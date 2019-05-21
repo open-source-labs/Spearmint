@@ -27,6 +27,7 @@ export const testCaseReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'UPDATE_TEST_TITLE':
       let testTitle = action.title;
+      console.log(testTitle);
       return {
         ...state,
         testTitle,
