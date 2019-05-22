@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const TestCase = () => {
   const [testCase, dispatch] = useReducer(testCaseReducer, initialState);
   
-  const handleUpdateTestStatement = (e) => {
+  const handleUpdateTestStatement = e => {
     dispatch(updateTestStatement(e.target.value));
   };
 
@@ -22,9 +22,9 @@ const TestCase = () => {
     dispatch(addMockData());
   }
 
-  const mockData = testCase.mockData.map((mockDatum) => {
+  const mockData = testCase.mockData.map(mockDatum => {
     if (mockDatum.type === 'mockData') {
-      return <MockData key={mockDatum.id} mockDatumId={mockDatum.id} dispatch={dispatch} keys={mockDatum.keys} />
+      return <MockData key={mockDatum.id} mockDatumId={mockDatum.id} dispatch={dispatch} fieldKeys={mockDatum.fieldKeys} />
     }
   }).filter(Boolean);
 
@@ -46,12 +46,12 @@ const TestCase = () => {
       <TestMenu />
       <section>
         <label htmlFor='test-statement'>test:</label>
-        <input type='text' id='test-statement' name='test-statement' value={testCase.testStatement} onChange={handleUpdateTestStatement} />
+        <input type='text' id='test-statement' value={testCase.testStatement} onChange={handleUpdateTestStatement} />
       </section>   
       
       <section>
         <label htmlFor='mock-data-checkbox'>Will you need mock data:</label>
-        <input type='checkbox' id='mock-data-checkbox' name='mock-data' disabled={mockData.length} onClick={handleToggleMockData}/>
+        <input type='checkbox' id='mock-data-checkbox' disabled={mockData.length} onClick={handleToggleMockData}/>
       </section>
       
       {testCase.mockDataCheckBox &&

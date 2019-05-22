@@ -1,10 +1,15 @@
 export const actionTypes = {
   UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
+  
   TOGGLE_MOCK_DATA: 'TOGGLE_MOCK_DATA',
   ADD_MOCK_DATA: 'ADD_MOCK_DATA',
   DELETE_MOCK_DATA: 'DELETE_MOCK_DATA',
+  UPDATE_MOCK_DATA_NAME: 'UPDATE_MOCK_DATA_NAME',
+  
   ADD_MOCK_DATA_KEY: 'ADD_MOCK_DATA_KEY',
   DELETE_MOCK_DATA_KEY: 'DELETE_MOCK_DATA_KEY',
+  UPDATE_MOCK_DATA_KEY: 'UPDATE_MOCK_DATA_KEY',
+  
   ADD_ACTION: 'ADD_ACTION',
   ADD_ASSERTION: 'ADD_ASSERTION',
   ADD_RENDER: 'ADD_RENDER',
@@ -28,6 +33,12 @@ export const deleteMockData = (id) => ({
   id,
 })
 
+export const updateMockDataName = (id, name) => ({
+  type: actionTypes.UPDATE_MOCK_DATA_NAME,
+  id,
+  name,
+})
+
 export const addMockDataKey = (id) => ({
   type: actionTypes.ADD_MOCK_DATA_KEY,
   id,
@@ -39,6 +50,13 @@ export const deleteMockDataKey = (mockDatumId, mockDatumKeyId) => ({
   mockDatumKeyId,
 })
 
+export const updateMockDataKey = (mockDatumId, mockDatumKeyId, fieldKey, fieldType) => ({
+  type: actionTypes.UPDATE_MOCK_DATA_KEY,
+  mockDatumId,
+  mockDatumKeyId,
+  fieldKey,
+  fieldType,
+})
 
 export const initialState = {
   testStatement: '',
@@ -46,16 +64,21 @@ export const initialState = {
   statements: [],
   mockDataCheckBox: false,
 }
-
-let statementId = 0;
-let mockDataId = 0;
-let mockDatumKeyId = 0;
 const createMockDatum = (id) => ({
-  id: id,
-  keys: [],
+  id,
+  name: '',
+  fieldKeys: [],
   content: '',
   type: 'mockData'
 })
+const createFieldKeys = (id) => ({        
+  id,
+  fieldKey: '',
+  fieldType: '',
+})
+let statementId = 0;
+let mockDatumId = 0;
+let mockDatumKeyId = 0;
 
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
@@ -65,14 +88,14 @@ export const testCaseReducer = (state, action) => {
   
   switch (action.type) {
     case actionTypes.UPDATE_TEST_STATEMENT:
-      let testStatement = `test ('${action.testStatement}', () => {`
+      let testStatement = action.testStatement;
       return {
           ...state,
           testStatement,
         } 
     case actionTypes.TOGGLE_MOCK_DATA:
       if (!state.mockDataCheckBox) {
-        mockData.push(createMockDatum(mockDatumKeyId++));
+        mockData.push(createMockDatum(mockDatumId++));
       }
       return {
         ...state,
@@ -80,26 +103,32 @@ export const testCaseReducer = (state, action) => {
         mockDataCheckBox: !state.mockDataCheckBox
       } 
     case actionTypes.ADD_MOCK_DATA:
-      mockData.push(createMockDatum(mockDatumKeyId++))
-    return {
+      mockData.push(createMockDatum(mockDatumId++))
+      return {
         ...state,
         mockData,
       }
     case actionTypes.DELETE_MOCK_DATA:
-      mockData = mockData.filter((mockDatum) => mockDatum.id !== action.id)
+      mockData = mockData.filter(mockDatum => mockDatum.id !== action.id)
+      return {
+        ...state,
+        mockData,
+      }
+    case actionTypes.UPDATE_MOCK_DATA_NAME:
+      mockData = mockData.map(mockDatum => {
+        if (mockDatum.id === action.id) {
+          mockDatum.name = action.name;
+        }
+        return mockDatum;
+      })
       return {
         ...state,
         mockData,
       }
     case actionTypes.ADD_MOCK_DATA_KEY:
-      mockData = mockData.map((mockDatum) => { 
+      mockData = mockData.map(mockDatum => { 
         if (mockDatum.id === action.id) {
-          mockDatum.keys.push({        
-            id: mockDatumKeyId++,
-            fieldKey: '',
-            type: '',
-          });
-          console.log(mockDatum.keys);
+          mockDatum.fieldKeys.push(createFieldKeys(mockDatumKeyId++));
         } 
         return mockDatum;
       })
@@ -108,12 +137,30 @@ export const testCaseReducer = (state, action) => {
         mockData,
       }
       case actionTypes.DELETE_MOCK_DATA_KEY:
-        mockData = mockData.map((mockDatum) => { 
+        mockData = mockData.map(mockDatum => { 
           if (mockDatum.id === action.mockDatumId) {
-            console.log('hihi');
-
-            mockDatum.keys = mockDatum.keys.filter((key) => key.id !== action.mockDatumKeyId)
-            console.log(mockDatum.keys);
+            mockDatum.fieldKeys = mockDatum.fieldKeys.filter((key) => key.id !== action.mockDatumKeyId)
+          } 
+          return mockDatum;
+        })
+        return {
+          ...state,
+          mockData,
+        }
+      case actionTypes.UPDATE_MOCK_DATA_KEY:
+        mockData = mockData.map(mockDatum => { 
+          if (mockDatum.id === action.mockDatumId) {
+            mockDatum.fieldKeys.map(fieldKey => {
+              if (fieldKey.id === action.mockDatumKeyId) {
+                // console.log(fieldKey);
+                // console.log(`fieldKey: ${fieldKey.fieldKey}`);
+                // console.log(`action: ${action.fieldKey}`)
+                fieldKey.fieldKey = action.fieldKey;
+                fieldKey.fieldType = action.fieldType;
+              }
+              console.log(fieldKey);
+              return fieldKey;
+            })
           } 
           return mockDatum;
         })

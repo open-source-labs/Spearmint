@@ -1,38 +1,43 @@
 import React from 'react';
-import MockDataKey from './MockData/MockDataKey';
-import { deleteMockData, addMockDataKey } from './testCaseReducer';
+import MockDataFieldKey from './MockData/MockDataKey';
+import { deleteMockData, addMockDataKey, updateMockDataName } from './testCaseReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const MockData = ({ mockDatumId, dispatch, keys }) => {
+const MockData = ({ mockDatumId, dispatch, fieldKeys }) => {
   const handleClickAdd = (e, id) => {
     e.stopPropagation();
     dispatch(addMockDataKey(id));
   }
 
-  const handleClickDelete = (e, id) => {
+  const handleClickDelete = (e) => {
     e.stopPropagation();
-    dispatch(deleteMockData(id));
+    dispatch(deleteMockData(mockDatumId));
   }
 
-  const mockDataKeys = keys.map((key) => <MockDataKey 
+  const handleClickUpdate = (e) => {
+    e.stopPropagation();
+    dispatch(updateMockDataName(mockDatumId, e.target.value));
+  }
+
+  const mockDataFieldKeys = fieldKeys.map((key) => <MockDataFieldKey 
                                            key={key.id} 
                                            dispatch={dispatch}
-                                           fieldKey={key.fieldKey} 
-                                           type={key.type} 
                                            mockDatumId={mockDatumId} 
                                            mockDatumKeyId={key.id} 
+                                           fieldKey={key.fieldKey} 
+                                           fieldType={key.fieldType} 
                                          />)
 
   return (
     <div>
-      <FontAwesomeIcon id='delete-mock-data' icon='times' onClick={(e) => handleClickDelete(e, mockDatumId)} />
+      <FontAwesomeIcon id='delete-mock-data' icon='times' onClick={handleClickDelete} />
       <label htmlFor='mock-data-name'>Name </label>
-      <input type='text' id='mock-data-name' />
+      <input type='text' id='mock-data-name' onChange={handleClickUpdate}/>
       <div>
         <label htmlFor='mock-data-key'>Add filed keys </label>
         <label htmlFor='mock-data-type'>Type </label>
       </div>
-      {mockDataKeys}
+      {mockDataFieldKeys}
       <button onClick={(e) => handleClickAdd(e, mockDatumId)}>
         <FontAwesomeIcon id='add-mock-data-key' icon='plus'  /> 
         Add Key 

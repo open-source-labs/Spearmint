@@ -1,19 +1,29 @@
 import React from 'react';
-import { deleteMockDataKey } from '../testCaseReducer';
+import { deleteMockDataKey, updateMockDataKey } from '../testCaseReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const MockDataKey = ({ dispatch, fieldKey, type, mockDatumId, mockDatumKeyId }) => {
-  const handleDeleteMockDataKey = (e, mockDatumId, mockDatumKeyId) => {
+const MockDataKey = ({ dispatch, mockDatumId, mockDatumKeyId, fieldKey, fieldType }) => {
+  const handleChangeDelete = (e) => {
     e.stopPropagation();
     dispatch(deleteMockDataKey(mockDatumId, mockDatumKeyId));
   }
   
+  const handleChangeUpdateFieldKey = (e) => {
+    e.stopPropagation();
+    dispatch(updateMockDataKey(mockDatumId, mockDatumKeyId, e.target.value, fieldType))
+  }
+
+  const handleChangeUpdateFieldType = (e) => {
+    e.stopPropagation();
+    dispatch(updateMockDataKey(mockDatumId, mockDatumKeyId, fieldKey, e.target.value))
+  }
+
   return (
     <div>
-        <FontAwesomeIcon id='delete-mock-data-key' icon='minus' onClick={(e) => handleDeleteMockDataKey(e, mockDatumId, mockDatumKeyId)}/>
+        <FontAwesomeIcon id='delete-mock-data-key' icon='minus' onClick={handleChangeDelete}/>
         <form id='mock-data-form'>
-          <input type='text' id='mock-data-key' />
-          <select id='mock-data-type' form='mock-data-form'>
+          <input type='text' id='mock-data-key' value={fieldKey} onChange={handleChangeUpdateFieldKey} />
+          <select id='mock-data-type' form='mock-data-form' onChange={handleChangeUpdateFieldType} >
             <option value='number'>Number</option>
             <option value='string'>String</option>
             <option value='boolean'>Boolean</option>
