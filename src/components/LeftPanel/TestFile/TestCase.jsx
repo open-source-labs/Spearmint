@@ -13,8 +13,8 @@ const TestCase = () => {
 
   return (
     <>
-      <label for='test-title'>test:</label>
-      <input type='text' id='test-title' name='test-title' value={testCase.testTitle} onChange={handleTestTitleChange} />
+      {/* <label forhtml='test-title'>test:</label>
+      <input type='text' id='test-title' name='test-title' value={testCase.testTitle} onChange={handleTestTitleChange} /> */}
     </>
   )
 }
