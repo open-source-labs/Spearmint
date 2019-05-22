@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import TestMenu from './TestCase/TestMenu';
-import TestCase from './TestCase';
+import TestCase from './TestFile/TestCase';
 
 const TestFile = ({ fileName }) => {
   return (
     <> 
-      <TestMenu />
       <TestCase />
     </>
   )
