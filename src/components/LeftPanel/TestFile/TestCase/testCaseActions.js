@@ -6,7 +6,16 @@ export const actionTypes = {
   UPDATE_ACTION: "UPDATE_ACTION",
 
   ADD_ASSERTION: "ADD_ASSERTION",
-  ADD_RENDER: "ADD_RENDER"
+  DELETE_ASSERTION: "DELETE_ASSERTION",
+  UPDATE_ASSERTION: "UPDATE_ASSERTION",
+
+  ADD_RENDER: "ADD_RENDER",
+  DELETE_RENDER: "DELETE_RENDER",
+  UPDATE_RENDER: "UPDATE_RENDER",
+
+  ADD_RENDER_PROP: "ADD_RENDER_PROP",
+  DELETE_RENDER_PROP: "DELETE_RENDER_PROP",
+  UPDATE_RENDER_PROP: "UPDATE_RENDER_PROPS"
 };
 
 export const updateTestStatement = testStatement => ({
@@ -26,6 +35,7 @@ export const deleteAction = id => ({
 export const updateAction = (
   id,
   eventType,
+  eventValue,
   queryVariant,
   querySelector,
   queryValue
@@ -33,11 +43,64 @@ export const updateAction = (
   type: actionTypes.UPDATE_ACTION,
   id,
   eventType,
+  eventValue,
   queryVariant,
   querySelector,
   queryValue
 });
 
+export const addAssertion = () => ({
+  type: actionTypes.ADD_ASSERTION
+});
+
+export const deleteAssertion = id => ({
+  type: actionTypes.DELETE_ASSERTION,
+  id
+});
+
+export const updateAssertion = (
+  id,
+  queryVariant,
+  querySelector,
+  assertionValue,
+  matcher
+) => ({
+  type: actionTypes.UPDATE_ASSERTION,
+  id,
+  queryVariant,
+  querySelector,
+  assertionValue,
+  matcher
+});
+
 export const addRender = () => ({
   type: actionTypes.ADD_RENDER
+});
+
+export const deleteRender = id => ({
+  type: actionTypes.DELETE_RENDER,
+  id
+});
+
+export const updateRender = (id, componentName) => ({
+  type: actionTypes.UPDATE_RENDER,
+  id,
+  componentName
+});
+
+export const addRenderProp = () => ({
+  type: actionTypes.ADD_RENDER_PROP
+});
+
+export const deleteRenderProp = id => ({
+  type: actionTypes.DELETE_RENDER_PROP,
+  id
+});
+
+export const updateRenderProps = (renderId, propId, propKey, propValue) => ({
+  type: actionTypes.UPDATE_RENDER_PROP,
+  renderId,
+  propId,
+  propKey,
+  propValue
 });

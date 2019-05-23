@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Action = ({ id, dispatchTestCase }) => {
   const [eventType, setEventType] = useState("");
+  const [eventValue, setEventValue] = useState("");
   const [queryVariant, setQueryVariant] = useState("");
   const [querySelector, setQuerySelector] = useState("");
   const [queryValue, setQueryValue] = useState("");
@@ -15,26 +16,84 @@ const Action = ({ id, dispatchTestCase }) => {
   const handleChangeEventType = e => {
     setEventType(e.target.value);
     dispatchTestCase(
-      updateAction(id, e.target.value, queryVariant, querySelector, queryValue)
+      updateAction(
+        id,
+        e.target.value,
+        eventValue,
+        queryVariant,
+        querySelector,
+        queryValue
+      )
     );
   };
+
+  const handleChangeEventValue = e => {
+    setEventValue(e.target.value);
+    dispatchTestCase(
+      updateAction(
+        id,
+        eventType,
+        e.target.value,
+        queryVariant,
+        querySelector,
+        queryValue
+      )
+    );
+  };
+
   const handleChangeQueryVariant = e => {
     setQueryVariant(e.target.value);
     dispatchTestCase(
-      updateAction(id, eventType, e.target.value, querySelector, queryValue)
+      updateAction(
+        id,
+        eventType,
+        eventValue,
+        e.target.value,
+        querySelector,
+        queryValue
+      )
     );
   };
+
   const handleChangeQuerySelector = e => {
     setQuerySelector(e.target.value);
     dispatchTestCase(
-      updateAction(id, eventType, queryVariant, e.target.value, queryValue)
+      updateAction(
+        id,
+        eventType,
+        eventValue,
+        queryVariant,
+        e.target.value,
+        queryValue
+      )
     );
   };
+
   const handleChangeQueryValue = e => {
     setQueryValue(e.target.value);
     dispatchTestCase(
-      updateAction(id, eventType, queryVariant, querySelector, e.target.value)
+      updateAction(
+        id,
+        eventType,
+        eventValue,
+        queryVariant,
+        querySelector,
+        e.target.value
+      )
     );
+  };
+
+  const needsEventValue = eventType => {
+    const eventsWithValues = [
+      "keyDown",
+      "keyPress",
+      "keyUp",
+      "change",
+      "input",
+      "invalid",
+      "submit"
+    ];
+    return eventsWithValues.includes(eventType);
   };
 
   return (
@@ -45,8 +104,19 @@ const Action = ({ id, dispatchTestCase }) => {
         icon="times"
         onClick={handleClickDelete}
       />
-      <label htmlFor="action-name">Event Type</label>
-      <input type="text" id="action-name" onChange={handleChangeEventType} />
+      <label htmlFor="event-type">Event Type</label>
+      <input type="text" id="event-type" onChange={handleChangeEventType} />
+      {needsEventValue(eventType) && (
+        <span>
+          <label htmlFor="event-value" />
+          <input
+            type="text"
+            id="event-type"
+            onChange={handleChangeEventValue}
+          />
+        </span>
+      )}
+
       <label htmlFor="queryVariant">Query Selector</label>
       <FontAwesomeIcon className="query" icon="question-circle" />
       <select id="queryVariant" onChange={handleChangeQueryVariant}>
