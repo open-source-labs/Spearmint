@@ -1,49 +1,59 @@
-import React from 'react';
-import MockDataFieldKey from './MockData/MockDataKey';
-import { deleteMockData, addMockDataKey, updateMockDataName } from './testCaseReducer';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from "react";
+import MockDataFieldKey from "./MockData/MockDataKey";
+import {
+  deleteMockData,
+  addMockDataKey,
+  updateMockDataName
+} from "./MockData/mockDataActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const MockData = ({ mockDatumId, dispatch, fieldKeys }) => {
+const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
   const handleClickAdd = (e, id) => {
     e.stopPropagation();
-    dispatch(addMockDataKey(id));
-  }
+    dispatchMockData(addMockDataKey(id));
+  };
 
-  const handleClickDelete = (e) => {
+  const handleClickDelete = e => {
     e.stopPropagation();
-    dispatch(deleteMockData(mockDatumId));
-  }
+    dispatchMockData(deleteMockData(mockDatumId));
+  };
 
-  const handleClickUpdate = (e) => {
+  const handleClickUpdate = e => {
     e.stopPropagation();
-    dispatch(updateMockDataName(mockDatumId, e.target.value));
-  }
+    dispatchMockData(updateMockDataName(mockDatumId, e.target.value));
+  };
 
-  const mockDataFieldKeys = fieldKeys.map((key) => <MockDataFieldKey 
-                                           key={key.id} 
-                                           dispatch={dispatch}
-                                           mockDatumId={mockDatumId} 
-                                           mockDatumKeyId={key.id} 
-                                           fieldKey={key.fieldKey} 
-                                           fieldType={key.fieldType} 
-                                         />)
+  const mockDataFieldKeys = fieldKeys.map(key => (
+    <MockDataFieldKey
+      key={key.id}
+      dispatchMockData={dispatchMockData}
+      mockDatumId={mockDatumId}
+      mockDatumKeyId={key.id}
+      fieldKey={key.fieldKey}
+      fieldType={key.fieldType}
+    />
+  ));
 
   return (
     <div>
-      <FontAwesomeIcon id='delete-mock-data' icon='times' onClick={handleClickDelete} />
-      <label htmlFor='mock-data-name'>Name </label>
-      <input type='text' id='mock-data-name' onChange={handleClickUpdate}/>
+      <FontAwesomeIcon
+        id="delete-mock-data"
+        icon="times"
+        onClick={handleClickDelete}
+      />
+      <label htmlFor="mock-data-name">Name </label>
+      <input type="text" id="mock-data-name" onChange={handleClickUpdate} />
       <div>
-        <label htmlFor='mock-data-key'>Add filed keys </label>
-        <label htmlFor='mock-data-type'>Type </label>
+        <label htmlFor="mock-data-key">Add filed keys </label>
+        <label htmlFor="mock-data-type">Type </label>
       </div>
       {mockDataFieldKeys}
-      <button onClick={(e) => handleClickAdd(e, mockDatumId)}>
-        <FontAwesomeIcon id='add-mock-data-key' icon='plus'  /> 
-        Add Key 
+      <button onClick={e => handleClickAdd(e, mockDatumId)}>
+        <FontAwesomeIcon id="add-mock-data-key" icon="plus" />
+        Add Key
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default MockData; 
+export default MockData;
