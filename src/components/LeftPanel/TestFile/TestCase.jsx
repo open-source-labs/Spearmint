@@ -39,20 +39,16 @@ const TestCase = () => {
     dispatchMockData(addMockData());
   };
 
-  const mockDataJSX = mockData.mockData
-    .map(mockDatum => {
-      if (mockDatum.type === "mockData") {
-        return (
-          <MockData
-            key={mockDatum.id}
-            mockDatumId={mockDatum.id}
-            dispatchMockData={dispatchMockData}
-            fieldKeys={mockDatum.fieldKeys}
-          />
-        );
-      }
-    })
-    .filter(Boolean);
+  const mockDataJSX = mockData.mockData.map(mockDatum => {
+    return (
+      <MockData
+        key={mockDatum.id}
+        mockDatumId={mockDatum.id}
+        dispatchMockData={dispatchMockData}
+        fieldKeys={mockDatum.fieldKeys}
+      />
+    );
+  });
 
   const statementsJSX = testCase.statements.map(statement => {
     switch (statement.type) {
@@ -78,6 +74,7 @@ const TestCase = () => {
             key={statement.id}
             id={statement.id}
             dispatchTestCase={dispatchTestCase}
+            props={statement.props}
           />
         );
       default:
@@ -85,10 +82,9 @@ const TestCase = () => {
     }
   });
 
-  console.log(statementsJSX);
   return (
     <div>
-      <TestMenu />
+      <TestMenu dispatchTestCase={dispatchTestCase} />
       <section>
         <label htmlFor="test-statement">test:</label>
         <input
