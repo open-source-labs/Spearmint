@@ -32,7 +32,7 @@ export default class NavBar extends React.Component {
     const navBar = {
       padding: ".625rem",
       height: "100%",
-      width: "3.5rem",
+      width: "2rem",
       backgroundColor: "#02c2c3"
     };
 
@@ -64,8 +64,8 @@ export default class NavBar extends React.Component {
     };
 
     const icons = {
-      height: "1.6rem",
-      width: "1.6rem"
+      height: "1.25rem",
+      width: "1.25rem"
     };
 
     const plusBtn = {
@@ -84,24 +84,24 @@ export default class NavBar extends React.Component {
         <div id="navBar" style={navBar}>
           <div id="topNav" style={topNav}>
             <button style={button} onClick={this.explorerOpen}>
-              <img src={prevIcon} style={icons} />{" "}
+              <img src={prevIcon} style={icons} alt="fileExplorer" />{" "}
             </button>
             <button style={button}>
-              <img src={exportIcon} style={icons} />
+              <img src={exportIcon} style={icons} alt="export" />
             </button>
             <button style={button}>
-              <img src={folderOpenIcon} style={icons} />
+              <img src={folderOpenIcon} style={icons} alt="folderOpen" />
             </button>
             <button style={button}>
-              <img src={saveIcon} style={icons} />
+              <img src={saveIcon} style={icons} alt="save" />
             </button>
             <button style={button}>
-              <img src={trashIcon} style={icons} />
+              <img src={trashIcon} style={icons} alt="delete" />
             </button>
           </div>
           <div id="bottomNav" style={bottomNav}>
             <button style={plusBtn}>
-              <img src={roundPlusIcon} style={icons} />
+              <img src={roundPlusIcon} style={icons} alt="newTest" />
             </button>
           </div>
         </div>
