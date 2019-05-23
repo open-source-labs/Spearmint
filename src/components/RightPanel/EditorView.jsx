@@ -5,9 +5,6 @@ import { FileCodeContext } from '../../App';
 const Editor = () => {
   const fileCode = useContext(FileCodeContext);
 
-  const editorDidMount = (editor, monaco) => {
-    editor.focus();
-  }
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'on',
@@ -15,16 +12,23 @@ const Editor = () => {
     colorDecorators: true
   };
 
+  const editor = {
+    padding: ".625rem",
+    height: "auto",
+    width: "2rem",
+    border: "grey",
+  }
   return (
-    <MonacoEditor
-      width="700"
-      height="600"
-      language="javascript"
-      theme="vs-dark"
-      value={fileCode}
-      options={options}
-      editorDidMount={editorDidMount}
-    />
+    <div style={editor}>
+      <MonacoEditor
+        width="500"
+        height="100%"
+        language="javascript"
+        theme="vs-dark"
+        value={fileCode}
+        options={options}
+      />
+    </div>
   );
 }
 

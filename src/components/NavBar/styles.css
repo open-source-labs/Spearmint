@@ -1,0 +1,13 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 5px;
+}
+
+.fileBtn:hover {
+  background-color: lightgrey;
+}
+
+#fileTree {
+  display: flex;
+  width: 400px;
+}

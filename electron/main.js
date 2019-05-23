@@ -8,8 +8,8 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({ 
-    width: 900, 
-    height: 680,
+    width: 1500, 
+    height: 750,
     webPreferences: {
       nodeIntegration: true
     }
@@ -20,7 +20,6 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
-
   mainWindow.on("closed", () => (mainWindow = null));
 }
 

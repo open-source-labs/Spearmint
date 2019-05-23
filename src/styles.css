@@ -26,8 +26,3 @@ li {
 .fileBtn:hover {
   background-color: lightgrey;
 }
-
-#fileTree {
-  display: flex;
-  width: 400px;
-}
