@@ -2,17 +2,11 @@ import React, { useReducer } from "react";
 import { testCaseReducer, testCaseState } from "./testCaseReducer";
 import { addAction } from "./testCaseActions";
 
-const TestMenu = () => {
-  const [testCase, dispatchTestCase] = useReducer(
-    testCaseReducer,
-    testCaseState
-  );
-
-  const handleAddAction = () => {
+const TestMenu = ({ dispatchTestCase }) => {
+  const handleAddAction = e => {
     dispatchTestCase(addAction());
   };
 
-  // const handleDeleteAction = () => {};
   return (
     <div className="flex-container">
       <div id="left-menu">

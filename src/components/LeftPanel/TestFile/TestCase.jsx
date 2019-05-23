@@ -85,10 +85,9 @@ const TestCase = () => {
     }
   });
 
-  console.log(statementsJSX);
   return (
     <div>
-      <TestMenu />
+      <TestMenu dispatchTestCase={dispatchTestCase} />
       <section>
         <label htmlFor="test-statement">test:</label>
         <input

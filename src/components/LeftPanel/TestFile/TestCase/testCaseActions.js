@@ -3,6 +3,7 @@ export const actionTypes = {
 
   ADD_ACTION: "ADD_ACTION",
   DELETE_ACTION: "DELETE_ACTION",
+  UPDATE_ACTION: "UPDATE_ACTION",
 
   ADD_ASSERTION: "ADD_ASSERTION",
   ADD_RENDER: "ADD_RENDER"
@@ -17,18 +18,23 @@ export const addAction = () => ({
   type: actionTypes.ADD_ACTION
 });
 
-export const deleteAction = (
+export const deleteAction = id => ({
+  type: actionTypes.DELETE_ACTION,
+  id
+});
+
+export const updateAction = (
   id,
   eventType,
   queryVariant,
-  queryOption,
+  querySelector,
   queryValue
 ) => ({
-  type: actionTypes.DELETE_ACTION,
+  type: actionTypes.UPDATE_ACTION,
   id,
   eventType,
   queryVariant,
-  queryOption,
+  querySelector,
   queryValue
 });
 
