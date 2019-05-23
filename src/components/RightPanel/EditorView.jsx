@@ -9,7 +9,8 @@ const Editor = () => {
     selectOnLineNumbers: true,
     wordWrap: 'on',
     autoIndent: true,
-    colorDecorators: true
+    colorDecorators: true,
+    theme:"hc-black"
   };
 
   const editor = {
@@ -24,7 +25,7 @@ const Editor = () => {
         width="500"
         height="100%"
         language="javascript"
-        theme="vs-dark"
+        // theme="vs-dark"
         value={fileCode}
         options={options}
       />

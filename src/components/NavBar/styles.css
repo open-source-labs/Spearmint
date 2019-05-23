@@ -11,3 +11,18 @@ body {
   display: flex;
   width: 400px;
 }
+
+.openBtn {
+  width: 500px;
+  height: 120px;
+  border-radius: 15px;
+  border: 2px solid black;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.openBtn:hover {
+  background-color: lightgrey;
+  border: 2px solid lightgrey;
+  color: white;
+}

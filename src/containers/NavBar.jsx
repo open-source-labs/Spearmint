@@ -101,7 +101,7 @@ const NavBar = (handleShowCode) => {
           </button>
         </div>
       </div>
-      {opened && <FileDirectory fileTree={fileTree} showCode={showCode} />}
+      {!opened && <FileDirectory fileTree={fileTree} showCode={showCode} />}
     </div>
   );
   

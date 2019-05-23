@@ -12,12 +12,17 @@ li {
   list-style-type: none;
 }
 
-.openBtn {
+/* .openBtn {
   width: 200px;
   height: 50px;
   border-radius: 15px;
   border: 2px solid black;
-}
+} */
+
+/* .openBtn :hover {
+  background-color: black;
+  color: white;
+} */
 
 .fileBtn {
   border: none;

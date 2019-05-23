@@ -1,22 +1,36 @@
-import React, { useContext } from 'react';
+import '../components/NavBar/styles.css'
+import React, { useContext, useState } from 'react';
 import FileDirectory from '../components/NavBar/FileDirectory';
-import { FileTreeContext } from '../App';
+import { FileTreeContext, LoadedContext } from '../App';
 
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs')
 let { dialog } = remote;
 
+const h1 = {
+  fontSize:"80px",
+  textAlign:"center",
+  paddingTop: "200px",
+  fontFamily: "comfortaa",
+  color: "#02c2c3",
+}
 
-const openBtnStyle = {
-  width: "100px",
-  height: "40px",
-  borderRadius: "15px",
-  border: "2px solid black",
-  fontSize: "12px"
+const h2 = {
+  fontSize:"24px",
+  textAlign:"center",
+  paddingTop: "10px",
+  paddingBottom: "20px",
+  fontFamily: "montserrat",
+  color: "#ffc800"
+}
+
+const imgStyle ={
+  padding: "10px"
 }
 
 const ProjectLoader = () => {
 
+  const setLoaded = useContext(LoadedContext)
   const setFileTree = useContext(FileTreeContext);
 
   const handleOpenFolder = () => {
@@ -29,6 +43,7 @@ const ProjectLoader = () => {
       ]
     });
     if (directory && directory[0]){
+      setLoaded(!false)
       setFileTree(generateFileTreeObject(directory[0]));
     }
   }
@@ -53,7 +68,13 @@ const ProjectLoader = () => {
 
   return (
     <div>
-      <button className="openBtn" onClick={handleOpenFolder} style={openBtnStyle}>
+      <span>
+      <h1 style={h1}>spearmint
+        <img style={imgStyle} src="https://img.icons8.com/ios/40/000000/natural-food.png"></img>
+      </h1>
+      </span>
+      <h2 style={h2}>A FRESH TAKE ON TESTING </h2>
+      <button className="openBtn" onClick={handleOpenFolder}>
         Open Folder
       </button>
       <div id="filetree">
