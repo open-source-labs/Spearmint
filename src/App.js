@@ -3,17 +3,21 @@ import NavBar from './containers/NavBar';
 import LeftPanel from './containers/LeftPanel';
 import ProjectLoader from './containers/ProjectLoader';
 import RightPanel from './containers/RightPanel';
+import FileTree from './FileTree';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus, faTimes } from "@fortawesome/free-solid-svg-icons";
-import FileTree from './FileTree';
-
+import {
+  faPlus,
+  faMinus,
+  faTimes,
+  faQuestionCircle
+} from "@fortawesome/free-solid-svg-icons";
 
 export const FileTreeContext = createContext(null);
 export const FileCodeContext = createContext(null);
 export const LoadedContext = createContext(false);
 
-library.add(faPlus, faMinus, faTimes);
+library.add(faPlus, faMinus, faTimes, faQuestionCircle);
 
 const styles = {
   fontFamily: "arial",

@@ -1,15 +1,16 @@
 import React, { useReducer } from "react";
 import { testCaseReducer, testCaseState } from "./testCaseReducer";
-import { addAction } from "./testCaseActions";
+import { addAction, addAssertion, addRender } from "./testCaseActions";
 
-const TestMenu = () => {
-  const [testCase, dispatchTestCase] = useReducer(
-    testCaseReducer,
-    testCaseState
-  );
-
-  const handleAddAction = () => {
+const TestMenu = ({ dispatchTestCase }) => {
+  const handleAddAction = e => {
     dispatchTestCase(addAction());
+  };
+  const handleAddAssertion = e => {
+    dispatchTestCase(addAssertion());
+  };
+  const handleAddRender = e => {
+    dispatchTestCase(addRender());
   };
 
   const panel = {
@@ -17,7 +18,6 @@ const TestMenu = () => {
     justifyContent: "center",
   }
 
-  // const handleDeleteAction = () => {};
   return (
     <div className="flex-container" style={panel}>
       <div id="left-menu" >
@@ -27,8 +27,12 @@ const TestMenu = () => {
         <button className="menu-btn" onClick={handleAddAction}>
           Action
         </button>
-        <button className="menu-btn">Assertion</button>
-        <button className="menu-btn">Render</button>
+        <button className="menu-btn" onClick={handleAddAssertion}>
+          Assertion
+        </button>
+        <button className="menu-btn" onClick={handleAddRender}>
+          Render
+        </button>
       </div>
     </div>
   );
