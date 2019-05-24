@@ -82,10 +82,14 @@ const TestCase = () => {
     }
   });
 
+  const testStyle = {
+    padding: "5px"
+  }
+
   return (
     <div>
       <TestMenu dispatchTestCase={dispatchTestCase} />
-      <section>
+      <section style={testStyle}>
         <label htmlFor="test-statement">test:</label>
         <input
           type="text"
@@ -94,7 +98,7 @@ const TestCase = () => {
           onChange={handleUpdateTestStatement}
         />
       </section>
-      <section>
+      <section style={testStyle}>
         <label htmlFor="mock-data-checkbox">Will you need mock data:</label>
         <input
           type="checkbox"
@@ -104,7 +108,7 @@ const TestCase = () => {
         />
       </section>
       {mockData.mockDataCheckBox && (
-        <section>
+        <section style={testStyle}>
           <label htmlFor="mock-data">Mock data</label>
           <FontAwesomeIcon
             id="mock-data"

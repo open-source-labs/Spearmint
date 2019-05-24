@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css?family=Comfortaa|Montserrat&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <!--
@@ -27,5 +28,23 @@
 <body>
   <div id="root"></div>
 </body>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/vs/loader.js"></script>
+<script>
+  //importing the loader from the Monaco project directly from CDNJS
+    //configuring require to point the vs-paths to the CDN
+  require.config({
+    paths: {
+      'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/vs'
+    }
+  });
+  //setting up Monaco environment to use a customized worker url(our proxy)
+  window.MonacoEnvironment = {
+    getWorkerUrl: function (workerId, label) {
+      return '/monaco-editor-worker-loader-proxy.js';
+    }
+  };
+  require(["vs/editor/editor.main"], function () {})
+</script>
 
 </html>

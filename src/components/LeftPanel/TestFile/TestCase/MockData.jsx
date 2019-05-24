@@ -23,6 +23,9 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
     dispatchMockData(updateMockDataName(mockDatumId, e.target.value));
   };
 
+  const keys = {
+    padding: "5px"
+  }
   const mockDataFieldKeys = fieldKeys.map(key => (
     <MockDataFieldKey
       key={key.id}
@@ -40,10 +43,11 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
         id="delete-mock-data"
         icon="times"
         onClick={handleClickDelete}
+        style={keys}
       />
       <label htmlFor="mock-data-name">Name </label>
       <input type="text" id="mock-data-name" onChange={handleClickUpdate} />
-      <div>
+      <div style={keys}>
         <label htmlFor="mock-data-key">Add filed keys </label>
         <label htmlFor="mock-data-type">Type </label>
       </div>
