@@ -16,8 +16,8 @@ const Render = ({ id, dispatchTestCase, props }) => {
     dispatchTestCase(updateRender(id, e.target.value));
   };
 
-  const handleToggleProps = () => {
-    dispatchTestCase(addRenderProp());
+  const handleToggleProps = id => {
+    dispatchTestCase(addRenderProp(id));
   };
 
   const propsJSX = props.map(prop => {
