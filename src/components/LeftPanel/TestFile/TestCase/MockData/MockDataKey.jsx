@@ -47,6 +47,7 @@ const MockDataKey = ({
           form="mock-data-form"
           onChange={handleChangeUpdateFieldType}
         >
+          <option value="" />
           <option value="number">Number</option>
           <option value="string">String</option>
           <option value="boolean">Boolean</option>
