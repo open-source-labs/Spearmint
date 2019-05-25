@@ -17,7 +17,7 @@ const createMockDatum = id => ({
 });
 
 const createFieldKeys = id => ({
-  id: mockDatumKeyId,
+  id: mockDatumKeyId++,
   fieldKey: "",
   fieldType: ""
 });

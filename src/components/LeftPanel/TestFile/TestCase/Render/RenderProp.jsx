@@ -2,11 +2,11 @@ import React from "react";
 import {
   addRenderProp,
   deleteRenderProp,
-  updateRenderProps
+  updateRenderProp
 } from "../testCaseActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Prop = ({ dispatchTestCase, renderId, propId, propKey, propValue }) => {
+const RenderProp = ({ dispatchTestCase, renderId, propId, propKey, propValue }) => {
   const handleClickAdd = () => {
     dispatchTestCase(addRenderProp());
   };
@@ -19,14 +19,14 @@ const Prop = ({ dispatchTestCase, renderId, propId, propKey, propValue }) => {
   const handleChangeUpdatePropKey = e => {
     e.stopPropagation();
     dispatchTestCase(
-      updateRenderProps(renderId, propId, e.target.value, propValue)
+      updateRenderProp(renderId, propId, e.target.value, propValue)
     );
   };
 
   const handleChangeUpdatePropValue = e => {
     e.stopPropagation();
     dispatchTestCase(
-      updateRenderProps(renderId, propId, propKey, e.target.value)
+      updateRenderProp(renderId, propId, propKey, e.target.value)
     );
   };
 
@@ -55,4 +55,4 @@ const Prop = ({ dispatchTestCase, renderId, propId, propKey, propValue }) => {
   );
 };
 
-export default Prop;
+export default RenderProp;
