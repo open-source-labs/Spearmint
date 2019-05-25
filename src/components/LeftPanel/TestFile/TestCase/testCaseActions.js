@@ -98,7 +98,7 @@ export const deleteRenderProp = id => ({
   id
 });
 
-export const updateRenderProps = (renderId, propId, propKey, propValue) => ({
+export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   type: actionTypes.UPDATE_RENDER_PROP,
   renderId,
   propId,
