@@ -1,37 +1,18 @@
-import '../components/NavBar/styles.css'
-import React, { useContext, useState } from 'react';
-import FileDirectory from '../components/NavBar/FileDirectory';
-import { FileTreeContext, LoadedContext } from '../App';
-
+import React, { useState, useContext } from 'react';
+import FileTree from './FileTree';
+import { FileCodeContext } from './App';
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs')
 let { dialog } = remote;
 
-const h1 = {
-  fontSize:"80px",
-  textAlign:"center",
-  paddingTop: "200px",
-  fontFamily: "comfortaa",
-  color: "#02c2c3",
-}
+const FilesContainer = () => {
+  const [fileTree, setFileTree] = useState(null);
+  const setFileCode = useContext(FileCodeContext);
 
-const h2 = {
-  fontSize:"24px",
-  textAlign:"center",
-  paddingTop: "10px",
-  paddingBottom: "20px",
-  fontFamily: "montserrat",
-  color: "#ffc800"
-}
-
-const imgStyle ={
-  padding: "10px"
-}
-
-const ProjectLoader = () => {
-
-  const setLoaded = useContext(LoadedContext)
-  const setFileTree = useContext(FileTreeContext);
+  const handleShowCode = (filepath) => {
+    const content = electronFs.readFileSync(filepath, "utf8");
+    setFileCode(content);
+  }
 
   const handleOpenFolder = () => {
     let directory = dialog.showOpenDialog({
@@ -43,7 +24,6 @@ const ProjectLoader = () => {
       ]
     });
     if (directory && directory[0]){
-      setLoaded(!false)
       setFileTree(generateFileTreeObject(directory[0]));
     }
   }
@@ -68,22 +48,20 @@ const ProjectLoader = () => {
 
   return (
     <div>
-      <span>
-      <h1 style={h1}>spearmint
-        <img style={imgStyle} src="https://img.icons8.com/ios/40/000000/natural-food.png"></img>
-      </h1>
-      </span>
-      <h2 style={h2}>A FRESH TAKE ON TESTING </h2>
       <button className="openBtn" onClick={handleOpenFolder}>
         Open Folder
       </button>
       <div id="filetree">
+        <FileTree fileTree={fileTree} handleShowCode={handleShowCode} /> 
       </div>
     </div>
   );
 }
 
-export default ProjectLoader;
+export default FilesContainer;
+
+
+
 
 
 

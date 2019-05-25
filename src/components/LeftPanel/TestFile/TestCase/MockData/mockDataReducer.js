@@ -5,8 +5,11 @@ export const mockDataState = {
   mockDataCheckBox: false
 };
 
+let mockDatumId = 0;
+let mockDatumKeyId = 0;
+
 const createMockDatum = id => ({
-  id,
+  id: mockDatumId++,
   name: "",
   fieldKeys: [],
   content: "",
@@ -14,20 +17,10 @@ const createMockDatum = id => ({
 });
 
 const createFieldKeys = id => ({
-  id,
+  id: mockDatumKeyId,
   fieldKey: "",
   fieldType: ""
 });
-
-const createAction = () => ({
-  event: {},
-  varient: "",
-  option: "",
-  query: ""
-});
-
-let mockDatumId = 0;
-let mockDatumKeyId = 0;
 
 export const mockDataReducer = (state, action) => {
   Object.freeze(state);
@@ -36,7 +29,7 @@ export const mockDataReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.TOGGLE_MOCK_DATA:
       if (!state.mockDataCheckBox) {
-        mockData.push(createMockDatum(mockDatumId++));
+        mockData.push(createMockDatum());
       }
       return {
         ...state,
@@ -44,7 +37,7 @@ export const mockDataReducer = (state, action) => {
         mockDataCheckBox: !state.mockDataCheckBox
       };
     case actionTypes.ADD_MOCK_DATA:
-      mockData.push(createMockDatum(mockDatumId++));
+      mockData.push(createMockDatum());
       return {
         ...state,
         mockData
@@ -69,7 +62,7 @@ export const mockDataReducer = (state, action) => {
     case actionTypes.ADD_MOCK_DATA_KEY:
       mockData = mockData.map(mockDatum => {
         if (mockDatum.id === action.id) {
-          mockDatum.fieldKeys.push(createFieldKeys(mockDatumKeyId++));
+          mockDatum.fieldKeys.push(createFieldKeys());
         }
         return mockDatum;
       });
@@ -95,9 +88,6 @@ export const mockDataReducer = (state, action) => {
         if (mockDatum.id === action.mockDatumId) {
           mockDatum.fieldKeys.map(fieldKey => {
             if (fieldKey.id === action.mockDatumKeyId) {
-              // console.log(fieldKey);
-              // console.log(`fieldKey: ${fieldKey.fieldKey}`);
-              // console.log(`action: ${action.fieldKey}`)
               fieldKey.fieldKey = action.fieldKey;
               fieldKey.fieldType = action.fieldType;
             }

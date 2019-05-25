@@ -28,12 +28,17 @@ const MockDataKey = ({
     );
   };
 
+  const keys = {
+    padding: "5px"
+  }
+
   return (
     <div>
       <FontAwesomeIcon
         id="delete-mock-data-key"
         icon="minus"
         onClick={handleChangeDelete}
+        style={keys}
       />
       <form id="mock-data-form">
         <input
@@ -47,6 +52,7 @@ const MockDataKey = ({
           form="mock-data-form"
           onChange={handleChangeUpdateFieldType}
         >
+          <option value="" />
           <option value="number">Number</option>
           <option value="string">String</option>
           <option value="boolean">Boolean</option>
@@ -55,6 +61,10 @@ const MockDataKey = ({
       </form>
     </div>
   );
+
+
+
+
 };
 
 export default MockDataKey;

@@ -39,20 +39,16 @@ const TestCase = () => {
     dispatchMockData(addMockData());
   };
 
-  const mockDataJSX = mockData.mockData
-    .map(mockDatum => {
-      if (mockDatum.type === "mockData") {
-        return (
-          <MockData
-            key={mockDatum.id}
-            mockDatumId={mockDatum.id}
-            dispatchMockData={dispatchMockData}
-            fieldKeys={mockDatum.fieldKeys}
-          />
-        );
-      }
-    })
-    .filter(Boolean);
+  const mockDataJSX = mockData.mockData.map(mockDatum => {
+    return (
+      <MockData
+        key={mockDatum.id}
+        mockDatumId={mockDatum.id}
+        dispatchMockData={dispatchMockData}
+        fieldKeys={mockDatum.fieldKeys}
+      />
+    );
+  });
 
   const statementsJSX = testCase.statements.map(statement => {
     switch (statement.type) {
@@ -78,6 +74,7 @@ const TestCase = () => {
             key={statement.id}
             id={statement.id}
             dispatchTestCase={dispatchTestCase}
+            props={statement.props}
           />
         );
       default:
@@ -85,11 +82,14 @@ const TestCase = () => {
     }
   });
 
-  console.log(statementsJSX);
+  const testStyle = {
+    padding: "5px"
+  }
+
   return (
     <div>
-      <TestMenu />
-      <section>
+      <TestMenu dispatchTestCase={dispatchTestCase} />
+      <section style={testStyle}>
         <label htmlFor="test-statement">test:</label>
         <input
           type="text"
@@ -98,7 +98,7 @@ const TestCase = () => {
           onChange={handleUpdateTestStatement}
         />
       </section>
-      <section>
+      <section style={testStyle}>
         <label htmlFor="mock-data-checkbox">Will you need mock data:</label>
         <input
           type="checkbox"
@@ -108,7 +108,7 @@ const TestCase = () => {
         />
       </section>
       {mockData.mockDataCheckBox && (
-        <section>
+        <section style={testStyle}>
           <label htmlFor="mock-data">Mock data</label>
           <FontAwesomeIcon
             id="mock-data"
