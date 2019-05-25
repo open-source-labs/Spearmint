@@ -16,7 +16,8 @@ const Render = ({ id, dispatchTestCase, props }) => {
     dispatchTestCase(updateRender(id, e.target.value));
   };
 
-  const handleToggleProps = id => {
+  const handleToggleProps = () => {
+    setToggleProps(!toggleProps);
     dispatchTestCase(addRenderProp(id));
   };
 
@@ -58,6 +59,7 @@ const Render = ({ id, dispatchTestCase, props }) => {
           onClick={handleToggleProps}
         />
       </div>
+      {toggleProps && propsJSX}
     </section>
   );
 };

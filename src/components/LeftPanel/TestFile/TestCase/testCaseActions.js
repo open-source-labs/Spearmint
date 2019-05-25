@@ -88,8 +88,9 @@ export const updateRender = (id, componentName) => ({
   componentName
 });
 
-export const addRenderProp = () => ({
-  type: actionTypes.ADD_RENDER_PROP
+export const addRenderProp = id => ({
+  type: actionTypes.ADD_RENDER_PROP,
+  id
 });
 
 export const deleteRenderProp = id => ({

@@ -136,6 +136,7 @@ export const testCaseReducer = (state, action) => {
         }
         return render;
       });
+      console.log(statements);
       return {
         ...state,
         statements
