@@ -1,7 +1,7 @@
 import '../components/NavBar/styles.css'
 import React, { useContext, useState } from 'react';
 import FileDirectory from '../components/NavBar/FileDirectory';
-import { FileTreeContext, LoadedContext } from '../App';
+import { FileTreeContext, LoadedContext, UrlContext } from '../App';
 
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs')
@@ -30,9 +30,14 @@ const imgStyle ={
 
 const ProjectLoader = () => {
 
+  const setUrl = useContext(UrlContext)
   const setLoaded = useContext(LoadedContext)
   const setFileTree = useContext(FileTreeContext);
 
+  const handleChangeUrl = (e) => {
+    setUrl(e.target.value)
+  }
+  
   const handleOpenFolder = () => {
     let directory = dialog.showOpenDialog({
       properties: ['openDirectory'],
@@ -74,6 +79,7 @@ const ProjectLoader = () => {
       </h1>
       </span>
       <h2 style={h2}>A FRESH TAKE ON TESTING </h2>
+      <input type='text' id='url' placeholder="Enter test site's URL..." onChange={handleChangeUrl}></input>
       <button className="openBtn" onClick={handleOpenFolder}>
         Open Folder
       </button>

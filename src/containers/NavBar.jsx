@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import FileDirectory from "../components/NavBar/FileDirectory";
-import { FileTreeContext } from '../App';
+import { FileTreeContext, ToggleContext } from '../App';
 
 const prevIcon = require("../assets/prev_icon.png");
 const exportIcon = require("../assets/export_icon.png");
@@ -11,11 +11,19 @@ const roundPlusIcon = require("../assets/round_plus_icon.png");
 
 const NavBar = (handleShowCode) => {
   const [opened, setOpened] = useState(false);
+  const[toggled, setToggled] = useState(true);
   const fileTree = useContext(FileTreeContext);
+  const setToggleView = useContext(ToggleContext);
   const showCode = handleShowCode;
 
   const explorerOpen = () => {
     setOpened(!opened)
+  }
+
+  const toggleClick = () => {
+    toggled ? setToggleView(true) : setToggleView(false);
+    setToggled(false);
+    if(!toggled) setToggled(true);
   }
 
   const container = {
@@ -91,7 +99,7 @@ const NavBar = (handleShowCode) => {
           <button style={button}>
             <img src={saveIcon} style={icons} alt="save" />
           </button>
-          <button style={button}>
+          <button style={button} onClick={toggleClick}>
             <img src={trashIcon} style={icons} alt="delete" />
           </button>
         </div>
