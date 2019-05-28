@@ -74,7 +74,6 @@ export const testCaseReducer = (state, action) => {
           actionObj.querySelector = action.querySelector;
           actionObj.queryValue = action.queryValue;
         }
-        console.log(actionObj);
         return actionObj;
       });
       return {
@@ -125,7 +124,6 @@ export const testCaseReducer = (state, action) => {
           render.componentName = action.componentName;
         return render;
       });
-      console.log(statements);
       return {
         ...state,
         statements
