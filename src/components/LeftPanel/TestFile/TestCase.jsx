@@ -4,7 +4,8 @@ import MockData from "./TestCase/MockData";
 import Action from "./TestCase/Action";
 import Assertion from "./TestCase/Assertion";
 import Render from "./TestCase/Render";
-import { TestCaseContext, MockDataContext } from "../../../App";
+import { TestCaseContext } from "../../../context/testCaseReducer";
+import { MockDataContext } from "../../../context/mockDataReducer";
 import { updateTestStatement } from "../../../context/testCaseActions";
 import {
   toggleMockData,
