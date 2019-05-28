@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteAssertion, updateAssertion } from "./testCaseActions";
+import { deleteAssertion, updateAssertion } from "../../../../context/testCaseActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Assertion = ({ id, dispatchTestCase }) => {

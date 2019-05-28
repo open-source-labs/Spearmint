@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RenderProp from "./Render/RenderProp";
-import { deleteRender, updateRender, addRenderProp } from "./testCaseActions";
+import { deleteRender, updateRender, addRenderProp } from "../../../../context/testCaseActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Render = ({ id, dispatchTestCase, props }) => {

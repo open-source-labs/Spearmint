@@ -60,21 +60,21 @@ export const testCaseReducer = (state, action) => {
         statements
       };
     case actionTypes.DELETE_ACTION:
-      statements = statements.filter(action => action.id !== action.id);
+      statements = statements.filter(actionObj => actionObj.id !== action.id);
       return {
         ...state,
         statements
       };
     case actionTypes.UPDATE_ACTION:
-      statements = statements.map(action => {
-        if (action.id === action.id) {
-          action.event.type = action.eventType;
-          action.event.value = action.eventValue;
-          action.queryVariant = action.queryVariant;
-          action.querySelector = action.querySelector;
-          action.queryValue = action.queryValue;
+      statements = statements.map(actionObj => {
+        if (actionObj.id === action.id) {
+          actionObj.event.type = action.eventType;
+          actionObj.event.value = action.eventValue;
+          actionObj.queryVariant = action.queryVariant;
+          actionObj.querySelector = action.querySelector;
+          actionObj.queryValue = action.queryValue;
         }
-        return action;
+        return actionObj;
       });
       return {
         ...state,
@@ -124,7 +124,6 @@ export const testCaseReducer = (state, action) => {
           render.componentName = action.componentName;
         return render;
       });
-      console.log(statements);
       return {
         ...state,
         statements
