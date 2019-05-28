@@ -1,4 +1,7 @@
+import { createContext } from 'react';
 import { actionTypes } from "./testCaseActions";
+
+export const TestCaseContext = createContext(null);
 
 export const testCaseState = {
   testStatement: "",

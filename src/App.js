@@ -22,9 +22,6 @@ export const FileTreeContext = createContext(null);
 export const FileCodeContext = createContext(null);
 export const LoadedContext = createContext(null);
 
-export const TestCaseContext = createContext(null);
-export const MockDataContext = createContext(null);
-
 library.add(faPlus, faMinus, faTimes, faQuestionCircle);
 
 const styles = {
