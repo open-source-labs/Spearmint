@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Prop from "./Render/Prop";
+import RenderProp from "./Render/RenderProp";
 import { deleteRender, updateRender, addRenderProp } from "./testCaseActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -16,13 +16,14 @@ const Render = ({ id, dispatchTestCase, props }) => {
     dispatchTestCase(updateRender(id, e.target.value));
   };
 
-  const handleToggleProps = id => {
+  const handleToggleProps = () => {
+    setToggleProps(!toggleProps);
     dispatchTestCase(addRenderProp(id));
   };
 
   const propsJSX = props.map(prop => {
     return (
-      <Prop
+      <RenderProp
         key={id}
         renderId={id}
         propId={prop.id}
@@ -58,6 +59,7 @@ const Render = ({ id, dispatchTestCase, props }) => {
           onClick={handleToggleProps}
         />
       </div>
+      {toggleProps && propsJSX}
     </section>
   );
 };
