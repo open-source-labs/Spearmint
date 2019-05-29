@@ -1,61 +1,122 @@
 import React, { useState } from "react";
-import { deleteAssertion, updateAssertion } from "../../../../context/testCaseActions";
+import { deleteAction, updateAction } from "../../../context/testCaseActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Assertion = ({ id, dispatchTestCase }) => {
+const Action = ({ id, dispatchTestCase }) => {
+  const [eventType, setEventType] = useState("");
+  const [eventValue, setEventValue] = useState("");
   const [queryVariant, setQueryVariant] = useState("");
   const [querySelector, setQuerySelector] = useState("");
-  const [assertionValue, setAssertionValue] = useState("");
-  const [matcher, setMatcher] = useState("");
+  const [queryValue, setQueryValue] = useState("");
 
   const handleClickDelete = e => {
-    dispatchTestCase(deleteAssertion(id));
+    dispatchTestCase(deleteAction(id));
+  };
+
+  const handleChangeEventType = e => {
+    setEventType(e.target.value);
+    dispatchTestCase(
+      updateAction(
+        id,
+        e.target.value,
+        eventValue,
+        queryVariant,
+        querySelector,
+        queryValue
+      )
+    );
+  };
+
+  const handleChangeEventValue = e => {
+    setEventValue(e.target.value);
+    dispatchTestCase(
+      updateAction(
+        id,
+        eventType,
+        e.target.value,
+        queryVariant,
+        querySelector,
+        queryValue
+      )
+    );
   };
 
   const handleChangeQueryVariant = e => {
     setQueryVariant(e.target.value);
     dispatchTestCase(
-      updateAssertion(
+      updateAction(
         id,
+        eventType,
+        eventValue,
         e.target.value,
         querySelector,
-        assertionValue,
-        matcher
+        queryValue
       )
     );
   };
+
   const handleChangeQuerySelector = e => {
     setQuerySelector(e.target.value);
     dispatchTestCase(
-      updateAssertion(id, queryVariant, e.target.value, assertionValue, matcher)
-    );
-  };
-  const handleChangeAssertionValue = e => {
-    setAssertionValue(e.target.value);
-    dispatchTestCase(
-      updateAssertion(id, queryVariant, querySelector, e.target.value, matcher)
-    );
-  };
-  const handleChangeMatcher = e => {
-    setMatcher(e.target.value);
-    dispatchTestCase(
-      updateAssertion(
+      updateAction(
         id,
+        eventType,
+        eventValue,
+        queryVariant,
+        e.target.value,
+        queryValue
+      )
+    );
+  };
+
+  const handleChangeQueryValue = e => {
+    setQueryValue(e.target.value);
+    dispatchTestCase(
+      updateAction(
+        id,
+        eventType,
+        eventValue,
         queryVariant,
         querySelector,
-        assertionValue,
         e.target.value
       )
     );
   };
+
+  const needsEventValue = eventType => {
+    const eventsWithValues = [
+      "keyDown",
+      "keyPress",
+      "keyUp",
+      "change",
+      "input",
+      "invalid",
+      "submit"
+    ];
+    return eventsWithValues.includes(eventType);
+  };
+
   return (
     <div>
-      <h3>Assertion</h3>
+      <h3>Action</h3>
       <FontAwesomeIcon
         id="delete-action"
         icon="times"
         onClick={handleClickDelete}
       />
+      <label htmlFor="event-type">Event Type</label>
+      <input type="text" id="event-type" onChange={handleChangeEventType} />
+      {needsEventValue(eventType) && (
+        <span>
+          <label htmlFor="event-value" />
+          <input
+            type="text"
+            id="event-type"
+            onChange={handleChangeEventValue}
+          />
+        </span>
+      )}
+
       <label htmlFor="queryVariant">Query Selector</label>
       <FontAwesomeIcon className="query" icon="question-circle" />
       <select id="queryVariant" onChange={handleChangeQueryVariant}>
@@ -80,11 +141,10 @@ const Assertion = ({ id, dispatchTestCase }) => {
         <option value="TestId">TestId</option>
         {/* TextMatch Precision & Normalization will be added */}
       </select>
-      <input type="text" onChange={handleChangeAssertionValue} />
-      <p>Matcher</p>
-      <input type="text" onChange={handleChangeMatcher} />
+      <label>Query</label>
+      <input type="text" onChange={handleChangeQueryValue} />
     </div>
   );
 };
 
-export default Assertion;
+export default Action;

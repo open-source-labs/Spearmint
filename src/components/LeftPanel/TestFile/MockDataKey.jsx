@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteMockDataKey, updateMockDataKey } from "../../../../../context/mockDataActions";
+import { deleteMockDataKey, updateMockDataKey } from "../../../context/mockDataActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MockDataKey = ({

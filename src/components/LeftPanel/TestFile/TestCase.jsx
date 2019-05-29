@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import TestMenu from "./TestCase/TestMenu";
-import MockData from "./TestCase/MockData";
-import Action from "./TestCase/Action";
-import Assertion from "./TestCase/Assertion";
-import Render from "./TestCase/Render";
+import TestMenu from "./TestMenu";
+import MockData from "./MockData";
+import Action from "./Action";
+import Assertion from "./Assertion";
+import Render from "./Render";
 import { TestCaseContext } from "../../../context/testCaseReducer";
 import { MockDataContext } from "../../../context/mockDataReducer";
 import { updateTestStatement } from "../../../context/testCaseActions";

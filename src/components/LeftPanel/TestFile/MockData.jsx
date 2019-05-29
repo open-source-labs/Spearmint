@@ -1,10 +1,10 @@
 import React from "react";
-import MockDataFieldKey from "./MockData/MockDataKey";
+import MockDataFieldKey from "./MockDataKey";
 import {
   deleteMockData,
   addMockDataKey,
   updateMockDataName
-} from "../../../../context/mockDataActions";
+} from "../../../context/mockDataActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {

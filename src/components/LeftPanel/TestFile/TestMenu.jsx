@@ -1,5 +1,5 @@
 import React from "react";
-import { addAction, addAssertion, addRender } from "../../../../context/testCaseActions";
+import { addAction, addAssertion, addRender } from "../../../context/testCaseActions";
 
 const TestMenu = ({ dispatchTestCase }) => {
   const handleAddAction = e => {
