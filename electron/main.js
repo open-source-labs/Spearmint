@@ -38,7 +38,6 @@ app.on("activate", () => {
 });
 
 ipcMain.on('openTest' , (event, arg) => {
-
   testView = new BrowserView (
     {
     webPreferences: {
@@ -57,8 +56,5 @@ ipcMain.on('openTest' , (event, arg) => {
     height: 750
   })
 
-
   testView.webContents.loadURL(arg);
-
-
 })
