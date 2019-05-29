@@ -51,17 +51,20 @@ const ProjectLoader = () => {
   //reads contents within the selected directory and checks if it is a file/folder
   const generateFileTreeObject = (directoryPath) => {
     let fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
-      const file = {
-        filePath: `${directoryPath}/${fileName}`,
-        fileName,
-        files: [],
-      }
-      //generateFileTreeObj will be recursively called if it is a folder
-      const fileData = electronFs.statSync(file.filePath);
-      if (fileData.isDirectory()) {
-        file.files = generateFileTreeObject(file.filePath)
-      }
-      return file;
+        const file = {
+          filePath: `${directoryPath}/${fileName}`,
+          fileName,
+          files: [],
+        }
+        //generateFileTreeObj will be recursively called if it is a folder
+        const fileData = electronFs.statSync(file.filePath);
+        if (file.fileName !== '.git' && file.fileName !== 'node_modules') {
+            if (fileData.isDirectory()) {
+              file.toggle = true;
+              file.files = generateFileTreeObject(file.filePath)
+            }
+          }
+        return file;
     })
     return fileArray;
   }

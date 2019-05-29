@@ -9,10 +9,9 @@ const saveIcon = require("../assets/save_icon.png");
 const trashIcon = require("../assets/trash_icon.png");
 const roundPlusIcon = require("../assets/round_plus_icon.png");
 
-const NavBar = (handleShowCode) => {
+const NavBar = () => {
   const [opened, setOpened] = useState(false);
   const fileTree = useContext(FileTreeContext);
-  const showCode = handleShowCode;
 
   const explorerOpen = () => {
     setOpened(!opened)
@@ -101,7 +100,7 @@ const NavBar = (handleShowCode) => {
           </button>
         </div>
       </div>
-      {!opened && <FileDirectory fileTree={fileTree} showCode={showCode} />}
+      {!opened && <FileDirectory fileTree={fileTree} />}
     </div>
   );
   
