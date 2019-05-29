@@ -1,5 +1,5 @@
 import '../components/NavBar/styles.css'
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { FileTreeContext, LoadedContext } from '../App';
 
 let remote = window.require('electron').remote;
@@ -77,7 +77,6 @@ const ProjectLoader = () => {
       <button className="openBtn" onClick={handleOpenFolder}>
         Open Folder
       </button>
-      <Treebeard data={data} onToggle={onToggle}/>
       <div id="filetree">
       </div>
     </div>
