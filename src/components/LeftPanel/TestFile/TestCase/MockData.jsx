@@ -4,7 +4,7 @@ import {
   deleteMockData,
   addMockDataKey,
   updateMockDataName
-} from "./MockData/mockDataActions";
+} from "../../../../context/mockDataActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {

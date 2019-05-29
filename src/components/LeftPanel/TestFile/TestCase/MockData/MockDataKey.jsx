@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteMockDataKey, updateMockDataKey } from "./mockDataActions";
+import { deleteMockDataKey, updateMockDataKey } from "../../../../../context/mockDataActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MockDataKey = ({
@@ -52,6 +52,7 @@ const MockDataKey = ({
           form="mock-data-form"
           onChange={handleChangeUpdateFieldType}
         >
+          <option value="" />
           <option value="number">Number</option>
           <option value="string">String</option>
           <option value="boolean">Boolean</option>

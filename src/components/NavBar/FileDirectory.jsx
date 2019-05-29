@@ -13,85 +13,37 @@ const FileDirectory = ({ fileTree }) => {
     setFileCode(content);
   }
 
-  const folderToggle = (file) => {
-    file.toggle = !file.toggle;
-  }
-
   const convertToHTML = (filetree) => {
     let folderImg = "https://img.icons8.com/ios/20/000000/opened-folder.png";
     let fileImg = "https://img.icons8.com/metro/20/000000/document.png";
-  
+
     return filetree.map((file) => {
-        if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
-          if (file.files.length > 0) {
-            return (
-              <ul key={file.fileName} style={ul}>
-                <span>
-                  <img src={folderImg}></img>
-                  <button style={fileBtn} className="fileBtn" onClick={() => folderToggle(file)}>
-                    {file.fileName}
-                  </button>
-                </span>
-                {file.files.length > 0 && convertToHTML(file.files, fileImg)}
-              </ul>
-            )
-          } 
-          if (file.files.length == 0) {
-            return (
-              <ul key={file.filePath} style={ul}>
-                <span>
-                  <img src={fileImg}></img>
-                  <button style ={fileBtn} className ="fileBtn" onClick={() => handleShowCode(file.filePath)}>  
-                    {file.fileName}
-                  </button>
-                </span>
-              </ul>
-            )
-        }
-        }
+      if (file.files.length) {
+        return (
+          <ul key={file.fileName} style={ul}>
+            <span>
+              <img src={folderImg} alt=""/>
+              <button style={fileBtn} className="fileBtn">
+                {file.fileName}
+              </button>
+            </span>
+            {file.files.length && convertToHTML(file.files, fileImg)}
+          </ul>
+        )
+      } else {
+        return (
+          <ul key={file.filePath} style={ul}>
+            <span>
+              <img src={fileImg} alt=""/>
+              <button style ={fileBtn} className ="fileBtn" onClick={() => handleShowCode(file.filePath)}>  
+                {file.fileName}
+              </button>
+            </span>
+          </ul>
+        )
+      }
     })
   }
-
-  // const showFiles = (filetree) => {
-
-  //   let folderImg = "https://img.icons8.com/ios/20/000000/opened-folder.png";
-  //   let fileImg = "https://img.icons8.com/metro/20/000000/document.png";
-  //   // console.log('filetree in showfiles', filetree)
-
-  //     return filetree.map((file) => {
-  //       // console.log('file in showfiles loop', file)
-  //       if (file.toggle == true) {          
-  //         if (file.files.length > 0) {
-  //           // console.log('INSIDE > 0 CONDITIONAL', file)
-  //           // console.log('INSIDE > 0 CONDITIONAL', file.files[0].files, 'at index 0')
-  //           return (
-  //             <ul key={file.fileName} style={ul}>
-  //               <span>
-  //                 <img src={folderImg}></img>
-  //                 <button style={fileBtn} className="fileBtn" onClick={() => {folderToggle(file)}}>
-  //                   {file.fileName}
-  //                 </button>
-  //               </span>
-  //               {file.files.length > 0 && showFiles(file.files[0][file.files], fileImg)}
-  //             </ul>
-  //           )
-  //         } 
-  //         if (file.files.length == 0) {
-  //           // console.log('INSIDE == 0 CONDITIONAL')
-  //           return (
-  //             <ul key={file.filePath} style={ul}>
-  //               <span>
-  //                 <img src={fileImg}></img>
-  //                 <button style ={fileBtn} className ="fileBtn" onClick={() => handleShowCode(file.filePath)}>  
-  //                   {file.fileName}
-  //                 </button>
-  //               </span>
-  //             </ul>
-  //           )
-  //         }
-  //       }
-  //     })
-  // }
 
   const fileDir = {
     padding: ".625rem",
