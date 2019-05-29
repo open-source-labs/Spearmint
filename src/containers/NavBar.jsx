@@ -4,12 +4,12 @@ import { FileTreeContext, ToggleContext } from '../App';
 import ReactModal from "react-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const prevIcon = require("../assets/prev_icon.png");
-const exportIcon = require("../assets/export_icon.png");
-const folderOpenIcon = require("../assets/folder_open_icon.png");
-const saveIcon = require("../assets/save_icon.png");
-const trashIcon = require("../assets/trash_icon.png");
-const roundPlusIcon = require("../assets/round_plus_icon.png");
+const prevIcon = require("../assets/images/prev_icon.png");
+const exportIcon = require("../assets/images/export_icon.png");
+const folderOpenIcon = require("../assets/images/folder_open_icon.png");
+const saveIcon = require("../assets/images/save_icon.png");
+const trashIcon = require("../assets/images/trash_icon.png");
+const roundPlusIcon = require("../assets/images/round_plus_icon.png");
 
 const NavBar = () => {
   const [opened, setOpened] = useState(false);
