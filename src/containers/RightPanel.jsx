@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import EditorView from '../components/RightPanel/EditorView';
 import BrowserView from '../components/RightPanel/BrowserView';
 
 const RightPanel = () => {
-  const [newFileName, setNewFileName] = useState('untitled.test.js');
-
   const rightPanel ={
     display: "flex",
     justifyContent: "flex-end",
@@ -14,10 +12,10 @@ const RightPanel = () => {
 
   return (
     <> 
-    <div style={rightPanel}>
-      <BrowserView/>
-      <EditorView/>
-    </div>
+      <div style={rightPanel}>
+        <BrowserView/>
+        <EditorView/>
+      </div>
     </>
   )
 }

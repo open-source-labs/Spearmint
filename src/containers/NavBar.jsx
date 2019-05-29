@@ -100,7 +100,7 @@ const NavBar = () => {
           <button style={button} onClick={explorerOpen}>
             <img src={prevIcon} style={icons} alt="fileExplorer" />{" "}
           </button>
-          <button style={button}>
+          <button style={button} onClick={openModal}>
             <img src={exportIcon} style={icons} alt="export" />
           </button>
           
@@ -111,7 +111,6 @@ const NavBar = () => {
             contentLabel="Save testing file"
             shouldCloseOnOverlayClick={true}
             shouldCloseOnEsc={true}
-            style={modal}
           >
             <h3>Convert to Javascript Code</h3>
             <FontAwesomeIcon
@@ -137,6 +136,7 @@ const NavBar = () => {
             <img src={trashIcon} style={icons} alt="delete" />
           </button>
         </div>
+
         <div id="bottomNav" style={bottomNav}>
           <button style={plusBtn}>
             <img src={roundPlusIcon} style={icons} alt="newTest" />

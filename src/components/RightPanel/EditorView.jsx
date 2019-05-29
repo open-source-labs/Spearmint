@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { FileCodeContext, ToggleContext } from '../../App';
 

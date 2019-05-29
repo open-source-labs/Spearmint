@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const LeftTabs = () => {
-  const [currentTab, setCurrentTab] = useState('');
-  
   return (
     <> 
     </>

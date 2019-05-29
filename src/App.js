@@ -3,11 +3,9 @@ import NavBar from './containers/NavBar';
 import LeftPanel from './containers/LeftPanel';
 import ProjectLoader from './containers/ProjectLoader';
 import RightPanel from './containers/RightPanel';
-import FileTree from './FileTree';
 import { TestCaseContext, testCaseState, testCaseReducer } from "./context/testCaseReducer";
 import { MockDataContext, mockDataState, mockDataReducer } from "./context/mockDataReducer";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
   faMinus,
