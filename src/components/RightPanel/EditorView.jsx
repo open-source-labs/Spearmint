@@ -16,7 +16,7 @@ const Editor = () => {
     wordWrap: 'on',
     autoIndent: true,
     colorDecorators: true,
-    theme:"hc-black"
+    theme:"vs-dark"
   };
   const editor = {
     padding: ".625rem",
