@@ -1,11 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { FileCodeContext } from '../../App';
-// import { monaco } from 'react-monaco-editor'
+import { FileCodeContext, ToggleContext } from '../../App';
 
 const Editor = () => {
   const fileCode = useContext(FileCodeContext);
-
+  const toggleView = useContext(ToggleContext);
+  const requireConfig = ({
+    url: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/',
+    paths: {
+      'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/vs'
+    }
+  })
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'on',
@@ -13,35 +18,16 @@ const Editor = () => {
     colorDecorators: true,
     theme:"vs-dark"
   };
-
-  const styleEditor = {
+  const editor = {
     padding: ".625rem",
     height: "auto",
     width: "2rem",
     border: "grey",
   }
 
-  const requireconfig = ({
-    url: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/',
-    paths: {
-      'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/vs'
-    }
-  })
-
-  // monaco.editor.defineTheme('customTheme', {
-  //   base: 'vs',
-  //   inherit: false,
-  //   rules: [
-  //     {token: 'comment', foreground: 'ffa500', fontStyle: 'italic underline' },
-  //   ]
-  // })
-
-  // monaco.editor.setTheme('customTheme')
-
-
-
   return (
-    <div style={styleEditor}>
+    <div style={editor}>
+      {toggleView ? null :
       <MonacoEditor
         width="500"
         height="100%"
@@ -49,8 +35,8 @@ const Editor = () => {
         // theme="vs-dark"
         value={fileCode}
         options={options}
-        requireConfig={requireconfig}
-      />
+        requireConfig={requireConfig}
+      /> }
     </div>
   );
 }

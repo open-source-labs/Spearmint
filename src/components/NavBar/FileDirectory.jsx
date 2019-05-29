@@ -8,30 +8,15 @@ let fs = remote.require('fs')
 const FileDirectory = ({ fileTree }) => {
   const setFileCode = useContext(FileCodeContext);
   const [toggled, setToggled] = useState(false);
-
   const handleShowCode = (fileTree) => {
     const content = fs.readFileSync(fileTree, "utf8");
     setFileCode(content);
   }
-
   const folderToggle = (file) => {
     file.toggle = !file.toggle;
   }
 
-  // const folderToggle = (file, toggle) => {
-  //   if(toggled) {
-  //     toggled.active = false;
-  //   }
-  //   file.toggle = true;
-  //   if(file.files.length) {
-  //     file.toggle = toggle
-  //   }
-  //   setToggled(file);
-  //   setData(Object.assign({}, file))
-  // }
-
   const convertToHTML = (filetree) => {
-
     let folderImg = "https://img.icons8.com/ios/20/000000/opened-folder.png";
     let fileImg = "https://img.icons8.com/metro/20/000000/document.png";
 
@@ -65,7 +50,6 @@ const FileDirectory = ({ fileTree }) => {
     })
   }
 
-
   const fileDir = {
     padding: ".625rem",
     height: "auto",
@@ -74,21 +58,15 @@ const FileDirectory = ({ fileTree }) => {
     backgroundColor: "white",
     overflow: "scroll"
   };
-
   const ul = {
     marginLeft: "10px", 
     listStyleType: "none",
     fontSize: "12px",
   }
-
-
-
   const fileBtn = {
     hover: "lightgrey",
     border: "none"
   }
-
-  
 
   return (
     <>

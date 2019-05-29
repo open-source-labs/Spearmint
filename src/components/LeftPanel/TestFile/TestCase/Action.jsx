@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteAction, updateAction } from "./testCaseActions";
+import { deleteAction, updateAction } from "../../../../context/testCaseActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Action = ({ id, dispatchTestCase }) => {
