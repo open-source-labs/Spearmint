@@ -1,17 +1,17 @@
-const electron = require("electron");
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow, BrowserView, ipcMain } = require('electron')
 const path = require("path");
 const isDev = require("electron-is-dev");
 
 let mainWindow;
+let testView;
 
 function createWindow() {
   mainWindow = new BrowserWindow({ 
     width: 1300, 
     height: 750,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      webviewTag: true,
     }
   });
 
@@ -36,3 +36,29 @@ app.on("activate", () => {
     createWindow();
   }
 });
+
+ipcMain.on('openTest' , (event, arg) => {
+
+  testView = new BrowserView (
+    {
+    webPreferences: {
+      nodeIntegration: true,
+      webviewTag: true,
+    }
+  }
+  );
+
+  mainWindow.addBrowserView(testView)
+
+  testView.setBounds({ 
+    x: 750, 
+    y: 0, 
+    width: 750,
+    height: 750
+  })
+
+
+  testView.webContents.loadURL(arg);
+
+
+})
