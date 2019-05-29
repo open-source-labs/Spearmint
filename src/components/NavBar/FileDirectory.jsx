@@ -1,19 +1,34 @@
 import './styles.css'
-import React from 'react'
-import { useContext} from 'react'
+import React, { useState } from 'react'
+import { useContext, setData } from 'react'
 import { FileCodeContext } from '../../App';
 let remote = window.require('electron').remote;
-let electronFs = remote.require('fs')
+let fs = remote.require('fs')
 
 const FileDirectory = ({ fileTree }) => {
   const setFileCode = useContext(FileCodeContext);
+  const [toggled, setToggled] = useState(false);
 
   const handleShowCode = (fileTree) => {
-    const content = electronFs.readFileSync(fileTree, "utf8");
+    const content = fs.readFileSync(fileTree, "utf8");
     setFileCode(content);
   }
 
+  const folderToggle = (file) => {
+    file.toggle = !file.toggle;
+  }
 
+  // const folderToggle = (file, toggle) => {
+  //   if(toggled) {
+  //     toggled.active = false;
+  //   }
+  //   file.toggle = true;
+  //   if(file.files.length) {
+  //     file.toggle = toggle
+  //   }
+  //   setToggled(file);
+  //   setData(Object.assign({}, file))
+  // }
 
   const convertToHTML = (filetree) => {
 
@@ -21,20 +36,20 @@ const FileDirectory = ({ fileTree }) => {
     let fileImg = "https://img.icons8.com/metro/20/000000/document.png";
 
     return filetree.map((file) => {
-      if (file.files.length > 0) {
+      if(file.fileName !== 'node_modules' && file.fileName !== '.git') {
+      if (file.files.length) {
         return (
           <ul key={file.fileName} style={ul}>
             <span>
               <img src={folderImg}></img>
-              <button style={fileBtn} className="fileBtn">
+              <button style={fileBtn} className="fileBtn" onClick={() => folderToggle(file)}>
                 {file.fileName}
               </button>
             </span>
-            {file.files.length > 0 && convertToHTML(file.files, fileImg)}
+            {file.files.length && convertToHTML(file.files, fileImg)}
           </ul>
         )
-      } 
-      if (file.files.length == 0) {
+      } else {
         return (
           <ul key={file.filePath} style={ul}>
             <span>
@@ -46,6 +61,7 @@ const FileDirectory = ({ fileTree }) => {
           </ul>
         )
       }
+    }
     })
   }
 

@@ -2,6 +2,9 @@ import React, { useState, useContext } from "react";
 import FileDirectory from "../components/NavBar/FileDirectory";
 import { FileTreeContext } from '../App';
 
+//filetreebeard
+import TreeBeard from 'react-treebeard'
+
 const prevIcon = require("../assets/prev_icon.png");
 const exportIcon = require("../assets/export_icon.png");
 const folderOpenIcon = require("../assets/folder_open_icon.png");
@@ -102,6 +105,7 @@ const NavBar = (handleShowCode) => {
         </div>
       </div>
       {!opened && <FileDirectory fileTree={fileTree} showCode={showCode} />}
+      {/* {!opened && <TreeBeard fileTree={fileTree}/>} */}
     </div>
   );
   

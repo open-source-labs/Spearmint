@@ -32,11 +32,13 @@ const FileTree = ({ fileTree, handleShowCode }) => {
     })
   }
 
-  return (
-    <>
-      {fileTree && convertToHTML(fileTree)}
-    </>
-  )
-}
+
+
+    return (
+      <>
+        {fileTree && convertToHTML(fileTree)}
+      </>
+    )
+  }
 
 export default FileTree;
