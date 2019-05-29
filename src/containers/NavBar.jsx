@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
+import FileDirectory from "../components/NavBar/FileDirectory";
+import { FileTreeContext, ToggleContext } from '../App';
 import ReactModal from "react-modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FileDirectory from "../components/NavBar/FileDirectory";
-import { FileTreeContext } from "../App";
 
 const prevIcon = require("../assets/prev_icon.png");
 const exportIcon = require("../assets/export_icon.png");
@@ -11,28 +11,36 @@ const saveIcon = require("../assets/save_icon.png");
 const trashIcon = require("../assets/trash_icon.png");
 const roundPlusIcon = require("../assets/round_plus_icon.png");
 
-const NavBar = handleShowCode => {
+const NavBar = () => {
   const [opened, setOpened] = useState(false);
+  const [toggled, setToggled] = useState(true);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const fileTree = useContext(FileTreeContext);
-  const showCode = handleShowCode;
+  const setToggleView = useContext(ToggleContext);
 
   const explorerOpen = () => {
-    setOpened(!opened);
-  };
+    setOpened(!opened)
+  }
+
+  const toggleClick = () => {
+    toggled ? setToggleView(true) : setToggleView(false);
+    setToggled(false);
+    if(!toggled) setToggled(true);
+  }
 
   const openModal = () => {
     setModalIsOpen(!false);
   };
+  
   const closeModal = () => {
     setModalIsOpen(false);
   };
-
+  
   const container = {
     display: "flex",
     justifyContent: "flex-start",
     height: "100vh",
-    width: "320px"
+    width: "320px",
   };
 
   const navBar = {
@@ -85,15 +93,6 @@ const NavBar = handleShowCode => {
     outline: "none"
   };
 
-  const modal = {
-    position: "absolute",
-    top: "10rem",
-    left: "10rem",
-    right: "10rem",
-    bottom: "10rem",
-    backgroundColor: "papayawhip"
-  };
-
   return (
     <div id="container" style={container}>
       <div id="navBar" style={navBar}>
@@ -104,6 +103,7 @@ const NavBar = handleShowCode => {
           <button style={button} onClick={openModal}>
             <img src={exportIcon} style={icons} alt="export" />
           </button>
+          
           <ReactModal
             className="Modal"
             isOpen={modalIsOpen}
@@ -111,7 +111,6 @@ const NavBar = handleShowCode => {
             contentLabel="Save testing file"
             shouldCloseOnOverlayClick={true}
             shouldCloseOnEsc={true}
-            style={modal}
           >
             <h3>Convert to Javascript Code</h3>
             <FontAwesomeIcon
@@ -126,26 +125,28 @@ const NavBar = handleShowCode => {
               <button>Save</button>
             </div>
           </ReactModal>
-
+          
           <button style={button}>
             <img src={folderOpenIcon} style={icons} alt="folderOpen" />
           </button>
           <button style={button}>
             <img src={saveIcon} style={icons} alt="save" />
           </button>
-          <button style={button}>
+          <button style={button} onClick={toggleClick}>
             <img src={trashIcon} style={icons} alt="delete" />
           </button>
         </div>
+
         <div id="bottomNav" style={bottomNav}>
           <button style={plusBtn}>
             <img src={roundPlusIcon} style={icons} alt="newTest" />
           </button>
         </div>
       </div>
-      {!opened && <FileDirectory fileTree={fileTree} showCode={showCode} />}
+      {!opened && <FileDirectory fileTree={fileTree} />}
     </div>
   );
-};
+  
+}
 
 export default NavBar;

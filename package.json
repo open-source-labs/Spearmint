@@ -18,6 +18,7 @@
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2",
     "electron-is-dev": "^1.1.0",
+    "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

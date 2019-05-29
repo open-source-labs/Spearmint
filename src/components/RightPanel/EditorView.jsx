@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { FileCodeContext } from '../../App';
+import { FileCodeContext, ToggleContext } from '../../App';
 
 const Editor = () => {
   const fileCode = useContext(FileCodeContext);
+  const toggleView = useContext(ToggleContext);
 
   const options = {
     selectOnLineNumbers: true,
@@ -21,6 +22,7 @@ const Editor = () => {
   }
   return (
     <div style={editor}>
+      {toggleView ? null :
       <MonacoEditor
         width="500"
         height="100%"
@@ -28,7 +30,7 @@ const Editor = () => {
         // theme="vs-dark"
         value={fileCode}
         options={options}
-      />
+      /> }
     </div>
   );
 }

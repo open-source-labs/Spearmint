@@ -68,7 +68,7 @@ const TestCase = () => {
           />
         );
       default:
-        return;
+        return <></>;
     }
   });
 
