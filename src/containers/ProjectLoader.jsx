@@ -1,6 +1,5 @@
 import '../components/NavBar/styles.css'
-import React, { useContext, useState } from 'react';
-import FileDirectory from '../components/NavBar/FileDirectory';
+import React, { useContext } from 'react';
 import { FileTreeContext, LoadedContext, UrlContext } from '../App';
 
 let remote = window.require('electron').remote;
@@ -29,7 +28,6 @@ const imgStyle ={
 }
 
 const ProjectLoader = () => {
-
   const setUrl = useContext(UrlContext)
   const setLoaded = useContext(LoadedContext)
   const setFileTree = useContext(FileTreeContext);
@@ -75,7 +73,7 @@ const ProjectLoader = () => {
     <div>
       <span>
       <h1 style={h1}>spearmint
-        <img style={imgStyle} src="https://img.icons8.com/ios/40/000000/natural-food.png"></img>
+        <img style={imgStyle} src="https://img.icons8.com/ios/40/000000/natural-food.png" alt=""></img>
       </h1>
       </span>
       <h2 style={h2}>A FRESH TAKE ON TESTING </h2>

@@ -138,7 +138,6 @@ export const testCaseReducer = (state, action) => {
         }
         return render;
       });
-      console.log(statements);
       return {
         ...state,
         statements
@@ -147,8 +146,8 @@ export const testCaseReducer = (state, action) => {
       statements = statements.map(render => {
         if (render.id === action.renderId) {
           render = render.props.filter(render => render.id !== action.propId);
-          return render;
         }
+        return render;
       });
       return {
         ...state,

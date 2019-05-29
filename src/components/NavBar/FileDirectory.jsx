@@ -13,32 +13,28 @@ const FileDirectory = ({ fileTree }) => {
     setFileCode(content);
   }
 
-
-
   const convertToHTML = (filetree) => {
-
     let folderImg = "https://img.icons8.com/ios/20/000000/opened-folder.png";
     let fileImg = "https://img.icons8.com/metro/20/000000/document.png";
 
     return filetree.map((file) => {
-      if (file.files.length > 0) {
+      if (file.files.length) {
         return (
           <ul key={file.fileName} style={ul}>
             <span>
-              <img src={folderImg}></img>
+              <img src={folderImg} alt=""/>
               <button style={fileBtn} className="fileBtn">
                 {file.fileName}
               </button>
             </span>
-            {file.files.length > 0 && convertToHTML(file.files, fileImg)}
+            {file.files.length && convertToHTML(file.files, fileImg)}
           </ul>
         )
-      } 
-      if (file.files.length === 0) {
+      } else {
         return (
           <ul key={file.filePath} style={ul}>
             <span>
-              <img src={fileImg}></img>
+              <img src={fileImg} alt=""/>
               <button style ={fileBtn} className ="fileBtn" onClick={() => handleShowCode(file.filePath)}>  
                 {file.fileName}
               </button>

@@ -1,5 +1,4 @@
-import React, { useReducer } from "react";
-import { testCaseReducer, testCaseState } from "../../../../context/testCaseReducer";
+import React from "react";
 import { addAction, addAssertion, addRender } from "../../../../context/testCaseActions";
 
 const TestMenu = ({ dispatchTestCase }) => {
