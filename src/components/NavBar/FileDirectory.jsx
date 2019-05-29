@@ -34,7 +34,7 @@ const FileDirectory = ({ fileTree }) => {
           </ul>
         )
       } 
-      if (file.files.length == 0) {
+      if (file.files.length === 0) {
         return (
           <ul key={file.filePath} style={ul}>
             <span>
@@ -48,7 +48,6 @@ const FileDirectory = ({ fileTree }) => {
       }
     })
   }
-
 
   const fileDir = {
     padding: ".625rem",
@@ -65,14 +64,10 @@ const FileDirectory = ({ fileTree }) => {
     fontSize: "12px",
   }
 
-
-
   const fileBtn = {
     hover: "lightgrey",
     border: "none"
   }
-
-  
 
   return (
     <>

@@ -3,7 +3,6 @@ import { actionTypes } from "./mockDataActions";
 
 export const MockDataContext = createContext(null);
 
-
 export const mockDataState = {
   mockData: [],
   mockDataCheckBox: false
