@@ -29,10 +29,11 @@
   <div id="root"></div>
 </body>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/vs/loader.js"></script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/vs/loader.js"></script>
 <script>
   //importing the loader from the Monaco project directly from CDNJS
-    //configuring require to point the vs-paths to the CDN
+  //configuring require to point the vs-paths to the CDN
   require.config({
     paths: {
       'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/vs'
@@ -44,7 +45,7 @@
       return '/monaco-editor-worker-loader-proxy.js';
     }
   };
-  require(["vs/editor/editor.main"], function () {})
+  require(["vs/editor/editor.main"], () => { })
 </script>
 
 </html>

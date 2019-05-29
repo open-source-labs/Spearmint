@@ -1,9 +1,11 @@
-import React, { useState, createContext } from 'react';
+import React, { useState, useReducer, createContext } from 'react';
 import NavBar from './containers/NavBar';
 import LeftPanel from './containers/LeftPanel';
 import ProjectLoader from './containers/ProjectLoader';
 import RightPanel from './containers/RightPanel';
 import FileTree from './FileTree';
+import { TestCaseContext, testCaseState, testCaseReducer } from "./context/testCaseReducer";
+import { MockDataContext, mockDataState, mockDataReducer } from "./context/mockDataReducer";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,12 +34,21 @@ const loaderDiv = {
 }
 
 const App = () => {
-  const [url, setUrl] = useState('');
-  const [fileCode, setFileCode] = useState('');
+  
   const [fileTree, setFileTree] = useState(null);
+  const [fileCode, setFileCode] = useState('');
+  const [url, setUrl] = useState('');
   const [loaded, setLoaded] = useState(false);
   const [toggleView, setToggleView] = useState(false);
   
+  const [testCase, dispatchTestCase] = useReducer(
+    testCaseReducer,
+    testCaseState
+  );
+  const [mockData, dispatchMockData] = useReducer(
+    mockDataReducer,
+    mockDataState
+  );
 
     if(!loaded) {
       return (
@@ -57,11 +68,21 @@ const App = () => {
           <FileCodeContext.Provider value={setFileCode}>
             <FileTreeContext.Provider value={fileTree}>
               <ToggleContext.Provider value={setToggleView}>
+                <TestCaseContext.Provider value={testCase}>
+                  <MockDataContext.Provider value={mockData}>
                 <NavBar />
+                  </MockDataContext.Provider>
+                </TestCaseContext.Provider>
               </ToggleContext.Provider>
             </FileTreeContext.Provider>
           </FileCodeContext.Provider>
-          <LeftPanel />
+        
+          <TestCaseContext.Provider value={[testCase, dispatchTestCase]}>
+            <MockDataContext.Provider value={[mockData, dispatchMockData]}>
+              <LeftPanel />   
+            </MockDataContext.Provider>
+          </TestCaseContext.Provider>
+        
           <FileCodeContext.Provider value={fileCode}>
             <UrlContext.Provider value={url}>
               <ToggleContext.Provider value={toggleView}>
@@ -69,7 +90,7 @@ const App = () => {
               </ToggleContext.Provider>
             </UrlContext.Provider>
           </FileCodeContext.Provider>
-        </div>
+       </div>
     )
   }
 }

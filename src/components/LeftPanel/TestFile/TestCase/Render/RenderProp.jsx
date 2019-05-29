@@ -3,7 +3,7 @@ import {
   addRenderProp,
   deleteRenderProp,
   updateRenderProp
-} from "../testCaseActions";
+} from "../../../../../context/testCaseActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const RenderProp = ({ dispatchTestCase, renderId, propId, propKey, propValue }) => {

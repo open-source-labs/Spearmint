@@ -1,31 +1,21 @@
-import React, { useReducer } from "react";
+import React, { useContext } from "react";
 import TestMenu from "./TestCase/TestMenu";
 import MockData from "./TestCase/MockData";
 import Action from "./TestCase/Action";
 import Assertion from "./TestCase/Assertion";
 import Render from "./TestCase/Render";
-import { testCaseState, testCaseReducer } from "./TestCase/testCaseReducer";
-import { updateTestStatement } from "./TestCase/testCaseActions";
-import {
-  mockDataState,
-  mockDataReducer
-} from "./TestCase/MockData/mockDataReducer";
+import { TestCaseContext } from "../../../context/testCaseReducer";
+import { MockDataContext } from "../../../context/mockDataReducer";
+import { updateTestStatement } from "../../../context/testCaseActions";
 import {
   toggleMockData,
   addMockData
-} from "./TestCase/MockData/mockDataActions";
+} from "../../../context/mockDataActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TestCase = () => {
-  const [testCase, dispatchTestCase] = useReducer(
-    testCaseReducer,
-    testCaseState
-  );
-
-  const [mockData, dispatchMockData] = useReducer(
-    mockDataReducer,
-    mockDataState
-  );
+  const [testCase, dispatchTestCase] = useContext(TestCaseContext);
+  const [mockData, dispatchMockData] = useContext(MockDataContext);
 
   const handleUpdateTestStatement = e => {
     dispatchTestCase(updateTestStatement(e.target.value));
