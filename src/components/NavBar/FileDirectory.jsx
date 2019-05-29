@@ -1,16 +1,19 @@
 import './styles.css'
-import React from 'react'
-import { useContext} from 'react'
+import React, { useState } from 'react'
+import { useContext, setData } from 'react'
 import { FileCodeContext } from '../../App';
 let remote = window.require('electron').remote;
-let electronFs = remote.require('fs')
+let fs = remote.require('fs')
 
 const FileDirectory = ({ fileTree }) => {
   const setFileCode = useContext(FileCodeContext);
-
+  const [toggled, setToggled] = useState(false);
   const handleShowCode = (fileTree) => {
-    const content = electronFs.readFileSync(fileTree, "utf8");
+    const content = fs.readFileSync(fileTree, "utf8");
     setFileCode(content);
+  }
+  const folderToggle = (file) => {
+    file.toggle = !file.toggle;
   }
 
   const convertToHTML = (filetree) => {
@@ -18,12 +21,13 @@ const FileDirectory = ({ fileTree }) => {
     let fileImg = "https://img.icons8.com/metro/20/000000/document.png";
 
     return filetree.map((file) => {
+      if(file.fileName !== 'node_modules' && file.fileName !== '.git') {
       if (file.files.length) {
         return (
           <ul key={file.fileName} style={ul}>
             <span>
-              <img src={folderImg} alt=""/>
-              <button style={fileBtn} className="fileBtn">
+              <img src={folderImg}></img>
+              <button style={fileBtn} className="fileBtn" onClick={() => folderToggle(file)}>
                 {file.fileName}
               </button>
             </span>
@@ -34,7 +38,7 @@ const FileDirectory = ({ fileTree }) => {
         return (
           <ul key={file.filePath} style={ul}>
             <span>
-              <img src={fileImg} alt=""/>
+              <img src={fileImg}></img>
               <button style ={fileBtn} className ="fileBtn" onClick={() => handleShowCode(file.filePath)}>  
                 {file.fileName}
               </button>
@@ -42,6 +46,7 @@ const FileDirectory = ({ fileTree }) => {
           </ul>
         )
       }
+    }
     })
   }
 
@@ -53,13 +58,11 @@ const FileDirectory = ({ fileTree }) => {
     backgroundColor: "white",
     overflow: "scroll"
   };
-
   const ul = {
     marginLeft: "10px", 
     listStyleType: "none",
     fontSize: "12px",
   }
-
   const fileBtn = {
     hover: "lightgrey",
     border: "none"

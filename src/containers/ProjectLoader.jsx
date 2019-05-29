@@ -1,6 +1,6 @@
 import '../components/NavBar/styles.css'
-import React, { useContext } from 'react';
-import { FileTreeContext, LoadedContext, UrlContext } from '../App';
+import React, { useContext, useState } from 'react';
+import { FileTreeContext, LoadedContext } from '../App';
 
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs')
@@ -28,14 +28,8 @@ const imgStyle ={
 }
 
 const ProjectLoader = () => {
-  const setUrl = useContext(UrlContext)
   const setLoaded = useContext(LoadedContext)
   const setFileTree = useContext(FileTreeContext);
-
-  const handleChangeUrl = (e) => {
-    setUrl(e.target.value)
-  }
-  
   const handleOpenFolder = () => {
     let directory = dialog.showOpenDialog({
       properties: ['openDirectory'],
@@ -46,41 +40,44 @@ const ProjectLoader = () => {
       ]
     });
     if (directory && directory[0]){
-      setLoaded(!false)
+      setLoaded(true)
       setFileTree(generateFileTreeObject(directory[0]));
     }
   }
 
   //reads contents within the selected directory and checks if it is a file/folder
   const generateFileTreeObject = (directoryPath) => {
-    let fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
-      const file = {
-        filePath: `${directoryPath}/${fileName}`,
-        fileName,
-        files: [],
-      }
-      //generateFileTreeObj will be recursively called if it is a folder
-      const fileData = electronFs.statSync(file.filePath);
-      if (fileData.isDirectory()) {
-        file.files = generateFileTreeObject(file.filePath)
-      }
-      return file;
-    })
-    return fileArray;
+      let fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
+        const file = {
+          filePath: `${directoryPath}/${fileName}`,
+          fileName,
+          files: [],
+        }
+        //generateFileTreeObj will be recursively called if it is a folder
+        const fileData = electronFs.statSync(file.filePath);
+        if (file.fileName !== '.git' && file.fileName !== 'node_modules') {
+          if (fileData.isDirectory()) {
+              file.toggle = false;
+              file.files = generateFileTreeObject(file.filePath)
+          }
+        }
+        return file;
+      })
+      return fileArray;
   }
 
   return (
     <div>
       <span>
       <h1 style={h1}>spearmint
-        <img style={imgStyle} src="https://img.icons8.com/ios/40/000000/natural-food.png" alt=""></img>
+        <img style={imgStyle} src="https://img.icons8.com/ios/40/000000/natural-food.png"></img>
       </h1>
       </span>
       <h2 style={h2}>A FRESH TAKE ON TESTING </h2>
-      <input type='text' id='url' placeholder="Enter test site's URL..." onChange={handleChangeUrl}></input>
       <button className="openBtn" onClick={handleOpenFolder}>
         Open Folder
       </button>
+      <Treebeard data={data} onToggle={onToggle}/>
       <div id="filetree">
       </div>
     </div>
