@@ -1,12 +1,12 @@
-import React from 'react';
-import TestCase from './TestFile/TestCase';
+import React from 'react'
+import TestCase from './TestFile/TestCase'
 
 const TestFile = ({ fileName }) => {
   return (
-    <> 
+    <>
       <TestCase />
     </>
   )
 }
 
-export default TestFile; 
+export default TestFile

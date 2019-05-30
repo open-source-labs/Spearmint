@@ -1,40 +1,40 @@
-import React from "react";
-import { addAction, addAssertion, addRender } from "../../../context/testCaseActions";
+import React from 'react'
+import { addAction, addAssertion, addRender } from '../../../context/testCaseActions'
 
 const TestMenu = ({ dispatchTestCase }) => {
   const handleAddAction = e => {
-    dispatchTestCase(addAction());
-  };
+    dispatchTestCase(addAction())
+  }
   const handleAddAssertion = e => {
-    dispatchTestCase(addAssertion());
-  };
+    dispatchTestCase(addAssertion())
+  }
   const handleAddRender = e => {
-    dispatchTestCase(addRender());
-  };
+    dispatchTestCase(addRender())
+  }
 
   const panel = {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
   }
 
   return (
-    <div className="flex-container" style={panel}>
-      <div id="left-menu" >
-        <button className="menu-btn">New Test</button>
+    <div className='flex-container' style={panel}>
+      <div id='left-menu'>
+        <button className='menu-btn'>New Test</button>
       </div>
-      <div id="right-menu" >
-        <button className="menu-btn" onClick={handleAddAction}>
+      <div id='right-menu'>
+        <button className='menu-btn' onClick={handleAddAction}>
           Action
         </button>
-        <button className="menu-btn" onClick={handleAddAssertion}>
+        <button className='menu-btn' onClick={handleAddAssertion}>
           Assertion
         </button>
-        <button className="menu-btn" onClick={handleAddRender}>
+        <button className='menu-btn' onClick={handleAddRender}>
           Render
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TestMenu;
+export default TestMenu
