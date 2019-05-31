@@ -1,11 +1,11 @@
 import { createContext } from 'react';
-import { actionTypes } from "./testCaseActions";
+import { actionTypes } from './testCaseActions';
 
 export const TestCaseContext = createContext(null);
 
 export const testCaseState = {
-  testStatement: "",
-  statements: []
+  testStatement: '',
+  statements: [],
 };
 
 let statementId = 0;
@@ -13,36 +13,37 @@ let renderPropsId = 0;
 
 const createAction = () => ({
   id: statementId++,
-  type: "action",
+  type: 'action',
   event: {
-    type: "",
-    value: null
+    type: '',
+    value: null,
   },
-  queryVariant: "",
-  querySelector: "",
-  queryValue: ""
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
 });
 
 const createAssertion = () => ({
   id: statementId++,
-  type: "assertion",
-  queryVariant: "",
-  querySelector: "",
-  assertionValue: "",
-  matcher: ""
+  type: 'assertion',
+  queryVariant: '',
+  querySelector: '',
+  assertionValue: '',
+  matcher: '',
 });
 
 const createRender = () => ({
   id: statementId++,
-  type: "render",
-  componentName: "",
-  props: []
+  type: 'render',
+  componentName: '',
+  filePath: '',
+  props: [],
 });
 
 const createRenderProp = () => ({
   id: renderPropsId++,
-  propKey: "",
-  propValue: ""
+  propKey: '',
+  propValue: '',
 });
 
 export const testCaseReducer = (state, action) => {
@@ -54,19 +55,19 @@ export const testCaseReducer = (state, action) => {
       let testStatement = action.testStatement;
       return {
         ...state,
-        testStatement
+        testStatement,
       };
     case actionTypes.ADD_ACTION:
       statements.push(createAction());
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.DELETE_ACTION:
       statements = statements.filter(actionObj => actionObj.id !== action.id);
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.UPDATE_ACTION:
       statements = statements.map(actionObj => {
@@ -81,19 +82,19 @@ export const testCaseReducer = (state, action) => {
       });
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.ADD_ASSERTION:
       statements.push(createAssertion());
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.DELETE_ASSERTION:
       statements = statements.filter(assertion => assertion.id !== action.id);
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.UPDATE_ASSERTION:
       statements = statements.map(assertion => {
@@ -107,29 +108,31 @@ export const testCaseReducer = (state, action) => {
       });
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.ADD_RENDER:
       statements.push(createRender());
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.DELETE_RENDER:
       statements = statements.filter(render => render.id !== action.id);
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.UPDATE_RENDER:
       statements = statements.map(render => {
-        if (render.id === action.id)
+        if (render.id === action.id) {
           render.componentName = action.componentName;
+          render.filePath = action.filePath;
+        }
         return render;
       });
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.ADD_RENDER_PROP:
       statements = statements.map(render => {
@@ -140,7 +143,7 @@ export const testCaseReducer = (state, action) => {
       });
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.DELETE_RENDER_PROP:
       statements = statements.map(render => {
@@ -151,7 +154,7 @@ export const testCaseReducer = (state, action) => {
       });
       return {
         ...state,
-        statements
+        statements,
       };
     case actionTypes.UPDATE_RENDER_PROP:
       statements = statements.map(render => {
