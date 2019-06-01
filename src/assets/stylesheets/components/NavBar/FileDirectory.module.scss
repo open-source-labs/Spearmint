@@ -1,0 +1,22 @@
+#fileDirectory {
+  grid-area: fileDirectory;
+  padding: 0.5rem;
+  width: 15rem;
+  background-color: white;
+  border: grey;
+  overflow: scroll;
+  height: 100%;
+  margin-top: -400px;
+  margin-left: 40px;
+  font-size: 11px;
+
+  ul {
+    list-style-type: none;
+    margin-left: 7px;
+  }
+}
+
+#dirButton {
+  text-decoration: none;
+  border: none;
+}

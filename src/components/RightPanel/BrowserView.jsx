@@ -1,25 +1,16 @@
-import React, { useContext } from 'react';
-import { UrlContext, ToggleContext } from '../../App';
+import React, { useContext } from "react";
+import styles from "../../assets/stylesheets/components/RightPanel/BrowserView.module.scss";
+import { UrlContext, ToggleContext } from "../../App";
 
 const TestView = () => {
-  const url = useContext(UrlContext)
-  const toggleView = useContext(ToggleContext)
-  const test = {
-    padding: ".625rem",
-    height: "auto",
-    width: "2rem",
-    border: "grey",
-  }
-  const style = {
-    width: 500,
-    height: '100%',
-  }
+  const url = useContext(UrlContext);
+  const toggleView = useContext(ToggleContext);
 
   return (
-    <div style={test}>
-      {url && toggleView && <webview src={url} style={style}/>}
+    <div>
+      {url && toggleView && <webview id={styles.browserView} src={url} />}
     </div>
-  )
-}
+  );
+};
 
 export default TestView;

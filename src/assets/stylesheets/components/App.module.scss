@@ -1,0 +1,5 @@
+#appGrid {
+  display: grid;
+  grid-template-columns: 25% auto 40%;
+  grid-template-areas: "navBar leftPanel rightPanel";
+}

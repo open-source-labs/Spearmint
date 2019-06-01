@@ -1,10 +1,10 @@
 import React from "react";
-import MockDataFieldKey from "./MockData/MockDataKey";
+import MockDataFieldKey from "./MockDataKey";
 import {
   deleteMockData,
   addMockDataKey,
   updateMockDataName
-} from "../../../../context/mockDataActions";
+} from "../../../context/mockDataActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
@@ -23,9 +23,9 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
     dispatchMockData(updateMockDataName(mockDatumId, e.target.value));
   };
 
-  const keys = {
-    padding: "5px"
-  }
+  // const keys = {
+  //   padding: '5px',
+  // }
   const mockDataFieldKeys = fieldKeys.map(key => (
     <MockDataFieldKey
       key={key.id}
@@ -43,11 +43,10 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
         id="delete-mock-data"
         icon="times"
         onClick={handleClickDelete}
-        style={keys}
       />
       <label htmlFor="mock-data-name">Name </label>
       <input type="text" id="mock-data-name" onChange={handleClickUpdate} />
-      <div style={keys}>
+      <div>
         <label htmlFor="mock-data-key">Add filed keys </label>
         <label htmlFor="mock-data-type">Type </label>
       </div>
