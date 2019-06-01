@@ -13,7 +13,7 @@ export const FileTreeContext = createContext(null);
 export const FileCodeContext = createContext(null);
 export const LoadedContext = createContext(null);
 export const ToggleContext = createContext(null);
-export const ComponentInputContext = createContext(null);
+export const ComponentNameContext = createContext(null);
 export const FilePathContext = createContext(null);
 
 library.add(faPlus, faMinus, faTimes, faQuestionCircle);
@@ -34,9 +34,8 @@ const App = () => {
   const [url, setUrl] = useState('');
   const [loaded, setLoaded] = useState(false);
   const [toggleView, setToggleView] = useState(false);
-  const [componentInput, setComponentInput] = useState('');
-  const [filePath, setFilePath] = useState('');
-
+  const [componentName, setComponentName] = useState('');
+  const [filePath, setFilePath] = useState(null);
   const [testCase, dispatchTestCase] = useReducer(testCaseReducer, testCaseState);
   const [mockData, dispatchMockData] = useReducer(mockDataReducer, mockDataState);
   if (!loaded) {
@@ -59,9 +58,11 @@ const App = () => {
             <ToggleContext.Provider value={setToggleView}>
               <TestCaseContext.Provider value={testCase}>
                 <MockDataContext.Provider value={mockData}>
-                  <ComponentInputContext.Provider value={[componentInput, setComponentInput]}>
-                    <NavBar />
-                  </ComponentInputContext.Provider>
+                  <FilePathContext.Provider value={setFilePath}>
+                    <ComponentNameContext.Provider value={componentName}>
+                      <NavBar />
+                    </ComponentNameContext.Provider>
+                  </FilePathContext.Provider>
                 </MockDataContext.Provider>
               </TestCaseContext.Provider>
             </ToggleContext.Provider>
@@ -70,11 +71,11 @@ const App = () => {
 
         <TestCaseContext.Provider value={[testCase, dispatchTestCase]}>
           <MockDataContext.Provider value={[mockData, dispatchMockData]}>
-            <ComponentInputContext.Provider value={[componentInput, setComponentInput]}>
+            <ComponentNameContext.Provider value={setComponentName}>
               <FilePathContext.Provider value={[filePath, setFilePath]}>
                 <LeftPanel />
               </FilePathContext.Provider>
-            </ComponentInputContext.Provider>
+            </ComponentNameContext.Provider>
           </MockDataContext.Provider>
         </TestCaseContext.Provider>
 

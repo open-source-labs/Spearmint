@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import RenderProp from './RenderProp';
-import { ComponentInputContext, FilePathContext } from '../../../App';
+import { ComponentNameContext, FilePathContext, ReceivedFilePathContext } from '../../../App';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -8,7 +8,7 @@ const Render = ({ id, dispatchTestCase, props }) => {
   const [componentName, setComponentName] = useState('');
   const [toggleProps, setToggleProps] = useState(false);
 
-  const [componentInput, setComponentInput] = useContext(ComponentInputContext);
+  const getComponentName = useContext(ComponentNameContext);
   const [filePath, setFilePath] = useContext(FilePathContext);
 
   const handleClickDelete = e => {
@@ -17,11 +17,12 @@ const Render = ({ id, dispatchTestCase, props }) => {
 
   const handleChange = e => {
     setComponentName(e.target.value);
-    setComponentInput(e.target.value);
-    dispatchTestCase(updateRender(id, e.target.value, filePath));
+    getComponentName(e.target.value);
+    if (filePath) {
+      dispatchTestCase(updateRender(id, e.target.value, filePath));
+      setFilePath(null);
+    }
   };
-
-  const findFilePath = () => {};
 
   const handleToggleProps = () => {
     setToggleProps(!toggleProps);
@@ -39,7 +40,6 @@ const Render = ({ id, dispatchTestCase, props }) => {
       />
     );
   });
-
   return (
     <section>
       <h3>Render</h3>

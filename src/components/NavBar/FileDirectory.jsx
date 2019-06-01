@@ -1,44 +1,32 @@
 import './styles.css';
 import React from 'react';
 import { useContext } from 'react';
-import { FileCodeContext, FilePathContext, ComponentInputContext } from '../../App';
+import { FileCodeContext, FilePathContext, ComponentNameContext } from '../../App';
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs');
 let path = remote.require('path');
 
 const FileDirectory = ({ fileTree }) => {
   const setFileCode = useContext(FileCodeContext);
-  const [filePath, setFilePath] = useContext(FilePathContext);
-  const [componentInput, setComponentInput] = useContext(ComponentInputContext);
-  // console.log('this is setFilePath in filedrecitpry', setFilePath);
+  const setFilePath = useContext(FilePathContext);
+  const componentName = useContext(ComponentNameContext);
 
   const handleShowCode = fileTree => {
     const content = electronFs.readFileSync(fileTree, 'utf8');
-    console.log('is it hitting here? ');
     setFileCode(content);
   };
-
-  const testFunction = filepath => {
-    setFilePath(filepath);
-  };
-
-  // console.log(path.relative('/src/components/NavBar/FileDirectory', '/src/App'));
 
   const convertToHTML = filetree => {
     let folderImg = 'https://img.icons8.com/ios/20/000000/opened-folder.png';
     let fileImg = 'https://img.icons8.com/metro/20/000000/document.png';
-    console.log('componentName in FileDirectory', componentInput);
 
     return filetree.map(file => {
       const desiredComponentName = file.fileName
-        .substring(0, file.fileName.indexOf('.'))
+        .substring(0, file.fileName.indexOf('.') - 1)
         .toLowerCase();
-      if (componentInput && componentInput === desiredComponentName) {
-        testFunction(file.filePath); // console.log('is it giving us error? ', componentName);
-        // // console.log('name from input value', componentName);
-        // // console.log('from fileName key from each file object', desiredComponentName);
-        // console.log(file.filePath);
-        // setFilePath(file.filePath);
+      if (componentName && componentName === desiredComponentName) {
+        setFilePath(file.filePath);
+        // console.log(path.relative('__tests__/test', file.filePath));
       }
 
       if (file.files.length) {
@@ -93,6 +81,7 @@ const FileDirectory = ({ fileTree }) => {
     hover: 'lightgrey',
     border: 'none',
   };
+
   return (
     <>
       <div style={fileDir} className='fileDir'>
