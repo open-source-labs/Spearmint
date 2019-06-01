@@ -71,7 +71,7 @@ const App = () => {
 
         <TestCaseContext.Provider value={[testCase, dispatchTestCase]}>
           <MockDataContext.Provider value={[mockData, dispatchMockData]}>
-            <ComponentNameContext.Provider value={setComponentName}>
+            <ComponentNameContext.Provider value={[componentName, setComponentName]}>
               <FilePathContext.Provider value={[filePath, setFilePath]}>
                 <LeftPanel />
               </FilePathContext.Provider>

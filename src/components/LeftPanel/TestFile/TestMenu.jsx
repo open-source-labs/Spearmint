@@ -1,21 +1,24 @@
-import React from 'react'
-import { addAction, addAssertion, addRender } from '../../../context/testCaseActions'
+import React, { useState } from 'react';
+import { addAction, addAssertion, addRender } from '../../../context/testCaseActions';
 
 const TestMenu = ({ dispatchTestCase }) => {
+  const [reRender, setReRender] = useState(false);
+
   const handleAddAction = e => {
-    dispatchTestCase(addAction())
-  }
+    dispatchTestCase(addAction());
+  };
   const handleAddAssertion = e => {
-    dispatchTestCase(addAssertion())
-  }
+    dispatchTestCase(addAssertion());
+  };
   const handleAddRender = e => {
-    dispatchTestCase(addRender())
-  }
+    dispatchTestCase(addRender());
+    if (!reRender) setReRender(true);
+  };
 
   const panel = {
     display: 'flex',
     justifyContent: 'center',
-  }
+  };
 
   return (
     <div className='flex-container' style={panel}>
@@ -30,11 +33,11 @@ const TestMenu = ({ dispatchTestCase }) => {
           Assertion
         </button>
         <button className='menu-btn' onClick={handleAddRender}>
-          Render
+          {!reRender ? 'Render' : 'Rerender'}
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TestMenu
+export default TestMenu;

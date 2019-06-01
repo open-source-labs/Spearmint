@@ -1,14 +1,12 @@
 import React, { useState, useContext } from 'react';
 import RenderProp from './RenderProp';
-import { ComponentNameContext, FilePathContext, ReceivedFilePathContext } from '../../../App';
+import { ComponentNameContext, FilePathContext } from '../../../App';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const Render = ({ id, dispatchTestCase, props }) => {
-  const [componentName, setComponentName] = useState('');
+const Render = ({ id, dispatchTestCase, props, reRender }) => {
   const [toggleProps, setToggleProps] = useState(false);
-
-  const getComponentName = useContext(ComponentNameContext);
+  const [componentName, setComponentName] = useContext(ComponentNameContext);
   const [filePath, setFilePath] = useContext(FilePathContext);
 
   const handleClickDelete = e => {
@@ -17,7 +15,6 @@ const Render = ({ id, dispatchTestCase, props }) => {
 
   const handleChange = e => {
     setComponentName(e.target.value);
-    getComponentName(e.target.value);
     if (filePath) {
       dispatchTestCase(updateRender(id, e.target.value, filePath));
       setFilePath(null);
@@ -42,7 +39,7 @@ const Render = ({ id, dispatchTestCase, props }) => {
   });
   return (
     <section>
-      <h3>Render</h3>
+      <h3>{!reRender ? 'Render' : 'Rerender'}</h3>
       <FontAwesomeIcon id='delete-action' icon='times' onClick={handleClickDelete} />
       <div>
         <label htmlFor='render-input-box'>Component Name</label>

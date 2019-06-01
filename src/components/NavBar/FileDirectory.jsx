@@ -4,7 +4,6 @@ import { useContext } from 'react';
 import { FileCodeContext, FilePathContext, ComponentNameContext } from '../../App';
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs');
-let path = remote.require('path');
 
 const FileDirectory = ({ fileTree }) => {
   const setFileCode = useContext(FileCodeContext);
@@ -26,7 +25,6 @@ const FileDirectory = ({ fileTree }) => {
         .toLowerCase();
       if (componentName && componentName === desiredComponentName) {
         setFilePath(file.filePath);
-        // console.log(path.relative('__tests__/test', file.filePath));
       }
 
       if (file.files.length) {

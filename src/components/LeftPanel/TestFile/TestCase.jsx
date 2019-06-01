@@ -53,6 +53,7 @@ const TestCase = () => {
             id={statement.id}
             dispatchTestCase={dispatchTestCase}
             props={statement.props}
+            reRender={statement.reRender}
           />
         );
       default:
