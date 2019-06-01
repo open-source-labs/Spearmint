@@ -2,14 +2,14 @@ import React, { useState, useContext } from 'react';
 import FileDirectory from '../components/NavBar/FileDirectory';
 import { FileTreeContext, ToggleContext } from '../App';
 import ReactModal from 'react-modal';
-const closeIcon = require('../assets/images/close-outline.png');
 
-const leftIcon = require('../assets/images/chevron-left.png');
-const rightIcon = require('../assets/images/chevron-right.png');
-const exportIcon = require('../assets/images/file-export.png');
-const folderOpenIcon = require('../assets/images/folder-open.png');
-const saveIcon = require('../assets/images/save.png');
-const codeIcon = require('../assets/images/code.png');
+const closeIcon = require('../assets/images/close-outline.png');
+const leftIcon = require('../assets/images/sq_br_first_icon.png');
+const rightIcon = require('../assets/images/sq_br_last_icon.png');
+const exportIcon = require('../assets/images/export_icon.png');
+const folderOpenIcon = require('../assets/images/folder_open.png');
+const saveIcon = require('../assets/images/save_icon.png');
+const browserIcon = require('../assets/images/app_window_shell.png');
 
 const NavBar = () => {
   const [opened, setOpened] = useState(false);
@@ -57,20 +57,12 @@ const NavBar = () => {
     height: '80%',
   };
 
-  const bottomNav = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    height: '20%',
-  };
-
   const button = {
     padding: '0',
     border: '0',
     margin: '1.6rem 0',
-    width: '1.6rem',
-    height: '1.6rem',
+    width: '2rem',
+    height: '2rem',
     cursor: 'pointer',
     backgroundColor: 'transparent',
     outline: 'none',
@@ -79,20 +71,8 @@ const NavBar = () => {
   const icons = {
     height: '1.25rem',
     width: '1.25rem',
+    color: 'white',
   };
-
-  const plusBtn = {
-    padding: '0',
-    border: '0',
-    marginBottom: '2rem',
-    width: '1.6rem',
-    height: '1.6rem',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    outline: 'none',
-  };
-
-  const style = { width: '5px', height: '5px' };
 
   return (
     <div id='container' style={container}>
@@ -114,7 +94,7 @@ const NavBar = () => {
             shouldCloseOnEsc={true}
           >
             <h3>Convert to Javascript Code</h3>
-            <img src={closeIcon} style={style} onClick={closeModal} />
+            <img src={closeIcon} onClick={closeModal} />
             <div>
               <p>File Name</p>
               <input type='text' />
@@ -130,7 +110,7 @@ const NavBar = () => {
             <img src={saveIcon} style={icons} alt='save' />
           </button>
           <button style={button} onClick={toggleClick}>
-            <img src={codeIcon} style={icons} alt='delete' />
+            <img src={browserIcon} style={icons} alt='browser' />
           </button>
         </div>
 

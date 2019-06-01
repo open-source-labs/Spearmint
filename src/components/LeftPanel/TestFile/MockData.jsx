@@ -6,8 +6,7 @@ import {
   updateMockDataName,
 } from '../../../context/mockDataActions';
 const plusIcon = require('../../../assets/images/plus.png');
-const minusIcon = require('../../../assets/images/minus-box.png');
-
+const closeIcon = require('../../../assets/images/close.png');
 const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
   const handleClickAdd = (e, id) => {
     e.stopPropagation();
@@ -40,8 +39,8 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
 
   return (
     <div>
-      <img src={minusIcon} onClick={handleClickDelete} style={keys} />
       <label htmlFor='mock-data-name'>Name </label>
+      <img src={closeIcon} onClick={handleClickDelete} style={keys} />
       <input type='text' id='mock-data-name' onChange={handleClickUpdate} />
       <div style={keys}>
         <label htmlFor='mock-data-key'>Add filed keys </label>
