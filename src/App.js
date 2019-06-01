@@ -1,5 +1,4 @@
 import React, { useState, useReducer, createContext } from "react";
-import styles from "./assets/stylesheets/components/App.module.scss";
 import NavBar from "./containers/NavBar";
 import LeftPanel from "./containers/LeftPanel";
 import ProjectLoader from "./containers/ProjectLoader";
@@ -14,32 +13,25 @@ import {
   mockDataState,
   mockDataReducer
 } from "./context/mockDataReducer";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-  faPlus,
-  faMinus,
-  faTimes,
-  faQuestionCircle
-} from "@fortawesome/free-solid-svg-icons";
 
 export const UrlContext = createContext(null);
 export const FileTreeContext = createContext(null);
 export const FileCodeContext = createContext(null);
 export const LoadedContext = createContext(null);
 export const ToggleContext = createContext(null);
+export const ComponentNameContext = createContext(null);
+export const FilePathContext = createContext(null);
 export const FileToggleContext = createContext(null);
 
-library.add(faPlus, faMinus, faTimes, faQuestionCircle);
+const styles = {
+  fontFamily: "arial",
+  display: "flex"
+};
 
-// const styles = {
-//   fontFamily: 'arial',
-//   display: 'flex',
-// }
-
-// const loaderDiv = {
-//   display: "flex",
-//   justifyContent: "center"
-// };
+const loaderDiv = {
+  display: "flex",
+  justifyContent: "center"
+};
 
 const App = () => {
   const [fileTree, setFileTree] = useState(null);
@@ -47,8 +39,9 @@ const App = () => {
   const [url, setUrl] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [toggleView, setToggleView] = useState(false);
+  const [componentName, setComponentName] = useState("");
+  const [filePath, setFilePath] = useState(null);
   const [fileToggle, setFileToggle] = useState(false);
-
   const [testCase, dispatchTestCase] = useReducer(
     testCaseReducer,
     testCaseState
@@ -60,8 +53,7 @@ const App = () => {
 
   if (!loaded) {
     return (
-      // <div style={loaderDiv}>
-      <div>
+      <div style={loaderDiv}>
         <FileTreeContext.Provider value={setFileTree}>
           <LoadedContext.Provider value={setLoaded}>
             <UrlContext.Provider value={setUrl}>
@@ -79,9 +71,13 @@ const App = () => {
             <ToggleContext.Provider value={setToggleView}>
               <TestCaseContext.Provider value={testCase}>
                 <MockDataContext.Provider value={mockData}>
-                  <FileToggleContext.Provider value={setFileToggle}>
-                    <NavBar />
-                  </FileToggleContext.Provider>
+                  <FilePathContext.Provider value={setFilePath}>
+                    <ComponentNameContext.Provider value={componentName}>
+                      <FileToggleContext.Provider value={setFileToggle}>
+                        <NavBar />
+                      </FileToggleContext.Provider>
+                    </ComponentNameContext.Provider>
+                  </FilePathContext.Provider>
                 </MockDataContext.Provider>
               </TestCaseContext.Provider>
             </ToggleContext.Provider>
@@ -90,7 +86,11 @@ const App = () => {
 
         <TestCaseContext.Provider value={[testCase, dispatchTestCase]}>
           <MockDataContext.Provider value={[mockData, dispatchMockData]}>
-            <LeftPanel />
+            <ComponentNameContext.Provider value={setComponentName}>
+              <FilePathContext.Provider value={[filePath, setFilePath]}>
+                <LeftPanel />
+              </FilePathContext.Provider>
+            </ComponentNameContext.Provider>
           </MockDataContext.Provider>
         </TestCaseContext.Provider>
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useContext } from "react";
 import TestMenu from "./TestMenu";
 import MockData from "./MockData";
@@ -9,6 +10,20 @@ import { MockDataContext } from "../../../context/mockDataReducer";
 import { updateTestStatement } from "../../../context/testCaseActions";
 import { toggleMockData, addMockData } from "../../../context/mockDataActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+=======
+import React, { useContext } from 'react';
+import TestMenu from './TestMenu';
+import MockData from './MockData';
+import Action from './Action';
+import Assertion from './Assertion';
+import Render from './Render';
+import { TestCaseContext } from '../../../context/testCaseReducer';
+import { MockDataContext } from '../../../context/mockDataReducer';
+import { updateTestStatement } from '../../../context/testCaseActions';
+import { toggleMockData, addMockData } from '../../../context/mockDataActions';
+
+const plusIcon = require('../../../assets/images/plus-box.png');
+>>>>>>> c2c77423de5df72be189a45d02eb3229d5733e08
 
 const TestCase = () => {
   const [testCase, dispatchTestCase] = useContext(TestCaseContext);
@@ -38,7 +53,9 @@ const TestCase = () => {
   });
 
   const statementsJSX = testCase.statements.map(statement => {
+    console.log(statement);
     switch (statement.type) {
+<<<<<<< HEAD
       case "action":
         return (
           <Action
@@ -56,6 +73,15 @@ const TestCase = () => {
           />
         );
       case "render":
+=======
+      case 'action':
+        return <Action key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />;
+      case 'assertion':
+        return (
+          <Assertion key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />
+        );
+      case 'render':
+>>>>>>> c2c77423de5df72be189a45d02eb3229d5733e08
         return (
           <Render
             key={statement.id}
@@ -68,6 +94,13 @@ const TestCase = () => {
         return <></>;
     }
   });
+<<<<<<< HEAD
+=======
+
+  const testStyle = {
+    padding: '5px',
+  };
+>>>>>>> c2c77423de5df72be189a45d02eb3229d5733e08
 
   return (
     <div>
@@ -91,6 +124,7 @@ const TestCase = () => {
         />
       </section>
       {mockData.mockDataCheckBox && (
+<<<<<<< HEAD
         <section>
           <label htmlFor="mock-data">Mock data</label>
           <FontAwesomeIcon
@@ -98,6 +132,11 @@ const TestCase = () => {
             icon="plus"
             onClick={handleAddMockData}
           />
+=======
+        <section style={testStyle}>
+          <label htmlFor='mock-data'>Mock data</label>
+          <img src={plusIcon} onClick={handleAddMockData} />
+>>>>>>> c2c77423de5df72be189a45d02eb3229d5733e08
           {mockDataJSX}
         </section>
       )}

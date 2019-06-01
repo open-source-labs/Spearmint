@@ -1,16 +1,16 @@
 import React, { useState, useContext } from "react";
 import styles from "../assets/stylesheets/components/NavBar/NavBar.module.scss";
 import FileDirectory from "../components/NavBar/FileDirectory";
-import { FileTreeContext, ToggleContext, FileToggleContext } from "../App";
+import { FileTreeContext, ToggleContext, FileToggleContex } from "../App";
 import ReactModal from "react-modal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const closeIcon = require("../assets/images/close-outline.png");
 
-const prevIcon = require("../assets/images/prev_icon.png");
-const exportIcon = require("../assets/images/export_icon.png");
-const folderOpenIcon = require("../assets/images/folder_open_icon.png");
-const saveIcon = require("../assets/images/save_icon.png");
-const trashIcon = require("../assets/images/trash_icon.png");
-// const roundPlusIcon = require("../assets/images/round_plus_icon.png");
+const leftIcon = require("../assets/images/chevron-left.png");
+const rightIcon = require("../assets/images/chevron-right.png");
+const exportIcon = require("../assets/images/file-export.png");
+const folderOpenIcon = require("../assets/images/folder-open.png");
+const saveIcon = require("../assets/images/save.png");
+const codeIcon = require("../assets/images/code.png");
 
 const NavBar = () => {
   const [opened, setOpened] = useState(false);
