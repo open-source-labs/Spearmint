@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import RenderProp from './RenderProp';
 import { ComponentNameContext, FilePathContext, ReceivedFilePathContext } from '../../../App';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+const minusIcon = require('../../../assets/images/minus-box.png');
 
 const Render = ({ id, dispatchTestCase, props }) => {
   const [componentName, setComponentName] = useState('');
@@ -43,7 +43,7 @@ const Render = ({ id, dispatchTestCase, props }) => {
   return (
     <section>
       <h3>Render</h3>
-      <FontAwesomeIcon id='delete-action' icon='times' onClick={handleClickDelete} />
+      <img src={minusIcon} onClick={handleClickDelete} />
       <div>
         <label htmlFor='render-input-box'>Component Name</label>
         <input type='text' id='render-input-box' value={componentName} onChange={handleChange} />
