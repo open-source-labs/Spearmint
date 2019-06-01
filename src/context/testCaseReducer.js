@@ -10,6 +10,7 @@ export const testCaseState = {
 
 let statementId = 0;
 let renderPropsId = 0;
+let reRender = false;
 
 const createAction = () => ({
   id: statementId++,
@@ -35,6 +36,7 @@ const createAssertion = () => ({
 const createRender = () => ({
   id: statementId++,
   type: 'render',
+  reRender,
   componentName: '',
   filePath: '',
   props: [],
@@ -64,21 +66,21 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
     case actionTypes.DELETE_ACTION:
-      statements = statements.filter(actionObj => actionObj.id !== action.id);
+      statements = statements.filter(statement => statement.id !== action.id);
       return {
         ...state,
         statements,
       };
     case actionTypes.UPDATE_ACTION:
-      statements = statements.map(actionObj => {
-        if (actionObj.id === action.id) {
-          actionObj.event.type = action.eventType;
-          actionObj.event.value = action.eventValue;
-          actionObj.queryVariant = action.queryVariant;
-          actionObj.querySelector = action.querySelector;
-          actionObj.queryValue = action.queryValue;
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.event.type = action.eventType;
+          statement.event.value = action.eventValue;
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
         }
-        return actionObj;
+        return statement;
       });
       return {
         ...state,
@@ -91,20 +93,20 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
     case actionTypes.DELETE_ASSERTION:
-      statements = statements.filter(assertion => assertion.id !== action.id);
+      statements = statements.filter(statement => statement.id !== action.id);
       return {
         ...state,
         statements,
       };
     case actionTypes.UPDATE_ASSERTION:
-      statements = statements.map(assertion => {
-        if (assertion.id === action.id) {
-          assertion.queryVariant = action.queryVariant;
-          assertion.querySelector = action.querySelector;
-          assertion.assertionValue = action.assertionValue;
-          assertion.matcher = action.matcher;
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.assertionValue = action.assertionValue;
+          statement.matcher = action.matcher;
         }
-        return assertion;
+        return statement;
       });
       return {
         ...state,
@@ -112,54 +114,55 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.ADD_RENDER:
       statements.push(createRender());
+      reRender = true;
       return {
         ...state,
         statements,
       };
     case actionTypes.DELETE_RENDER:
-      statements = statements.filter(render => render.id !== action.id);
+      statements = statements.filter(statement => statement.id !== action.id);
       return {
         ...state,
         statements,
       };
     case actionTypes.UPDATE_RENDER:
-      statements = statements.map(render => {
-        if (render.id === action.id) {
-          render.componentName = action.componentName;
-          render.filePath = action.filePath;
+      statements = statements.map(statement => {
+        if (statement.type === 'render') {
+          statement.componentName = action.componentName;
+          statement.filePath = action.filePath;
         }
-        return render;
+        return statement;
       });
       return {
         ...state,
         statements,
       };
     case actionTypes.ADD_RENDER_PROP:
-      statements = statements.map(render => {
-        if (render.id === action.id) {
-          render.props.push(createRenderProp());
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.props.push(createRenderProp());
         }
-        return render;
+        return statement;
       });
       return {
         ...state,
         statements,
       };
     case actionTypes.DELETE_RENDER_PROP:
-      statements = statements.map(render => {
-        if (render.id === action.renderId) {
-          render = render.props.filter(render => render.id !== action.propId);
+      statements = statements.map(statement => {
+        if (statement.id === action.renderId) {
+          statement = statement.props.filter(statement => statement.id !== action.propId);
         }
-        return render;
+        return statement;
       });
       return {
         ...state,
         statements,
       };
     case actionTypes.UPDATE_RENDER_PROP:
-      statements = statements.map(render => {
-        if (render.id === action.id) {
-          render.props.map(prop => {
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.props.map(prop => {
             if (prop.id === action.propId) {
               prop.propKey = action.propKey;
               prop.propValue = action.propValue;
@@ -167,7 +170,7 @@ export const testCaseReducer = (state, action) => {
             return prop;
           });
         }
-        return render;
+        return statement;
       });
     default:
       return state;

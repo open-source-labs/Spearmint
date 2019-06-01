@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+import './styles.css';
+import React from 'react';
+import { useContext } from 'react';
+import { FileCodeContext, FilePathContext, ComponentNameContext } from '../../App';
+let remote = window.require('electron').remote;
+let electronFs = remote.require('fs');
+=======
 import React from "react";
 import styles from "../../assets/stylesheets/components/NavBar/FileDirectory.module.scss";
 import { useContext } from "react";
@@ -9,6 +17,7 @@ import {
 let remote = window.require("electron").remote;
 let electronFs = remote.require("fs");
 let path = remote.require("path");
+>>>>>>> b1ed50647ec13e4186166f32953231a1e90a63be
 
 const FileDirectory = ({ fileTree }) => {
   const setFileCode = useContext(FileCodeContext);
@@ -30,7 +39,6 @@ const FileDirectory = ({ fileTree }) => {
         .toLowerCase();
       if (componentName && componentName === desiredComponentName) {
         setFilePath(file.filePath);
-        // console.log(path.relative('__tests__/test', file.filePath));
       }
       if (file.fileName !== "node_modules" && file.fileName !== ".git") {
         if (file.files.length) {
