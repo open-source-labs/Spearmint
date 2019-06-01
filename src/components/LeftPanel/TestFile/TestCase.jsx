@@ -1,16 +1,13 @@
 import React, { useContext } from "react";
-import TestMenu from "./TestCase/TestMenu";
-import MockData from "./TestCase/MockData";
-import Action from "./TestCase/Action";
-import Assertion from "./TestCase/Assertion";
-import Render from "./TestCase/Render";
+import TestMenu from "./TestMenu";
+import MockData from "./MockData";
+import Action from "./Action";
+import Assertion from "./Assertion";
+import Render from "./Render";
 import { TestCaseContext } from "../../../context/testCaseReducer";
 import { MockDataContext } from "../../../context/mockDataReducer";
 import { updateTestStatement } from "../../../context/testCaseActions";
-import {
-  toggleMockData,
-  addMockData
-} from "../../../context/mockDataActions";
+import { toggleMockData, addMockData } from "../../../context/mockDataActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const TestCase = () => {
@@ -72,14 +69,10 @@ const TestCase = () => {
     }
   });
 
-  const testStyle = {
-    padding: "5px"
-  }
-
   return (
     <div>
       <TestMenu dispatchTestCase={dispatchTestCase} />
-      <section style={testStyle}>
+      <section>
         <label htmlFor="test-statement">test:</label>
         <input
           type="text"
@@ -88,7 +81,7 @@ const TestCase = () => {
           onChange={handleUpdateTestStatement}
         />
       </section>
-      <section style={testStyle}>
+      <section>
         <label htmlFor="mock-data-checkbox">Will you need mock data:</label>
         <input
           type="checkbox"
@@ -98,7 +91,7 @@ const TestCase = () => {
         />
       </section>
       {mockData.mockDataCheckBox && (
-        <section style={testStyle}>
+        <section>
           <label htmlFor="mock-data">Mock data</label>
           <FontAwesomeIcon
             id="mock-data"

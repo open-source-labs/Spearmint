@@ -1,0 +1,21 @@
+#fileDirectory {
+  grid-area: fileDirectory;
+  padding: 0.625rem;
+  width: 10rem;
+  background-color: white;
+  border: grey;
+  overflow: scroll;
+  // flex-flow: row nowrap;
+  height: 100%;
+  margin-top: -400px;
+  margin-left: 30px;
+}
+
+// const fileDir = {
+//   padding: ".625rem",
+//   height: "auto",
+//   width: "12rem",
+//   border: "grey",
+//   backgroundColor: "white",
+//   overflow: "scroll"
+// };

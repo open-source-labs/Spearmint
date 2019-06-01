@@ -1,0 +1,20 @@
+@mixin clearfix {
+  &:after {
+    display: table;
+    clear: both;
+    content: "";
+  }
+}
+
+#leftPanel {
+  grid-area: leftPanel;
+  @include clearfix;
+  // display: flex;
+  width: auto;
+  // justify-content: "center";
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+//flex container
+//buttons action/assertion/render

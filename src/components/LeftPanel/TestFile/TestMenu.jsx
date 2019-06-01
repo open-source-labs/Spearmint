@@ -1,5 +1,9 @@
 import React from "react";
-import { addAction, addAssertion, addRender } from "../../../../context/testCaseActions";
+import {
+  addAction,
+  addAssertion,
+  addRender
+} from "../../../context/testCaseActions";
 
 const TestMenu = ({ dispatchTestCase }) => {
   const handleAddAction = e => {
@@ -12,17 +16,12 @@ const TestMenu = ({ dispatchTestCase }) => {
     dispatchTestCase(addRender());
   };
 
-  const panel = {
-    display: "flex",
-    justifyContent: "center",
-  }
-
   return (
-    <div className="flex-container" style={panel}>
-      <div id="left-menu" >
+    <div className="flex-container">
+      <div id="left-menu">
         <button className="menu-btn">New Test</button>
       </div>
-      <div id="right-menu" >
+      <div id="right-menu">
         <button className="menu-btn" onClick={handleAddAction}>
           Action
         </button>
