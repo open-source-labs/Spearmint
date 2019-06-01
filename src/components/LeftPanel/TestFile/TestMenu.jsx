@@ -1,40 +1,42 @@
-import React from 'react'
-import { addAction, addAssertion, addRender } from '../../../context/testCaseActions'
+import React, { useState } from "react";
+import {
+  addAction,
+  addAssertion,
+  addRender
+} from "../../../context/testCaseActions";
 
 const TestMenu = ({ dispatchTestCase }) => {
-  const handleAddAction = e => {
-    dispatchTestCase(addAction())
-  }
-  const handleAddAssertion = e => {
-    dispatchTestCase(addAssertion())
-  }
-  const handleAddRender = e => {
-    dispatchTestCase(addRender())
-  }
+  const [reRender, setReRender] = useState(false);
 
-  const panel = {
-    display: 'flex',
-    justifyContent: 'center',
-  }
+  const handleAddAction = e => {
+    dispatchTestCase(addAction());
+  };
+  const handleAddAssertion = e => {
+    dispatchTestCase(addAssertion());
+  };
+  const handleAddRender = e => {
+    dispatchTestCase(addRender());
+    if (!reRender) setReRender(true);
+  };
 
   return (
-    <div className='flex-container' style={panel}>
-      <div id='left-menu'>
-        <button className='menu-btn'>New Test</button>
+    <div className="flex-container">
+      <div id="left-menu">
+        <button className="menu-btn">New Test</button>
       </div>
-      <div id='right-menu'>
-        <button className='menu-btn' onClick={handleAddAction}>
+      <div id="right-menu">
+        <button className="menu-btn" onClick={handleAddAction}>
           Action
         </button>
-        <button className='menu-btn' onClick={handleAddAssertion}>
+        <button className="menu-btn" onClick={handleAddAssertion}>
           Assertion
         </button>
-        <button className='menu-btn' onClick={handleAddRender}>
-          Render
+        <button className="menu-btn" onClick={handleAddRender}>
+          {!reRender ? "Render" : "Rerender"}
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TestMenu
+export default TestMenu;

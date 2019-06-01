@@ -1,146 +1,130 @@
-import React, { useState, useContext } from 'react'
-import FileDirectory from '../components/NavBar/FileDirectory'
-import { FileTreeContext, ToggleContext } from '../App'
-import ReactModal from 'react-modal'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState, useContext } from "react";
+import styles from "../assets/stylesheets/components/NavBar/NavBar.module.scss";
+import FileDirectory from "../components/NavBar/FileDirectory";
+import ExportFileModal from "../components/NavBar/ExportFileModal";
+import { FileTreeContext, ToggleContext, FileToggleContext } from "../App";
 
-const prevIcon = require('../assets/images/prev_icon.png')
-const exportIcon = require('../assets/images/export_icon.png')
-const folderOpenIcon = require('../assets/images/folder_open_icon.png')
-const saveIcon = require('../assets/images/save_icon.png')
-const trashIcon = require('../assets/images/trash_icon.png')
-const roundPlusIcon = require('../assets/images/round_plus_icon.png')
+const closeIcon = require("../assets/images/close-outline.png");
+const leftIcon = require("../assets/images/chevron-left.png");
+const rightIcon = require("../assets/images/chevron-right.png");
+const exportIcon = require("../assets/images/file-export.png");
+const folderOpenIcon = require("../assets/images/folder-open.png");
+const saveIcon = require("../assets/images/save.png");
+const codeIcon = require("../assets/images/code.png");
 
 const NavBar = () => {
-  const [opened, setOpened] = useState(false)
-  const [toggled, setToggled] = useState(true)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-  const fileTree = useContext(FileTreeContext)
-  const setToggleView = useContext(ToggleContext)
+  const [isOpen, setIsOpen] = useState(false);
+  const [toggled, setToggled] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const fileTree = useContext(FileTreeContext);
+  const setToggleView = useContext(ToggleContext);
+  const fileToggle = useContext(FileToggleContext);
 
   const explorerOpen = () => {
-    setOpened(!opened)
-  }
+    setIsOpen(!isOpen);
+    isOpen ? fileToggle(false) : fileToggle(true);
+  };
 
   const toggleClick = () => {
-    toggled ? setToggleView(true) : setToggleView(false)
-    setToggled(false)
-    if (!toggled) setToggled(true)
-  }
+    toggled ? setToggleView(true) : setToggleView(false);
+    setToggled(false);
+    if (!toggled) setToggled(true);
+  };
 
   const openModal = () => {
-    setModalIsOpen(!false)
-  }
+    setIsModalOpen(!false);
+  };
 
   const closeModal = () => {
-    setModalIsOpen(false)
-  }
+    setIsModalOpen(false);
+  };
 
-  const container = {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    height: '100vh',
-    width: '320px',
-  }
+  // const container = {
+  //   display: 'flex',
+  //   justifyContent: 'flex-start',
+  //   height: '100vh',
+  //   width: '320px',
+  // }
 
-  const navBar = {
-    height: '100%',
-    width: '3rem',
-    backgroundColor: '#02c2c3',
-  }
+  // const navBar = {
+  //   padding: '.625rem',
+  //   height: '100%',
+  //   width: '2rem',
+  //   backgroundColor: '#02c2c3',
+  // }
 
-  const topNav = {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    height: '80%',
-  }
+  // const topNav = {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   justifyContent: 'flex-start',
+  //   alignItems: 'center',
+  //   height: '80%',
+  // }
 
-  const bottomNav = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    height: '20%',
-  }
+  // const bottomNav = {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   alignItems: 'center',
+  //   justifyContent: 'flex-end',
+  //   height: '20%',
+  // }
 
   const button = {
-    padding: '0',
-    border: '0',
-    margin: '1.6rem 0',
-    width: '1.6rem',
-    height: '1.6rem',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    outline: 'none',
-  }
+    padding: "0",
+    border: "0",
+    margin: "1.6rem 0",
+    width: "1.6rem",
+    height: "1.6rem",
+    cursor: "pointer",
+    backgroundColor: "transparent",
+    outline: "none"
+  };
 
   const icons = {
-    height: '1.25rem',
-    width: '1.25rem',
-  }
+    height: "1.25rem",
+    width: "1.25rem"
+  };
 
-  const plusBtn = {
-    padding: '0',
-    border: '0',
-    marginBottom: '2rem',
-    width: '1.6rem',
-    height: '1.6rem',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    outline: 'none',
-  }
+  // const plusBtn = {
+  //   padding: "0",
+  //   border: "0",
+  //   marginBottom: "2rem",
+  //   width: "1.6rem",
+  //   height: "1.6rem",
+  //   cursor: "pointer",
+  //   backgroundColor: "transparent",
+  //   outline: "none"
+  // };
 
   return (
-    <div id='container' style={container}>
-      <div id='navBar' style={navBar}>
-        <div id='topNav' style={topNav}>
-          <button style={button} onClick={explorerOpen}>
-            <img src={prevIcon} style={icons} alt='fileExplorer' />{' '}
-          </button>
-          <button style={button} onClick={openModal}>
-            <img src={exportIcon} style={icons} alt='export' />
-          </button>
+    // <div id='container' style={container}>
+    // <div id='navBar' style={navBar}>
+    //  <div id='topNav' style={topNav}>
+    <div id={styles.navBar}>
+      <button style={button} onClick={explorerOpen}>
+        <img src={leftIcon} style={icons} alt="fileExplorer" />{" "}
+      </button>
+      <button style={button} onClick={openModal}>
+        <img src={exportIcon} style={icons} alt="export" />
+      </button>
 
-          <ReactModal
-            className='Modal'
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            contentLabel='Save testing file'
-            shouldCloseOnOverlayClick={true}
-            shouldCloseOnEsc={true}
-          >
-            <h3>Convert to Javascript Code</h3>
-            <FontAwesomeIcon id='delete-action' icon='times' onClick={closeModal} />
-            <div>
-              <p>File Name</p>
-              <input type='text' />
-              <button onClick={closeModal}>Cancel</button>
-              <button>Save</button>
-            </div>
-          </ReactModal>
+      <ExportFileModal isModalOpen={isModalOpen} closeModal={closeModal} />
 
-          <button style={button}>
-            <img src={folderOpenIcon} style={icons} alt='folderOpen' />
-          </button>
-          <button style={button}>
-            <img src={saveIcon} style={icons} alt='save' />
-          </button>
-          <button style={button} onClick={toggleClick}>
-            <img src={trashIcon} style={icons} alt='delete' />
-          </button>
-        </div>
+      <button style={button}>
+        <img src={folderOpenIcon} style={icons} alt="folderOpen" />
+      </button>
+      <button style={button}>
+        <img src={saveIcon} style={icons} alt="save" />
+      </button>
+      <button style={button} onClick={toggleClick}>
+        <img src={codeIcon} style={icons} alt="delete" />
+      </button>
+      {/* </div> */}
 
-        <div id='bottomNav' style={bottomNav}>
-          <button style={plusBtn}>
-            <img src={roundPlusIcon} style={icons} alt='newTest' />
-          </button>
-        </div>
-      </div>
-      {!opened && <FileDirectory fileTree={fileTree} />}
+      {/* </div> */}
+      {!isOpen && <FileDirectory fileTree={fileTree} />}
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
