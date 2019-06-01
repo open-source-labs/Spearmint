@@ -39,7 +39,6 @@ const TestCase = () => {
   });
 
   const statementsJSX = testCase.statements.map(statement => {
-    console.log(statement);
     switch (statement.type) {
       case "action":
         return (
