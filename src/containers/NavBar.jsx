@@ -114,7 +114,7 @@ const NavBar = () => {
             shouldCloseOnEsc={true}
           >
             <h3>Convert to Javascript Code</h3>
-            <img src={closeIcon} style={style} onClick={closeModal} />
+            <img src={closeIcon} alt='' style={style} onClick={closeModal} />
             <div>
               <p>File Name</p>
               <input type='text' />
