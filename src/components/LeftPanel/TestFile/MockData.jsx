@@ -1,31 +1,32 @@
-import React from 'react'
-import MockDataFieldKey from './MockDataKey'
+import React from 'react';
+import MockDataFieldKey from './MockDataKey';
 import {
   deleteMockData,
   addMockDataKey,
   updateMockDataName,
-} from '../../../context/mockDataActions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+} from '../../../context/mockDataActions';
+const plusIcon = require('../../../assets/images/13 copy.png');
+const minusIcon = require('../../../assets/images/14 copy.png');
 
 const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
   const handleClickAdd = (e, id) => {
-    e.stopPropagation()
-    dispatchMockData(addMockDataKey(id))
-  }
+    e.stopPropagation();
+    dispatchMockData(addMockDataKey(id));
+  };
 
   const handleClickDelete = e => {
-    e.stopPropagation()
-    dispatchMockData(deleteMockData(mockDatumId))
-  }
+    e.stopPropagation();
+    dispatchMockData(deleteMockData(mockDatumId));
+  };
 
   const handleClickUpdate = e => {
-    e.stopPropagation()
-    dispatchMockData(updateMockDataName(mockDatumId, e.target.value))
-  }
+    e.stopPropagation();
+    dispatchMockData(updateMockDataName(mockDatumId, e.target.value));
+  };
 
   const keys = {
     padding: '5px',
-  }
+  };
   const mockDataFieldKeys = fieldKeys.map(key => (
     <MockDataFieldKey
       key={key.id}
@@ -35,16 +36,11 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
       fieldKey={key.fieldKey}
       fieldType={key.fieldType}
     />
-  ))
+  ));
 
   return (
     <div>
-      <FontAwesomeIcon
-        id='delete-mock-data'
-        icon='times'
-        onClick={handleClickDelete}
-        style={keys}
-      />
+      <img src={minusIcon} onClick={handleClickDelete} style={keys} />
       <label htmlFor='mock-data-name'>Name </label>
       <input type='text' id='mock-data-name' onChange={handleClickUpdate} />
       <div style={keys}>
@@ -53,11 +49,11 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
       </div>
       {mockDataFieldKeys}
       <button onClick={e => handleClickAdd(e, mockDatumId)}>
-        <FontAwesomeIcon id='add-mock-data-key' icon='plus' />
+        <img src={plusIcon} />
         Add Key
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default MockData
+export default MockData;

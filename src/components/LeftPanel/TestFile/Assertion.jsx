@@ -1,41 +1,44 @@
-import React, { useState } from 'react'
-import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react';
+import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
+const minusIcon = require('../../../assets/images/minus3.svg');
+const questionIcon = require('../../../assets/images/19 copy.png');
 
 const Assertion = ({ id, dispatchTestCase }) => {
-  const [queryVariant, setQueryVariant] = useState('')
-  const [querySelector, setQuerySelector] = useState('')
-  const [assertionValue, setAssertionValue] = useState('')
-  const [matcher, setMatcher] = useState('')
+  const [queryVariant, setQueryVariant] = useState('');
+  const [querySelector, setQuerySelector] = useState('');
+  const [assertionValue, setAssertionValue] = useState('');
+  const [matcher, setMatcher] = useState('');
 
   const handleClickDelete = e => {
-    dispatchTestCase(deleteAssertion(id))
-  }
+    dispatchTestCase(deleteAssertion(id));
+  };
 
   const handleChangeQueryVariant = e => {
-    setQueryVariant(e.target.value)
-    dispatchTestCase(updateAssertion(id, e.target.value, querySelector, assertionValue, matcher))
-  }
+    setQueryVariant(e.target.value);
+    dispatchTestCase(updateAssertion(id, e.target.value, querySelector, assertionValue, matcher));
+  };
   const handleChangeQuerySelector = e => {
-    setQuerySelector(e.target.value)
-    dispatchTestCase(updateAssertion(id, queryVariant, e.target.value, assertionValue, matcher))
-  }
+    setQuerySelector(e.target.value);
+    dispatchTestCase(updateAssertion(id, queryVariant, e.target.value, assertionValue, matcher));
+  };
   const handleChangeAssertionValue = e => {
-    setAssertionValue(e.target.value)
-    dispatchTestCase(updateAssertion(id, queryVariant, querySelector, e.target.value, matcher))
-  }
+    setAssertionValue(e.target.value);
+    dispatchTestCase(updateAssertion(id, queryVariant, querySelector, e.target.value, matcher));
+  };
   const handleChangeMatcher = e => {
-    setMatcher(e.target.value)
+    setMatcher(e.target.value);
     dispatchTestCase(
       updateAssertion(id, queryVariant, querySelector, assertionValue, e.target.value)
-    )
-  }
+    );
+  };
+
+  const style = { width: '15px', height: '15px' };
   return (
     <div>
       <h3>Assertion</h3>
-      <FontAwesomeIcon id='delete-action' icon='times' onClick={handleClickDelete} />
+      <img src={minusIcon} style={style} onClick={handleClickDelete} />
       <label htmlFor='queryVariant'>Query Selector</label>
-      <FontAwesomeIcon className='query' icon='question-circle' />
+      <img src={questionIcon} style={style} />
       <select id='queryVariant' onChange={handleChangeQueryVariant}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -45,7 +48,7 @@ const Assertion = ({ id, dispatchTestCase }) => {
         <option value='findBy'>findBy</option>
         <option value='findAllBy'>findAllBy</option>
       </select>
-      <FontAwesomeIcon className='query' icon='question-circle' />
+      <img src={questionIcon} style={style} />
       <select id='queries' onChange={handleChangeQuerySelector}>
         <option value='' />
         <option value='LabelText'>LabelText</option>
@@ -62,7 +65,7 @@ const Assertion = ({ id, dispatchTestCase }) => {
       <p>Matcher</p>
       <input type='text' onChange={handleChangeMatcher} />
     </div>
-  )
-}
+  );
+};
 
-export default Assertion
+export default Assertion;

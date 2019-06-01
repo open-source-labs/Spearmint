@@ -1,52 +1,53 @@
-import React, { useState } from 'react'
-import { deleteAction, updateAction } from '../../../context/testCaseActions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react';
+import { deleteAction, updateAction } from '../../../context/testCaseActions';
+const minusIcon = require('../../../assets/images/minus3.svg');
+const questionIcon = require('../../../assets/images/question.svg');
 
 const Action = ({ id, dispatchTestCase }) => {
-  const [eventType, setEventType] = useState('')
-  const [eventValue, setEventValue] = useState('')
-  const [queryVariant, setQueryVariant] = useState('')
-  const [querySelector, setQuerySelector] = useState('')
-  const [queryValue, setQueryValue] = useState('')
+  const [eventType, setEventType] = useState('');
+  const [eventValue, setEventValue] = useState('');
+  const [queryVariant, setQueryVariant] = useState('');
+  const [querySelector, setQuerySelector] = useState('');
+  const [queryValue, setQueryValue] = useState('');
 
   const handleClickDelete = e => {
-    dispatchTestCase(deleteAction(id))
-  }
+    dispatchTestCase(deleteAction(id));
+  };
 
   const handleChangeEventType = e => {
-    setEventType(e.target.value)
+    setEventType(e.target.value);
     dispatchTestCase(
       updateAction(id, e.target.value, eventValue, queryVariant, querySelector, queryValue)
-    )
-  }
+    );
+  };
 
   const handleChangeEventValue = e => {
-    setEventValue(e.target.value)
+    setEventValue(e.target.value);
     dispatchTestCase(
       updateAction(id, eventType, e.target.value, queryVariant, querySelector, queryValue)
-    )
-  }
+    );
+  };
 
   const handleChangeQueryVariant = e => {
-    setQueryVariant(e.target.value)
+    setQueryVariant(e.target.value);
     dispatchTestCase(
       updateAction(id, eventType, eventValue, e.target.value, querySelector, queryValue)
-    )
-  }
+    );
+  };
 
   const handleChangeQuerySelector = e => {
-    setQuerySelector(e.target.value)
+    setQuerySelector(e.target.value);
     dispatchTestCase(
       updateAction(id, eventType, eventValue, queryVariant, e.target.value, queryValue)
-    )
-  }
+    );
+  };
 
   const handleChangeQueryValue = e => {
-    setQueryValue(e.target.value)
+    setQueryValue(e.target.value);
     dispatchTestCase(
       updateAction(id, eventType, eventValue, queryVariant, querySelector, e.target.value)
-    )
-  }
+    );
+  };
 
   const needsEventValue = eventType => {
     const eventsWithValues = [
@@ -57,14 +58,27 @@ const Action = ({ id, dispatchTestCase }) => {
       'input',
       'invalid',
       'submit',
-    ]
-    return eventsWithValues.includes(eventType)
-  }
+    ];
+    return eventsWithValues.includes(eventType);
+  };
 
   return (
     <div>
       <h3>Action</h3>
-      <FontAwesomeIcon id='delete-action' icon='times' onClick={handleClickDelete} />
+      {/* <img src={minusIcon} onClick={handleClickDelete} /> */}
+      <svg
+        width='24px'
+        height='24px'
+        viewBox='0 0 24 24'
+        xmlns='http://www.w3.org/2000/svg'
+        xmlnsXlink='http://www.w3.org/1999/xlink'
+        onClick={handleClickDelete}
+      >
+        <path
+          fill='#000000'
+          d='M19,19V5H5V19H19M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5C3,3.89 3.9,3 5,3H19M17,11V13H7V11H17Z'
+        />
+      </svg>
       <label htmlFor='event-type'>Event Type</label>
       <input type='text' id='event-type' onChange={handleChangeEventType} />
       {needsEventValue(eventType) && (
@@ -75,7 +89,18 @@ const Action = ({ id, dispatchTestCase }) => {
       )}
 
       <label htmlFor='queryVariant'>Query Selector</label>
-      <FontAwesomeIcon className='query' icon='question-circle' />
+      <svg
+        width='24px'
+        height='24px'
+        viewBox='0 0 24 24'
+        xmlns='http://www.w3.org/2000/svg'
+        xmlnsXlink='http://www.w3.org/1999/xlink'
+      >
+        <path
+          fill='#000000'
+          d='M15.07,11.25L14.17,12.17C13.45,12.89 13,13.5 13,15H11V14.5C11,13.39 11.45,12.39 12.17,11.67L13.41,10.41C13.78,10.05 14,9.55 14,9C14,7.89 13.1,7 12,7A2,2 0 0,0 10,9H8A4,4 0 0,1 12,5A4,4 0 0,1 16,9C16,9.88 15.64,10.67 15.07,11.25M13,19H11V17H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z'
+        />
+      </svg>
       <select id='queryVariant' onChange={handleChangeQueryVariant}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -85,7 +110,7 @@ const Action = ({ id, dispatchTestCase }) => {
         <option value='findBy'>findBy</option>
         <option value='findAllBy'>findAllBy</option>
       </select>
-      <FontAwesomeIcon className='query' icon='question-circle' />
+      <img src={questionIcon} />
       <select id='queries' onChange={handleChangeQuerySelector}>
         <option value='' />
         <option value='LabelText'>LabelText</option>
@@ -101,7 +126,7 @@ const Action = ({ id, dispatchTestCase }) => {
       <label>Query</label>
       <input type='text' onChange={handleChangeQueryValue} />
     </div>
-  )
-}
+  );
+};
 
-export default Action
+export default Action;

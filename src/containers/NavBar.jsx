@@ -1,53 +1,53 @@
-import React, { useState, useContext } from 'react'
-import FileDirectory from '../components/NavBar/FileDirectory'
-import { FileTreeContext, ToggleContext } from '../App'
-import ReactModal from 'react-modal'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState, useContext } from 'react';
+import FileDirectory from '../components/NavBar/FileDirectory';
+import { FileTreeContext, ToggleContext } from '../App';
+import ReactModal from 'react-modal';
+const closeIcon = require('../assets/images/15 copy.png');
 
-const prevIcon = require('../assets/images/prev_icon.png')
-const exportIcon = require('../assets/images/export_icon.png')
-const folderOpenIcon = require('../assets/images/folder_open_icon.png')
-const saveIcon = require('../assets/images/save_icon.png')
-const trashIcon = require('../assets/images/trash_icon.png')
-const roundPlusIcon = require('../assets/images/round_plus_icon.png')
+const prevIcon = require('../assets/images/prev_icon.png');
+const exportIcon = require('../assets/images/export_icon.png');
+const folderOpenIcon = require('../assets/images/folder_open_icon.png');
+const saveIcon = require('../assets/images/save_icon.png');
+const codeIcon = require('../assets/images/code.svg');
+const roundPlusIcon = require('../assets/images/round_plus_icon.png');
 
 const NavBar = () => {
-  const [opened, setOpened] = useState(false)
-  const [toggled, setToggled] = useState(true)
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-  const fileTree = useContext(FileTreeContext)
-  const setToggleView = useContext(ToggleContext)
+  const [opened, setOpened] = useState(false);
+  const [toggled, setToggled] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const fileTree = useContext(FileTreeContext);
+  const setToggleView = useContext(ToggleContext);
 
   const explorerOpen = () => {
-    setOpened(!opened)
-  }
+    setOpened(!opened);
+  };
 
   const toggleClick = () => {
-    toggled ? setToggleView(true) : setToggleView(false)
-    setToggled(false)
-    if (!toggled) setToggled(true)
-  }
+    toggled ? setToggleView(true) : setToggleView(false);
+    setToggled(false);
+    if (!toggled) setToggled(true);
+  };
 
   const openModal = () => {
-    setModalIsOpen(!false)
-  }
+    setModalIsOpen(!false);
+  };
 
   const closeModal = () => {
-    setModalIsOpen(false)
-  }
+    setModalIsOpen(false);
+  };
 
   const container = {
     display: 'flex',
     justifyContent: 'flex-start',
     height: '100vh',
     width: '320px',
-  }
+  };
 
   const navBar = {
     height: '100%',
     width: '3rem',
     backgroundColor: '#02c2c3',
-  }
+  };
 
   const topNav = {
     display: 'flex',
@@ -55,7 +55,7 @@ const NavBar = () => {
     justifyContent: 'flex-start',
     alignItems: 'center',
     height: '80%',
-  }
+  };
 
   const bottomNav = {
     display: 'flex',
@@ -63,7 +63,7 @@ const NavBar = () => {
     alignItems: 'center',
     justifyContent: 'flex-end',
     height: '20%',
-  }
+  };
 
   const button = {
     padding: '0',
@@ -74,12 +74,12 @@ const NavBar = () => {
     cursor: 'pointer',
     backgroundColor: 'transparent',
     outline: 'none',
-  }
+  };
 
   const icons = {
     height: '1.25rem',
     width: '1.25rem',
-  }
+  };
 
   const plusBtn = {
     padding: '0',
@@ -90,7 +90,9 @@ const NavBar = () => {
     cursor: 'pointer',
     backgroundColor: 'transparent',
     outline: 'none',
-  }
+  };
+
+  const style = { width: '5px', height: '5px' };
 
   return (
     <div id='container' style={container}>
@@ -112,7 +114,7 @@ const NavBar = () => {
             shouldCloseOnEsc={true}
           >
             <h3>Convert to Javascript Code</h3>
-            <FontAwesomeIcon id='delete-action' icon='times' onClick={closeModal} />
+            <img src={closeIcon} style={style} onClick={closeModal} />
             <div>
               <p>File Name</p>
               <input type='text' />
@@ -128,7 +130,7 @@ const NavBar = () => {
             <img src={saveIcon} style={icons} alt='save' />
           </button>
           <button style={button} onClick={toggleClick}>
-            <img src={trashIcon} style={icons} alt='delete' />
+            <img src={codeIcon} style={icons} alt='delete' />
           </button>
         </div>
 
@@ -140,7 +142,7 @@ const NavBar = () => {
       </div>
       {!opened && <FileDirectory fileTree={fileTree} />}
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;
