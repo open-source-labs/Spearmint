@@ -1,6 +1,6 @@
 import React from 'react';
 import { deleteMockDataKey, updateMockDataKey } from '../../../context/mockDataActions';
-const minusIcon = require('../../../assets/images/minus1.svg');
+const minusIcon = require('../../../assets/images/minus.png');
 
 const MockDataKey = ({ dispatchMockData, mockDatumId, mockDatumKeyId, fieldKey, fieldType }) => {
   const handleChangeDelete = e => {

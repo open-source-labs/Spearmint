@@ -5,8 +5,6 @@ import ProjectLoader from './containers/ProjectLoader';
 import RightPanel from './containers/RightPanel';
 import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
 import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPlus, faMinus, faTimes, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
 export const UrlContext = createContext(null);
 export const FileTreeContext = createContext(null);
@@ -15,8 +13,6 @@ export const LoadedContext = createContext(null);
 export const ToggleContext = createContext(null);
 export const ComponentNameContext = createContext(null);
 export const FilePathContext = createContext(null);
-
-library.add(faPlus, faMinus, faTimes, faQuestionCircle);
 
 const styles = {
   fontFamily: 'arial',

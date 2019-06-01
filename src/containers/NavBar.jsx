@@ -2,14 +2,14 @@ import React, { useState, useContext } from 'react';
 import FileDirectory from '../components/NavBar/FileDirectory';
 import { FileTreeContext, ToggleContext } from '../App';
 import ReactModal from 'react-modal';
-const closeIcon = require('../assets/images/15 copy.png');
+const closeIcon = require('../assets/images/close-outline.png');
 
-const prevIcon = require('../assets/images/prev_icon.png');
-const exportIcon = require('../assets/images/export_icon.png');
-const folderOpenIcon = require('../assets/images/folder_open_icon.png');
-const saveIcon = require('../assets/images/save_icon.png');
-const codeIcon = require('../assets/images/code.svg');
-const roundPlusIcon = require('../assets/images/round_plus_icon.png');
+const leftIcon = require('../assets/images/chevron-left.png');
+const rightIcon = require('../assets/images/chevron-right.png');
+const exportIcon = require('../assets/images/file-export.png');
+const folderOpenIcon = require('../assets/images/folder-open.png');
+const saveIcon = require('../assets/images/save.png');
+const codeIcon = require('../assets/images/code.png');
 
 const NavBar = () => {
   const [opened, setOpened] = useState(false);
@@ -99,7 +99,7 @@ const NavBar = () => {
       <div id='navBar' style={navBar}>
         <div id='topNav' style={topNav}>
           <button style={button} onClick={explorerOpen}>
-            <img src={prevIcon} style={icons} alt='fileExplorer' />{' '}
+            <img src={leftIcon} style={icons} alt='fileExplorer' />{' '}
           </button>
           <button style={button} onClick={openModal}>
             <img src={exportIcon} style={icons} alt='export' />
@@ -134,13 +134,8 @@ const NavBar = () => {
           </button>
         </div>
 
-        <div id='bottomNav' style={bottomNav}>
-          <button style={plusBtn}>
-            <img src={roundPlusIcon} style={icons} alt='newTest' />
-          </button>
-        </div>
+        {!opened && <FileDirectory fileTree={fileTree} />}
       </div>
-      {!opened && <FileDirectory fileTree={fileTree} />}
     </div>
   );
 };

@@ -5,8 +5,8 @@ import {
   addMockDataKey,
   updateMockDataName,
 } from '../../../context/mockDataActions';
-const plusIcon = require('../../../assets/images/13 copy.png');
-const minusIcon = require('../../../assets/images/14 copy.png');
+const plusIcon = require('../../../assets/images/plus.png');
+const minusIcon = require('../../../assets/images/minus-box.png');
 
 const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
   const handleClickAdd = (e, id) => {

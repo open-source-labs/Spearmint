@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
-const minusIcon = require('../../../assets/images/minus3.svg');
-const questionIcon = require('../../../assets/images/19 copy.png');
+const minusIcon = require('../../../assets/images/minus-box-outline.png');
+const questionIcon = require('../../../assets/images/help-circle.png');
 
 const Assertion = ({ id, dispatchTestCase }) => {
   const [queryVariant, setQueryVariant] = useState('');

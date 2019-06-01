@@ -10,9 +10,6 @@
   "homepage": "https://www.github.com/spearmintjs/spearmint",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.18",
-    "@fortawesome/free-solid-svg-icons": "^5.8.2",
-    "@fortawesome/react-fontawesome": "^0.1.4",
     "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
     "electron": "^5.0.1",

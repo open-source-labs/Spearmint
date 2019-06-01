@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import RenderProp from './RenderProp';
 import { ComponentNameContext, FilePathContext, ReceivedFilePathContext } from '../../../App';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
-const minusIcon = require('../../../assets/images/minus3.svg');
+const minusIcon = require('../../../assets/images/minus-box.png');
 
 const Render = ({ id, dispatchTestCase, props }) => {
   const [componentName, setComponentName] = useState('');
