@@ -1,4 +1,5 @@
 import React, { useState, useReducer, createContext } from "react";
+import styles from "./assets/stylesheets/components/App.module.scss";
 import NavBar from "./containers/NavBar";
 import LeftPanel from "./containers/LeftPanel";
 import ProjectLoader from "./containers/ProjectLoader";
@@ -23,15 +24,15 @@ export const ComponentNameContext = createContext(null);
 export const FilePathContext = createContext(null);
 export const FileToggleContext = createContext(null);
 
-const styles = {
-  fontFamily: "arial",
-  display: "flex"
-};
+// const styles = {
+//   fontFamily: "arial",
+//   display: "flex"
+// };
 
-const loaderDiv = {
-  display: "flex",
-  justifyContent: "center"
-};
+// const loaderDiv = {
+//   display: "flex",
+//   justifyContent: "center"
+// };
 
 const App = () => {
   const [fileTree, setFileTree] = useState(null);
@@ -53,7 +54,7 @@ const App = () => {
 
   if (!loaded) {
     return (
-      <div style={loaderDiv}>
+      <div>
         <FileTreeContext.Provider value={setFileTree}>
           <LoadedContext.Provider value={setLoaded}>
             <UrlContext.Provider value={setUrl}>

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styles from "../assets/stylesheets/components/NavBar/NavBar.module.scss";
 import FileDirectory from "../components/NavBar/FileDirectory";
-import { FileTreeContext, ToggleContext, FileToggleContex } from "../App";
+import { FileTreeContext, ToggleContext, FileToggleContext } from "../App";
 import ReactModal from "react-modal";
 const closeIcon = require("../assets/images/close-outline.png");
 
@@ -102,7 +102,7 @@ const NavBar = () => {
     //  <div id='topNav' style={topNav}>
     <div id={styles.navBar}>
       <button style={button} onClick={explorerOpen}>
-        <img src={prevIcon} style={icons} alt="fileExplorer" />{" "}
+        <img src={leftIcon} style={icons} alt="fileExplorer" />{" "}
       </button>
       <button style={button} onClick={openModal}>
         <img src={exportIcon} style={icons} alt="export" />
@@ -117,7 +117,7 @@ const NavBar = () => {
         shouldCloseOnEsc={true}
       >
         <h3>Convert to Javascript Code</h3>
-        <FontAwesomeIcon id="delete-action" icon="times" onClick={closeModal} />
+        {/* <FontAwesomeIcon id="delete-action" icon="times" onClick={closeModal} /> */}
         <div>
           <p>File Name</p>
           <input type="text" />
@@ -133,7 +133,7 @@ const NavBar = () => {
         <img src={saveIcon} style={icons} alt="save" />
       </button>
       <button style={button} onClick={toggleClick}>
-        <img src={trashIcon} style={icons} alt="delete" />
+        <img src={codeIcon} style={icons} alt="delete" />
       </button>
       {/* </div> */}
 

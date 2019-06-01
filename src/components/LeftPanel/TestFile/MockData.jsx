@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from "react";
 import MockDataFieldKey from "./MockDataKey";
 import {
@@ -6,18 +5,8 @@ import {
   addMockDataKey,
   updateMockDataName
 } from "../../../context/mockDataActions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-=======
-import React from 'react';
-import MockDataFieldKey from './MockDataKey';
-import {
-  deleteMockData,
-  addMockDataKey,
-  updateMockDataName,
-} from '../../../context/mockDataActions';
-const plusIcon = require('../../../assets/images/plus.png');
-const minusIcon = require('../../../assets/images/minus-box.png');
->>>>>>> c2c77423de5df72be189a45d02eb3229d5733e08
+const plusIcon = require("../../../assets/images/plus.png");
+const minusIcon = require("../../../assets/images/minus-box.png");
 
 const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
   const handleClickAdd = (e, id) => {
@@ -35,15 +24,6 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
     dispatchMockData(updateMockDataName(mockDatumId, e.target.value));
   };
 
-<<<<<<< HEAD
-  // const keys = {
-  //   padding: '5px',
-  // }
-=======
-  const keys = {
-    padding: '5px',
-  };
->>>>>>> c2c77423de5df72be189a45d02eb3229d5733e08
   const mockDataFieldKeys = fieldKeys.map(key => (
     <MockDataFieldKey
       key={key.id}
@@ -57,12 +37,7 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
 
   return (
     <div>
-<<<<<<< HEAD
-      <FontAwesomeIcon
-        id="delete-mock-data"
-        icon="times"
-        onClick={handleClickDelete}
-      />
+      <img src={minusIcon} onClick={handleClickDelete} />
       <label htmlFor="mock-data-name">Name </label>
       <input type="text" id="mock-data-name" onChange={handleClickUpdate} />
       <div>
@@ -71,19 +46,7 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
       </div>
       {mockDataFieldKeys}
       <button onClick={e => handleClickAdd(e, mockDatumId)}>
-        <FontAwesomeIcon id="add-mock-data-key" icon="plus" />
-=======
-      <img src={minusIcon} onClick={handleClickDelete} style={keys} />
-      <label htmlFor='mock-data-name'>Name </label>
-      <input type='text' id='mock-data-name' onChange={handleClickUpdate} />
-      <div style={keys}>
-        <label htmlFor='mock-data-key'>Add filed keys </label>
-        <label htmlFor='mock-data-type'>Type </label>
-      </div>
-      {mockDataFieldKeys}
-      <button onClick={e => handleClickAdd(e, mockDatumId)}>
         <img src={plusIcon} />
->>>>>>> c2c77423de5df72be189a45d02eb3229d5733e08
         Add Key
       </button>
     </div>

@@ -1,42 +1,9 @@
 #navBar {
   grid-area: navBar;
-  // display: flex;
   background-color: #02c2c3;
-  // justify-content: flex-start;
   padding: 0.625rem;
-  height: 100%;
+  height: 750px;
   width: 3rem;
   flex-direction: column;
-  // flex-flow: row nowrap;
-  // overflow: scroll;
+  align-items: center;
 }
-
-// const container = {
-//   display: 'flex',
-//   justifyContent: 'flex-start',
-//   height: '100vh',
-//   width: '320px',
-// }
-
-// const navBar = {
-//   padding: '.625rem',
-//   height: '100%',
-//   width: '2rem',
-//   backgroundColor: '#02c2c3',
-// }
-
-// const topNav = {
-//   display: 'flex',
-//   flexDirection: 'column',
-//   justifyContent: 'flex-start',
-//   alignItems: 'center',
-//   height: '80%',
-// }
-
-// const bottomNav = {
-//   display: 'flex',
-//   flexDirection: 'column',
-//   alignItems: 'center',
-//   justifyContent: 'flex-end',
-//   height: '20%',
-// }

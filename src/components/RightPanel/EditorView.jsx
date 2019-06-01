@@ -23,8 +23,8 @@ const Editor = () => {
     <div>
       {toggleView ? null : (
         <MonacoEditor
-          width="500"
-          height="100%"
+          width="680"
+          height="750"
           language="javascript"
           value={fileCode}
           options={options}

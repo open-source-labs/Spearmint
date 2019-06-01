@@ -32,36 +32,34 @@ const FileDirectory = ({ fileTree }) => {
         setFilePath(file.filePath);
         // console.log(path.relative('__tests__/test', file.filePath));
       }
-
-      if (file.files.length) {
-        return (
-          <ul key={file.fileName} style={ul}>
-            <span>
-              <img src={folderImg} alt="" />
-              <button style={fileBtn} className="fileBtn">
-                {file.fileName}
-              </button>
-            </span>
-            {file.files.length && convertToHTML(file.files, fileImg)}
-          </ul>
-        );
-      } else {
-        return (
-          <ul key={file.filePath} style={ul}>
-            <span>
-              <img src={fileImg} alt="" />
-              <button
-                style={fileBtn}
-                className="fileBtn"
-                onClick={() => {
-                  handleShowCode(file.filePath);
-                }}
-              >
-                {file.fileName}
-              </button>
-            </span>
-          </ul>
-        );
+      if (file.fileName !== "node_modules" && file.fileName !== ".git") {
+        if (file.files.length) {
+          return (
+            <ul key={file.fileName}>
+              <span>
+                <img src={folderImg} alt="" />
+                <button id={styles.dirButton}>{file.fileName}</button>
+              </span>
+              {file.files.length && convertToHTML(file.files, fileImg)}
+            </ul>
+          );
+        } else {
+          return (
+            <ul key={file.filePath}>
+              <span>
+                <img src={fileImg} alt="" />
+                <button
+                  id={styles.dirButton}
+                  onClick={() => {
+                    handleShowCode(file.filePath);
+                  }}
+                >
+                  {file.fileName}
+                </button>
+              </span>
+            </ul>
+          );
+        }
       }
     });
   };
