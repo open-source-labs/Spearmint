@@ -1,52 +1,68 @@
-import React, { useState } from 'react'
-import { deleteAction, updateAction } from '../../../context/testCaseActions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react';
+import { deleteAction, updateAction } from '../../../context/testCaseActions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Autosuggest from 'react-autosuggest';
+import { events } from './ActionEvents';
+
+const getSuggestions = value => {
+  const inputValue = value.trim().toLowerCase();
+  const inputLength = inputValue.length;
+
+  return inputLength === 0
+    ? []
+    : events.filter(e => e.name.toLowerCase().slice(0, inputLength) === inputValue);
+};
+
+const getSuggestionValue = suggestion => suggestion.name;
+const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
 
 const Action = ({ id, dispatchTestCase }) => {
-  const [eventType, setEventType] = useState('')
-  const [eventValue, setEventValue] = useState('')
-  const [queryVariant, setQueryVariant] = useState('')
-  const [querySelector, setQuerySelector] = useState('')
-  const [queryValue, setQueryValue] = useState('')
+  const [eventType, setEventType] = useState('');
+  const [eventValue, setEventValue] = useState('');
+  const [queryVariant, setQueryVariant] = useState('');
+  const [querySelector, setQuerySelector] = useState('');
+  const [queryValue, setQueryValue] = useState('');
+  const [eventName, setEventName] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
 
   const handleClickDelete = e => {
-    dispatchTestCase(deleteAction(id))
-  }
+    dispatchTestCase(deleteAction(id));
+  };
 
   const handleChangeEventType = e => {
-    setEventType(e.target.value)
+    setEventType(e.target.value);
     dispatchTestCase(
       updateAction(id, e.target.value, eventValue, queryVariant, querySelector, queryValue)
-    )
-  }
+    );
+  };
 
   const handleChangeEventValue = e => {
-    setEventValue(e.target.value)
+    setEventValue(e.target.value);
     dispatchTestCase(
       updateAction(id, eventType, e.target.value, queryVariant, querySelector, queryValue)
-    )
-  }
+    );
+  };
 
   const handleChangeQueryVariant = e => {
-    setQueryVariant(e.target.value)
+    setQueryVariant(e.target.value);
     dispatchTestCase(
       updateAction(id, eventType, eventValue, e.target.value, querySelector, queryValue)
-    )
-  }
+    );
+  };
 
   const handleChangeQuerySelector = e => {
-    setQuerySelector(e.target.value)
+    setQuerySelector(e.target.value);
     dispatchTestCase(
       updateAction(id, eventType, eventValue, queryVariant, e.target.value, queryValue)
-    )
-  }
+    );
+  };
 
   const handleChangeQueryValue = e => {
-    setQueryValue(e.target.value)
+    setQueryValue(e.target.value);
     dispatchTestCase(
       updateAction(id, eventType, eventValue, queryVariant, querySelector, e.target.value)
-    )
-  }
+    );
+  };
 
   const needsEventValue = eventType => {
     const eventsWithValues = [
@@ -57,22 +73,105 @@ const Action = ({ id, dispatchTestCase }) => {
       'input',
       'invalid',
       'submit',
-    ]
-    return eventsWithValues.includes(eventType)
-  }
+    ];
+    return eventsWithValues.includes(eventType);
+  };
+
+  const onChange = (event, { newValue }) => {
+    setEventName(newValue);
+  };
+
+  const onSuggestionsFetchRequested = ({ value }) => {
+    setSuggestions(getSuggestions(value));
+  };
+
+  const onSuggestionsClearRequested = () => {
+    setSuggestions([]);
+  };
+
+  const inputProps = {
+    placeholder: 'Enter an action',
+    value: eventName,
+    onChange,
+  };
+
+  const theme = {
+    container: {
+      position: 'relative',
+    },
+    input: {
+      width: 120,
+      height: 0,
+      padding: '10px 20px',
+      fontFamily: 'Helvetica, sans-serif',
+      fontWeight: 300,
+      fontSize: 16,
+      border: '1px solid #aaa',
+      borderTopLeftRadius: 4,
+      borderTopRightRadius: 4,
+      borderBottomLeftRadius: 4,
+      borderBottomRightRadius: 4,
+    },
+    inputFocused: {
+      outline: 'none',
+    },
+    inputOpen: {
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0,
+    },
+    suggestionsContainer: {
+      display: 'none',
+    },
+    suggestionsContainerOpen: {
+      display: 'block',
+      position: 'absolute',
+      top: 51,
+      width: 280,
+      border: '1px solid #aaa',
+      backgroundColor: '#fff',
+      fontFamily: 'Helvetica, sans-serif',
+      fontWeight: 300,
+      fontSize: 16,
+      borderBottomLeftRadius: 4,
+      borderBottomRightRadius: 4,
+      zIndex: 2,
+    },
+    suggestionsList: {
+      margin: 0,
+      padding: 0,
+      listStyleType: 'none',
+    },
+    suggestion: {
+      cursor: 'pointer',
+      padding: '10px 20px',
+    },
+    suggestionHighlighted: {
+      backgroundColor: '#ddd',
+    },
+  };
 
   return (
     <div>
       <h3>Action</h3>
       <FontAwesomeIcon id='delete-action' icon='times' onClick={handleClickDelete} />
       <label htmlFor='event-type'>Event Type</label>
-      <input type='text' id='event-type' onChange={handleChangeEventType} />
+      <Autosuggest
+        theme={theme}
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+      />
+
+      {/* <input type='text' id='event-type' onChange={handleChangeEventType} />
       {needsEventValue(eventType) && (
         <span>
           <label htmlFor='event-value' />
           <input type='text' id='event-type' onChange={handleChangeEventValue} />
         </span>
-      )}
+      )} */}
 
       <label htmlFor='queryVariant'>Query Selector</label>
       <FontAwesomeIcon className='query' icon='question-circle' />
@@ -101,7 +200,7 @@ const Action = ({ id, dispatchTestCase }) => {
       <label>Query</label>
       <input type='text' onChange={handleChangeQueryValue} />
     </div>
-  )
-}
+  );
+};
 
-export default Action
+export default Action;
