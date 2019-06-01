@@ -8,7 +8,8 @@ import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { updateTestStatement } from '../../../context/testCaseActions';
 import { toggleMockData, addMockData } from '../../../context/mockDataActions';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
   const [testCase, dispatchTestCase] = useContext(TestCaseContext);
@@ -89,7 +90,7 @@ const TestCase = () => {
       {mockData.mockDataCheckBox && (
         <section style={testStyle}>
           <label htmlFor='mock-data'>Mock data</label>
-          <FontAwesomeIcon id='mock-data' icon='plus' onClick={handleAddMockData} />
+          <img src={plusIcon} onClick={handleAddMockData} />
           {mockDataJSX}
         </section>
       )}
