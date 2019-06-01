@@ -10,6 +10,7 @@
   "homepage": "https://www.github.com/spearmintjs/spearmint",
   "private": true,
   "dependencies": {
+    "beautify": "0.0.8",
     "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
     "electron": "^5.0.1",

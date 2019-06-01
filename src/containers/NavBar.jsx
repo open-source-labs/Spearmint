@@ -1,25 +1,23 @@
 import React, { useState, useContext } from 'react';
 import FileDirectory from '../components/NavBar/FileDirectory';
 import { FileTreeContext, ToggleContext } from '../App';
-import ReactModal from 'react-modal';
-const closeIcon = require('../assets/images/close-outline.png');
+import ExportFileModal from '../components/NavBar/ExportFileModal';
 
 const leftIcon = require('../assets/images/chevron-left.png');
-const rightIcon = require('../assets/images/chevron-right.png');
 const exportIcon = require('../assets/images/file-export.png');
 const folderOpenIcon = require('../assets/images/folder-open.png');
 const saveIcon = require('../assets/images/save.png');
 const codeIcon = require('../assets/images/code.png');
 
 const NavBar = () => {
-  const [opened, setOpened] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [toggled, setToggled] = useState(true);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const fileTree = useContext(FileTreeContext);
   const setToggleView = useContext(ToggleContext);
 
   const explorerOpen = () => {
-    setOpened(!opened);
+    setIsOpen(!isOpen);
   };
 
   const toggleClick = () => {
@@ -29,11 +27,11 @@ const NavBar = () => {
   };
 
   const openModal = () => {
-    setModalIsOpen(!false);
+    setIsModalOpen(!false);
   };
 
   const closeModal = () => {
-    setModalIsOpen(false);
+    setIsModalOpen(false);
   };
 
   const container = {
@@ -57,14 +55,6 @@ const NavBar = () => {
     height: '80%',
   };
 
-  const bottomNav = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    height: '20%',
-  };
-
   const button = {
     padding: '0',
     border: '0',
@@ -81,19 +71,6 @@ const NavBar = () => {
     width: '1.25rem',
   };
 
-  const plusBtn = {
-    padding: '0',
-    border: '0',
-    marginBottom: '2rem',
-    width: '1.6rem',
-    height: '1.6rem',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    outline: 'none',
-  };
-
-  const style = { width: '5px', height: '5px' };
-
   return (
     <div id='container' style={container}>
       <div id='navBar' style={navBar}>
@@ -105,23 +82,7 @@ const NavBar = () => {
             <img src={exportIcon} style={icons} alt='export' />
           </button>
 
-          <ReactModal
-            className='Modal'
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            contentLabel='Save testing file'
-            shouldCloseOnOverlayClick={true}
-            shouldCloseOnEsc={true}
-          >
-            <h3>Convert to Javascript Code</h3>
-            <img src={closeIcon} alt='' style={style} onClick={closeModal} />
-            <div>
-              <p>File Name</p>
-              <input type='text' />
-              <button onClick={closeModal}>Cancel</button>
-              <button>Save</button>
-            </div>
-          </ReactModal>
+          <ExportFileModal isModalOpen={isModalOpen} closeModal={closeModal} />
 
           <button style={button}>
             <img src={folderOpenIcon} style={icons} alt='folderOpen' />
@@ -134,7 +95,7 @@ const NavBar = () => {
           </button>
         </div>
 
-        {!opened && <FileDirectory fileTree={fileTree} />}
+        {!isOpen && <FileDirectory fileTree={fileTree} />}
       </div>
     </div>
   );
