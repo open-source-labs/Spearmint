@@ -76,10 +76,11 @@ export const deleteRender = id => ({
   id,
 })
 
-export const updateRender = (id, componentName) => ({
+export const updateRender = (id, componentName, filePath) => ({
   type: actionTypes.UPDATE_RENDER,
   id,
   componentName,
+  filePath,
 })
 
 export const addRenderProp = id => ({

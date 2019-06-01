@@ -1,30 +1,30 @@
-import React, { useContext } from 'react'
-import TestMenu from './TestMenu'
-import MockData from './MockData'
-import Action from './Action'
-import Assertion from './Assertion'
-import Render from './Render'
-import { TestCaseContext } from '../../../context/testCaseReducer'
-import { MockDataContext } from '../../../context/mockDataReducer'
-import { updateTestStatement } from '../../../context/testCaseActions'
-import { toggleMockData, addMockData } from '../../../context/mockDataActions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useContext } from 'react';
+import TestMenu from './TestMenu';
+import MockData from './MockData';
+import Action from './Action';
+import Assertion from './Assertion';
+import Render from './Render';
+import { TestCaseContext } from '../../../context/testCaseReducer';
+import { MockDataContext } from '../../../context/mockDataReducer';
+import { updateTestStatement } from '../../../context/testCaseActions';
+import { toggleMockData, addMockData } from '../../../context/mockDataActions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const TestCase = () => {
-  const [testCase, dispatchTestCase] = useContext(TestCaseContext)
-  const [mockData, dispatchMockData] = useContext(MockDataContext)
+  const [testCase, dispatchTestCase] = useContext(TestCaseContext);
+  const [mockData, dispatchMockData] = useContext(MockDataContext);
 
   const handleUpdateTestStatement = e => {
-    dispatchTestCase(updateTestStatement(e.target.value))
-  }
+    dispatchTestCase(updateTestStatement(e.target.value));
+  };
 
   const handleToggleMockData = () => {
-    dispatchMockData(toggleMockData())
-  }
+    dispatchMockData(toggleMockData());
+  };
 
   const handleAddMockData = () => {
-    dispatchMockData(addMockData())
-  }
+    dispatchMockData(addMockData());
+  };
 
   const mockDataJSX = mockData.mockData.map(mockDatum => {
     return (
@@ -34,17 +34,18 @@ const TestCase = () => {
         dispatchMockData={dispatchMockData}
         fieldKeys={mockDatum.fieldKeys}
       />
-    )
-  })
+    );
+  });
 
   const statementsJSX = testCase.statements.map(statement => {
+    console.log(statement);
     switch (statement.type) {
       case 'action':
-        return <Action key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />
+        return <Action key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />;
       case 'assertion':
         return (
           <Assertion key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />
-        )
+        );
       case 'render':
         return (
           <Render
@@ -53,15 +54,15 @@ const TestCase = () => {
             dispatchTestCase={dispatchTestCase}
             props={statement.props}
           />
-        )
+        );
       default:
-        return <></>
+        return <></>;
     }
-  })
+  });
 
   const testStyle = {
     padding: '5px',
-  }
+  };
 
   return (
     <div>
@@ -93,7 +94,7 @@ const TestCase = () => {
       )}
       <div>{statementsJSX}</div>
     </div>
-  )
-}
+  );
+};
 
-export default TestCase
+export default TestCase;

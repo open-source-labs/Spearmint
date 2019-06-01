@@ -44,9 +44,8 @@ const NavBar = () => {
   }
 
   const navBar = {
-    padding: '.625rem',
     height: '100%',
-    width: '2rem',
+    width: '3rem',
     backgroundColor: '#02c2c3',
   }
 

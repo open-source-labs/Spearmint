@@ -1,41 +1,43 @@
-import React, { useState, useReducer, createContext } from 'react'
-import NavBar from './containers/NavBar'
-import LeftPanel from './containers/LeftPanel'
-import ProjectLoader from './containers/ProjectLoader'
-import RightPanel from './containers/RightPanel'
-import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer'
-import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faMinus, faTimes, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useReducer, createContext } from 'react';
+import NavBar from './containers/NavBar';
+import LeftPanel from './containers/LeftPanel';
+import ProjectLoader from './containers/ProjectLoader';
+import RightPanel from './containers/RightPanel';
+import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
+import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPlus, faMinus, faTimes, faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
 
-export const UrlContext = createContext(null)
-export const FileTreeContext = createContext(null)
-export const FileCodeContext = createContext(null)
-export const LoadedContext = createContext(null)
-export const ToggleContext = createContext(null)
+export const UrlContext = createContext(null);
+export const FileTreeContext = createContext(null);
+export const FileCodeContext = createContext(null);
+export const LoadedContext = createContext(null);
+export const ToggleContext = createContext(null);
+export const ComponentNameContext = createContext(null);
+export const FilePathContext = createContext(null);
 
-library.add(faPlus, faMinus, faTimes, faQuestionCircle)
+library.add(faPlus, faMinus, faTimes, faQuestionCircle);
 
 const styles = {
   fontFamily: 'arial',
   display: 'flex',
-}
+};
 
 const loaderDiv = {
   display: 'flex',
   justifyContent: 'center',
-}
+};
 
 const App = () => {
-  const [fileTree, setFileTree] = useState(null)
-  const [fileCode, setFileCode] = useState('')
-  const [url, setUrl] = useState('')
-  const [loaded, setLoaded] = useState(false)
-  const [toggleView, setToggleView] = useState(false)
-
-  const [testCase, dispatchTestCase] = useReducer(testCaseReducer, testCaseState)
-  const [mockData, dispatchMockData] = useReducer(mockDataReducer, mockDataState)
-
+  const [fileTree, setFileTree] = useState(null);
+  const [fileCode, setFileCode] = useState('');
+  const [url, setUrl] = useState('');
+  const [loaded, setLoaded] = useState(false);
+  const [toggleView, setToggleView] = useState(false);
+  const [componentName, setComponentName] = useState('');
+  const [filePath, setFilePath] = useState(null);
+  const [testCase, dispatchTestCase] = useReducer(testCaseReducer, testCaseState);
+  const [mockData, dispatchMockData] = useReducer(mockDataReducer, mockDataState);
   if (!loaded) {
     return (
       <div style={loaderDiv}>
@@ -47,7 +49,7 @@ const App = () => {
           </LoadedContext.Provider>
         </FileTreeContext.Provider>
       </div>
-    )
+    );
   } else {
     return (
       <div style={styles}>
@@ -56,7 +58,11 @@ const App = () => {
             <ToggleContext.Provider value={setToggleView}>
               <TestCaseContext.Provider value={testCase}>
                 <MockDataContext.Provider value={mockData}>
-                  <NavBar />
+                  <FilePathContext.Provider value={setFilePath}>
+                    <ComponentNameContext.Provider value={componentName}>
+                      <NavBar />
+                    </ComponentNameContext.Provider>
+                  </FilePathContext.Provider>
                 </MockDataContext.Provider>
               </TestCaseContext.Provider>
             </ToggleContext.Provider>
@@ -65,7 +71,11 @@ const App = () => {
 
         <TestCaseContext.Provider value={[testCase, dispatchTestCase]}>
           <MockDataContext.Provider value={[mockData, dispatchMockData]}>
-            <LeftPanel />
+            <ComponentNameContext.Provider value={setComponentName}>
+              <FilePathContext.Provider value={[filePath, setFilePath]}>
+                <LeftPanel />
+              </FilePathContext.Provider>
+            </ComponentNameContext.Provider>
           </MockDataContext.Provider>
         </TestCaseContext.Provider>
 
@@ -77,8 +87,8 @@ const App = () => {
           </UrlContext.Provider>
         </FileCodeContext.Provider>
       </div>
-    )
+    );
   }
-}
+};
 
-export default App
+export default App;
