@@ -16,21 +16,21 @@ export const actionTypes = {
   ADD_RENDER_PROP: 'ADD_RENDER_PROP',
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
-}
+};
 
 export const updateTestStatement = testStatement => ({
   type: actionTypes.UPDATE_TEST_STATEMENT,
   testStatement,
-})
+});
 
 export const addAction = () => ({
   type: actionTypes.ADD_ACTION,
-})
+});
 
 export const deleteAction = id => ({
   type: actionTypes.DELETE_ACTION,
   id,
-})
+});
 
 export const updateAction = (
   id,
@@ -47,16 +47,16 @@ export const updateAction = (
   queryVariant,
   querySelector,
   queryValue,
-})
+});
 
 export const addAssertion = () => ({
   type: actionTypes.ADD_ASSERTION,
-})
+});
 
 export const deleteAssertion = id => ({
   type: actionTypes.DELETE_ASSERTION,
   id,
-})
+});
 
 export const updateAssertion = (id, queryVariant, querySelector, assertionValue, matcher) => ({
   type: actionTypes.UPDATE_ASSERTION,
@@ -65,33 +65,33 @@ export const updateAssertion = (id, queryVariant, querySelector, assertionValue,
   querySelector,
   assertionValue,
   matcher,
-})
+});
 
 export const addRender = () => ({
   type: actionTypes.ADD_RENDER,
-})
+});
 
 export const deleteRender = id => ({
   type: actionTypes.DELETE_RENDER,
   id,
-})
+});
 
 export const updateRender = (id, componentName, filePath) => ({
   type: actionTypes.UPDATE_RENDER,
   id,
   componentName,
   filePath,
-})
+});
 
 export const addRenderProp = id => ({
   type: actionTypes.ADD_RENDER_PROP,
   id,
-})
+});
 
 export const deleteRenderProp = id => ({
   type: actionTypes.DELETE_RENDER_PROP,
   id,
-})
+});
 
 export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   type: actionTypes.UPDATE_RENDER_PROP,
@@ -99,4 +99,4 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propId,
   propKey,
   propValue,
-})
+});
