@@ -1,19 +1,11 @@
-import React, { useState, useReducer, createContext } from "react";
-import styles from "./assets/stylesheets/components/App.module.scss";
-import NavBar from "./containers/NavBar";
-import LeftPanel from "./containers/LeftPanel";
-import ProjectLoader from "./containers/ProjectLoader";
-import RightPanel from "./containers/RightPanel";
-import {
-  TestCaseContext,
-  testCaseState,
-  testCaseReducer
-} from "./context/testCaseReducer";
-import {
-  MockDataContext,
-  mockDataState,
-  mockDataReducer
-} from "./context/mockDataReducer";
+import React, { useState, useReducer, createContext } from 'react';
+import styles from './assets/stylesheets/components/App.module.scss';
+import NavBar from './containers/NavBar';
+import LeftPanel from './containers/LeftPanel';
+import ProjectLoader from './containers/ProjectLoader';
+import RightPanel from './containers/RightPanel';
+import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
+import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
 
 //TODO: create app reducer
 export const UrlContext = createContext(null);
@@ -37,21 +29,15 @@ export const FileToggleContext = createContext(null);
 
 const App = () => {
   const [fileTree, setFileTree] = useState(null);
-  const [fileCode, setFileCode] = useState("");
-  const [url, setUrl] = useState("");
+  const [fileCode, setFileCode] = useState('');
+  const [url, setUrl] = useState('');
   const [loaded, setLoaded] = useState(false);
   const [toggleView, setToggleView] = useState(false);
-  const [componentName, setComponentName] = useState("");
+  const [componentName, setComponentName] = useState('');
   const [filePath, setFilePath] = useState(null);
   const [fileToggle, setFileToggle] = useState(false);
-  const [testCase, dispatchTestCase] = useReducer(
-    testCaseReducer,
-    testCaseState
-  );
-  const [mockData, dispatchMockData] = useReducer(
-    mockDataReducer,
-    mockDataState
-  );
+  const [testCase, dispatchTestCase] = useReducer(testCaseReducer, testCaseState);
+  const [mockData, dispatchMockData] = useReducer(mockDataReducer, mockDataState);
 
   if (!loaded) {
     return (

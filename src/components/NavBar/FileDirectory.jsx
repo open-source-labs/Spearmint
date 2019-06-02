@@ -1,14 +1,10 @@
-import React from "react";
-import styles from "../../assets/stylesheets/components/NavBar/FileDirectory.module.scss";
-import { useContext } from "react";
-import {
-  FileCodeContext,
-  FilePathContext,
-  ComponentNameContext
-} from "../../App";
-let remote = window.require("electron").remote;
-let electronFs = remote.require("fs");
-let path = remote.require("path");
+import React from 'react';
+import styles from '../../assets/stylesheets/components/NavBar/FileDirectory.module.scss';
+import { useContext } from 'react';
+import { FileCodeContext, FilePathContext, ComponentNameContext } from '../../App';
+let remote = window.require('electron').remote;
+let electronFs = remote.require('fs');
+let path = remote.require('path');
 
 const FileDirectory = ({ fileTree }) => {
   const setFileCode = useContext(FileCodeContext);
@@ -16,27 +12,27 @@ const FileDirectory = ({ fileTree }) => {
   const componentName = useContext(ComponentNameContext);
 
   const handleShowCode = fileTree => {
-    const content = electronFs.readFileSync(fileTree, "utf8");
+    const content = electronFs.readFileSync(fileTree, 'utf8');
     setFileCode(content);
   };
 
   const convertToHTML = filetree => {
-    let folderImg = "https://img.icons8.com/ios/20/000000/opened-folder.png";
-    let fileImg = "https://img.icons8.com/metro/20/000000/document.png";
+    let folderImg = 'https://img.icons8.com/ios/20/000000/opened-folder.png';
+    let fileImg = 'https://img.icons8.com/metro/20/000000/document.png';
 
     return filetree.map(file => {
       const desiredComponentName = file.fileName
-        .substring(0, file.fileName.indexOf(".") - 1)
+        .substring(0, file.fileName.indexOf('.') - 1)
         .toLowerCase();
       if (componentName && componentName === desiredComponentName) {
         setFilePath(file.filePath);
       }
-      if (file.fileName !== "node_modules" && file.fileName !== ".git") {
+      if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (file.files.length) {
           return (
             <ul key={file.fileName}>
               <span>
-                <img src={folderImg} alt="" />
+                <img src={folderImg} alt='' />
                 <button id={styles.dirButton}>{file.fileName}</button>
               </span>
               {file.files.length && convertToHTML(file.files, fileImg)}
@@ -46,7 +42,7 @@ const FileDirectory = ({ fileTree }) => {
           return (
             <ul key={file.filePath}>
               <span>
-                <img src={fileImg} alt="" />
+                <img src={fileImg} alt='' />
                 <button
                   id={styles.dirButton}
                   onClick={() => {

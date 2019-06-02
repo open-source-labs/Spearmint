@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const LeftTabs = () => {
-  return <></>
-}
+  return <></>;
+};
 
-export default LeftTabs
+export default LeftTabs;

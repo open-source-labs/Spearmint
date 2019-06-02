@@ -3,14 +3,5 @@
   "tabWidth": 2,
   "singleQuote": true,
   "jsxSingleQuote": true,
-<<<<<<< HEAD
-  "trailingComma": "es5",
-<<<<<<< HEAD
-}
-=======
   "trailingComma": "es5"
 }
->>>>>>> c2c77423de5df72be189a45d02eb3229d5733e08
-=======
-}
->>>>>>> 8356823bc24ae520738ac2aa3d0f1de13f2cfc5e

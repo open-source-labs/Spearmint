@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "../assets/stylesheets/components/RightPanel/RightPanel.module.scss";
-import EditorView from "../components/RightPanel/EditorView";
-import BrowserView from "../components/RightPanel/BrowserView";
+import React from 'react';
+import styles from '../assets/stylesheets/components/RightPanel/RightPanel.module.scss';
+import EditorView from '../components/RightPanel/EditorView';
+import BrowserView from '../components/RightPanel/BrowserView';
 
 const RightPanel = () => {
   return (
