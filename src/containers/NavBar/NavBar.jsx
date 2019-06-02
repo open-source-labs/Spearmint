@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import styles from './NavBar.module.scss';
 import FileDirectory from './FileDirectory/FileDirectory';
 import ExportFileModal from './ExportFileModal/ExportFileModal';
-import { FileTreeContext, ToggleContext, FileToggleContext } from '../../App';
+import { FileTreeContext, ToggleContext, ToggleCodeEditorContext } from '../../App';
 
 const closeIcon = require('../../assets/images/close-outline.png');
 const leftIcon = require('../../assets/images/chevron-left.png');
@@ -17,16 +17,16 @@ const NavBar = () => {
   const [toggled, setToggled] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const fileTree = useContext(FileTreeContext);
-  const setToggleView = useContext(ToggleContext);
-  const fileToggle = useContext(FileToggleContext);
+  const setToggleBrowser = useContext(ToggleContext);
+  const toggleCodeEditor = useContext(ToggleCodeEditorContext);
 
   const explorerOpen = () => {
     setIsOpen(!isOpen);
-    isOpen ? fileToggle(false) : fileToggle(true);
+    isOpen ? toggleCodeEditor(false) : toggleCodeEditor(true);
   };
 
   const toggleClick = () => {
-    toggled ? setToggleView(true) : setToggleView(false);
+    toggled ? setToggleBrowser(true) : setToggleBrowser(false);
     setToggled(false);
     if (!toggled) setToggled(true);
   };

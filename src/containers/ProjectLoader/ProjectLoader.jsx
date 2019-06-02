@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
-import { FileTreeContext, LoadedContext, UrlContext } from '../../App';
+import { FileTreeContext, IsProjectLoadedContext, UrlContext } from '../../App';
 
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs');
@@ -8,7 +8,7 @@ let { dialog } = remote;
 
 const ProjectLoader = () => {
   const setUrl = useContext(UrlContext);
-  const setLoaded = useContext(LoadedContext);
+  const setIsProjectLoaded = useContext(IsProjectLoadedContext);
   const setFileTree = useContext(FileTreeContext);
 
   const handleChangeUrl = e => {
@@ -25,7 +25,7 @@ const ProjectLoader = () => {
       ],
     });
     if (directory && directory[0]) {
-      setLoaded(!false);
+      setIsProjectLoaded(!false);
       setFileTree(generateFileTreeObject(directory[0]));
     }
   };

@@ -4,9 +4,9 @@ import { UrlContext, ToggleContext } from '../../../App';
 
 const TestView = () => {
   const url = useContext(UrlContext);
-  const toggleView = useContext(ToggleContext);
+  const toggleBrowser = useContext(ToggleContext);
 
-  return <div>{url && toggleView && <webview id={styles.browserView} src={url} />}</div>;
+  return <div>{url && toggleBrowser && <webview id={styles.browserView} src={url} />}</div>;
 };
 
 export default TestView;

@@ -10,12 +10,12 @@ import { MockDataContext, mockDataState, mockDataReducer } from './context/mockD
 //TODO: create app reducer
 export const UrlContext = createContext(null);
 export const FileTreeContext = createContext(null);
-export const FileCodeContext = createContext(null);
-export const LoadedContext = createContext(null);
+export const DisplayedFileCodeContext = createContext(null);
+export const IsProjectLoadedContext = createContext(null);
 export const ToggleContext = createContext(null);
 export const ComponentNameContext = createContext(null);
 export const FilePathContext = createContext(null);
-export const FileToggleContext = createContext(null);
+export const ToggleCodeEditorContext = createContext(null);
 
 // const styles = {
 //   fontFamily: "arial",
@@ -29,48 +29,48 @@ export const FileToggleContext = createContext(null);
 
 const App = () => {
   const [fileTree, setFileTree] = useState(null);
-  const [fileCode, setFileCode] = useState('');
+  const [displayedFileCode, setDisplayedFileCode] = useState('');
   const [url, setUrl] = useState('');
-  const [loaded, setLoaded] = useState(false);
-  const [toggleView, setToggleView] = useState(false);
+  const [isProjectLoaded, setIsProjectLoaded] = useState(false);
+  const [toggleBrowser, setToggleBrowser] = useState(false);
   const [componentName, setComponentName] = useState('');
   const [filePath, setFilePath] = useState(null);
-  const [fileToggle, setFileToggle] = useState(false);
+  const [toggleCodeEditor, setToggleCodeEditor] = useState(false);
   const [testCase, dispatchTestCase] = useReducer(testCaseReducer, testCaseState);
   const [mockData, dispatchMockData] = useReducer(mockDataReducer, mockDataState);
 
-  if (!loaded) {
+  if (!isProjectLoaded) {
     return (
       <div>
         <FileTreeContext.Provider value={setFileTree}>
-          <LoadedContext.Provider value={setLoaded}>
+          <IsProjectLoadedContext.Provider value={setIsProjectLoaded}>
             <UrlContext.Provider value={setUrl}>
               <ProjectLoader />
             </UrlContext.Provider>
-          </LoadedContext.Provider>
+          </IsProjectLoadedContext.Provider>
         </FileTreeContext.Provider>
       </div>
     );
   } else {
     return (
-      <div id={fileToggle ? styles.appGridClose : styles.appGridOpen}>
-        <FileCodeContext.Provider value={setFileCode}>
+      <div id={toggleCodeEditor ? styles.appGridClose : styles.appGridOpen}>
+        <DisplayedFileCodeContext.Provider value={setDisplayedFileCode}>
           <FileTreeContext.Provider value={fileTree}>
-            <ToggleContext.Provider value={setToggleView}>
+            <ToggleContext.Provider value={setToggleBrowser}>
               <TestCaseContext.Provider value={testCase}>
                 <MockDataContext.Provider value={mockData}>
                   <FilePathContext.Provider value={setFilePath}>
                     <ComponentNameContext.Provider value={componentName}>
-                      <FileToggleContext.Provider value={setFileToggle}>
+                      <ToggleCodeEditorContext.Provider value={setToggleCodeEditor}>
                         <NavBar />
-                      </FileToggleContext.Provider>
+                      </ToggleCodeEditorContext.Provider>
                     </ComponentNameContext.Provider>
                   </FilePathContext.Provider>
                 </MockDataContext.Provider>
               </TestCaseContext.Provider>
             </ToggleContext.Provider>
           </FileTreeContext.Provider>
-        </FileCodeContext.Provider>
+        </DisplayedFileCodeContext.Provider>
 
         <TestCaseContext.Provider value={[testCase, dispatchTestCase]}>
           <MockDataContext.Provider value={[mockData, dispatchMockData]}>
@@ -82,13 +82,13 @@ const App = () => {
           </MockDataContext.Provider>
         </TestCaseContext.Provider>
 
-        <FileCodeContext.Provider value={fileCode}>
+        <DisplayedFileCodeContext.Provider value={displayedFileCode}>
           <UrlContext.Provider value={url}>
-            <ToggleContext.Provider value={toggleView}>
+            <ToggleContext.Provider value={toggleBrowser}>
               <RightPanel />
             </ToggleContext.Provider>
           </UrlContext.Provider>
-        </FileCodeContext.Provider>
+        </DisplayedFileCodeContext.Provider>
       </div>
     );
   }

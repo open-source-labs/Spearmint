@@ -1,19 +1,19 @@
 import React from 'react';
 import styles from './FileDirectory.module.scss';
 import { useContext } from 'react';
-import { FileCodeContext, FilePathContext, ComponentNameContext } from '../../../App';
+import { DisplayedFileCodeContext, FilePathContext, ComponentNameContext } from '../../../App';
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs');
 let path = remote.require('path');
 
 const FileDirectory = ({ fileTree }) => {
-  const setFileCode = useContext(FileCodeContext);
+  const setDisplayedFileCode = useContext(DisplayedFileCodeContext);
   const setFilePath = useContext(FilePathContext);
   const componentName = useContext(ComponentNameContext);
 
   const handleShowCode = fileTree => {
     const content = electronFs.readFileSync(fileTree, 'utf8');
-    setFileCode(content);
+    setDisplayedFileCode(content);
   };
 
   const convertToHTML = filetree => {
