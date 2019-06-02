@@ -3,31 +3,31 @@ import { deleteAssertion, updateAssertion } from '../../../context/testCaseActio
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
-const Assertion = ({ id, dispatchTestCase }) => {
+const Assertion = ({ id, dispatchToTestCase }) => {
   const [queryVariant, setQueryVariant] = useState('');
   const [querySelector, setQuerySelector] = useState('');
   const [assertionValue, setAssertionValue] = useState('');
   const [matcher, setMatcher] = useState('');
 
   const handleClickDelete = e => {
-    dispatchTestCase(deleteAssertion(id));
+    dispatchToTestCase(deleteAssertion(id));
   };
 
   const handleChangeQueryVariant = e => {
     setQueryVariant(e.target.value);
-    dispatchTestCase(updateAssertion(id, e.target.value, querySelector, assertionValue, matcher));
+    dispatchToTestCase(updateAssertion(id, e.target.value, querySelector, assertionValue, matcher));
   };
   const handleChangeQuerySelector = e => {
     setQuerySelector(e.target.value);
-    dispatchTestCase(updateAssertion(id, queryVariant, e.target.value, assertionValue, matcher));
+    dispatchToTestCase(updateAssertion(id, queryVariant, e.target.value, assertionValue, matcher));
   };
   const handleChangeAssertionValue = e => {
     setAssertionValue(e.target.value);
-    dispatchTestCase(updateAssertion(id, queryVariant, querySelector, e.target.value, matcher));
+    dispatchToTestCase(updateAssertion(id, queryVariant, querySelector, e.target.value, matcher));
   };
   const handleChangeMatcher = e => {
     setMatcher(e.target.value);
-    dispatchTestCase(
+    dispatchToTestCase(
       updateAssertion(id, queryVariant, querySelector, assertionValue, e.target.value)
     );
   };

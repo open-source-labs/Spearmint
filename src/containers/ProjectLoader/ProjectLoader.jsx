@@ -1,18 +1,17 @@
 import React, { useContext } from 'react';
-import styles from './ProjectLoader.module.scss';
-import { FileTreeContext, IsProjectLoadedContext, UrlContext } from '../../App';
+// import styles from './ProjectLoader.module.scss';
+import { GlobalContext } from '../../context/globalReducer';
+import { setProjectUrl, loadProject, createFileTree } from '../../context/globalActions';
 
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs');
 let { dialog } = remote;
 
 const ProjectLoader = () => {
-  const setUrl = useContext(UrlContext);
-  const setIsProjectLoaded = useContext(IsProjectLoadedContext);
-  const setFileTree = useContext(FileTreeContext);
+  const [_, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleChangeUrl = e => {
-    setUrl(e.target.value);
+    dispatchToGlobal(setProjectUrl(e.target.value));
   };
 
   const handleOpenFolder = () => {
@@ -25,8 +24,8 @@ const ProjectLoader = () => {
       ],
     });
     if (directory && directory[0]) {
-      setIsProjectLoaded(!false);
-      setFileTree(generateFileTreeObject(directory[0]));
+      dispatchToGlobal(loadProject());
+      dispatchToGlobal(createFileTree(generateFileTreeObject(directory[0])));
     }
   };
 

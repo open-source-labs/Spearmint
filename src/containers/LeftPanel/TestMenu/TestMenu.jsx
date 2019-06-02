@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { addAction, addAssertion, addRender } from '../../../context/testCaseActions';
 
-const TestMenu = ({ dispatchTestCase }) => {
+const TestMenu = ({ dispatchToTestCase }) => {
   const [reRender, setReRender] = useState(false);
 
   const handleAddAction = e => {
-    dispatchTestCase(addAction());
+    dispatchToTestCase(addAction());
   };
   const handleAddAssertion = e => {
-    dispatchTestCase(addAssertion());
+    dispatchToTestCase(addAssertion());
   };
   const handleAddRender = e => {
-    dispatchTestCase(addRender());
+    dispatchToTestCase(addRender());
     if (!reRender) setReRender(true);
   };
 

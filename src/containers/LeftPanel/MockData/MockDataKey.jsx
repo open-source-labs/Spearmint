@@ -2,20 +2,20 @@ import React from 'react';
 import { deleteMockDataKey, updateMockDataKey } from '../../../context/mockDataActions';
 const minusIcon = require('../../../assets/images/minus.png');
 
-const MockDataKey = ({ dispatchMockData, mockDatumId, mockDatumKeyId, fieldKey, fieldType }) => {
+const MockDataKey = ({ dispatchToMockData, mockDatumId, mockDatumKeyId, fieldKey, fieldType }) => {
   const handleChangeDelete = e => {
     e.stopPropagation();
-    dispatchMockData(deleteMockDataKey(mockDatumId, mockDatumKeyId));
+    dispatchToMockData(deleteMockDataKey(mockDatumId, mockDatumKeyId));
   };
 
   const handleChangeUpdateFieldKey = e => {
     e.stopPropagation();
-    dispatchMockData(updateMockDataKey(mockDatumId, mockDatumKeyId, e.target.value, fieldType));
+    dispatchToMockData(updateMockDataKey(mockDatumId, mockDatumKeyId, e.target.value, fieldType));
   };
 
   const handleChangeUpdateFieldType = e => {
     e.stopPropagation();
-    dispatchMockData(updateMockDataKey(mockDatumId, mockDatumKeyId, fieldKey, e.target.value));
+    dispatchToMockData(updateMockDataKey(mockDatumId, mockDatumKeyId, fieldKey, e.target.value));
   };
 
   const keys = {

@@ -7,24 +7,24 @@ import {
 const minusIcon = require('../../../assets/images/minus.png');
 const plusIcon = require('../../../assets/images/plus.png');
 
-const RenderProp = ({ dispatchTestCase, renderId, propId, propKey, propValue }) => {
+const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }) => {
   const handleClickAdd = () => {
-    dispatchTestCase(addRenderProp());
+    dispatchToTestCase(addRenderProp());
   };
 
   const handleClickDelete = e => {
     e.stopPropagation();
-    dispatchTestCase(deleteRenderProp(renderId, propId));
+    dispatchToTestCase(deleteRenderProp(renderId, propId));
   };
 
   const handleChangeUpdatePropKey = e => {
     e.stopPropagation();
-    dispatchTestCase(updateRenderProp(renderId, propId, e.target.value, propValue));
+    dispatchToTestCase(updateRenderProp(renderId, propId, e.target.value, propValue));
   };
 
   const handleChangeUpdatePropValue = e => {
     e.stopPropagation();
-    dispatchTestCase(updateRenderProp(renderId, propId, propKey, e.target.value));
+    dispatchToTestCase(updateRenderProp(renderId, propId, propKey, e.target.value));
   };
 
   return (

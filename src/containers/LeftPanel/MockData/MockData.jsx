@@ -8,26 +8,26 @@ import {
 const plusIcon = require('../../../assets/images/plus.png');
 const minusIcon = require('../../../assets/images/minus-box.png');
 
-const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
+const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
   const handleClickAdd = (e, id) => {
     e.stopPropagation();
-    dispatchMockData(addMockDataKey(id));
+    dispatchToMockData(addMockDataKey(id));
   };
 
   const handleClickDelete = e => {
     e.stopPropagation();
-    dispatchMockData(deleteMockData(mockDatumId));
+    dispatchToMockData(deleteMockData(mockDatumId));
   };
 
   const handleClickUpdate = e => {
     e.stopPropagation();
-    dispatchMockData(updateMockDataName(mockDatumId, e.target.value));
+    dispatchToMockData(updateMockDataName(mockDatumId, e.target.value));
   };
 
   const mockDataFieldKeys = fieldKeys.map(key => (
     <MockDataFieldKey
       key={key.id}
-      dispatchMockData={dispatchMockData}
+      dispatchToMockData={dispatchToMockData}
       mockDatumId={mockDatumId}
       mockDatumKeyId={key.id}
       fieldKey={key.fieldKey}

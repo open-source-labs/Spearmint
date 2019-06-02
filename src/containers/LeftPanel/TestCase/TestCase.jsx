@@ -12,19 +12,19 @@ import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
-  const [testCase, dispatchTestCase] = useContext(TestCaseContext);
-  const [mockData, dispatchMockData] = useContext(MockDataContext);
+  const [testCase, dispatchToTestCase] = useContext(TestCaseContext);
+  const [mockData, dispatchToMockData] = useContext(MockDataContext);
 
   const handleUpdateTestStatement = e => {
-    dispatchTestCase(updateTestStatement(e.target.value));
+    dispatchToTestCase(updateTestStatement(e.target.value));
   };
 
   const handleToggleMockData = () => {
-    dispatchMockData(toggleMockData());
+    dispatchToMockData(toggleMockData());
   };
 
   const handleAddMockData = () => {
-    dispatchMockData(addMockData());
+    dispatchToMockData(addMockData());
   };
 
   const mockDataJSX = mockData.mockData.map(mockDatum => {
@@ -32,7 +32,7 @@ const TestCase = () => {
       <MockData
         key={mockDatum.id}
         mockDatumId={mockDatum.id}
-        dispatchMockData={dispatchMockData}
+        dispatchToMockData={dispatchToMockData}
         fieldKeys={mockDatum.fieldKeys}
       />
     );
@@ -41,17 +41,19 @@ const TestCase = () => {
   const statementsJSX = testCase.statements.map(statement => {
     switch (statement.type) {
       case 'action':
-        return <Action key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />;
+        return (
+          <Action key={statement.id} id={statement.id} dispatchToTestCase={dispatchToTestCase} />
+        );
       case 'assertion':
         return (
-          <Assertion key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />
+          <Assertion key={statement.id} id={statement.id} dispatchToTestCase={dispatchToTestCase} />
         );
       case 'render':
         return (
           <Render
             key={statement.id}
             id={statement.id}
-            dispatchTestCase={dispatchTestCase}
+            dispatchToTestCase={dispatchToTestCase}
             props={statement.props}
             reRender={statement.reRender}
           />
@@ -63,7 +65,7 @@ const TestCase = () => {
 
   return (
     <div>
-      <TestMenu dispatchTestCase={dispatchTestCase} />
+      <TestMenu dispatchToTestCase={dispatchToTestCase} />
       <section>
         <label htmlFor='test-statement'>test:</label>
         <input

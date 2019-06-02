@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import Autosuggest from 'react-autosuggest';
-import { events } from './actionEvents';
+import { actionEvents } from './actionEvents';
+
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
@@ -11,56 +12,56 @@ const getSuggestions = value => {
 
   return inputLength === 0
     ? []
-    : events.filter(e => e.name.toLowerCase().slice(0, inputLength) === inputValue);
+    : actionEvents.filter(e => e.name.toLowerCase().slice(0, inputLength) === inputValue);
 };
 
 const getSuggestionValue = suggestion => suggestion.name;
 const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
 
-const Action = ({ id, dispatchTestCase }) => {
-  const [eventType, setEventType] = useState('');
-  const [eventValue, setEventValue] = useState('');
-  const [queryVariant, setQueryVariant] = useState('');
-  const [querySelector, setQuerySelector] = useState('');
-  const [queryValue, setQueryValue] = useState('');
-  const [eventName, setEventName] = useState('');
-  const [suggestions, setSuggestions] = useState([]);
+const Action = ({ id, dispatchToTestCase }) => {
+  // const [eventType, setEventType] = useState('');
+  // const [eventValue, setEventValue] = useState('');
+  // const [queryVariant, setQueryVariant] = useState('');
+  // const [querySelector, setQuerySelector] = useState('');
+  // const [queryValue, setQueryValue] = useState('');
+  // const [eventName, setEventName] = useState('');
+  // const [suggestions, setSuggestions] = useState([]);
 
   const handleClickDelete = e => {
-    dispatchTestCase(deleteAction(id));
+    dispatchToTestCase(deleteAction(id));
   };
 
   const handleChangeEventType = e => {
     setEventType(e.target.value);
-    dispatchTestCase(
+    dispatchToTestCase(
       updateAction(id, e.target.value, eventValue, queryVariant, querySelector, queryValue)
     );
   };
 
   const handleChangeEventValue = e => {
     setEventValue(e.target.value);
-    dispatchTestCase(
+    dispatchToTestCase(
       updateAction(id, eventType, e.target.value, queryVariant, querySelector, queryValue)
     );
   };
 
   const handleChangeQueryVariant = e => {
     setQueryVariant(e.target.value);
-    dispatchTestCase(
+    dispatchToTestCase(
       updateAction(id, eventType, eventValue, e.target.value, querySelector, queryValue)
     );
   };
 
   const handleChangeQuerySelector = e => {
     setQuerySelector(e.target.value);
-    dispatchTestCase(
+    dispatchToTestCase(
       updateAction(id, eventType, eventValue, queryVariant, e.target.value, queryValue)
     );
   };
 
   const handleChangeQueryValue = e => {
     setQueryValue(e.target.value);
-    dispatchTestCase(
+    dispatchToTestCase(
       updateAction(id, eventType, eventValue, queryVariant, querySelector, e.target.value)
     );
   };

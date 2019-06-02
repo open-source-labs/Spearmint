@@ -4,25 +4,25 @@ import { ComponentNameContext, FilePathContext } from '../../../App';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
 const minusIcon = require('../../../assets/images/minus-box.png');
 
-const Render = ({ id, dispatchTestCase, props, reRender }) => {
+const Render = ({ id, dispatchToTestCase, props, reRender }) => {
   const [toggleProps, setToggleProps] = useState(false);
   const [filePath, setFilePath] = useContext(FilePathContext);
   const [componentName, setComponentName] = useContext(ComponentNameContext);
   const handleClickDelete = e => {
-    dispatchTestCase(deleteRender(id));
+    dispatchToTestCase(deleteRender(id));
   };
 
   const handleChange = e => {
     setComponentName(e.target.value);
     if (filePath) {
-      dispatchTestCase(updateRender(id, e.target.value, filePath));
+      dispatchToTestCase(updateRender(id, e.target.value, filePath));
       setFilePath(null);
     }
   };
 
   const handleToggleProps = () => {
     setToggleProps(!toggleProps);
-    dispatchTestCase(addRenderProp(id));
+    dispatchToTestCase(addRenderProp(id));
   };
 
   const propsJSX = props.map(prop => {
@@ -33,7 +33,7 @@ const Render = ({ id, dispatchTestCase, props, reRender }) => {
         propId={prop.id}
         propKey={prop.propKey}
         propValue={prop.propValue}
-        dispatchTestCase={dispatchTestCase}
+        dispatchToTestCase={dispatchToTestCase}
       />
     );
   });

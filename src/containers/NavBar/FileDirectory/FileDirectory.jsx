@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
-import { useContext } from 'react';
-import { DisplayedFileCodeContext, FilePathContext, ComponentNameContext } from '../../../App';
+import { GlobalContext } from '../../../context/globalReducer';
+import { displayFileCode, setFilePath } from '../../../context/globalActions';
+
 let remote = window.require('electron').remote;
-let electronFs = remote.require('fs');
-let path = remote.require('path');
+let fs = remote.require('fs');
 
 const FileDirectory = ({ fileTree }) => {
-  const setDisplayedFileCode = useContext(DisplayedFileCodeContext);
-  const setFilePath = useContext(FilePathContext);
-  const componentName = useContext(ComponentNameContext);
+  const [{ componentName }, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleShowCode = fileTree => {
-    const content = electronFs.readFileSync(fileTree, 'utf8');
-    setDisplayedFileCode(content);
+  const handleDisplayFileCode = fileTree => {
+    const fileContent = fs.readFileSync(fileTree, 'utf8');
+    dispatchToGlobal(displayFileCode(fileContent));
   };
 
   const convertToHTML = filetree => {
@@ -25,7 +23,7 @@ const FileDirectory = ({ fileTree }) => {
         .substring(0, file.fileName.indexOf('.') - 1)
         .toLowerCase();
       if (componentName && componentName === desiredComponentName) {
-        setFilePath(file.filePath);
+        dispatchToGlobal(setFilePath(file.filePath));
       }
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (file.files.length) {
@@ -46,7 +44,7 @@ const FileDirectory = ({ fileTree }) => {
                 <button
                   id={styles.dirButton}
                   onClick={() => {
-                    handleShowCode(file.filePath);
+                    handleDisplayFileCode(file.filePath);
                   }}
                 >
                   {file.fileName}
@@ -59,32 +57,9 @@ const FileDirectory = ({ fileTree }) => {
     });
   };
 
-  // const fileDir = {
-  //   padding: ".625rem",
-  //   height: "auto",
-  //   width: "12rem",
-  //   border: "grey",
-  //   backgroundColor: "white",
-  //   overflow: "scroll"
-  // };
-
-  // const ul = {
-  //   marginLeft: "10px",
-  //   listStyleType: "none",
-  //   fontSize: "12px"
-  // };
-
-  // const fileBtn = {
-  //   hover: "lightgrey",
-  //   border: "none"
-  // };
-
   return (
     <>
-      <div id={styles.fileDirectory}>
-        {/* <div style={fileDir} className='fileDir'> */}
-        {fileTree && convertToHTML(fileTree)}
-      </div>
+      <div id={styles.fileDirectory}>{fileTree && convertToHTML(fileTree)}</div>
     </>
   );
 };

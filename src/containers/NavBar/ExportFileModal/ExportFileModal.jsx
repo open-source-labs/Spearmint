@@ -11,8 +11,8 @@ const closeIcon = require('../../../assets/images/close-outline.png');
 
 const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');
-  const testCase = useContext(TestCaseContext);
-  const mockData = useContext(MockDataContext);
+  const [testCase, _] = useContext(TestCaseContext);
+  const [mockData, __] = useContext(MockDataContext);
   let testDisplayedFileCode = 'import React from "react";';
 
   const handleChangeFileName = e => {
