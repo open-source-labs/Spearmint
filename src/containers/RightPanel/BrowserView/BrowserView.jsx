@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import styles from '../../assets/stylesheets/components/RightPanel/BrowserView.module.scss';
-import { UrlContext, ToggleContext } from '../../App';
+import styles from './BrowserView.module.scss';
+import { UrlContext, ToggleContext } from '../../../App';
 
 const TestView = () => {
   const url = useContext(UrlContext);

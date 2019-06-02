@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from '../../assets/stylesheets/components/NavBar/FileDirectory.module.scss';
+import styles from './FileDirectory.module.scss';
 import { useContext } from 'react';
-import { FileCodeContext, FilePathContext, ComponentNameContext } from '../../App';
+import { FileCodeContext, FilePathContext, ComponentNameContext } from '../../../App';
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs');
 let path = remote.require('path');

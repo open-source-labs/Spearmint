@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import Autosuggest from 'react-autosuggest';
-import { events } from './ActionEvents';
+import { events } from './actionEvents';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 

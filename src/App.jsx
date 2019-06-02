@@ -1,9 +1,9 @@
 import React, { useState, useReducer, createContext } from 'react';
-import styles from './assets/stylesheets/components/App.module.scss';
-import NavBar from './containers/NavBar';
-import LeftPanel from './containers/LeftPanel';
-import ProjectLoader from './containers/ProjectLoader';
-import RightPanel from './containers/RightPanel';
+import styles from './App.module.scss';
+import NavBar from './containers/NavBar/NavBar';
+import LeftPanel from './containers//LeftPanel/LeftPanel';
+import ProjectLoader from './containers/ProjectLoader/ProjectLoader';
+import RightPanel from './containers/RightPanel/RightPanel';
 import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
 import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
 

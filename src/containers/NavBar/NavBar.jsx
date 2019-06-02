@@ -1,16 +1,16 @@
 import React, { useState, useContext } from 'react';
-import styles from '../assets/stylesheets/components/NavBar/NavBar.module.scss';
-import FileDirectory from '../components/NavBar/FileDirectory';
-import ExportFileModal from '../components/NavBar/ExportFileModal';
-import { FileTreeContext, ToggleContext, FileToggleContext } from '../App';
+import styles from './NavBar.module.scss';
+import FileDirectory from './FileDirectory/FileDirectory';
+import ExportFileModal from './ExportFileModal/ExportFileModal';
+import { FileTreeContext, ToggleContext, FileToggleContext } from '../../App';
 
-const closeIcon = require('../assets/images/close-outline.png');
-const leftIcon = require('../assets/images/chevron-left.png');
-const rightIcon = require('../assets/images/chevron-right.png');
-const exportIcon = require('../assets/images/file-export.png');
-const folderOpenIcon = require('../assets/images/folder-open.png');
-const saveIcon = require('../assets/images/save.png');
-const codeIcon = require('../assets/images/code.png');
+const closeIcon = require('../../assets/images/close-outline.png');
+const leftIcon = require('../../assets/images/chevron-left.png');
+const rightIcon = require('../../assets/images/chevron-right.png');
+const exportIcon = require('../../assets/images/file-export.png');
+const folderOpenIcon = require('../../assets/images/folder-open.png');
+const saveIcon = require('../../assets/images/save.png');
+const codeIcon = require('../../assets/images/code.png');
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
