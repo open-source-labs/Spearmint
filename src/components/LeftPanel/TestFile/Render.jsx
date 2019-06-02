@@ -6,9 +6,8 @@ const minusIcon = require('../../../assets/images/minus-box.png');
 
 const Render = ({ id, dispatchTestCase, props, reRender }) => {
   const [toggleProps, setToggleProps] = useState(false);
-  const [componentName, setComponentName] = useContext(ComponentNameContext);
   const [filePath, setFilePath] = useContext(FilePathContext);
-
+  const [componentName, setComponentName] = useContext(ComponentNameContext);
   const handleClickDelete = e => {
     dispatchTestCase(deleteRender(id));
   };
@@ -34,6 +33,7 @@ const Render = ({ id, dispatchTestCase, props, reRender }) => {
         propId={prop.id}
         propKey={prop.propKey}
         propValue={prop.propValue}
+        dispatchTestCase={dispatchTestCase}
       />
     );
   });
