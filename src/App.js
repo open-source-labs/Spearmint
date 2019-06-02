@@ -15,6 +15,7 @@ import {
   mockDataReducer
 } from "./context/mockDataReducer";
 
+//TODO: create app reducer
 export const UrlContext = createContext(null);
 export const FileTreeContext = createContext(null);
 export const FileCodeContext = createContext(null);
@@ -87,7 +88,7 @@ const App = () => {
 
         <TestCaseContext.Provider value={[testCase, dispatchTestCase]}>
           <MockDataContext.Provider value={[mockData, dispatchMockData]}>
-            <ComponentNameContext.Provider value={setComponentName}>
+            <ComponentNameContext.Provider value={[componentName, setComponentName]}>
               <FilePathContext.Provider value={[filePath, setFilePath]}>
                 <LeftPanel />
               </FilePathContext.Provider>
