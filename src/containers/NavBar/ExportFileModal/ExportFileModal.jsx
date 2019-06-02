@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
-import { TestCaseContext } from '../../context/testCaseReducer';
-import { MockDataContext } from '../../context/mockDataReducer';
+import { TestCaseContext } from '../../../context/testCaseReducer';
+import { MockDataContext } from '../../../context/mockDataReducer';
 import ReactModal from 'react-modal';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
-const closeIcon = require('../../assets/images/close-outline.png');
+const closeIcon = require('../../../assets/images/close-outline.png');
 
 const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');

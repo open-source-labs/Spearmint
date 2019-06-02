@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-// import styles from "../assets/stylesheets/components/ProjectLoader/ProjectLoader.module.scss";
-import { FileTreeContext, LoadedContext, UrlContext } from '../App';
+import styles from './ProjectLoader.module.scss';
+import { FileTreeContext, LoadedContext, UrlContext } from '../../App';
 
 let remote = window.require('electron').remote;
 let electronFs = remote.require('fs');

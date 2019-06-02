@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { FileCodeContext, ToggleContext } from '../../App';
+import { FileCodeContext, ToggleContext } from '../../../App';
 
 const Editor = () => {
   const fileCode = useContext(FileCodeContext);

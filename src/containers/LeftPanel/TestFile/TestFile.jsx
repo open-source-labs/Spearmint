@@ -1,5 +1,5 @@
 import React from 'react';
-import TestCase from './TestFile/TestCase';
+import TestCase from '../TestCase/TestCase';
 
 const TestFile = ({ fileName }) => {
   return (
