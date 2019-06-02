@@ -1,40 +1,11 @@
-import React, { useContext } from 'react';
-import { FileTreeContext, LoadedContext, UrlContext } from '../App';
+import React, { useContext } from "react";
+import styles from "../assets/stylesheets/components/ProjectLoader/ProjectLoader.module.scss";
+import { FileTreeContext, LoadedContext, UrlContext } from "../App";
 
-let remote = window.require('electron').remote;
-let electronFs = remote.require('fs');
-let { dialog } = remote;
-
-const loaderPage = {
-  display: 'flex',
-};
-
-const left = {
-  backgroundColor: '#02c2c3',
-  width: '50%',
-  height: '100%',
-};
-
-const h1 = {
-  fontSize: '80px',
-  textAlign: 'center',
-  paddingTop: '200px',
-  fontFamily: 'comfortaa',
-  color: '#fff',
-};
-
-const h2 = {
-  fontSize: '24px',
-  textAlign: 'center',
-  paddingTop: '10px',
-  paddingBottom: '20px',
-  fontFamily: 'montserrat',
-  color: '#ffc800',
-};
-
-const imgStyle = {
-  padding: '10px',
-};
+const remote = window.require("electron").remote;
+const electronFs = remote.require("fs");
+const { dialog } = remote;
+const leaf = require("../assets/images/leaf.png");
 
 const ProjectLoader = () => {
   const setUrl = useContext(UrlContext);
@@ -47,12 +18,12 @@ const ProjectLoader = () => {
 
   const handleOpenFolder = () => {
     let directory = dialog.showOpenDialog({
-      properties: ['openDirectory'],
+      properties: ["openDirectory"],
       filters: [
-        { name: 'Javascript Files', extensions: ['js', 'jsx'] },
-        { name: 'Style', extensions: ['css'] },
-        { name: 'Html', extensions: ['html'] },
-      ],
+        { name: "Javascript Files", extensions: ["js", "jsx"] },
+        { name: "Style", extensions: ["css"] },
+        { name: "Html", extensions: ["html"] }
+      ]
     });
     if (directory && directory[0]) {
       setLoaded(!false);
@@ -66,12 +37,14 @@ const ProjectLoader = () => {
       const file = {
         filePath: `${directoryPath}/${fileName}`,
         fileName,
-        files: [],
+        files: []
       };
       //generateFileTreeObj will be recursively called if it is a folder
       const fileData = electronFs.statSync(file.filePath);
-      if (fileData.isDirectory()) {
-        file.files = generateFileTreeObject(file.filePath);
+      if (file.fileName !== "node_modules" && file.fileName !== ".git") {
+        if (fileData.isDirectory()) {
+          file.files = generateFileTreeObject(file.filePath);
+        }
       }
       return file;
     });
@@ -79,29 +52,27 @@ const ProjectLoader = () => {
   };
 
   return (
-    <div id='loaderPage' style={loaderPage}>
-      <div id='leftPage' style={left}>
-        <h1 style={h1}>spearmint </h1>
-        {/* <img
-            style={imgStyle}
-            src='https://img.icons8.com/ios/40/000000/natural-food.png'
-            alt=''
-          /> */}
-        <h2 style={h2}>A FRESH TAKE ON TESTING </h2>
+    <div id={styles.projectLoader}>
+      <div id={styles.left}>
+        <h1>
+          spearmint <img src={leaf} />
+        </h1>
+        <h2>A FRESH TAKE ON TESTING </h2>
       </div>
-      <div id='rightPage'>
-        <h3>Enter URL</h3>
+      <div id={styles.right}>
+        <p>Enter the URL</p>
         <input
-          type='text'
-          id='url'
+          type="text"
+          id="url"
           placeholder="Enter test site's URL..."
           onChange={handleChangeUrl}
         />
-        <button className='openBtn' onClick={handleOpenFolder}>
+        <p>Select your application</p>
+        <button className="openBtn" onClick={handleOpenFolder}>
           Open Folder
         </button>
       </div>
-      <div id='filetree' />
+      <div id="filetree" />
     </div>
   );
 };
