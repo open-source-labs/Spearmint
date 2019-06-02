@@ -1,4 +1,21 @@
+// @import "base/fonts";
+
 #leftPanel {
   grid-area: leftPanel;
   grid-column-start: 2;
+  height: 100vh;
+  // font-family: $comfortaa;
+  // color: $primary-color;
+  justify-content: space-evenly;
+
+  button {
+    text-decoration: none;
+    width: 30%;
+    height: 25px;
+    border-radius: 5px;
+  }
+
+  input {
+    width: 70%;
+  }
 }

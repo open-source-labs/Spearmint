@@ -1,24 +1,17 @@
-// #projectLoader {
-//   grid-area: projectLoader;
-// }
-
-// const h1 = {
-//   fontSize: "80px",
-//   textAlign: "center",
-//   paddingTop: "200px",
-//   fontFamily: "comfortaa",
-//   color: "#02c2c3"
-// };
-
-// const h2 = {
-//   fontSize: "24px",
-//   textAlign: "center",
-//   paddingTop: "10px",
-//   paddingBottom: "20px",
-//   fontFamily: "montserrat",
-//   color: "#ffc800"
-// };
-
-// const imgStyle = {
-//   padding: "10px"
-// };
+#projectLoader {
+  h1 {
+    font-size: 80px;
+    text-align: center;
+    padding-top: 200px;
+    font-family: comfortaa;
+    color: #02c2c3;
+  }
+  h2 {
+    font-size: 24px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    font-family: montserrat;
+    color: #ffc800;
+  }
+}

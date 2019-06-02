@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-// import styles from "../assets/stylesheets/components/ProjectLoader/ProjectLoader.module.scss";
+import styles from "../assets/stylesheets/components/ProjectLoader/ProjectLoader.module.scss";
 import { FileTreeContext, LoadedContext, UrlContext } from "../App";
 
 let remote = window.require("electron").remote;
@@ -51,7 +51,7 @@ const ProjectLoader = () => {
   };
 
   return (
-    <div>
+    <div id={styles.projectLoader}>
       <span>
         <h1>
           spearmint
