@@ -48,16 +48,17 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     testFileCode += `import ${renderStatement.componentName} from '${filePath}'`;
   };
 
-  // const fakeTodo = build("Todo").fields({ id: fake(f => f.random.number()), content: fake(f => f.lorem.words()) })();
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
-      testFileCode += `${mockDatum.name} = build('${mockDatum.name}').fields({ `;
+      testFileCode += `${mockDatum.name} = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
     });
   };
 
   const createMockDatumFieldKeys = mockDatum => {
-    mockDatum.fieldKeys.reduce();
+    return mockDatum.fieldKeys.reduce((fieldKeysCode, mockDatum) => {
+      return fieldKeysCode + `${mockDatum.fieldKey}: fake(f => f.random.${mockDatum.fieldType}()),`;
+    }, '');
   };
 
   const addTestStatements = () => {
