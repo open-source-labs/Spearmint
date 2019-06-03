@@ -56,7 +56,7 @@ const TestCase = () => {
             id={statement.id}
             dispatchToTestCase={dispatchToTestCase}
             props={statement.props}
-            reRender={statement.reRender}
+            isRerender={statement.isRerender}
           />
         );
       default:
@@ -66,7 +66,7 @@ const TestCase = () => {
 
   return (
     <div>
-      <TestMenu dispatchToTestCase={dispatchToTestCase} />
+      <TestMenu dispatchToTestCase={dispatchToTestCase} hasRerender={testCase.hasRerender} />
       <section id={styles.testCaseHeader}>
         <label htmlFor='test-statement'>Test:</label>
         <input

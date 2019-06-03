@@ -7,7 +7,7 @@ import RenderProp from './RenderProp';
 
 const minusIcon = require('../../../assets/images/minus-box.png');
 
-const Render = ({ id, dispatchToTestCase, props, reRender }) => {
+const Render = ({ id, dispatchToTestCase, props, isRerender }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
   const [toggleProps, setToggleProps] = useState(false);
 
@@ -43,7 +43,7 @@ const Render = ({ id, dispatchToTestCase, props, reRender }) => {
   return (
     <section id={styles.render}>
       <div id={styles.renderHeader}>
-        <h3>{!reRender ? 'Render' : 'Rerender'}</h3>
+        <h3>{!isRerender ? 'Render' : 'Rerender'}</h3>
         <img src={minusIcon} alt='' onClick={handleClickDelete} />
       </div>
       <div>
