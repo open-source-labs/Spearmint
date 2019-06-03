@@ -1,7 +1,7 @@
 import React from 'react';
 import TestCase from '../TestCase/TestCase';
 
-const TestFile = ({ fileName }) => {
+const TestFile = () => {
   return (
     <>
       <TestCase />

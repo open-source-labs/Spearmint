@@ -1,0 +1,11 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+@import '../LeftPanel.module.scss';
+
+#assertion {
+  @include box-styling;
+}
+
+#assertionHeader {
+  @include box-header-alignment;
+}

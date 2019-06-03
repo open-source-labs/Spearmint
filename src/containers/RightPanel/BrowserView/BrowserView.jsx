@@ -1,18 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styles from './BrowserView.module.scss';
-import { UrlContext, ToggleContext } from '../../../App';
+import { GlobalContext } from '../../../context/globalReducer';
 
 const TestView = () => {
-  const url = useContext(UrlContext);
-  const toggleView = useContext(ToggleContext);
-  useEffect(() => {
-    if (!toggleView) {
-      const webview = document.getElementById('BrowserView_browserView__HyRyN');
-      webview.setZoomFactor(0.5);
-    }
-  });
+  const [{ url, isBrowserOpen }, _] = useContext(GlobalContext);
 
-  return <div>{url && !toggleView && <webview id={styles.browserView} src={url} />}</div>;
+  return <div>{url && isBrowserOpen && <webview id={styles.browserView} src={url} />}</div>;
 };
 
 export default TestView;

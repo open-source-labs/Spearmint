@@ -1,34 +1,26 @@
 import React, { useState, useContext } from 'react';
 import styles from './NavBar.module.scss';
+import { GlobalContext } from '../../context/globalReducer';
+import { toggleBrowser, toggleFileDirectory } from '../../context/globalActions';
 import FileDirectory from './FileDirectory/FileDirectory';
 import ExportFileModal from './ExportFileModal/ExportFileModal';
-import { FileTreeContext, ToggleContext, FileToggleContext } from '../../App';
 
-const closeIcon = require('../../assets/images/close-outline.png');
-const leftIcon = require('../../assets/images/chevron-left.png');
-const rightIcon = require('../../assets/images/chevron-right.png');
-const exportIcon = require('../../assets/images/file-export.png');
-const folderOpenIcon = require('../../assets/images/folder-open.png');
-const saveIcon = require('../../assets/images/save.png');
-const codeIcon = require('../../assets/images/code.png');
+const leftIcon = require('../../assets/images/sq_br_first_icon.png');
+const exportIcon = require('../../assets/images/export.png');
+const folderOpenIcon = require('../../assets/images/folder_open.png');
+const saveIcon = require('../../assets/images/save_icon.png');
+const codeIcon = require('../../assets/images/app_window_shell.png');
 
 const NavBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [toggled, setToggled] = useState(true);
+  const [{ fileTree, isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const fileTree = useContext(FileTreeContext);
-  const setToggleView = useContext(ToggleContext);
-  const fileToggle = useContext(FileToggleContext);
 
-  const explorerOpen = () => {
-    setIsOpen(!isOpen);
-    isOpen ? fileToggle(false) : fileToggle(true);
+  const handleToggleFileDirectory = () => {
+    dispatchToGlobal(toggleFileDirectory());
   };
 
-  const toggleClick = () => {
-    toggled ? setToggleView(true) : setToggleView(false);
-    setToggled(false);
-    if (!toggled) setToggled(true);
+  const handleBrowserToggle = () => {
+    dispatchToGlobal(toggleBrowser());
   };
 
   const openModal = () => {
@@ -38,36 +30,6 @@ const NavBar = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  // const container = {
-  //   display: 'flex',
-  //   justifyContent: 'flex-start',
-  //   height: '100vh',
-  //   width: '320px',
-  // }
-
-  // const navBar = {
-  //   padding: '.625rem',
-  //   height: '100%',
-  //   width: '2rem',
-  //   backgroundColor: '#02c2c3',
-  // }
-
-  // const topNav = {
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   justifyContent: 'flex-start',
-  //   alignItems: 'center',
-  //   height: '80%',
-  // }
-
-  // const bottomNav = {
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   alignItems: 'center',
-  //   justifyContent: 'flex-end',
-  //   height: '20%',
-  // }
 
   const button = {
     padding: '0',
@@ -85,44 +47,28 @@ const NavBar = () => {
     width: '1.25rem',
   };
 
-  // const plusBtn = {
-  //   padding: "0",
-  //   border: "0",
-  //   marginBottom: "2rem",
-  //   width: "1.6rem",
-  //   height: "1.6rem",
-  //   cursor: "pointer",
-  //   backgroundColor: "transparent",
-  //   outline: "none"
-  // };
-
   return (
-    // <div id='container' style={container}>
-    // <div id='navBar' style={navBar}>
-    //  <div id='topNav' style={topNav}>
     <div id={styles.navBar}>
-      <button style={button} onClick={explorerOpen}>
+      <button style={button} onClick={handleToggleFileDirectory}>
         <img src={leftIcon} style={icons} alt='fileExplorer' />{' '}
       </button>
       <button style={button} onClick={openModal}>
-        <img src={exportIcon} style={icons} alt='export' />
+        <img src={exportIcon} style={icons} alt='export' title='export a test file' />
       </button>
 
       <ExportFileModal isModalOpen={isModalOpen} closeModal={closeModal} />
 
       <button style={button}>
-        <img src={folderOpenIcon} style={icons} alt='folderOpen' />
+        <img src={folderOpenIcon} style={icons} alt='folderOpen' title='open a new folder' />
       </button>
       <button style={button}>
-        <img src={saveIcon} style={icons} alt='save' />
+        <img src={saveIcon} style={icons} alt='save' title='save the file' />
       </button>
-      <button style={button} onClick={toggleClick}>
-        <img src={codeIcon} style={icons} alt='delete' />
+      <button style={button} onClick={handleBrowserToggle}>
+        <img src={codeIcon} style={icons} alt='browserview' title='browser view' />
       </button>
-      {/* </div> */}
 
-      {/* </div> */}
-      {!isOpen && <FileDirectory fileTree={fileTree} />}
+      {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>
   );
 };

@@ -1,0 +1,23 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+@import '../LeftPanel.module.scss';
+
+#action {
+  @include box-styling;
+
+  input {
+    width: 50%;
+  }
+
+  select {
+    padding: 15px;
+  }
+
+  img {
+    width: 18px;
+  }
+}
+
+#actionHeader {
+  @include box-header-alignment;
+}

@@ -1,45 +1,50 @@
 import React, { useState } from 'react';
+import styles from '../Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
-const Assertion = ({ id, dispatchTestCase }) => {
+const Assertion = ({ id, dispatchToTestCase }) => {
   const [queryVariant, setQueryVariant] = useState('');
   const [querySelector, setQuerySelector] = useState('');
   const [assertionValue, setAssertionValue] = useState('');
   const [matcher, setMatcher] = useState('');
 
-  const handleClickDelete = e => {
-    dispatchTestCase(deleteAssertion(id));
+  const SETTER_MAP = {
+    queryVariant: value => setQueryVariant(value),
+    querySelector: value => setQuerySelector(value),
+    assertionValue: value => setAssertionValue(value),
+    matcher: value => setMatcher(value),
   };
 
-  const handleChangeQueryVariant = e => {
-    setQueryVariant(e.target.value);
-    dispatchTestCase(updateAssertion(id, e.target.value, querySelector, assertionValue, matcher));
+  let newAssertion = {
+    id,
+    queryVariant,
+    querySelector,
+    assertionValue,
+    matcher,
   };
-  const handleChangeQuerySelector = e => {
-    setQuerySelector(e.target.value);
-    dispatchTestCase(updateAssertion(id, queryVariant, e.target.value, assertionValue, matcher));
+
+  const handleChangeAssertionFields = (e, field) => {
+    SETTER_MAP[field](e.target.value);
+    newAssertion[field] = e.target.value;
+    dispatchToTestCase(updateAssertion(newAssertion));
   };
-  const handleChangeAssertionValue = e => {
-    setAssertionValue(e.target.value);
-    dispatchTestCase(updateAssertion(id, queryVariant, querySelector, e.target.value, matcher));
-  };
-  const handleChangeMatcher = e => {
-    setMatcher(e.target.value);
-    dispatchTestCase(
-      updateAssertion(id, queryVariant, querySelector, assertionValue, e.target.value)
-    );
+
+  const handleClickDelete = e => {
+    dispatchToTestCase(deleteAssertion(id));
   };
 
   const style = { width: '15px', height: '15px' };
   return (
-    <div>
-      <h3>Assertion</h3>
-      <img src={minusIcon} style={style} onClick={handleClickDelete} />
+    <div id={styles.assertion}>
+      <div id={styles.assertionHeader}>
+        <h3>Assertion</h3>
+        <img src={minusIcon} style={style} onClick={handleClickDelete} />
+      </div>
       <label htmlFor='queryVariant'>Query Selector</label>
-      <img src={questionIcon} style={style} />
-      <select id='queryVariant' onChange={handleChangeQueryVariant}>
+      <img src={questionIcon} alt='help' style={style} />
+      <select id='queryVariant' onChange={e => handleChangeAssertionFields(e, 'queryVariant')}>
         <option value='' />
         <option value='getBy'>getBy</option>
         <option value='getAllBy'>getAllBy</option>
@@ -48,8 +53,8 @@ const Assertion = ({ id, dispatchTestCase }) => {
         <option value='findBy'>findBy</option>
         <option value='findAllBy'>findAllBy</option>
       </select>
-      <img src={questionIcon} style={style} />
-      <select id='queries' onChange={handleChangeQuerySelector}>
+      <img src={questionIcon} alt='help' style={style} />
+      <select id='querySelector' onChange={e => handleChangeAssertionFields(e, 'querySelector')}>
         <option value='' />
         <option value='LabelText'>LabelText</option>
         <option value='PlaceholderText'>PlaceholderText</option>
@@ -61,9 +66,9 @@ const Assertion = ({ id, dispatchTestCase }) => {
         <option value='TestId'>TestId</option>
         {/* TextMatch Precision & Normalization will be added */}
       </select>
-      <input type='text' onChange={handleChangeAssertionValue} />
-      <p>Matcher</p>
-      <input type='text' onChange={handleChangeMatcher} />
+      <input type='text' onChange={e => handleChangeAssertionFields(e, 'assertionValue')} />
+      <label htmlFor='matcher'>Matcher</label>
+      <input type='text' id='matcher' onChange={e => handleChangeAssertionFields(e, 'matcher')} />
     </div>
   );
 };

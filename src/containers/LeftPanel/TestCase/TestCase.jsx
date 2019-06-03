@@ -1,30 +1,31 @@
 import React, { useContext } from 'react';
+import styles from '../TestCase/TestCase.module.scss';
+import { TestCaseContext } from '../../../context/testCaseReducer';
+import { updateTestStatement } from '../../../context/testCaseActions';
+import { MockDataContext } from '../../../context/mockDataReducer';
+import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import TestMenu from '../TestMenu/TestMenu';
 import MockData from '../MockData/MockData';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
 import Render from '../Render/Render';
-import { TestCaseContext } from '../../../context/testCaseReducer';
-import { MockDataContext } from '../../../context/mockDataReducer';
-import { updateTestStatement } from '../../../context/testCaseActions';
-import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 
 const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
-  const [testCase, dispatchTestCase] = useContext(TestCaseContext);
-  const [mockData, dispatchMockData] = useContext(MockDataContext);
+  const [testCase, dispatchToTestCase] = useContext(TestCaseContext);
+  const [mockData, dispatchToMockData] = useContext(MockDataContext);
 
   const handleUpdateTestStatement = e => {
-    dispatchTestCase(updateTestStatement(e.target.value));
+    dispatchToTestCase(updateTestStatement(e.target.value));
   };
 
   const handleToggleMockData = () => {
-    dispatchMockData(toggleMockData());
+    dispatchToMockData(toggleMockData());
   };
 
   const handleAddMockData = () => {
-    dispatchMockData(addMockData());
+    dispatchToMockData(addMockData());
   };
 
   const mockDataJSX = mockData.mockData.map(mockDatum => {
@@ -32,7 +33,7 @@ const TestCase = () => {
       <MockData
         key={mockDatum.id}
         mockDatumId={mockDatum.id}
-        dispatchMockData={dispatchMockData}
+        dispatchToMockData={dispatchToMockData}
         fieldKeys={mockDatum.fieldKeys}
       />
     );
@@ -41,17 +42,19 @@ const TestCase = () => {
   const statementsJSX = testCase.statements.map(statement => {
     switch (statement.type) {
       case 'action':
-        return <Action key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />;
+        return (
+          <Action key={statement.id} id={statement.id} dispatchToTestCase={dispatchToTestCase} />
+        );
       case 'assertion':
         return (
-          <Assertion key={statement.id} id={statement.id} dispatchTestCase={dispatchTestCase} />
+          <Assertion key={statement.id} id={statement.id} dispatchToTestCase={dispatchToTestCase} />
         );
       case 'render':
         return (
           <Render
             key={statement.id}
             id={statement.id}
-            dispatchTestCase={dispatchTestCase}
+            dispatchToTestCase={dispatchToTestCase}
             props={statement.props}
             reRender={statement.reRender}
           />
@@ -63,9 +66,9 @@ const TestCase = () => {
 
   return (
     <div>
-      <TestMenu dispatchTestCase={dispatchTestCase} />
-      <section>
-        <label htmlFor='test-statement'>test:</label>
+      <TestMenu dispatchToTestCase={dispatchToTestCase} />
+      <section id={styles.testCaseHeader}>
+        <label htmlFor='test-statement'>Test:</label>
         <input
           type='text'
           id='test-statement'
@@ -73,8 +76,10 @@ const TestCase = () => {
           onChange={handleUpdateTestStatement}
         />
       </section>
-      <section>
-        <label htmlFor='mock-data-checkbox'>Will you need mock data:</label>
+      <section id={styles.testCaseHeader}>
+        <label htmlFor='mock-data-checkbox' id='mock-data-checkbox'>
+          Will you need mock data?
+        </label>
         <input
           type='checkbox'
           id='mock-data-checkbox'
@@ -83,9 +88,9 @@ const TestCase = () => {
         />
       </section>
       {mockData.mockDataCheckBox && (
-        <section>
+        <section id={styles.mockDataHeader}>
           <label htmlFor='mock-data'>Mock data</label>
-          <img src={plusIcon} onClick={handleAddMockData} />
+          <img src={plusIcon} alt='add' onClick={handleAddMockData} />
           {mockDataJSX}
         </section>
       )}

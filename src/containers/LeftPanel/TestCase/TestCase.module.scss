@@ -1,0 +1,31 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+
+#testCase {
+  padding-bottom: 25px;
+
+  section {
+    padding: 5px;
+  }
+  input {
+    margin: 5px;
+  }
+}
+
+#testCaseHeader {
+  text-align: center;
+
+  .mock-data-checkbox input {
+    width: 200px;
+  }
+}
+
+#mockDataHeader {
+  label {
+    margin-left: 10px;
+    padding: 5px;
+  }
+  img {
+    width: 20px;
+  }
+}
