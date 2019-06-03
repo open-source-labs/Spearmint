@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
+import styles from '../Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
-import { actionReducer } from '../Action/actionReducer';
-import { SERVFAIL } from 'dns';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
@@ -38,11 +37,13 @@ const Assertion = ({ id, dispatchToTestCase }) => {
 
   const style = { width: '15px', height: '15px' };
   return (
-    <div>
-      <h3>Assertion</h3>
-      <img src={minusIcon} style={style} onClick={handleClickDelete} />
+    <div id={styles.assertion}>
+      <div id={styles.assertionHeader}>
+        <h3>Assertion</h3>
+        <img src={minusIcon} style={style} onClick={handleClickDelete} />
+      </div>
       <label htmlFor='queryVariant'>Query Selector</label>
-      <img src={questionIcon} style={style} />
+      <img src={questionIcon} alt='help' style={style} />
       <select id='queryVariant' onChange={e => handleChangeAssertionFields(e, 'queryVariant')}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -52,7 +53,7 @@ const Assertion = ({ id, dispatchToTestCase }) => {
         <option value='findBy'>findBy</option>
         <option value='findAllBy'>findAllBy</option>
       </select>
-      <img src={questionIcon} style={style} />
+      <img src={questionIcon} alt='help' style={style} />
       <select id='querySelector' onChange={e => handleChangeAssertionFields(e, 'querySelector')}>
         <option value='' />
         <option value='LabelText'>LabelText</option>

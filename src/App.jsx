@@ -23,7 +23,7 @@ const App = () => {
     );
   } else {
     return (
-      <div id={global.isFileDirectoryOpen ? styles.appGridClose : styles.appGridOpen}>
+      <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>

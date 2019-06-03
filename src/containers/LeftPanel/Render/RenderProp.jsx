@@ -4,9 +4,8 @@ import {
   deleteRenderProp,
   updateRenderProp,
 } from '../../../context/testCaseActions';
-
-const minusIcon = require('../../../assets/images/minus.png');
-const plusIcon = require('../../../assets/images/plus.png');
+const minusIcon = require('../../../assets/images/minus-box-outline.png');
+const plusIcon = require('../../../assets/images/plus-box.png');
 
 const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }) => {
   const handleClickAddProp = () => {

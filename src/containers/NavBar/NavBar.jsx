@@ -5,11 +5,11 @@ import { toggleBrowser, toggleFileDirectory } from '../../context/globalActions'
 import FileDirectory from './FileDirectory/FileDirectory';
 import ExportFileModal from './ExportFileModal/ExportFileModal';
 
-const leftIcon = require('../../assets/images/chevron-left.png');
-const exportIcon = require('../../assets/images/file-export.png');
-const folderOpenIcon = require('../../assets/images/folder-open.png');
-const saveIcon = require('../../assets/images/save.png');
-const codeIcon = require('../../assets/images/code.png');
+const leftIcon = require('../../assets/images/sq_br_first_icon.png');
+const exportIcon = require('../../assets/images/export.png');
+const folderOpenIcon = require('../../assets/images/folder_open.png');
+const saveIcon = require('../../assets/images/save_icon.png');
+const codeIcon = require('../../assets/images/app_window_shell.png');
 
 const NavBar = () => {
   const [{ fileTree, isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
@@ -53,19 +53,19 @@ const NavBar = () => {
         <img src={leftIcon} style={icons} alt='fileExplorer' />{' '}
       </button>
       <button style={button} onClick={openModal}>
-        <img src={exportIcon} style={icons} alt='export' />
+        <img src={exportIcon} style={icons} alt='export' title='export a test file' />
       </button>
 
       <ExportFileModal isModalOpen={isModalOpen} closeModal={closeModal} />
 
       <button style={button}>
-        <img src={folderOpenIcon} style={icons} alt='folderOpen' />
+        <img src={folderOpenIcon} style={icons} alt='folderOpen' title='open a new folder' />
       </button>
       <button style={button}>
-        <img src={saveIcon} style={icons} alt='save' />
+        <img src={saveIcon} style={icons} alt='save' title='save the file' />
       </button>
       <button style={button} onClick={handleBrowserToggle}>
-        <img src={codeIcon} style={icons} alt='delete' />
+        <img src={codeIcon} style={icons} alt='browserview' title='browser view' />
       </button>
 
       {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}

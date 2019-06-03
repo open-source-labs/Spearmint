@@ -5,6 +5,8 @@ import { displayFileCode, setFilePath } from '../../../context/globalActions';
 
 let remote = window.require('electron').remote;
 let fs = remote.require('fs');
+const fileImg = require('../../../assets/images/file-document-outline.svg');
+const folderImg = require('../../../assets/images/folder-outline.svg');
 
 const FileDirectory = ({ fileTree }) => {
   const [{ componentName }, dispatchToGlobal] = useContext(GlobalContext);
@@ -15,9 +17,6 @@ const FileDirectory = ({ fileTree }) => {
   };
 
   const convertToHTML = filetree => {
-    let folderImg = 'https://img.icons8.com/ios/20/000000/opened-folder.png';
-    let fileImg = 'https://img.icons8.com/metro/20/000000/document.png';
-
     return filetree.map(file => {
       const desiredComponentName = file.fileName
         .substring(0, file.fileName.indexOf('.') - 1)
@@ -30,7 +29,7 @@ const FileDirectory = ({ fileTree }) => {
           return (
             <ul key={file.fileName}>
               <span>
-                <img src={folderImg} alt='' />
+                <img src={folderImg} alt='folder' />
                 <button id={styles.dirButton}>{file.fileName}</button>
               </span>
               {file.files.length && convertToHTML(file.files, fileImg)}
@@ -40,7 +39,7 @@ const FileDirectory = ({ fileTree }) => {
           return (
             <ul key={file.filePath}>
               <span>
-                <img src={fileImg} alt='' />
+                <img src={fileImg} alt='file' />
                 <button
                   id={styles.dirButton}
                   onClick={() => {

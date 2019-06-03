@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import styles from '../Action/Action.module.scss';
 import { actionState, actionReducer } from './actionReducer';
 import { setEventValue, setQuerySelector, setQueryValue, setQueryVariant } from './actionActions';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
@@ -50,9 +51,9 @@ const Action = ({ id, dispatchToTestCase }) => {
   };
 
   return (
-    <div>
+    <div id={styles.action}>
       <h3>Action</h3>
-      <img src={minusIcon} onClick={handleClickDeleteAction} />
+      <img src={minusIcon} alt='delete' onClick={handleClickDeleteAction} />
       <label htmlFor='event-type'>Event Type</label>
       <AutoComplete
         action={action}
@@ -71,7 +72,7 @@ const Action = ({ id, dispatchToTestCase }) => {
       )}
 
       <label htmlFor='queryVariant'>Query Selector</label>
-      <img src={questionIcon} />
+      <img src={questionIcon} alt='help' title='Please chose the variant' />
       <select id='queryVariant' onChange={e => handleChangeActionFields(e, 'queryVariant')}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -81,7 +82,7 @@ const Action = ({ id, dispatchToTestCase }) => {
         <option value='findBy'>findBy</option>
         <option value='findAllBy'>findAllBy</option>
       </select>
-      <img src={questionIcon} />
+      <img src={questionIcon} alt='help' title='Please chose the queries' />
       <select id='querySelector' onChange={e => handleChangeActionFields(e, 'querySelector')}>
         <option value='' />
         <option value='LabelText'>LabelText</option>

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import styles from './Render.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
 import { setFilePath, setComponentName } from '../../../context/globalActions';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
@@ -40,9 +41,11 @@ const Render = ({ id, dispatchToTestCase, props, reRender }) => {
     );
   });
   return (
-    <section>
-      <h3>{!reRender ? 'Render' : 'Rerender'}</h3>
-      <img src={minusIcon} alt='' onClick={handleClickDelete} />
+    <section id={styles.render}>
+      <div id={styles.renderHeader}>
+        <h3>{!reRender ? 'Render' : 'Rerender'}</h3>
+        <img src={minusIcon} alt='' onClick={handleClickDelete} />
+      </div>
       <div>
         <label htmlFor='render-input-box'>Component Name</label>
         <input

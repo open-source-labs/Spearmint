@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import styles from '../TestCase/TestCase.module.scss';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { updateTestStatement } from '../../../context/testCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
@@ -66,8 +67,8 @@ const TestCase = () => {
   return (
     <div>
       <TestMenu dispatchToTestCase={dispatchToTestCase} />
-      <section>
-        <label htmlFor='test-statement'>test:</label>
+      <section id={styles.testCaseHeader}>
+        <label htmlFor='test-statement'>Test:</label>
         <input
           type='text'
           id='test-statement'
@@ -75,8 +76,10 @@ const TestCase = () => {
           onChange={handleUpdateTestStatement}
         />
       </section>
-      <section>
-        <label htmlFor='mock-data-checkbox'>Will you need mock data:</label>
+      <section id={styles.testCaseHeader}>
+        <label htmlFor='mock-data-checkbox' id='mock-data-checkbox'>
+          Will you need mock data?
+        </label>
         <input
           type='checkbox'
           id='mock-data-checkbox'
@@ -85,9 +88,9 @@ const TestCase = () => {
         />
       </section>
       {mockData.mockDataCheckBox && (
-        <section>
+        <section id={styles.mockDataHeader}>
           <label htmlFor='mock-data'>Mock data</label>
-          <img src={plusIcon} onClick={handleAddMockData} />
+          <img src={plusIcon} alt='add' onClick={handleAddMockData} />
           {mockDataJSX}
         </section>
       )}
