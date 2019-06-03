@@ -31,6 +31,7 @@ const createAssertion = () => ({
   querySelector: '',
   assertionValue: '',
   matcher: '',
+  matcherValue: '',
 });
 
 const createRender = (isRerender) => ({
@@ -105,6 +106,7 @@ export const testCaseReducer = (state, action) => {
           statement.querySelector = action.querySelector;
           statement.assertionValue = action.assertionValue;
           statement.matcher = action.matcher;
+          statement.matcherValue = action.matcherValue;
         }
         return statement;
       });

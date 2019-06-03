@@ -29,7 +29,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const generateTestFile = () => {
     addImportStatements();
-    addMockData = () => {};
+    addMockData();
     addTestStatements();
     testFileCode += beautify(testFileCode, {
       indent_size: 2,
