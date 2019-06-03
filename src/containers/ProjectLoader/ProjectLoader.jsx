@@ -5,7 +5,6 @@ import { FileTreeContext, LoadedContext, UrlContext } from '../../App';
 const remote = window.require('electron').remote;
 const electronFs = remote.require('fs');
 const { dialog } = remote;
-const leaf = require('../../assets/images/leaf.png');
 
 const ProjectLoader = () => {
   const setUrl = useContext(UrlContext);
