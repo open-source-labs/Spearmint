@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import styles from "../../assets/stylesheets/components/RightPanel/EditorView.module.scss";
 import MonacoEditor from "react-monaco-editor";
 import { FileCodeContext, ToggleContext } from "../../App";
 
@@ -20,11 +21,11 @@ const Editor = () => {
   };
 
   return (
-    <div>
+    <div id={styles.editorView}>
       {toggleView ? null : (
         <MonacoEditor
-          width="680"
-          height="750"
+          width="100%"
+          height="100%"
           language="javascript"
           value={fileCode}
           options={options}

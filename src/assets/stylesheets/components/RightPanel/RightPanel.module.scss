@@ -1,5 +1,7 @@
 #rightPanel {
   grid-area: rightPanel;
   grid-column-start: 3;
-  height: 750px;
+  // height: 750px;
+  max-height: 100vh;
+  max-width: 100%;
 }
