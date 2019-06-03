@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import {
-  addAction,
-  addAssertion,
-  addRender
-} from "../../../context/testCaseActions";
+import React, { useState } from 'react';
+import { addAction, addAssertion, addRender } from '../../../context/testCaseActions';
 
 const TestMenu = ({ dispatchTestCase }) => {
   const [reRender, setReRender] = useState(false);
@@ -20,19 +16,19 @@ const TestMenu = ({ dispatchTestCase }) => {
   };
 
   return (
-    <div className="flex-container">
-      <div id="left-menu">
-        <button className="menu-btn">New Test</button>
+    <div className='flex-container'>
+      <div id='left-menu'>
+        <button className='menu-btn'>New Test</button>
       </div>
-      <div id="right-menu">
-        <button className="menu-btn" onClick={handleAddAction}>
+      <div id='right-menu'>
+        <button className='menu-btn' onClick={handleAddAction}>
           Action
         </button>
-        <button className="menu-btn" onClick={handleAddAssertion}>
+        <button className='menu-btn' onClick={handleAddAssertion}>
           Assertion
         </button>
-        <button className="menu-btn" onClick={handleAddRender}>
-          {!reRender ? "Render" : "Rerender"}
+        <button className='menu-btn' onClick={handleAddRender}>
+          {!reRender ? 'Render' : 'Rerender'}
         </button>
       </div>
     </div>

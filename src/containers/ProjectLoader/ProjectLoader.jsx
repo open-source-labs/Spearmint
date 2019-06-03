@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-// import styles from "../assets/stylesheets/components/ProjectLoader/ProjectLoader.module.scss";
-import { FileTreeContext, LoadedContext, UrlContext } from "../App";
+import React, { useContext } from 'react';
+import styles from './ProjectLoader.module.scss';
+import { FileTreeContext, LoadedContext, UrlContext } from '../../App';
 
-let remote = window.require("electron").remote;
-let electronFs = remote.require("fs");
+let remote = window.require('electron').remote;
+let electronFs = remote.require('fs');
 let { dialog } = remote;
 
 const ProjectLoader = () => {
@@ -17,12 +17,12 @@ const ProjectLoader = () => {
 
   const handleOpenFolder = () => {
     let directory = dialog.showOpenDialog({
-      properties: ["openDirectory"],
+      properties: ['openDirectory'],
       filters: [
-        { name: "Javascript Files", extensions: ["js", "jsx"] },
-        { name: "Style", extensions: ["css"] },
-        { name: "Html", extensions: ["html"] }
-      ]
+        { name: 'Javascript Files', extensions: ['js', 'jsx'] },
+        { name: 'Style', extensions: ['css'] },
+        { name: 'Html', extensions: ['html'] },
+      ],
     });
     if (directory && directory[0]) {
       setLoaded(!false);
@@ -36,11 +36,11 @@ const ProjectLoader = () => {
       const file = {
         filePath: `${directoryPath}/${fileName}`,
         fileName,
-        files: []
+        files: [],
       };
       //generateFileTreeObj will be recursively called if it is a folder
       const fileData = electronFs.statSync(file.filePath);
-      if (file.fileName !== "node_modules" && file.fileName !== ".git") {
+      if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (fileData.isDirectory()) {
           file.files = generateFileTreeObject(file.filePath);
         }
@@ -55,23 +55,20 @@ const ProjectLoader = () => {
       <span>
         <h1>
           spearmint
-          <img
-            src="https://img.icons8.com/ios/40/000000/natural-food.png"
-            alt=""
-          />
+          <img src='https://img.icons8.com/ios/40/000000/natural-food.png' alt='' />
         </h1>
       </span>
       <h2>A FRESH TAKE ON TESTING </h2>
       <input
-        type="text"
-        id="url"
+        type='text'
+        id='url'
         placeholder="Enter test site's URL..."
         onChange={handleChangeUrl}
       />
-      <button className="openBtn" onClick={handleOpenFolder}>
+      <button className='openBtn' onClick={handleOpenFolder}>
         Open Folder
       </button>
-      <div id="filetree" />
+      <div id='filetree' />
     </div>
   );
 };
