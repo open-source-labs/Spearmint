@@ -1,31 +1,44 @@
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../assets/stylesheets/colors.scss';
+// $easing: cubic-bezier(0.6, 0.05, 0.28, 0.91);
 
 #fileDirectory {
   grid-area: fileDirectory;
-  padding: 0.5rem;
-  width: 15rem;
-  background-color: white;
-  overflow: scroll;
+  padding: 28px 8px;
+  width: 400%;
   height: 100vh;
   margin-top: -400px;
-  margin-left: 40px;
-  font-size: 11px;
-
+  margin-left: 242px;
+  font-size: 12px;
+  background-color: #fff;
+  overflow: scroll;
+  // transition: all 500ms $easing;
   ul {
     list-style-type: none;
-    margin-left: 7px;
+    margin-left: 10px;
   }
 }
 
 #dirButton {
   text-decoration: none;
   color: $dark-gray;
+  background-color: transparent;
   border: none;
   font-family: $openSans;
+  vertical-align: middle;
 }
 
 #dirButton:hover {
   background-color: $light-gray;
   border-radius: 3px;
+}
+
+#folder {
+  width: 18px;
+  height: 18px;
+}
+
+#file {
+  width: 18px;
+  height: 18px;
 }

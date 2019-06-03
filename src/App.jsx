@@ -17,16 +17,6 @@ export const ComponentNameContext = createContext(null);
 export const FilePathContext = createContext(null);
 export const FileToggleContext = createContext(null);
 
-// const styles = {
-//   fontFamily: "arial",
-//   display: "flex"
-// };
-
-// const loaderDiv = {
-//   display: "flex",
-//   justifyContent: "center"
-// };
-
 const App = () => {
   const [fileTree, setFileTree] = useState(null);
   const [fileCode, setFileCode] = useState('');

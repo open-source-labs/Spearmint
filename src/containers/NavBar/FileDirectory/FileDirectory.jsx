@@ -19,9 +19,6 @@ const FileDirectory = ({ fileTree }) => {
   };
 
   const convertToHTML = filetree => {
-    // let folderImg = 'https://img.icons8.com/ios/20/000000/opened-folder.png';
-    // let fileImg = 'https://img.icons8.com/metro/20/000000/document.png';
-
     return filetree.map(file => {
       const desiredComponentName = file.fileName
         .substring(0, file.fileName.indexOf('.') - 1)
@@ -33,18 +30,18 @@ const FileDirectory = ({ fileTree }) => {
         if (file.files.length) {
           return (
             <ul key={file.fileName}>
-              <span>
-                <img src={folderImg} alt='folder' />
+              <li>
+                <img id={styles.folder} src={folderImg} alt='folder' />
                 <button id={styles.dirButton}>{file.fileName}</button>
-              </span>
+              </li>
               {file.files.length && convertToHTML(file.files, fileImg)}
             </ul>
           );
         } else {
           return (
             <ul key={file.filePath}>
-              <span>
-                <img src={fileImg} alt='file' />
+              <li>
+                <img id={styles.file} src={fileImg} alt='file' />
                 <button
                   id={styles.dirButton}
                   onClick={() => {
@@ -53,7 +50,7 @@ const FileDirectory = ({ fileTree }) => {
                 >
                   {file.fileName}
                 </button>
-              </span>
+              </li>
             </ul>
           );
         }

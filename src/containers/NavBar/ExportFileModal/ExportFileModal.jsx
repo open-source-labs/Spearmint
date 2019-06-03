@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
+import ReactModal from 'react-modal';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
-import ReactModal from 'react-modal';
+import styles from './ExportFileModal.module.scss';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
-const closeIcon = require('../../../assets/images/close-outline.png');
 
 const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');
@@ -53,24 +53,28 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     });
   };
 
-  const style = { width: '5px', height: '5px' };
-
   return (
     <ReactModal
-      className='Modal'
+      className={styles.modal}
       isOpen={isModalOpen}
       onRequestClose={closeModal}
       contentLabel='Save testing file'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
     >
-      <h3>Convert to Javascript Code</h3>
-      <img src={closeIcon} alt='' style={style} onClick={closeModal} />
-      <div>
+      <div id={styles.title}>
+        <p>Convert to Javascript Code</p>
+        <svg id={styles.close} onClick={closeModal}>
+          <path d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' />
+        </svg>
+      </div>
+      <div id={styles.body}>
         <p>File Name</p>
         <input type='text' value={fileName} onChange={handleChangeFileName} />
+        <button id={styles.save} onClick={handleClickSave}>
+          Save
+        </button>
         <button onClick={closeModal}>Cancel</button>
-        <button onClick={handleClickSave}>Save</button>
       </div>
     </ReactModal>
   );

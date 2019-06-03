@@ -39,43 +39,26 @@ const NavBar = () => {
     setIsModalOpen(false);
   };
 
-  const button = {
-    padding: '0',
-    border: '0',
-    margin: '1.6rem 0',
-    width: '1.6rem',
-    height: '1.6rem',
-    cursor: 'pointer',
-    backgroundColor: 'transparent',
-    outline: 'none',
-  };
-
-  const icons = {
-    height: '1.25rem',
-    width: '1.25rem',
-  };
-
   return (
     <div id={styles.navBar}>
-      <button style={button} onClick={explorerOpen}>
-        <img src={leftIcon} style={icons} alt='fileExplorer' />{' '}
+      <button class={styles.navBtn} onClick={explorerOpen}>
+        <img src={leftIcon} class={styles.icons} alt='fileExplorer' />
       </button>
-      <button style={button} onClick={openModal}>
-        <img src={exportIcon} style={icons} alt='export' title='export a test file' />
+      <button class={styles.navBtn} onClick={openModal}>
+        <img src={exportIcon} class={styles.icons} alt='export' title='export a test file' />
       </button>
 
       <ExportFileModal isModalOpen={isModalOpen} closeModal={closeModal} />
 
-      <button style={button}>
-        <img src={folderOpenIcon} style={icons} alt='folderOpen' title='open a new folder' />
+      <button class={styles.navBtn}>
+        <img src={folderOpenIcon} class={styles.icons} alt='folderOpen' title='open a new folder' />
       </button>
-      <button style={button}>
-        <img src={saveIcon} style={icons} alt='save' title='save the file' />
+      <button class={styles.navBtn}>
+        <img src={saveIcon} class={styles.icons} alt='save' title='save the file' />
       </button>
-      <button style={button} onClick={toggleClick}>
-        <img src={codeIcon} style={icons} alt='browserview' title='browser view' />
+      <button class={styles.navBtn} onClick={toggleClick}>
+        <img src={codeIcon} class={styles.icons} alt='browserview' title='browser view' />
       </button>
-
       {!isOpen && <FileDirectory fileTree={fileTree} />}
     </div>
   );
