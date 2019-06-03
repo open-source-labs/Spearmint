@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import styles from './EditorView.module.scss';
 import MonacoEditor from 'react-monaco-editor';
-import { FileCodeContext, ToggleContext } from '../../../App';
+import { GlobalContext } from '../../../context/globalReducer';
 
 const Editor = () => {
-  const fileCode = useContext(FileCodeContext);
-  const toggleView = useContext(ToggleContext);
+  const [{ displayedFileCode, isBrowserOpen }, _] = useContext(GlobalContext);
   const requireConfig = {
     url: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/',
     paths: {
@@ -21,13 +20,13 @@ const Editor = () => {
   };
 
   return (
-    <div id={styles.editorView}>
-      {toggleView ? null : (
+    <div>
+      {isBrowserOpen ? null : (
         <MonacoEditor
-          width='100%'
-          height='100%'
+          width='50vw'
+          height='100vh'
           language='javascript'
-          value={fileCode}
+          value={displayedFileCode}
           options={options}
           requireConfig={requireConfig}
         />

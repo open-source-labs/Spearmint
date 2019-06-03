@@ -1,11 +1,11 @@
-$nav-color: #02c2c3;
+@import '../../assets/stylesheets/colors.scss';
 
 #navBar {
   grid-area: navBar;
-  background-color: $nav-color;
+  background-color: $mint;
   padding: 0.625rem;
   height: 100vh;
-  width: 3rem;
+  width: 3.5rem;
   flex-direction: column;
   align-items: center;
 }
