@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import ReactModal from 'react-modal';
-import { addMockData } from '../../../context/mockDataActions';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
@@ -23,6 +22,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const handleClickSave = () => {
     generateTestFile();
     console.log(testFileCode);
+    exportTestFile();
   };
 
   const generateTestFile = () => {
@@ -121,7 +121,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     }, '');
   };
 
-  const saveTestFile = () => {
+  const exportTestFile = () => {
     if (!fs.existsSync(path.join(__dirname, '../__tests__'))) {
       fs.mkdirSync(path.join(__dirname, '../__tests__'));
     }
