@@ -4,12 +4,12 @@
 #fileDirectory {
   grid-area: fileDirectory;
   padding: 0.5rem;
-  width: 15rem;
+  width: 14rem;
   background-color: white;
   overflow: scroll;
   height: 100vh;
   margin-top: -400px;
-  margin-left: 40px;
+  margin-left: 41px;
   font-size: 11px;
 
   ul {
@@ -20,9 +20,10 @@
 
 #dirButton {
   text-decoration: none;
+  background-color: white;
   color: $dark-gray;
   border: none;
-  font-family: $openSans;
+  font-family: $raleway;
 }
 
 #dirButton:hover {

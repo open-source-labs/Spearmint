@@ -1,14 +1,16 @@
+@import '../../../assets/stylesheets/fonts.scss';
+
 .container {
   position: 'relative';
 }
 
 .input {
-  width: 120;
-  height: 0;
+  width: 200;
+  height: 30;
   padding: '10px 20px';
-  font-family: 'Helvetica; sans-serif';
+  font-family: $raleway;
   font-weight: 300;
-  font-size: 16;
+  font-size: 12;
   border: '1px solid #aaa';
   border-top-left-radius: 4;
   border-top-right-radius: 4;

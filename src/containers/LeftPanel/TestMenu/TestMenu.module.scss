@@ -6,16 +6,11 @@
   text-align: center;
 
   button {
-    border: none;
-    border: 3px solid white;
-    border-radius: 10px;
-    margin: 5px;
     height: 40px;
     color: white;
     background-color: $mint;
-    font-family: $openSans;
-    font-weight: 800;
-    letter-spacing: 1px;
+    opacity: 0.8;
+    font-family: $oxygen;
   }
 
   button:hover {
@@ -23,4 +18,20 @@
     color: $mint;
     border-radius: 7px;
   }
+}
+
+#actionBtn {
+  border: none;
+  border-right: 1px solid white;
+  border-left: 1px solid white;
+}
+
+#renderBtn {
+  border-radius: 20px 0 0 20px;
+  border: none;
+}
+
+#assertionBtn {
+  border-radius: 0 20px 20px 0;
+  border: none;
 }

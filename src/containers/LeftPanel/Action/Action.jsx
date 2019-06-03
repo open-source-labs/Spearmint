@@ -52,8 +52,10 @@ const Action = ({ id, dispatchToTestCase }) => {
 
   return (
     <div id={styles.action}>
-      <h3>Action</h3>
-      <img src={minusIcon} alt='delete' onClick={handleClickDeleteAction} />
+      <div id={styles.actionHeader}>
+        <h3>Action</h3>
+        <img src={minusIcon} alt='delete' onClick={handleClickDeleteAction} />
+      </div>
       <label htmlFor='event-type'>Event Type</label>
       <AutoComplete
         action={action}

@@ -13,11 +13,10 @@
 }
 
 #testCaseHeader {
-  text-align: center;
-
-  .mock-data-checkbox input {
-    width: 200px;
-  }
+  padding: 10px;
+  // .mock-data-checkbox input {
+  //   // width: 200px;
+  // }
 }
 
 #mockDataHeader {
@@ -26,6 +25,6 @@
     padding: 5px;
   }
   img {
-    width: 20px;
+    width: 18px;
   }
 }

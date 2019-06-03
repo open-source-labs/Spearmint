@@ -22,14 +22,14 @@ const TestMenu = ({ dispatchToTestCase }) => {
     //   <button className='menu-btn'>New Test</button>
     // </div>
     <div id={styles.testMenu}>
-      <button className='menu-btn' onClick={handleAddAction}>
-        ACTION
+      <button id={styles.renderBtn} onClick={handleAddRender}>
+        {!reRender ? 'Render' : 'Rerender'}
       </button>
-      <button className='menu-btn' onClick={handleAddAssertion}>
-        ASSERTION
+      <button id={styles.actionBtn} onClick={handleAddAction}>
+        Action
       </button>
-      <button className='menu-btn' onClick={handleAddRender}>
-        {!reRender ? 'RENDER' : 'RERENDER'}
+      <button id={styles.assertionBtn} onClick={handleAddAssertion}>
+        Assertion
       </button>
     </div>
     //</div>

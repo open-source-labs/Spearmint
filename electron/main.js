@@ -8,7 +8,9 @@ let testView;
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1300,
+    minWidth: 1300,
     height: 750,
+    minHeight: 750,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,

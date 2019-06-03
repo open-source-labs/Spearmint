@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from '../MockData/MockDataKey.module.scss';
 import { deleteMockDataKey, updateMockDataKey } from '../../../context/mockDataActions';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
@@ -18,13 +19,8 @@ const MockDataKey = ({ dispatchToMockData, mockDatumId, mockDatumKeyId, fieldKey
     dispatchToMockData(updateMockDataKey(mockDatumId, mockDatumKeyId, fieldKey, e.target.value));
   };
 
-  const keys = {
-    padding: '5px',
-  };
-
   return (
-    <div>
-      <img src={minusIcon} alt='delete' onClick={handleChangeDelete} style={keys} />
+    <div id={styles.mockDataKey}>
       <form id='mock-data-form'>
         <input
           type='text'
@@ -39,6 +35,7 @@ const MockDataKey = ({ dispatchToMockData, mockDatumId, mockDatumKeyId, fieldKey
           <option value='boolean'>Boolean</option>
           <option value='object'>Object</option>
         </select>
+        <img src={minusIcon} alt='delete' onClick={handleChangeDelete} />
       </form>
     </div>
   );

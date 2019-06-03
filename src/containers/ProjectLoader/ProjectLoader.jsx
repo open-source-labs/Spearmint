@@ -66,7 +66,7 @@ const ProjectLoader = () => {
         </svg>
       </section>
       <section id={styles.lowerPart}>
-        <h3>A Fresh Take on Testing </h3>
+        <h3 id={styles.subText}>A Fresh Take on Testing </h3>
         <div id={styles.appBox}>
           <div class={styles.contentBox}>
             <span class={styles.number}>01</span>
