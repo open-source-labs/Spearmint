@@ -6,11 +6,11 @@ export const TestCaseContext = createContext(null);
 export const testCaseState = {
   testStatement: '',
   statements: [],
+  hasRerender: false,
 };
 
 let statementId = 0;
 let renderPropsId = 0;
-let reRender = false;
 
 const createAction = () => ({
   id: statementId++,
@@ -33,10 +33,10 @@ const createAssertion = () => ({
   matcher: '',
 });
 
-const createRender = () => ({
+const createRender = (isRerender) => ({
   id: statementId++,
   type: 'render',
-  reRender,
+  isRerender,
   componentName: '',
   filePath: '',
   props: [],
@@ -113,11 +113,12 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
     case actionTypes.ADD_RENDER:
-      statements.push(createRender());
-      reRender = true;
+      statements.push(createRender(state.hasRerender));
+      const hasRerender = true;
       return {
         ...state,
         statements,
+        hasRerender,
       };
     case actionTypes.DELETE_RENDER:
       statements = statements.filter(statement => statement.id !== action.id);
@@ -172,6 +173,10 @@ export const testCaseReducer = (state, action) => {
         }
         return statement;
       });
+      return {
+        ...state,
+        statements,
+      };
     default:
       return state;
   }
