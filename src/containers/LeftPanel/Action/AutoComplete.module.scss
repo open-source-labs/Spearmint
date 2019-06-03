@@ -1,23 +1,22 @@
+@import '../../assets/stylesheets/colors.scss';
+
 .container {
-  position: 'relative';
+  position: relative;
 }
 
 .input {
-  width: 120;
-  height: 0;
-  padding: '10px 20px';
-  font-family: 'Helvetica; sans-serif';
+  width: 160px;
+  height: 26px;
+  padding: 10px 20px;
+  font-family: Helvetica, sans-serif;
   font-weight: 300;
-  font-size: 16;
-  border: '1px solid #aaa';
-  border-top-left-radius: 4;
-  border-top-right-radius: 4;
-  border-bottom-left-radius: 4;
-  border-bottom-right-radius: 4;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
 }
 
 .inputFocused {
-  outline: 'none';
+  outline: none;
 }
 
 .inputOpen {
@@ -26,35 +25,34 @@
 }
 
 .suggestionsContainer {
-  display: 'none';
+  display: none;
 }
 
 .suggestionsContainerOpen {
-  display: 'block';
-  position: 'absolute';
-  top: 51;
-  width: 280;
-  border: '1px solid #aaa';
-  background-color: '#fff';
-  font-family: 'Helvetica; sans-serif';
+  display: block;
+  position: absolute;
+  top: 26px;
+  width: 196px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  font-family: Helvetica, sans-serif;
   font-weight: 300;
-  font-size: 16;
-  border-bottom-left-radius: 4;
-  border-bottom-right-radius: 4;
+  font-size: 16px;
+  border-radius: 0 0 4px 4px;
   z-index: 2;
 }
 
 .suggestionsList {
   margin: 0;
   padding: 0;
-  list-style-type: 'none';
+  list-style-type: none;
 }
 
 .suggestion {
-  cursor: 'pointer';
-  padding: '10px 20px';
+  cursor: pointer;
+  padding: 10px 20px;
 }
 
 .suggestionHighlighted {
-  background-color: '#ddd';
+  background-color: #b4e6e6;
 }

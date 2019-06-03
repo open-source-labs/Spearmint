@@ -3,19 +3,27 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/globalReducer';
 import { setProjectUrl, loadProject, createFileTree } from '../../context/globalActions';
 
-const remote = window.require('electron').remote;
+const { remote } = window.require('electron');
 const electronFs = remote.require('fs');
 const { dialog } = remote;
 
 const ProjectLoader = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
 
+  const addHttps = url => {
+    if (!/^(f|ht)tps?:\/\//i.test(url)) {
+      url = 'https://' + url;
+    }
+    return url;
+  };
+
   const handleChangeUrl = e => {
-    dispatchToGlobal(setProjectUrl(e.target.value));
+    const testSiteURL = addHttps(e.target.value);
+    dispatchToGlobal(setProjectUrl(testSiteURL));
   };
 
   const handleOpenFolder = () => {
-    let directory = dialog.showOpenDialog({
+    const directory = dialog.showOpenDialog({
       properties: ['openDirectory'],
       filters: [
         { name: 'Javascript Files', extensions: ['js', 'jsx'] },
@@ -31,7 +39,7 @@ const ProjectLoader = () => {
 
   //reads contents within the selected directory and checks if it is a file/folder
   const generateFileTreeObject = directoryPath => {
-    let fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
+    const fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
       const file = {
         filePath: `${directoryPath}/${fileName}`,
         fileName,
@@ -68,9 +76,9 @@ const ProjectLoader = () => {
       <section id={styles.lowerPart}>
         <h3>A Fresh Take on Testing </h3>
         <div id={styles.appBox}>
-          <div class={styles.contentBox}>
-            <span class={styles.number}>01</span>
-            <span class={styles.text}> Enter the URL</span> <br />
+          <div className={styles.contentBox}>
+            <span className={styles.number}>01</span>
+            <span className={styles.text}> Enter the URL</span> <br />
             <input
               type='text'
               id={styles.url}
@@ -78,9 +86,9 @@ const ProjectLoader = () => {
               onChange={handleChangeUrl}
             />
           </div>
-          <div class={styles.contentBox}>
-            <span class={styles.number}>02</span>
-            <span class={styles.text}>Select your application</span> <br />
+          <div className={styles.contentBox}>
+            <span className={styles.number}>02</span>
+            <span className={styles.text}>Select your application</span> <br />
             <button id={styles.openBtn} onClick={handleOpenFolder}>
               Open Folder
             </button>
