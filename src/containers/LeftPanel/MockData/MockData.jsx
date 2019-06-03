@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './MockData.module.scss';
 import MockDataFieldKey from './MockDataKey';
 import {
   deleteMockData,
@@ -36,19 +37,26 @@ const MockData = ({ mockDatumId, dispatchMockData, fieldKeys }) => {
   ));
 
   return (
-    <div>
-      <img src={minusIcon} alt='delete' onClick={handleClickDelete} />
+    <div id={styles.mockData}>
       <label htmlFor='mock-data-name'>Name </label>
       <input type='text' id='mock-data-name' onChange={handleClickUpdate} />
+      <img src={minusIcon} onClick={handleClickDelete} />
       <div>
-        <label htmlFor='mock-data-key'>Add filed keys </label>
-        <label htmlFor='mock-data-type'>Type </label>
+        <label htmlFor='mock-data-key' id={styles.mockDataKey}>
+          Add field keys{' '}
+        </label>
+        <label htmlFor='mock-data-type' id={styles.mockDataType}>
+          Type{' '}
+        </label>
       </div>
-      {mockDataFieldKeys}
-      <button onClick={e => handleClickAdd(e, mockDatumId)}>
-        <img src={plusIcon} alt='add' />
-        Add Key
-      </button>
+      <div id={styles.keyList}>
+        <hr />
+        {mockDataFieldKeys}
+        <button onClick={e => handleClickAdd(e, mockDatumId)}>
+          <img src={plusIcon} />
+          Add Key
+        </button>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import Autosuggest from 'react-autosuggest';
 import { events } from './actionEvents';
@@ -101,7 +102,7 @@ const Action = ({ id, dispatchTestCase }) => {
       position: 'relative',
     },
     input: {
-      width: 120,
+      width: 400,
       height: 0,
       padding: '10px 20px',
       fontFamily: 'Helvetica, sans-serif',
@@ -152,7 +153,7 @@ const Action = ({ id, dispatchTestCase }) => {
   };
 
   return (
-    <div>
+    <div id={styles.action}>
       <h3>Action</h3>
       <img src={minusIcon} alt='delete' onClick={handleClickDelete} />
       <label htmlFor='event-type'>Event Type</label>
