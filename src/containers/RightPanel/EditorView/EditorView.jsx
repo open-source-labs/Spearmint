@@ -21,7 +21,7 @@ const Editor = () => {
 
   return (
     <div>
-      {toggleView ? null : (
+      {toggleView ? (
         <MonacoEditor
           width='680'
           height='750'
@@ -30,7 +30,7 @@ const Editor = () => {
           options={options}
           requireConfig={requireConfig}
         />
-      )}
+      ) : null}
     </div>
   );
 };
