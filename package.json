@@ -20,6 +20,7 @@
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
+    "react-beautiful-dnd": "^11.0.3",
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
     "react-monaco-editor": "^0.25.1",
