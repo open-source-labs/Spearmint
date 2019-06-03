@@ -53,7 +53,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const addMockData = () => {};
 
   const addTestStatements = () => {
-    testFileCode += `test(${testCase.testStatement}),`;
+    testFileCode += `test(${testCase.testStatement}), () => {`;
     const methods = identifyMethods();
     testCase.statements.forEach(statement => {
       switch (statement.type) {
@@ -67,6 +67,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
           return statement;
       }
     });
+    testFileCode += '});';
   };
 
   const identifyMethods = () => {
@@ -90,13 +91,15 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     }
   };
 
-  //  expect(getByText(fakeTodo.content)).toBeInTheDocument;});`,
-  const addAssertion = assertion => {};
+  const addAssertion = assertion => {
+    testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
+                    (${assertion.assertionValue})).${assertion.matcher}(${assertion.matcherValue})`;
+  };
 
   const addRender = (render, methods) => {
     let props = addRenderProps(render);
     if (!render.isRerender) {
-      testFileCode += `() => { const { ${methods} } } = 
+      testFileCode += `const { ${methods} } } = 
                       render(<${render.componentName} ${props} />);`;
     } else {
       testFileCode += `rerender(<${render.componentName} ${props} />);`;
