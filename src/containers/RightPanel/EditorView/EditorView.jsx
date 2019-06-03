@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import styles from '../../assets/stylesheets/components/RightPanel/EditorView.module.scss';
+import styles from './EditorView.module.scss';
 import MonacoEditor from 'react-monaco-editor';
-import { FileCodeContext, ToggleContext } from '../../App';
+import { FileCodeContext, ToggleContext } from '../../../App';
 
 const Editor = () => {
   const fileCode = useContext(FileCodeContext);

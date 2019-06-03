@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import TestMenu from '../TestMenu/TestMenu';
 import MockData from '../MockData/MockData';
 import Action from '../Action/Action';
@@ -89,7 +90,16 @@ const TestCase = () => {
           {mockDataJSX}
         </section>
       )}
-      <div>{statementsJSX}</div>
+      <DragDropContext>
+        <Droppable droppableId='droppable'>
+          {provided => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {statementsJSX}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 };

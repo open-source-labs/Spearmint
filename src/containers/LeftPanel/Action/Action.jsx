@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import Autosuggest from 'react-autosuggest';
 import { events } from './actionEvents';
@@ -152,6 +153,14 @@ const Action = ({ id, dispatchTestCase }) => {
   };
 
   return (
+    // <Draggable draggableId={id}>
+    //   {provided => (
+    //     <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+    //       hello
+    //     </div>
+    //   )}
+    // </Draggable>
+
     <div>
       <h3>Action</h3>
       <img src={minusIcon} onClick={handleClickDelete} />
