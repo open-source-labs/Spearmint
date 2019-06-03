@@ -7,37 +7,37 @@ export const actionTypes = {
   ADD_MOCK_DATA_KEY: 'ADD_MOCK_DATA_KEY',
   DELETE_MOCK_DATA_KEY: 'DELETE_MOCK_DATA_KEY',
   UPDATE_MOCK_DATA_KEY: 'UPDATE_MOCK_DATA_KEY',
-}
+};
 
 export const toggleMockData = () => ({
   type: actionTypes.TOGGLE_MOCK_DATA,
-})
+});
 
 export const addMockData = () => ({
   type: actionTypes.ADD_MOCK_DATA,
-})
+});
 
 export const deleteMockData = id => ({
   type: actionTypes.DELETE_MOCK_DATA,
   id,
-})
+});
 
 export const updateMockDataName = (id, name) => ({
   type: actionTypes.UPDATE_MOCK_DATA_NAME,
   id,
   name,
-})
+});
 
 export const addMockDataKey = id => ({
   type: actionTypes.ADD_MOCK_DATA_KEY,
   id,
-})
+});
 
 export const deleteMockDataKey = (mockDatumId, mockDatumKeyId) => ({
   type: actionTypes.DELETE_MOCK_DATA_KEY,
   mockDatumId,
   mockDatumKeyId,
-})
+});
 
 export const updateMockDataKey = (mockDatumId, mockDatumKeyId, fieldKey, fieldType) => ({
   type: actionTypes.UPDATE_MOCK_DATA_KEY,
@@ -45,4 +45,4 @@ export const updateMockDataKey = (mockDatumId, mockDatumKeyId, fieldKey, fieldTy
   mockDatumKeyId,
   fieldKey,
   fieldType,
-})
+});

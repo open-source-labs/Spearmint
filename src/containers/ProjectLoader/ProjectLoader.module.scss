@@ -1,0 +1,20 @@
+@import '../../assets/stylesheets/fonts.scss';
+@import '../../assets/stylesheets/colors.scss';
+
+#projectLoader {
+  h1 {
+    font-family: $comfortaa;
+    color: $mint;
+    font-size: 80px;
+    text-align: center;
+    padding-top: 200px;
+  }
+  h2 {
+    font-family: $montserrat;
+    color: #ffc800;
+    font-size: 24px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 20px;
+  }
+}

@@ -1,0 +1,64 @@
+@import '../../assets/stylesheets/fonts.scss';
+@import '../../assets/stylesheets/colors.scss';
+
+#leftPanel {
+  grid-area: leftPanel;
+  grid-column-start: 2;
+  height: 100vh;
+  font-family: $roboto;
+  justify-content: space-evenly;
+  overflow: scroll;
+
+  button {
+    text-decoration: none;
+    width: 30%;
+    height: 25px;
+    border-radius: 10px;
+  }
+
+  input {
+    width: 70%;
+  }
+
+  h3 {
+    color: $mint;
+    font-weight: bold;
+    font-size: 18px;
+  }
+}
+
+@mixin box-styling {
+  background-color: white;
+  padding: 12px;
+  margin: 15px 10px;
+  // border: 1px solid white;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  font-family: $openSans;
+
+  img {
+    width: 20px;
+  }
+
+  label {
+    padding: 0.3em 0.5em;
+    font-size: 14px;
+  }
+
+  p {
+    font-size: 14px;
+    padding: 5px;
+  }
+}
+
+@mixin box-header-alignment {
+  margin-bottom: 25px;
+
+  h3 {
+    float: left;
+  }
+
+  img {
+    float: right;
+  }
+}

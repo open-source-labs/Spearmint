@@ -1,0 +1,20 @@
+@import 'assets/stylesheets/global';
+@import 'assets/stylesheets/reset';
+@import 'assets/stylesheets/fonts';
+@import 'assets/stylesheets/colors';
+
+#appGridOpen {
+  display: grid;
+  grid-template-columns: 25% auto 40%;
+  grid-template-rows: auto;
+  grid-template-areas: 'navBar leftPanel rightPanel';
+  background-color: $light-gray2;
+}
+
+#appGridClose {
+  display: grid;
+  grid-template-columns: 5% auto 55%;
+  grid-template-rows: auto;
+  grid-template-areas: 'navBar leftPanel rightPanel';
+  background-color: $light-gray2;
+}

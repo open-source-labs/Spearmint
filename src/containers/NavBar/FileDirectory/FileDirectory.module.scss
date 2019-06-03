@@ -1,0 +1,31 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+
+#fileDirectory {
+  grid-area: fileDirectory;
+  padding: 0.5rem;
+  width: 15rem;
+  background-color: white;
+  overflow: scroll;
+  height: 100vh;
+  margin-top: -400px;
+  margin-left: 40px;
+  font-size: 11px;
+
+  ul {
+    list-style-type: none;
+    margin-left: 7px;
+  }
+}
+
+#dirButton {
+  text-decoration: none;
+  color: $dark-gray;
+  border: none;
+  font-family: $openSans;
+}
+
+#dirButton:hover {
+  background-color: $light-gray;
+  border-radius: 3px;
+}

@@ -1,0 +1,24 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+@import '../LeftPanel.module.scss';
+
+#mockData {
+  @include box-styling;
+
+  hr {
+    border: 1px solid $light-gray;
+  }
+}
+
+#mockDataKey {
+  float: left;
+}
+
+#mockDataType {
+  float: right;
+  margin-right: 15px;
+}
+
+#keyList {
+  margin-top: 30px;
+}

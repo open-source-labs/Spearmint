@@ -1,0 +1,26 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+
+#testMenu {
+  padding: 10px;
+  text-align: center;
+
+  button {
+    border: none;
+    border: 3px solid white;
+    border-radius: 10px;
+    margin: 5px;
+    height: 40px;
+    color: white;
+    background-color: $mint;
+    font-family: $openSans;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  button:hover {
+    background-color: white;
+    color: $mint;
+    border-radius: 7px;
+  }
+}
