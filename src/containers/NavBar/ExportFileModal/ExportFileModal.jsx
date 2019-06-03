@@ -13,7 +13,7 @@ const closeIcon = require('../../../assets/images/close-outline.png');
 const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');
   const [testCase, _] = useContext(TestCaseContext);
-  const [mockData, __] = useContext(MockDataContext);
+  const [{ mockData }, __] = useContext(MockDataContext);
   let testFileCode = 'import React from "react";';
 
   const handleChangeFileName = e => {
@@ -24,8 +24,6 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     generateTestFile();
     console.log(testFileCode);
   };
-
-  // const todoBuilder = build("Todo").fields({ id: fake(f => f.random.number()), content: fake(f => f.lorem.words()) }); const fakeTodo = todoBuilder();
 
   const generateTestFile = () => {
     addImportStatements();
@@ -40,8 +38,8 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const addImportStatements = () => {
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
-                     import { build, fake } from 'test-data-bot'; 
-                     import 'react-testing-library/cleanup-after-each';`;
+    import { build, fake } from 'test-data-bot'; 
+    import 'react-testing-library/cleanup-after-each';`;
   };
 
   const addComponentImportStatement = () => {
@@ -50,7 +48,17 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     testFileCode += `import ${renderStatement.componentName} from '${filePath}'`;
   };
 
-  const addMockData = () => {};
+  // const fakeTodo = build("Todo").fields({ id: fake(f => f.random.number()), content: fake(f => f.lorem.words()) })();
+  const addMockData = () => {
+    mockData.forEach(mockDatum => {
+      let fieldKeys = createMockDatumFieldKeys(mockDatum);
+      testFileCode += `${mockDatum.name} = build('${mockDatum.name}').fields({ `;
+    });
+  };
+
+  const createMockDatumFieldKeys = mockDatum => {
+    mockDatum.fieldKeys.reduce();
+  };
 
   const addTestStatements = () => {
     testFileCode += `test(${testCase.testStatement}), () => {`;
@@ -97,7 +105,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const addRender = (render, methods) => {
-    let props = addRenderProps(render);
+    let props = createRenderProps(render);
     if (!render.isRerender) {
       testFileCode += `const { ${methods} } } = 
                       render(<${render.componentName} ${props} />);`;
@@ -106,7 +114,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     }
   };
 
-  const addRenderProps = render => {
+  const createRenderProps = render => {
     return render.props.reduce((propsCode, prop) => {
       return propsCode + `${prop.propKey}={${prop.propValue}}`;
     }, '');
