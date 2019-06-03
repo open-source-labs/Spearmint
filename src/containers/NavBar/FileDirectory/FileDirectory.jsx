@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
-import { useContext } from 'react';
-import { FileCodeContext, FilePathContext, ComponentNameContext } from '../../../App';
-const remote = window.require('electron').remote;
-const electronFs = remote.require('fs');
-const path = remote.require('path');
+import { GlobalContext } from '../../../context/globalReducer';
+import { displayFileCode, setFilePath } from '../../../context/globalActions';
+
+let remote = window.require('electron').remote;
+let fs = remote.require('fs');
 const fileImg = require('../../../assets/images/file-document-outline.svg');
 const folderImg = require('../../../assets/images/folder-outline.svg');
 
 const FileDirectory = ({ fileTree }) => {
-  const setFileCode = useContext(FileCodeContext);
-  const setFilePath = useContext(FilePathContext);
-  const componentName = useContext(ComponentNameContext);
+  const [{ componentName }, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleShowCode = fileTree => {
-    const content = electronFs.readFileSync(fileTree, 'utf8');
-    setFileCode(content);
+  const handleDisplayFileCode = fileTree => {
+    const fileContent = fs.readFileSync(fileTree, 'utf8');
+    dispatchToGlobal(displayFileCode(fileContent));
   };
 
   const convertToHTML = filetree => {
@@ -24,7 +22,7 @@ const FileDirectory = ({ fileTree }) => {
         .substring(0, file.fileName.indexOf('.') - 1)
         .toLowerCase();
       if (componentName && componentName === desiredComponentName) {
-        setFilePath(file.filePath);
+        dispatchToGlobal(setFilePath(file.filePath));
       }
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (file.files.length) {
@@ -45,7 +43,7 @@ const FileDirectory = ({ fileTree }) => {
                 <button
                   id={styles.dirButton}
                   onClick={() => {
-                    handleShowCode(file.filePath);
+                    handleDisplayFileCode(file.filePath);
                   }}
                 >
                   {file.fileName}
