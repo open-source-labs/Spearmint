@@ -1,29 +1,31 @@
 import React, { useState, useContext } from 'react';
-import styles from '../Render/Render.module.scss';
-import RenderProp from './RenderProp';
-import { ComponentNameContext, FilePathContext } from '../../../App';
+import styles from './Render.module.scss';
+import { GlobalContext } from '../../../context/globalReducer';
+import { setFilePath, setComponentName } from '../../../context/globalActions';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
-const minusIcon = require('../../../assets/images/minus-box-outline.png');
+import RenderProp from './RenderProp';
 
-const Render = ({ id, dispatchTestCase, props, reRender }) => {
+const minusIcon = require('../../../assets/images/minus-box.png');
+
+const Render = ({ id, dispatchToTestCase, props, reRender }) => {
+  const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
   const [toggleProps, setToggleProps] = useState(false);
-  const [filePath, setFilePath] = useContext(FilePathContext);
-  const [componentName, setComponentName] = useContext(ComponentNameContext);
+
   const handleClickDelete = e => {
-    dispatchTestCase(deleteRender(id));
+    dispatchToTestCase(deleteRender(id));
   };
 
-  const handleChange = e => {
-    setComponentName(e.target.value);
+  const handleChangeComponentName = e => {
+    dispatchToGlobal(setComponentName(e.target.value));
     if (filePath) {
-      dispatchTestCase(updateRender(id, e.target.value, filePath));
-      setFilePath(null);
+      dispatchToTestCase(updateRender(id, e.target.value, filePath));
+      dispatchToGlobal(setFilePath(null));
     }
   };
 
   const handleToggleProps = () => {
     setToggleProps(!toggleProps);
-    dispatchTestCase(addRenderProp(id));
+    dispatchToTestCase(addRenderProp(id));
   };
 
   const propsJSX = props.map(prop => {
@@ -34,7 +36,7 @@ const Render = ({ id, dispatchTestCase, props, reRender }) => {
         propId={prop.id}
         propKey={prop.propKey}
         propValue={prop.propValue}
-        dispatchTestCase={dispatchTestCase}
+        dispatchToTestCase={dispatchToTestCase}
       />
     );
   });
@@ -46,7 +48,12 @@ const Render = ({ id, dispatchTestCase, props, reRender }) => {
       </div>
       <div>
         <label htmlFor='render-input-box'>Component Name</label>
-        <input type='text' id='render-input-box' value={componentName} onChange={handleChange} />
+        <input
+          type='text'
+          id='render-input-box'
+          value={componentName}
+          onChange={handleChangeComponentName}
+        />
       </div>
       <div>
         <label htmlFor='render-checkbox'>Props</label>
