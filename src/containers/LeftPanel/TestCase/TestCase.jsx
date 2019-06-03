@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
 import { TestCaseContext } from '../../../context/testCaseReducer';
-import { updateTestStatement } from '../../../context/testCaseActions';
+import { updateTestStatement, updateStatementsOrder } from '../../../context/testCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import TestMenu from '../TestMenu/TestMenu';
 import MockData from '../MockData/MockData';
-import Action from '../Action/Action';
-import Assertion from '../Assertion/Assertion';
-import Render from '../Render/Render';
+import TestStatements from './TestStatements';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const plusIcon = require('../../../assets/images/plus-box.png');
 
@@ -28,6 +27,29 @@ const TestCase = () => {
     dispatchToMockData(addMockData());
   };
 
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+
+    return result;
+  };
+
+  const onDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+    const reorderedStatements = reorder(
+      testCase.statements,
+      result.source.index,
+      result.destination.index
+    );
+    dispatchToTestCase(updateStatementsOrder(reorderedStatements));
+  };
+
   const mockDataJSX = mockData.mockData.map(mockDatum => {
     return (
       <MockData
@@ -37,31 +59,6 @@ const TestCase = () => {
         fieldKeys={mockDatum.fieldKeys}
       />
     );
-  });
-
-  const statementsJSX = testCase.statements.map(statement => {
-    switch (statement.type) {
-      case 'action':
-        return (
-          <Action key={statement.id} id={statement.id} dispatchToTestCase={dispatchToTestCase} />
-        );
-      case 'assertion':
-        return (
-          <Assertion key={statement.id} id={statement.id} dispatchToTestCase={dispatchToTestCase} />
-        );
-      case 'render':
-        return (
-          <Render
-            key={statement.id}
-            id={statement.id}
-            dispatchToTestCase={dispatchToTestCase}
-            props={statement.props}
-            isRerender={statement.isRerender}
-          />
-        );
-      default:
-        return <></>;
-    }
   });
 
   return (
@@ -94,9 +91,20 @@ const TestCase = () => {
           {mockDataJSX}
         </section>
       )}
-      <div>{statementsJSX}</div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId='droppable'>
+          {provided => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              <TestStatements
+                statements={testCase.statements}
+                dispatchToTestCase={dispatchToTestCase}
+              />
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 };
-
 export default TestCase;

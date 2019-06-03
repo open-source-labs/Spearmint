@@ -1,4 +1,5 @@
 export const actionTypes = {
+  UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
 
   ADD_ACTION: 'ADD_ACTION',
@@ -17,6 +18,11 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 };
+
+export const updateStatementsOrder = statements => ({
+  type: actionTypes.UPDATE_STATEMENTS_ORDER,
+  statements,
+});
 
 export const updateTestStatement = testStatement => ({
   type: actionTypes.UPDATE_TEST_STATEMENT,
@@ -38,7 +44,7 @@ export const updateAction = ({
   eventValue,
   queryVariant,
   querySelector,
-  queryValue
+  queryValue,
 }) => ({
   type: actionTypes.UPDATE_ACTION,
   id,
@@ -58,7 +64,14 @@ export const deleteAssertion = id => ({
   id,
 });
 
-export const updateAssertion = ({id, queryVariant, querySelector, assertionValue, matcher, matcherValue}) => ({
+export const updateAssertion = ({
+  id,
+  queryVariant,
+  querySelector,
+  assertionValue,
+  matcher,
+  matcherValue,
+}) => ({
   type: actionTypes.UPDATE_ASSERTION,
   id,
   queryVariant,
