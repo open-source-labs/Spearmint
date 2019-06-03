@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import Autosuggest from 'react-autosuggest';
 import { events } from './actionEvents';
@@ -101,7 +102,7 @@ const Action = ({ id, dispatchTestCase }) => {
       position: 'relative',
     },
     input: {
-      width: 120,
+      width: 400,
       height: 0,
       padding: '10px 20px',
       fontFamily: 'Helvetica, sans-serif',
@@ -152,9 +153,9 @@ const Action = ({ id, dispatchTestCase }) => {
   };
 
   return (
-    <div>
+    <div id={styles.action}>
       <h3>Action</h3>
-      <img src={minusIcon} onClick={handleClickDelete} />
+      <img src={minusIcon} alt='delete' onClick={handleClickDelete} />
       <label htmlFor='event-type'>Event Type</label>
       <Autosuggest
         theme={theme}
@@ -165,16 +166,9 @@ const Action = ({ id, dispatchTestCase }) => {
         renderSuggestion={renderSuggestion}
         inputProps={inputProps}
       />
-      {/* <input type='text' id='event-type' onChange={handleChangeEventType} />
-      {needsEventValue(eventType) && (
-        <span>
-          <label htmlFor='event-value' />
-          <input type='text' id='event-type' onChange={handleChangeEventValue} />
-        </span>
-      )} */}
 
       <label htmlFor='queryVariant'>Query Selector</label>
-      <img src={questionIcon} />
+      <img src={questionIcon} alt='help' title='Please chose the variant' />
       <select id='queryVariant' onChange={handleChangeQueryVariant}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -184,7 +178,7 @@ const Action = ({ id, dispatchTestCase }) => {
         <option value='findBy'>findBy</option>
         <option value='findAllBy'>findAllBy</option>
       </select>
-      <img src={questionIcon} />
+      <img src={questionIcon} alt='help' title='Please chose the queries' />
       <select id='queries' onChange={handleChangeQuerySelector}>
         <option value='' />
         <option value='LabelText'>LabelText</option>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from '../Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
@@ -34,11 +35,13 @@ const Assertion = ({ id, dispatchTestCase }) => {
 
   const style = { width: '15px', height: '15px' };
   return (
-    <div>
-      <h3>Assertion</h3>
-      <img src={minusIcon} style={style} onClick={handleClickDelete} />
+    <div id={styles.assertion}>
+      <div id={styles.assertionHeader}>
+        <h3>Assertion</h3>
+        <img src={minusIcon} style={style} onClick={handleClickDelete} />
+      </div>
       <label htmlFor='queryVariant'>Query Selector</label>
-      <img src={questionIcon} style={style} />
+      <img src={questionIcon} alt='help' style={style} />
       <select id='queryVariant' onChange={handleChangeQueryVariant}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -48,7 +51,7 @@ const Assertion = ({ id, dispatchTestCase }) => {
         <option value='findBy'>findBy</option>
         <option value='findAllBy'>findAllBy</option>
       </select>
-      <img src={questionIcon} style={style} />
+      <img src={questionIcon} alt='help' style={style} />
       <select id='queries' onChange={handleChangeQuerySelector}>
         <option value='' />
         <option value='LabelText'>LabelText</option>

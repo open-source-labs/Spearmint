@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
+import styles from '../Render/Render.module.scss';
 import RenderProp from './RenderProp';
 import { ComponentNameContext, FilePathContext } from '../../../App';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
-const minusIcon = require('../../../assets/images/minus-box.png');
+const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
 const Render = ({ id, dispatchTestCase, props, reRender }) => {
   const [toggleProps, setToggleProps] = useState(false);
@@ -38,9 +39,11 @@ const Render = ({ id, dispatchTestCase, props, reRender }) => {
     );
   });
   return (
-    <section>
-      <h3>{!reRender ? 'Render' : 'Rerender'}</h3>
-      <img src={minusIcon} alt='' onClick={handleClickDelete} />
+    <section id={styles.render}>
+      <div id={styles.renderHeader}>
+        <h3>{!reRender ? 'Render' : 'Rerender'}</h3>
+        <img src={minusIcon} alt='' onClick={handleClickDelete} />
+      </div>
       <div>
         <label htmlFor='render-input-box'>Component Name</label>
         <input type='text' id='render-input-box' value={componentName} onChange={handleChange} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { deleteMockDataKey, updateMockDataKey } from '../../../context/mockDataActions';
-const minusIcon = require('../../../assets/images/minus.png');
+const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
 const MockDataKey = ({ dispatchMockData, mockDatumId, mockDatumKeyId, fieldKey, fieldType }) => {
   const handleChangeDelete = e => {
@@ -24,7 +24,7 @@ const MockDataKey = ({ dispatchMockData, mockDatumId, mockDatumKeyId, fieldKey, 
 
   return (
     <div>
-      <img src={minusIcon} onClick={handleChangeDelete} style={keys} />
+      <img src={minusIcon} alt='delete' onClick={handleChangeDelete} style={keys} />
       <form id='mock-data-form'>
         <input
           type='text'
