@@ -51,7 +51,9 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
-      testFileCode += `${mockDatum.name} = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
+      testFileCode += `mock${mockDatum.name} = build('${
+        mockDatum.name
+      }').fields({ ${fieldKeys} })();`;
     });
   };
 
