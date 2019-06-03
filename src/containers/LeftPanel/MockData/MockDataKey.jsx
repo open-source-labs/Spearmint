@@ -34,10 +34,18 @@ const MockDataKey = ({ dispatchToMockData, mockDatumId, mockDatumKeyId, fieldKey
         />
         <select id='mock-data-type' form='mock-data-form' onChange={handleChangeUpdateFieldType}>
           <option value='' />
-          <option value='number'>Number</option>
-          <option value='string'>String</option>
-          <option value='boolean'>Boolean</option>
-          <option value='object'>Object</option>
+          <option value='word'>word</option>
+          <option value='words'>words</option>
+          <option value='number'>number</option>
+          <option value='float'>float</option>
+          <option value='arrayElement'>arrayElement</option>
+          <option value='objectElement'>objectElement</option>
+          <option value='alphaNumeric'>alphaNumeric</option>
+          <option value='boolean'>boolean</option>
+          <option value='image'>image</option>
+          <option value='locale'>locale</option>
+          <option value='hexaDecimal'>hexaDecimal</option>
+          <option value='uuid'>uuid</option>
         </select>
       </form>
     </div>

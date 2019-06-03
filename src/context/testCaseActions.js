@@ -64,13 +64,21 @@ export const deleteAssertion = id => ({
   id,
 });
 
-export const updateAssertion = ({ id, queryVariant, querySelector, assertionValue, matcher }) => ({
+export const updateAssertion = ({
+  id,
+  queryVariant,
+  querySelector,
+  assertionValue,
+  matcher,
+  matcherValue,
+}) => ({
   type: actionTypes.UPDATE_ASSERTION,
   id,
   queryVariant,
   querySelector,
   assertionValue,
   matcher,
+  matcherValue,
 });
 
 export const addRender = () => ({

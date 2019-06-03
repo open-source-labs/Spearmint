@@ -10,12 +10,14 @@ const Assertion = ({ id, index, dispatchToTestCase }) => {
   const [querySelector, setQuerySelector] = useState('');
   const [assertionValue, setAssertionValue] = useState('');
   const [matcher, setMatcher] = useState('');
+  const [matcherValue, setMatcherValue] = useState('');
 
   const SETTER_MAP = {
     queryVariant: value => setQueryVariant(value),
     querySelector: value => setQuerySelector(value),
     assertionValue: value => setAssertionValue(value),
     matcher: value => setMatcher(value),
+    matcherValue: value => setMatcherValue(value),
   };
 
   let newAssertion = {
@@ -24,6 +26,7 @@ const Assertion = ({ id, index, dispatchToTestCase }) => {
     querySelector,
     assertionValue,
     matcher,
+    matcherValue,
   };
 
   const handleChangeAssertionFields = (e, field) => {

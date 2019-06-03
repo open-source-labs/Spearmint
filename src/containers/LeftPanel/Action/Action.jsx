@@ -3,8 +3,8 @@ import styles from '../Action/Action.module.scss';
 import { actionState, actionReducer } from './actionReducer';
 import { setEventValue, setQuerySelector, setQueryValue, setQueryVariant } from './actionActions';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
-import AutoComplete from './AutoComplete';
 import { Draggable } from 'react-beautiful-dnd';
+import AutoComplete from './AutoComplete';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');

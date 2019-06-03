@@ -63,7 +63,7 @@ const TestCase = () => {
 
   return (
     <div>
-      <TestMenu dispatchToTestCase={dispatchToTestCase} />
+      <TestMenu dispatchToTestCase={dispatchToTestCase} hasRerender={testCase.hasRerender} />
       <section id={styles.testCaseHeader}>
         <label htmlFor='test-statement'>Test:</label>
         <input

@@ -3,7 +3,7 @@ import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
 import { displayFileCode, setFilePath } from '../../../context/globalActions';
 
-let remote = window.require('electron').remote;
+const { remote } = window.require('electron');
 let fs = remote.require('fs');
 const fileImg = require('../../../assets/images/file-document-outline.svg');
 const folderImg = require('../../../assets/images/folder-outline.svg');
@@ -28,18 +28,18 @@ const FileDirectory = ({ fileTree }) => {
         if (file.files.length) {
           return (
             <ul key={file.fileName}>
-              <span>
-                <img src={folderImg} alt='folder' />
+              <li>
+                <img id={styles.folder} src={folderImg} alt='folder' />
                 <button id={styles.dirButton}>{file.fileName}</button>
-              </span>
+              </li>
               {file.files.length && convertToHTML(file.files, fileImg)}
             </ul>
           );
         } else {
           return (
             <ul key={file.filePath}>
-              <span>
-                <img src={fileImg} alt='file' />
+              <li>
+                <img id={styles.file} src={fileImg} alt='file' />
                 <button
                   id={styles.dirButton}
                   onClick={() => {
@@ -48,7 +48,7 @@ const FileDirectory = ({ fileTree }) => {
                 >
                   {file.fileName}
                 </button>
-              </span>
+              </li>
             </ul>
           );
         }
