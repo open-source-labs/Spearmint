@@ -28,18 +28,18 @@ const FileDirectory = ({ fileTree }) => {
         if (file.files.length) {
           return (
             <ul key={file.fileName}>
-              <span>
-                <img src={folderImg} alt='folder' />
+              <li>
+                <img id={styles.folder} src={folderImg} alt='folder' />
                 <button id={styles.dirButton}>{file.fileName}</button>
-              </span>
+              </li>
               {file.files.length && convertToHTML(file.files, fileImg)}
             </ul>
           );
         } else {
           return (
             <ul key={file.filePath}>
-              <span>
-                <img src={fileImg} alt='file' />
+              <li>
+                <img id={styles.file} src={fileImg} alt='file' />
                 <button
                   id={styles.dirButton}
                   onClick={() => {
@@ -48,7 +48,7 @@ const FileDirectory = ({ fileTree }) => {
                 >
                   {file.fileName}
                 </button>
-              </span>
+              </li>
             </ul>
           );
         }

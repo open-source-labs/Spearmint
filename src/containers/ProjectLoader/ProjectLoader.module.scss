@@ -1,6 +1,5 @@
-body {
-  font-family: 'Open Sans', sans-serif;
-}
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
 
 #upperPart {
   width: 100%;
@@ -10,6 +9,7 @@ body {
   justify-content: center;
   align-items: flex-end;
 }
+
 #title {
   font-size: 4rem;
   text-align: center;
@@ -33,13 +33,13 @@ body {
   background-color: #f0fefe;
 }
 
-h3 {
+#subText {
   font-size: 1.25rem;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: $openSans;
   font-weight: 300;
   letter-spacing: 1px;
-  color: #02c2c3;
+  color: $mint;
   padding: 20px;
 }
 
@@ -68,7 +68,7 @@ h3 {
   text-align: left;
   width: 250px;
   height: 1.5rem;
-  color: rgb(128, 128, 128);
+  color: $dark-gray;
   outline: none;
   box-shadow: none;
   cursor: pointer;
@@ -79,11 +79,12 @@ h3 {
 .number {
   font-weight: bold;
   letter-spacing: 1.5px;
-  color: #02c2c3;
+  color: $mint;
 }
 
 .text {
   margin-left: 5px;
   font-weight: 300;
+  font-family: $openSans;
   letter-spacing: 1px;
 }
