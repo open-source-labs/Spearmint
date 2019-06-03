@@ -1,11 +1,10 @@
 export const actionTypes = {
   SET_EVENT_TYPE: 'SET_EVENT_TYPE',
   SET_EVENT_VALUE: 'SET_EVENT_VALUE',
-  SET_EVENT_NAME: 'SET_EVENT_NAME',
   SET_QUERY_VARIANT: 'SET_QUERY_VARIANT',
   SET_QUERY_SELECTOR: 'SET_QUERY_SELECTOR',
   SET_QUERY_VALUE: 'SET_QUERY_VALUE',
-  GENERATE_SUGGESTIONS: 'GENERATE_SUGGESTIONS',
+  SET_SUGGESTIONS: 'SET_SUGGESTIONS',
 };
 
 export const setEventType = (eventType) => ({
@@ -16,11 +15,6 @@ export const setEventType = (eventType) => ({
 export const setEventValue = (eventValue) => ({
   type: actionTypes.SET_EVENT_VALUE,
   eventValue,
-});
-
-export const setEventName = (eventName) => ({
-  type: actionTypes.SET_EVENT_NAME,
-  eventName,
 });
 
 export const setQueryVariant = (queryVariant) => ({
@@ -38,6 +32,7 @@ export const setQueryValue = (queryValue) => ({
   queryValue,
 });
 
-export const generateSuggestions = () => ({
-  type: actionTypes.GENERATE_SUGGESTIONS,
+export const setSuggestions = (suggestions) => ({
+  type: actionTypes.SET_SUGGESTIONS,
+  suggestions,
 });

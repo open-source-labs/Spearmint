@@ -37,19 +37,23 @@ export const globalReducer = (state, action) => {
         fileTree,
       }
     case actionTypes.SET_COMPONENT_NAME:
+      const componentName = action.componentName;
       return {
         ...state,
+        componentName,
       }
     case actionTypes.SET_FILE_PATH:
+      const filePath = action.filePath;
       return {
         ...state,
+        filePath,
       }
-      case actionTypes.TOGGLE_FILE_DIRECTORY:
-        const isFileDirectoryOpen = !state.isFileDirectoryOpen;
-        return {
-          ...state,
-          isFileDirectoryOpen,
-        }
+    case actionTypes.TOGGLE_FILE_DIRECTORY:
+      const isFileDirectoryOpen = !state.isFileDirectoryOpen;
+      return {
+        ...state,
+        isFileDirectoryOpen,
+      }
     case actionTypes.TOGGLE_BROWSER:
       const isBrowserOpen = !state.isBrowserOpen;
       return {
@@ -57,8 +61,10 @@ export const globalReducer = (state, action) => {
         isBrowserOpen,
       }
     case actionTypes.DISPLAY_FILE_CODE:
+      const displayedFileCode = action.displayedFileCode;
       return {
         ...state,
+        displayedFileCode,
       }
     default:
       return state;

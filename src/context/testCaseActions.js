@@ -32,14 +32,14 @@ export const deleteAction = id => ({
   id,
 });
 
-export const updateAction = (
+export const updateAction = ({
   id,
   eventType,
   eventValue,
   queryVariant,
   querySelector,
   queryValue
-) => ({
+}) => ({
   type: actionTypes.UPDATE_ACTION,
   id,
   eventType,
@@ -58,7 +58,7 @@ export const deleteAssertion = id => ({
   id,
 });
 
-export const updateAssertion = (id, queryVariant, querySelector, assertionValue, matcher) => ({
+export const updateAssertion = ({id, queryVariant, querySelector, assertionValue, matcher}) => ({
   type: actionTypes.UPDATE_ASSERTION,
   id,
   queryVariant,

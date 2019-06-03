@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
+import { TestCaseContext } from '../../../context/testCaseReducer';
+import { updateTestStatement } from '../../../context/testCaseActions';
+import { MockDataContext } from '../../../context/mockDataReducer';
+import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import TestMenu from '../TestMenu/TestMenu';
 import MockData from '../MockData/MockData';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
 import Render from '../Render/Render';
-import { TestCaseContext } from '../../../context/testCaseReducer';
-import { MockDataContext } from '../../../context/mockDataReducer';
-import { updateTestStatement } from '../../../context/testCaseActions';
-import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 
 const plusIcon = require('../../../assets/images/plus-box.png');
 

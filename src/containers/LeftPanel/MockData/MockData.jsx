@@ -1,10 +1,11 @@
 import React from 'react';
-import MockDataFieldKey from './MockDataKey';
 import {
   deleteMockData,
   addMockDataKey,
   updateMockDataName,
 } from '../../../context/mockDataActions';
+import MockDataFieldKey from './MockDataKey';
+
 const plusIcon = require('../../../assets/images/plus.png');
 const minusIcon = require('../../../assets/images/minus-box.png');
 

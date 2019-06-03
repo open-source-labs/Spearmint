@@ -23,6 +23,11 @@ export const createFileTree = (fileTree) => ({
   fileTree,
 });
 
+export const setComponentName = (componentName) => ({
+  type: actionTypes.SET_COMPONENT_NAME,
+  componentName,
+});
+
 export const setFilePath = () => ({
   type: actionTypes.SET_FILE_PATH
 });
@@ -36,6 +41,7 @@ export const toggleBrowser = () => ({
 });
 
 
-export const displayFileCode = () => ({
-  type: actionTypes.DISPLAY_FILE_CODE
+export const displayFileCode = (displayedFileCode) => ({
+  type: actionTypes.DISPLAY_FILE_CODE,
+  displayedFileCode,
 });

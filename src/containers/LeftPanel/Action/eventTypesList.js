@@ -1,4 +1,4 @@
-export const actionEvents = [
+export const eventTypesList = [
   // Clipboard Events
   {
     name: 'copy',

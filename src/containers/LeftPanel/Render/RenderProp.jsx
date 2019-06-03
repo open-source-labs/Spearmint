@@ -4,15 +4,16 @@ import {
   deleteRenderProp,
   updateRenderProp,
 } from '../../../context/testCaseActions';
+
 const minusIcon = require('../../../assets/images/minus.png');
 const plusIcon = require('../../../assets/images/plus.png');
 
 const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }) => {
-  const handleClickAdd = () => {
+  const handleClickAddProp = () => {
     dispatchToTestCase(addRenderProp());
   };
 
-  const handleClickDelete = e => {
+  const handleClickDeleteProp = e => {
     e.stopPropagation();
     dispatchToTestCase(deleteRenderProp(renderId, propId));
   };
@@ -30,10 +31,10 @@ const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }
   return (
     <div>
       <h4>Props</h4>
-      <img src={plusIcon} onClick={handleClickAdd} />
-      <p>key</p>
-      <p>value</p>
-      <img src={minusIcon} onClick={handleClickDelete} />
+      <img src={plusIcon} onClick={handleClickAddProp} />
+      <label htmlFor='prop-key'>key</label>
+      <label htmlFor='prop-value'>value</label>
+      <img src={minusIcon} onClick={handleClickDeleteProp} />
       <input type='text' id='propKey' onChange={handleChangeUpdatePropKey} />
       <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
     </div>
