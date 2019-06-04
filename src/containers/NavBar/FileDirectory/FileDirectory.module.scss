@@ -37,7 +37,12 @@
   border-radius: 3px;
 }
 
-#dirButton:focus {
+#dirButtonClicked {
+  text-decoration: none;
+  color: $dark-gray;
+  border: none;
+  font-family: $openSans;
+  vertical-align: middle;
   background-color: $light-gray;
   border-radius: 3px;
 }

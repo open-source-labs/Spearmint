@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { actionTypes } from './globalActions';
+// import { object } from '../../../../Library/Caches/typescript/3.4.5/node_modules/@types/prop-types';
 
 export const GlobalContext = createContext(null);
 
@@ -12,6 +13,7 @@ export const globalState = {
   isFileDirectoryOpen: true,
   isBrowserOpen: true,
   displayedFileCode: '',
+  isFolderOpen: {},
 };
 
 export const globalReducer = (state, action) => {
@@ -23,49 +25,57 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         url,
-      }
+      };
     case actionTypes.LOAD_PROJECT:
       const isProjectLoaded = true;
       return {
         ...state,
         isProjectLoaded,
-      }
+      };
     case actionTypes.CREATE_FILE_TREE:
       const fileTree = action.fileTree;
       return {
         ...state,
         fileTree,
-      }
+      };
     case actionTypes.SET_COMPONENT_NAME:
       const componentName = action.componentName;
       return {
         ...state,
         componentName,
-      }
+      };
     case actionTypes.SET_FILE_PATH:
       const filePath = action.filePath;
       return {
         ...state,
         filePath,
-      }
+      };
     case actionTypes.TOGGLE_FILE_DIRECTORY:
       const isFileDirectoryOpen = !state.isFileDirectoryOpen;
       return {
         ...state,
         isFileDirectoryOpen,
-      }
+      };
     case actionTypes.TOGGLE_BROWSER:
       const isBrowserOpen = !state.isBrowserOpen;
       return {
         ...state,
         isBrowserOpen,
-      }
+      };
     case actionTypes.DISPLAY_FILE_CODE:
       const displayedFileCode = action.displayedFileCode;
       return {
         ...state,
         displayedFileCode,
-      }
+      };
+    case actionTypes.TOGGLE_FOLDER_VIEW:
+      const isFolderOpen = state.isFolderOpen;
+      isFolderOpen[action.filePath] = !isFolderOpen[action.filePath];
+      return {
+        ...state,
+        isFolderOpen,
+      };
+
     default:
       return state;
   }

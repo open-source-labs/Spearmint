@@ -23,7 +23,7 @@ const Editor = () => {
   const editorDidMount = () => {
     editor.setTheme('light-dark');
   };
-  console.log(editor);
+
   return (
     <div>
       {isBrowserOpen && url ? null : (

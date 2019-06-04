@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import { displayFileCode, setFilePath } from '../../../context/globalActions';
+import { displayFileCode, setFilePath, toggleFolderView } from '../../../context/globalActions';
+import { FileClick } from './File';
 
 const { remote } = window.require('electron');
-let fs = remote.require('fs');
+const fs = remote.require('fs');
 const fileImg = require('../../../assets/images/file-document-outline.svg');
 
 const FileDirectory = ({ fileTree }) => {
-  const [{ componentName }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ componentName, isFolderOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleDisplayFileCode = fileTree => {
     const fileContent = fs.readFileSync(fileTree, 'utf8');
@@ -39,6 +40,10 @@ const FileDirectory = ({ fileTree }) => {
     }
   };
 
+  const handleClickToggleFolderView = filePath => {
+    dispatchToGlobal(toggleFolderView(filePath));
+  };
+
   const convertToHTML = filetree => {
     return filetree.map(file => {
       const desiredComponentName = file.fileName
@@ -50,23 +55,37 @@ const FileDirectory = ({ fileTree }) => {
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (file.files.length) {
           return (
-            <ul>
+            <ul key={file.fileName}>
               <li>
-                <img id={styles.folder} src={ICON_MAP.folder} alt='folder' />
-                <button id={styles.dirButton}>{file.fileName}</button>
+                <img
+                  id={styles.folder}
+                  src={ICON_MAP.folder}
+                  alt='folder'
+                  onClick={() => handleClickToggleFolderView(file.filePath)}
+                />
+
+                <button
+                  id={styles.dirButton}
+                  onClick={() => handleClickToggleFolderView(file.filePath)}
+                >
+                  {file.fileName}
+                </button>
               </li>
-              {file.files.length && convertToHTML(file.files, fileImg)}
+              {file.files.length &&
+                isFolderOpen[file.filePath] &&
+                convertToHTML(file.files, fileImg)}
             </ul>
           );
         } else {
           return (
-            <ul>
+            <ul key={file.filePath}>
               <li>
                 {differImg(file.fileName)}
                 <button
                   id={styles.dirButton}
                   onClick={() => {
                     handleDisplayFileCode(file.filePath);
+                    FileClick(file);
                   }}
                 >
                   {file.fileName}
