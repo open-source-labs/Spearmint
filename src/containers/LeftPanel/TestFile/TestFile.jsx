@@ -4,7 +4,9 @@ import TestCase from '../TestCase/TestCase';
 const TestFile = () => {
   return (
     <>
-      <TestCase />
+      <div>
+        <TestCase />
+      </div>
     </>
   );
 };

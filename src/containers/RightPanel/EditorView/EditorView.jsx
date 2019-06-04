@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import styles from './EditorView.module.scss';
 import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../../context/globalReducer';
 import { editor } from 'monaco-editor';
@@ -22,7 +23,7 @@ const Editor = () => {
   const editorDidMount = () => {
     editor.setTheme('light-dark');
   };
-  console.log(editor);
+
   return (
     <div>
       {isBrowserOpen && url ? null : (

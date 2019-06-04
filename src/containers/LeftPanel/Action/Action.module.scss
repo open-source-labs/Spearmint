@@ -5,10 +5,6 @@
 #action {
   @include box-styling;
   font-family: $raleway;
-  // input {
-  //   width: 100%;
-  //   font-family: $raleway;
-  // }
 }
 
 #actionHeader {
@@ -18,10 +14,8 @@
 #actionFlexBox {
   display: flex;
   flex-wrap: nowrap;
-  // flex-direction: row;
   align-items: stretch;
   padding-bottom: 1%;
-  // justify-content: space-between;
 }
 
 #eventType {
