@@ -73,7 +73,7 @@ const TestCase = () => {
           onChange={handleUpdateTestStatement}
         />
       </section>
-      <section id={styles.mockHeader}>
+      <div id={styles.mockHeader}>
         <span>
           <label htmlFor='mock-data-checkbox' id='mock-data-checkbox'>
             Will you need mock data?
@@ -85,7 +85,7 @@ const TestCase = () => {
             onClick={handleToggleMockData}
           />
         </span>
-      </section>
+      </div>
       {mockData.mockDataCheckBox && (
         <section id={styles.mockDataHeader}>
           <label htmlFor='mock-data'>Mock data</label>
