@@ -4,7 +4,7 @@ import { actionState, actionReducer } from './actionReducer';
 import { setEventValue, setQuerySelector, setQueryValue, setQueryVariant } from './actionActions';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
-import AutoComplete from './AutoComplete';
+import AutoComplete from '../AutoComplete/AutoComplete';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
@@ -68,7 +68,8 @@ const Action = ({ id, index, dispatchToTestCase }) => {
           <div id={styles.eventType}> */}
           <label htmlFor='event-type'>Event Type</label>
           <AutoComplete
-            action={action}
+            statement={action}
+            type='action'
             dispatchToAction={dispatchToAction}
             dispatchToTestCase={dispatchToTestCase}
           />

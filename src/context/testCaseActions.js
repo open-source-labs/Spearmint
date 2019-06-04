@@ -68,7 +68,7 @@ export const updateAssertion = ({
   id,
   queryVariant,
   querySelector,
-  assertionValue,
+  queryValue,
   matcher,
   matcherValue,
 }) => ({
@@ -76,7 +76,7 @@ export const updateAssertion = ({
   id,
   queryVariant,
   querySelector,
-  assertionValue,
+  queryValue,
   matcher,
   matcherValue,
 });

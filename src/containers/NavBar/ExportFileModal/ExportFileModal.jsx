@@ -104,7 +104,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const addAssertion = assertion => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
-                    (${assertion.assertionValue})).${assertion.matcher}(${assertion.matcherValue})`;
+                    (${assertion.queryValue})).${assertion.matcher}(${assertion.matcherValue})`;
   };
 
   const addRender = (render, methods) => {
