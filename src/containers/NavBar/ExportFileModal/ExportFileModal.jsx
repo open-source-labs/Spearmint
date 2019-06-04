@@ -88,7 +88,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
         methods.add(statement.queryVariant + statement.querySelector);
       }
     });
-    if (testCase.hasRerender) methods.add('rerender');
+    // if (testCase.hasRerender) methods.add('rerender');
     return Array.from(methods).join();
   };
 
@@ -108,13 +108,13 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const addRender = (render, methods) => {
-    let props = createRenderProps(render);
-    if (!render.isRerender) {
-      testFileCode += `const { ${methods} } } = 
-                      render(<${render.componentName} ${props} />);`;
-    } else {
-      testFileCode += `rerender(<${render.componentName} ${props} />);`;
-    }
+    // let props = createRenderProps(render);
+    // if (!render.isRerender) {
+    //   testFileCode += `const { ${methods} } } =
+    //                   render(<${render.componentName} ${props} />);`;
+    // } else {
+    //   testFileCode += `rerender(<${render.componentName} ${props} />);`;
+    // }
   };
 
   const createRenderProps = render => {

@@ -7,13 +7,17 @@ import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import TestMenu from '../TestMenu/TestMenu';
 import MockData from '../MockData/MockData';
 import TestStatements from './TestStatements';
+import FirstRender from '../Render/FirstRender';
+import LastAssertion from '../Assertion/LastAssertion';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
-  const [testCase, dispatchToTestCase] = useContext(TestCaseContext);
-  const [mockData, dispatchToMockData] = useContext(MockDataContext);
+  const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
+  const [{ mockData, mockDataCheckBox }, dispatchToMockData] = useContext(MockDataContext);
+  const firstRenderStatement = statements[0];
+  const lastAssertionStatement = statements[statements.length - 1];
 
   const handleUpdateTestStatement = e => {
     dispatchToTestCase(updateTestStatement(e.target.value));
@@ -42,15 +46,11 @@ const TestCase = () => {
     if (result.destination.index === result.source.index) {
       return;
     }
-    const reorderedStatements = reorder(
-      testCase.statements,
-      result.source.index,
-      result.destination.index
-    );
+    const reorderedStatements = reorder(statements, result.source.index, result.destination.index);
     dispatchToTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  const mockDataJSX = mockData.mockData.map(mockDatum => {
+  const mockDataJSX = mockData.map(mockDatum => {
     return (
       <MockData
         key={mockDatum.id}
@@ -63,13 +63,13 @@ const TestCase = () => {
 
   return (
     <div>
-      <TestMenu dispatchToTestCase={dispatchToTestCase} hasRerender={testCase.hasRerender} />
+      <TestMenu dispatchToTestCase={dispatchToTestCase} />
       <section id={styles.testCaseHeader}>
         <label htmlFor='test-statement'>Test:</label>
         <input
           type='text'
           id='test-statement'
-          value={testCase.testStatement}
+          value={testStatement}
           onChange={handleUpdateTestStatement}
         />
       </section>
@@ -84,19 +84,25 @@ const TestCase = () => {
           onClick={handleToggleMockData}
         />
       </section>
-      {mockData.mockDataCheckBox && (
+      {mockDataCheckBox && (
         <section id={styles.mockDataHeader}>
           <label htmlFor='mock-data'>Mock data</label>
           <img src={plusIcon} alt='add' onClick={handleAddMockData} />
           {mockDataJSX}
         </section>
       )}
+      <FirstRender
+        key={firstRenderStatement.id}
+        id={firstRenderStatement.id}
+        props={firstRenderStatement.props}
+        dispatchToTestCase={dispatchToTestCase}
+      />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <TestStatements
-                statements={testCase.statements}
+                statements={statements.slice(1, -1)}
                 dispatchToTestCase={dispatchToTestCase}
               />
               {provided.placeholder}
@@ -104,6 +110,12 @@ const TestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <LastAssertion
+        key={lastAssertionStatement.id}
+        id={lastAssertionStatement.id}
+        dispatchToTestCase={dispatchToTestCase}
+        isLast={true}
+      />
     </div>
   );
 };

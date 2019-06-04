@@ -1,4 +1,4 @@
-import React, { useReducer, createContext } from 'react';
+import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
 import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';

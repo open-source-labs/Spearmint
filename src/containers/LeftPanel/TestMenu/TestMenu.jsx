@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { addAction, addAssertion, addRender } from '../../../context/testCaseActions';
 
-const TestMenu = ({ dispatchToTestCase, hasRerender }) => {
+const TestMenu = ({ dispatchToTestCase }) => {
   const handleAddAction = e => {
     dispatchToTestCase(addAction());
   };
@@ -16,13 +16,13 @@ const TestMenu = ({ dispatchToTestCase, hasRerender }) => {
   return (
     <div id={styles.testMenu}>
       <button className='menu-btn' onClick={handleAddAction}>
-        ACTION
+        Action
       </button>
       <button className='menu-btn' onClick={handleAddAssertion}>
-        ASSERTION
+        Assertion
       </button>
       <button className='menu-btn' onClick={handleAddRender}>
-        {!hasRerender ? 'RENDER' : 'RERENDER'}
+        Rerender
       </button>
     </div>
   );
