@@ -52,8 +52,12 @@ const createRenderProp = () => ({
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = state.statements;
-
   switch (action.type) {
+    case actionTypes.UPDATE_STATEMENTS_ORDER:
+      return {
+        ...state,
+        statements: action.statements,
+      };
     case actionTypes.UPDATE_TEST_STATEMENT:
       let testStatement = action.testStatement;
       return {
