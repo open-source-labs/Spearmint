@@ -54,7 +54,7 @@ const Render = ({ id, index, dispatchToTestCase, props, isRerender }) => {
             <h3>{!isRerender ? 'Render' : 'Rerender'}</h3>
             <img src={minusIcon} alt='' onClick={handleClickDelete} />
           </div>
-          <div>
+          <div id={styles.renderProp}>
             <label htmlFor='render-input-box'>Component Name</label>
             <input
               type='text'

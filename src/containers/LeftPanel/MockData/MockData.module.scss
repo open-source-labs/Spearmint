@@ -8,6 +8,31 @@
   hr {
     border: 1px solid $light-gray;
   }
+
+  button:hover {
+    color: $mint;
+  }
+  button {
+    font-size: 12px;
+    width: 30%;
+    padding-top: 5px;
+    border: none;
+    font-family: $raleway;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  input {
+    width: 50%;
+  }
+}
+
+#mockDataHeader {
+  padding: 12px 0 12px 0;
+
+  img {
+    float: right;
+  }
 }
 
 #mockDataKey {
@@ -16,7 +41,7 @@
 
 #mockDataType {
   float: right;
-  margin-right: 15px;
+  margin-right: 28%;
 }
 
 #keyList {

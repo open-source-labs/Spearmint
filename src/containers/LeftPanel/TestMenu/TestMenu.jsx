@@ -15,14 +15,14 @@ const TestMenu = ({ dispatchToTestCase, hasRerender }) => {
 
   return (
     <div id={styles.testMenu}>
-      <button className='menu-btn' onClick={handleAddAction}>
-        ACTION
+      <button id={styles.renderBtn} onClick={handleAddRender}>
+        {!hasRerender ? 'Render' : 'Rerender'}
       </button>
-      <button className='menu-btn' onClick={handleAddAssertion}>
-        ASSERTION
+      <button id={styles.actionBtn} onClick={handleAddAction}>
+        Action
       </button>
-      <button className='menu-btn' onClick={handleAddRender}>
-        {!hasRerender ? 'RENDER' : 'RERENDER'}
+      <button id={styles.assertionBtn} onClick={handleAddAssertion}>
+        Assertion
       </button>
     </div>
   );

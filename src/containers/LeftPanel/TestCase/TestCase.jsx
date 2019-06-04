@@ -68,21 +68,23 @@ const TestCase = () => {
         <label htmlFor='test-statement'>Test:</label>
         <input
           type='text'
-          id='test-statement'
+          id={styles.testStatement}
           value={testCase.testStatement}
           onChange={handleUpdateTestStatement}
         />
       </section>
-      <section id={styles.testCaseHeader}>
-        <label htmlFor='mock-data-checkbox' id='mock-data-checkbox'>
-          Will you need mock data?
-        </label>
-        <input
-          type='checkbox'
-          id='mock-data-checkbox'
-          disabled={mockDataJSX.length}
-          onClick={handleToggleMockData}
-        />
+      <section id={styles.mockHeader}>
+        <span>
+          <label htmlFor='mock-data-checkbox' id='mock-data-checkbox'>
+            Will you need mock data?
+          </label>
+          <input
+            type='checkbox'
+            id='mock-data-checkbox'
+            disabled={mockDataJSX.length}
+            onClick={handleToggleMockData}
+          />
+        </span>
       </section>
       {mockData.mockDataCheckBox && (
         <section id={styles.mockDataHeader}>

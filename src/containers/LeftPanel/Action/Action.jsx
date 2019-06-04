@@ -60,8 +60,12 @@ const Action = ({ id, index, dispatchToTestCase }) => {
           {...provided.dragHandleProps}
           id={styles.action}
         >
-          <h3>Action</h3>
-          <img src={minusIcon} alt='delete' onClick={handleClickDeleteAction} />
+          <div id={styles.actionHeader}>
+            <h3>Action</h3>
+            <img src={minusIcon} alt='delete' onClick={handleClickDeleteAction} />
+          </div>
+          {/* <div id={styles.actionFlexBox}>
+          <div id={styles.eventType}> */}
           <label htmlFor='event-type'>Event Type</label>
           <AutoComplete
             action={action}
@@ -78,7 +82,9 @@ const Action = ({ id, index, dispatchToTestCase }) => {
               />
             </span>
           )}
-
+          {/* </div> */}
+          {/* // </div> */}
+          {/* <div id={styles.query}> */}
           <label htmlFor='queryVariant'>Query Selector</label>
           <img src={questionIcon} alt='help' title='Please chose the variant' />
           <select id='queryVariant' onChange={e => handleChangeActionFields(e, 'queryVariant')}>
@@ -117,3 +123,17 @@ const Action = ({ id, index, dispatchToTestCase }) => {
 };
 
 export default Action;
+
+{
+  /* </div> */
+}
+
+{
+  /* <div id={styles.querySelector}> */
+}
+{
+  /* </div> */
+}
+{
+  /* </div> */
+}

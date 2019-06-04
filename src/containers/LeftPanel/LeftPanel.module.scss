@@ -5,7 +5,7 @@
   grid-area: leftPanel;
   grid-column-start: 2;
   height: 100vh;
-  font-family: $roboto;
+  font-family: $raleway;
   justify-content: space-evenly;
   overflow: scroll;
 
@@ -13,17 +13,19 @@
     text-decoration: none;
     width: 30%;
     height: 25px;
-    border-radius: 10px;
   }
 
   input {
-    width: 70%;
+    font-family: $raleway;
+    font-size: 14px;
+    padding: 4px;
   }
 
   h3 {
     color: $mint;
     font-weight: bold;
     font-size: 18px;
+    padding: 0.3em 0.5em;
   }
 }
 
@@ -31,13 +33,14 @@
   background-color: white;
   padding: 12px;
   margin: 15px 10px;
-  // border: 1px solid white;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  font-family: $openSans;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  // box-shadow: 0px 3px 6px rgba(21, 27, 38, 0.15);
+  box-shadow: 1px 1px 4px rgba(21, 27, 38, 0.15);
+  font-family: $raleway;
 
   img {
-    width: 20px;
+    width: 18px;
   }
 
   label {
@@ -52,7 +55,7 @@
 }
 
 @mixin box-header-alignment {
-  margin-bottom: 25px;
+  margin-bottom: 7%;
 
   h3 {
     float: left;
@@ -61,4 +64,11 @@
   img {
     float: right;
   }
+}
+
+@mixin help-button {
+  margin: 2px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
 }
