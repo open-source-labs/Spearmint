@@ -72,6 +72,12 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
       <input type='text' onChange={e => handleChangeAssertionFields(e, 'assertionValue')} />
       <label htmlFor='matcher'>Matcher</label>
       <input type='text' id='matcher' onChange={e => handleChangeAssertionFields(e, 'matcher')} />
+      <label htmlFor='matcherValue'>Value</label>
+      <input
+        type='text'
+        id='matcherValue'
+        onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+      />
     </section>
   );
 };

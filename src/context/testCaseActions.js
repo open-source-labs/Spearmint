@@ -19,9 +19,9 @@ export const actionTypes = {
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 };
 
-export const updateStatementsOrder = statements => ({
+export const updateStatementsOrder = draggableStatements => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
-  statements,
+  draggableStatements,
 });
 
 export const updateTestStatement = testStatement => ({

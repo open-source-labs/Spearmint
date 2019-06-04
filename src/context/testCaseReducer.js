@@ -63,14 +63,16 @@ const createRenderProp = () => ({
 
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
-  let statements = state.statements;
+  let statements = [...state.statements];
   let lastAssertionStatement;
-
   switch (action.type) {
     case actionTypes.UPDATE_STATEMENTS_ORDER:
+      const firstRenderStatement = statements[0];
+      lastAssertionStatement = statements[statements.length - 1];
+      statements = [firstRenderStatement, ...action.draggableStatements, lastAssertionStatement];
       return {
         ...state,
-        statements: action.statements,
+        statements,
       };
     case actionTypes.UPDATE_TEST_STATEMENT:
       let testStatement = action.testStatement;
@@ -80,7 +82,6 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.ADD_ACTION:
       lastAssertionStatement = statements.pop();
-      lastAssertionStatement.id++;
       statements.push(createAction(), lastAssertionStatement);
       return {
         ...state,
@@ -88,7 +89,6 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.DELETE_ACTION:
       lastAssertionStatement = statements.pop();
-      lastAssertionStatement.id--;
       statements = statements.filter(statement => statement.id !== action.id);
       statements.push(lastAssertionStatement);
       return {
@@ -112,7 +112,6 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.ADD_ASSERTION:
       lastAssertionStatement = statements.pop();
-      lastAssertionStatement.id++;
       statements.push(createAssertion(), lastAssertionStatement);
       return {
         ...state,
@@ -120,7 +119,6 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.DELETE_ASSERTION:
       lastAssertionStatement = statements.pop();
-      lastAssertionStatement.id--;
       statements = statements.filter(statement => statement.id !== action.id);
       statements.push(lastAssertionStatement);
       return {
@@ -144,7 +142,6 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.ADD_RENDER:
       lastAssertionStatement = statements.pop();
-      lastAssertionStatement.id++;
       statements.push(createRerender(), lastAssertionStatement);
       return {
         ...state,
@@ -152,7 +149,6 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.DELETE_RENDER:
       lastAssertionStatement = statements.pop();
-      lastAssertionStatement.id--;
       statements = statements.filter(statement => statement.id !== action.id);
       statements.push(lastAssertionStatement)
       return {

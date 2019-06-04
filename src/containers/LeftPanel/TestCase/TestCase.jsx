@@ -17,6 +17,7 @@ const TestCase = () => {
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
   const [{ mockData, mockDataCheckBox }, dispatchToMockData] = useContext(MockDataContext);
   const firstRenderStatement = statements[0];
+  const draggableStatements = statements.slice(1, -1);
   const lastAssertionStatement = statements[statements.length - 1];
 
   const handleUpdateTestStatement = e => {
@@ -46,7 +47,11 @@ const TestCase = () => {
     if (result.destination.index === result.source.index) {
       return;
     }
-    const reorderedStatements = reorder(statements, result.source.index, result.destination.index);
+    const reorderedStatements = reorder(
+      draggableStatements,
+      result.source.index,
+      result.destination.index
+    );
     dispatchToTestCase(updateStatementsOrder(reorderedStatements));
   };
 
@@ -102,7 +107,7 @@ const TestCase = () => {
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <TestStatements
-                statements={statements.slice(1, -1)}
+                statements={draggableStatements}
                 dispatchToTestCase={dispatchToTestCase}
               />
               {provided.placeholder}
