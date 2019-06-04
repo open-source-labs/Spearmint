@@ -19,9 +19,9 @@ export const actionTypes = {
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 };
 
-export const updateStatementsOrder = statements => ({
+export const updateStatementsOrder = draggableStatements => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
-  statements,
+  draggableStatements,
 });
 
 export const updateTestStatement = testStatement => ({
@@ -97,14 +97,15 @@ export const updateRender = (id, componentName, filePath) => ({
   filePath,
 });
 
-export const addRenderProp = id => ({
+export const addRenderProp = renderId => ({
   type: actionTypes.ADD_RENDER_PROP,
-  id,
+  renderId,
 });
 
-export const deleteRenderProp = id => ({
+export const deleteRenderProp = (renderId, propId) => ({
   type: actionTypes.DELETE_RENDER_PROP,
-  id,
+  renderId,
+  propId,
 });
 
 export const updateRenderProp = (renderId, propId, propKey, propValue) => ({

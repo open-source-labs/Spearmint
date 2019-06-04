@@ -1,7 +1,7 @@
 import React from 'react';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
-import Render from '../Render/Render';
+import Rerender from '../Render/Rerender';
 
 const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
   return statements.map((statement, i) => {
@@ -26,17 +26,17 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
         );
       case 'render':
         return (
-          <Render
+          <Rerender
             key={statement.id}
             id={statement.id}
             index={i}
-            dispatchToTestCase={dispatchToTestCase}
+            type={statement.type}
             props={statement.props}
-            reRender={statement.reRender}
+            dispatchToTestCase={dispatchToTestCase}
           />
         );
       default:
-        return;
+        return <></>;
     }
   });
 };
