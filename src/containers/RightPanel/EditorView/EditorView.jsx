@@ -31,7 +31,7 @@ const Editor = () => {
           height='100vh'
           language='javascript'
           theme='light-dark'
-          value={displayedFileCode ? displayedFileCode : '// Open a file to view code.'}
+          value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
           options={options}
           requireConfig={requireConfig}
           editorDidMount={editorDidMount}

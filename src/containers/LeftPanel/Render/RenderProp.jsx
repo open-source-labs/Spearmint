@@ -34,12 +34,16 @@ const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }
         <h4>Props</h4>
         <img src={plusIcon} onClick={handleClickAddProp} />
       </div>
-      <div id={styles.renderProps}>
-        <label htmlFor='prop-key'>key</label>
-        <label htmlFor='prop-value'>value</label>
+      <div id={styles.renderPropsFlexBox}>
+        <div>
+          <label htmlFor='prop-key'>key</label>
+          <input type='text' id='propKey' onChange={handleChangeUpdatePropKey} />
+        </div>
+        <div>
+          <label htmlFor='prop-value'>value</label>
+          <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
+        </div>
         <img src={minusIcon} onClick={handleClickDeleteProp} />
-        <input type='text' id='propKey' onChange={handleChangeUpdatePropKey} />
-        <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
       </div>
     </div>
   );

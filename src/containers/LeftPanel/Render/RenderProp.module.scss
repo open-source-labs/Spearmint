@@ -23,3 +23,12 @@
 #renderProps {
   padding-top: 5%;
 }
+
+#renderPropsFlexBox {
+  padding-top: 5%;
+  display: flex;
+  flex-wrap: nowrap;
+  // label {
+  //   display: block;
+  // }
+}

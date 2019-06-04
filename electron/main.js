@@ -7,8 +7,8 @@ let testView;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1300,
-    minWidth: 1300,
+    width: 1400,
+    minWidth: 1400,
     height: 750,
     minHeight: 750,
     webPreferences: {

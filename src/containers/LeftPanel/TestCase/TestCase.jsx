@@ -71,12 +71,12 @@ const TestCase = () => {
         <label htmlFor='test-statement'>Test:</label>
         <input
           type='text'
-          id='test-statement'
+          id={styles.testStatement}
           value={testCase.testStatement}
           onChange={handleUpdateTestStatement}
         />
       </section>
-      <section id={styles.testCaseHeader}>
+      <section id={styles.mockHeader}>
         <span>
           <label htmlFor='mock-data-checkbox' id='mock-data-checkbox'>
             Will you need mock data?

@@ -17,7 +17,9 @@
   }
 
   input {
-    width: 60%;
+    font-family: $raleway;
+    font-size: 14px;
+    padding: 4px;
   }
 
   h3 {
@@ -63,4 +65,11 @@
   img {
     float: right;
   }
+}
+
+@mixin help-button {
+  margin: 2px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.8;
 }

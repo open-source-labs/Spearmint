@@ -46,7 +46,7 @@ const Render = ({ id, dispatchToTestCase, props, isRerender }) => {
         <h3>{!isRerender ? 'Render' : 'Rerender'}</h3>
         <img src={minusIcon} alt='' onClick={handleClickDelete} />
       </div>
-      <div>
+      <div id={styles.renderProp}>
         <label htmlFor='render-input-box'>Component Name</label>
         <input
           type='text'
@@ -54,8 +54,6 @@ const Render = ({ id, dispatchToTestCase, props, isRerender }) => {
           value={componentName}
           onChange={handleChangeComponentName}
         />
-      </div>
-      <div>
         <label htmlFor='render-checkbox'>Props</label>
         <input
           type='checkbox'
