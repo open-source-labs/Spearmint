@@ -146,9 +146,10 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.ADD_RENDER_PROP:
       statements = statements.map(statement => {
-        if (statement.id === action.id) {
+        if (statement.id === action.renderId) {
           statement.props.push(createRenderProp());
         }
+        console.log(statement);
         return statement;
       });
       return {
@@ -168,7 +169,7 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.UPDATE_RENDER_PROP:
       statements = statements.map(statement => {
-        if (statement.id === action.id) {
+        if (statement.id === action.renderId) {
           statement.props.map(prop => {
             if (prop.id === action.propId) {
               prop.propKey = action.propKey;

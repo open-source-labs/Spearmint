@@ -9,7 +9,7 @@ const plusIcon = require('../../../assets/images/plus-box.png');
 
 const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }) => {
   const handleClickAddProp = () => {
-    dispatchToTestCase(addRenderProp());
+    dispatchToTestCase(addRenderProp(renderId));
   };
 
   const handleClickDeleteProp = e => {

@@ -18,8 +18,8 @@ const Render = ({ id, index, dispatchToTestCase, props, isRerender }) => {
 
   const handleChangeComponentName = e => {
     dispatchToGlobal(setComponentName(e.target.value));
+    dispatchToTestCase(updateRender(id, e.target.value, filePath));
     if (filePath) {
-      dispatchToTestCase(updateRender(id, e.target.value, filePath));
       dispatchToGlobal(setFilePath(null));
     }
   };
