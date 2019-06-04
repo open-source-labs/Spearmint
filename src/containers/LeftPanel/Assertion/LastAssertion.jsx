@@ -1,31 +1,36 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import styles from '../Assertion/Assertion.module.scss';
+import {
+  setQueryVariant,
+  setQuerySelector,
+  setQueryValue,
+  setMatcherType,
+  setMatcherValue,
+} from './assertionActions';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
+import AutoComplete from '../AutoComplete/AutoComplete';
+import { assertionReducer, assertionState } from './assertionReducer';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
 const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
-  const [queryVariant, setQueryVariant] = useState('');
-  const [querySelector, setQuerySelector] = useState('');
-  const [assertionValue, setAssertionValue] = useState('');
-  const [matcher, setMatcher] = useState('');
-  const [matcherValue, setMatcherValue] = useState('');
+  const [assertion, dispatchToAssertion] = useReducer(assertionReducer, assertionState);
 
   const SETTER_MAP = {
-    queryVariant: value => setQueryVariant(value),
-    querySelector: value => setQuerySelector(value),
-    assertionValue: value => setAssertionValue(value),
-    matcher: value => setMatcher(value),
-    matcherValue: value => setMatcherValue(value),
+    queryVariant: value => dispatchToAssertion(setQueryVariant(value)),
+    querySelector: value => dispatchToAssertion(setQuerySelector(value)),
+    queryValue: value => dispatchToAssertion(setQueryValue(value)),
+    matcherType: value => dispatchToAssertion(setMatcherType(value)),
+    matcherValue: value => dispatchToAssertion(setMatcherValue(value)),
   };
 
   let newAssertion = {
     id,
-    queryVariant,
-    querySelector,
-    assertionValue,
-    matcher,
-    matcherValue,
+    queryVariant: assertion.queryVariant,
+    querySelector: assertion.querySelector,
+    queryValue: assertion.queryValue,
+    matcherType: assertion.matcherType,
+    matcherValue: assertion.matcherValue,
   };
 
   const handleChangeAssertionFields = (e, field) => {
@@ -36,6 +41,19 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
 
   const handleClickDelete = e => {
     dispatchToTestCase(deleteAssertion(id));
+  };
+
+  const needsMatcherValue = matcherType => {
+    const matchersWithValues = [
+      'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
+      'toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
+      'toHaveAttribute', //takes in a string Ex: 'type'
+      'toHaveClass', //takes in a string Ex: 'btn-link'
+      'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
+      'toHaveStyle', //takes in a sting value Ex: 'display: none'
+      'toHaveTextContent', //takes in a string value Ex: 'Content'
+    ];
+    return matchersWithValues.includes(matcherType);
   };
 
   const style = { width: '15px', height: '15px' };
@@ -69,15 +87,23 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
         <option value='TestId'>TestId</option>
         {/* TextMatch Precision & Normalization will be added */}
       </select>
-      <input type='text' onChange={e => handleChangeAssertionFields(e, 'assertionValue')} />
+      <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
       <label htmlFor='matcher'>Matcher</label>
-      <input type='text' id='matcher' onChange={e => handleChangeAssertionFields(e, 'matcher')} />
-      <label htmlFor='matcherValue'>Value</label>
-      <input
-        type='text'
-        id='matcherValue'
-        onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+      <AutoComplete
+        statement={assertion}
+        dispatchToAssertion={dispatchToAssertion}
+        dispatchToTestCase={dispatchToTestCase}
       />
+      {needsMatcherValue(assertion.matcherType) && (
+        <span>
+          <label htmlFor='matcherValue' />
+          <input
+            type='text'
+            id='matcherValue'
+            onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+          />
+        </span>
+      )}
     </section>
   );
 };
