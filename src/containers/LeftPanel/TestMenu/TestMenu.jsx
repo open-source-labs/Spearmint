@@ -15,6 +15,7 @@ const TestMenu = ({ dispatchToTestCase }) => {
 
   return (
     <div id={styles.testMenu}>
+<<<<<<< HEAD
       <button className='menu-btn' onClick={handleAddAction}>
         Action
       </button>
@@ -23,6 +24,16 @@ const TestMenu = ({ dispatchToTestCase }) => {
       </button>
       <button className='menu-btn' onClick={handleAddRender}>
         Rerender
+=======
+      <button id={styles.renderBtn} onClick={handleAddRender}>
+        {!hasRerender ? 'Render' : 'Rerender'}
+      </button>
+      <button id={styles.actionBtn} onClick={handleAddAction}>
+        Action
+      </button>
+      <button id={styles.assertionBtn} onClick={handleAddAssertion}>
+        Assertion
+>>>>>>> 7ba564ca16687835b1be1d961d0b52ac46ad8e4f
       </button>
     </div>
   );

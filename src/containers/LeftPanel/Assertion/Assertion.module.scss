@@ -4,6 +4,13 @@
 
 #assertion {
   @include box-styling;
+
+  img {
+    margin: 2px;
+    opacity: 0.8;
+    width: 30px;
+    height: 30px;
+  }
 }
 
 #assertionHeader {

@@ -1,0 +1,30 @@
+@import '../../../assets/stylesheets/colors.scss';
+
+#renderProp {
+  h4 {
+    color: $mint;
+    padding-left: 2%;
+  }
+}
+
+#renderPropHeader {
+  margin-bottom: 5%;
+
+  h4 {
+    float: left;
+  }
+
+  img {
+    float: right;
+  }
+}
+
+#renderProps {
+  padding-top: 5%;
+}
+
+#renderPropsFlexBox {
+  padding-top: 5%;
+  display: flex;
+  flex-wrap: nowrap;
+}

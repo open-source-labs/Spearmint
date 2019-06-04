@@ -4,20 +4,42 @@
 
 #action {
   @include box-styling;
-
-  input {
-    width: 50%;
-  }
-
-  select {
-    padding: 15px;
-  }
-
-  img {
-    width: 18px;
-  }
+  font-family: $raleway;
 }
 
 #actionHeader {
   @include box-header-alignment;
+}
+
+#actionFlexBox {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  padding-bottom: 1%;
+}
+
+#eventType {
+  margin: 7px;
+
+  input {
+    width: 197px;
+  }
+}
+
+#query {
+  label {
+    display: block;
+  }
+  input {
+    width: 150%;
+  }
+}
+
+#querySelector {
+  display: flex;
+  padding-bottom: 1%;
+
+  img {
+    @include help-button;
+  }
 }

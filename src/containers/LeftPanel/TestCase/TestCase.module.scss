@@ -7,25 +7,27 @@
   section {
     padding: 5px;
   }
-  input {
-    margin: 5px;
-  }
+}
+
+#testStatement {
+  margin: 5px;
+  width: 60%;
 }
 
 #testCaseHeader {
-  text-align: center;
-
-  .mock-data-checkbox input {
-    width: 200px;
-  }
+  padding-left: 5%;
+}
+#mockHeader {
+  float: right;
+  padding: 2% 4%;
 }
 
 #mockDataHeader {
+  padding: 10px 5%;
   label {
-    margin-left: 10px;
-    padding: 5px;
+    margin-top: 5px;
   }
   img {
-    width: 20px;
+    width: 18px;
   }
 }
