@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
+import styles from './EditorView.module.scss';
 import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../../context/globalReducer';
+import { editor } from 'monaco-editor';
 
 const Editor = () => {
-  const [{ displayedFileCode, isBrowserOpen }, _] = useContext(GlobalContext);
+  const [{ displayedFileCode, isBrowserOpen, url }, _] = useContext(GlobalContext);
+
   const requireConfig = {
     url: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.13.1/min/',
     paths: {
@@ -15,19 +18,24 @@ const Editor = () => {
     wordWrap: 'on',
     autoIndent: true,
     colorDecorators: true,
-    theme: 'hc-black',
   };
 
+  const editorDidMount = () => {
+    editor.setTheme('light-dark');
+  };
+  console.log(editor);
   return (
     <div>
-      {isBrowserOpen ? null : (
+      {isBrowserOpen && url ? null : (
         <MonacoEditor
           width='50vw'
           height='100vh'
           language='javascript'
-          value={displayedFileCode}
+          theme='light-dark'
+          value={displayedFileCode ? displayedFileCode : '// Open a file to view code.'}
           options={options}
           requireConfig={requireConfig}
+          editorDidMount={editorDidMount}
         />
       )}
     </div>

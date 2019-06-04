@@ -3,7 +3,7 @@ import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
 import { displayFileCode, setFilePath } from '../../../context/globalActions';
 
-let remote = window.require('electron').remote;
+const { remote } = window.require('electron');
 let fs = remote.require('fs');
 const fileImg = require('../../../assets/images/file-document-outline.svg');
 

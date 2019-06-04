@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { addAction, addAssertion, addRender } from '../../../context/testCaseActions';
 
-const TestMenu = ({ dispatchToTestCase }) => {
-  const [reRender, setReRender] = useState(false);
-
+const TestMenu = ({ dispatchToTestCase, hasRerender }) => {
   const handleAddAction = e => {
     dispatchToTestCase(addAction());
   };
@@ -13,14 +11,9 @@ const TestMenu = ({ dispatchToTestCase }) => {
   };
   const handleAddRender = e => {
     dispatchToTestCase(addRender());
-    if (!reRender) setReRender(true);
   };
 
   return (
-    // <div className='flex-container'>
-    // <div id='left-menu'>
-    //   <button className='menu-btn'>New Test</button>
-    // </div>
     <div id={styles.testMenu}>
       <button className='menu-btn' onClick={handleAddAction}>
         ACTION
@@ -29,10 +22,9 @@ const TestMenu = ({ dispatchToTestCase }) => {
         ASSERTION
       </button>
       <button className='menu-btn' onClick={handleAddRender}>
-        {!reRender ? 'RENDER' : 'RERENDER'}
+        {!hasRerender ? 'RENDER' : 'RERENDER'}
       </button>
     </div>
-    //</div>
   );
 };
 
