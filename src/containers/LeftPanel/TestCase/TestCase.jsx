@@ -73,13 +73,8 @@ const TestCase = () => {
         <label htmlFor='test-statement'>Test:</label>
         <input
           type='text'
-<<<<<<< HEAD
-          id='test-statement'
-          value={testStatement}
-=======
           id={styles.testStatement}
-          value={testCase.testStatement}
->>>>>>> 7ba564ca16687835b1be1d961d0b52ac46ad8e4f
+          value={testStatement}
           onChange={handleUpdateTestStatement}
         />
       </section>
