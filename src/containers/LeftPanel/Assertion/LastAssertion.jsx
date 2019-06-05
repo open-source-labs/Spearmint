@@ -10,7 +10,9 @@ const closeIcon = require('../../../assets/images/close.png');
 const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...assertion };
-    field === 'isNot' ? updateAssertion[field] = !updatedAssertion.isNot : updatedAssertion[field] = e.target.value;
+    field === 'isNot'
+      ? (updateAssertion[field] = !updatedAssertion.isNot)
+      : (updatedAssertion[field] = e.target.value);
     dispatchToTestCase(updateAssertion(updatedAssertion));
   };
 
@@ -63,12 +65,16 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
         <option value='TestId'>TestId</option>
         {/* TextMatch Precision & Normalization will be added */}
       </select>
-      <img src={questionIcon} alt='help' style={style} /> 
+      <img src={questionIcon} alt='help' style={style} />
       <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
       <div id={styles.matcherFlexBox}>
         <div id={styles.notSection}>
           Not?
-          <input type='checkbox' id='matcher-checkbox' />
+          <input
+            type='checkbox'
+            id='matcher-checkbox'
+            onChange={e => handleChangeAssertionFields(e, 'isNot')}
+          />
         </div>
         <div id={styles.matcher}>
           <label htmlFor='matcherType'>Matcher</label>

@@ -54,7 +54,7 @@ export const updateAction = ({
   queryVariant,
   querySelector,
   queryValue,
-  suggestions
+  suggestions,
 });
 
 export const addAssertion = () => ({
@@ -84,7 +84,7 @@ export const updateAssertion = ({
   isNot,
   matcherType,
   matcherValue,
-  suggestions
+  suggestions,
 });
 
 export const addRender = () => ({
