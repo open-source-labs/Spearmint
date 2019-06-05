@@ -8,7 +8,7 @@ import {
 import MockDataFieldKey from './MockDataKey';
 
 const plusIcon = require('../../../assets/images/plus.png');
-const minusIcon = require('../../../assets/images/minus-box-outline.png');
+const closeIcon = require('../../../assets/images/close.png');
 
 const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
   const handleClickAdd = (e, id) => {
@@ -42,7 +42,7 @@ const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
       <div id={styles.mockDataHeader}>
         <label htmlFor='mock-data-name'>Name </label>
         <input type='text' id='mock-data-name' onChange={handleClickUpdate} />
-        <img src={minusIcon} onClick={handleClickDelete} />
+        <img src={closeIcon} alt='close' onClick={handleClickDelete} />
       </div>
       <div>
         <label htmlFor='mock-data-key' id={styles.mockDataKey}>

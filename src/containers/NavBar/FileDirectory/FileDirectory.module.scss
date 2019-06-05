@@ -4,28 +4,45 @@
 
 #fileDirectory {
   grid-area: fileDirectory;
-  padding: 28px 8px;
+  padding: 0px;
   width: 400%;
   height: 100vh;
-  margin-top: -400px;
-  margin-left: 242px;
-  font-size: 12px;
+  margin-top: -415px;
+  margin-left: 240px;
+  font-size: 13px;
   background-color: #fff;
   overflow: scroll;
+  border-right: 1px dotted $mint;
   // transition: all 500ms $easing;
   ul {
     list-style-type: none;
-    margin-left: 10px;
+    margin-left: 8px;
+  }
+  li {
+    margin-top: 6px;
+  }
+  #explorer {
+    margin: 0;
+    padding: 22px 10px;
+    color: $mint;
+    font-family: $oxygen;
+    letter-spacing: 1px;
+    font-weight: bold;
+    height: 30px;
+    background-color: #f0f8f8;
+    border-bottom: 0.5px dotted $mint;
   }
 }
-
+#file {
+  width: 20px;
+  height: 20px;
+}
 #dirButton {
   text-decoration: none;
-  background-color: white;
   color: $dark-gray;
   background-color: transparent;
   border: none;
-  font-family: $raleway;
+  font-family: $oxygen;
   vertical-align: middle;
 }
 
@@ -34,12 +51,7 @@
   border-radius: 3px;
 }
 
-#folder {
-  width: 18px;
-  height: 18px;
-}
-
-#file {
-  width: 18px;
-  height: 18px;
+#dirButtonHilighted {
+  background-color: $light-gray;
+  border-radius: 3px;
 }

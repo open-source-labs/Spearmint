@@ -5,11 +5,11 @@ import { setFilePath, setComponentName } from '../../../context/globalActions';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
 import RenderProp from './RenderProp';
 
-const minusIcon = require('../../../assets/images/minus-box.png');
+const closeIcon = require('../../../assets/images/close.png');
+const plusIcon = require('../../../assets/images/plus.png');
 
 const FirstRender = ({ render, dispatchToTestCase }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
-  // const [toggleProps, setToggleProps] = useState(false);
   const handleClickDelete = e => {
     e.stopPropagation();
     dispatchToTestCase(deleteRender(render.id));
@@ -24,7 +24,10 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
   };
 
   const handleToggleProps = () => {
-    // setToggleProps(!toggleProps);
+    dispatchToTestCase(addRenderProp(render.id));
+  };
+
+  const handleClickAddProp = () => {
     dispatchToTestCase(addRenderProp(render.id));
   };
 
@@ -40,11 +43,11 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
       />
     );
   });
+
   return (
     <section id={styles.render}>
       <div id={styles.renderHeader}>
         <h3>{render.id === 0 ? 'Render' : 'Rerender'}</h3>
-        {render.id !== 0 && <img src={minusIcon} alt='' onClick={handleClickDelete} />}
       </div>
       <div>
         <label htmlFor='render-input-box'>Component Name</label>
@@ -54,8 +57,6 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
           value={componentName}
           onChange={handleChangeComponentName}
         />
-      </div>
-      <div>
         <label htmlFor='render-checkbox'>Props</label>
         <input
           type='checkbox'
@@ -64,7 +65,25 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
           onClick={handleToggleProps}
         />
       </div>
-      {propsJSX.length !== 0 && propsJSX}
+      {propsJSX.length !== 0 && (
+        <div id={styles.renderProp}>
+          {/* <div id={styles.propLabelHeader}> */}
+          <label htmlFor='prop-key' id={styles.propKeyLabel}>
+            Prop key
+          </label>
+          <label htmlFor='prop-value' id={styles.propValLabel}>
+            Prop value
+          </label>
+          <br />
+          <hr />
+          {/* </div> */}
+          {propsJSX}
+          <button onClick={handleClickAddProp} id={styles.addPropBtn}>
+            <img src={plusIcon} />
+            Add Prop
+          </button>
+        </div>
+      )}
     </section>
   );
 };

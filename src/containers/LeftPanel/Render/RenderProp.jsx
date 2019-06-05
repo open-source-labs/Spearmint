@@ -1,18 +1,14 @@
 import React from 'react';
 import styles from '../Render/RenderProp.module.scss';
 import {
-  addRenderProp,
   deleteRenderProp,
   updateRenderProp,
 } from '../../../context/testCaseActions';
+
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
-const plusIcon = require('../../../assets/images/plus-box.png');
+const plusIcon = require('../../../assets/images/plus.png');
 
 const RenderProp = ({  renderId, propId, propKey, propValue, dispatchToTestCase }) => {
-  const handleClickAddProp = () => {
-    dispatchToTestCase(addRenderProp(renderId));
-  };
-
   const handleClickDeleteProp = e => {
     e.stopPropagation();
     dispatchToTestCase(deleteRenderProp(renderId, propId));
@@ -29,22 +25,10 @@ const RenderProp = ({  renderId, propId, propKey, propValue, dispatchToTestCase 
   };
 
   return (
-    <div id={styles.renderProp}>
-      <div id={styles.renderPropHeader}>
-        <h4>Props</h4>
-        <img src={plusIcon} onClick={handleClickAddProp} />
-      </div>
-      <div id={styles.renderPropsFlexBox}>
-        <div>
-          <label htmlFor='prop-key'>key</label>
-          <input type='text' id='propKey' onChange={handleChangeUpdatePropKey} />
-        </div>
-        <div>
-          <label htmlFor='prop-value'>value</label>
-          <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
-        </div>
-        <img src={minusIcon} onClick={handleClickDeleteProp} />
-      </div>
+    <div id={styles.renderPropsFlexBox}>
+      <input type='text' id='propKey' onChange={handleChangeUpdatePropKey} />
+      <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
+      <img src={minusIcon} alt='delete' onClick={handleClickDeleteProp} />
     </div>
   );
 };
