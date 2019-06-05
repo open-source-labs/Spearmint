@@ -45,7 +45,9 @@ const FileDirectory = ({ fileTree }) => {
     }
   };
 
+  // const path = require('path');
   const handleClickToggleFolderView = filePath => {
+    // console.log(path.dirname(filePath), 'dirname in handle toggle');
     dispatchToGlobal(toggleFolderView(filePath));
   };
 

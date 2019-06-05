@@ -13,6 +13,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');
   const [testCase, _] = useContext(TestCaseContext);
   const [{ mockData }, __] = useContext(MockDataContext);
+
   let testFileCode = 'import React from "react";';
 
   const handleChangeFileName = e => {
@@ -21,7 +22,6 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const handleClickSave = () => {
     generateTestFile();
-    console.log(testFileCode);
     exportTestFile();
   };
 
