@@ -31,8 +31,7 @@ const ProjectLoader = () => {
         { name: 'Html', extensions: ['html'] },
       ],
     });
-    const x = directory[0].lastIndexOf('/');
-    console.log(directory[0].substring(x));
+
     if (directory && directory[0]) {
       dispatchToGlobal(loadProject());
       dispatchToGlobal(createFileTree(generateFileTreeObject(directory[0])));

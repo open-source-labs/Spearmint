@@ -17,7 +17,6 @@ const TestCase = () => {
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
   const [{ mockData, mockDataCheckBox }, dispatchToMockData] = useContext(MockDataContext);
   const firstRenderStatement = statements[0];
-  console.log(firstRenderStatement)
   const draggableStatements = statements.slice(1, -1);
   const lastAssertionStatement = statements[statements.length - 1];
 

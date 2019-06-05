@@ -5,7 +5,6 @@ import { setFilePath, setComponentName } from '../../../context/globalActions';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
 import RenderProp from './RenderProp';
 
-const closeIcon = require('../../../assets/images/close.png');
 const plusIcon = require('../../../assets/images/plus.png');
 
 const FirstRender = ({ render, dispatchToTestCase }) => {
@@ -79,7 +78,7 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
           {/* </div> */}
           {propsJSX}
           <button onClick={handleClickAddProp} id={styles.addPropBtn}>
-            <img src={plusIcon} />
+            <img src={plusIcon} alt='add' />
             Add Prop
           </button>
         </div>

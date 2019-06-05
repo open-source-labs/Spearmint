@@ -56,7 +56,7 @@ const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
         <hr />
         {mockDataFieldKeys}
         <button id={styles.addKeyBtn} onClick={e => handleClickAdd(e, mockDatumId)}>
-          <img src={plusIcon} />
+          <img src={plusIcon} alt='add' />
           Add Key
         </button>
       </div>
