@@ -10,7 +10,7 @@ const plusIcon = require('../../../assets/images/plus-box.png');
 
 const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }) => {
   const handleClickAddProp = () => {
-    dispatchToTestCase(addRenderProp());
+    dispatchToTestCase(addRenderProp(renderId));
   };
 
   const handleClickDeleteProp = e => {
@@ -31,16 +31,17 @@ const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }
   return (
     <div id={styles.renderProp}>
       <div id={styles.renderPropHeader}>
-        <h4>Props</h4>
+        {/* <h4>Props</h4> */}
         <img src={plusIcon} onClick={handleClickAddProp} />
       </div>
+      <br />
       <div id={styles.renderPropsFlexBox}>
         <div>
-          <label htmlFor='prop-key'>key</label>
+          <label htmlFor='prop-key'>Prop key</label>
           <input type='text' id='propKey' onChange={handleChangeUpdatePropKey} />
         </div>
         <div>
-          <label htmlFor='prop-value'>value</label>
+          <label htmlFor='prop-value'>Prop value</label>
           <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
         </div>
         <img src={minusIcon} onClick={handleClickDeleteProp} />

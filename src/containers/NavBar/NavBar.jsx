@@ -33,23 +33,28 @@ const NavBar = () => {
 
   return (
     <div id={styles.navBar}>
-      <button class={styles.navBtn} onClick={handleToggleFileDirectory}>
-        <img src={leftIcon} class={styles.icons} alt='fileExplorer' />{' '}
+      <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
+        <img src={leftIcon} className={styles.icons} alt='fileExplorer' />{' '}
       </button>
-      <button class={styles.navBtn} onClick={openModal}>
-        <img src={exportIcon} class={styles.icons} alt='export' title='export a test file' />
+      <button className={styles.navBtn} onClick={openModal}>
+        <img src={exportIcon} className={styles.icons} alt='export' title='export a test file' />
       </button>
 
       <ExportFileModal isModalOpen={isModalOpen} closeModal={closeModal} />
 
-      <button class={styles.navBtn}>
-        <img src={folderOpenIcon} class={styles.icons} alt='folderOpen' title='open a new folder' />
+      <button className={styles.navBtn}>
+        <img
+          src={folderOpenIcon}
+          className={styles.icons}
+          alt='folderOpen'
+          title='open a new folder'
+        />
       </button>
-      <button class={styles.navBtn}>
-        <img src={saveIcon} class={styles.icons} alt='save' title='save the file' />
+      <button className={styles.navBtn}>
+        <img src={saveIcon} className={styles.icons} alt='save' title='save the file' />
       </button>
-      <button class={styles.navBtn} onClick={handleBrowserToggle}>
-        <img src={codeIcon} class={styles.icons} alt='browserview' title='browser view' />
+      <button className={styles.navBtn} onClick={handleBrowserToggle}>
+        <img src={codeIcon} className={styles.icons} alt='browserview' title='browser view' />
       </button>
 
       {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}

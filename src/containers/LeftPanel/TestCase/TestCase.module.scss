@@ -17,16 +17,29 @@
 #testCaseHeader {
   padding-left: 5%;
 }
+
+#mockDataCheckbox {
+  font-size: 12px;
+}
+
+#testMockSection {
+  margin-bottom: 40px;
+}
+
 #mockHeader {
   float: right;
-  padding: 2% 4%;
+  padding: 2% 2%;
   margin-bottom: 15px;
+  label {
+    margin: 7px;
+  }
 }
 
 #mockDataHeader {
-  padding: 10px 5%;
+  padding: 0 5%;
   label {
     margin-top: 5px;
+    font-size: 13px;
   }
   img {
     width: 18px;

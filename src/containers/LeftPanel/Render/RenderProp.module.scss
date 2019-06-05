@@ -1,6 +1,7 @@
 @import '../../../assets/stylesheets/colors.scss';
 
 #renderProp {
+  text-align: left;
   h4 {
     color: $mint;
     padding-left: 2%;
@@ -8,7 +9,7 @@
 }
 
 #renderPropHeader {
-  margin-bottom: 5%;
+  margin-bottom: 8px;
 
   h4 {
     float: left;
@@ -19,12 +20,17 @@
   }
 }
 
-#renderProps {
-  padding-top: 5%;
-}
-
 #renderPropsFlexBox {
-  padding-top: 5%;
   display: flex;
-  flex-wrap: nowrap;
+  margin-left: 5px;
+
+  label {
+    display: block;
+  }
+  img {
+    width: 18px;
+    height: 24px;
+    align-self: flex-end;
+    padding-bottom: 5px;
+  }
 }

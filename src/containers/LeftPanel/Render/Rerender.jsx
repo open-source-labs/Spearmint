@@ -1,17 +1,17 @@
 import React from 'react';
-import LastAssertion from './LastAssertion';
+import FirstRender from './FirstRender';
 import { Draggable } from 'react-beautiful-dnd';
 
-const Assertion = ({ id, index, dispatchToTestCase }) => {
+const Rerender = ({ id, index, props, dispatchToTestCase }) => {
   return (
     <Draggable draggableId={id.toString()} index={index}>
       {provided => (
         <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-          <LastAssertion id={id} dispatchToTestCase={dispatchToTestCase} />
+          <FirstRender key={id} id={id} props={props} dispatchToTestCase={dispatchToTestCase} />
         </div>
       )}
     </Draggable>
   );
 };
 
-export default Assertion;
+export default Rerender;
