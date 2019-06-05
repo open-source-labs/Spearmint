@@ -111,7 +111,6 @@ const FileDirectory = ({ fileTree }) => {
       }
     });
   };
-
   return (
     <>
       <div id={styles.fileDirectory}>

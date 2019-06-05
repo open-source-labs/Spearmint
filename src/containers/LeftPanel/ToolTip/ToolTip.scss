@@ -1,0 +1,11 @@
+@import '../LeftPanel.module.scss';
+
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+}
+
+#tooltip {
+  min-width: 10em;
+  padding: 0.5em 0.75em;
+  @include tooltip;
+}

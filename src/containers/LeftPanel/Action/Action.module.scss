@@ -20,10 +20,6 @@
 #querySelector {
   // display: flex;
   padding-bottom: 1%;
-
-  img {
-    @include help-button;
-  }
 }
 
 #query {
@@ -34,4 +30,15 @@
 
 #queryFlexBox {
   display: flex;
+  padding-bottom: 1%;
+}
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+}
+
+#tooltip {
+  min-width: 10em;
+  padding: 0.5em 0.75em;
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
 }
