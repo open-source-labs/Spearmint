@@ -1,22 +1,14 @@
 import React from 'react';
 import styles from '../Assertion/Assertion.module.scss';
-// import {
-//   setQueryVariant,
-//   setQuerySelector,
-//   setQueryValue,
-//   setMatcherType,
-//   setMatcherValue,
-// } from './assertionActions';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
 import AutoComplete from '../AutoComplete/AutoComplete';
-// import { assertionReducer, assertionState } from './assertionReducer';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
 const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...assertion };
-    updatedAssertion[field] = e.target.value;
+    field === 'isNot' ? updateAssertion[field] = !updatedAssertion.isNot : updatedAssertion[field] = e.target.value;
     dispatchToTestCase(updateAssertion(updatedAssertion));
   };
 

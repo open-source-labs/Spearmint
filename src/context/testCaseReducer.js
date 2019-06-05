@@ -46,6 +46,7 @@ const createAssertion = () => ({
   queryVariant: '',
   querySelector: '',
   queryValue: '',
+  isNot: false,
   matcherType: '',
   matcherValue: '',
   suggestions: [],
@@ -136,6 +137,7 @@ export const testCaseReducer = (state, action) => {
           statement.queryVariant = action.queryVariant;
           statement.querySelector = action.querySelector;
           statement.queryValue = action.queryValue;
+          statement.isNot = action.isNot;
           statement.matcherType = action.matcherType;
           statement.matcherValue = action.matcherValue;
           statement.suggestions = action.suggestions;
@@ -188,7 +190,7 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.DELETE_RENDER_PROP:
       statements = statements.map(statement => {
         if (statement.id === action.renderId) {
-          statement = statement.props.filter(statement => statement.id !== action.propId);
+          statement.props = statement.props.filter(prop => prop.id !== action.propId);
         }
         return statement;
       });

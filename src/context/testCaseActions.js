@@ -71,6 +71,7 @@ export const updateAssertion = ({
   queryVariant,
   querySelector,
   queryValue,
+  isNot,
   matcherType,
   matcherValue,
   suggestions,
@@ -80,6 +81,7 @@ export const updateAssertion = ({
   queryVariant,
   querySelector,
   queryValue,
+  isNot,
   matcherType,
   matcherValue,
   suggestions

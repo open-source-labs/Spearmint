@@ -9,7 +9,7 @@ const minusIcon = require('../../../assets/images/minus-box.png');
 
 const FirstRender = ({ render, dispatchToTestCase }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
-  const [toggleProps, setToggleProps] = useState(false);
+  // const [toggleProps, setToggleProps] = useState(false);
   const handleClickDelete = e => {
     e.stopPropagation();
     dispatchToTestCase(deleteRender(render.id));
@@ -24,7 +24,7 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
   };
 
   const handleToggleProps = () => {
-    setToggleProps(!toggleProps);
+    // setToggleProps(!toggleProps);
     dispatchToTestCase(addRenderProp(render.id));
   };
 
@@ -64,7 +64,7 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
           onClick={handleToggleProps}
         />
       </div>
-      {toggleProps && propsJSX}
+      {propsJSX.length !== 0 && propsJSX}
     </section>
   );
 };
