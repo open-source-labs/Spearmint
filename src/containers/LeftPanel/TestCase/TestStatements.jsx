@@ -5,12 +5,13 @@ import Rerender from '../Render/Rerender';
 
 const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
   return statements.map((statement, i) => {
+
     switch (statement.type) {
       case 'action':
-        return (
+        return ( 
           <Action
             key={statement.id}
-            id={statement.id}
+            action={statement}
             index={i}
             dispatchToTestCase={dispatchToTestCase}
           />
@@ -19,7 +20,7 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
         return (
           <Assertion
             key={statement.id}
-            id={statement.id}
+            assertion={statement}
             index={i}
             dispatchToTestCase={dispatchToTestCase}
           />
@@ -28,10 +29,8 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
         return (
           <Rerender
             key={statement.id}
-            id={statement.id}
+            render={statement}
             index={i}
-            type={statement.type}
-            props={statement.props}
             dispatchToTestCase={dispatchToTestCase}
           />
         );

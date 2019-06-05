@@ -1,46 +1,19 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import styles from '../Assertion/Assertion.module.scss';
-import {
-  setQueryVariant,
-  setQuerySelector,
-  setQueryValue,
-  setMatcherType,
-  setMatcherValue,
-} from './assertionActions';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
 import AutoComplete from '../AutoComplete/AutoComplete';
-import { assertionReducer, assertionState } from './assertionReducer';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
-const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
-  const [assertion, dispatchToAssertion] = useReducer(assertionReducer, assertionState);
-
-  const SETTER_MAP = {
-    queryVariant: value => dispatchToAssertion(setQueryVariant(value)),
-    querySelector: value => dispatchToAssertion(setQuerySelector(value)),
-    queryValue: value => dispatchToAssertion(setQueryValue(value)),
-    matcherType: value => dispatchToAssertion(setMatcherType(value)),
-    matcherValue: value => dispatchToAssertion(setMatcherValue(value)),
-  };
-
-  let newAssertion = {
-    id,
-    queryVariant: assertion.queryVariant,
-    querySelector: assertion.querySelector,
-    queryValue: assertion.queryValue,
-    matcherType: assertion.matcherType,
-    matcherValue: assertion.matcherValue,
-  };
-
+const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   const handleChangeAssertionFields = (e, field) => {
-    SETTER_MAP[field](e.target.value);
-    newAssertion[field] = e.target.value;
-    dispatchToTestCase(updateAssertion(newAssertion));
+    let updatedAssertion = { ...assertion };
+    field === 'isNot' ? updateAssertion[field] = !updatedAssertion.isNot : updatedAssertion[field] = e.target.value;
+    dispatchToTestCase(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = e => {
-    dispatchToTestCase(deleteAssertion(id));
+    dispatchToTestCase(deleteAssertion(assertion.id));
   };
 
   const needsMatcherValue = matcherType => {
@@ -91,7 +64,7 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
       <label htmlFor='matcher'>Matcher</label>
       <AutoComplete
         statement={assertion}
-        dispatchToAssertion={dispatchToAssertion}
+        statementType='assertion'
         dispatchToTestCase={dispatchToTestCase}
       />
       {needsMatcherValue(assertion.matcherType) && (

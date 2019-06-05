@@ -8,7 +8,7 @@ import {
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const plusIcon = require('../../../assets/images/plus-box.png');
 
-const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }) => {
+const RenderProp = ({  renderId, propId, propKey, propValue, dispatchToTestCase }) => {
   const handleClickAddProp = () => {
     dispatchToTestCase(addRenderProp(renderId));
   };
