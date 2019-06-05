@@ -69,28 +69,30 @@ const TestCase = () => {
   return (
     <div>
       <TestMenu dispatchToTestCase={dispatchToTestCase} />
-      <section id={styles.testCaseHeader}>
-        <label htmlFor='test-statement'>Test:</label>
-        <input
-          type='text'
-          id={styles.testStatement}
-          value={testStatement}
-          onChange={handleUpdateTestStatement}
-        />
-      </section>
-      <section id={styles.mockHeader}>
-        <span>
-          <label htmlFor='mock-data-checkbox' id='mock-data-checkbox'>
-            Will you need mock data?
-          </label>
+      <div id={styles.testMockSection}>
+        <section id={styles.testCaseHeader}>
+          <label htmlFor='test-statement'>Test:</label>
           <input
-            type='checkbox'
-            id='mock-data-checkbox'
-            disabled={mockDataJSX.length}
-            onClick={handleToggleMockData}
+            type='text'
+            id={styles.testStatement}
+            value={testStatement}
+            onChange={handleUpdateTestStatement}
           />
-        </span>
-      </section>
+        </section>
+        <section id={styles.mockHeader}>
+          <span>
+            <input
+              type='checkbox'
+              id='mock-data-checkbox'
+              disabled={mockDataJSX.length}
+              onClick={handleToggleMockData}
+            />
+            <label htmlFor='mock-data-checkbox' id={styles.mockDataCheckbox}>
+              Will you need mock data?
+            </label>
+          </span>
+        </section>
+      </div>
       {mockDataCheckBox && (
         <section id={styles.mockDataHeader}>
           <label htmlFor='mock-data'>Mock data</label>

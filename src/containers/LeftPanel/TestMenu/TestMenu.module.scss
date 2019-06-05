@@ -28,6 +28,7 @@
     border-radius: 5px;
   }
 }
+
 #right {
   button {
     height: 28px;
@@ -62,3 +63,47 @@
 //   border-radius: 0 20px 20px 0;
 //   border: none;
 // }
+    // height: 34px;
+    // border-radius: 4px;
+    // margin: 20px 35px;
+    // font-family: $oxygen;
+    // color: white;
+    // background-color: $mint;
+  // }
+// }
+
+#actionBtn {
+  border: none;
+  border: 1px solid $color1;
+  background-color: white;
+  color: $color1;
+  // border-right: 2px solid $color1;
+  // border-left: 2px solid $color1;
+}
+
+#assertionBtn {
+  border: none;
+  border: 1px solid $color2;
+  background-color: white;
+  color: $color2;
+  // border-radius: 0 20px 20px 0;
+  // border-right: 2px solid $color3;
+  // border-left: 2px solid $color3;
+}
+
+#renderBtn {
+  border: none;
+  border: 1px solid $color3;
+  background-color: white;
+  color: $color3;
+  // border-radius: 20px 0 0 20px;
+  // border-right: 2px solid $color2;
+  // border-left: 2px solid $color2;
+}
+
+#actionBtn:hover,
+#assertionBtn:hover,
+#renderBtn:hover {
+  font-weight: 800;
+  border-radius: 4px;
+}
