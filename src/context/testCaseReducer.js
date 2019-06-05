@@ -52,10 +52,10 @@ const createAssertion = () => ({
   suggestions: [],
 });
 
-const createRerender = () => ({
+const createRerender = (componentName) => ({
   id: statementId++,
   type: 'render',
-  componentName: '',
+  componentName,
   filePath: '',
   props: [],
 });
@@ -69,6 +69,7 @@ const createRenderProp = () => ({
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
+  console.log(statements);
   let lastAssertionStatement;
   switch (action.type) {
     case actionTypes.UPDATE_STATEMENTS_ORDER:
@@ -150,7 +151,7 @@ export const testCaseReducer = (state, action) => {
       };
     case actionTypes.ADD_RENDER:
       lastAssertionStatement = statements.pop();
-      statements.push(createRerender(), lastAssertionStatement);
+      statements.push(createRerender(state.statements[0].componentName), lastAssertionStatement);
       return {
         ...state,
         statements,

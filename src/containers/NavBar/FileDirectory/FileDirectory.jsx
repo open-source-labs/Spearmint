@@ -17,9 +17,8 @@ const FileDirectory = ({ fileTree }) => {
     dispatchToGlobal,
   ] = useContext(GlobalContext);
 
-  const x = projectFilePath.lastIndexOf('/');
+  const x = projectFilePath.lastIndexOf('\\');
   const projectName = projectFilePath.substring(x + 1);
-
   const handleDisplayFileCode = fileTree => {
     const fileContent = fs.readFileSync(fileTree, 'utf8');
     dispatchToGlobal(displayFileCode(fileContent));
@@ -49,9 +48,7 @@ const FileDirectory = ({ fileTree }) => {
     }
   };
 
-  // const path = require('path');
   const handleClickToggleFolderView = filePath => {
-    // console.log(path.dirname(filePath), 'dirname in handle toggle');
     dispatchToGlobal(toggleFolderView(filePath));
   };
 

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
+import { GlobalContext } from '../../../context/globalReducer';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
@@ -11,8 +12,9 @@ const beautify = remote.require('js-beautify');
 
 const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');
-  const [testCase, _] = useContext(TestCaseContext);
-  const [{ mockData }, __] = useContext(MockDataContext);
+  const [{ projectFilePath }, _] = useContext(GlobalContext);
+  const [testCase, __] = useContext(TestCaseContext);
+  const [{ mockData }, ___] = useContext(MockDataContext);
 
   let testFileCode = 'import React from "react";';
 
@@ -51,9 +53,8 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
-      testFileCode += `const mock${mockDatum.name} = build('${
-        mockDatum.name
-      }').fields({ ${fieldKeys} })();`;
+      testFileCode += `const mock${mockDatum.name.charAt(0).toUpperCase() +
+        mockDatum.name.slice(1)} = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
     });
   };
 
@@ -64,7 +65,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const addTestStatements = () => {
-    testFileCode += `test(${testCase.testStatement}), () => {`;
+    testFileCode += `test('${testCase.testStatement}', () => {`;
     const methods = identifyMethods();
     testCase.statements.forEach(statement => {
       switch (statement.type) {
@@ -92,7 +93,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
       }
     });
     if (renderCount > 1) methods.add('rerender');
-    return Array.from(methods).join();
+    return Array.from(methods).join(', ');
   };
 
   const addAction = action => {
@@ -113,10 +114,10 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const addRender = (render, methods) => {
     let props = createRenderProps(render);
     if (render.id === 0) {
-      testFileCode += `const { ${methods} } } =
+      testFileCode += `const { ${methods} } =
                       render(<${render.componentName} ${props} />);`;
     } else {
-      console.log(render);
+      console.log(render, 'render in add render else conditional');
       testFileCode += `rerender(<${render.componentName} ${props} />);`;
     }
   };
@@ -128,10 +129,10 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const exportTestFile = () => {
-    if (!fs.existsSync(path.join(__dirname, '../__tests__'))) {
-      fs.mkdirSync(path.join(__dirname, '../__tests__'));
+    if (!fs.existsSync(projectFilePath + '/__tests__')) {
+      fs.mkdirSync(projectFilePath + '/__tests__');
     }
-    fs.writeFile(path.join(__dirname, `../__tests__/${fileName}.test.js`), testFileCode, err => {
+    fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
       if (err) throw err;
     });
   };
