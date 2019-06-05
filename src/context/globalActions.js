@@ -53,11 +53,6 @@ export const toggleFolderView = filePath => ({
   filePath,
 });
 
-export const setDefaultFileHighlighting = fileName => ({
-  type: actionTypes.SET_DEFAULT_FILE_HIGHLIGHTING,
-  fileName,
-});
-
 export const highlightFile = fileName => ({
   type: actionTypes.HIGHLIGHT_FILE,
   fileName,

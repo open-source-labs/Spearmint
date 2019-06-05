@@ -17,7 +17,6 @@ const TestCase = () => {
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
   const [{ mockData, mockDataCheckBox }, dispatchToMockData] = useContext(MockDataContext);
   const firstRenderStatement = statements[0];
-  console.log(firstRenderStatement)
   const draggableStatements = statements.slice(1, -1);
   const lastAssertionStatement = statements[statements.length - 1];
 
@@ -95,7 +94,7 @@ const TestCase = () => {
       </div>
       {mockDataCheckBox && (
         <section id={styles.mockDataHeader}>
-          <label htmlFor='mock-data'>Mock data</label>
+          <label htmlFor='mock-data'>Mock Data</label>
           <img src={plusIcon} alt='add' onClick={handleAddMockData} />
           {mockDataJSX}
         </section>

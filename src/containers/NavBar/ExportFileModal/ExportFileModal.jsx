@@ -21,6 +21,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const handleClickSave = () => {
     generateTestFile();
+    console.log(testFileCode);
     exportTestFile();
   };
 
@@ -42,15 +43,15 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const addComponentImportStatement = () => {
-    const renderStatement = testCase.statements.find(statement => statement.type === 'render');
+    const renderStatement = testCase.statements[0];
     const filePath = path.relative(`/__tests__/${fileName}.test.js`, renderStatement.filePath);
-    testFileCode += `import ${renderStatement.componentName} from '${filePath}'`;
+    testFileCode += `import ${renderStatement.componentName} from '${filePath}';`;
   };
 
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
-      testFileCode += `mock${mockDatum.name} = build('${
+      testFileCode += `const mock${mockDatum.name} = build('${
         mockDatum.name
       }').fields({ ${fieldKeys} })();`;
     });
@@ -82,38 +83,40 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const identifyMethods = () => {
     const methods = new Set([]);
-    testCase.statements.reduce(statement => {
-      if (statement === 'action' || statement === 'assertion') {
+    let renderCount = 0;
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'action' || statement.type === 'assertion') {
         methods.add(statement.queryVariant + statement.querySelector);
+      } else if (statement.type === 'render') {
+        renderCount++;
       }
     });
-    // if (testCase.hasRerender) methods.add('rerender');
+    if (renderCount > 1) methods.add('rerender');
     return Array.from(methods).join();
   };
 
   const addAction = action => {
     if (action.eventValue) {
       testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                      (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+                      ('${action.queryValue}'), { target: { value: ${action.eventValue} } });`;
     } else {
       testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                      (${action.queryValue}));`;
+                      ('${action.queryValue}'));`;
     }
   };
 
   const addAssertion = assertion => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
-                    (${assertion.assertionValue})).${assertion.matcherType}(${
-      assertion.matcherValue
-    })`;
+                    (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue})`;
   };
 
   const addRender = (render, methods) => {
     let props = createRenderProps(render);
-    if (!render.isRerender) {
+    if (render.id === 0) {
       testFileCode += `const { ${methods} } } =
                       render(<${render.componentName} ${props} />);`;
     } else {
+      console.log(render);
       testFileCode += `rerender(<${render.componentName} ${props} />);`;
     }
   };
@@ -128,7 +131,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     if (!fs.existsSync(path.join(__dirname, '../__tests__'))) {
       fs.mkdirSync(path.join(__dirname, '../__tests__'));
     }
-    fs.writeFile(path.join(__dirname, '../__tests__/beautifytest.js'), testFileCode, err => {
+    fs.writeFile(path.join(__dirname, `../__tests__/${fileName}.test.js`), testFileCode, err => {
       if (err) throw err;
     });
   };
