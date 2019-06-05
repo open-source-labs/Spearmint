@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import styles from './EditorView.module.scss';
 import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../../context/globalReducer';
 import { editor } from 'monaco-editor';
@@ -14,6 +13,7 @@ const Editor = () => {
     autoIndent: true,
     colorDecorators: true,
     wrappingIndent: 'indent',
+    automaticLayout: true,
   };
 
   const editorDidMount = () => {
@@ -31,8 +31,7 @@ const Editor = () => {
     <div>
       {isBrowserOpen && url ? null : (
         <MonacoEditor
-          // width='50vw'
-          height='100vh'
+          height='98vh'
           language='javascript'
           theme='light-dark'
           value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
