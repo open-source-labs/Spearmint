@@ -70,14 +70,14 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
           Not?
           <input type='checkbox' id='matcher-checkbox' />
         </div>
-        <div id={styles.matcher}
+        <div id={styles.matcher}>
           <label htmlFor='matcherType'>Matcher</label>
           <AutoComplete
             statement={assertion}
             statementType='assertion'
             dispatchToTestCase={dispatchToTestCase}
           />
-        />
+        </div>
         {needsMatcherValue(assertion.matcherType) && (
           <div id={styles.matcherVal}>
             <label htmlFor='matcherValue' />

@@ -6,7 +6,6 @@ import { deleteRender, updateRender, addRenderProp } from '../../../context/test
 import RenderProp from './RenderProp';
 
 const closeIcon = require('../../../assets/images/close.png');
-const minusIcon = require('../../../assets/images/minus-box.png');
 const plusIcon = require('../../../assets/images/plus.png');
 
 const FirstRender = ({ render, dispatchToTestCase }) => {
@@ -29,10 +28,10 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
   };
 
   const handleClickAddProp = () => {
-    dispatchToTestCase(addRenderProp(id));
+    dispatchToTestCase(addRenderProp(render.id));
   };
 
-  const propsJSX = props.map(prop => {
+  const propsJSX = render.props.map(prop => {
     return (
       <RenderProp
         key={prop.id}
