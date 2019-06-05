@@ -42,7 +42,7 @@ const Action = ({ action, index, dispatchToTestCase }) => {
           id={styles.action}
         >
           <div id={styles.actionHeader}>
-            <h3>: Action</h3>
+            <h3>Action</h3>
             <img src={closeIcon} alt='close' onClick={handleClickDeleteAction} />
           </div>
           <label htmlFor='eventType'>Event Type</label>
