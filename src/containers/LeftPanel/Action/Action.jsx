@@ -1,41 +1,21 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import styles from '../Action/Action.module.scss';
-import { actionState, actionReducer } from './actionReducer';
-import { setEventValue, setQuerySelector, setQueryValue, setQueryVariant } from './actionActions';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
-import AutoComplete from './AutoComplete';
+import AutoComplete from '../AutoComplete/AutoComplete';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
-const Action = ({ id, index, dispatchToTestCase }) => {
-  const [action, dispatchToAction] = useReducer(actionReducer, actionState);
-
-  const DISPATCH_MAP = {
-    eventValue: value => dispatchToAction(setEventValue(value)),
-    queryVariant: value => dispatchToAction(setQueryVariant(value)),
-    querySelector: value => dispatchToAction(setQuerySelector(value)),
-    queryValue: value => dispatchToAction(setQueryValue(value)),
-  };
-
-  let newAction = {
-    id,
-    eventType: action.eventType,
-    eventValue: action.eventValue,
-    queryVariant: action.queryVariant,
-    querySelector: action.querySelector,
-    queryValue: action.queryValue,
-  };
-
+const Action = ({ action, index, dispatchToTestCase }) => {
   const handleChangeActionFields = (e, field) => {
-    DISPATCH_MAP[field](e.target.value);
-    newAction[field] = e.target.value;
-    dispatchToTestCase(updateAction(newAction));
+    let updatedAction = { ...action };
+    updatedAction[field] = e.target.value;
+    dispatchToTestCase(updateAction(updatedAction));
   };
 
   const handleClickDeleteAction = e => {
-    dispatchToTestCase(deleteAction(id));
+    dispatchToTestCase(deleteAction(action.id));
   };
   //conditional rendering for events with values
   const needsEventValue = eventType => {
@@ -52,7 +32,7 @@ const Action = ({ id, index, dispatchToTestCase }) => {
   };
 
   return (
-    <Draggable draggableId={id.toString()} index={index}>
+    <Draggable draggableId={action.id.toString()} index={index}>
       {provided => (
         <div
           ref={provided.innerRef}
@@ -64,58 +44,61 @@ const Action = ({ id, index, dispatchToTestCase }) => {
             <h3>Action</h3>
             <img src={closeIcon} alt='close' onClick={handleClickDeleteAction} />
           </div>
-          {/* <div id={styles.actionFlexBox}>
-          <div id={styles.eventType}> */}
-          <label htmlFor='event-type'>Event Type</label>
+          <label htmlFor='eventType'>Event Type</label>
           <AutoComplete
-            action={action}
-            dispatchToAction={dispatchToAction}
+            statement={action}
+            statementType='action'
             dispatchToTestCase={dispatchToTestCase}
           />
           {needsEventValue(action.eventType) && (
             <span>
-              <label htmlFor='event-value' />
+              <label htmlFor='eventValue' />
               <input
                 type='text'
-                id='event-value'
+                id='eventValue'
                 onChange={e => handleChangeActionFields(e, 'eventValue')}
               />
             </span>
           )}
-          {/* </div> */}
-          {/* // </div> */}
-          {/* <div id={styles.query}> */}
-          <label htmlFor='queryVariant'>Query Selector</label>
-          <img src={questionIcon} alt='help' title='Please chose the variant' />
-          <select id='queryVariant' onChange={e => handleChangeActionFields(e, 'queryVariant')}>
-            <option value='' />
-            <option value='getBy'>getBy</option>
-            <option value='getAllBy'>getAllBy</option>
-            <option value='queryBy'>queryBy</option>
-            <option value='queryAllBy'>queryAllBy</option>
-            <option value='findBy'>findBy</option>
-            <option value='findAllBy'>findAllBy</option>
-          </select>
-          <img src={questionIcon} alt='help' title='Please chose the queries' />
-          <select id='querySelector' onChange={e => handleChangeActionFields(e, 'querySelector')}>
-            <option value='' />
-            <option value='LabelText'>LabelText</option>
-            <option value='PlaceholderText'>PlaceholderText</option>
-            <option value='ByText'>Text</option>
-            <option value='AltText'>AltText</option>
-            <option value='Title'>Title</option>
-            <option value='DisplayValue'>DisplayValue</option>
-            <option value='Role'>Role</option>
-            <option value='TestId'>TestId</option>
-            {/* TextMatch Precision & Normalization will be added */}
-          </select>
-          <label htmlFor='queryValue'>Query</label>
-
-          <input
-            type='text'
-            id='queryValue'
-            onChange={e => handleChangeActionFields(e, 'queryValue')}
-          />
+          <div id={styles.queryFlexBox}>
+            <div id={styles.querySelector}>
+              <label htmlFor='queryVariant'>Query Selector</label>
+              <select id='queryVariant' onChange={e => handleChangeActionFields(e, 'queryVariant')}>
+                <option value='' />
+                <option value='getBy'>getBy</option>
+                <option value='getAllBy'>getAllBy</option>
+                <option value='queryBy'>queryBy</option>
+                <option value='queryAllBy'>queryAllBy</option>
+                <option value='findBy'>findBy</option>
+                <option value='findAllBy'>findAllBy</option>
+              </select>
+              <img src={questionIcon} alt='help' title='Please chose the variant' />
+              <select
+                id='querySelector'
+                onChange={e => handleChangeActionFields(e, 'querySelector')}
+              >
+                <option value='' />
+                <option value='LabelText'>LabelText</option>
+                <option value='PlaceholderText'>PlaceholderText</option>
+                <option value='ByText'>Text</option>
+                <option value='AltText'>AltText</option>
+                <option value='Title'>Title</option>
+                <option value='DisplayValue'>DisplayValue</option>
+                <option value='Role'>Role</option>
+                <option value='TestId'>TestId</option>
+                {/* TextMatch Precision & Normalization will be added */}
+              </select>
+              <img src={questionIcon} alt='help' title='Please chose the queries' />
+            </div>
+            <div id={styles.query}>
+              <label htmlFor='queryValue'>Query</label>
+              <input
+                type='text'
+                id='queryValue'
+                onChange={e => handleChangeActionFields(e, 'queryValue')}
+              />
+            </div>
+          </div>
         </div>
       )}
     </Draggable>
@@ -123,17 +106,3 @@ const Action = ({ id, index, dispatchToTestCase }) => {
 };
 
 export default Action;
-
-{
-  /* </div> */
-}
-
-{
-  /* <div id={styles.querySelector}> */
-}
-{
-  /* </div> */
-}
-{
-  /* </div> */
-}

@@ -17,6 +17,7 @@ const TestCase = () => {
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
   const [{ mockData, mockDataCheckBox }, dispatchToMockData] = useContext(MockDataContext);
   const firstRenderStatement = statements[0];
+  console.log(firstRenderStatement)
   const draggableStatements = statements.slice(1, -1);
   const lastAssertionStatement = statements[statements.length - 1];
 
@@ -36,7 +37,6 @@ const TestCase = () => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
     return result;
   };
 
@@ -69,28 +69,30 @@ const TestCase = () => {
   return (
     <div>
       <TestMenu dispatchToTestCase={dispatchToTestCase} />
-      <section id={styles.testCaseHeader}>
-        <label htmlFor='test-statement'>Test:</label>
-        <input
-          type='text'
-          id={styles.testStatement}
-          value={testStatement}
-          onChange={handleUpdateTestStatement}
-        />
-      </section>
-      <section id={styles.mockHeader}>
-        <span>
-          <label htmlFor='mock-data-checkbox' id='mock-data-checkbox'>
-            Will you need mock data?
-          </label>
+      <div id={styles.testMockSection}>
+        <section id={styles.testCaseHeader}>
+          <label htmlFor='test-statement'>Test:</label>
           <input
-            type='checkbox'
-            id='mock-data-checkbox'
-            disabled={mockDataJSX.length}
-            onClick={handleToggleMockData}
+            type='text'
+            id={styles.testStatement}
+            value={testStatement}
+            onChange={handleUpdateTestStatement}
           />
-        </span>
-      </section>
+        </section>
+        <section id={styles.mockHeader}>
+          <span>
+            <input
+              type='checkbox'
+              id='mock-data-checkbox'
+              disabled={mockDataJSX.length}
+              onClick={handleToggleMockData}
+            />
+            <label htmlFor='mock-data-checkbox' id={styles.mockDataCheckbox}>
+              Will you need mock data?
+            </label>
+          </span>
+        </section>
+      </div>
       {mockDataCheckBox && (
         <section id={styles.mockDataHeader}>
           <label htmlFor='mock-data'>Mock data</label>
@@ -100,8 +102,7 @@ const TestCase = () => {
       )}
       <FirstRender
         key={firstRenderStatement.id}
-        id={firstRenderStatement.id}
-        props={firstRenderStatement.props}
+        render={firstRenderStatement}
         dispatchToTestCase={dispatchToTestCase}
       />
       <DragDropContext onDragEnd={onDragEnd}>
@@ -119,7 +120,7 @@ const TestCase = () => {
       </DragDropContext>
       <LastAssertion
         key={lastAssertionStatement.id}
-        id={lastAssertionStatement.id}
+        assertion={lastAssertionStatement}
         dispatchToTestCase={dispatchToTestCase}
         isLast={true}
       />

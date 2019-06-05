@@ -1,41 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
+import AutoComplete from '../AutoComplete/AutoComplete';
+
+const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
-const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
-  const [queryVariant, setQueryVariant] = useState('');
-  const [querySelector, setQuerySelector] = useState('');
-  const [assertionValue, setAssertionValue] = useState('');
-  const [matcher, setMatcher] = useState('');
-  const [matcherValue, setMatcherValue] = useState('');
-
-  const SETTER_MAP = {
-    queryVariant: value => setQueryVariant(value),
-    querySelector: value => setQuerySelector(value),
-    assertionValue: value => setAssertionValue(value),
-    matcher: value => setMatcher(value),
-    matcherValue: value => setMatcherValue(value),
-  };
-
-  let newAssertion = {
-    id,
-    queryVariant,
-    querySelector,
-    assertionValue,
-    matcher,
-    matcherValue,
-  };
-
+const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   const handleChangeAssertionFields = (e, field) => {
-    SETTER_MAP[field](e.target.value);
-    newAssertion[field] = e.target.value;
-    dispatchToTestCase(updateAssertion(newAssertion));
+    let updatedAssertion = { ...assertion };
+    field === 'isNot' ? updateAssertion[field] = !updatedAssertion.isNot : updatedAssertion[field] = e.target.value;
+    dispatchToTestCase(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = e => {
-    dispatchToTestCase(deleteAssertion(id));
+    dispatchToTestCase(deleteAssertion(assertion.id));
+  };
+
+  const needsMatcherValue = matcherType => {
+    const matchersWithValues = [
+      'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
+      'toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
+      'toHaveAttribute', //takes in a string Ex: 'type'
+      'toHaveClass', //takes in a string Ex: 'btn-link'
+      'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
+      'toHaveStyle', //takes in a sting value Ex: 'display: none'
+      'toHaveTextContent', //takes in a string value Ex: 'Content'
+    ];
+    return matchersWithValues.includes(matcherType);
   };
 
   const style = { width: '15px', height: '15px' };
@@ -45,8 +38,9 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
         <h3>Assertion</h3>
         {!isLast && <img src={closeIcon} style={style} alt='close' onClick={handleClickDelete} />}
       </div>
-      <label htmlFor='queryVariant'>Query Selector</label>
-      <img src={questionIcon} alt='help' style={style} />
+      <label htmlFor='queryVariant' id={styles.querySelectorHeader}>
+        Query Selector
+      </label>
       <select id='queryVariant' onChange={e => handleChangeAssertionFields(e, 'queryVariant')}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -69,15 +63,32 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
         <option value='TestId'>TestId</option>
         {/* TextMatch Precision & Normalization will be added */}
       </select>
-      <input type='text' onChange={e => handleChangeAssertionFields(e, 'assertionValue')} />
-      <label htmlFor='matcher'>Matcher</label>
-      <input type='text' id='matcher' onChange={e => handleChangeAssertionFields(e, 'matcher')} />
-      <label htmlFor='matcherValue'>Value</label>
-      <input
-        type='text'
-        id='matcherValue'
-        onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
-      />
+      <img src={questionIcon} alt='help' style={style} /> 
+      <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
+      <div id={styles.matcherFlexBox}>
+        <div id={styles.notSection}>
+          Not?
+          <input type='checkbox' id='matcher-checkbox' />
+        </div>
+        <div id={styles.matcher}>
+          <label htmlFor='matcherType'>Matcher</label>
+          <AutoComplete
+            statement={assertion}
+            statementType='assertion'
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        </div>
+        {needsMatcherValue(assertion.matcherType) && (
+          <div id={styles.matcherVal}>
+            <label htmlFor='matcherValue' />
+            <input
+              type='text'
+              id='matcherValue'
+              onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+            />
+          </div>
+        )}
+      </div>
     </section>
   );
 };

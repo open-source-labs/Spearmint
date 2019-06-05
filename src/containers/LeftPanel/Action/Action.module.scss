@@ -11,35 +11,27 @@
   @include box-header-alignment;
 }
 
-#actionFlexBox {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  padding-bottom: 1%;
-}
-
-#eventType {
-  margin: 7px;
-
-  input {
-    width: 197px;
-  }
-}
-
-#query {
+#querySelector {
   label {
     display: block;
-  }
-  input {
-    width: 150%;
   }
 }
 
 #querySelector {
-  display: flex;
+  // display: flex;
   padding-bottom: 1%;
 
   img {
     @include help-button;
   }
+}
+
+#query {
+  input {
+    display: block;
+  }
+}
+
+#queryFlexBox {
+  display: flex;
 }
