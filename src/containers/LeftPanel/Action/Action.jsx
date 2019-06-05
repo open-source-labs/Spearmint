@@ -6,8 +6,8 @@ import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
 
-const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
+const closeIcon = require('../../../assets/images/close.png');
 
 const Action = ({ action, index, dispatchToTestCase }) => {
   const handleChangeActionFields = (e, field) => {
@@ -44,7 +44,7 @@ const Action = ({ action, index, dispatchToTestCase }) => {
         >
           <div id={styles.actionHeader}>
             <h3>Action</h3>
-            <img src={minusIcon} alt='delete' onClick={handleClickDeleteAction} />
+            <img src={closeIcon} alt='close' onClick={handleClickDeleteAction} />
           </div>
           {/* <div id={styles.actionFlexBox}>
           <div id={styles.eventType}> */}
