@@ -6,7 +6,7 @@ import { deleteRender, updateRender, addRenderProp } from '../../../context/test
 import RenderProp from './RenderProp';
 import { Draggable } from 'react-beautiful-dnd';
 
-const minusIcon = require('../../../assets/images/minus-box.png');
+const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ id, index, dispatchToTestCase, props, isRerender }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
@@ -52,7 +52,7 @@ const Render = ({ id, index, dispatchToTestCase, props, isRerender }) => {
         >
           <div id={styles.renderHeader}>
             <h3>{!isRerender ? 'Render' : 'Rerender'}</h3>
-            <img src={minusIcon} alt='' onClick={handleClickDelete} />
+            <img src={closeIcon} alt='close' onClick={handleClickDelete} />
           </div>
           <div id={styles.renderProp}>
             <label htmlFor='render-input-box'>Component Name</label>

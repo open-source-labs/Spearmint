@@ -5,21 +5,25 @@ export const TestCaseContext = createContext(null);
 
 export const testCaseState = {
   testStatement: '',
-  statements: [{
-    id: 0,
-    type: 'render',
-    componentName: '',
-    filePath: '',
-    props: [],
-  }, {
-    id: 1,
-    type: 'assertion',
-    queryVariant: '',
-    querySelector: '',
-    assertionValue: '',
-    matcher: '',
-    matcherValue: '',
-  }],
+  statements: [
+    {
+      id: 0,
+      type: 'render',
+      componentName: '',
+      filePath: '',
+      props: [],
+    },
+    {
+      id: 1,
+      type: 'assertion',
+      queryVariant: '',
+      querySelector: '',
+      queryValue: '',
+      matcherType: '',
+      matcherValue: '',
+      suggestions: [],
+    },
+  ],
 };
 
 let statementId = 2;
@@ -28,13 +32,12 @@ let renderPropsId = 0;
 const createAction = () => ({
   id: statementId++,
   type: 'action',
-  event: {
-    type: '',
-    value: null,
-  },
+  eventType: '',
+  eventValue: null,
   queryVariant: '',
   querySelector: '',
   queryValue: '',
+  suggestions: [],
 });
 
 const createAssertion = () => ({
@@ -42,9 +45,11 @@ const createAssertion = () => ({
   type: 'assertion',
   queryVariant: '',
   querySelector: '',
-  assertionValue: '',
-  matcher: '',
+  queryValue: '',
+  isNot: false,
+  matcherType: '',
   matcherValue: '',
+  suggestions: [],
 });
 
 const createRerender = () => ({
@@ -98,11 +103,12 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ACTION:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
-          statement.event.type = action.eventType;
-          statement.event.value = action.eventValue;
+          statement.eventType = action.eventType;
+          statement.eventValue = action.eventValue;
           statement.queryVariant = action.queryVariant;
           statement.querySelector = action.querySelector;
           statement.queryValue = action.queryValue;
+          statement.suggestions = action.suggestions;
         }
         return statement;
       });
@@ -130,9 +136,11 @@ export const testCaseReducer = (state, action) => {
         if (statement.id === action.id) {
           statement.queryVariant = action.queryVariant;
           statement.querySelector = action.querySelector;
-          statement.assertionValue = action.assertionValue;
-          statement.matcher = action.matcher;
+          statement.queryValue = action.queryValue;
+          statement.isNot = action.isNot;
+          statement.matcherType = action.matcherType;
           statement.matcherValue = action.matcherValue;
+          statement.suggestions = action.suggestions;
         }
         return statement;
       });
@@ -150,7 +158,7 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.DELETE_RENDER:
       lastAssertionStatement = statements.pop();
       statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement)
+      statements.push(lastAssertionStatement);
       return {
         ...state,
         statements,
@@ -182,7 +190,7 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.DELETE_RENDER_PROP:
       statements = statements.map(statement => {
         if (statement.id === action.renderId) {
-          statement = statement.props.filter(statement => statement.id !== action.propId);
+          statement.props = statement.props.filter(prop => prop.id !== action.propId);
         }
         return statement;
       });

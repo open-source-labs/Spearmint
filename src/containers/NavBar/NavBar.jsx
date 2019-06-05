@@ -5,11 +5,11 @@ import { toggleBrowser, toggleFileDirectory } from '../../context/globalActions'
 import FileDirectory from './FileDirectory/FileDirectory';
 import ExportFileModal from './ExportFileModal/ExportFileModal';
 
-const leftIcon = require('../../assets/images/sq_br_first_icon.png');
-const exportIcon = require('../../assets/images/export.png');
-const folderOpenIcon = require('../../assets/images/folder_open.png');
-const saveIcon = require('../../assets/images/save_icon.png');
-const codeIcon = require('../../assets/images/app_window_shell.png');
+const menuIcon = require('../../assets/images/menu.png');
+const exportIcon = require('../../assets/images/file-export.png');
+const folderOpenIcon = require('../../assets/images/folder-open.png');
+const saveIcon = require('../../assets/images/content-save-outline.png');
+const codeIcon = require('../../assets/images/google-chrome.png');
 
 const NavBar = () => {
   const [{ fileTree, isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
@@ -34,7 +34,7 @@ const NavBar = () => {
   return (
     <div id={styles.navBar}>
       <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
-        <img src={leftIcon} className={styles.icons} alt='fileExplorer' />{' '}
+        <img src={menuIcon} className={styles.icons} alt='fileExplorer' />
       </button>
       <button className={styles.navBtn} onClick={openModal}>
         <img src={exportIcon} className={styles.icons} alt='export' title='export a test file' />

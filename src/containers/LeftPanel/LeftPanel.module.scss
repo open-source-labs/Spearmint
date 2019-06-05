@@ -8,23 +8,24 @@
   font-family: $raleway;
   justify-content: space-evenly;
   overflow: scroll;
+  border-right: 0.5px dotted $mint;
 
   button {
     text-decoration: none;
-    width: 30%;
-    height: 25px;
+    width: 20%;
+    height: 10px;
+    font-size: 13px;
   }
 
   input {
     font-family: $raleway;
-    font-size: 14px;
+    font-size: 12px;
     padding: 4px;
   }
 
   h3 {
     color: $mint;
-    font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
     padding: 0.3em 0.5em;
   }
 }
@@ -48,7 +49,7 @@
 
   label {
     padding: 0.3em 0.5em;
-    font-size: 14px;
+    font-size: 12px;
   }
 
   p {
@@ -58,7 +59,7 @@
 }
 
 @mixin box-header-alignment {
-  margin-bottom: 7%;
+  margin-bottom: 6%;
 
   h3 {
     float: left;

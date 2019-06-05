@@ -4,6 +4,10 @@
 
 #assertion {
   @include box-styling;
+
+  select {
+    margin-left: 5px;
+  }
 }
 
 #assertionHeader {
@@ -19,4 +23,39 @@
   padding: 0.5em 0.75em;
   box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
   @include tooltip;
+}
+#querySelectorHeader {
+  display: block;
+}
+
+#querySelectorInput {
+  width: 35%;
+}
+
+#matcherFlexBox {
+  display: flex;
+}
+
+#notSection {
+  font-size: 12px;
+  align-self: flex-end;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  input {
+    margin: 5px;
+  }
+}
+
+#matcher,
+#matcherVal {
+  margin-top: 5px;
+
+  label,
+  input {
+    display: block;
+  }
+  input {
+    width: 20em;
+    margin: 0 5px;
+  }
 }

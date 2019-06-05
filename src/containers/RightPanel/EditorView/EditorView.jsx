@@ -31,7 +31,7 @@ const Editor = () => {
     <div>
       {isBrowserOpen && url ? null : (
         <MonacoEditor
-          width='50vw'
+          // width='50vw'
           height='100vh'
           language='javascript'
           theme='light-dark'

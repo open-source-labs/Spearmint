@@ -14,6 +14,7 @@ export const globalState = {
   isBrowserOpen: true,
   displayedFileCode: '',
   isFolderOpen: {},
+  isFileHighlighted: '',
 };
 
 export const globalReducer = (state, action) => {
@@ -69,11 +70,24 @@ export const globalReducer = (state, action) => {
         displayedFileCode,
       };
     case actionTypes.TOGGLE_FOLDER_VIEW:
-      const isFolderOpen = state.isFolderOpen;
+      const isFolderOpen = { ...state.isFolderOpen };
       isFolderOpen[action.filePath] = !isFolderOpen[action.filePath];
       return {
         ...state,
         isFolderOpen,
+      };
+    // case actionTypes.SET_DEFAULT_FILE_HIGHLIGHTING:
+    //   isFileHighlighted[action.fileName] = false;
+    //   return {
+    //     ...state,
+    //     isFileHighlighted,
+    //   }
+    case actionTypes.HIGHLIGHT_FILE:
+      const isFileHighlighted = action.fileName;
+      console.log(isFileHighlighted);
+      return {
+        ...state,
+        isFileHighlighted,
       };
 
     default:
