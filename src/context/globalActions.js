@@ -10,6 +10,7 @@ export const actionTypes = {
   TOGGLE_FOLDER_VIEW: 'TOGGLE_FOLDER_VIEW',
   SET_DEFAULT_FILE_HIGHLIGHTING: 'SET_DEFAULT_FILE_HIGHLIGHTING',
   HIGHLIGHT_FILE: 'HIGHLIGHT_FILE',
+  SET_PROJECT_FILE_PATH: 'SET_PROJECT_FILE_PATH',
 };
 
 export const setProjectUrl = url => ({
@@ -61,4 +62,9 @@ export const setDefaultFileHighlighting = fileName => ({
 export const highlightFile = fileName => ({
   type: actionTypes.HIGHLIGHT_FILE,
   fileName,
+});
+
+export const setProjectFilePath = projectFilePath => ({
+  type: actionTypes.SET_PROJECT_FILE_PATH,
+  projectFilePath,
 });

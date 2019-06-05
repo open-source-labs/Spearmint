@@ -12,9 +12,13 @@ const { remote } = window.require('electron');
 const fs = remote.require('fs');
 const fileImg = require('../../../assets/images/file-document-outline.svg');
 const FileDirectory = ({ fileTree }) => {
-  const [{ componentName, isFolderOpen, isFileHighlighted }, dispatchToGlobal] = useContext(
-    GlobalContext
-  );
+  const [
+    { componentName, isFolderOpen, isFileHighlighted, projectFilePath },
+    dispatchToGlobal,
+  ] = useContext(GlobalContext);
+
+  const x = projectFilePath.lastIndexOf('/');
+  const projectName = projectFilePath.substring(x + 1);
 
   const handleDisplayFileCode = fileTree => {
     const fileContent = fs.readFileSync(fileTree, 'utf8');
@@ -114,7 +118,7 @@ const FileDirectory = ({ fileTree }) => {
   return (
     <>
       <div id={styles.fileDirectory}>
-        <div id={styles.explorer}>Explorer</div>
+        <div id={styles.explorer}>{projectName}</div>
         {fileTree && convertToHTML(fileTree)}
       </div>
     </>

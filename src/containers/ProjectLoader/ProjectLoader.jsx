@@ -1,7 +1,13 @@
 import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/globalReducer';
-import { setProjectUrl, loadProject, createFileTree } from '../../context/globalActions';
+import {
+  setProjectUrl,
+  loadProject,
+  createFileTree,
+  setProjectName,
+  setProjectFilePath,
+} from '../../context/globalActions';
 
 const { remote } = window.require('electron');
 const electronFs = remote.require('fs');
@@ -31,14 +37,14 @@ const ProjectLoader = () => {
         { name: 'Html', extensions: ['html'] },
       ],
     });
-    const x = directory[0].lastIndexOf('/');
-    console.log(directory[0].substring(x));
+    // const x = directory[0].lastIndexOf('/');
+    // const directoryName = directory[0].substring(x + 1);
     if (directory && directory[0]) {
+      dispatchToGlobal(setProjectFilePath(directory[0]));
       dispatchToGlobal(loadProject());
       dispatchToGlobal(createFileTree(generateFileTreeObject(directory[0])));
     }
   };
-
   //reads contents within the selected directory and checks if it is a file/folder
   const generateFileTreeObject = directoryPath => {
     const fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
@@ -54,8 +60,10 @@ const ProjectLoader = () => {
           file.files = generateFileTreeObject(file.filePath);
         }
       }
+
       return file;
     });
+
     return fileArray;
   };
 

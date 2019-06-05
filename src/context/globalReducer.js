@@ -15,6 +15,7 @@ export const globalState = {
   displayedFileCode: '',
   isFolderOpen: {},
   isFileHighlighted: '',
+  projectFilePath: '',
 };
 
 export const globalReducer = (state, action) => {
@@ -84,10 +85,16 @@ export const globalReducer = (state, action) => {
     //   }
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
-      console.log(isFileHighlighted);
+      console.log('filed highlighted', isFileHighlighted);
       return {
         ...state,
         isFileHighlighted,
+      };
+    case actionTypes.SET_PROJECT_FILE_PATH:
+      const projectFilePath = action.projectFilePath;
+      return {
+        ...state,
+        projectFilePath,
       };
 
     default:
