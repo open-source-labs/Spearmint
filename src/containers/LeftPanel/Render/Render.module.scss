@@ -4,8 +4,30 @@
 
 #render {
   @include box-styling;
+  padding-bottom: 35px;
 }
 
 #renderHeader {
   @include box-header-alignment;
+}
+
+#propKeyLabel {
+  float: left;
+}
+
+#propValLabel {
+  float: right;
+  margin-right: 30%;
+}
+
+#addPropBtn {
+  width: 10%;
+  font-family: $raleway;
+  border: none;
+  margin: 5px 12px 0 0;
+  float: right;
+}
+
+#addPropBtn:hover {
+  color: $mint;
 }

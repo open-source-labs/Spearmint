@@ -6,7 +6,7 @@ import { deleteRender, updateRender, addRenderProp } from '../../../context/test
 import RenderProp from './RenderProp';
 
 const minusIcon = require('../../../assets/images/minus-box.png');
-const plusIcon = require('../../../assets/images/plus-box.png');
+const plusIcon = require('../../../assets/images/plus.png');
 
 const FirstRender = ({ id, props, dispatchToTestCase }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
@@ -68,14 +68,21 @@ const FirstRender = ({ id, props, dispatchToTestCase }) => {
       </div>
       {toggleProps && (
         <div id={styles.renderProp}>
-          <div id={styles.renderPropHeader}>
-            <img src={plusIcon} onClick={handleClickAddProp} />
-          </div>
-          <div>
-            <label htmlFor='prop-key'>Prop key</label>
-            <label htmlFor='prop-value'>Prop value</label>
-          </div>
+          {/* <div id={styles.propLabelHeader}> */}
+          <label htmlFor='prop-key' id={styles.propKeyLabel}>
+            Prop key
+          </label>
+          <label htmlFor='prop-value' id={styles.propValLabel}>
+            Prop value
+          </label>
+          <br />
+          <hr />
+          {/* </div> */}
           {propsJSX}
+          <button onClick={handleClickAddProp} id={styles.addPropBtn}>
+            <img src={plusIcon} />
+            Add Prop
+          </button>
         </div>
       )}
     </section>

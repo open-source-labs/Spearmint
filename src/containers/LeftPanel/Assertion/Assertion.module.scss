@@ -33,6 +33,16 @@
   display: flex;
 }
 
+#notSection {
+  font-size: 12px;
+  align-self: flex-end;
+  margin-bottom: 5px;
+  padding-left: 5px;
+  input {
+    margin: 5px;
+  }
+}
+
 #matcher,
 #matcherVal {
   margin-top: 5px;

@@ -77,6 +77,10 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
         onChange={e => handleChangeAssertionFields(e, 'assertionValue')}
       />
       <div id={styles.matcherFlexBox}>
+        <div id={styles.notSection}>
+          Not?
+          <input type='checkbox' id='matcher-checkbox' />
+        </div>
         <div id={styles.matcher}>
           <label htmlFor='matcher'>Matcher</label>
           <input

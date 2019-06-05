@@ -2,8 +2,11 @@
 @import '../../../assets/stylesheets/colors.scss';
 
 #testMenu {
-  padding: 10px;
-  text-align: center;
+  display: flex;
+  // padding: 10px;
+  // text-align: center;
+  // position: fixed;
+  // width: 100%;
 
   button {
     height: 34px;

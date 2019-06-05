@@ -1,28 +1,9 @@
 @import '../../../assets/stylesheets/colors.scss';
 
-#renderProp {
-  text-align: left;
-  h4 {
-    color: $mint;
-    padding-left: 2%;
-  }
-}
-
-#renderPropHeader {
-  margin-bottom: 8px;
-
-  h4 {
-    float: left;
-  }
-
-  img {
-    float: right;
-  }
-}
-
 #renderPropsFlexBox {
   display: flex;
   margin-left: 5px;
+  justify-content: center;
 
   label {
     display: block;
@@ -32,5 +13,9 @@
     height: 24px;
     align-self: flex-end;
     padding-bottom: 5px;
+  }
+  input {
+    width: 45%;
+    margin: 0 7px 0 7px;
   }
 }

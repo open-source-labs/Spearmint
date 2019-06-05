@@ -14,17 +14,19 @@ const TestMenu = ({ dispatchToTestCase }) => {
   };
 
   return (
-    <div id={styles.testMenu}>
-      <button id={styles.actionBtn} onClick={handleAddAction}>
-        ACTION
-      </button>
-      <button id={styles.assertionBtn} onClick={handleAddAssertion}>
-        ASSERTION
-      </button>
-      <button id={styles.renderBtn} onClick={handleAddRender}>
-        RERENDER
-      </button>
-    </div>
+    <header>
+      <div id={styles.testMenu}>
+        <button id={styles.actionBtn} onClick={handleAddAction}>
+          ACTION
+        </button>
+        <button id={styles.assertionBtn} onClick={handleAddAssertion}>
+          ASSERTION
+        </button>
+        <button id={styles.renderBtn} onClick={handleAddRender}>
+          RERENDER
+        </button>
+      </div>
+    </header>
   );
 };
 
