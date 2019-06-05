@@ -4,6 +4,7 @@
 
 #mockData {
   @include box-styling;
+  // padding-bottom: 35px;
 
   hr {
     border: 1px solid $light-gray;
@@ -28,7 +29,7 @@
 }
 
 #mockDataHeader {
-  padding: 12px 0 12px 0;
+  padding: 5px 0 5px 0;
 
   img {
     float: right;
@@ -47,3 +48,7 @@
 #keyList {
   margin-top: 30px;
 }
+
+// #addKeyBtn {
+//   float: right;
+// }

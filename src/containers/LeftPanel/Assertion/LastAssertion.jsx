@@ -38,8 +38,9 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
         <h3>Assertion</h3>
         {!isLast && <img src={closeIcon} style={style} alt='close' onClick={handleClickDelete} />}
       </div>
-      <label htmlFor='queryVariant'>Query Selector</label>
-      <img src={questionIcon} alt='help' style={style} />
+      <label htmlFor='queryVariant' id={styles.querySelectorHeader}>
+        Query Selector
+      </label>
       <select id='queryVariant' onChange={e => handleChangeAssertionFields(e, 'queryVariant')}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -62,23 +63,32 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
         <option value='TestId'>TestId</option>
         {/* TextMatch Precision & Normalization will be added */}
       </select>
+      <img src={questionIcon} alt='help' style={style} /> 
       <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
-      <label htmlFor='matcher'>Matcher</label>
-      <AutoComplete
-        statement={assertion}
-        statementType='assertion'
-        dispatchToTestCase={dispatchToTestCase}
-      />
-      {needsMatcherValue(assertion.matcherType) && (
-        <span>
-          <label htmlFor='matcherValue' />
-          <input
-            type='text'
-            id='matcherValue'
-            onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+      <div id={styles.matcherFlexBox}>
+        <div id={styles.notSection}>
+          Not?
+          <input type='checkbox' id='matcher-checkbox' />
+        </div>
+        <div id={styles.matcher}
+          <label htmlFor='matcherType'>Matcher</label>
+          <AutoComplete
+            statement={assertion}
+            statementType='assertion'
+            dispatchToTestCase={dispatchToTestCase}
           />
-        </span>
-      )}
+        />
+        {needsMatcherValue(assertion.matcherType) && (
+          <div id={styles.matcherVal}>
+            <label htmlFor='matcherValue' />
+            <input
+              type='text'
+              id='matcherValue'
+              onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+            />
+          </div>
+        )}
+      </div>
     </section>
   );
 };
