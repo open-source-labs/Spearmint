@@ -1,42 +1,24 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import styles from '../Action/Action.module.scss';
-import { actionState, actionReducer } from './actionReducer';
-import { setEventValue, setQuerySelector, setQueryValue, setQueryVariant } from './actionActions';
+// import { actionState, actionReducer } from './actionReducer';
+// import { setEventValue, setQuerySelector, setQueryValue, setQueryVariant } from './actionActions';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
-import AutoComplete from './AutoComplete';
+import AutoComplete from '../AutoComplete/AutoComplete';
 import ToolTip from '../ToolTip/ToolTip';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
-const Action = ({ id, index, dispatchToTestCase }) => {
-  const [action, dispatchToAction] = useReducer(actionReducer, actionState);
-
-  const DISPATCH_MAP = {
-    eventValue: value => dispatchToAction(setEventValue(value)),
-    queryVariant: value => dispatchToAction(setQueryVariant(value)),
-    querySelector: value => dispatchToAction(setQuerySelector(value)),
-    queryValue: value => dispatchToAction(setQueryValue(value)),
-  };
-
-  let newAction = {
-    id,
-    eventType: action.eventType,
-    eventValue: action.eventValue,
-    queryVariant: action.queryVariant,
-    querySelector: action.querySelector,
-    queryValue: action.queryValue,
-  };
-
+const Action = ({ action, index, dispatchToTestCase }) => {
   const handleChangeActionFields = (e, field) => {
-    DISPATCH_MAP[field](e.target.value);
-    newAction[field] = e.target.value;
-    dispatchToTestCase(updateAction(newAction));
+    let updatedAction = { ...action };
+    updatedAction[field] = e.target.value;
+    dispatchToTestCase(updateAction(updatedAction));
   };
 
   const handleClickDeleteAction = e => {
-    dispatchToTestCase(deleteAction(id));
+    dispatchToTestCase(deleteAction(action.id));
   };
   //conditional rendering for events with values
   const needsEventValue = eventType => {
@@ -53,7 +35,7 @@ const Action = ({ id, index, dispatchToTestCase }) => {
   };
 
   return (
-    <Draggable draggableId={id.toString()} index={index}>
+    <Draggable draggableId={action.id.toString()} index={index}>
       {provided => (
         <div
           ref={provided.innerRef}
@@ -65,18 +47,19 @@ const Action = ({ id, index, dispatchToTestCase }) => {
             <h3>Action</h3>
             <img src={minusIcon} alt='delete' onClick={handleClickDeleteAction} />
           </div>
-          <label htmlFor='event-type'>Event Type</label>
+          <label htmlFor='eventType'>Event Type</label>
           <AutoComplete
-            action={action}
-            dispatchToAction={dispatchToAction}
+            statement={action}
+            statementType='action'
+            // dispatchToAction={dispatchToAction}
             dispatchToTestCase={dispatchToTestCase}
           />
           {needsEventValue(action.eventType) && (
             <span>
-              <label htmlFor='event-value' />
+              <label htmlFor='eventValue' />
               <input
                 type='text'
-                id='event-value'
+                id='eventValue'
                 onChange={e => handleChangeActionFields(e, 'eventValue')}
               />
             </span>

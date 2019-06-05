@@ -6,7 +6,7 @@ export const actionState = {
   queryVariant: '',
   querySelector: '',
   queryValue: '',
-  suggestions: [],
+  actionSuggestions: [],
 };
 
 export const actionReducer = (state, action) => {
@@ -43,11 +43,11 @@ export const actionReducer = (state, action) => {
         ...state,
         queryValue,
       };
-    case actionTypes.SET_SUGGESTIONS:
-      let suggestions = action.suggestions;
+    case actionTypes.SET_ACTION_SUGGESTIONS:
+      let actionSuggestions = action.actionSuggestions;
       return {
         ...state,
-        suggestions,
+        actionSuggestions,
       };
     default:
       return state;
