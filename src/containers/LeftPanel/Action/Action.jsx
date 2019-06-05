@@ -5,6 +5,7 @@ import { setEventValue, setQuerySelector, setQueryValue, setQueryVariant } from 
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from './AutoComplete';
+import ToolTip from '../ToolTip/ToolTip';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
@@ -64,8 +65,6 @@ const Action = ({ id, index, dispatchToTestCase }) => {
             <h3>Action</h3>
             <img src={minusIcon} alt='delete' onClick={handleClickDeleteAction} />
           </div>
-          {/* <div id={styles.actionFlexBox}>
-          <div id={styles.eventType}> */}
           <label htmlFor='event-type'>Event Type</label>
           <AutoComplete
             action={action}
@@ -82,11 +81,7 @@ const Action = ({ id, index, dispatchToTestCase }) => {
               />
             </span>
           )}
-          {/* </div> */}
-          {/* // </div> */}
-          {/* <div id={styles.query}> */}
           <label htmlFor='queryVariant'>Query Selector</label>
-          <img src={questionIcon} alt='help' title='Please chose the variant' />
           <select id='queryVariant' onChange={e => handleChangeActionFields(e, 'queryVariant')}>
             <option value='' />
             <option value='getBy'>getBy</option>
@@ -96,12 +91,19 @@ const Action = ({ id, index, dispatchToTestCase }) => {
             <option value='findBy'>findBy</option>
             <option value='findAllBy'>findAllBy</option>
           </select>
-          <img src={questionIcon} alt='help' title='Please chose the queries' />
+
+          <span id={styles.hastooltip} role='tooltip'>
+            <img src={questionIcon} alt='help' />
+            <span id={styles.tooltip}>
+              <ToolTip toolTipType={action.queryVariant} />
+            </span>
+          </span>
+
           <select id='querySelector' onChange={e => handleChangeActionFields(e, 'querySelector')}>
             <option value='' />
             <option value='LabelText'>LabelText</option>
             <option value='PlaceholderText'>PlaceholderText</option>
-            <option value='ByText'>Text</option>
+            <option value='Text'>Text</option>
             <option value='AltText'>AltText</option>
             <option value='Title'>Title</option>
             <option value='DisplayValue'>DisplayValue</option>
@@ -109,8 +111,14 @@ const Action = ({ id, index, dispatchToTestCase }) => {
             <option value='TestId'>TestId</option>
             {/* TextMatch Precision & Normalization will be added */}
           </select>
-          <label htmlFor='queryValue'>Query</label>
 
+          <span id={styles.hastooltip} role='tooltip'>
+            <img src={questionIcon} alt='help' />
+            <span id={styles.tooltip}>
+              <ToolTip toolTipType={action.querySelector} />
+            </span>
+          </span>
+          <label htmlFor='queryValue'>Query</label>
           <input
             type='text'
             id='queryValue'
@@ -123,17 +131,3 @@ const Action = ({ id, index, dispatchToTestCase }) => {
 };
 
 export default Action;
-
-{
-  /* </div> */
-}
-
-{
-  /* <div id={styles.querySelector}> */
-}
-{
-  /* </div> */
-}
-{
-  /* </div> */
-}

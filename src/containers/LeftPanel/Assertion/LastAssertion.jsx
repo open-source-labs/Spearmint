@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
+import ToolTip from '../ToolTip/ToolTip';
+import { actionReducer } from '../Action/actionReducer';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
@@ -46,7 +48,6 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
         {!isLast && <img src={minusIcon} style={style} alt='delete' onClick={handleClickDelete} />}
       </div>
       <label htmlFor='queryVariant'>Query Selector</label>
-      <img src={questionIcon} alt='help' style={style} />
       <select id='queryVariant' onChange={e => handleChangeAssertionFields(e, 'queryVariant')}>
         <option value='' />
         <option value='getBy'>getBy</option>
@@ -56,12 +57,17 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
         <option value='findBy'>findBy</option>
         <option value='findAllBy'>findAllBy</option>
       </select>
-      <img src={questionIcon} alt='help' style={style} />
+      <span id={styles.hastooltip} role='tooltip'>
+        <img src={questionIcon} alt='help' />
+        <span id={styles.tooltip}>
+          <ToolTip toolTipType={queryVariant} />
+        </span>
+      </span>
       <select id='querySelector' onChange={e => handleChangeAssertionFields(e, 'querySelector')}>
         <option value='' />
         <option value='LabelText'>LabelText</option>
         <option value='PlaceholderText'>PlaceholderText</option>
-        <option value='ByText'>Text</option>
+        <option value='Text'>Text</option>
         <option value='AltText'>AltText</option>
         <option value='Title'>Title</option>
         <option value='DisplayValue'>DisplayValue</option>
@@ -69,6 +75,12 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
         <option value='TestId'>TestId</option>
         {/* TextMatch Precision & Normalization will be added */}
       </select>
+      <span id={styles.hastooltip} role='tooltip'>
+        <img src={questionIcon} alt='help' />
+        <span id={styles.tooltip}>
+          <ToolTip toolTipType={querySelector} />
+        </span>
+      </span>
       <input type='text' onChange={e => handleChangeAssertionFields(e, 'assertionValue')} />
       <label htmlFor='matcher'>Matcher</label>
       <input type='text' id='matcher' onChange={e => handleChangeAssertionFields(e, 'matcher')} />

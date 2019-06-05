@@ -4,15 +4,19 @@
 
 #assertion {
   @include box-styling;
-
-  img {
-    margin: 2px;
-    opacity: 0.8;
-    width: 30px;
-    height: 30px;
-  }
 }
 
 #assertionHeader {
   @include box-header-alignment;
+}
+
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+}
+
+#tooltip {
+  min-width: 10em;
+  padding: 0.5em 0.75em;
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
 }

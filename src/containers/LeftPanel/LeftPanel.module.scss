@@ -40,7 +40,10 @@
   font-family: $raleway;
 
   img {
-    width: 18px;
+    margin: 2px;
+    opacity: 0.8;
+    width: 15px;
+    height: 15px;
   }
 
   label {
@@ -66,9 +69,76 @@
   }
 }
 
-@mixin help-button {
-  margin: 2px;
-  width: 18px;
-  height: 18px;
-  opacity: 0.8;
+@mixin tooltip(
+  $tooltip-arrow-base: 2em,
+  $tooltip-arrow-length: 1em,
+  $tooltip-border-width: 0,
+  $tooltip-border-color: transparent,
+  $tooltip-transition-out-duration: 0.3s
+) {
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  margin-bottom: $tooltip-arrow-length;
+
+  background-color: $light-gray2;
+  text-align: center;
+
+  visibility: hidden;
+  opacity: 0;
+  transform: translate(-50%, $tooltip-arrow-length);
+  transition: visibility 0s linear $tooltip-transition-out-duration,
+    opacity $tooltip-transition-out-duration ease-in 0s,
+    transform $tooltip-transition-out-duration ease-in 0s;
+
+  // Disable events.
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    // Draw a triangle.
+    border-top: ($tooltip-arrow-length - $tooltip-border-width) solid $light-gray2;
+    border-left: ($tooltip-arrow-base / 2 - $tooltip-border-width) solid transparent;
+    border-right: ($tooltip-arrow-base / 2 - $tooltip-border-width) solid transparent;
+    // Center the triangle.
+    margin-left: ($tooltip-border-width - $tooltip-arrow-base / 2);
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    // Draw another triangle to simulate a border.
+    border-top: $tooltip-arrow-length solid $tooltip-border-color;
+    border-left: ($tooltip-arrow-base / 2) solid transparent;
+    border-right: ($tooltip-arrow-base / 2) solid transparent;
+    // Center the triangle.
+    margin-left: ($tooltip-arrow-base / -2);
+  }
+}
+
+@mixin hastooltip($tooltip-transition-in-duration: 0.3s) {
+  position: relative;
+  // Prevent the tooltip from being clipped by its container.
+  overflow: visible;
+
+  // Display the tooltip on hover and on focus.
+  &:hover,
+  &:focus {
+    #tooltip {
+      visibility: visible;
+      opacity: 1;
+      transform: translate(-50%, 0); // horizontally centered
+      transition: visibility 0s linear 0s, opacity $tooltip-transition-in-duration ease-out 0s,
+        transform $tooltip-transition-in-duration ease-out 0s;
+    }
+  }
 }
