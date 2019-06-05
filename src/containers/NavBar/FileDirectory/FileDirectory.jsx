@@ -13,9 +13,12 @@ const fs = remote.require('fs');
 const fileImg = require('../../../assets/images/file-document-outline.svg');
 const FileDirectory = ({ fileTree }) => {
   const [
-    { componentName, isFolderOpen, isFileHighlighted, projectName },
+    { componentName, isFolderOpen, isFileHighlighted, projectFilePath },
     dispatchToGlobal,
   ] = useContext(GlobalContext);
+
+  const x = projectFilePath.lastIndexOf('/');
+  const projectName = projectFilePath.substring(x + 1);
 
   const handleDisplayFileCode = fileTree => {
     const fileContent = fs.readFileSync(fileTree, 'utf8');

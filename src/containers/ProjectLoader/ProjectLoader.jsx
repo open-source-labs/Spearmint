@@ -6,6 +6,7 @@ import {
   loadProject,
   createFileTree,
   setProjectName,
+  setProjectFilePath,
 } from '../../context/globalActions';
 
 const { remote } = window.require('electron');
@@ -36,11 +37,10 @@ const ProjectLoader = () => {
         { name: 'Html', extensions: ['html'] },
       ],
     });
-    const x = directory[0].lastIndexOf('/');
-    const directoryName = directory[0].substring(x + 1);
-
+    // const x = directory[0].lastIndexOf('/');
+    // const directoryName = directory[0].substring(x + 1);
     if (directory && directory[0]) {
-      dispatchToGlobal(setProjectName(directoryName));
+      dispatchToGlobal(setProjectFilePath(directory[0]));
       dispatchToGlobal(loadProject());
       dispatchToGlobal(createFileTree(generateFileTreeObject(directory[0])));
     }
