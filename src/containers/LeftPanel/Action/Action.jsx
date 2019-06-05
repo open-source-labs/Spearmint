@@ -3,6 +3,7 @@ import styles from '../Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
+import ToolTip from '../ToolTip/ToolTip';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
@@ -72,7 +73,12 @@ const Action = ({ action, index, dispatchToTestCase }) => {
                 <option value='findBy'>findBy</option>
                 <option value='findAllBy'>findAllBy</option>
               </select>
-              <img src={questionIcon} alt='help' title='Please chose the variant' />
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                  <ToolTip toolTipType={action.queryVariant} />
+                </span>
+              </span>
               <select
                 id='querySelector'
                 onChange={e => handleChangeActionFields(e, 'querySelector')}
@@ -88,7 +94,12 @@ const Action = ({ action, index, dispatchToTestCase }) => {
                 <option value='TestId'>TestId</option>
                 {/* TextMatch Precision & Normalization will be added */}
               </select>
-              <img src={questionIcon} alt='help' title='Please chose the queries' />
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                  <ToolTip toolTipType={action.querySelector} />
+                </span>
+              </span>
             </div>
             <div id={styles.query}>
               <label htmlFor='queryValue'>Query</label>
