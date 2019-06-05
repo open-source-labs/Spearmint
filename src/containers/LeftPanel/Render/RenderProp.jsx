@@ -6,7 +6,7 @@ import {
   updateRenderProp,
 } from '../../../context/testCaseActions';
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
-const plusIcon = require('../../../assets/images/plus-box.png');
+const plusIcon = require('../../../assets/images/plus.png');
 
 const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }) => {
   const handleClickAddProp = () => {
@@ -32,7 +32,7 @@ const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }
     <div id={styles.renderProp}>
       <div id={styles.renderPropHeader}>
         <h4>Props</h4>
-        <img src={plusIcon} onClick={handleClickAddProp} />
+        <img src={plusIcon} alt='add' onClick={handleClickAddProp} />
       </div>
       <div id={styles.renderPropsFlexBox}>
         <div>
@@ -43,7 +43,7 @@ const RenderProp = ({ dispatchToTestCase, renderId, propId, propKey, propValue }
           <label htmlFor='prop-value'>value</label>
           <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
         </div>
-        <img src={minusIcon} onClick={handleClickDeleteProp} />
+        <img src={minusIcon} alt='delete' onClick={handleClickDeleteProp} />
       </div>
     </div>
   );

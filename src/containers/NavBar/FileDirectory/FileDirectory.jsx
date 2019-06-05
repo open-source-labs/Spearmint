@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import { displayFileCode, setFilePath, toggleFolderView } from '../../../context/globalActions';
-import { FileClick } from './File';
+import {
+  displayFileCode,
+  setFilePath,
+  toggleFolderView,
+  highlightFile,
+} from '../../../context/globalActions';
 
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
 const fileImg = require('../../../assets/images/file-document-outline.svg');
-
 const FileDirectory = ({ fileTree }) => {
-  const [{ componentName, isFolderOpen }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ componentName, isFolderOpen, isFileHighlighted }, dispatchToGlobal] = useContext(
+    GlobalContext
+  );
 
   const handleDisplayFileCode = fileTree => {
     const fileContent = fs.readFileSync(fileTree, 'utf8');
@@ -32,7 +37,7 @@ const FileDirectory = ({ fileTree }) => {
     let idx = file.lastIndexOf('.');
     let fileType = file.substring(idx);
     if (imageTypes.includes(fileType)) {
-      return <img id={styles.file} src={ICON_MAP['img']} alt='image' />;
+      return <img id={styles.file} src={ICON_MAP['img']} alt='img' />;
     } else if (ICON_MAP[fileType]) {
       return <img id={styles.file} src={ICON_MAP[fileType]} alt={fileType} />;
     } else {
@@ -44,14 +49,20 @@ const FileDirectory = ({ fileTree }) => {
     dispatchToGlobal(toggleFolderView(filePath));
   };
 
+  const handleClickHighlightFile = fileName => {
+    dispatchToGlobal(highlightFile(fileName));
+  };
+
   const convertToHTML = filetree => {
     return filetree.map(file => {
       const desiredComponentName = file.fileName
         .substring(0, file.fileName.indexOf('.') - 1)
         .toLowerCase();
+
       if (componentName && componentName === desiredComponentName) {
         dispatchToGlobal(setFilePath(file.filePath));
       }
+
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (file.files.length) {
           return (
@@ -82,10 +93,14 @@ const FileDirectory = ({ fileTree }) => {
               <li>
                 {differImg(file.fileName)}
                 <button
-                  id={styles.dirButton}
+                  id={
+                    isFileHighlighted === file.fileName
+                      ? styles.dirButtonHilighted
+                      : styles.dirButton
+                  }
                   onClick={() => {
                     handleDisplayFileCode(file.filePath);
-                    FileClick(file);
+                    handleClickHighlightFile(file.fileName);
                   }}
                 >
                   {file.fileName}
@@ -100,7 +115,10 @@ const FileDirectory = ({ fileTree }) => {
 
   return (
     <>
-      <div id={styles.fileDirectory}>{fileTree && convertToHTML(fileTree)}</div>
+      <div id={styles.fileDirectory}>
+        <div id={styles.explorer}>Explorer</div>
+        {fileTree && convertToHTML(fileTree)}
+      </div>
     </>
   );
 };

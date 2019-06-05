@@ -11,7 +11,7 @@ import FirstRender from '../Render/FirstRender';
 import LastAssertion from '../Assertion/LastAssertion';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
-const plusIcon = require('../../../assets/images/plus-box.png');
+const plusIcon = require('../../../assets/images/plus.png');
 
 const TestCase = () => {
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);

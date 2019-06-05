@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
-const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
+const closeIcon = require('../../../assets/images/close.png');
 
 const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
   const [queryVariant, setQueryVariant] = useState('');
@@ -43,7 +43,7 @@ const LastAssertion = ({ id, dispatchToTestCase, isLast }) => {
     <section id={styles.assertion}>
       <div id={styles.assertionHeader}>
         <h3>Assertion</h3>
-        {!isLast && <img src={minusIcon} style={style} alt='delete' onClick={handleClickDelete} />}
+        {!isLast && <img src={closeIcon} style={style} alt='close' onClick={handleClickDelete} />}
       </div>
       <label htmlFor='queryVariant'>Query Selector</label>
       <img src={questionIcon} alt='help' style={style} />

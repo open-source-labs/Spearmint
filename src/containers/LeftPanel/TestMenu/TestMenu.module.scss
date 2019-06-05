@@ -4,13 +4,40 @@
 #testMenu {
   padding: 10px;
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
+#left {
+  float: left;
   button {
-    height: 40px;
+    height: 28px;
+    width: 100px;
+    color: $mint;
+    background-color: $light-gray3;
+    opacity: 0.8;
+    font-family: $oxygen;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+
+  button:hover {
+    background-color: white;
+    color: $mint;
+    border-radius: 5px;
+  }
+}
+#right {
+  button {
+    height: 28px;
+    width: 100px;
     color: white;
     background-color: $mint;
     opacity: 0.8;
     font-family: $oxygen;
+    font-size: 14px;
+    border-radius: 5px;
   }
 
   button:hover {
@@ -20,18 +47,18 @@
   }
 }
 
-#actionBtn {
-  border: none;
-  border-right: 1px solid white;
-  border-left: 1px solid white;
-}
+// #actionBtn {
+//   border: none;
+//   border-right: 1px solid white;
+//   border-left: 1px solid white;
+// }
 
-#renderBtn {
-  border-radius: 20px 0 0 20px;
-  border: none;
-}
+// #renderBtn {
+//   border-radius: 5px;
+//   border: none;
+// }
 
-#assertionBtn {
-  border-radius: 0 20px 20px 0;
-  border: none;
-}
+// #assertionBtn {
+//   border-radius: 0 20px 20px 0;
+//   border: none;
+// }

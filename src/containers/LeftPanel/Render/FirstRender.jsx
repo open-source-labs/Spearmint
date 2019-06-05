@@ -5,7 +5,7 @@ import { setFilePath, setComponentName } from '../../../context/globalActions';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
 import RenderProp from './RenderProp';
 
-const minusIcon = require('../../../assets/images/minus-box.png');
+const closeIcon = require('../../../assets/images/close.png');
 
 const FirstRender = ({ id, props, dispatchToTestCase }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
@@ -43,7 +43,7 @@ const FirstRender = ({ id, props, dispatchToTestCase }) => {
     <section id={styles.render}>
       <div id={styles.renderHeader}>
         <h3>{id === 0 ? 'Render' : 'Rerender'}</h3>
-        {id !== 0 && <img src={minusIcon} alt='' onClick={handleClickDelete} />}
+        {id !== 0 && <img src={closeIcon} alt='close' onClick={handleClickDelete} />}
       </div>
       <div>
         <label htmlFor='render-input-box'>Component Name</label>
