@@ -5,11 +5,10 @@ import { setFilePath, setComponentName } from '../../../context/globalActions';
 import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
 import RenderProp from './RenderProp';
 
-const minusIcon = require('../../../assets/images/minus-box.png');
+const closeIcon = require('../../../assets/images/close.png');
 
 const FirstRender = ({ render, dispatchToTestCase }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
-  // const [toggleProps, setToggleProps] = useState(false);
   const handleClickDelete = e => {
     e.stopPropagation();
     dispatchToTestCase(deleteRender(render.id));
@@ -24,7 +23,6 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
   };
 
   const handleToggleProps = () => {
-    // setToggleProps(!toggleProps);
     dispatchToTestCase(addRenderProp(render.id));
   };
 
@@ -44,7 +42,6 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
     <section id={styles.render}>
       <div id={styles.renderHeader}>
         <h3>{render.id === 0 ? 'Render' : 'Rerender'}</h3>
-        {render.id !== 0 && <img src={minusIcon} alt='' onClick={handleClickDelete} />}
       </div>
       <div>
         <label htmlFor='render-input-box'>Component Name</label>

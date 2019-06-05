@@ -13,7 +13,7 @@
 
 #appGridClose {
   display: grid;
-  grid-template-columns: 5% auto 55%;
+  grid-template-columns: 48px 50% auto;
   grid-template-rows: auto;
   grid-template-areas: 'navBar leftPanel rightPanel';
   background-color: $light-gray3;
