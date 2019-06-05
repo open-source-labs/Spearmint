@@ -7,16 +7,17 @@ import RenderProp from './RenderProp';
 
 const minusIcon = require('../../../assets/images/minus-box.png');
 
-const FirstRender = ({ id, props, dispatchToTestCase }) => {
+const FirstRender = ({ render, dispatchToTestCase }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
   const [toggleProps, setToggleProps] = useState(false);
   const handleClickDelete = e => {
-    dispatchToTestCase(deleteRender(id));
+    e.stopPropagation();
+    dispatchToTestCase(deleteRender(render.id));
   };
 
   const handleChangeComponentName = e => {
     dispatchToGlobal(setComponentName(e.target.value));
-    dispatchToTestCase(updateRender(id, e.target.value, filePath));
+    dispatchToTestCase(updateRender(render.id, e.target.value, filePath));
     if (filePath) {
       dispatchToGlobal(setFilePath(null));
     }
@@ -24,14 +25,14 @@ const FirstRender = ({ id, props, dispatchToTestCase }) => {
 
   const handleToggleProps = () => {
     setToggleProps(!toggleProps);
-    dispatchToTestCase(addRenderProp(id));
+    dispatchToTestCase(addRenderProp(render.id));
   };
 
-  const propsJSX = props.map(prop => {
+  const propsJSX = render.props.map(prop => {
     return (
       <RenderProp
         key={prop.id}
-        renderId={id}
+        renderId={render.id}
         propId={prop.id}
         propKey={prop.propKey}
         propValue={prop.propValue}
@@ -42,8 +43,8 @@ const FirstRender = ({ id, props, dispatchToTestCase }) => {
   return (
     <section id={styles.render}>
       <div id={styles.renderHeader}>
-        <h3>{id === 0 ? 'Render' : 'Rerender'}</h3>
-        {id !== 0 && <img src={minusIcon} alt='' onClick={handleClickDelete} />}
+        <h3>{render.id === 0 ? 'Render' : 'Rerender'}</h3>
+        {render.id !== 0 && <img src={minusIcon} alt='' onClick={handleClickDelete} />}
       </div>
       <div>
         <label htmlFor='render-input-box'>Component Name</label>

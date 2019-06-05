@@ -19,8 +19,9 @@ export const testCaseState = {
       queryVariant: '',
       querySelector: '',
       queryValue: '',
-      matcher: '',
+      matcherType: '',
       matcherValue: '',
+      suggestions: [],
     },
   ],
 };
@@ -31,13 +32,12 @@ let renderPropsId = 0;
 const createAction = () => ({
   id: statementId++,
   type: 'action',
-  event: {
-    type: '',
-    value: null,
-  },
+  eventType: '',
+  eventValue: null,
   queryVariant: '',
   querySelector: '',
   queryValue: '',
+  suggestions: [],
 });
 
 const createAssertion = () => ({
@@ -46,8 +46,9 @@ const createAssertion = () => ({
   queryVariant: '',
   querySelector: '',
   queryValue: '',
-  matcher: '',
+  matcherType: '',
   matcherValue: '',
+  suggestions: [],
 });
 
 const createRerender = () => ({
@@ -101,11 +102,12 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ACTION:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
-          statement.event.type = action.eventType;
-          statement.event.value = action.eventValue;
+          statement.eventType = action.eventType;
+          statement.eventValue = action.eventValue;
           statement.queryVariant = action.queryVariant;
           statement.querySelector = action.querySelector;
           statement.queryValue = action.queryValue;
+          statement.suggestions = action.suggestions;
         }
         return statement;
       });
@@ -134,8 +136,9 @@ export const testCaseReducer = (state, action) => {
           statement.queryVariant = action.queryVariant;
           statement.querySelector = action.querySelector;
           statement.queryValue = action.queryValue;
-          statement.matcher = action.matcher;
+          statement.matcherType = action.matcherType;
           statement.matcherValue = action.matcherValue;
+          statement.suggestions = action.suggestions;
         }
         return statement;
       });

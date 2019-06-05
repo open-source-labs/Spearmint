@@ -21,7 +21,6 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const handleClickSave = () => {
     generateTestFile();
-    console.log(testFileCode);
     exportTestFile();
   };
 
@@ -93,28 +92,30 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const addAction = action => {
-    if (action.event.value) {
-      testFileCode += `fireEvent.${action.event.type}(${action.queryVariant + action.querySelector}
-                      (${action.queryValue}), { target: { value: ${action.event.value} } });`;
+    if (action.eventValue) {
+      testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
+                      (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
     } else {
-      testFileCode += `fireEvent.${action.event.type}(${action.queryVariant + action.querySelector}
+      testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
                       (${action.queryValue}));`;
     }
   };
 
   const addAssertion = assertion => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
-                    (${assertion.queryValue})).${assertion.matcher}(${assertion.matcherValue})`;
+                    (${assertion.assertionValue})).${assertion.matcherType}(${
+      assertion.matcherValue
+    })`;
   };
 
   const addRender = (render, methods) => {
-    // let props = createRenderProps(render);
-    // if (!render.isRerender) {
-    //   testFileCode += `const { ${methods} } } =
-    //                   render(<${render.componentName} ${props} />);`;
-    // } else {
-    //   testFileCode += `rerender(<${render.componentName} ${props} />);`;
-    // }
+    let props = createRenderProps(render);
+    if (!render.isRerender) {
+      testFileCode += `const { ${methods} } } =
+                      render(<${render.componentName} ${props} />);`;
+    } else {
+      testFileCode += `rerender(<${render.componentName} ${props} />);`;
+    }
   };
 
   const createRenderProps = render => {

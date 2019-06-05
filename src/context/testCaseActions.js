@@ -45,6 +45,7 @@ export const updateAction = ({
   queryVariant,
   querySelector,
   queryValue,
+  suggestions,
 }) => ({
   type: actionTypes.UPDATE_ACTION,
   id,
@@ -53,6 +54,7 @@ export const updateAction = ({
   queryVariant,
   querySelector,
   queryValue,
+  suggestions
 });
 
 export const addAssertion = () => ({
@@ -69,16 +71,18 @@ export const updateAssertion = ({
   queryVariant,
   querySelector,
   queryValue,
-  matcher,
+  matcherType,
   matcherValue,
+  suggestions,
 }) => ({
   type: actionTypes.UPDATE_ASSERTION,
   id,
   queryVariant,
   querySelector,
   queryValue,
-  matcher,
+  matcherType,
   matcherValue,
+  suggestions
 });
 
 export const addRender = () => ({

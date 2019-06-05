@@ -36,7 +36,6 @@ const TestCase = () => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-
     return result;
   };
 
@@ -100,8 +99,7 @@ const TestCase = () => {
       )}
       <FirstRender
         key={firstRenderStatement.id}
-        id={firstRenderStatement.id}
-        props={firstRenderStatement.props}
+        render={firstRenderStatement}
         dispatchToTestCase={dispatchToTestCase}
       />
       <DragDropContext onDragEnd={onDragEnd}>
@@ -119,7 +117,7 @@ const TestCase = () => {
       </DragDropContext>
       <LastAssertion
         key={lastAssertionStatement.id}
-        id={lastAssertionStatement.id}
+        assertion={lastAssertionStatement}
         dispatchToTestCase={dispatchToTestCase}
         isLast={true}
       />
