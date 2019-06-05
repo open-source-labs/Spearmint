@@ -10,7 +10,9 @@ const closeIcon = require('../../../assets/images/close.png');
 const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...assertion };
-    field === 'isNot' ? updateAssertion[field] = !updatedAssertion.isNot : updatedAssertion[field] = e.target.value;
+    field === 'isNot'
+      ? (updateAssertion[field] = !updatedAssertion.isNot)
+      : (updatedAssertion[field] = e.target.value);
     dispatchToTestCase(updateAssertion(updatedAssertion));
   };
 
@@ -63,7 +65,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
         <option value='TestId'>TestId</option>
         {/* TextMatch Precision & Normalization will be added */}
       </select>
-      <img src={questionIcon} alt='help' style={style} /> 
+      <img src={questionIcon} alt='help' style={style} />
       <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
       <div id={styles.matcherFlexBox}>
         <div id={styles.notSection}>
@@ -80,7 +82,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
         </div>
         {needsMatcherValue(assertion.matcherType) && (
           <div id={styles.matcherVal}>
-            <label htmlFor='matcherValue' />
+            <label htmlFor='matcherValue'>Value</label>
             <input
               type='text'
               id='matcherValue'

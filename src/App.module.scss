@@ -5,6 +5,7 @@
 
 #appGridOpen {
   display: grid;
+  // grid-template-columns: 240px auto 40%;
   grid-template-columns: 240px auto 40%;
   grid-template-rows: auto;
   grid-template-areas: 'navBar leftPanel rightPanel';
@@ -13,7 +14,8 @@
 
 #appGridClose {
   display: grid;
-  grid-template-columns: 48px 50% auto;
+  // grid-template-columns: 48px 50% auto;
+  grid-template-columns: 48px auto 50%;
   grid-template-rows: auto;
   grid-template-areas: 'navBar leftPanel rightPanel';
   background-color: $light-gray3;
