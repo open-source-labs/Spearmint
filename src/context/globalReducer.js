@@ -9,12 +9,13 @@ export const globalState = {
   isProjectLoaded: false,
   fileTree: null,
   componentName: '',
-  filePath: '',
   isFileDirectoryOpen: true,
   isBrowserOpen: true,
   displayedFileCode: '',
   isFolderOpen: {},
   isFileHighlighted: '',
+  projectFilePath: '',
+  filePathMap: {},
 };
 
 export const globalReducer = (state, action) => {
@@ -45,12 +46,6 @@ export const globalReducer = (state, action) => {
         ...state,
         componentName,
       };
-    case actionTypes.SET_FILE_PATH:
-      const filePath = action.filePath;
-      return {
-        ...state,
-        filePath,
-      };
     case actionTypes.TOGGLE_FILE_DIRECTORY:
       const isFileDirectoryOpen = !state.isFileDirectoryOpen;
       return {
@@ -76,18 +71,23 @@ export const globalReducer = (state, action) => {
         ...state,
         isFolderOpen,
       };
-    // case actionTypes.SET_DEFAULT_FILE_HIGHLIGHTING:
-    //   isFileHighlighted[action.fileName] = false;
-    //   return {
-    //     ...state,
-    //     isFileHighlighted,
-    //   }
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
-      console.log(isFileHighlighted);
       return {
         ...state,
         isFileHighlighted,
+      };
+    case actionTypes.SET_PROJECT_FILE_PATH:
+      const projectFilePath = action.projectFilePath;
+      return {
+        ...state,
+        projectFilePath,
+      };
+    case actionTypes.SET_FILE_PATH_MAP:
+      const filePathMap = action.filePathMap;
+      return {
+        ...state,
+        filePathMap,
       };
 
     default:

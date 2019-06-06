@@ -75,22 +75,34 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
         </span>
       </span>
       <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
-      <label htmlFor='matcher'>Matcher</label>
-      <AutoComplete
-        statement={assertion}
-        statementType='assertion'
-        dispatchToTestCase={dispatchToTestCase}
-      />
-      {needsMatcherValue(assertion.matcherType) && (
-        <div id={styles.matcherVal}>
-          <label htmlFor='matcherValue'>Value</label>
+      <div id={styles.matcherFlexBox}>
+        <div id={styles.notSection}>
+          Not?
           <input
-            type='text'
-            id='matcherValue'
-            onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+            type='checkbox'
+            id='matcher-checkbox'
+            onChange={e => handleChangeAssertionFields(e, 'isNot')}
           />
         </div>
-      )}
+        <div id={styles.matcher}>
+          <label htmlFor='matcher'>Matcher</label>
+          <AutoComplete
+            statement={assertion}
+            statementType='assertion'
+            dispatchToTestCase={dispatchToTestCase}
+          />
+          {needsMatcherValue(assertion.matcherType) && (
+            <span>
+              <label htmlFor='matcherValue' />
+              <input
+                type='text'
+                id='matcherValue'
+                onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+              />
+            </span>
+          )}
+        </div>
+      </div>
     </section>
   );
 };
