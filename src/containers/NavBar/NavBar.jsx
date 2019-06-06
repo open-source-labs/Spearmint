@@ -4,7 +4,7 @@ import { GlobalContext } from '../../context/globalReducer';
 import { toggleBrowser, toggleFileDirectory } from '../../context/globalActions';
 import FileDirectory from './FileDirectory/FileDirectory';
 import ExportFileModal from './ExportFileModal/ExportFileModal';
-import OpenFolder from '../LeftPanel/OpenFolder/OpenFolder';
+import OpenFolder from '../LeftPanel/OpenFolder/OpenFolderButton';
 
 const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');

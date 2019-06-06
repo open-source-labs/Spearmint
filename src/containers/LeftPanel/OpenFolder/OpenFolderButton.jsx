@@ -1,6 +1,11 @@
 import React, { useContext } from 'react';
-import styles from './OpenFolder.module.scss';
-import { loadProject, createFileTree, setProjectFilePath } from '../../../context/globalActions';
+import styles from './OpenFolderButton.module.scss';
+import {
+  loadProject,
+  createFileTree,
+  setFilePathMap,
+  setProjectFilePath,
+} from '../../../context/globalActions';
 import { GlobalContext } from '../../../context/globalReducer';
 
 const folderOpenIcon = require('../../../assets/images/folder-open.png');
@@ -11,6 +16,7 @@ const { dialog } = remote;
 
 const OpenFolder = () => {
   const [{ isProjectLoaded }, dispatchToGlobal] = useContext(GlobalContext);
+  const filePathMap = {};
 
   const handleOpenFolder = () => {
     const directory = dialog.showOpenDialog({
@@ -23,6 +29,9 @@ const OpenFolder = () => {
     });
 
     if (directory && directory[0]) {
+      let directoryPath = directory[0];
+      //replace backslashes for Windows OS
+      directoryPath = directoryPath.replace(/\\/g, '/');
       dispatchToGlobal(setProjectFilePath(directory[0]));
       dispatchToGlobal(loadProject());
       dispatchToGlobal(createFileTree(generateFileTreeObject(directory[0])));
@@ -32,8 +41,11 @@ const OpenFolder = () => {
   //reads contents within the selected directory and checks if it is a file/folder
   const generateFileTreeObject = directoryPath => {
     const fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
+      //replace backslashes for Windows OS
+      directoryPath = directoryPath.replace(/\\/g, '/');
+      let filePath = `${directoryPath}/${fileName}`;
       const file = {
-        filePath: `${directoryPath}/${fileName}`,
+        filePath,
         fileName,
         files: [],
       };
@@ -42,12 +54,19 @@ const OpenFolder = () => {
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (fileData.isDirectory()) {
           file.files = generateFileTreeObject(file.filePath);
+          file.files.forEach(file => {
+            let javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
+            let fileType = file.fileName.split('.')[1];
+            if (javaScriptFileTypes.includes(fileType)) {
+              let componentName = file.fileName.split('.')[0];
+              filePathMap[componentName] = file.filePath;
+            }
+          });
         }
       }
-
       return file;
     });
-
+    dispatchToGlobal(setFilePathMap(filePathMap));
     return fileArray;
   };
 

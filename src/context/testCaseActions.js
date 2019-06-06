@@ -14,7 +14,7 @@ export const actionTypes = {
 
   ADD_RENDER: 'ADD_RENDER',
   DELETE_RENDER: 'DELETE_RENDER',
-  UPDATE_RENDER: 'UPDATE_RENDER',
+  UPDATE_RENDER_COMPONENT: 'UPDATE_RENDER_COMPONENT',
 
   ADD_RENDER_PROP: 'ADD_RENDER_PROP',
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
@@ -102,9 +102,8 @@ export const deleteRender = id => ({
   id,
 });
 
-export const updateRender = (id, componentName, filePath) => ({
-  type: actionTypes.UPDATE_RENDER,
-  id,
+export const updateRenderComponent = (componentName, filePath) => ({
+  type: actionTypes.UPDATE_RENDER_COMPONENT,
   componentName,
   filePath,
 });

@@ -46,6 +46,7 @@ const TestCase = () => {
     if (result.destination.index === result.source.index) {
       return;
     }
+
     const reorderedStatements = reorder(
       draggableStatements,
       result.source.index,
@@ -94,7 +95,7 @@ const TestCase = () => {
       </div>
       {mockDataCheckBox && (
         <section id={styles.mockDataHeader}>
-          <label htmlFor='mock-data'>Mock data</label>
+          <label htmlFor='mock-data'>Mock Data</label>
           <img src={plusIcon} alt='add' onClick={handleAddMockData} />
           {mockDataJSX}
         </section>

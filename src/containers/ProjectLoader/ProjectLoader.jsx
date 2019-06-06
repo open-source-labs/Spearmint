@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/globalReducer';
-import OpenFolder from '../LeftPanel/OpenFolder/OpenFolder';
+import OpenFolder from '../LeftPanel/OpenFolder/OpenFolderButton';
 import { setProjectUrl } from '../../context/globalActions';
 
 const ProjectLoader = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
+
   const addHttps = url => {
     if (!/^(f | ht)tps ? : \/\//i.test(url)) {
       url = 'https://' + url;

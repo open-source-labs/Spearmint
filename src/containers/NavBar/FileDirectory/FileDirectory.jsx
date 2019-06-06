@@ -1,25 +1,18 @@
 import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import {
-  displayFileCode,
-  setFilePath,
-  toggleFolderView,
-  highlightFile,
-} from '../../../context/globalActions';
+import { displayFileCode, toggleFolderView, highlightFile } from '../../../context/globalActions';
 
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
 const fileImg = require('../../../assets/images/file-document-outline.svg');
 const FileDirectory = ({ fileTree }) => {
-  const [
-    { componentName, isFolderOpen, isFileHighlighted, projectFilePath },
-    dispatchToGlobal,
-  ] = useContext(GlobalContext);
+  const [{ isFolderOpen, isFileHighlighted, projectFilePath }, dispatchToGlobal] = useContext(
+    GlobalContext
+  );
 
-  const x = projectFilePath.lastIndexOf('/');
-  const projectName = projectFilePath.substring(x + 1);
-
+  const idx = projectFilePath.lastIndexOf('/');
+  const projectName = projectFilePath.substring(idx + 1);
   const handleDisplayFileCode = fileTree => {
     const fileContent = fs.readFileSync(fileTree, 'utf8');
     dispatchToGlobal(displayFileCode(fileContent));
@@ -59,14 +52,6 @@ const FileDirectory = ({ fileTree }) => {
 
   const convertToHTML = filetree => {
     return filetree.map(file => {
-      const desiredComponentName = file.fileName
-        .substring(0, file.fileName.indexOf('.') - 1)
-        .toLowerCase();
-
-      if (componentName && componentName === desiredComponentName) {
-        dispatchToGlobal(setFilePath(file.filePath));
-      }
-
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (file.files.length) {
           return (

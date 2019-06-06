@@ -3,7 +3,6 @@ export const actionTypes = {
   LOAD_PROJECT: 'LOAD_PROJECT',
   CREATE_FILE_TREE: 'CREATE_FILE_TREE',
   SET_COMPONENT_NAME: 'SET_COMPONENT_NAME',
-  SET_FILE_PATH: 'SET_FILE_PATH',
   TOGGLE_FILE_DIRECTORY: 'TOGGLE_FILE_DIRECTORY',
   TOGGLE_BROWSER: 'TOGGLE_BROWSER',
   DISPLAY_FILE_CODE: 'DISPLAY_FILE_CODE',
@@ -11,6 +10,7 @@ export const actionTypes = {
   SET_DEFAULT_FILE_HIGHLIGHTING: 'SET_DEFAULT_FILE_HIGHLIGHTING',
   HIGHLIGHT_FILE: 'HIGHLIGHT_FILE',
   SET_PROJECT_FILE_PATH: 'SET_PROJECT_FILE_PATH',
+  SET_FILE_PATH_MAP: 'SET_FILE_PATH_MAP',
 };
 
 export const setProjectUrl = url => ({
@@ -32,10 +32,6 @@ export const setComponentName = componentName => ({
   componentName,
 });
 
-export const setFilePath = () => ({
-  type: actionTypes.SET_FILE_PATH,
-});
-
 export const toggleFileDirectory = () => ({
   type: actionTypes.TOGGLE_FILE_DIRECTORY,
 });
@@ -54,11 +50,6 @@ export const toggleFolderView = filePath => ({
   filePath,
 });
 
-export const setDefaultFileHighlighting = fileName => ({
-  type: actionTypes.SET_DEFAULT_FILE_HIGHLIGHTING,
-  fileName,
-});
-
 export const highlightFile = fileName => ({
   type: actionTypes.HIGHLIGHT_FILE,
   fileName,
@@ -67,4 +58,9 @@ export const highlightFile = fileName => ({
 export const setProjectFilePath = projectFilePath => ({
   type: actionTypes.SET_PROJECT_FILE_PATH,
   projectFilePath,
+});
+
+export const setFilePathMap = filePathMap => ({
+  type: actionTypes.SET_FILE_PATH_MAP,
+  filePathMap,
 });
