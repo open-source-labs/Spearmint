@@ -13,11 +13,6 @@ const FileDirectory = ({ fileTree }) => {
 
   const idx = projectFilePath.lastIndexOf('/');
   const projectName = projectFilePath.substring(idx + 1);
-  const handleDisplayFileCode = filePath => {
-    console.log(filePath);
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    dispatchToGlobal(displayFileCode(fileContent));
-  };
 
   const ICON_MAP = {
     '.html': 'https://img.icons8.com/small/16/000000/html.png',
@@ -41,6 +36,11 @@ const FileDirectory = ({ fileTree }) => {
     } else {
       return <img id={styles.file} src={ICON_MAP.etc} alt='file' />;
     }
+  };
+
+  const handleDisplayFileCode = filePath => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    dispatchToGlobal(displayFileCode(fileContent));
   };
 
   const handleClickToggleFolderView = filePath => {

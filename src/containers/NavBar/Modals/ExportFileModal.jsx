@@ -1,7 +1,12 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import { GlobalContext } from '../../../context/globalReducer';
-import { displayFileCode, highlightFile } from '../../../context/globalActions';
+import {
+  displayFileCode,
+  loadProject,
+  toggleFolderView,
+  highlightFile,
+} from '../../../context/globalActions';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
@@ -53,9 +58,13 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const addComponentImportStatement = () => {
+    debugger;
     const renderStatement = testCase.statements[0];
+    console.log('pfp', projectFilePath);
+    console.log('rSfP', renderStatement.filePath);
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
     filePath = filePath.replace(/\\/g, '/');
+    console.log('relfp', filePath);
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
   const addMockData = () => {
@@ -139,15 +148,23 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {
       fs.mkdirSync(projectFilePath + '/__tests__');
     }
+    debugger;
     await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
       if (err) throw err;
     });
-    displayTestFile();
+    debugger;
+    displayTestFile(projectFilePath + '/__tests__/');
   };
 
-  const displayTestFile = () => {
-    const fileContent = fs.readFileSync(projectFilePath + `/__tests__/${fileName}.test.js`, 'utf8');
+  const displayTestFile = testFolderFilePath => {
+    const fileContent = fs.readFileSync(testFolderFilePath + `${fileName}.test.js`, 'utf8');
+    debugger;
     dispatchToGlobal(displayFileCode(fileContent));
+    debugger;
+    dispatchToGlobal(loadProject('reload'));
+    debugger;
+    dispatchToGlobal(toggleFolderView(testFolderFilePath));
+    debugger;
     dispatchToGlobal(highlightFile(fileName));
   };
 
@@ -159,6 +176,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
       contentLabel='Save testing file'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      ariaHideApp={false}
     >
       <div id={styles.title}>
         <p>Convert to Javascript Code</p>

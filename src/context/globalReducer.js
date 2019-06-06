@@ -29,10 +29,9 @@ export const globalReducer = (state, action) => {
         url,
       };
     case actionTypes.LOAD_PROJECT:
-      const isProjectLoaded = true;
       return {
         ...state,
-        isProjectLoaded,
+        isProjectLoaded: action.load,
       };
     case actionTypes.CREATE_FILE_TREE:
       const fileTree = action.fileTree;

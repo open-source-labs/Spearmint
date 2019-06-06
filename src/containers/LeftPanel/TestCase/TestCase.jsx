@@ -71,58 +71,56 @@ const TestCase = () => {
       <div id='head'>
         <TestMenu dispatchToTestCase={dispatchToTestCase} />
       </div>
-      <body>
-        <div id={styles.testMockSection}>
-          <section id={styles.testCaseHeader}>
-            <label htmlFor='test-statement'>Test</label>
-            <input
-              type='text'
-              id={styles.testStatement}
-              value={testStatement}
-              onChange={handleUpdateTestStatement}
-            />
-          </section>
-          <section id={styles.mockHeader}>
-            <span>
-              <input type='checkbox' disabled={mockDataJSX.length} onClick={handleToggleMockData} />
-              <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
-                Do you need mock data?
-              </label>
-            </span>
-          </section>
-        </div>
-        {mockDataCheckBox && (
-          <section id={styles.mockDataHeader}>
-            <label htmlFor='mock-data'>Mock data</label>
-            <img src={plusIcon} alt='add' onClick={handleAddMockData} />
-            {mockDataJSX}
-          </section>
-        )}
-        <FirstRender
-          key={firstRenderStatement.id}
-          render={firstRenderStatement}
-          dispatchToTestCase={dispatchToTestCase}
-        />
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='droppable'>
-            {provided => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                <TestStatements
-                  statements={draggableStatements}
-                  dispatchToTestCase={dispatchToTestCase}
-                />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
-        <LastAssertion
-          key={lastAssertionStatement.id}
-          assertion={lastAssertionStatement}
-          dispatchToTestCase={dispatchToTestCase}
-          isLast={true}
-        />
-      </body>
+      <div id={styles.testMockSection}>
+        <section id={styles.testCaseHeader}>
+          <label htmlFor='test-statement'>Test</label>
+          <input
+            type='text'
+            id={styles.testStatement}
+            value={testStatement}
+            onChange={handleUpdateTestStatement}
+          />
+        </section>
+        <section id={styles.mockHeader}>
+          <span>
+            <input type='checkbox' disabled={mockDataJSX.length} onClick={handleToggleMockData} />
+            <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
+              Do you need mock data?
+            </label>
+          </span>
+        </section>
+      </div>
+      {mockDataCheckBox && (
+        <section id={styles.mockDataHeader}>
+          <label htmlFor='mock-data'>Mock data</label>
+          <img src={plusIcon} alt='add' onClick={handleAddMockData} />
+          {mockDataJSX}
+        </section>
+      )}
+      <FirstRender
+        key={firstRenderStatement.id}
+        render={firstRenderStatement}
+        dispatchToTestCase={dispatchToTestCase}
+      />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId='droppable'>
+          {provided => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              <TestStatements
+                statements={draggableStatements}
+                dispatchToTestCase={dispatchToTestCase}
+              />
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <LastAssertion
+        key={lastAssertionStatement.id}
+        assertion={lastAssertionStatement}
+        dispatchToTestCase={dispatchToTestCase}
+        isLast={true}
+      />
     </div>
   );
 };
