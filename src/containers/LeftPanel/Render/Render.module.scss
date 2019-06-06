@@ -4,30 +4,55 @@
 
 #render {
   @include box-styling;
-  padding-bottom: 35px;
+  padding-bottom: 10px;
+  vertical-align: middle;
+
+  button:hover {
+    color: $mint;
+  }
+  button {
+    font-size: 12px;
+    padding-top: 5px;
+    border: none;
+    font-family: $raleway;
+    font-weight: bold;
+    text-align: left;
+  }
+  hr {
+    border: 1px solid $light-gray;
+    margin-top: 0;
+  }
 }
 
+#closeBtn {
+  float: right;
+  margin: 0;
+}
 #renderHeader {
   @include box-header-alignment;
 }
 
-#propKeyLabel {
-  float: left;
+#renderBody {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
-
-#propValLabel {
+#renderInputBox {
+  width: 150px;
+}
+#renderProp {
+  font-size: 13px;
+  margin-bottom: 0;
+  padding: 6px 0;
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+}
+#renderCheckbox {
   float: right;
-  margin-right: 30%;
 }
 
-#addPropBtn {
-  width: 10%;
-  font-family: $raleway;
-  border: none;
-  margin: 5px 12px 0 0;
-  float: right;
-}
-
-#addPropBtn:hover {
-  color: $mint;
+#props {
+  margin: 5px 0;
 }

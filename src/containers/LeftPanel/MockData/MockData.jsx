@@ -39,12 +39,12 @@ const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
 
   return (
     <div id={styles.mockData}>
+      <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDelete} />
       <div id={styles.mockDataHeader}>
         <label htmlFor='mock-data-name'>Name </label>
         <input type='text' id='mock-data-name' onChange={handleClickUpdate} />
-        <img src={closeIcon} alt='close' onClick={handleClickDelete} />
       </div>
-      <div>
+      <div id={styles.keys}>
         <label htmlFor='mock-data-key' id={styles.mockDataKey}>
           Add field keys{' '}
         </label>
@@ -52,8 +52,8 @@ const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
           Type{' '}
         </label>
       </div>
+      <hr />
       <div id={styles.keyList}>
-        <hr />
         {mockDataFieldKeys}
         <button id={styles.addKeyBtn} onClick={e => handleClickAdd(e, mockDatumId)}>
           <img src={plusIcon} alt='add' />

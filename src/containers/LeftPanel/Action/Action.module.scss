@@ -5,33 +5,62 @@
 #action {
   @include box-styling;
   font-family: $raleway;
+  letter-spacing: 0.5px;
 }
 
 #actionHeader {
   @include box-header-alignment;
 }
 
-#querySelector {
-  label {
-    display: block;
-  }
+#eventType {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
-#querySelector {
-  // display: flex;
-  padding-bottom: 1%;
+#queryFlexBox {
+  display: flex;
+  align-items: center;
+}
 
-  img {
-    @include help-button;
+.queryLabel {
+  margin-bottom: 5px;
+  display: block;
+}
+
+#dropdownFlex {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+#querySelector {
+  select {
+    font-family: $raleway;
+    width: 160px;
+    height: 25px;
+    margin: 0 3px 0 6px;
+    background-color: white;
+    border: 1px solid $light-gray;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: $dark-gray;
   }
 }
 
 #query {
   input {
-    display: block;
+    width: 138%;
   }
 }
 
-#queryFlexBox {
-  display: flex;
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+}
+
+#tooltip {
+  min-width: 10em;
+  padding: 0.5em 0.75em;
+
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
 }

@@ -6,6 +6,7 @@ import { deleteRender, updateRender, addRenderProp } from '../../../context/test
 import RenderProp from './RenderProp';
 
 const plusIcon = require('../../../assets/images/plus.png');
+const closeIcon = require('../../../assets/images/close.png');
 
 const FirstRender = ({ render, dispatchToTestCase }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
@@ -45,42 +46,52 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
 
   return (
     <section id={styles.render}>
+      {render.id !== 0 ? (
+        <img src={closeIcon} id={styles.closeBtn} alt='close' onClick={handleClickDelete} />
+      ) : (
+        <p />
+      )}
       <div id={styles.renderHeader}>
         <h3>{render.id === 0 ? 'Render' : 'Rerender'}</h3>
       </div>
-      <div>
-        <label htmlFor='render-input-box'>Component Name</label>
-        <input
-          type='text'
-          id='render-input-box'
-          value={componentName}
-          onChange={handleChangeComponentName}
-        />
-        <label htmlFor='render-checkbox'>Props</label>
-        <input
-          type='checkbox'
-          id='render-checkbox'
-          disabled={propsJSX.length}
-          onClick={handleToggleProps}
-        />
+      <div id={styles.renderBody}>
+        <div>
+          <label htmlFor='renderInputBox'>Component Name</label>
+          <input
+            type='text'
+            id={styles.renderInputBox}
+            value={componentName}
+            onChange={handleChangeComponentName}
+          />
+        </div>
+        <div id={styles.renderCheckbox}>
+          <input
+            type='checkbox'
+            id='render-checkbox'
+            disabled={propsJSX.length}
+            onClick={handleToggleProps}
+          />
+          <label htmlFor='render-checkbox'>Do you pass props ? </label>
+        </div>
       </div>
       {propsJSX.length !== 0 && (
-        <div id={styles.renderProp}>
-          {/* <div id={styles.propLabelHeader}> */}
-          <label htmlFor='prop-key' id={styles.propKeyLabel}>
-            Prop key
-          </label>
-          <label htmlFor='prop-value' id={styles.propValLabel}>
-            Prop value
-          </label>
-          <br />
+        <div>
+          <div id={styles.renderProp}>
+            <label htmlFor='prop-key' id={styles.propKeyLabel}>
+              Prop key
+            </label>
+            <label htmlFor='prop-value' id={styles.propValLabel}>
+              Prop value
+            </label>
+          </div>
           <hr />
-          {/* </div> */}
           {propsJSX}
-          <button onClick={handleClickAddProp} id={styles.addPropBtn}>
-            <img src={plusIcon} alt='add' />
-            Add Prop
-          </button>
+          <div id={styles.props}>
+            <button id={styles.addPropBtn} onClick={handleClickAddProp}>
+              <img src={plusIcon} alt='add' />
+              Add Prop
+            </button>
+          </div>
         </div>
       )}
     </section>

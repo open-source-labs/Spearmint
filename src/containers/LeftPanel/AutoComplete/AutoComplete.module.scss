@@ -6,17 +6,13 @@
 }
 
 .input {
-  width: 400;
-  height: 30;
+  width: 185px;
   padding: '10px 20px';
-  font-family: $raleway;
+  font-family: $oxygen;
   font-weight: 300;
   font-size: 12;
+  letter-spacing: 0.5px;
   border: '1px solid #aaa';
-  border-top-left-radius: 4;
-  border-top-right-radius: 4;
-  border-bottom-left-radius: 4;
-  border-bottom-right-radius: 4;
 }
 
 .inputFocused {
@@ -36,11 +32,12 @@
   display: block;
   position: absolute;
   top: 26px;
-  width: 196px;
-  border: 1px solid #aaa;
+  width: 190px;
+  border: 1px solid $light-gray;
   background-color: #fff;
-  font-family: Helvetica, sans-serif;
+  font-family: $oxygen;
   font-weight: 300;
+  letter-spacing: 0.5px;
   font-size: 16px;
   border-radius: 0 0 4px 4px;
   z-index: 2;
@@ -58,5 +55,5 @@
 }
 
 .suggestionHighlighted {
-  background-color: #b4e6e6;
+  background-color: $light-gray3;
 }

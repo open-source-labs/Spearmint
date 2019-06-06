@@ -1,14 +1,25 @@
+@import '../../../assets/stylesheets/colors.scss';
 #mockDataKey {
+  // display: flex;
+  // justify-content: space-between;
+  margin: 0 10px 5px 12px;
   img {
-    width: 18px;
+    width: 15px;
+    height: 15px;
+    // display: inline-block;
   }
 
   input {
     width: 50%;
+    display: inline-block;
+    margin-right: 20px;
   }
 
   select {
-    width: 27%;
-    margin: 5px;
+    width: 40%;
+    height: 25px;
+    margin-right: 10px;
+    background-color: white;
+    border: 1px solid $light-gray;
   }
 }
