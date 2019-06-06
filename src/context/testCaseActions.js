@@ -17,6 +17,8 @@ export const actionTypes = {
   ADD_RENDER_PROP: 'ADD_RENDER_PROP',
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
+
+  CREATE_NEW_TEST: 'NEW_TEST',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -119,4 +121,7 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propId,
   propKey,
   propValue,
+});
+export const createNewTest = () => ({
+  type: actionTypes.CREATE_NEW_TEST,
 });

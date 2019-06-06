@@ -3,12 +3,12 @@ import styles from './NavBar.module.scss';
 import { GlobalContext } from '../../context/globalReducer';
 import { toggleFileDirectory } from '../../context/globalActions';
 import FileDirectory from './FileDirectory/FileDirectory';
+import OpenFolder from '../LeftPanel/OpenFolder/OpenFolderButton';
 import ExportFileModal from './Modals/ExportFileModal';
 import BrowserModal from './Modals/BrowserModal';
 
 const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');
-const folderOpenIcon = require('../../assets/images/folder-open.png');
 const saveIcon = require('../../assets/images/content-save-outline.png');
 const codeIcon = require('../../assets/images/google-chrome.png');
 
@@ -30,10 +30,9 @@ const NavBar = () => {
   };
 
   const browserModalOpen = () => {
-    // console.log('object')
     setIsBrowserModalOpen(true);
   };
-  // console.log('browser', isBrowserModalOpen);
+
   const closeBrowserModal = () => {
     setIsBrowserModalOpen(false);
   };
@@ -46,17 +45,8 @@ const NavBar = () => {
       <button className={styles.navBtn} onClick={openModal}>
         <img src={exportIcon} className={styles.icons} alt='export' title='export a test file' />
       </button>
-
       <ExportFileModal isModalOpen={isModalOpen} closeModal={closeModal} />
-
-      <button className={styles.navBtn}>
-        <img
-          src={folderOpenIcon}
-          className={styles.icons}
-          alt='folderOpen'
-          title='open a new folder'
-        />
-      </button>
+      <OpenFolder />
       <button className={styles.navBtn}>
         <img src={saveIcon} className={styles.icons} alt='save' title='save the file' />
       </button>
@@ -64,7 +54,6 @@ const NavBar = () => {
         <img src={codeIcon} className={styles.icons} alt='browserview' title='browser view' />
       </button>
       <BrowserModal isBrowserModalOpen={isBrowserModalOpen} closeBrowserModal={closeBrowserModal} />
-
       {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>
   );
