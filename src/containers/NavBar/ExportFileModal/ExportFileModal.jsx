@@ -9,6 +9,7 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
+const beautify_html = remote.require('js-beautify').html;
 
 const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');
@@ -35,20 +36,26 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
       indent_size: 2,
       space_in_empty_paren: true,
     });
+    testFileCode = beautify_html(testFileCode, {
+      unformatted: true,
+    });
   };
 
   const addImportStatements = () => {
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
     import { build, fake } from 'test-data-bot'; 
-    import 'react-testing-library/cleanup-after-each'; \n`;
+    import 'react-testing-library/cleanup-after-each'; 
+    import 'jest-dom/extend-expect'
+    
+    \n`;
   };
 
   const addComponentImportStatement = () => {
     const renderStatement = testCase.statements[0];
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
     filePath = filePath.replace(/\\/g, '/');
-    testFileCode += `import ${renderStatement.componentName} from './${filePath}';`;
+    testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
   const addMockData = () => {
     mockData.forEach(mockDatum => {
@@ -115,10 +122,9 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const addRender = (render, methods) => {
     let props = createRenderProps(render);
     if (render.id === 0) {
-      testFileCode += `const { ${methods} } =
-                      render(<${render.componentName} ${props} />);`;
+      testFileCode += `const {${methods}} = render(<${render.componentName} ${props}/>);`;
     } else {
-      testFileCode += `rerender(<${render.componentName} ${props} />);`;
+      testFileCode += `rerender(<${render.componentName} ${props}/>);`;
     }
   };
 
