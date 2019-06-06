@@ -22,8 +22,8 @@ const RenderProp = ({ renderId, propId, propKey, propValue, dispatchToTestCase }
 
   return (
     <div id={styles.renderPropsFlexBox}>
-      <input type='text' id='propKey' onChange={handleChangeUpdatePropKey} />
-      <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
+      <input type='text' id='propKey' value={propKey} onChange={handleChangeUpdatePropKey} />
+      <input type='text' id='propValue' value={propValue} onChange={handleChangeUpdatePropValue} />
       <img src={minusIcon} alt='delete' onClick={handleClickDeleteProp} />
     </div>
   );

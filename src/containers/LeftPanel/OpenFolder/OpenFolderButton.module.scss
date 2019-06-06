@@ -1,0 +1,31 @@
+@import '../../../assets/stylesheets/colors.scss';
+
+.navBtn {
+  padding: 0;
+  border: 0;
+  margin-top: 15px;
+  margin-bottom: 40px;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+}
+
+.icons {
+  width: 28px;
+  height: 28px;
+}
+
+#openBtn {
+  margin-top: 10px;
+  padding-left: 1rem;
+  font-size: 12px;
+  text-align: left;
+  width: 250px;
+  height: 1.5rem;
+  color: $dark-gray;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
