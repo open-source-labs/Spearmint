@@ -20,13 +20,6 @@ const Editor = () => {
     editor.setTheme('light-dark');
   };
 
-  // const saveFile = () => {
-  //   // editor.onDidChangeContent = event => {
-  //   let value = editor.getValue();
-  //   console.log(value);
-  //   // };
-  // };
-
   return (
     <div>
       {isBrowserOpen && url ? null : (
