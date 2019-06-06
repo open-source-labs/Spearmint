@@ -10,7 +10,6 @@ const FileDirectory = ({ fileTree }) => {
   const [{ isFolderOpen, isFileHighlighted, projectFilePath }, dispatchToGlobal] = useContext(
     GlobalContext
   );
-
   const idx = projectFilePath.lastIndexOf('/');
   const projectName = projectFilePath.substring(idx + 1);
 
@@ -66,7 +65,7 @@ const FileDirectory = ({ fileTree }) => {
                     id={styles.folder}
                     src={ICON_MAP.folder}
                     alt='folder'
-                    onClick={() => handleClickToggleFolderView(file.filePath)}
+                    // onClick={() => handleClickToggleFolderView(file.filePath)}
                   />
                   {file.fileName}
                 </button>

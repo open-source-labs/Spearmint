@@ -58,13 +58,9 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const addComponentImportStatement = () => {
-    debugger;
     const renderStatement = testCase.statements[0];
-    console.log('pfp', projectFilePath);
-    console.log('rSfP', renderStatement.filePath);
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
     filePath = filePath.replace(/\\/g, '/');
-    console.log('relfp', filePath);
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
   const addMockData = () => {
@@ -148,24 +144,18 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {
       fs.mkdirSync(projectFilePath + '/__tests__');
     }
-    debugger;
     await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
       if (err) throw err;
     });
-    debugger;
-    displayTestFile(projectFilePath + '/__tests__/');
+    displayTestFile(projectFilePath + '/__tests__');
   };
 
   const displayTestFile = testFolderFilePath => {
-    const fileContent = fs.readFileSync(testFolderFilePath + `${fileName}.test.js`, 'utf8');
-    debugger;
+    const fileContent = fs.readFileSync(testFolderFilePath + `/${fileName}.test.js`, 'utf8');
     dispatchToGlobal(displayFileCode(fileContent));
-    debugger;
     dispatchToGlobal(loadProject('reload'));
-    debugger;
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
-    debugger;
-    dispatchToGlobal(highlightFile(fileName));
+    dispatchToGlobal(highlightFile(`${fileName}.test.js`));
   };
 
   return (
