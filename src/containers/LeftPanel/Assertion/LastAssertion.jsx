@@ -12,7 +12,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...assertion };
     field === 'isNot'
-      ? (updateAssertion[field] = !updatedAssertion.isNot)
+      ? (updatedAssertion[field] = !updatedAssertion.isNot)
       : (updatedAssertion[field] = e.target.value);
     dispatchToTestCase(updateAssertion(updatedAssertion));
   };
@@ -95,7 +95,6 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
           <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
         </div>
       </div>
-
       <div id={styles.matcherLabelFlexBox}>
         <div>
           <label htmlFor='matcher'>Matcher</label>

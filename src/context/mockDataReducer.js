@@ -97,6 +97,7 @@ export const mockDataReducer = (state, action) => {
         }
         return mockDatum;
       });
+
       return {
         ...state,
         mockData,

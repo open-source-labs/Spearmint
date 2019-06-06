@@ -19,6 +19,7 @@ export const testCaseState = {
       queryVariant: '',
       querySelector: '',
       queryValue: '',
+      isNot: false,
       matcherType: '',
       matcherValue: '',
       suggestions: [],

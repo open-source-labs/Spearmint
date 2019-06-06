@@ -38,6 +38,9 @@ const ProjectLoader = () => {
         { name: 'Html', extensions: ['html'] },
       ],
     });
+    const x = directory[0].lastIndexOf('/');
+    const projectName = directory[0].substring(x + 1);
+
     if (directory && directory[0]) {
       let directoryPath = directory[0];
       //replace backslashes for Windows OS
