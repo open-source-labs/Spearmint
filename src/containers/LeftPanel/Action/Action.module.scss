@@ -8,6 +8,10 @@
   letter-spacing: 0.5px;
 }
 
+#close {
+  float: right;
+}
+
 #actionHeader {
   @include box-header-alignment;
   justify-content: flex-start;
@@ -24,30 +28,24 @@
     padding: 0;
   }
 }
-#close {
-  float: right;
-}
-#eventType {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-#queryFlexBox {
-  display: flex;
-  align-items: center;
-}
 
 .queryLabel {
   margin-bottom: 5px;
   display: block;
 }
 
-#dropdownFlex {
+#queryFlexBox {
   display: flex;
   align-items: center;
   width: 100%;
 }
+
+#eventType {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
 #querySelector {
   select {
     font-family: $raleway;
@@ -60,6 +58,12 @@
     letter-spacing: 0.5px;
     color: $dark-gray;
   }
+}
+
+#dropdownFlex {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 #query {

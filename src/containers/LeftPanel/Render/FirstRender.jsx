@@ -1,27 +1,26 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styles from './Render.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import { setFilePath, setComponentName } from '../../../context/globalActions';
-import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
+import { TestCaseContext } from '../../../context/testCaseReducer';
+
+import {
+  deleteRender,
+  updateRenderComponent,
+  addRenderProp,
+} from '../../../context/testCaseActions';
 import RenderProp from './RenderProp';
 
 const plusIcon = require('../../../assets/images/plus.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const FirstRender = ({ render, dispatchToTestCase }) => {
-  const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
-  const handleClickDelete = e => {
-    e.stopPropagation();
-    dispatchToTestCase(deleteRender(render.id));
-  };
+const FirstRender = ({ render }) => {
+  const [{ filePathMap }, _] = useContext(GlobalContext);
+  const [{ statements }, dispatchToTestCase] = useContext(TestCaseContext);
 
   const handleChangeComponentName = e => {
-    dispatchToGlobal(setComponentName(e.target.value));
-    dispatchToTestCase(updateRender(render.id, e.target.value, filePath));
-    if (filePath) {
-      dispatchToGlobal(setFilePath(null));
-    }
+    const componentName = e.target.value;
+    dispatchToTestCase(updateRenderComponent(componentName, filePathMap[componentName]));
   };
 
   const handleToggleProps = () => {
@@ -30,6 +29,10 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
 
   const handleClickAddProp = () => {
     dispatchToTestCase(addRenderProp(render.id));
+  };
+
+  const handleClickDeleteRender = e => {
+    dispatchToTestCase(deleteRender(render.id));
   };
 
   const propsJSX = render.props.map(prop => {
@@ -48,7 +51,7 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
   return (
     <section id={styles.render}>
       {render.id !== 0 ? (
-        <img src={closeIcon} id={styles.closeBtn} alt='close' onClick={handleClickDelete} />
+        <img src={closeIcon} id={styles.closeBtn} alt='close' onClick={handleClickDeleteRender} />
       ) : (
         <p />
       )}
@@ -62,7 +65,7 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
           <input
             type='text'
             id={styles.renderInputBox}
-            value={componentName}
+            value={statements[0].componentName}
             onChange={handleChangeComponentName}
           />
         </div>

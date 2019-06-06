@@ -46,6 +46,7 @@ const TestCase = () => {
     if (result.destination.index === result.source.index) {
       return;
     }
+
     const reorderedStatements = reorder(
       draggableStatements,
       result.source.index,
