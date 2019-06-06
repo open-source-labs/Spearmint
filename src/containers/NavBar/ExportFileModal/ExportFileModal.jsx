@@ -31,7 +31,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     addImportStatements();
     addMockData();
     addTestStatements();
-    testFileCode += beautify(testFileCode, {
+    testFileCode = beautify(testFileCode, {
       indent_size: 2,
       space_in_empty_paren: true,
     });
@@ -46,10 +46,10 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const addComponentImportStatement = () => {
     const renderStatement = testCase.statements[0];
-    const filePath = path.relative(`/__tests__/${fileName}.test.js`, renderStatement.filePath);
-    testFileCode += `import ${renderStatement.componentName} from '${filePath}';`;
+    let filePath = path.relative(projectFilePath, renderStatement.filePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import ${renderStatement.componentName} from './${filePath}';`;
   };
-
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
@@ -117,7 +117,6 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
       testFileCode += `const { ${methods} } =
                       render(<${render.componentName} ${props} />);`;
     } else {
-      console.log(render, 'render in add render else conditional');
       testFileCode += `rerender(<${render.componentName} ${props} />);`;
     }
   };
