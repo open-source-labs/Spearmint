@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
+import { GlobalContext } from '../../../context/globalReducer';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
@@ -11,8 +12,10 @@ const beautify = remote.require('js-beautify');
 
 const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');
-  const [testCase, _] = useContext(TestCaseContext);
-  const [{ mockData }, __] = useContext(MockDataContext);
+  const [{ projectFilePath }, _] = useContext(GlobalContext);
+  const [testCase, __] = useContext(TestCaseContext);
+  const [{ mockData }, ___] = useContext(MockDataContext);
+
   let testFileCode = 'import React from "react";';
 
   const handleChangeFileName = e => {
@@ -28,7 +31,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     addImportStatements();
     addMockData();
     addTestStatements();
-    testFileCode += beautify(testFileCode, {
+    testFileCode = beautify(testFileCode, {
       indent_size: 2,
       space_in_empty_paren: true,
     });
@@ -38,22 +41,22 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
     import { build, fake } from 'test-data-bot'; 
-    import 'react-testing-library/cleanup-after-each';`;
+    import 'react-testing-library/cleanup-after-each'; \n`;
   };
 
   const addComponentImportStatement = () => {
-    const renderStatement = testCase.statements.find(statement => statement.type === 'render');
-    const filePath = path.relative(`/__tests__/${fileName}.test.js`, renderStatement.filePath);
-    testFileCode += `import ${renderStatement.componentName} from '${filePath}'`;
+    const renderStatement = testCase.statements[0];
+    let filePath = path.relative(projectFilePath, renderStatement.filePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import ${renderStatement.componentName} from './${filePath}';`;
   };
-
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
-      testFileCode += `mock${mockDatum.name} = build('${
-        mockDatum.name
-      }').fields({ ${fieldKeys} })();`;
+      testFileCode += `const mock${mockDatum.name.charAt(0).toUpperCase() +
+        mockDatum.name.slice(1)} = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
     });
+    testFileCode += '\n';
   };
 
   const createMockDatumFieldKeys = mockDatum => {
@@ -63,7 +66,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const addTestStatements = () => {
-    testFileCode += `test(${testCase.testStatement}), () => {`;
+    testFileCode += `test('${testCase.testStatement}', () => {`;
     const methods = identifyMethods();
     testCase.statements.forEach(statement => {
       switch (statement.type) {
@@ -82,36 +85,37 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const identifyMethods = () => {
     const methods = new Set([]);
-    testCase.statements.reduce(statement => {
-      if (statement === 'action' || statement === 'assertion') {
+    let renderCount = 0;
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'action' || statement.type === 'assertion') {
         methods.add(statement.queryVariant + statement.querySelector);
+      } else if (statement.type === 'render') {
+        renderCount++;
       }
     });
-    // if (testCase.hasRerender) methods.add('rerender');
-    return Array.from(methods).join();
+    if (renderCount > 1) methods.add('rerender');
+    return Array.from(methods).join(', ');
   };
 
   const addAction = action => {
     if (action.eventValue) {
       testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                      (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+                      ('${action.queryValue}'), { target: { value: ${action.eventValue} } });`;
     } else {
       testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                      (${action.queryValue}));`;
+                      ('${action.queryValue}'));`;
     }
   };
 
   const addAssertion = assertion => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
-                    (${assertion.assertionValue})).${assertion.matcherType}(${
-      assertion.matcherValue
-    })`;
+                    (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue})`;
   };
 
   const addRender = (render, methods) => {
     let props = createRenderProps(render);
-    if (!render.isRerender) {
-      testFileCode += `const { ${methods} } } =
+    if (render.id === 0) {
+      testFileCode += `const { ${methods} } =
                       render(<${render.componentName} ${props} />);`;
     } else {
       testFileCode += `rerender(<${render.componentName} ${props} />);`;
@@ -125,10 +129,10 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   };
 
   const exportTestFile = () => {
-    if (!fs.existsSync(path.join(__dirname, '../__tests__'))) {
-      fs.mkdirSync(path.join(__dirname, '../__tests__'));
+    if (!fs.existsSync(projectFilePath + '/__tests__')) {
+      fs.mkdirSync(projectFilePath + '/__tests__');
     }
-    fs.writeFile(path.join(__dirname, '../__tests__/beautifytest.js'), testFileCode, err => {
+    fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
       if (err) throw err;
     });
   };
