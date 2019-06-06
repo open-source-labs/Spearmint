@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from '../Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
 import ToolTip from '../ToolTip/ToolTip';
-
+import { MockDataContext } from '../../../context/mockDataReducer';
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Action = ({ action, index, dispatchToTestCase }) => {
+  const [{ mockData }, _] = useContext(MockDataContext);
   const handleChangeActionFields = (e, field) => {
     let updatedAction = { ...action };
     updatedAction[field] = e.target.value;
@@ -32,6 +33,24 @@ const Action = ({ action, index, dispatchToTestCase }) => {
     return eventsWithValues.includes(eventType);
   };
 
+  const dropDownMockOptions = [];
+  mockData.forEach(mockDatum => {
+    mockDatum.fieldKeys.forEach(key => {
+      dropDownMockOptions.push(`${mockDatum.name}.${key.fieldKey}`);
+    });
+    dropDownMockOptions.push(`${mockDatum.name}`);
+    dropDownMockOptions.push(`{${mockDatum.name}}`);
+    dropDownMockOptions.push(`[${mockDatum.name}]`);
+  });
+
+  let options = dropDownMockOptions.map(option => {
+    return (
+      <option id='eventValue' value={option}>
+        {option}
+      </option>
+    );
+  });
+
   return (
     <Draggable draggableId={action.id.toString()} index={index}>
       {provided => (
@@ -46,21 +65,29 @@ const Action = ({ action, index, dispatchToTestCase }) => {
             <img src={closeIcon} alt='close' onClick={handleClickDeleteAction} />
           </div>
           <label htmlFor='eventType'>Event Type</label>
+
           <AutoComplete
             statement={action}
             statementType='action'
             dispatchToTestCase={dispatchToTestCase}
           />
-          {needsEventValue(action.eventType) && (
+          {needsEventValue(action.eventType) && mockData.length > 0 ? (
             <span>
               <label htmlFor='eventValue' />
+              <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
+                <option id='eventValue' value='' />
+                {options}
+              </select>
+            </span>
+          ) : needsEventValue(action.eventType) ? (
+            <span>
               <input
                 type='text'
                 id='eventValue'
                 onChange={e => handleChangeActionFields(e, 'eventValue')}
               />
             </span>
-          )}
+          ) : null}
           <div id={styles.queryFlexBox}>
             <div id={styles.querySelector}>
               <label htmlFor='queryVariant'>Query Selector</label>

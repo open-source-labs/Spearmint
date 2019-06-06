@@ -23,7 +23,16 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
 
   const inputProps = {
     placeholder: statementType === 'action' ? 'Enter an event' : 'Enter a matcher',
-    value: statementType === 'action' ? statement.eventType : statement.matcherType,
+    // value: statementType === 'action' ? statement.eventType : statement.matcherType,
+    value:
+      statementType === 'action'
+        ? statement.eventType
+        : statementType === 'assertion'
+        ? statement.matcherType
+        : statementType === 'assertion' && updatedAssertion.isNot
+        ? `not.${statement.matcherType}`
+        : null,
+
     onChange: handleChangeValue,
   };
 
@@ -64,8 +73,17 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
       dispatchToTestCase(updateAssertion(updatedAssertion));
     }
   };
-  const getSuggestionValue = suggestion => suggestion.name;
-  const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
+
+  let getSuggestionValue;
+  updatedAssertion.isNot
+    ? (getSuggestionValue = suggestion => `not.${suggestion.name}`)
+    : (getSuggestionValue = suggestion => suggestion.name);
+
+  let renderSuggestion;
+
+  updatedAssertion.isNot
+    ? (renderSuggestion = suggestion => <div>not.{suggestion.name}</div>)
+    : (renderSuggestion = suggestion => <div>{suggestion.name}</div>);
 
   return (
     <AutoSuggest
