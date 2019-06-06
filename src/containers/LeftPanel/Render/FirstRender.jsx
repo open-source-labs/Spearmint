@@ -1,26 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styles from './Render.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import { setFilePath, setComponentName } from '../../../context/globalActions';
-import { deleteRender, updateRender, addRenderProp } from '../../../context/testCaseActions';
+import { TestCaseContext } from '../../../context/testCaseReducer';
+
+import {
+  deleteRender,
+  updateRenderComponent,
+  addRenderProp,
+} from '../../../context/testCaseActions';
 import RenderProp from './RenderProp';
 
-const closeIcon = require('../../../assets/images/close.png');
 const plusIcon = require('../../../assets/images/plus.png');
 
-const FirstRender = ({ render, dispatchToTestCase }) => {
-  const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
-  const handleClickDelete = e => {
-    e.stopPropagation();
-    dispatchToTestCase(deleteRender(render.id));
-  };
+const FirstRender = ({ render }) => {
+  const [{ filePathMap }, _] = useContext(GlobalContext);
+  const [{ statements }, dispatchToTestCase] = useContext(TestCaseContext);
 
   const handleChangeComponentName = e => {
-    dispatchToGlobal(setComponentName(e.target.value));
-    dispatchToTestCase(updateRender(render.id, e.target.value, filePath));
-    if (filePath) {
-      dispatchToGlobal(setFilePath(null));
-    }
+    const componentName = e.target.value;
+    dispatchToTestCase(updateRenderComponent(componentName, filePathMap[componentName]));
   };
 
   const handleToggleProps = () => {
@@ -54,7 +52,7 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
         <input
           type='text'
           id='render-input-box'
-          value={componentName}
+          value={statements[0].componentName}
           onChange={handleChangeComponentName}
         />
         <label htmlFor='render-checkbox'>Props</label>
@@ -67,7 +65,6 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
       </div>
       {propsJSX.length !== 0 && (
         <div id={styles.renderProp}>
-          {/* <div id={styles.propLabelHeader}> */}
           <label htmlFor='prop-key' id={styles.propKeyLabel}>
             Prop key
           </label>
@@ -76,10 +73,9 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
           </label>
           <br />
           <hr />
-          {/* </div> */}
           {propsJSX}
           <button onClick={handleClickAddProp} id={styles.addPropBtn}>
-            <img src={plusIcon} />
+            <img src={plusIcon} alt='add' />
             Add Prop
           </button>
         </div>

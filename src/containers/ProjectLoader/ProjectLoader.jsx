@@ -5,8 +5,8 @@ import {
   setProjectUrl,
   loadProject,
   createFileTree,
-  setProjectName,
   setProjectFilePath,
+  setFilePathMap,
 } from '../../context/globalActions';
 
 const { remote } = window.require('electron');
@@ -15,6 +15,7 @@ const { dialog } = remote;
 
 const ProjectLoader = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
+  const filePathMap = {};
 
   const addHttps = url => {
     if (!/^(f | ht)tps ? : \/\//i.test(url)) {
@@ -37,33 +38,43 @@ const ProjectLoader = () => {
         { name: 'Html', extensions: ['html'] },
       ],
     });
-    // const x = directory[0].lastIndexOf('/');
-    // const directoryName = directory[0].substring(x + 1);
     if (directory && directory[0]) {
-      dispatchToGlobal(setProjectFilePath(directory[0]));
+      let directoryPath = directory[0];
+      //replace backslashes for Windows OS
+      directoryPath = directoryPath.replace(/\\/g, '/');
+      dispatchToGlobal(setProjectFilePath(directoryPath));
       dispatchToGlobal(loadProject());
-      dispatchToGlobal(createFileTree(generateFileTreeObject(directory[0])));
+      dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
     }
   };
   //reads contents within the selected directory and checks if it is a file/folder
   const generateFileTreeObject = directoryPath => {
     const fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
+      //replace backslashes for Windows OS
+      directoryPath = directoryPath.replace(/\\/g, '/');
+      let filePath = `${directoryPath}/${fileName}`;
       const file = {
-        filePath: `${directoryPath}/${fileName}`,
+        filePath,
         fileName,
         files: [],
       };
-      //generateFileTreeObj will be recursively called if it is a folder
       const fileData = electronFs.statSync(file.filePath);
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (fileData.isDirectory()) {
           file.files = generateFileTreeObject(file.filePath);
+          file.files.forEach(file => {
+            let javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
+            let fileType = file.fileName.split('.')[1];
+            if (javaScriptFileTypes.includes(fileType)) {
+              let componentName = file.fileName.split('.')[0];
+              filePathMap[componentName] = file.filePath;
+            }
+          });
         }
       }
-
       return file;
     });
-
+    dispatchToGlobal(setFilePathMap(filePathMap));
     return fileArray;
   };
 

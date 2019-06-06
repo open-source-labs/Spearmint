@@ -86,7 +86,7 @@ const Action = ({ action, index, dispatchToTestCase }) => {
                 <option value='' />
                 <option value='LabelText'>LabelText</option>
                 <option value='PlaceholderText'>PlaceholderText</option>
-                <option value='ByText'>Text</option>
+                <option value='Text'>Text</option>
                 <option value='AltText'>AltText</option>
                 <option value='Title'>Title</option>
                 <option value='DisplayValue'>DisplayValue</option>
