@@ -31,6 +31,13 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
       'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
       'toHaveStyle', //takes in a sting value Ex: 'display: none'
       'toHaveTextContent', //takes in a string value Ex: 'Content'
+      'not.toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
+      'not.toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
+      'not.toHaveAttribute', //takes in a string Ex: 'type'
+      'not.toHaveClass', //takes in a string Ex: 'btn-link'
+      'not.toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
+      'not.toHaveStyle', //takes in a sting value Ex: 'display: none'
+      'not.toHaveTextContent', //takes in a string value Ex: 'Content'
     ];
     return matchersWithValues.includes(matcherType);
   };
