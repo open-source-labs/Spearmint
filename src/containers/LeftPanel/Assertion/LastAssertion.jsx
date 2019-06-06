@@ -4,14 +4,15 @@ import { deleteAssertion, updateAssertion } from '../../../context/testCaseActio
 import ToolTip from '../ToolTip/ToolTip';
 import AutoComplete from '../AutoComplete/AutoComplete';
 
-const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
+const closeIcon = require('../../../assets/images/close.png');
+const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...assertion };
     field === 'isNot'
-      ? (updateAssertion[field] = !updatedAssertion.isNot)
+      ? (updatedAssertion[field] = !updatedAssertion.isNot)
       : (updatedAssertion[field] = e.target.value);
     dispatchToTestCase(updateAssertion(updatedAssertion));
   };
@@ -33,75 +34,93 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
     return matchersWithValues.includes(matcherType);
   };
 
-  const style = { width: '15px', height: '15px' };
   return (
     <section id={styles.assertion}>
+      {!isLast && <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDelete} />}
       <div id={styles.assertionHeader}>
+        {!isLast && <img src={dragIcon} alt='drag' />}
         <h3>Assertion</h3>
-        {!isLast && <img src={minusIcon} style={style} alt='delete' onClick={handleClickDelete} />}
       </div>
-      <label htmlFor='queryVariant'>Query Selector</label>
-      <select id='queryVariant' onChange={e => handleChangeAssertionFields(e, 'queryVariant')}>
-        <option value='' />
-        <option value='getBy'>getBy</option>
-        <option value='getAllBy'>getAllBy</option>
-        <option value='queryBy'>queryBy</option>
-        <option value='queryAllBy'>queryAllBy</option>
-        <option value='findBy'>findBy</option>
-        <option value='findAllBy'>findAllBy</option>
-      </select>
-      <span id={styles.hastooltip} role='tooltip'>
-        <img src={questionIcon} alt='help' />
-        <span id={styles.tooltip}>
-          <ToolTip toolTipType={assertion.queryVariant} />
-        </span>
-      </span>
-      <select id='querySelector' onChange={e => handleChangeAssertionFields(e, 'querySelector')}>
-        <option value='' />
-        <option value='LabelText'>LabelText</option>
-        <option value='PlaceholderText'>PlaceholderText</option>
-        <option value='Text'>Text</option>
-        <option value='AltText'>AltText</option>
-        <option value='Title'>Title</option>
-        <option value='DisplayValue'>DisplayValue</option>
-        <option value='Role'>Role</option>
-        <option value='TestId'>TestId</option>
-        {/* TextMatch Precision & Normalization will be added */}
-      </select>
-      <span id={styles.hastooltip} role='tooltip'>
-        <img src={questionIcon} alt='help' />
-        <span id={styles.tooltip}>
-          <ToolTip toolTipType={assertion.querySelector} />
-        </span>
-      </span>
-      <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
-      <div id={styles.matcherFlexBox}>
-        <div id={styles.notSection}>
-          Not?
-          <input
-            type='checkbox'
-            id='matcher-checkbox'
-            onChange={e => handleChangeAssertionFields(e, 'isNot')}
-          />
-        </div>
-        <div id={styles.matcher}>
-          <label htmlFor='matcher'>Matcher</label>
-          <AutoComplete
-            statement={assertion}
-            statementType='assertion'
-            dispatchToTestCase={dispatchToTestCase}
-          />
-          {needsMatcherValue(assertion.matcherType) && (
-            <span>
-              <label htmlFor='matcherValue' />
-              <input
-                type='text'
-                id='matcherValue'
-                onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
-              />
+      <div id={styles.queryFlexBox}>
+        <div id={styles.querySelector}>
+          <label htmlFor='queryVariant' className={styles.queryLabel}>
+            Query Selector
+          </label>
+          <div id={styles.dropdownFlex}>
+            <select
+              id='queryVariant'
+              onChange={e => handleChangeAssertionFields(e, 'queryVariant')}
+            >
+              <option value='' />
+              <option value='getBy'>getBy</option>
+              <option value='getAllBy'>getAllBy</option>
+              <option value='queryBy'>queryBy</option>
+              <option value='queryAllBy'>queryAllBy</option>
+              <option value='findBy'>findBy</option>
+              <option value='findAllBy'>findAllBy</option>
+            </select>
+            <span id={styles.hastooltip} role='tooltip'>
+              <img src={questionIcon} alt='help' />
+              <span id={styles.tooltip}>
+                <ToolTip toolTipType={assertion.queryVariant} />
+              </span>
             </span>
-          )}
+            <select
+              id='querySelector'
+              onChange={e => handleChangeAssertionFields(e, 'querySelector')}
+            >
+              <option value='' />
+              <option value='LabelText'>LabelText</option>
+              <option value='PlaceholderText'>PlaceholderText</option>
+              <option value='Text'>Text</option>
+              <option value='AltText'>AltText</option>
+              <option value='Title'>Title</option>
+              <option value='DisplayValue'>DisplayValue</option>
+              <option value='Role'>Role</option>
+              <option value='TestId'>TestId</option>
+              {/* TextMatch Precision & Normalization will be added */}
+            </select>
+            <span id={styles.hastooltip} role='tooltip'>
+              <img src={questionIcon} alt='help' />
+              <span id={styles.tooltip}>
+                <ToolTip toolTipType={assertion.querySelector} />
+              </span>
+            </span>
+          </div>
         </div>
+        <div id={styles.query}>
+          <label htmlFor='queryValue' className={styles.queryLabel}>
+            Query
+          </label>
+          <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
+        </div>
+      </div>
+      <div id={styles.matcherLabelFlexBox}>
+        <div>
+          <label htmlFor='matcher'>Matcher</label>
+        </div>
+        <div>
+          Not?
+          <input type='checkbox' onClick={e => handleChangeAssertionFields(e, 'isNot')} />
+        </div>
+      </div>
+      <div id={styles.matcherFlexBox}>
+        <AutoComplete
+          statement={assertion}
+          statementType='assertion'
+          dispatchToTestCase={dispatchToTestCase}
+          className={styles.matcherInput}
+        />
+        {needsMatcherValue(assertion.matcherType) && (
+          <span>
+            <label htmlFor='matcherValue' />
+            <input
+              type='text'
+              className={styles.matcherInput}
+              onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+            />
+          </span>
+        )}
       </div>
     </section>
   );
