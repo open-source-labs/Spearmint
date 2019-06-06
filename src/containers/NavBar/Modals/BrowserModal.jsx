@@ -38,9 +38,11 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
         <p>Enter the URL</p>
         <input type='text' id={styles.url} onChange={handleClickUrl} />
         <button id={styles.save} onClick={closeBrowserModal}>
+          Cancel
+        </button>
+        <button id={styles.save} onClick={closeBrowserModal}>
           Open
         </button>
-        <button onClick={closeBrowserModal}>Cancel</button>
       </div>
     </ReactModal>
   );

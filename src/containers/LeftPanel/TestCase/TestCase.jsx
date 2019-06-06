@@ -69,7 +69,7 @@ const TestCase = () => {
   return (
     <div>
       <div id='head'>
-        <TestMenu dispatchToTestCase={dispatchToTestCase} />
+        <TestMenu dispatchToTestCase={dispatchToTestCase} dispatchToMockData={dispatchToMockData} />
       </div>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
