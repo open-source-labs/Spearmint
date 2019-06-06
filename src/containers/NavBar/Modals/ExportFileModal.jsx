@@ -25,6 +25,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const handleClickSave = () => {
     generateTestFile();
     exportTestFile();
+    closeModal();
   };
 
   const generateTestFile = () => {
@@ -158,7 +159,9 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
         <button id={styles.save} onClick={handleClickSave}>
           Save
         </button>
-        <button onClick={closeModal}>Cancel</button>
+        <button id={styles.save} onClick={closeModal}>
+          Cancel
+        </button>
       </div>
     </ReactModal>
   );

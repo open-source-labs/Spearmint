@@ -2,20 +2,16 @@
 
 #renderPropsFlexBox {
   display: flex;
-  margin-left: 5px;
+  // margin-left: px;
   justify-content: center;
+  align-items: center;
 
-  label {
-    display: block;
-  }
-  img {
-    width: 18px;
-    height: 24px;
-    align-self: flex-end;
-    padding-bottom: 5px;
-  }
+  // label {
+  //   display: block;
+  // }
+
   input {
     width: 45%;
-    margin: 0 7px 0 7px;
+    margin: 0 10px 5px 0px;
   }
 }

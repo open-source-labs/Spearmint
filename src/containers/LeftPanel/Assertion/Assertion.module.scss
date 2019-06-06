@@ -4,14 +4,65 @@
 
 #assertion {
   @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+}
 
-  select {
-    margin-left: 5px;
-  }
+#close {
+  float: right;
 }
 
 #assertionHeader {
   @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+.queryLabel {
+  margin-bottom: 5px;
+  display: block;
+}
+
+#queryFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#querySelector {
+  select {
+    font-family: $raleway;
+    width: 160px;
+    height: 25px;
+    margin: 0 3px 0 6px;
+    background-color: white;
+    border: 1px solid $light-gray;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: $dark-gray;
+  }
+}
+
+#dropdownFlex {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#query {
+  input {
+    width: 95%;
+  }
 }
 
 #hastooltip {
@@ -24,38 +75,29 @@
   box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
   @include tooltip;
 }
-#querySelectorHeader {
-  display: block;
-}
 
-#querySelectorInput {
-  width: 35%;
+#matcherLabelFlexBox {
+  display: flex;
+  div {
+    font-size: 12px;
+  }
+  justify-content: space-between;
+  width: 185px;
+  align-items: center;
+  margin-bottom: 8px;
 }
-
 #matcherFlexBox {
   display: flex;
+  justify-content: flex-start;
+  width: 140px;
+  align-items: center;
 }
 
-#notSection {
-  font-size: 12px;
-  align-self: flex-end;
-  margin-bottom: 5px;
-  padding-left: 5px;
-  input {
-    margin: 5px;
-  }
+.matcherInput {
+  // margin-left: 5px;
+  width: 158px;
 }
 
-#matcher,
-#matcherVal {
-  margin-top: 5px;
-
-  label,
-  input {
-    display: block;
-  }
-  input {
-    width: 20em;
-    margin: 0 5px;
-  }
+#lastAssertion {
+  padding: 15px;
 }

@@ -1,47 +1,49 @@
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../assets/stylesheets/colors.scss';
 
-#testCase {
-  padding-bottom: 25px;
+div {
+  font-size: 13px;
+  vertical-align: middle;
+}
+#head {
+  position: fixed;
+  z-index: 9999;
+}
 
-  section {
-    padding: 5px;
-  }
+// body {
+// position: absolute;
+// top: 100px;
+// }
+
+#testCaseHeader {
+  margin: 15px 25px 15px 15px;
 }
 
 #testStatement {
-  margin: 5px;
-  width: 60%;
-}
-
-#testCaseHeader {
-  padding-left: 5%;
-}
-
-#mockDataCheckbox {
-  font-size: 12px;
-}
-
-#testMockSection {
-  margin-bottom: 40px;
+  margin-left: 15px;
+  width: 92%;
 }
 
 #mockHeader {
   float: right;
-  padding: 2% 2%;
-  margin-bottom: 15px;
-  label {
-    margin: 7px;
-  }
+  margin: 5px 26px;
+}
+
+#checkboxLabel {
+  margin: 10px;
+}
+
+#testMockSection {
+  margin-bottom: 50px;
 }
 
 #mockDataHeader {
-  padding: 0 5%;
+  padding: 0 2%;
   label {
-    margin-top: 5px;
-    font-size: 13px;
+    margin: 5px;
+    vertical-align: middle;
   }
   img {
-    width: 18px;
+    width: 15px;
   }
 }

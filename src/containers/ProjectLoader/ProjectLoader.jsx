@@ -1,21 +1,11 @@
 import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/globalReducer';
-import {
-  setProjectUrl,
-  loadProject,
-  createFileTree,
-  setProjectFilePath,
-  setFilePathMap,
-} from '../../context/globalActions';
-
-const { remote } = window.require('electron');
-const electronFs = remote.require('fs');
-const { dialog } = remote;
+import OpenFolder from '../LeftPanel/OpenFolder/OpenFolderButton';
+import { setProjectUrl } from '../../context/globalActions';
 
 const ProjectLoader = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
-  const filePathMap = {};
 
   const addHttps = url => {
     if (!/^(f | ht)tps ? : \/\//i.test(url)) {
@@ -27,55 +17,6 @@ const ProjectLoader = () => {
   const handleChangeUrl = e => {
     const testSiteURL = addHttps(e.target.value);
     dispatchToGlobal(setProjectUrl(testSiteURL));
-  };
-
-  const handleOpenFolder = () => {
-    const directory = dialog.showOpenDialog({
-      properties: ['openDirectory'],
-      filters: [
-        { name: 'Javascript Files', extensions: ['js', 'jsx'] },
-        { name: 'Style', extensions: ['css'] },
-        { name: 'Html', extensions: ['html'] },
-      ],
-    });
-    if (directory && directory[0]) {
-      let directoryPath = directory[0];
-      //replace backslashes for Windows OS
-      directoryPath = directoryPath.replace(/\\/g, '/');
-      dispatchToGlobal(setProjectFilePath(directoryPath));
-      dispatchToGlobal(loadProject());
-      dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
-    }
-  };
-  //reads contents within the selected directory and checks if it is a file/folder
-  const generateFileTreeObject = directoryPath => {
-    const fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
-      //replace backslashes for Windows OS
-      directoryPath = directoryPath.replace(/\\/g, '/');
-      let filePath = `${directoryPath}/${fileName}`;
-      const file = {
-        filePath,
-        fileName,
-        files: [],
-      };
-      const fileData = electronFs.statSync(file.filePath);
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
-        if (fileData.isDirectory()) {
-          file.files = generateFileTreeObject(file.filePath);
-          file.files.forEach(file => {
-            let javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
-            let fileType = file.fileName.split('.')[1];
-            if (javaScriptFileTypes.includes(fileType)) {
-              let componentName = file.fileName.split('.')[0];
-              filePathMap[componentName] = file.filePath;
-            }
-          });
-        }
-      }
-      return file;
-    });
-    dispatchToGlobal(setFilePathMap(filePathMap));
-    return fileArray;
   };
 
   return (
@@ -95,7 +36,7 @@ const ProjectLoader = () => {
         </svg>
       </section>
       <section id={styles.lowerPart}>
-        <h3 id={styles.subText}>A simple way to test your React app </h3>
+        <h3 id={styles.subText}>An easier way to write React tests </h3>
         <div id={styles.appBox}>
           <div className={styles.contentBox}>
             <span className={styles.number}>01</span>
@@ -110,9 +51,7 @@ const ProjectLoader = () => {
           <div className={styles.contentBox}>
             <span className={styles.number}>02</span>
             <span className={styles.text}>Select your application</span> <br />
-            <button id={styles.openBtn} onClick={handleOpenFolder}>
-              Open Folder
-            </button>
+            <OpenFolder />
           </div>
         </div>
       </section>

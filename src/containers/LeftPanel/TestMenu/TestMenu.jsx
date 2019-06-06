@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import { addAction, addAssertion, addRender } from '../../../context/testCaseActions';
+import {
+  addAction,
+  addAssertion,
+  addRender,
+  createNewTest,
+} from '../../../context/testCaseActions';
 
 const TestMenu = ({ dispatchToTestCase }) => {
   const handleAddAction = e => {
@@ -12,11 +17,14 @@ const TestMenu = ({ dispatchToTestCase }) => {
   const handleAddRender = e => {
     dispatchToTestCase(addRender());
   };
+  const handleNewTest = e => {
+    dispatchToTestCase(createNewTest());
+  };
 
   return (
     <div id={styles.testMenu}>
       <div id={styles.left}>
-        <button onClick={handleAddAction}>New Test +</button>
+        <button onClick={handleNewTest}>New Test +</button>
       </div>
       <div id={styles.right}>
         <button onClick={handleAddAction}>Action</button>

@@ -1,14 +1,10 @@
 import React from 'react';
 import styles from '../Render/RenderProp.module.scss';
-import {
-  deleteRenderProp,
-  updateRenderProp,
-} from '../../../context/testCaseActions';
+import { deleteRenderProp, updateRenderProp } from '../../../context/testCaseActions';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
-const plusIcon = require('../../../assets/images/plus.png');
 
-const RenderProp = ({  renderId, propId, propKey, propValue, dispatchToTestCase }) => {
+const RenderProp = ({ renderId, propId, propKey, propValue, dispatchToTestCase }) => {
   const handleClickDeleteProp = e => {
     e.stopPropagation();
     dispatchToTestCase(deleteRenderProp(renderId, propId));
@@ -26,8 +22,8 @@ const RenderProp = ({  renderId, propId, propKey, propValue, dispatchToTestCase 
 
   return (
     <div id={styles.renderPropsFlexBox}>
-      <input type='text' id='propKey' onChange={handleChangeUpdatePropKey} />
-      <input type='text' id='propValue' onChange={handleChangeUpdatePropValue} />
+      <input type='text' id='propKey' value={propKey} onChange={handleChangeUpdatePropKey} />
+      <input type='text' id='propValue' value={propValue} onChange={handleChangeUpdatePropValue} />
       <img src={minusIcon} alt='delete' onClick={handleClickDeleteProp} />
     </div>
   );

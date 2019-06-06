@@ -9,7 +9,7 @@
   height: 100vh;
   margin-top: -415px;
   margin-left: 270px;
-  font-size: 13px;
+  font-size: 12px;
   background-color: white;
   overflow: scroll;
   border-right: 1px dotted $mint;
@@ -39,6 +39,7 @@
   width: 18px;
   height: 18px;
   margin-right: 6px;
+  float: left;
 }
 #folder {
   margin-right: 6px;

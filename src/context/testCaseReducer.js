@@ -19,6 +19,7 @@ export const testCaseState = {
       queryVariant: '',
       querySelector: '',
       queryValue: '',
+      isNot: false,
       matcherType: '',
       matcherValue: '',
       suggestions: [],
@@ -70,7 +71,7 @@ export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
   let lastAssertionStatement;
-
+  console.log(state);
   switch (action.type) {
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       const firstRenderStatement = statements[0];
@@ -217,6 +218,29 @@ export const testCaseReducer = (state, action) => {
       return {
         ...state,
         statements,
+      };
+    case actionTypes.CREATE_NEW_TEST:
+      return {
+        testStatement: '',
+        statements: [
+          {
+            id: 0,
+            type: 'render',
+            componentName: '',
+            filePath: '',
+            props: [],
+          },
+          {
+            id: 1,
+            type: 'assertion',
+            queryVariant: '',
+            querySelector: '',
+            queryValue: '',
+            matcherType: '',
+            matcherValue: '',
+            suggestions: [],
+          },
+        ],
       };
     default:
       return state;
