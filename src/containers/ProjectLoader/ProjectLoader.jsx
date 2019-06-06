@@ -1,21 +1,11 @@
 import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/globalReducer';
-import {
-  setProjectUrl,
-  loadProject,
-  createFileTree,
-  setProjectName,
-  setProjectFilePath,
-} from '../../context/globalActions';
-
-const { remote } = window.require('electron');
-const electronFs = remote.require('fs');
-const { dialog } = remote;
+import OpenFolder from '../LeftPanel/OpenFolder/OpenFolder';
+import { setProjectUrl } from '../../context/globalActions';
 
 const ProjectLoader = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
-
   const addHttps = url => {
     if (!/^(f | ht)tps ? : \/\//i.test(url)) {
       url = 'https://' + url;
@@ -26,45 +16,6 @@ const ProjectLoader = () => {
   const handleChangeUrl = e => {
     const testSiteURL = addHttps(e.target.value);
     dispatchToGlobal(setProjectUrl(testSiteURL));
-  };
-
-  const handleOpenFolder = () => {
-    const directory = dialog.showOpenDialog({
-      properties: ['openDirectory'],
-      filters: [
-        { name: 'Javascript Files', extensions: ['js', 'jsx'] },
-        { name: 'Style', extensions: ['css'] },
-        { name: 'Html', extensions: ['html'] },
-      ],
-    });
-    // const x = directory[0].lastIndexOf('/');
-    // const directoryName = directory[0].substring(x + 1);
-    if (directory && directory[0]) {
-      dispatchToGlobal(setProjectFilePath(directory[0]));
-      dispatchToGlobal(loadProject());
-      dispatchToGlobal(createFileTree(generateFileTreeObject(directory[0])));
-    }
-  };
-  //reads contents within the selected directory and checks if it is a file/folder
-  const generateFileTreeObject = directoryPath => {
-    const fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
-      const file = {
-        filePath: `${directoryPath}/${fileName}`,
-        fileName,
-        files: [],
-      };
-      //generateFileTreeObj will be recursively called if it is a folder
-      const fileData = electronFs.statSync(file.filePath);
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
-        if (fileData.isDirectory()) {
-          file.files = generateFileTreeObject(file.filePath);
-        }
-      }
-
-      return file;
-    });
-
-    return fileArray;
   };
 
   return (
@@ -99,9 +50,7 @@ const ProjectLoader = () => {
           <div className={styles.contentBox}>
             <span className={styles.number}>02</span>
             <span className={styles.text}>Select your application</span> <br />
-            <button id={styles.openBtn} onClick={handleOpenFolder}>
-              Open Folder
-            </button>
+            <OpenFolder />
           </div>
         </div>
       </section>

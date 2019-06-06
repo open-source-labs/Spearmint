@@ -85,7 +85,6 @@ export const globalReducer = (state, action) => {
     //   }
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
-      console.log('filed highlighted', isFileHighlighted);
       return {
         ...state,
         isFileHighlighted,

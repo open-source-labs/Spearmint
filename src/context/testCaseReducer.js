@@ -71,6 +71,8 @@ export const testCaseReducer = (state, action) => {
   let statements = [...state.statements];
   let lastAssertionStatement;
   switch (action.type) {
+    case actionTypes.CREATE_NEW_TEST:
+      return testCaseState;
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       const firstRenderStatement = statements[0];
       lastAssertionStatement = statements[statements.length - 1];

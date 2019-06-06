@@ -1,4 +1,6 @@
 export const actionTypes = {
+  CREATE_NEW_TEST: 'NEW_TEST',
+
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
 
@@ -18,6 +20,10 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 };
+
+export const createNewTest = () => ({
+  type: actionTypes.CREATE_NEW_TEST,
+});
 
 export const updateStatementsOrder = draggableStatements => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
@@ -54,7 +60,7 @@ export const updateAction = ({
   queryVariant,
   querySelector,
   queryValue,
-  suggestions
+  suggestions,
 });
 
 export const addAssertion = () => ({
@@ -84,7 +90,7 @@ export const updateAssertion = ({
   isNot,
   matcherType,
   matcherValue,
-  suggestions
+  suggestions,
 });
 
 export const addRender = () => ({

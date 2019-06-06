@@ -4,10 +4,10 @@ import { GlobalContext } from '../../context/globalReducer';
 import { toggleBrowser, toggleFileDirectory } from '../../context/globalActions';
 import FileDirectory from './FileDirectory/FileDirectory';
 import ExportFileModal from './ExportFileModal/ExportFileModal';
+import OpenFolder from '../LeftPanel/OpenFolder/OpenFolder';
 
 const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');
-const folderOpenIcon = require('../../assets/images/folder-open.png');
 const saveIcon = require('../../assets/images/content-save-outline.png');
 const codeIcon = require('../../assets/images/google-chrome.png');
 
@@ -42,14 +42,8 @@ const NavBar = () => {
 
       <ExportFileModal isModalOpen={isModalOpen} closeModal={closeModal} />
 
-      <button className={styles.navBtn}>
-        <img
-          src={folderOpenIcon}
-          className={styles.icons}
-          alt='folderOpen'
-          title='open a new folder'
-        />
-      </button>
+      <OpenFolder />
+
       <button className={styles.navBtn}>
         <img src={saveIcon} className={styles.icons} alt='save' title='save the file' />
       </button>
