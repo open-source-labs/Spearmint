@@ -65,7 +65,6 @@ const FirstRender = ({ render }) => {
       </div>
       {propsJSX.length !== 0 && (
         <div id={styles.renderProp}>
-          {/* <div id={styles.propLabelHeader}> */}
           <label htmlFor='prop-key' id={styles.propKeyLabel}>
             Prop key
           </label>
@@ -74,7 +73,6 @@ const FirstRender = ({ render }) => {
           </label>
           <br />
           <hr />
-          {/* </div> */}
           {propsJSX}
           <button onClick={handleClickAddProp} id={styles.addPropBtn}>
             <img src={plusIcon} alt='add' />

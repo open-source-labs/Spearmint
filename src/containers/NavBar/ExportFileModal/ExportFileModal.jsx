@@ -41,7 +41,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
     import { build, fake } from 'test-data-bot'; 
-    import 'react-testing-library/cleanup-after-each';`;
+    import 'react-testing-library/cleanup-after-each'; \n`;
   };
 
   const addComponentImportStatement = () => {
@@ -56,6 +56,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
       testFileCode += `const mock${mockDatum.name.charAt(0).toUpperCase() +
         mockDatum.name.slice(1)} = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
     });
+    testFileCode += '\n';
   };
 
   const createMockDatumFieldKeys = mockDatum => {
