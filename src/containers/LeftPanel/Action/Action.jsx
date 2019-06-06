@@ -7,6 +7,7 @@ import ToolTip from '../ToolTip/ToolTip';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
+const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Action = ({ action, index, dispatchToTestCase }) => {
   const handleChangeActionFields = (e, field) => {
@@ -41,9 +42,10 @@ const Action = ({ action, index, dispatchToTestCase }) => {
           {...provided.dragHandleProps}
           id={styles.action}
         >
+          <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAction} />
           <div id={styles.actionHeader}>
+            <img src={dragIcon} alt='drag' />
             <h3>Action</h3>
-            <img src={closeIcon} alt='close' onClick={handleClickDeleteAction} />
           </div>
           <div id={styles.eventType}>
             <label htmlFor='eventType'>Event Type</label>

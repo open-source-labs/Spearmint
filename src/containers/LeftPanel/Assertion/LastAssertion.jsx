@@ -6,6 +6,7 @@ import AutoComplete from '../AutoComplete/AutoComplete';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
+const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   const handleChangeAssertionFields = (e, field) => {
@@ -33,12 +34,12 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
     return matchersWithValues.includes(matcherType);
   };
 
-  const style = { width: '15px', height: '15px' };
   return (
     <section id={styles.assertion}>
+      {!isLast && <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDelete} />}
       <div id={styles.assertionHeader}>
+        {!isLast && <img src={dragIcon} alt='drag' />}
         <h3>Assertion</h3>
-        {!isLast && <img src={closeIcon} style={style} alt='close' onClick={handleClickDelete} />}
       </div>
       <div id={styles.queryFlexBox}>
         <div id={styles.querySelector}>

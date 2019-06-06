@@ -10,8 +10,23 @@
 
 #actionHeader {
   @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
 }
-
+#close {
+  float: right;
+}
 #eventType {
   display: flex;
   align-items: center;
@@ -49,7 +64,7 @@
 
 #query {
   input {
-    width: 138%;
+    width: 95%;
   }
 }
 

@@ -59,7 +59,7 @@
 }
 
 @mixin box-header-alignment {
-  margin-bottom: 6%;
+  margin-bottom: 12px;
 
   h3 {
     float: left;
@@ -84,6 +84,7 @@
   bottom: 100%;
   margin-bottom: $tooltip-arrow-length;
   background-color: $light-gray3;
+  border: $mint solid 1px;
   font-size: 10px;
   text-align: left;
   line-height: 12px;
@@ -107,7 +108,7 @@
     width: 0;
     height: 0;
     // Draw a triangle.
-    border-top: ($tooltip-arrow-length - $tooltip-border-width) solid $light-gray2;
+    border-top: ($tooltip-arrow-length - $tooltip-border-width) solid $mint;
     border-left: ($tooltip-arrow-base / 2 - $tooltip-border-width) solid transparent;
     border-right: ($tooltip-arrow-base / 2 - $tooltip-border-width) solid transparent;
     // Center the triangle.
@@ -116,10 +117,6 @@
   &::before {
     content: '';
     position: absolute;
-    top: 100%;
-    left: 50%;
-    width: 0;
-    height: 0;
     // Draw another triangle to simulate a border.
     border-top: $tooltip-arrow-length solid $tooltip-border-color;
     border-left: ($tooltip-arrow-base / 2) solid transparent;

@@ -7,6 +7,7 @@ import RenderProp from './RenderProp';
 
 const plusIcon = require('../../../assets/images/plus.png');
 const closeIcon = require('../../../assets/images/close.png');
+const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const FirstRender = ({ render, dispatchToTestCase }) => {
   const [{ filePath, componentName }, dispatchToGlobal] = useContext(GlobalContext);
@@ -52,6 +53,7 @@ const FirstRender = ({ render, dispatchToTestCase }) => {
         <p />
       )}
       <div id={styles.renderHeader}>
+        {render.id !== 0 ? <img src={dragIcon} alt='drag' /> : <p />}
         <h3>{render.id === 0 ? 'Render' : 'Rerender'}</h3>
       </div>
       <div id={styles.renderBody}>

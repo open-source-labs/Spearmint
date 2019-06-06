@@ -8,6 +8,10 @@
   letter-spacing: 0.5px;
 }
 
+#close {
+  float: right;
+}
+
 .queryLabel {
   margin-bottom: 5px;
   display: block;
@@ -41,12 +45,25 @@
 
 #query {
   input {
-    width: 138%;
+    width: 95%;
   }
 }
 
 #assertionHeader {
   @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 #hastooltip {

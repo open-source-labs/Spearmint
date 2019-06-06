@@ -76,15 +76,8 @@ export const globalReducer = (state, action) => {
         ...state,
         isFolderOpen,
       };
-    // case actionTypes.SET_DEFAULT_FILE_HIGHLIGHTING:
-    //   isFileHighlighted[action.fileName] = false;
-    //   return {
-    //     ...state,
-    //     isFileHighlighted,
-    //   }
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
-      console.log(isFileHighlighted);
       return {
         ...state,
         isFileHighlighted,
