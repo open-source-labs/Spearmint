@@ -20,7 +20,8 @@ const FirstRender = ({ render }) => {
 
   const handleChangeComponentName = e => {
     const componentName = e.target.value;
-    dispatchToTestCase(updateRenderComponent(componentName, filePathMap[componentName]));
+    const filePath = filePathMap[componentName] || '';
+    dispatchToTestCase(updateRenderComponent(componentName, filePath));
   };
 
   const handleToggleProps = () => {

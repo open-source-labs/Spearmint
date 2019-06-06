@@ -1,7 +1,12 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import { GlobalContext } from '../../../context/globalReducer';
-import { displayFileCode, highlightFile } from '../../../context/globalActions';
+import {
+  displayFileCode,
+  loadProject,
+  toggleFolderView,
+  highlightFile,
+} from '../../../context/globalActions';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
@@ -142,13 +147,15 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
       if (err) throw err;
     });
-    displayTestFile();
+    displayTestFile(projectFilePath + '/__tests__');
   };
 
-  const displayTestFile = () => {
-    const fileContent = fs.readFileSync(projectFilePath + `/__tests__/${fileName}.test.js`, 'utf8');
+  const displayTestFile = testFolderFilePath => {
+    const fileContent = fs.readFileSync(testFolderFilePath + `/${fileName}.test.js`, 'utf8');
     dispatchToGlobal(displayFileCode(fileContent));
-    dispatchToGlobal(highlightFile(fileName));
+    dispatchToGlobal(loadProject('reload'));
+    dispatchToGlobal(toggleFolderView(testFolderFilePath));
+    dispatchToGlobal(highlightFile(`${fileName}.test.js`));
   };
 
   return (
@@ -159,6 +166,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
       contentLabel='Save testing file'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      ariaHideApp={false}
     >
       <div id={styles.title}>
         <p>Convert to Javascript Code</p>

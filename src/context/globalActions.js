@@ -18,8 +18,9 @@ export const setProjectUrl = url => ({
   url,
 });
 
-export const loadProject = () => ({
+export const loadProject = (load) => ({
   type: actionTypes.LOAD_PROJECT,
+  load,
 });
 
 export const createFileTree = fileTree => ({

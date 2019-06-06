@@ -10,14 +10,8 @@ const FileDirectory = ({ fileTree }) => {
   const [{ isFolderOpen, isFileHighlighted, projectFilePath }, dispatchToGlobal] = useContext(
     GlobalContext
   );
-
   const idx = projectFilePath.lastIndexOf('/');
   const projectName = projectFilePath.substring(idx + 1);
-  const handleDisplayFileCode = filePath => {
-    console.log(filePath);
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    dispatchToGlobal(displayFileCode(fileContent));
-  };
 
   const ICON_MAP = {
     '.html': 'https://img.icons8.com/small/16/000000/html.png',
@@ -43,6 +37,11 @@ const FileDirectory = ({ fileTree }) => {
     }
   };
 
+  const handleDisplayFileCode = filePath => {
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    dispatchToGlobal(displayFileCode(fileContent));
+  };
+
   const handleClickToggleFolderView = filePath => {
     dispatchToGlobal(toggleFolderView(filePath));
   };
@@ -66,7 +65,7 @@ const FileDirectory = ({ fileTree }) => {
                     id={styles.folder}
                     src={ICON_MAP.folder}
                     alt='folder'
-                    onClick={() => handleClickToggleFolderView(file.filePath)}
+                    // onClick={() => handleClickToggleFolderView(file.filePath)}
                   />
                   {file.fileName}
                 </button>
