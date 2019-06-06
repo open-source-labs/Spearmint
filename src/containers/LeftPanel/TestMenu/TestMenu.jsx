@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import {
-  addAction,
-  addAssertion,
-  addRender,
-  createNewTest,
-} from '../../../context/testCaseActions';
+import { addAction, addAssertion, addRender } from '../../../context/testCaseActions';
 
-const TestMenu = ({ dispatchToTestCase }) => {
+import NewTestModal from '../Modals/NewTestModal';
+
+const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const handleAddAction = e => {
     dispatchToTestCase(addAction());
   };
@@ -17,14 +24,17 @@ const TestMenu = ({ dispatchToTestCase }) => {
   const handleAddRender = e => {
     dispatchToTestCase(addRender());
   };
-  const handleNewTest = e => {
-    dispatchToTestCase(createNewTest());
-  };
 
   return (
     <div id={styles.testMenu}>
       <div id={styles.left}>
-        <button onClick={handleNewTest}>New Test +</button>
+        <button onClick={openModal}>New Test +</button>
+        <NewTestModal
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          dispatchToMockData={dispatchToMockData}
+          dispatchToTestCase={dispatchToTestCase}
+        />
       </div>
       <div id={styles.right}>
         <button onClick={handleAddAction}>Action</button>
