@@ -67,8 +67,18 @@
   }
 }
 
+#text {
+  margin: 12px;
+  text-align: center;
+}
+
 #save:hover {
   background-color: rgb(232, 232, 232);
   color: $mint;
   border-radius: 3px;
+}
+
+#newTestButtons {
+  display: flex;
+  justify-content: center;
 }

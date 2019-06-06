@@ -169,11 +169,11 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
       <div id={styles.body}>
         <p>File Name</p>
         <input type='text' value={fileName} onChange={handleChangeFileName} />
-        <button id={styles.save} onClick={handleClickSave}>
-          Save
-        </button>
         <button id={styles.save} onClick={closeModal}>
           Cancel
+        </button>
+        <button id={styles.save} onClick={handleClickSave}>
+          Save
         </button>
       </div>
     </ReactModal>

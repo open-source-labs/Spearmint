@@ -7,6 +7,8 @@ export const actionTypes = {
   ADD_MOCK_DATA_KEY: 'ADD_MOCK_DATA_KEY',
   DELETE_MOCK_DATA_KEY: 'DELETE_MOCK_DATA_KEY',
   UPDATE_MOCK_DATA_KEY: 'UPDATE_MOCK_DATA_KEY',
+
+  CLEAR_MOCK_DATA: 'CLEAR_MOCK_DATA',
 };
 
 export const toggleMockData = () => ({
@@ -45,4 +47,8 @@ export const updateMockDataKey = (mockDatumId, mockDatumKeyId, fieldKey, fieldTy
   mockDatumKeyId,
   fieldKey,
   fieldType,
+});
+
+export const clearMockData = () => ({
+  type: actionTypes.CLEAR_MOCK_DATA,
 });
