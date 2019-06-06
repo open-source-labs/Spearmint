@@ -65,7 +65,12 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
     }
   };
   const getSuggestionValue = suggestion => suggestion.name;
-  const renderSuggestion = suggestion => <div>{suggestion.name}</div>;
+  let renderSuggestion;
+  if (updateAssertion && updateAssertion.isNot) {
+    renderSuggestion = suggestion => <div>not.{suggestion.name}</div>;
+  } else {
+    renderSuggestion = suggestion => <div>{suggestion.name}</div>;
+  }
 
   return (
     <AutoSuggest

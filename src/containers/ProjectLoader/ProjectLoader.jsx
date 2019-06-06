@@ -95,7 +95,7 @@ const ProjectLoader = () => {
         </svg>
       </section>
       <section id={styles.lowerPart}>
-        <h3 id={styles.subText}>A simple way to test your React app </h3>
+        <h3 id={styles.subText}>An easier way to wrtie React tests </h3>
         <div id={styles.appBox}>
           <div className={styles.contentBox}>
             <span className={styles.number}>01</span>
