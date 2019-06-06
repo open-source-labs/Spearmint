@@ -32,9 +32,9 @@ const OpenFolder = () => {
       let directoryPath = directory[0];
       //replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
-      dispatchToGlobal(setProjectFilePath(directory[0]));
+      dispatchToGlobal(setProjectFilePath(directoryPath));
       dispatchToGlobal(loadProject());
-      dispatchToGlobal(createFileTree(generateFileTreeObject(directory[0])));
+      dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
     }
   };
 

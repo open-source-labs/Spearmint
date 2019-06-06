@@ -13,8 +13,9 @@ const FileDirectory = ({ fileTree }) => {
 
   const idx = projectFilePath.lastIndexOf('/');
   const projectName = projectFilePath.substring(idx + 1);
-  const handleDisplayFileCode = fileTree => {
-    const fileContent = fs.readFileSync(fileTree, 'utf8');
+  const handleDisplayFileCode = filePath => {
+    console.log(filePath);
+    const fileContent = fs.readFileSync(filePath, 'utf8');
     dispatchToGlobal(displayFileCode(fileContent));
   };
 
