@@ -7,6 +7,7 @@ import ToolTip from '../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/mockDataReducer';
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
+const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Action = ({ action, index, dispatchToTestCase }) => {
   const [{ mockData }, _] = useContext(MockDataContext);
@@ -60,17 +61,21 @@ const Action = ({ action, index, dispatchToTestCase }) => {
           {...provided.dragHandleProps}
           id={styles.action}
         >
+          <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAction} />
           <div id={styles.actionHeader}>
+            <img src={dragIcon} alt='drag' />
             <h3>Action</h3>
-            <img src={closeIcon} alt='close' onClick={handleClickDeleteAction} />
           </div>
-          <label htmlFor='eventType'>Event Type</label>
+          <div id={styles.eventType}>
+            <label htmlFor='eventType'>Event Type</label>
 
-          <AutoComplete
-            statement={action}
-            statementType='action'
-            dispatchToTestCase={dispatchToTestCase}
-          />
+            <AutoComplete
+              statement={action}
+              statementType='action'
+              dispatchToTestCase={dispatchToTestCase}
+              id={styles.autoComplete}
+            />
+          </div>
           {needsEventValue(action.eventType) && mockData.length > 0 ? (
             <span>
               <label htmlFor='eventValue' />
@@ -90,46 +95,57 @@ const Action = ({ action, index, dispatchToTestCase }) => {
           ) : null}
           <div id={styles.queryFlexBox}>
             <div id={styles.querySelector}>
-              <label htmlFor='queryVariant'>Query Selector</label>
-              <select id='queryVariant' onChange={e => handleChangeActionFields(e, 'queryVariant')}>
-                <option value='' />
-                <option value='getBy'>getBy</option>
-                <option value='getAllBy'>getAllBy</option>
-                <option value='queryBy'>queryBy</option>
-                <option value='queryAllBy'>queryAllBy</option>
-                <option value='findBy'>findBy</option>
-                <option value='findAllBy'>findAllBy</option>
-              </select>
-              <span id={styles.hastooltip} role='tooltip'>
-                <img src={questionIcon} alt='help' />
-                <span id={styles.tooltip}>
-                  <ToolTip toolTipType={action.queryVariant} />
+              <label htmlFor='queryVariant' className={styles.queryLabel}>
+                Query Selector
+              </label>
+              <div id={styles.dropdownFlex}>
+                <select
+                  id='queryVariant'
+                  onChange={e => handleChangeActionFields(e, 'queryVariant')}
+                >
+                  <option value='' />
+                  <option value='getBy'>getBy</option>
+                  <option value='getAllBy'>getAllBy</option>
+                  <option value='queryBy'>queryBy</option>
+                  <option value='queryAllBy'>queryAllBy</option>
+                  <option value='findBy'>findBy</option>
+                  <option value='findAllBy'>findAllBy</option>
+                </select>
+                <span id={styles.hastooltip} role='tooltip'>
+                  <img src={questionIcon} alt='help' />
+                  <span id={styles.tooltip}>
+                    <ToolTip toolTipType={action.queryVariant} />
+                  </span>
                 </span>
-              </span>
-              <select
-                id='querySelector'
-                onChange={e => handleChangeActionFields(e, 'querySelector')}
-              >
-                <option value='' />
-                <option value='LabelText'>LabelText</option>
-                <option value='PlaceholderText'>PlaceholderText</option>
-                <option value='Text'>Text</option>
-                <option value='AltText'>AltText</option>
-                <option value='Title'>Title</option>
-                <option value='DisplayValue'>DisplayValue</option>
-                <option value='Role'>Role</option>
-                <option value='TestId'>TestId</option>
-                {/* TextMatch Precision & Normalization will be added */}
-              </select>
-              <span id={styles.hastooltip} role='tooltip'>
-                <img src={questionIcon} alt='help' />
-                <span id={styles.tooltip}>
-                  <ToolTip toolTipType={action.querySelector} />
+
+                <select
+                  id='querySelector'
+                  onChange={e => handleChangeActionFields(e, 'querySelector')}
+                >
+                  <option value='' />
+                  <option value='LabelText'>LabelText</option>
+                  <option value='PlaceholderText'>PlaceholderText</option>
+                  <option value='Text'>Text</option>
+                  <option value='AltText'>AltText</option>
+                  <option value='Title'>Title</option>
+                  <option value='DisplayValue'>DisplayValue</option>
+                  <option value='Role'>Role</option>
+                  <option value='TestId'>TestId</option>
+                  {/* TextMatch Precision & Normalization will be added */}
+                </select>
+                <span id={styles.hastooltip} role='tooltip'>
+                  <img src={questionIcon} alt='help' />
+                  <span id={styles.tooltip}>
+                    <ToolTip toolTipType={action.querySelector} />
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
             <div id={styles.query}>
-              <label htmlFor='queryValue'>Query</label>
+              <label htmlFor='queryValue' className={styles.queryLabel}>
+                Query
+              </label>
+
               <input
                 type='text'
                 id='queryValue'

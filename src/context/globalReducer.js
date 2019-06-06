@@ -73,10 +73,6 @@ export const globalReducer = (state, action) => {
       };
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
-<<<<<<< HEAD
-
-=======
->>>>>>> be2ec877cb30cc0289763e5b02baeffb71ea18e6
       return {
         ...state,
         isFileHighlighted,

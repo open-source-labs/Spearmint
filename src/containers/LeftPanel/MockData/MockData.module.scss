@@ -4,10 +4,11 @@
 
 #mockData {
   @include box-styling;
-  // padding-bottom: 35px;
-
+  padding: 5px 10px 10px 8px;
+  // margin: 5px 3px 10px 0;
   hr {
     border: 1px solid $light-gray;
+    margin-top: 0;
   }
 
   button:hover {
@@ -24,31 +25,26 @@
   }
 
   input {
-    width: 50%;
+    width: 38%;
   }
 }
 
-#mockDataHeader {
-  padding: 5px 0 5px 0;
-
-  img {
-    float: right;
-  }
-}
-
-#mockDataKey {
-  float: left;
-}
-
-#mockDataType {
+#close {
   float: right;
-  margin-right: 28%;
+}
+#mockDataHeader {
+  padding: 10px 0;
+  vertical-align: middle;
+}
+
+#keys {
+  font-size: 13px;
+  margin-bottom: 0;
+  display: flex;
+  width: 61%;
+  justify-content: space-between;
 }
 
 #keyList {
-  margin-top: 30px;
+  margin-top: 5px;
 }
-
-// #addKeyBtn {
-//   float: right;
-// }
