@@ -68,17 +68,16 @@ const FileDirectory = ({ fileTree }) => {
           return (
             <ul key={file.fileName}>
               <li>
-                <img
-                  id={styles.folder}
-                  src={ICON_MAP.folder}
-                  alt='folder'
-                  onClick={() => handleClickToggleFolderView(file.filePath)}
-                />
-
                 <button
                   id={styles.dirButton}
                   onClick={() => handleClickToggleFolderView(file.filePath)}
                 >
+                  <img
+                    id={styles.folder}
+                    src={ICON_MAP.folder}
+                    alt='folder'
+                    onClick={() => handleClickToggleFolderView(file.filePath)}
+                  />
                   {file.fileName}
                 </button>
               </li>
@@ -91,7 +90,6 @@ const FileDirectory = ({ fileTree }) => {
           return (
             <ul key={file.filePath}>
               <li>
-                {differImg(file.fileName)}
                 <button
                   id={
                     isFileHighlighted === file.fileName
@@ -103,6 +101,7 @@ const FileDirectory = ({ fileTree }) => {
                     handleClickHighlightFile(file.fileName);
                   }}
                 >
+                  {differImg(file.fileName)}
                   {file.fileName}
                 </button>
               </li>
@@ -112,7 +111,6 @@ const FileDirectory = ({ fileTree }) => {
       }
     });
   };
-
   return (
     <>
       <div id={styles.fileDirectory}>
