@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import { GlobalContext } from '../../../context/globalReducer';
+import { displayFileCode, highlightFile } from '../../../context/globalActions';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
@@ -13,7 +14,7 @@ const beautify_html = remote.require('js-beautify').html;
 
 const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const [fileName, setFileName] = useState('');
-  const [{ projectFilePath }, _] = useContext(GlobalContext);
+  const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
   const [testCase, __] = useContext(TestCaseContext);
   const [{ mockData }, ___] = useContext(MockDataContext);
 
@@ -26,6 +27,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const handleClickSave = () => {
     generateTestFile();
     exportTestFile();
+    closeModal();
   };
 
   const generateTestFile = () => {
@@ -47,7 +49,6 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     import { build, fake } from 'test-data-bot'; 
     import 'react-testing-library/cleanup-after-each'; 
     import 'jest-dom/extend-expect'
-    
     \n`;
   };
 
@@ -134,13 +135,20 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     }, '');
   };
 
-  const exportTestFile = () => {
+  const exportTestFile = async () => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {
       fs.mkdirSync(projectFilePath + '/__tests__');
     }
-    fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
+    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
       if (err) throw err;
     });
+    displayTestFile();
+  };
+
+  const displayTestFile = () => {
+    const fileContent = fs.readFileSync(projectFilePath + `/__tests__/${fileName}.test.js`, 'utf8');
+    dispatchToGlobal(displayFileCode(fileContent));
+    dispatchToGlobal(highlightFile(fileName));
   };
 
   return (
