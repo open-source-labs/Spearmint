@@ -25,15 +25,15 @@
 
   h3 {
     color: $mint;
-    font-size: 16px;
+    font-size: 14px;
     padding: 0.3em 0.5em;
   }
 }
 
 @mixin box-styling {
   background-color: white;
-  padding: 12px;
-  margin: 15px 10px;
+  padding: 10px 10px 22px 15px;
+  margin: 10px 18px 0 8px;
   border: 1px solid transparent;
   border-radius: 4px;
   // box-shadow: 0px 3px 6px rgba(21, 27, 38, 0.15);
@@ -59,10 +59,11 @@
 }
 
 @mixin box-header-alignment {
-  margin-bottom: 6%;
+  margin-bottom: 12px;
 
   h3 {
     float: left;
+    font-size: 14px;
   }
 
   img {
@@ -79,12 +80,15 @@
 ) {
   box-sizing: border-box;
   position: absolute;
-  left: 50%;
+  left: 40%;
   bottom: 100%;
   margin-bottom: $tooltip-arrow-length;
-
-  background-color: $light-gray2;
-  text-align: center;
+  background-color: $light-gray3;
+  border: $mint solid 1px;
+  font-size: 10px;
+  text-align: left;
+  line-height: 12px;
+  width: 180px;
 
   visibility: hidden;
   opacity: 0;
@@ -104,7 +108,7 @@
     width: 0;
     height: 0;
     // Draw a triangle.
-    border-top: ($tooltip-arrow-length - $tooltip-border-width) solid $light-gray2;
+    border-top: ($tooltip-arrow-length - $tooltip-border-width) solid $mint;
     border-left: ($tooltip-arrow-base / 2 - $tooltip-border-width) solid transparent;
     border-right: ($tooltip-arrow-base / 2 - $tooltip-border-width) solid transparent;
     // Center the triangle.
@@ -113,10 +117,6 @@
   &::before {
     content: '';
     position: absolute;
-    top: 100%;
-    left: 50%;
-    width: 0;
-    height: 0;
     // Draw another triangle to simulate a border.
     border-top: $tooltip-arrow-length solid $tooltip-border-color;
     border-left: ($tooltip-arrow-base / 2) solid transparent;
