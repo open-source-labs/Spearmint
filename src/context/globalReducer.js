@@ -29,10 +29,9 @@ export const globalReducer = (state, action) => {
         url,
       };
     case actionTypes.LOAD_PROJECT:
-      const isProjectLoaded = true;
       return {
         ...state,
-        isProjectLoaded,
+        isProjectLoaded: action.load,
       };
     case actionTypes.CREATE_FILE_TREE:
       const fileTree = action.fileTree;
@@ -67,12 +66,14 @@ export const globalReducer = (state, action) => {
     case actionTypes.TOGGLE_FOLDER_VIEW:
       const isFolderOpen = { ...state.isFolderOpen };
       isFolderOpen[action.filePath] = !isFolderOpen[action.filePath];
+      console.log(isFolderOpen)
       return {
         ...state,
         isFolderOpen,
       };
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
+      console.log(isFileHighlighted);
       return {
         ...state,
         isFileHighlighted,

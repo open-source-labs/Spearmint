@@ -15,7 +15,6 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
 
   const handleClickUrl = e => {
     const testSiteURL = addHttps(e.target.value);
-    console.log(testSiteURL);
     dispatchToGlobal(setProjectUrl(testSiteURL));
   };
 
@@ -27,6 +26,7 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
       contentLabel='Open the test site'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      ariaHideApp={false}
     >
       <div id={styles.title}>
         <p>Open the test site</p>
@@ -38,9 +38,11 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
         <p>Enter the URL</p>
         <input type='text' id={styles.url} onChange={handleClickUrl} />
         <button id={styles.save} onClick={closeBrowserModal}>
+          Cancel
+        </button>
+        <button id={styles.save} onClick={closeBrowserModal}>
           Open
         </button>
-        <button onClick={closeBrowserModal}>Cancel</button>
       </div>
     </ReactModal>
   );

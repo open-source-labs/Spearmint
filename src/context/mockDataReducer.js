@@ -102,6 +102,8 @@ export const mockDataReducer = (state, action) => {
         ...state,
         mockData,
       };
+    case actionTypes.CLEAR_MOCK_DATA:
+      return { ...mockDataState };
     default:
       return state;
   }

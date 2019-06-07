@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
 import ToolTip from '../ToolTip/ToolTip';
+import ToolTipMatcher from '../ToolTip/ToolTipMatcher';
 import AutoComplete from '../AutoComplete/AutoComplete';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
@@ -30,6 +31,13 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
       'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
       'toHaveStyle', //takes in a sting value Ex: 'display: none'
       'toHaveTextContent', //takes in a string value Ex: 'Content'
+      'not.toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
+      'not.toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
+      'not.toHaveAttribute', //takes in a string Ex: 'type'
+      'not.toHaveClass', //takes in a string Ex: 'btn-link'
+      'not.toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
+      'not.toHaveStyle', //takes in a sting value Ex: 'display: none'
+      'not.toHaveTextContent', //takes in a string value Ex: 'Content'
     ];
     return matchersWithValues.includes(matcherType);
   };
@@ -111,11 +119,18 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
           dispatchToTestCase={dispatchToTestCase}
           className={styles.matcherInput}
         />
+        <span id={styles.hastooltip} role='tooltip'>
+          <img src={questionIcon} alt='help' />
+          <span id={styles.tooltip}>
+            <ToolTipMatcher toolTipType={assertion.matcherType} />
+          </span>
+        </span>
         {needsMatcherValue(assertion.matcherType) && (
           <span>
             <label htmlFor='matcherValue'>Value</label>
             <input
               type='text'
+              id='matcher'
               className={styles.matcherInput}
               onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
             />
