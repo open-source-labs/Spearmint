@@ -32,7 +32,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const handleClickSave = () => {
     generateTestFile();
     exportTestFile();
-    closeModal();
+    closeExportModal();
   };
 
   const generateTestFile = () => {
@@ -177,7 +177,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       <div id={styles.body}>
         <p>File Name</p>
         <input type='text' value={fileName} onChange={handleChangeFileName} />
-        <button id={styles.save} onClick={closeModal}>
+        <button id={styles.save} onClick={closeExportModal}>
           Cancel
         </button>
         <button id={styles.save} onClick={handleClickSave}>
