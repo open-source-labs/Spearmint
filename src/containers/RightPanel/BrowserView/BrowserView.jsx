@@ -3,9 +3,9 @@ import styles from './BrowserView.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
 
 const TestView = () => {
-  const [{ url, isBrowserOpen }, _] = useContext(GlobalContext);
+  const [{ url }, _] = useContext(GlobalContext);
 
-  return <div>{url && isBrowserOpen && <webview id={styles.browserView} src={url} />}</div>;
+  return <webview id={styles.browserView} src={url} />;
 };
 
 export default TestView;

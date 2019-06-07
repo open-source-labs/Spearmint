@@ -50,15 +50,20 @@
   background-color: transparent;
   border: none;
   font-family: $oxygen;
+  text-align: left;
   vertical-align: middle;
+  width: 97%;
 }
 
 #dirButton:hover {
-  background-color: $light-gray;
+  background-color: #f0f8f8;
   border-radius: 3px;
 }
 
 #dirButtonHilighted {
-  background-color: $light-gray;
+  text-align: left;
+  background-color: #f0f8f8;
+  border: none;
   border-radius: 3px;
+  width: 97%;
 }
