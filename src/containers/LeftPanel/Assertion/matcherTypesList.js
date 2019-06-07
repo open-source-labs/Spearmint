@@ -1,5 +1,26 @@
 export const matcherTypesList = [
   {
+    name: 'toHaveTextContent',
+  },
+  {
+    name: 'toBeInTheDocument',
+  },
+  {
+    name: 'toContainHTML',
+  },
+  {
+    name: 'toContainElement',
+  },
+  {
+    name: 'toHaveAttribute',
+  },
+  {
+    name: 'toHaveClass',
+  },
+  {
+    name: 'toHaveStyle',
+  },
+  {
     name: 'toBeDisabled',
   },
   {
@@ -7,9 +28,6 @@ export const matcherTypesList = [
   },
   {
     name: 'toBeEmpty',
-  },
-  {
-    name: 'toBeInTheDocument',
   },
   {
     name: 'toBeInvalid',
@@ -24,27 +42,9 @@ export const matcherTypesList = [
     name: 'toBeVisible',
   },
   {
-    name: 'toContainElement',
-  },
-  {
-    name: 'toContainHTML',
-  },
-  {
-    name: 'toHaveAttribute',
-  },
-  {
-    name: 'toHaveClass',
-  },
-  {
     name: 'toHaveFocus',
   },
   {
     name: 'toHaveFormValues',
-  },
-  {
-    name: 'toHaveStyle',
-  },
-  {
-    name: 'toHaveTextContent',
   },
 ];
