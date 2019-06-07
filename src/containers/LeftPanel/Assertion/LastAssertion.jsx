@@ -127,7 +127,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
         </span>
         {needsMatcherValue(assertion.matcherType) && (
           <span>
-            <label htmlFor='matcherValue' />
+            <label htmlFor='matcherValue'>Value</label>
             <input
               type='text'
               id='matcher'

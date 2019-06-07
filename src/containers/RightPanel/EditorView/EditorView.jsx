@@ -4,7 +4,7 @@ import { GlobalContext } from '../../../context/globalReducer';
 import { editor } from 'monaco-editor';
 
 const Editor = () => {
-  const [{ displayedFileCode, isBrowserOpen, url }, _] = useContext(GlobalContext);
+  const [{ displayedFileCode }, _] = useContext(GlobalContext);
 
   const options = {
     selectOnLineNumbers: true,
@@ -22,17 +22,14 @@ const Editor = () => {
 
   return (
     <div>
-      {isBrowserOpen && url ? null : (
-        <MonacoEditor
-          height='98vh'
-          language='javascript'
-          theme='light-dark'
-          value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
-          options={options}
-          editorDidMount={editorDidMount}
-          // saveFile={saveFile}
-        />
-      )}
+      <MonacoEditor
+        height='98vh'
+        language='javascript'
+        theme='light-dark'
+        value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
+        options={options}
+        editorDidMount={editorDidMount}
+      />
     </div>
   );
 };
