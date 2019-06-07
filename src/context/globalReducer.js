@@ -5,12 +5,12 @@ import { actionTypes } from './globalActions';
 export const GlobalContext = createContext(null);
 
 export const globalState = {
-  url: '',
+  url: null,
   isProjectLoaded: false,
   fileTree: null,
   componentName: '',
   isFileDirectoryOpen: true,
-  isBrowserOpen: true,
+  rightPanelDisplay: 'browserView',
   displayedFileCode: '',
   isFolderOpen: {},
   isFileHighlighted: '',
@@ -52,11 +52,11 @@ export const globalReducer = (state, action) => {
         ...state,
         isFileDirectoryOpen,
       };
-    case actionTypes.TOGGLE_BROWSER:
-      const isBrowserOpen = !state.isBrowserOpen;
+    case actionTypes.TOGGLE_RIGHT_PANEL:
+      const rightPanelDisplay = action.display;
       return {
         ...state,
-        isBrowserOpen,
+        rightPanelDisplay,
       };
     case actionTypes.DISPLAY_FILE_CODE:
       const displayedFileCode = action.displayedFileCode;

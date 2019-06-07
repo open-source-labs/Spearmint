@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styles from './Render.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
 import { TestCaseContext } from '../../../context/testCaseReducer';
+import ToolTip from '../ToolTip/ToolTip';
 
 import {
   deleteRender,
@@ -13,6 +14,7 @@ import RenderProp from './RenderProp';
 const plusIcon = require('../../../assets/images/plus.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
+const questionIcon = require('../../../assets/images/help-circle.png');
 
 const FirstRender = ({ render }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
@@ -50,13 +52,11 @@ const FirstRender = ({ render }) => {
 
   return (
     <section id={styles.render}>
-      {render.id !== 0 ? (
+      {render.id !== 0 && (
         <img src={closeIcon} id={styles.closeBtn} alt='close' onClick={handleClickDeleteRender} />
-      ) : (
-        <p />
       )}
       <div id={styles.renderHeader}>
-        {render.id !== 0 ? <img src={dragIcon} alt='drag' /> : <p />}
+        {render.id !== 0 && <img src={dragIcon} alt='drag' />}
         <h3>{render.id === 0 ? 'Render' : 'Rerender'}</h3>
       </div>
       <div id={styles.renderBody}>
@@ -68,6 +68,12 @@ const FirstRender = ({ render }) => {
             value={statements[0].componentName}
             onChange={handleChangeComponentName}
           />
+          <span id={styles.hastooltip} role='tooltip'>
+            <img src={questionIcon} alt='help' />
+            <span id={styles.tooltip}>
+              <ToolTip toolTipType={render.renderInputBox} />
+            </span>
+          </span>
         </div>
         <div id={styles.renderCheckbox}>
           <input
@@ -76,7 +82,7 @@ const FirstRender = ({ render }) => {
             disabled={propsJSX.length}
             onClick={handleToggleProps}
           />
-          <label htmlFor='render-checkbox'>Do you pass props ? </label>
+          <label htmlFor='render-checkbox'>Do you need props ? </label>
         </div>
       </div>
       {propsJSX.length !== 0 && (

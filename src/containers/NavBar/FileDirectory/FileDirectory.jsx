@@ -1,7 +1,12 @@
 import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import { displayFileCode, toggleFolderView, highlightFile } from '../../../context/globalActions';
+import {
+  displayFileCode,
+  toggleFolderView,
+  highlightFile,
+  toggleRightPanel,
+} from '../../../context/globalActions';
 
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
@@ -48,6 +53,7 @@ const FileDirectory = ({ fileTree }) => {
 
   const handleClickHighlightFile = fileName => {
     dispatchToGlobal(highlightFile(fileName));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
   const convertToHTML = filetree => {

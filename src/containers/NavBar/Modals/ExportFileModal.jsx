@@ -10,7 +10,7 @@ const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
 
-const ExportFileModal = ({ isModalOpen, closeModal }) => {
+const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [fileName, setFileName] = useState('');
   const [{ projectFilePath }, _] = useContext(GlobalContext);
   const [testCase, __] = useContext(TestCaseContext);
@@ -140,15 +140,15 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   return (
     <ReactModal
       className={styles.modal}
-      isOpen={isModalOpen}
-      onRequestClose={closeModal}
+      isOpen={isExportModalOpen}
+      onRequestClose={closeExportModal}
       contentLabel='Save testing file'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
     >
       <div id={styles.title}>
         <p>Convert to Javascript Code</p>
-        <svg id={styles.close} onClick={closeModal}>
+        <svg id={styles.close} onClick={closeExportModal}>
           <path d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' />
         </svg>
       </div>
@@ -158,7 +158,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
         <button id={styles.save} onClick={handleClickSave}>
           Save
         </button>
-        <button onClick={closeModal}>Cancel</button>
+        <button onClick={closeExportModal}>Cancel</button>
       </div>
     </ReactModal>
   );
