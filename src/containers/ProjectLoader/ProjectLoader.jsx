@@ -8,10 +8,12 @@ const ProjectLoader = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
 
   const addHttps = url => {
-    if (!/^(f | ht)tps ? : \/\//i.test(url)) {
+    if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
+      return url;
+    } else {
       url = 'https://' + url;
+      return url;
     }
-    return url;
   };
 
   const handleChangeUrl = e => {

@@ -37,7 +37,7 @@ const Action = ({ action, index, dispatchToTestCase }) => {
   const dropDownMockOptions = [];
   mockData.forEach(mockDatum => {
     mockDatum.fieldKeys.forEach(key => {
-      dropDownMockOptions.push(`${mockDatum.name}.${key.fieldKey}`);
+      dropDownMockOptions.push(`mock${mockDatum.name}.${key.fieldKey}`);
     });
     dropDownMockOptions.push(`${mockDatum.name}`);
     dropDownMockOptions.push(`{${mockDatum.name}}`);
