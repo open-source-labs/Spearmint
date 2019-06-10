@@ -141,12 +141,12 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const exportTestFile = async () => {
-    if (!fs.existsSync(projectFilePath + '/__tests__')) {
-      fs.mkdirSync(projectFilePath + '/__tests__');
-    }
-    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
-      if (err) throw err;
-    });
+    // if (!fs.existsSync(projectFilePath + '/__tests__')) {
+    //   fs.mkdirSync(projectFilePath + '/__tests__');
+    // }
+    // await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
+    //   if (err) throw err;
+    // });
     displayTestFile(projectFilePath + '/__tests__');
   };
 
