@@ -37,10 +37,10 @@ const Action = ({ action, index, dispatchToTestCase }) => {
   const dropDownMockOptions = [];
   mockData.forEach(mockDatum => {
     mockDatum.fieldKeys.forEach(key => {
-      dropDownMockOptions.push(`${mockDatum.name}.${key.fieldKey}`);
+      dropDownMockOptions.push(`mock${mockDatum.name}.${key.fieldKey}`);
     });
-    dropDownMockOptions.push(`${mockDatum.name}`);
-    dropDownMockOptions.push(`{${mockDatum.name}}`);
+    dropDownMockOptions.push(`mock${mockDatum.name}`);
+    dropDownMockOptions.push(`mock{${mockDatum.name}}`);
     dropDownMockOptions.push(`[${mockDatum.name}]`);
   });
 
@@ -75,24 +75,26 @@ const Action = ({ action, index, dispatchToTestCase }) => {
               dispatchToTestCase={dispatchToTestCase}
               id={styles.autoComplete}
             />
+
+            {needsEventValue(action.eventType) && mockData.length > 0 ? (
+              <span className={styles.eventValue}>
+                <label htmlFor='eventValue'> Value </label>
+                <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
+                  <option id='eventValue' value='' />
+                  {options}
+                </select>
+              </span>
+            ) : needsEventValue(action.eventType) ? (
+              <span className={styles.eventValue}>
+                <label htmlFor='eventValue'> Value </label>
+                <input
+                  type='text'
+                  id='eventValue'
+                  onChange={e => handleChangeActionFields(e, 'eventValue')}
+                />
+              </span>
+            ) : null}
           </div>
-          {needsEventValue(action.eventType) && mockData.length > 0 ? (
-            <span>
-              <label htmlFor='eventValue' />
-              <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
-                <option id='eventValue' value='' />
-                {options}
-              </select>
-            </span>
-          ) : needsEventValue(action.eventType) ? (
-            <span>
-              <input
-                type='text'
-                id='eventValue'
-                onChange={e => handleChangeActionFields(e, 'eventValue')}
-              />
-            </span>
-          ) : null}
           <div id={styles.queryFlexBox}>
             <div id={styles.querySelector}>
               <label htmlFor='queryVariant' className={styles.queryLabel}>

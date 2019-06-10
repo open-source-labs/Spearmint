@@ -32,7 +32,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const handleClickSave = () => {
     generateTestFile();
     exportTestFile();
-    closeModal();
+    closeExportModal();
   };
 
   const generateTestFile = () => {
@@ -141,12 +141,12 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const exportTestFile = async () => {
-    if (!fs.existsSync(projectFilePath + '/__tests__')) {
-      fs.mkdirSync(projectFilePath + '/__tests__');
-    }
-    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
-      if (err) throw err;
-    });
+    // if (!fs.existsSync(projectFilePath + '/__tests__')) {
+    //   fs.mkdirSync(projectFilePath + '/__tests__');
+    // }
+    // await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
+    //   if (err) throw err;
+    // });
     displayTestFile(projectFilePath + '/__tests__');
   };
 
@@ -177,7 +177,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       <div id={styles.body}>
         <p>File Name</p>
         <input type='text' value={fileName} onChange={handleChangeFileName} />
-        <button id={styles.save} onClick={closeModal}>
+        <button id={styles.save} onClick={closeExportModal}>
           Cancel
         </button>
         <button id={styles.save} onClick={handleClickSave}>
