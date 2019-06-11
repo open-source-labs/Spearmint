@@ -35,7 +35,8 @@
     "electron-build": "electron-builder",
     "release": "npm run react-build && electron-builder --publish=always",
     "build": "npm run react-build && yarn electron-build",
-    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": "react-app"
