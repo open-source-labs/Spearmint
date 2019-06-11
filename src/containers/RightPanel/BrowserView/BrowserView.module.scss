@@ -1,6 +1,36 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+
 #browserView {
   // height: 750px;
   // display: block;
   height: 100vh;
   width: auto;
+}
+
+#browserAddress {
+  button {
+    width: 45px;
+    height: 28px;
+    margin-left: 5px;
+    color: $mint;
+    background-color: $light-gray3;
+    outline: none;
+    border-radius: 4px;
+  }
+
+  button:hover {
+    background-color: $mint;
+    color: white;
+  }
+}
+
+#address {
+  width: 88%;
+  height: 28px;
+  margin: 5px 0 10px 5px;
+  border: none;
+  border: 1px solid $light-gray;
+  border-radius: 4px;
+  padding-left: 10px;
 }

@@ -26,7 +26,7 @@ const NavBar = () => {
   };
 
   const handleBrowserToggle = () => {
-    url ? dispatchToGlobal(toggleRightPanel('browserView')) : setIsBrowserModalOpen(true);
+    dispatchToGlobal(toggleRightPanel('browserView'));
   };
 
   const openExportModal = () => {
@@ -37,9 +37,9 @@ const NavBar = () => {
     setIsExportModalOpen(false);
   };
 
-  const closeBrowserModal = () => {
-    setIsBrowserModalOpen(false);
-  };
+  // const closeBrowserModal = () => {
+  //   setIsBrowserModalOpen(false);
+  // };
 
   return (
     <div id={styles.navBar}>
@@ -57,7 +57,7 @@ const NavBar = () => {
       <button className={styles.navBtn} onClick={handleBrowserToggle}>
         <img src={browserIcon} className={styles.icons} alt='browserview' title='Browser view' />
       </button>
-      <BrowserModal isBrowserModalOpen={isBrowserModalOpen} closeBrowserModal={closeBrowserModal} />
+      {/* <BrowserModal isBrowserModalOpen={isBrowserModalOpen} closeBrowserModal={closeBrowserModal} /> */}
 
       {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>

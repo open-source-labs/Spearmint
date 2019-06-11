@@ -5,12 +5,12 @@ import BrowserView from './BrowserView/BrowserView';
 import { GlobalContext } from '../../context/globalReducer';
 
 const RightPanel = () => {
-  const [{ rightPanelDisplay, url }, _] = useContext(GlobalContext);
-  console.log(url);
+  const [{ rightPanelDisplay }, _] = useContext(GlobalContext);
+
   return (
     <div id={styles.rightPanel}>
-      {url && rightPanelDisplay === 'browserView' ? <BrowserView /> : <></>}
-      {!url || rightPanelDisplay === 'codeEditorView' ? <EditorView /> : <></>}
+      {rightPanelDisplay === 'browserView' && <BrowserView />}
+      {rightPanelDisplay === 'codeEditorView' && <EditorView />}
     </div>
   );
 };
