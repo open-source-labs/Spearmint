@@ -15,7 +15,6 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
-const beautify_html = remote.require('js-beautify').html;
 
 const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [fileName, setFileName] = useState('');
@@ -42,9 +41,10 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode = beautify(testFileCode, {
       indent_size: 2,
       space_in_empty_paren: true,
-    });
-    testFileCode = beautify_html(testFileCode, {
-      unformatted: true,
+      e4x: true,
+      // break_chained_methods: true,
+      // preserve_newlines: true,
+      // brace_style: collapse_preserve_inline,
     });
   };
 
@@ -122,7 +122,9 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   const addAssertion = assertion => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
-                    (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue})`;
+                    (${assertion.queryValue})).${assertion.matcherType}(${
+      assertion.matcherValue
+    });`;
   };
 
   const addRender = (render, methods) => {
