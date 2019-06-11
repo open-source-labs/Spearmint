@@ -12,11 +12,9 @@ const ProjectLoader = () => {
       return url;
     } else if (url.startsWith('localhost')) {
       url = 'http://' + url;
-      // console.log(url);
       return url;
     } else {
       url = 'https://' + url;
-      // console.log(url);
       return url;
     }
   };

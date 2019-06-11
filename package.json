@@ -51,5 +51,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^8.0.1",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "jest-dom": "^3.5.0",
+    "react-test-renderer": "^16.8.6",
+    "test-data-bot": "^0.8.0"
   }
 }
