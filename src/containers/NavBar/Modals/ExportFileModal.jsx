@@ -185,7 +185,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         <button id={styles.save} onClick={handleClickSave}>
           Save
         </button>
-        <button onClick={closeExportModal}>Cancel</button>
       </div>
     </ReactModal>
   );

@@ -15,7 +15,7 @@ const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
-  const [{ mockData, mockDataCheckBox }, dispatchToMockData] = useContext(MockDataContext);
+  const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
   const firstRenderStatement = statements[0];
   const draggableStatements = statements.slice(1, -1);
   const lastAssertionStatement = statements[statements.length - 1];
@@ -24,8 +24,8 @@ const TestCase = () => {
     dispatchToTestCase(updateTestStatement(e.target.value));
   };
 
-  const handleToggleMockData = () => {
-    dispatchToMockData(toggleMockData());
+  const handleToggleMockData = e => {
+    dispatchToMockData(toggleMockData(e.currentTarget.checked));
   };
 
   const handleAddMockData = () => {
@@ -83,14 +83,19 @@ const TestCase = () => {
         </section>
         <section id={styles.mockHeader}>
           <span>
-            <input type='checkbox' disabled={mockDataJSX.length} onClick={handleToggleMockData} />
+            <input
+              type='checkbox'
+              disabled={mockDataJSX.length}
+              checked={hasMockData}
+              onClick={handleToggleMockData}
+            />
             <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
               Do you need mock data?
             </label>
           </span>
         </section>
       </div>
-      {mockDataCheckBox && (
+      {hasMockData && (
         <section id={styles.mockDataHeader}>
           <label htmlFor='mock-data'>Mock data</label>
           <img src={plusIcon} alt='add' onClick={handleAddMockData} />
