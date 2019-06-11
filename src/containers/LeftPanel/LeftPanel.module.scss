@@ -5,6 +5,8 @@
   grid-area: leftPanel;
   grid-column-start: 2;
   height: 100vh;
+  padding-bottom: 20px;
+  padding-top: 4px;
   font-family: $raleway;
   justify-content: space-evenly;
   overflow: auto;
@@ -80,7 +82,7 @@
 ) {
   box-sizing: border-box;
   position: absolute;
-  left: 40%;
+  left: -230%;
   bottom: 100%;
   margin-bottom: $tooltip-arrow-length;
   background-color: $light-gray3;
@@ -104,7 +106,7 @@
     content: '';
     position: absolute;
     top: 100%;
-    left: 50%;
+    left: 80%;
     width: 0;
     height: 0;
     // Draw a triangle.
@@ -114,16 +116,16 @@
     // Center the triangle.
     margin-left: ($tooltip-border-width - $tooltip-arrow-base / 2);
   }
-  &::before {
-    content: '';
-    position: absolute;
-    // Draw another triangle to simulate a border.
-    border-top: $tooltip-arrow-length solid $tooltip-border-color;
-    border-left: ($tooltip-arrow-base / 2) solid transparent;
-    border-right: ($tooltip-arrow-base / 2) solid transparent;
-    // Center the triangle.
-    margin-left: ($tooltip-arrow-base / -2);
-  }
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   // Draw another triangle to simulate a border.
+  //   border-top: $tooltip-arrow-length solid $tooltip-border-color;
+  //   border-left: ($tooltip-arrow-base / 2) solid transparent;
+  //   border-right: ($tooltip-arrow-base / 2) solid transparent;
+  //   // Center the triangle.
+  //   margin-left: ($tooltip-arrow-base / -4);
+  // }
 }
 
 @mixin hastooltip($tooltip-transition-in-duration: 0.3s) {

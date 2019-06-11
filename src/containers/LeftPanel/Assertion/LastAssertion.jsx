@@ -123,30 +123,36 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
           />
         </div>
       </div>
-      <div id={styles.matcherFlexBox}>
-        <AutoComplete
-          statement={assertion}
-          statementType='assertion'
-          dispatchToTestCase={dispatchToTestCase}
-          className={styles.matcherInput}
-        />
-        <span id={styles.hastooltip} role='tooltip'>
-          <img src={questionIcon} alt='help' />
-          <span id={styles.tooltip}>
-            <ToolTipMatcher toolTipType={assertion.matcherType} />
-          </span>
-        </span>
-        {needsMatcherValue(assertion.matcherType) && (
-          <span>
-            <label htmlFor='matcherValue'>Value</label>
-            <input
-              type='text'
-              id='matcher'
-              className={styles.matcherInput}
-              onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+      <div>
+        <div id={styles.matcherFlexBox}>
+          <div id={styles.matcherLeft}>
+            <AutoComplete
+              statement={assertion}
+              statementType='assertion'
+              dispatchToTestCase={dispatchToTestCase}
+              id={styles.matcherAuto}
             />
-          </span>
-        )}
+
+            <span id={styles.hastooltip} role='tooltip'>
+              <img src={questionIcon} alt='help' />
+              <span id={styles.tooltip}>
+                <ToolTipMatcher toolTipType={assertion.matcherType} />
+              </span>
+            </span>
+          </div>
+          <div>
+            {needsMatcherValue(assertion.matcherType) && (
+              <span>
+                <label htmlFor='matcherValue'>Value</label>
+                <input
+                  type='text'
+                  id={styles.matcherInput}
+                  onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+                />
+              </span>
+            )}
+          </div>
+        </div>
       </div>
     </section>
   );

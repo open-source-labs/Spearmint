@@ -6,7 +6,7 @@ import { GlobalContext } from '../../context/globalReducer';
 
 const RightPanel = () => {
   const [{ rightPanelDisplay, url }, _] = useContext(GlobalContext);
-  console.log(url);
+
   return (
     <div id={styles.rightPanel}>
       {url && rightPanelDisplay === 'browserView' ? <BrowserView /> : <></>}
