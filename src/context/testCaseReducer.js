@@ -71,7 +71,7 @@ export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
   let lastAssertionStatement;
-  
+
   switch (action.type) {
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       const firstRenderStatement = statements[0];
@@ -114,6 +114,7 @@ export const testCaseReducer = (state, action) => {
         }
         return statement;
       });
+      console.log('action', statements);
       return {
         ...state,
         statements,
@@ -146,6 +147,7 @@ export const testCaseReducer = (state, action) => {
         }
         return statement;
       });
+      console.log('assertion', statements);
       return {
         ...state,
         statements,
@@ -213,6 +215,7 @@ export const testCaseReducer = (state, action) => {
             return prop;
           });
         }
+        console.log(statements);
         return statement;
       });
       return {

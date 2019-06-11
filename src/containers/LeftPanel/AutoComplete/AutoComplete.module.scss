@@ -47,6 +47,8 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
+  height: 200px;
+  overflow-y: scroll;
 }
 
 .suggestion {
@@ -55,5 +57,5 @@
 }
 
 .suggestionHighlighted {
-  background-color: $light-gray3;
+  background-color: $light-gray4;
 }

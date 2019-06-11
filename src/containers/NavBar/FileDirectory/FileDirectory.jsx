@@ -58,7 +58,11 @@ const FileDirectory = ({ fileTree }) => {
 
   const convertToHTML = filetree => {
     return filetree.map(file => {
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
+      if (
+        file.fileName !== 'node_modules' &&
+        file.fileName !== '.git' &&
+        file.fileName[0] !== '.'
+      ) {
         if (file.files.length) {
           return (
             <ul key={file.fileName}>
