@@ -1,6 +1,5 @@
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../assets/stylesheets/colors.scss';
-// $easing: cubic-bezier(0.6, 0.05, 0.28, 0.91);
 
 #fileDirectory {
   grid-area: fileDirectory;
@@ -13,7 +12,7 @@
   background-color: white;
   overflow: auto;
   border-right: 1px dotted $mint;
-  // transition: all 500ms $easing;
+
   ul {
     list-style-type: none;
     margin-left: 15px;
@@ -25,12 +24,13 @@
   }
   #explorer {
     margin: 0;
-    padding: 22px 10px;
+    padding: 10%;
     color: $mint;
     font-family: $oxygen;
     letter-spacing: 1px;
+    vertical-align: middle;
     font-weight: bold;
-    height: 30px;
+    height: 50px;
     background-color: #f0f8f8;
     border-bottom: 0.5px dotted $mint;
   }

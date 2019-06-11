@@ -18,7 +18,7 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 
-  CREATE_NEW_TEST: 'NEW_TEST',
+  CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
 export const updateStatementsOrder = draggableStatements => ({

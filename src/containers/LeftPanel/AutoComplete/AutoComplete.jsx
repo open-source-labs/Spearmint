@@ -24,7 +24,6 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
   const inputProps = {
     placeholder:
       statementType === 'action' ? 'eg. click, change, keypress' : 'eg. toHaveTextValue ',
-    // value: statementType === 'action' ? statement.eventType : statement.matcherType,
     value:
       statementType === 'action'
         ? statement.eventType

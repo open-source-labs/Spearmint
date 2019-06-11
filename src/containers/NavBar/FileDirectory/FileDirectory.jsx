@@ -71,12 +71,7 @@ const FileDirectory = ({ fileTree }) => {
                   id={styles.dirButton}
                   onClick={() => handleClickToggleFolderView(file.filePath)}
                 >
-                  <img
-                    id={styles.folder}
-                    src={ICON_MAP.folder}
-                    alt='folder'
-                    // onClick={() => handleClickToggleFolderView(file.filePath)}
-                  />
+                  <img id={styles.folder} src={ICON_MAP.folder} alt='folder' />
                   {file.fileName}
                 </button>
               </li>

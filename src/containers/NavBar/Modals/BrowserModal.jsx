@@ -7,13 +7,18 @@ import { setProjectUrl } from '../../../context/globalActions';
 const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
   const addHttps = url => {
-    if (!/^(f | ht)tps ? : \/\//i.test(url)) {
+    if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
+      return url;
+    } else if (url.startsWith('localhost')) {
+      url = 'http://' + url;
+      return url;
+    } else {
       url = 'https://' + url;
+      return url;
     }
-    return url;
   };
 
-  const handleClickUrl = e => {
+  const handleChangeUrl = e => {
     const testSiteURL = addHttps(e.target.value);
     dispatchToGlobal(setProjectUrl(testSiteURL));
   };
@@ -36,7 +41,7 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
       </div>
       <div id={styles.body}>
         <p>Enter the URL</p>
-        <input type='text' id={styles.url} onChange={handleClickUrl} />
+        <input type='text' id={styles.url} onChange={handleChangeUrl} />
         <button id={styles.save} onClick={closeBrowserModal}>
           Cancel
         </button>

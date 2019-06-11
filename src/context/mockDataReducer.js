@@ -5,7 +5,7 @@ export const MockDataContext = createContext(null);
 
 export const mockDataState = {
   mockData: [],
-  mockDataCheckBox: false,
+  hasMockData: false,
 };
 
 let mockDatumId = 0;
@@ -31,13 +31,13 @@ export const mockDataReducer = (state, action) => {
 
   switch (action.type) {
     case actionTypes.TOGGLE_MOCK_DATA:
-      if (!state.mockDataCheckBox) {
+      if (!state.hasMockData) {
         mockData.push(createMockDatum());
       }
       return {
         ...state,
         mockData,
-        mockDataCheckBox: !state.mockDataCheckBox,
+        hasMockData: !state.hasMockData,
       };
     case actionTypes.ADD_MOCK_DATA:
       mockData.push(createMockDatum());
@@ -103,7 +103,10 @@ export const mockDataReducer = (state, action) => {
         mockData,
       };
     case actionTypes.CLEAR_MOCK_DATA:
-      return { ...mockDataState };
+      return {
+        mockData: [],
+        hasMockData: false,
+      };
     default:
       return state;
   }
