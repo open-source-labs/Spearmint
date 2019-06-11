@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 import { actionTypes } from './globalActions';
-// import { object } from '../../../../Library/Caches/typescript/3.4.5/node_modules/@types/prop-types';
 
 export const GlobalContext = createContext(null);
 
@@ -66,14 +65,12 @@ export const globalReducer = (state, action) => {
     case actionTypes.TOGGLE_FOLDER_VIEW:
       const isFolderOpen = { ...state.isFolderOpen };
       isFolderOpen[action.filePath] = !isFolderOpen[action.filePath];
-      console.log(isFolderOpen)
       return {
         ...state,
         isFolderOpen,
       };
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
-      console.log(isFileHighlighted);
       return {
         ...state,
         isFileHighlighted,
