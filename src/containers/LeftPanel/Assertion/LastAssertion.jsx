@@ -4,6 +4,7 @@ import { deleteAssertion, updateAssertion } from '../../../context/testCaseActio
 import ToolTip from '../ToolTip/ToolTip';
 import ToolTipMatcher from '../ToolTip/ToolTipMatcher';
 import AutoComplete from '../AutoComplete/AutoComplete';
+import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
@@ -102,11 +103,10 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
           <label htmlFor='queryValue' className={styles.queryLabel}>
             Query
           </label>
-          <input
-            type='text'
-            id='queryValue'
-            value={assertion.queryValue}
-            onChange={e => handleChangeAssertionFields(e, 'queryValue')}
+          <AutoCompleteMockData
+            statement={assertion}
+            dispatchToTestCase={dispatchToTestCase}
+            statementType='assertion'
           />
         </div>
       </div>

@@ -3,6 +3,7 @@ import styles from '../Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
+import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/mockDataReducer';
 const questionIcon = require('../../../assets/images/help-circle.png');
@@ -34,23 +35,22 @@ const Action = ({ action, index, dispatchToTestCase }) => {
     return eventsWithValues.includes(eventType);
   };
 
-  const dropDownMockOptions = [];
-  mockData.forEach(mockDatum => {
-    mockDatum.fieldKeys.forEach(key => {
-      dropDownMockOptions.push(`mock${mockDatum.name}.${key.fieldKey}`);
-    });
-    dropDownMockOptions.push(`mock${mockDatum.name}`);
-    dropDownMockOptions.push(`mock{${mockDatum.name}}`);
-    dropDownMockOptions.push(`[${mockDatum.name}]`);
-  });
+  // const dropDownMockOptions = [];
+  // mockData.forEach(mockDatum => {
+  //   mockDatum.fieldKeys.forEach(key => {
+  //     dropDownMockOptions.push(`mock${mockDatum.name}.${key.fieldKey}`);
+  //   });
+  //   dropDownMockOptions.push(`[mock${mockDatum.name}]`);
+  //   dropDownMockOptions.push(`{mock${mockDatum.name}}`);
+  // });
 
-  let options = dropDownMockOptions.map(option => {
-    return (
-      <option id='eventValue' value={option}>
-        {option}
-      </option>
-    );
-  });
+  // let options = dropDownMockOptions.map(option => {
+  //   return (
+  //     <option id='eventValue' value={option}>
+  //       {option}
+  //     </option>
+  //   );
+  // });
 
   return (
     <Draggable draggableId={action.id.toString()} index={index}>
@@ -79,10 +79,15 @@ const Action = ({ action, index, dispatchToTestCase }) => {
             {needsEventValue(action.eventType) && mockData.length > 0 ? (
               <span className={styles.eventValue}>
                 <label htmlFor='eventValue'> Value </label>
-                <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
+                {/* <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
                   <option id='eventValue' value='' />
                   {options}
-                </select>
+                </select> */}
+                <AutoCompleteMockData
+                  statement={action}
+                  dispatchToTestCase={dispatchToTestCase}
+                  statementType='action'
+                />
               </span>
             ) : needsEventValue(action.eventType) ? (
               <span className={styles.eventValue}>
