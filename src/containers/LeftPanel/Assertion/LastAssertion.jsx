@@ -43,7 +43,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
   };
 
   return (
-    <section id={styles.assertion}>
+    <section id={styles.assertion} data-testid='assertionCard'>
       {!isLast && <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDelete} />}
       <div id={styles.assertionHeader}>
         {!isLast && <img src={dragIcon} alt='drag' />}
@@ -57,6 +57,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
           <div id={styles.dropdownFlex}>
             <select
               id='queryVariant'
+              value={assertion.queryVariant}
               onChange={e => handleChangeAssertionFields(e, 'queryVariant')}
             >
               <option value='' />
@@ -75,6 +76,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
             </span>
             <select
               id='querySelector'
+              value={assertion.querySelector}
               onChange={e => handleChangeAssertionFields(e, 'querySelector')}
             >
               <option value='' />
@@ -100,7 +102,12 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
           <label htmlFor='queryValue' className={styles.queryLabel}>
             Query
           </label>
-          <input type='text' onChange={e => handleChangeAssertionFields(e, 'queryValue')} />
+          <input
+            type='text'
+            id='queryValue'
+            value={assertion.queryValue}
+            onChange={e => handleChangeAssertionFields(e, 'queryValue')}
+          />
         </div>
       </div>
       <div id={styles.matcherLabelFlexBox}>
@@ -109,7 +116,11 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
         </div>
         <div>
           Not?
-          <input type='checkbox' onClick={e => handleChangeAssertionFields(e, 'isNot')} />
+          <input
+            type='checkbox'
+            checked={assertion.isNot}
+            onClick={e => handleChangeAssertionFields(e, 'isNot')}
+          />
         </div>
       </div>
       <div>
