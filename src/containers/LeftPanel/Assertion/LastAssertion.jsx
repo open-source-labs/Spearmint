@@ -121,6 +121,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
               dispatchToTestCase={dispatchToTestCase}
               id={styles.matcherAuto}
             />
+
             <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>

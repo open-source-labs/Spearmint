@@ -17,7 +17,7 @@
     font-family: $oxygen;
     font-size: 14px;
     border-radius: 5px;
-    border: 1px $light-gray sold;
+    border: 0.5px $light-gray solid;
   }
 
   button:hover {
@@ -53,9 +53,9 @@
   }
 }
 
-#actionBtn:hover,
-#assertionBtn:hover,
-#renderBtn:hover {
-  font-weight: 800;
-  border-radius: 4px;
-}
+// #actionBtn:hover,
+// #assertionBtn:hover,
+// #renderBtn:hover {
+//   font-weight: 800;
+//   border-radius: 4px;
+// }

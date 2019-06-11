@@ -2,13 +2,15 @@
 @import '../../../assets/stylesheets/colors.scss';
 
 #browserView {
-  // height: 750px;
-  // display: block;
   height: 100vh;
   width: auto;
 }
 
 #browserAddress {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
   button {
     width: 45px;
     height: 28px;
@@ -26,9 +28,8 @@
 }
 
 #address {
-  width: 88%;
+  width: 89%;
   height: 28px;
-  margin: 5px 0 10px 5px;
   border: none;
   border: 1px solid $light-gray;
   border-radius: 4px;

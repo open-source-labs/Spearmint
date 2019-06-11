@@ -13,12 +13,11 @@
   background-color: white;
   overflow: scroll;
   border-right: 1px dotted $mint;
-  // transition: all 500ms $easing;
+  // transform: translate(500ms $easing);
   ul {
     list-style-type: none;
     margin-left: 15px;
     text-align: left;
-    vertical-align: middle;
   }
   li {
     margin-top: 3px;
@@ -26,7 +25,7 @@
   }
   #explorer {
     margin: 0;
-    padding: 8%;
+    padding: 10%;
     color: $mint;
     font-family: $oxygen;
     letter-spacing: 1px;
