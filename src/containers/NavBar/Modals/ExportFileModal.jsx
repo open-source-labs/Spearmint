@@ -15,9 +15,8 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
-const beautify_html = remote.require('js-beautify').html;
 
-const ExportFileModal = ({ isModalOpen, closeModal }) => {
+const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [fileName, setFileName] = useState('');
   const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
   const [testCase, __] = useContext(TestCaseContext);
@@ -32,7 +31,7 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   const handleClickSave = () => {
     generateTestFile();
     exportTestFile();
-    closeModal();
+    closeExportModal();
   };
 
   const generateTestFile = () => {
@@ -42,9 +41,10 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     testFileCode = beautify(testFileCode, {
       indent_size: 2,
       space_in_empty_paren: true,
-    });
-    testFileCode = beautify_html(testFileCode, {
-      unformatted: true,
+      e4x: true,
+      // break_chained_methods: true,
+      // preserve_newlines: true,
+      // brace_style: collapse_preserve_inline,
     });
   };
 
@@ -122,7 +122,9 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
 
   const addAssertion = assertion => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
-                    (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue})`;
+                    (${assertion.queryValue})).${assertion.matcherType}(${
+      assertion.matcherValue
+    });`;
   };
 
   const addRender = (render, methods) => {
@@ -161,8 +163,8 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
   return (
     <ReactModal
       className={styles.modal}
-      isOpen={isModalOpen}
-      onRequestClose={closeModal}
+      isOpen={isExportModalOpen}
+      onRequestClose={closeExportModal}
       contentLabel='Save testing file'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
@@ -170,19 +172,20 @@ const ExportFileModal = ({ isModalOpen, closeModal }) => {
     >
       <div id={styles.title}>
         <p>Convert to Javascript Code</p>
-        <svg id={styles.close} onClick={closeModal}>
+        <svg id={styles.close} onClick={closeExportModal}>
           <path d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' />
         </svg>
       </div>
       <div id={styles.body}>
         <p>File Name</p>
         <input type='text' value={fileName} onChange={handleChangeFileName} />
-        <button id={styles.save} onClick={closeModal}>
+        <button id={styles.save} onClick={closeExportModal}>
           Cancel
         </button>
         <button id={styles.save} onClick={handleClickSave}>
           Save
         </button>
+        <button onClick={closeExportModal}>Cancel</button>
       </div>
     </ReactModal>
   );

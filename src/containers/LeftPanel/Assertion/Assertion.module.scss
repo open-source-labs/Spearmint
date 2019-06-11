@@ -38,7 +38,10 @@
   align-items: center;
   margin-bottom: 20px;
 }
-
+#queryVariant {
+  top: auto;
+  bottom: 100%;
+}
 #querySelector {
   select {
     font-family: $raleway;

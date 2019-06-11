@@ -10,8 +10,13 @@ const ProjectLoader = () => {
   const addHttps = url => {
     if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
       return url;
+    } else if (url.startsWith('localhost')) {
+      url = 'http://' + url;
+      console.log(url);
+      return url;
     } else {
       url = 'https://' + url;
+      console.log(url);
       return url;
     }
   };

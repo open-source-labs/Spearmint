@@ -57,7 +57,7 @@
   padding-left: 1rem;
   font-size: 12px;
   width: 250px;
-  height: 1.5rem;
+  height: 25px;
   color: rgb(128, 128, 128);
 }
 
@@ -67,9 +67,10 @@
   font-size: 12px;
   text-align: left;
   width: 250px;
-  height: 1.5rem;
+  // height: 30px;
   color: $dark-gray;
   outline: none;
+  border: 0.5px solid $light-gray;
   box-shadow: none;
   cursor: pointer;
   -webkit-appearance: none;

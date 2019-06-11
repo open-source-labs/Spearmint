@@ -4,7 +4,7 @@ export const actionTypes = {
   CREATE_FILE_TREE: 'CREATE_FILE_TREE',
   SET_COMPONENT_NAME: 'SET_COMPONENT_NAME',
   TOGGLE_FILE_DIRECTORY: 'TOGGLE_FILE_DIRECTORY',
-  TOGGLE_BROWSER: 'TOGGLE_BROWSER',
+  TOGGLE_RIGHT_PANEL: 'TOGGLE_RIGHT_PANEL',
   DISPLAY_FILE_CODE: 'DISPLAY_FILE_CODE',
   TOGGLE_FOLDER_VIEW: 'TOGGLE_FOLDER_VIEW',
   SET_DEFAULT_FILE_HIGHLIGHTING: 'SET_DEFAULT_FILE_HIGHLIGHTING',
@@ -37,8 +37,9 @@ export const toggleFileDirectory = () => ({
   type: actionTypes.TOGGLE_FILE_DIRECTORY,
 });
 
-export const toggleBrowser = () => ({
-  type: actionTypes.TOGGLE_BROWSER,
+export const toggleRightPanel = display => ({
+  type: actionTypes.TOGGLE_RIGHT_PANEL,
+  display,
 });
 
 export const displayFileCode = displayedFileCode => ({
