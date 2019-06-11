@@ -12,6 +12,7 @@ export const testCaseState = {
       componentName: '',
       filePath: '',
       props: [],
+      hasProp: false,
     },
     {
       id: 1,
@@ -71,7 +72,7 @@ export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
   let lastAssertionStatement;
-  
+
   switch (action.type) {
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       const firstRenderStatement = statements[0];
@@ -190,6 +191,7 @@ export const testCaseReducer = (state, action) => {
       return {
         ...state,
         statements,
+        hasProp: !statements[0].hasProp,
       };
     case actionTypes.DELETE_RENDER_PROP:
       statements = statements.map(statement => {
@@ -229,6 +231,7 @@ export const testCaseReducer = (state, action) => {
             componentName: '',
             filePath: '',
             props: [],
+            hasProp: false,
           },
           {
             id: 1,
@@ -236,6 +239,7 @@ export const testCaseReducer = (state, action) => {
             queryVariant: '',
             querySelector: '',
             queryValue: '',
+            isNot: false,
             matcherType: '',
             matcherValue: '',
             suggestions: [],
