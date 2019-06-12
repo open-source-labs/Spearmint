@@ -30,7 +30,7 @@
   "scripts": {
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
-    "react-test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
     "release": "npm run react-build && electron-builder --publish=always",
@@ -58,6 +58,7 @@
     "enzyme-adapter-react-16": "^1.14.0",
     "jest-dom": "^3.5.0",
     "react-test-renderer": "^16.8.6",
+    "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"
   }
 }
