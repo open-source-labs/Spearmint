@@ -12,7 +12,7 @@
   "dependencies": {
     "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
-    "electron": "^5.0.1",
+    "electron": "^5.0.3",
     "electron-builder": "^20.40.2",
     "electron-is-dev": "^1.1.0",
     "js-beautify": "^1.10.0",

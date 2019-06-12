@@ -18,7 +18,7 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 
 const FirstRender = ({ render }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
-  const [{ statements }, dispatchToTestCase] = useContext(TestCaseContext);
+  const [{ statements, hasProp }, dispatchToTestCase] = useContext(TestCaseContext);
 
   const handleChangeComponentName = e => {
     const componentName = e.target.value;
@@ -26,7 +26,7 @@ const FirstRender = ({ render }) => {
     dispatchToTestCase(updateRenderComponent(componentName, filePath));
   };
 
-  const handleToggleProps = () => {
+  const handleToggleProps = e => {
     dispatchToTestCase(addRenderProp(render.id));
   };
 
@@ -52,7 +52,7 @@ const FirstRender = ({ render }) => {
   });
 
   return (
-    <section id={styles.render}>
+    <section data-testid='renderCard' id={styles.render}>
       {render.id !== 0 && (
         <img src={closeIcon} id={styles.closeBtn} alt='close' onClick={handleClickDeleteRender} />
       )}
@@ -81,6 +81,7 @@ const FirstRender = ({ render }) => {
             type='checkbox'
             id='render-checkbox'
             disabled={propsJSX.length}
+            checked={hasProp}
             onClick={handleToggleProps}
           />
           <label htmlFor='render-checkbox'>Do you need props ? </label>
