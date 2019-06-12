@@ -1,5 +1,6 @@
 import React from 'react';
-// import ProjectLoader from '../ProjectLoader';
+import ProjectLoader from '../ProjectLoader';
+import { GlobalContext } from '../../../context/globalReducer';
 import { render, fireEvent } from '@testing-library/react';
 import { build, fake } from 'test-data-bot';
 import '@testing-library/react/cleanup-after-each';
