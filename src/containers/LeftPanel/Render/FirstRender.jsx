@@ -69,12 +69,6 @@ const FirstRender = ({ render }) => {
             value={statements[0].componentName}
             onChange={handleChangeComponentName}
           />
-          <span id={styles.hastooltip} role='tooltip'>
-            <img src={questionIcon} alt='help' />
-            <span id={styles.tooltip}>
-              <ToolTip toolTipType={render.renderInputBox} />
-            </span>
-          </span>
         </div>
         <div id={styles.renderCheckbox}>
           <input
