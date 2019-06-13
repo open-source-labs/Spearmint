@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styles from '../Action/Action.module.scss';
+import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
 import { deleteAction, updateAction } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
@@ -66,39 +67,43 @@ const Action = ({ action, index, dispatchToTestCase }) => {
             <img src={dragIcon} alt='drag' />
             <h3>Action</h3>
           </div>
-          <div id={styles.eventType}>
-            <label htmlFor='eventType'>Event Type</label>
+          <div id={styles.eventTypeFlexBox}>
+            <div id={styles.eventType}>
+              <label htmlFor='eventType'>Event Type</label>
 
-            <AutoComplete
-              statement={action}
-              statementType='action'
-              dispatchToTestCase={dispatchToTestCase}
-              id={styles.autoComplete}
-            />
-
-            {needsEventValue(action.eventType) && mockData.length > 0 ? (
-              <span className={styles.eventValue}>
-                <label htmlFor='eventValue'> Value </label>
-                {/* <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
+              <AutoComplete
+                statement={action}
+                statementType='action'
+                dispatchToTestCase={dispatchToTestCase}
+                id={styles.autoComplete}
+              />
+            </div>
+            <div id={styles.eventTypeVal}>
+              {needsEventValue(action.eventType) && mockData.length > 0 ? (
+                <div className={styles.eventValue}>
+                  <label htmlFor='eventValue'> Value </label>
+                  {/* <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
                   <option id='eventValue' value='' />
                   {options}
                 </select> */}
-                <AutoCompleteMockData
-                  statement={action}
-                  dispatchToTestCase={dispatchToTestCase}
-                  statementType='action'
-                />
-              </span>
-            ) : needsEventValue(action.eventType) ? (
-              <span className={styles.eventValue}>
-                <label htmlFor='eventValue'> Value </label>
-                <input
-                  type='text'
-                  id='eventValue'
-                  onChange={e => handleChangeActionFields(e, 'eventValue')}
-                />
-              </span>
-            ) : null}
+                  <AutoCompleteMockData
+                    statement={action}
+                    dispatchToTestCase={dispatchToTestCase}
+                    statementType='action'
+                    id={styles2.autoCompleteMockData}
+                  />
+                </div>
+              ) : needsEventValue(action.eventType) ? (
+                <span className={styles.eventValue}>
+                  <label htmlFor='eventValue'> Value </label>
+                  <input
+                    type='text'
+                    id='eventValue'
+                    onChange={e => handleChangeActionFields(e, 'eventValue')}
+                  />
+                </span>
+              ) : null}
+            </div>
           </div>
           <div id={styles.queryFlexBox}>
             <div id={styles.querySelector}>
