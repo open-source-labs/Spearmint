@@ -1,19 +1,25 @@
 {
-  "name": "spearmint",
+  "name": "Spearmint",
   "version": "0.1.0",
-  "description": "spearmint",
+  "description": "Spearmint",
   "author": "spearmintjs",
   "build": {
-    "appId": "com.spearmint"
+    "appId": "com.spearmint",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "build/icon.*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    }
   },
-  "main": "electron/main.js",
-  "homepage": "https://www.github.com/spearmintjs/spearmint",
+  "main": "public/electron.js",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "concurrently": "^4.1.0",
     "cross-env": "^5.2.0",
-    "electron": "^5.0.3",
-    "electron-builder": "^20.40.2",
     "electron-is-dev": "^1.1.0",
     "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
@@ -25,16 +31,17 @@
     "react-modal": "^3.8.1",
     "react-monaco-editor": "^0.25.1",
     "react-scripts": "3.0.1",
+    "typescript": "^3.5.1",
     "wait-on": "^3.2.0"
   },
   "scripts": {
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
-    "react-test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
     "release": "npm run react-build && electron-builder --publish=always",
-    "build": "npm run react-build && yarn electron-build",
+    "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
@@ -54,10 +61,13 @@
   },
   "devDependencies": {
     "@testing-library/react": "^8.0.1",
+    "electron": "^5.0.3",
+    "electron-builder": "^20.43.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "jest-dom": "^3.5.0",
     "react-test-renderer": "^16.8.6",
+    "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"
   }
 }

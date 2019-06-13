@@ -34,7 +34,7 @@ const TestView = () => {
         <input type='text' defaultValue={url} id={styles.address} onChange={handleChangeUrl} />
         <button onClick={handleClickUrl}>Go</button>
       </div> */}
-      <webview id={styles.browserView} src={url} enableremotemodule='false' />
+      <webview id={styles.browserView} src={url} />
     </>
   );
 };
