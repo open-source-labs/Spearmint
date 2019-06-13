@@ -19,10 +19,6 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   };
   const handleAddAssertion = e => {
     dispatchToTestCase(addAssertion());
-    let testing = document.createElement('p');
-    let div1 = document.getElementById('test');
-    testing.innerHTML = 'computer';
-    div1.appendChild(testing);
   };
   const handleAddRender = e => {
     dispatchToTestCase(addRender());

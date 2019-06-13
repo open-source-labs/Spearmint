@@ -17,11 +17,6 @@ const RenderProp = ({ renderId, propId, propKey, propValue, dispatchToTestCase }
     dispatchToTestCase(updateRenderProp(renderId, propId, e.target.value, propValue));
   };
 
-  // const handleChangeUpdatePropValue = e => {
-  //   e.stopPropagation();
-  //   dispatchToTestCase(updateRenderProp(renderId, propId, propKey, e.target.value));
-  // };
-
   return (
     <div id={styles.renderPropsFlexBox}>
       <input type='text' id='propKey' value={propKey} onChange={handleChangeUpdatePropKey} />

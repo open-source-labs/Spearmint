@@ -42,9 +42,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       indent_size: 2,
       space_in_empty_paren: true,
       e4x: true,
-      // break_chained_methods: true,
-      // preserve_newlines: true,
-      // brace_style: collapse_preserve_inline,
     });
   };
 
