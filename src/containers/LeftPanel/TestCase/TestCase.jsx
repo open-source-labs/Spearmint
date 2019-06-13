@@ -87,7 +87,7 @@ const TestCase = () => {
               type='checkbox'
               disabled={mockDataJSX.length}
               checked={hasMockData}
-              onClick={handleToggleMockData}
+              onChange={handleToggleMockData}
             />
             <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
               Do you need mock data?

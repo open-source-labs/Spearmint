@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import styles from '../AutoComplete/AutoComplete.module.scss';
+import styles from '../AutoComplete/AutoCompleteMockData.module.scss';
 import AutoSuggest from 'react-autosuggest';
 import { updateAction, updateAssertion, updateRenderProp } from '../../../context/testCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';

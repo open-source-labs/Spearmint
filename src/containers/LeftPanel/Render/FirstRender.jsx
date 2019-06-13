@@ -84,7 +84,7 @@ const FirstRender = ({ render }) => {
             checked={hasProp}
             onClick={handleToggleProps}
           />
-          <label htmlFor='render-checkbox'>Do you need props ? </label>
+          <label htmlFor='render-checkbox'>Do you need props? </label>
         </div>
       </div>
       {propsJSX.length !== 0 && (
