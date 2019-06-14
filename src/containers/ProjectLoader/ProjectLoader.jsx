@@ -27,7 +27,7 @@ const ProjectLoader = () => {
   return (
     <div id={styles.projectLoader}>
       <section id={styles.upperPart}>
-        <span id={styles.title}>spearmint </span>
+        <span id={styles.title}>spearmint</span>
         <svg
           viewBox='0 0 24 24'
           xmlns='http://www.w3.org/2000/svg'
@@ -41,15 +41,14 @@ const ProjectLoader = () => {
         </svg>
       </section>
       <section id={styles.lowerPart}>
-        <h3 id={styles.subText}>An easier way to write React tests </h3>
         <div id={styles.appBox}>
           <div className={styles.contentBox}>
             <span className={styles.number}>01</span>
-            <span className={styles.text}> Enter the URL</span> <br />
+            <span className={styles.text}> Enter test site's URL</span> <br />
             <input
               type='text'
               id={styles.url}
-              placeholder="Enter test site's url"
+              placeholder='ex: localhost:3000'
               onChange={handleChangeUrl}
             />
           </div>

@@ -115,7 +115,6 @@ export const testCaseReducer = (state, action) => {
         }
         return statement;
       });
-      console.log('action', statements);
       return {
         ...state,
         statements,
@@ -148,7 +147,6 @@ export const testCaseReducer = (state, action) => {
         }
         return statement;
       });
-      console.log('assertion', statements);
       return {
         ...state,
         statements,
@@ -217,7 +215,6 @@ export const testCaseReducer = (state, action) => {
             return prop;
           });
         }
-        console.log(statements);
         return statement;
       });
       return {
