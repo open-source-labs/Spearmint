@@ -6,9 +6,6 @@ import { build, fake } from 'test-data-bot';
 import '@testing-library/react/cleanup-after-each';
 import 'jest-dom/extend-expect'
 
-// test('displays a chosen file code on the code view', () => {
-// });
-
 test('renders the export file modal when the open new folder button is clicked', () => {
 });
 
