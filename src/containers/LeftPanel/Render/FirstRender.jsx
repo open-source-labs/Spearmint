@@ -69,12 +69,6 @@ const FirstRender = ({ render }) => {
             value={statements[0].componentName}
             onChange={handleChangeComponentName}
           />
-          <span id={styles.hastooltip} role='tooltip'>
-            <img src={questionIcon} alt='help' />
-            <span id={styles.tooltip}>
-              <ToolTip toolTipType={render.renderInputBox} />
-            </span>
-          </span>
         </div>
         <div id={styles.renderCheckbox}>
           <input
@@ -84,7 +78,7 @@ const FirstRender = ({ render }) => {
             checked={hasProp}
             onClick={handleToggleProps}
           />
-          <label htmlFor='render-checkbox'>Do you need props ? </label>
+          <label htmlFor='render-checkbox'>Do you need props? </label>
         </div>
       </div>
       {propsJSX.length !== 0 && (

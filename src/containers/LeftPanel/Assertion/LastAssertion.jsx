@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../Assertion/Assertion.module.scss';
+import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
 import ToolTip from '../ToolTip/ToolTip';
 import ToolTipMatcher from '../ToolTip/ToolTipMatcher';
@@ -107,6 +108,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
             statement={assertion}
             dispatchToTestCase={dispatchToTestCase}
             statementType='assertion'
+            // id={styles2.autoCompleteMockData}
           />
         </div>
       </div>
@@ -119,7 +121,7 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
           <input
             type='checkbox'
             checked={assertion.isNot}
-            onClick={e => handleChangeAssertionFields(e, 'isNot')}
+            onChange={e => handleChangeAssertionFields(e, 'isNot')}
           />
         </div>
       </div>
@@ -140,18 +142,16 @@ const LastAssertion = ({ assertion, dispatchToTestCase, isLast }) => {
               </span>
             </span>
           </div>
-          <div>
-            {needsMatcherValue(assertion.matcherType) && (
-              <span>
-                <label htmlFor='matcherValue'>Value</label>
-                <input
-                  type='text'
-                  id={styles.matcherInput}
-                  onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
-                />
-              </span>
-            )}
-          </div>
+          {needsMatcherValue(assertion.matcherType) && (
+            <span id={styles.matcherVal}>
+              <label htmlFor='matcherValue'>Value</label>
+              <input
+                type='text'
+                id={styles.matcherInput}
+                onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+              />
+            </span>
+          )}
         </div>
       </div>
     </section>

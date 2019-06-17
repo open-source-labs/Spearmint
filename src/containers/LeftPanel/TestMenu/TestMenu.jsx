@@ -25,24 +25,26 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   };
 
   return (
-    <div id={styles.testMenu}>
-      <div id={styles.left}>
-        <button onClick={openModal}>New Test +</button>
-        <NewTestModal
-          isModalOpen={isModalOpen}
-          closeModal={closeModal}
-          dispatchToMockData={dispatchToMockData}
-          dispatchToTestCase={dispatchToTestCase}
-        />
-      </div>
-      <div id={styles.right}>
-        <button onClick={handleAddAction}>Action</button>
-        <button data-testid='assertionButton' onClick={handleAddAssertion}>
-          Assertion
-        </button>
-        <button data-testid='rerenderButton' onClick={handleAddRender}>
-          Rerender
-        </button>
+    <div id='test'>
+      <div id={styles.testMenu}>
+        <div id={styles.left}>
+          <button onClick={openModal}>New Test +</button>
+          <NewTestModal
+            isModalOpen={isModalOpen}
+            closeModal={closeModal}
+            dispatchToMockData={dispatchToMockData}
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        </div>
+        <div id={styles.right}>
+          <button onClick={handleAddAction}>Action</button>
+          <button data-testid='assertionButton' onClick={handleAddAssertion}>
+            Assertion
+          </button>
+          <button data-testid='rerenderButton' onClick={handleAddRender}>
+            Rerender
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../Render/RenderProp.module.scss';
+import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
 import { deleteRenderProp, updateRenderProp } from '../../../context/testCaseActions';
 import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
 
@@ -15,11 +16,6 @@ const RenderProp = ({ renderId, propId, propKey, propValue, dispatchToTestCase }
     e.stopPropagation();
     dispatchToTestCase(updateRenderProp(renderId, propId, e.target.value, propValue));
   };
-
-  // const handleChangeUpdatePropValue = e => {
-  //   e.stopPropagation();
-  //   dispatchToTestCase(updateRenderProp(renderId, propId, propKey, e.target.value));
-  // };
 
   return (
     <div id={styles.renderPropsFlexBox}>

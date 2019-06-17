@@ -1,4 +1,4 @@
-const { app, BrowserWindow, BrowserView, ipcMain } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 
@@ -11,6 +11,7 @@ function createWindow() {
     minWidth: 1400,
     height: 750,
     minHeight: 750,
+    icon: path.join(__dirname, 'public/icon.png'),
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
@@ -35,24 +36,4 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
-});
-
-ipcMain.on('openTest', (event, arg) => {
-  testView = new BrowserView({
-    webPreferences: {
-      nodeIntegration: true,
-      webviewTag: true,
-    },
-  });
-
-  mainWindow.addBrowserView(testView);
-
-  testView.setBounds({
-    x: 750,
-    y: 0,
-    width: 750,
-    height: 750,
-  });
-
-  testView.webContents.loadURL(arg);
 });

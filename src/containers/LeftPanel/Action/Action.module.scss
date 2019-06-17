@@ -40,16 +40,35 @@
   width: 100%;
 }
 
-#eventType {
+#eventTypeFlexBox {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
 }
-.eventValue {
-  margin-left: 10px;
+
+#eventType {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
 }
+
+.eventValue {
+  // width: 50%;
+  input {
+    width: 90%;
+    margin-top: 6px;
+  }
+}
+
+#eventTypeVal {
+  width: 43%;
+}
+
 #querySelector {
-  margin-right: 16%;
+  margin-right: 9%;
   select {
     font-family: $raleway;
     width: 100%;
@@ -71,7 +90,7 @@
 
 #query {
   input {
-    width: 105%;
+    width: 148%;
   }
 }
 

@@ -1,7 +1,5 @@
 import React from 'react';
 import styles from './AutoComplete.module.scss';
-// import { setEventType, setActionSuggestions } from '../Action/actionActions';
-// import { setMatcherType, setAssertionSuggestions } from '../Assertion/assertionActions';
 import { updateAction, updateAssertion } from '../../../context/testCaseActions';
 import { eventTypesList } from '../Action/eventTypesList';
 import { matcherTypesList } from '../Assertion/matcherTypesList';
