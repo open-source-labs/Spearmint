@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './AutoComplete.module.scss';
-import { updateAction, updateAssertion } from '../../../context/testCaseActions';
+import { updateAction, updateAssertion, updateReducer } from '../../../context/testCaseActions';
 import { eventTypesList } from '../Action/eventTypesList';
 import { matcherTypesList } from '../Assertion/matcherTypesList';
 import AutoSuggest from 'react-autosuggest';
@@ -8,6 +8,7 @@ import AutoSuggest from 'react-autosuggest';
 const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
+  // let updatedReducer = { ...statement };
 
   const handleChangeValue = (e, { newValue }) => {
     if (statementType === 'action') {

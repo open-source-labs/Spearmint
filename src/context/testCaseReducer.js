@@ -1,8 +1,10 @@
 import { createContext } from 'react';
 import { actionTypes } from './testCaseActions';
 
+// where we createContext for the testCase with default value of null
 export const TestCaseContext = createContext(null);
 
+// initial state
 export const testCaseState = {
   testStatement: '',
   statements: [
@@ -66,6 +68,19 @@ const createRenderProp = () => ({
   id: renderPropsId++,
   propKey: '',
   propValue: '',
+});
+
+// create reducer function
+// need to figure out what key-value pairs I need to list
+const createReducer = () => ({
+  id: statementId++,
+  type: 'reducer',
+  eventType: '',
+  eventValue: null,
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
+  suggestions: [],
 });
 
 export const testCaseReducer = (state, action) => {
@@ -144,6 +159,39 @@ export const testCaseReducer = (state, action) => {
           statement.matcherType = action.matcherType;
           statement.matcherValue = action.matcherValue;
           statement.suggestions = action.suggestions;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+    // switch cases for reducer
+    case actionTypes.ADD_REDUCER:
+      lastAssertionStatement = statements.pop();
+      statements.push(createReducer(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_REDUCER:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_REDUCER:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
+          statement.isNot = action.isNot;
+          statement.matcherType = action.matcherType;
+          statement.suggestions = action.suggestions;
+          statement.matcherValue = action.matcherValue;
         }
         return statement;
       });

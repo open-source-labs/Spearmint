@@ -19,6 +19,11 @@ export const actionTypes = {
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
+
+  // Action type for reducer
+  ADD_REDUCER: 'ADD_REDUCER',
+  DELETE_REDUCER: 'DELETE_REDUCER',
+  UPDATE_REDUCER: 'UPDATE_REDUCER',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -122,6 +127,36 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propKey,
   propValue,
 });
+
+// Functions for Reducer
+export const addReducer = () => ({
+  type: actionTypes.ADD_REDUCER,
+});
+
+export const deleteReducer = id => ({
+  type: actionTypes.DELETE_REDUCER,
+  id,
+});
+
+export const updateReducer = ({
+  id,
+  eventType,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  suggestions,
+}) => ({
+  type: actionTypes.UPDATE_REDUCER,
+  id,
+  eventType,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  suggestions,
+});
+
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });
