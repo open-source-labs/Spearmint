@@ -1,0 +1,1 @@
+// component to be rendered in the electron app
