@@ -1,3 +1,8 @@
+/**
+ * all of the actions used to update state for test cases
+ * invoked in the testCase.jsx file
+ */
+
 export const actionTypes = {
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
@@ -5,6 +10,10 @@ export const actionTypes = {
   ADD_ACTION: 'ADD_ACTION',
   DELETE_ACTION: 'DELETE_ACTION',
   UPDATE_ACTION: 'UPDATE_ACTION',
+
+  ADD_MIDDLEWARE: 'ADD_MIDDLEWARE',
+  DELETE_MIDDLEWARE: 'DELETE_MIDDLEWARE',
+  UPDATE_MIDDLEWARE: 'UPDATE_MIDDLEWARE',
 
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
@@ -29,6 +38,34 @@ export const updateStatementsOrder = draggableStatements => ({
 export const updateTestStatement = testStatement => ({
   type: actionTypes.UPDATE_TEST_STATEMENT,
   testStatement,
+});
+
+export const addMiddleware = () => ({
+  type: actionTypes.ADD_MIDDLEWARE,
+});
+
+export const deleteMiddleware = id => ({
+  type: actionTypes.DELETE_MIDDLEWARE,
+  id,
+});
+
+export const updateMiddleware = ({
+  id,
+  eventType,
+  // eventValue,
+  // queryVariant,
+  // querySelector,
+  // queryValue,
+  suggestions,
+}) => ({
+  type: actionTypes.UPDATE_MIDDLEWARE,
+  id,
+  eventType,
+  // eventValue,
+  // queryVariant,
+  // querySelector,
+  // queryValue,
+  suggestions,
 });
 
 export const addAction = () => ({

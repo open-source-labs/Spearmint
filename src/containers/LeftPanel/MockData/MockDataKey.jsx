@@ -1,3 +1,7 @@
+/**
+ * the data for each field key in the card for mock data
+ */
+
 import React from 'react';
 import styles from '../MockData/MockDataKey.module.scss';
 import { deleteMockDataKey, updateMockDataKey } from '../../../context/mockDataActions';

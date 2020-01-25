@@ -1,3 +1,7 @@
+/**
+ * right pane editor view (shows the code fof whatever file you click on)
+ */
+
 import React, { useContext } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../../context/globalReducer';

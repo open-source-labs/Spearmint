@@ -1,3 +1,8 @@
+/**
+ * nav pannel
+ * to export files, switch views, or open a new folder
+ */
+
 import React, { useState, useContext } from 'react';
 import styles from './NavBar.module.scss';
 import { GlobalContext } from '../../context/globalReducer';

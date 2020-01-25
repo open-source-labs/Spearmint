@@ -1,3 +1,7 @@
+/**
+ * the card for adding mock data
+ */
+
 import React from 'react';
 import styles from './MockData.module.scss';
 import {

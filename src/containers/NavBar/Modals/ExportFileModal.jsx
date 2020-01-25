@@ -1,3 +1,8 @@
+/**
+ * modal: pop ups windows on click 
+ * exprt test file  modal 
+ */
+
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import { GlobalContext } from '../../../context/globalReducer';
@@ -16,23 +21,27 @@ const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
 
-const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
-  const [fileName, setFileName] = useState('');
-  const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
-  const [testCase, __] = useContext(TestCaseContext);
-  const [{ mockData }, ___] = useContext(MockDataContext);
+const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destructuring these two from the nav bar component to see if someone clicked export file */
+  const [fileName, setFileName] = useState('');  /* using useState hook - adding state to this component, naming it fileName, giving it a function (setFileName) that will update state, and passing an empty string as initial state  */
+  const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext); /* invoking context created in GlobalReducer */
+  const [testCase, __] = useContext(TestCaseContext); /* invoking context from testCase reducer */
+  const [{ mockData }, ___] = useContext(MockDataContext); /* invoking context from mockdata reducer */
 
-  let testFileCode = 'import React from "react";';
+  let testFileCode = 'import React from "react";';  /* placeholder text? */
 
+
+  /* this is updating state  */
   const handleChangeFileName = e => {
     setFileName(e.target.value);
   };
 
+  /* invoking function to actually make the test file, export it, and close the modal */
   const handleClickSave = () => {
     generateTestFile();
     exportTestFile();
     closeExportModal();
   };
+
 
   const generateTestFile = () => {
     addImportStatements();
@@ -55,7 +64,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const addComponentImportStatement = () => {
-    const renderStatement = testCase.statements[0];
+    const renderStatement = testCase.statements[0]; /* [0] b.c this card is where users enter their componennt name */
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;

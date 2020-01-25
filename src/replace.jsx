@@ -1,3 +1,7 @@
+/**
+ * card and functionlity to add and update actions
+ */
+
 import React, { useContext } from 'react';
 import styles from '../Action/Action.module.scss';
 import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
@@ -11,20 +15,27 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const Action = ({ action, index, dispatchToTestCase }) => {
-  const [{ mockData }, _] = useContext(MockDataContext);
-  const handleChangeActionFields = (e, field) => {
+const Action = ({ action, index, dispatchToTestCase }) => {  /* args are the action being used, the index of the statement?, dispatchToTestCase */
+  /**
+   * invoke context by passing the context i created in the mock data reducer 
+   * destructuring mock data from initial state in mock data reducer
+   * not using a dispatcher in context. why? 
+   */
+  const [{ mockData }, _] = useContext(MockDataContext);  
+  const handleChangeActionFields = (e, field) => { /* function for the "changes" in the action card */
     let updatedAction = { ...action };
     updatedAction[field] = e.target.value;
     dispatchToTestCase(updateAction(updatedAction));
   };
 
-  const handleClickDeleteAction = e => {
+  const handleClickDeleteAction = e => {  /* to delete an action card */
     dispatchToTestCase(deleteAction(action.id));
   };
+
+
   //conditional rendering for events with values
-  const needsEventValue = eventType => {
-    const eventsWithValues = [
+  const needsEventValue = eventType => { /* conditional rendering - auto suggestions */
+    const eventsWithValues = [   /* where do these show up on the page? */
       'keyDown',
       'keyPress',
       'keyUp',
@@ -54,24 +65,24 @@ const Action = ({ action, index, dispatchToTestCase }) => {
   // });
 
   return (
-    <Draggable draggableId={action.id.toString()} index={index}>
-      {provided => (
+    <Draggable draggableId={action.id.toString()} index={index}>   {/* where does action come from ?? */}
+      {provided => (  /* what is provided doing?? */
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           id={styles.action}
         >
-          <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAction} />
+          <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAction} />   {/* the "X" to delete the card */}
           <div id={styles.actionHeader}>
-            <img src={dragIcon} alt='drag' />
+            <img src={dragIcon} alt='drag' />   {/* the drag icon in the corner */}
             <h3>Action</h3>
           </div>
-          <div id={styles.eventTypeFlexBox}>
+          <div id={styles.eventTypeFlexBox}>   
             <div id={styles.eventType}>
               <label htmlFor='eventType'>Event Type</label>
 
-              <AutoComplete
+              <AutoComplete   /* the auto suggestions on the input box */
                 statement={action}
                 statementType='action'
                 dispatchToTestCase={dispatchToTestCase}
@@ -79,7 +90,13 @@ const Action = ({ action, index, dispatchToTestCase }) => {
               />
             </div>
             <div id={styles.eventTypeVal}>
-              {needsEventValue(action.eventType) && mockData.length > 0 ? (
+              {/**
+               * EVENT TYPE + VALUE
+               * if there is an "approved" event type and the mock data > 0, render the value input box and the auto complete feature for auto suggestions in the value box. Suggections are the mock data names users enter
+               * if "approved" event type and no mock data,  render value input box with no auto suggestion feature
+               * otherwise, render nothing
+               */}
+              {needsEventValue(action.eventType) && mockData.length > 0 ? (    /* calling needEventValue function from above with event type (one from the event type list) passed in */
                 <div className={styles.eventValue}>
                   <label htmlFor='eventValue'> Value </label>
                   {/* <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
@@ -107,11 +124,16 @@ const Action = ({ action, index, dispatchToTestCase }) => {
           </div>
           <div id={styles.queryFlexBox}>
             <div id={styles.querySelector}>
+              {/**
+               * QUERY SELECTOR + QUERY VALUE + QUERY
+               * 
+               */}
               <label htmlFor='queryVariant' className={styles.queryLabel}>
                 Query Selector
               </label>
               <div id={styles.dropdownFlex}>
-                <select
+                {/* first drop down */}
+                <select 
                   id='queryVariant'
                   onChange={e => handleChangeActionFields(e, 'queryVariant')}
                 >
@@ -123,13 +145,14 @@ const Action = ({ action, index, dispatchToTestCase }) => {
                   <option value='findBy'>findBy</option>
                   <option value='findAllBy'>findAllBy</option>
                 </select>
-                <span id={styles.hastooltip} role='tooltip'>
+                <span id={styles.hastooltip} role='tooltip'> {/* question mark help popup */}
                   <img src={questionIcon} alt='help' />
                   <span id={styles.tooltip}>
                     <ToolTip toolTipType={action.queryVariant} />
                   </span>
                 </span>
 
+               {/* second drop down */}
                 <select
                   id='querySelector'
                   onChange={e => handleChangeActionFields(e, 'querySelector')}
@@ -145,7 +168,7 @@ const Action = ({ action, index, dispatchToTestCase }) => {
                   <option value='TestId'>TestId</option>
                   {/* TextMatch Precision & Normalization will be added */}
                 </select>
-                <span id={styles.hastooltip} role='tooltip'>
+                <span id={styles.hastooltip} role='tooltip'>  {/* question mark for help */}
                   <img src={questionIcon} alt='help' />
                   <span id={styles.tooltip}>
                     <ToolTip toolTipType={action.querySelector} />
@@ -154,6 +177,7 @@ const Action = ({ action, index, dispatchToTestCase }) => {
               </div>
             </div>
             <div id={styles.query}>
+              {/* query input box */}
               <label htmlFor='queryValue' className={styles.queryLabel}>
                 Query
               </label>

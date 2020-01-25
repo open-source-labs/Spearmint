@@ -1,3 +1,7 @@
+/**
+ * the question mark notes for selectors
+ */
+
 import React from 'react';
 import styles from '../ToolTip/ToolTip.scss';
 
