@@ -27,7 +27,7 @@ const App = () => {
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-              <NavBar />
+              <NavBar /> 
               <LeftPanel />
             </MockDataContext.Provider>
           </TestCaseContext.Provider>

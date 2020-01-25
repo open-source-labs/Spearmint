@@ -18,6 +18,10 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 
+  ADD_ASYNC: 'ADD_ASYNC',
+  DELETE_ASYNC: 'DELETE_ASYNC',
+  UPDATE_ASYNC: 'UPDATE_ASYNC',
+
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
@@ -122,6 +126,36 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propKey,
   propValue,
 });
+
+export const addAsync = () => ({
+  type: actionTypes.ADD_ASYNC,
+});
+
+export const deleteAsync = id => ({
+  type: actionTypes.DELETE_ASYNC,
+  id,
+});
+
+export const updateAsync = ({ id,
+  queryVariant,
+  querySelector,
+  queryValue,
+  isNot,
+  matcherType,
+  matcherValue,
+  suggestions,
+}) => ({
+  type: actionTypes.UPDATE_ASSERTION,
+  id,
+  queryVariant,
+  querySelector,
+  queryValue,
+  isNot,
+  matcherType,
+  matcherValue,
+  suggestions,
+});
+
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });

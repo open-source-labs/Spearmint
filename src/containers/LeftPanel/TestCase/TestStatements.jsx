@@ -2,6 +2,7 @@ import React from 'react';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
 import Rerender from '../Render/Rerender';
+import Async from '../Thunk/Thunk';
 
 const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
   return statements.map((statement, i) => {
@@ -20,6 +21,15 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
           <Assertion
             key={statement.id}
             assertion={statement}
+            index={i}
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        );
+      case 'async':
+        return (
+          <Async
+            key={statement.id}
+            async={statement}
             index={i}
             dispatchToTestCase={dispatchToTestCase}
           />

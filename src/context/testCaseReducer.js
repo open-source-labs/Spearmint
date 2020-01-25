@@ -62,11 +62,27 @@ const createRerender = (componentName, filePath) => ({
   props: [],
 });
 
+// update key value pairs for Aysnc
+const createAsync = () => ({
+  // UPDATE KEY VALUE PAIRS FOR ASYNC
+  id: statementId++,
+  type: 'async',
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
+  isNot: false,
+  matcherType: '',
+  matcherValue: '',
+  suggestions: [],
+});
+
 const createRenderProp = () => ({
   id: renderPropsId++,
   propKey: '',
   propValue: '',
 });
+
+
 
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
@@ -221,6 +237,39 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+// ASYNC SWITCH CASES
+    case actionTypes.ADD_ASYNC:
+      lastAssertionStatement = statements.pop();
+      statements.push(createAsync(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_ASYNC:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_ASYNC:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.eventType = action.eventType;
+          statement.eventValue = action.eventValue;
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
+          statement.suggestions = action.suggestions;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
     case actionTypes.CREATE_NEW_TEST:
       return {
         testStatement: '',
