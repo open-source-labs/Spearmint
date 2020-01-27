@@ -68,6 +68,19 @@ const createRenderProp = () => ({
   propValue: '',
 });
 
+//createActionCreator
+const createActionCreator = () => ({
+  id: statementId++,
+  filePath: '',
+  type: 'action-creator',
+  actionsFolder: '',
+  typesFolder: '',
+  actionCreatorFunc: '',
+  actionType: '',
+  payloadKey: null,
+  payloadType: null,
+});
+
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
@@ -82,12 +95,14 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.UPDATE_TEST_STATEMENT:
       let testStatement = action.testStatement;
       return {
         ...state,
         testStatement,
       };
+
     case actionTypes.ADD_ACTION:
       lastAssertionStatement = statements.pop();
       statements.push(createAction(), lastAssertionStatement);
@@ -95,6 +110,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.DELETE_ACTION:
       lastAssertionStatement = statements.pop();
       statements = statements.filter(statement => statement.id !== action.id);
@@ -103,6 +119,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.UPDATE_ACTION:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
@@ -119,6 +136,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.ADD_ASSERTION:
       lastAssertionStatement = statements.pop();
       statements.push(createAssertion(), lastAssertionStatement);
@@ -126,6 +144,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.DELETE_ASSERTION:
       lastAssertionStatement = statements.pop();
       statements = statements.filter(statement => statement.id !== action.id);
@@ -134,6 +153,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.UPDATE_ASSERTION:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
@@ -151,6 +171,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.ADD_RENDER:
       lastAssertionStatement = statements.pop();
       const renderComponentName = state.statements[0].componentName;
@@ -160,6 +181,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.DELETE_RENDER:
       lastAssertionStatement = statements.pop();
       statements = statements.filter(statement => statement.id !== action.id);
@@ -169,6 +191,7 @@ export const testCaseReducer = (state, action) => {
         statements,
         lastAssertionStatement,
       };
+
     case actionTypes.UPDATE_RENDER_COMPONENT:
       statements = statements.map(statement => {
         if (statement.type === 'render') {
@@ -181,6 +204,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.ADD_RENDER_PROP:
       statements = statements.map(statement => {
         if (statement.id === action.renderId) {
@@ -193,6 +217,7 @@ export const testCaseReducer = (state, action) => {
         statements,
         hasProp: !statements[0].hasProp,
       };
+
     case actionTypes.DELETE_RENDER_PROP:
       statements = statements.map(statement => {
         if (statement.id === action.renderId) {
@@ -204,6 +229,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.UPDATE_RENDER_PROP:
       statements = statements.map(statement => {
         if (statement.id === action.renderId) {
@@ -221,6 +247,42 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
+    //actioncreator cases
+    case actionTypes.ADD_ACTIONCREATOR:
+      lastAssertionStatement = statements.pop();
+      statements.push(createActionCreator(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.DELETE_ACTIONCREATOR:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_ACTIONCREATOR:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.actionCreatorFunc = action.actionCreatorFunc;
+          statement.payloadKey = action.payloadKey;
+          statement.payloadType = action.payloadType;
+          statement.actionType = action.actionType;
+          statement.actionsFolder = action.actionsFolder;
+          statement.typesFolder = action.typesFolder;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
     case actionTypes.CREATE_NEW_TEST:
       return {
         testStatement: '',

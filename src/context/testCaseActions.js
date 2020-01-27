@@ -18,6 +18,10 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 
+  ADD_ACTIONCREATOR: 'ADD_ACTIONCREATOR',
+  DELETE_ACTIONCREATOR: 'DELETE_ACTIONCREATOR',
+  UPDATE_ACTIONCREATOR: 'UPDATE_ACTIONCREATORS',
+
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
@@ -122,6 +126,37 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propKey,
   propValue,
 });
+
+export const addActionCreator = () => ({
+  type: actionTypes.ADD_ACTIONCREATOR,
+});
+
+export const deleteActionCreator = id => ({
+  type: actionTypes.DELETE_ACTIONCREATOR,
+  id,
+});
+
+export const updateActionCreator = ({
+  id,
+  actionsFolder,
+  typesFolder,
+  actionCreatorFunc,
+  actionType,
+  payloadKey,
+  payloadType,
+  filePath,
+}) => ({
+  type: actionTypes.UPDATE_ACTIONCREATOR,
+  id,
+  actionsFolder,
+  typesFolder,
+  actionCreatorFunc,
+  actionType,
+  payloadKey,
+  payloadType,
+  filePath,
+});
+
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });

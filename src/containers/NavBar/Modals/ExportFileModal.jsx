@@ -47,10 +47,10 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   const addImportStatements = () => {
     addComponentImportStatement();
-    testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
+    addReduxImportStatement();
+    testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
     import { build, fake } from 'test-data-bot'; 
-    import 'react-testing-library/cleanup-after-each'; 
-    import 'jest-dom/extend-expect'
+    import '@testing-library/jest-dom/extend-expect'
     \n`;
   };
 
@@ -60,6 +60,20 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
+
+  // import statement for actions and types
+  const addReduxImportStatement = () => {
+    let actionCreatorStatement;
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'action-creator') {
+        actionCreatorStatement = statement;
+        return actionCreatorStatement;
+      }
+    });
+    testFileCode += `import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
+      import * as types from '../${actionCreatorStatement.typesFolder}.js'; \n`;
+  };
+
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
@@ -75,6 +89,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }, '');
   };
 
+  // added action creator case
   const addTestStatements = () => {
     testFileCode += `test('${testCase.testStatement}', () => {`;
     const methods = identifyMethods();
@@ -86,6 +101,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
+        case 'action-creator':
+          return addActionCreator(statement);
         default:
           return statement;
       }
@@ -137,6 +154,23 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     return render.props.reduce((propsCode, prop) => {
       return propsCode + `${prop.propKey}={${prop.propValue}}`;
     }, '');
+  };
+
+  // actionCreator- export test code
+  const addActionCreator = actionCreator => {
+    if (actionCreator.payloadKey && actionCreator.payloadType) {
+      testFileCode += `const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
+      const expectedAction = { 
+        type: types.${actionCreator.actionType}, 
+        ${actionCreator.payloadKey} 
+      }; \n
+      expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction);`;
+    } else {
+      testFileCode += `const expectedAction = { 
+        type: types.${actionCreator.actionType} 
+      }; 
+      expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction);`;
+    }
   };
 
   const exportTestFile = async () => {

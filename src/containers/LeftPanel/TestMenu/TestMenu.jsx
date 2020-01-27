@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import { addAction, addAssertion, addRender } from '../../../context/testCaseActions';
+import {
+  addAction,
+  addAssertion,
+  addRender,
+  addActionCreator,
+} from '../../../context/testCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
 
 const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
@@ -23,6 +28,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const handleAddRender = e => {
     dispatchToTestCase(addRender());
   };
+  const handleAddActionCreator = e => {
+    dispatchToTestCase(addActionCreator());
+  };
 
   return (
     <div id='test'>
@@ -43,6 +51,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           </button>
           <button data-testid='rerenderButton' onClick={handleAddRender}>
             Rerender
+          </button>
+          <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
+            Action Creator
           </button>
         </div>
       </div>
