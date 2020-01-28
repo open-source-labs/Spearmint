@@ -136,24 +136,21 @@ export const deleteAsync = id => ({
   id,
 });
 
-export const updateAsync = ({ id,
-  queryVariant,
-  querySelector,
-  queryValue,
-  isNot,
-  matcherType,
-  matcherValue,
-  suggestions,
-}) => ({
-  type: actionTypes.UPDATE_ASSERTION,
+export const updateAsync = ({
   id,
-  queryVariant,
-  querySelector,
-  queryValue,
-  isNot,
-  matcherType,
-  matcherValue,
-  suggestions,
+  method,
+  route,
+  store,
+  matcher,
+  expectedResponse,
+}) => ({
+  type: actionTypes.UPDATE_ASYNC,
+  id,
+  method,
+  route,
+  store,
+  matcher,
+  expectedResponse,
 });
 
 export const createNewTest = () => ({
