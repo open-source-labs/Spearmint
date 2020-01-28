@@ -77,38 +77,38 @@ const Async = ({ async, index, dispatchToTestCase }) => {
 
               <label htmlFor='method' className={styles.queryLabel}>
                 Method
-                </label>
-              <div id={styles.dropdownFlex}>
-                <select
-                  id='method'
-                  value={async.method}
-                  onChange={e => handleChangeAsyncFields(e, 'method')}
-                >
-                  <option value='' />
-                  <option value='get'>get</option>
-                  <option value='post'>post</option>
-                  <option value='put'>put</option>
-                  <option value='delete'>delete</option>
-
-                </select>
-              </div>
+              </label>
+              <select
+                id='method'
+                value={async.method}
+                onChange={e => handleChangeAsyncFields(e, 'method')}
+              >
+                <option value='' />
+                <option value='get'>get</option>
+                <option value='post'>post</option>
+                <option value='put'>put</option>
+                <option value='delete'>delete</option>
+              </select>
+            
               <div id={styles.query}>
                 <label htmlFor='route' className={styles.queryLabel}>
                   Route
                 </label>
                 <input type="text" name="route" />
               </div>
+
               <div id={styles.query}>
                 <label htmlFor='store' className={styles.queryLabel}>
                   Store
                 </label>
                 <input type="text" name="store" />
               </div>
-            </div>
+          
+           
             <label htmlFor='matcher' className={styles.queryLabel}>
               Matcher
-                </label>
-
+            </label>
+            
             <select
               id='matcher'
               value={async.matcher}
@@ -118,10 +118,13 @@ const Async = ({ async, index, dispatchToTestCase }) => {
               <option value='toEqual'>toEqual</option>
               <option value='toContainEqual'>toContainEqual</option>
             </select>
+            
             <label htmlFor='expectedResponse' className={styles.queryLabel}>
               Expected Response
                 </label>
             <input type="text" name="expectedResponse" />
+
+            </div>
           </div>
         </div>
       )
