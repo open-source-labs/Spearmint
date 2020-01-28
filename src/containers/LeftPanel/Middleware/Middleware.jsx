@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import styles from '../Middleware/Middleware.module.scss';
-//import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
+import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
 
 import { deleteMiddleware, updateMiddleware } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
-// import AutoComplete from '../AutoComplete/AutoComplete';
-// import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
+import AutoComplete from '../AutoComplete/AutoComplete';
+import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../ToolTip/ToolTip';
-//import { MockDataContext } from '../../../context/mockDataReducer';
+import { MockDataContext } from '../../../context/mockDataReducer';
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -17,13 +17,13 @@ const dragIcon = require('../../../assets/images/drag-vertical.png');
 const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructuring from testStatements */
     /**
      * invoke context here ?
-     * make the context in the reducer ***
+     * make new the context in the reducer *** ?
      */
- 
+    const [{ mockData }, _] = useContext(MockDataContext);
      
  
      /**
-     *  create handler function to dispatch action with user input to reducer
+     * create handler function to dispatch action with user input to reducer
      * create handler function for udates to my middleware
      */
     const handleChangeMiddlewareFields = (e, field) => { /* function for the "changes" in the action card */
@@ -40,6 +40,12 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
      * create conditional rendering for events with values ??
      * the auto suggestions
      */
+    const needsEventValue = eventType => {
+        const eventsWithValues = [
+          'passing non-function arguements',
+        ];
+        return eventsWithValues.includes(eventType);
+      };
 
 
      return (
@@ -62,22 +68,66 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
 
                     {/* the categories inside the actual box */}
                     <div id={styles.eventTypeFlexBox}>
-                        <div id={styles.eventType}>
+                        {/* <div id={styles.eventType}>
                             <label htmlFor='eventType'> Middleware Type</label>
 
-                            {/* add auto complete *** */}
-                        </div>
+                            
+                            <AutoComplete
+                                statement={middleware}
+                                statementType='middleware'
+                                dispatchToTestCase={dispatchToTestCase}
+                                id={styles.autoComplete}
+                            />
+                        </div> */}
 
                         
-                           {/* add mock data stuff here? *** */} 
-    
+                           {/* add mock data stuff here *** */} 
+                        <div id={styles.eventTypeVal}>
+                            {needsEventValue(middleware.eventType) && mockData.length > 0 ? (
+                                <div className={styles.eventValue}>
+                                <label htmlFor='eventValue'> Value </label>
+                                <AutoCompleteMockData
+                                    statement={middleware}
+                                    dispatchToTestCase={dispatchToTestCase}
+                                    statementType='middleware'
+                                    id={styles2.autoCompleteMockData}
+                                />
+                                </div>
+                            ) : null}
+                        </div>
                     </div>
+
                     <div id={styles.queryFlexBox}>
                         <div id={styles.querySelector}>
+                            {/* <input
+                            id='queryFunction'
+                            onChange={e => handleChangeMiddlewareFields(e, 'queryFunction')}
+                            ></input> */}
+
                             <label htmlFor='queryVariant' className={styles.queryLabel}>
                                 Query Selector
                             </label>
                             <div id={styles.dropdownFlex}>
+                                
+                                {/* my added drop down (to replace the query input) */}
+                                <select
+                                id='queryValue'
+                                onChange={e => handleChangeMiddlewareFields(e, 'queryValue')}
+                                >
+                                    {/* add options here *** */}
+                                    <option value='' />
+                                    <option value='passes_non_functional_arguments'>passes_non_functional_arguments</option>
+                                    <option value='calls_the_function'>calls_the_function</option>
+                                    <option value='passes_functional_arguments'>passes_functional_arguments</option>
+                                </select>
+                                <span id={styles.hastooltip} role='tooltip'>
+                                    <img src={questionIcon} alt='help' />
+                                    <span id={styles.tooltip}>
+                                        <ToolTip toolTipType={middleware.queryVariant} />
+                                    </span>
+                                </span>
+
+
                                 {/* first drop down */}
                                 <select
                                 id='queryVariant'
@@ -85,7 +135,10 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                 >
                                     {/* add more options here *** */}
                                     <option value='' />
-                                    <option value='getBy'>getBy</option>
+                                    <option value='toBeCalled'>toBeCalled</option>
+                                    <option value='toHaveBeenCalled'>toHaveBeenCalled</option>
+                                    <option value='toHaveBeenCalledWith'>toHaveBeenCalledWith</option>
+                                    <option value='toHaveBeenLastCalledWith'>toHaveBeenLastCalledWith</option>
                                 </select>
                                 <span id={styles.hastooltip} role='tooltip'>
                                     <img src={questionIcon} alt='help' />
@@ -101,7 +154,10 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                 >
                                     {/* add more options here *** */}
                                     <option value='' />
-                                    <option value='LabelText'>LabelText</option>
+                                    <option value='next'>next</option>
+                                    <option value='function'>function</option>
+                                    <option value='store.Dispatch'>store.Dispatch</option>
+                                    <option value='store.GetState'>store.GetState</option>
                                 </select>
                                 <span id={styles.hastooltip} role='tooltip'>
                                     <img src={questionIcon} alt='help' />
@@ -109,20 +165,45 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                         <ToolTip toolTipType={middleware.querySelector} />
                                     </span>
                                 </span>
+
+                                {/* my added drop down */}
+                                <input 
+                                id='queryType'
+                                onChange={e => handleChangeMiddlewareFields(e, 'queryType')}
+                                >
+                                </input>
+                                {/* <select
+                                id='queryType'
+                                onChange={e => handleChangeMiddlewareFields(e, 'queryType')}
+                                >
+                                     add options here
+                                    <option value='' />
+                                    <option value='Thunk'>Thunk</option>
+                                    <option value='Logging'>Logging</option>
+                                    <option value='etc'>etc</option>
+                                    <option value='other'>other</option>
+                                </select> */}
+                                <span id={styles.hastooltip} role='tooltip'>
+                                    <img src={questionIcon} alt='help' />
+                                    <span id={styles.tooltip}>
+                                        <ToolTip toolTipType={middleware.querySelector} />
+                                    </span>
+                                </span>
+                                
                             </div>
                         </div>
 
                         <div id={styles.query}>
                             {/* query input box */}
-                            <label htmlFor='queryValue' className={styles.queryLabel}>
+                             {/* <label htmlFor='queryValue' className={styles.queryLabel}>
                              Query
-                            </label>
+                            </label> 
 
-                            <input
+                             <input
                             type='text'
                             id='queryValue'
                             onChange={e => handleChangeMiddlewareFields(e, 'queryValue')}
-                            />
+                            />  */}
                         </div>
 
                     </div>

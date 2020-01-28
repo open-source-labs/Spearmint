@@ -49,11 +49,12 @@ let renderPropsId = 0; /* same */
 const createMiddleware = () => ({ /* renders the action card when the "action" button is clicked */
   id: statementId++,  
   type: 'middleware',  
-  middlewareType: '',  /* ex: onclick */
-  // eventValue: null,  
-  // queryVariant: '',  /* drop down to select a query variant */
-  // querySelector: '', /* to select an option */
-  // queryValue: '',  
+  queryType: '',  /* ex: onclick */
+  eventValue: null,  
+  queryVariant: '',  /* drop down to select a query variant */
+  querySelector: '', /* to select an option */
+  queryValue: '', 
+  queryFunction: '', 
   suggestions: [],
 });
 
@@ -134,11 +135,12 @@ export const testCaseReducer = (state, action) => {  /* reducers only pass the s
     case actionTypes.UPDATE_MIDDLEWARE:
       statements = statements.map(statement => {  /* update statements if statement id === action id */
         if (statement.id === action.id) {
-          statement.middlewareType = action.middlewareType;
-          // statement.eventValue = action.eventValue;
-          // statement.queryVariant = action.queryVariant;
-          // statement.querySelector = action.querySelector;
-          // statement.queryValue = action.queryValue;
+          statement.queryType = action.queryType;
+          statement.eventValue = action.eventValue;
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
+          statement.queryFunction = action.queryFunction;
           statement.suggestions = action.suggestions;
         }
         return statement;

@@ -1,5 +1,5 @@
 /**
- * the data for each field key in the card for mock data
+ * the data for each field key and type in the card for mock data
  */
 
 import React from 'react';

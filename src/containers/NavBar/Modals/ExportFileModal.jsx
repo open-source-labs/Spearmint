@@ -46,6 +46,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
   const generateTestFile = () => {
     addImportStatements();
     addMockData();
+    //addJestMockData();
+    addJestTestStatements(); 
     addTestStatements();
     testFileCode = beautify(testFileCode, {
       indent_size: 2,
@@ -54,7 +56,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     });
   };
 
-  const addImportStatements = () => {
+  /* the test file code concats the modules users will import to run tests. These imports appear at the top of the exported file */
+  const addImportStatements = () => { 
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
     import { build, fake } from 'test-data-bot'; 
@@ -63,8 +66,14 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     \n`;
   };
 
+  /**
+   * render statement is [0] b.c this card is where users enter their component name (the render statement)
+   * filepath invokes projectFIlePath (initialized in global reducer. it gets updated in open folderbutton in "setFilePathMap")
+   * component name is from open folder in filePathMap object.  
+   *  
+  */ 
   const addComponentImportStatement = () => {
-    const renderStatement = testCase.statements[0]; /* [0] b.c this card is where users enter their componennt name */
+    const renderStatement = testCase.statements[0]; 
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
@@ -78,11 +87,32 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     testFileCode += '\n';
   };
 
+  
+
+
+  //  const addJestMockData = (statement) => {
+  // //  mockData.forEach(mockDatum => {
+  // //    //let fieldTypes = createJestMockDatumFieldTypes(mockDatum);
+  // //    let fieldTypes = `${mockDatum.fieldType}`
+  //   addMiddleware(statement)
+  //   testFileCode += '\n';
+  //  };
+  
+   
+
   const createMockDatumFieldKeys = mockDatum => {
     return mockDatum.fieldKeys.reduce((fieldKeysCode, mockDatum) => {
       return fieldKeysCode + `${mockDatum.fieldKey}: fake(f => f.random.${mockDatum.fieldType}()),`;
     }, '');
   };
+
+/**
+ * const createJestMockDatumFieldTypes = mockDatum => {
+ *    return mockDatum.fieldTypes.reduce((fieldTypesCode, mockDatum) => {
+ *        return fieldTypesCode + `${mockDatum.fieldType},`: 
+ *    }, '');
+ * };
+ */
 
   const addTestStatements = () => {
     testFileCode += `test('${testCase.testStatement}', () => {`;
@@ -95,12 +125,36 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
+        // case 'middleware':
+        //   return addMiddleware(statement);
         default:
           return statement;
       }
     });
     testFileCode += '});';
+    testFileCode += '\n';
   };
+
+
+  
+  const addJestTestStatements = () => {
+     //testFileCode += `it('${testCase.testStatement}', () => {`
+      //const methods = identifyJestMethods();
+      testCase.statements.forEach(statement => {
+        switch (statement.type) {
+          case 'middleware': 
+            return addMiddleware(statement);
+          // case 'render':
+          //   return addRender(statement, methods);
+          default:
+            return statement;
+        }
+      })
+      testFileCode += '});';
+      testFileCode += '\n';
+  };
+
+   
 
   const identifyMethods = () => {
     const methods = new Set([]);
@@ -116,6 +170,23 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     return Array.from(methods).join(', ');
   };
 
+
+  
+  // const identifyJestMethods = () => {
+  //    const methods = new Set([]);
+  //    let renderCount = 0;
+  //    testCase.statements.forEach(statement => {
+  //        if (statement.type === 'middleware') {
+  //           methods.add(statement.queryVariant + statement.querySelector);
+  //        } else if (statement.type === 'render'){
+  //           renderCount++;         
+  //        }
+  //    })
+  //    if (renderCount > 1) methods.add('rerender');
+  //    return Array.from(methods).join(', ');
+  // }
+   
+
   const addAction = action => {
     if (action.eventValue) {
       testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
@@ -125,6 +196,44 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
                       ('${action.queryValue}'));`;
     }
   };
+
+  
+  const addMiddleware = middleware => {
+    testFileCode += `const ${middleware.queryValue} = () => {
+    const store = {
+        getState: jest.fn(() => ({})),
+        dispatch: jest.fn()
+    }
+    const next = jest.fn()
+    const invoke = action => ${middleware.queryType}(store)(next)(action)
+    return { store, next, invoke } 
+  }`;
+testFileCode += '\n';
+
+   if (middleware.queryValue === 'passes_non_functional_arguments') {
+       testFileCode += ` it (${testCase.testStatement}, () => {
+       const { next, invoke } = ${middleware.queryValue}()
+       const action = {type : 'TEST'}
+       invoke(action)
+       expect(${middleware.querySelector}).${middleware.queryVariant}(action)`
+     } else if (middleware.queryValue === 'calls_the_function') {
+       testFileCode += ` it (${testCase.testStatement}, () => {
+         const { invoke } = ${middleware.queryValue}()
+         const fn = jest.fn()
+         invoke(fn)
+         expect(${middleware.querySelector}).${middleware.queryVariant}()`
+     } else if(middleware.queryValue === 'passes_functional_arguments'){
+       testFileCode += ` it (${testCase.testStatement}, () => {
+         const { store, invoke } = ${middleware.queryValue}()
+         invoke((dispatch, getState) => {
+           dispatch('Test Dispatch')
+           getState()
+         })
+         expect(${middleware.querySelector}).${middleware.queryVariant}('Test Dispatch')
+         expect(${middleware.querySelector}).${middleware.queryVariant}()`
+    }
+  }
+   
 
   const addAssertion = assertion => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
