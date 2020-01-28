@@ -75,14 +75,14 @@ const Async = ({ async, index, dispatchToTestCase }) => {
                 <input type="text" name="asyncFunction" />
               </div>
 
-              <label htmlFor='queryVariant' className={styles.queryLabel}>
+              <label htmlFor='method' className={styles.queryLabel}>
                 Method
                 </label>
               <div id={styles.dropdownFlex}>
                 <select
-                  id='queryVariant'
-                  value={async.queryVariant}
-                  onChange={e => handleChangeAsyncFields(e, 'queryVariant')}
+                  id='method'
+                  value={async.method}
+                  onChange={e => handleChangeAsyncFields(e, 'method')}
                 >
                   <option value='' />
                   <option value='get'>get</option>
@@ -93,26 +93,26 @@ const Async = ({ async, index, dispatchToTestCase }) => {
                 </select>
               </div>
               <div id={styles.query}>
-                <label htmlFor='queryVariant' className={styles.queryLabel}>
+                <label htmlFor='route' className={styles.queryLabel}>
                   Route
                 </label>
-                <input type="text" name="Route" />
+                <input type="text" name="route" />
               </div>
               <div id={styles.query}>
-                <label htmlFor='queryVariant' className={styles.queryLabel}>
+                <label htmlFor='store' className={styles.queryLabel}>
                   Store
                 </label>
-                <input type="text" name="Store" />
+                <input type="text" name="store" />
               </div>
             </div>
-            <label htmlFor='queryVariant' className={styles.queryLabel}>
+            <label htmlFor='matcher' className={styles.queryLabel}>
               Matcher
                 </label>
 
             <select
-              id='queryVariant'
-              value={async.queryVariant}
-              onChange={e => handleChangeAsyncFields(e, 'queryVariant')}
+              id='matcher'
+              value={async.matcher}
+              onChange={e => handleChangeAsyncFields(e, 'matcher')}
             >
               <option value='' />
               <option value='toEqual'>toEqual</option>
