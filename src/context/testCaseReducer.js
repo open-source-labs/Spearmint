@@ -186,11 +186,11 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_REDUCER:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
+          statement.queryVariant = action.queryVariant; // action
+          statement.querySelector = action.querySelector; // initial state
+          statement.queryValue = action.queryValue; // reducer name
           statement.isNot = action.isNot;
-          statement.matcherType = action.matcherType;
+          statement.matcherType = action.matcherType; // updated state
           statement.matcherValue = action.matcherValue;
           statement.suggestions = action.suggestions;
         }

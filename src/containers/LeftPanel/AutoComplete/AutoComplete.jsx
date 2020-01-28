@@ -35,7 +35,9 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
           ? statement.matcherType
           : statementType === 'assertion' && updatedAssertion.isNot
             ? `not.${statement.matcherType}`
-            : null,
+            : statementType === 'reducer'
+              ? statement.matcherType
+              : null,
 
     onChange: handleChangeValue,
   };

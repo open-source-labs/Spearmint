@@ -38,6 +38,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const generateTestFile = () => {
     addImportStatements();
     addMockData();
+    addJestTestStatementsReducer();
     addTestStatements();
     testFileCode = beautify(testFileCode, {
       indent_size: 2,
@@ -87,14 +88,27 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
-        case 'reducer':
-          return addReducer(statement);
+        // case 'reducer':
+        //   return addReducer(statement);
         default:
           return statement;
       }
     });
     testFileCode += '});';
   };
+
+  const addJestTestStatementsReducer = () => {
+    testFileCode += `it('${testCase.testStatement}', () => {`;
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'reducer':
+          return addReducer(statement);
+        default:
+          return statement;
+      }
+    })
+    testFileCode += '});';
+  }
 
   const identifyMethods = () => {
     const methods = new Set([]);
@@ -124,7 +138,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
                     (${assertion.queryValue})).${assertion.matcherType}(${
       assertion.matcherValue
-    });`;
+      });`;
   };
 
   // addReducer function needs to be refactored
