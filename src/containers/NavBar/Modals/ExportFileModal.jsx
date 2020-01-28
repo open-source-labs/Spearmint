@@ -34,17 +34,39 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     closeExportModal();
   };
 
+  // add teststatements
   const generateTestFile = () => {
-    addImportStatements();
-    addMockData();
-    addTestStatements();
-    testFileCode = beautify(testFileCode, {
-      indent_size: 2,
-      space_in_empty_paren: true,
-      e4x: true,
+    testCase.statements.forEach(statement => {
+      if (
+        (statement.type === 'render' && statement.componentName === '') ||
+        (statement.type === 'assertion' && statement.queryVariant === '')
+      ) {
+        return (
+          addImportStatements(),
+          addMockData(),
+          addActionCreatorTestStatements(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+      } else {
+        return (
+          addImportStatements(),
+          addMockData(),
+          addTestStatements(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+      }
     });
   };
 
+  // added ReduxImportStatement
   const addImportStatements = () => {
     addComponentImportStatement();
     addReduxImportStatement();
@@ -101,6 +123,18 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += '});';
+  };
+
+  // action creator test statement
+  const addActionCreatorTestStatements = () => {
+    testFileCode += `test('${testCase.testStatement}', () => {`;
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
         case 'action-creator':
           return addActionCreator(statement);
         default:
