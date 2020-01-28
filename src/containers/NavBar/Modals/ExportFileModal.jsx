@@ -123,12 +123,13 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
                     (${assertion.queryValue})).${assertion.matcherType}(${
       assertion.matcherValue
-    });`;
+      });`;
   };
 
   // Thunk
   const addAsync = async => {
-    testFileCode += `expect(store.getActions()).${async.matcher}(${async.expected}));`;
+    console.log('this is async -> ', async);
+    testFileCode += `expect(store.getActions()).${async.matcher}(${async.expectedResponse}));`;
   }
 
   const addRender = (render, methods) => {

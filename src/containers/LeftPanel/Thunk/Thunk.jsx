@@ -72,7 +72,10 @@ const Async = ({ async, index, dispatchToTestCase }) => {
                 <label htmlFor='asyncFunction' className={styles.queryLabel}>
                   Async Function
                 </label>
-                <input type="text" name="asyncFunction" />
+                <input
+                  type="text"
+                  name="asyncFunction"
+                  onChange={e => handleChangeAsyncFields(e, 'asyncFunction')} />
               </div>
 
               <label htmlFor='method' className={styles.queryLabel}>
@@ -89,40 +92,51 @@ const Async = ({ async, index, dispatchToTestCase }) => {
                 <option value='put'>put</option>
                 <option value='delete'>delete</option>
               </select>
-            
+
               <div id={styles.query}>
                 <label htmlFor='route' className={styles.queryLabel}>
                   Route
                 </label>
-                <input type="text" name="route" />
+                <input 
+                  type="text" 
+                  name="route"
+                  onChange={e => handleChangeAsyncFields(e, 'route')}
+                  />
               </div>
 
               <div id={styles.query}>
                 <label htmlFor='store' className={styles.queryLabel}>
                   Store
                 </label>
-                <input type="text" name="store" />
+                <input 
+                type="text" 
+                name="store" 
+                onChange={e => handleChangeAsyncFields(e, 'store')}/>
               </div>
-          
-           
-            <label htmlFor='matcher' className={styles.queryLabel}>
-              Matcher
+
+
+              <label htmlFor='matcher' className={styles.queryLabel}>
+                Matcher
             </label>
-            
-            <select
-              id='matcher'
-              value={async.matcher}
-              onChange={e => handleChangeAsyncFields(e, 'matcher')}
-            >
-              <option value='' />
-              <option value='toEqual'>toEqual</option>
-              <option value='toContainEqual'>toContainEqual</option>
-            </select>
-            
-            <label htmlFor='expectedResponse' className={styles.queryLabel}>
-              Expected Response
+
+              <select
+                id='matcher'
+                value={async.matcher}
+                onChange={e => handleChangeAsyncFields(e, 'matcher')}
+              >
+                <option value='' />
+                <option value='toEqual'>toEqual</option>
+                <option value='toContainEqual'>toContainEqual</option>
+              </select>
+
+              <label htmlFor='expectedResponse' className={styles.queryLabel}>
+                Expected Response
                 </label>
-            <input type="text" name="expectedResponse" />
+              <input
+                type="text"
+                name="expectedResponse"
+                onChange={e => handleChangeAsyncFields(e, 'expectedResponse')}
+              />
 
             </div>
           </div>

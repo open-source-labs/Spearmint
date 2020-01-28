@@ -67,13 +67,12 @@ const createAsync = () => ({
   // UPDATE KEY VALUE PAIRS FOR ASYNC
   id: statementId++,
   type: 'async',
-  queryVariant: '',
-  querySelector: '',
-  queryValue: '',
-  isNot: false,
-  matcherType: '',
-  matcherValue: '',
-  suggestions: [],
+  asyncFunction: '',
+  method: '',
+  route: '',
+  store: '',
+  matcher: '',
+  expectedResponse: '',
 });
 
 const createRenderProp = () => ({
@@ -256,12 +255,12 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ASYNC:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
-          statement.eventType = action.eventType;
-          statement.eventValue = action.eventValue;
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.suggestions = action.suggestions;
+          statement.asyncFunction = action.asyncFunction;
+          statement.method = action.method;
+          statement.route = action.route;
+          statement.store = action.store;
+          statement.matcher = action.matcher;
+          statement.expectedResponse = action.expectedResponse;
         }
         return statement;
       });
