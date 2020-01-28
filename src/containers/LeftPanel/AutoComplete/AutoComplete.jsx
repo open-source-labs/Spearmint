@@ -8,7 +8,7 @@ import AutoSuggest from 'react-autosuggest';
 const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
-  // let updatedReducer = { ...statement };
+  let updatedReducer = { ...statement };
 
   const handleChangeValue = (e, { newValue }) => {
     if (statementType === 'action') {
@@ -17,6 +17,11 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
     } else {
       updatedAssertion.matcherType = newValue;
       dispatchToTestCase(updateAssertion(updatedAssertion));
+    }
+    // added conditional for when statement type is reducer
+    if (statementType === 'reducer') {
+      updatedReducer.matcherType = newValue;
+      dispatchToTestCase(updateReducer(updatedReducer));
     }
   };
 
@@ -27,10 +32,10 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
       statementType === 'action'
         ? statement.eventType
         : statementType === 'assertion'
-        ? statement.matcherType
-        : statementType === 'assertion' && updatedAssertion.isNot
-        ? `not.${statement.matcherType}`
-        : null,
+          ? statement.matcherType
+          : statementType === 'assertion' && updatedAssertion.isNot
+            ? `not.${statement.matcherType}`
+            : null,
 
     onChange: handleChangeValue,
   };
@@ -42,14 +47,14 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
       return inputLength === 0
         ? []
         : eventTypesList.filter(
-            eventType => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
-          );
+          eventType => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
+        );
     } else {
       return inputLength === 0
         ? []
         : matcherTypesList.filter(
-            matcherType => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
-          );
+          matcherType => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
+        );
     }
   };
 

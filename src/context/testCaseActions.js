@@ -140,20 +140,22 @@ export const deleteReducer = id => ({
 
 export const updateReducer = ({
   id,
-  eventType,
-  eventValue,
-  queryVariant,
-  querySelector,
-  queryValue,
+  queryVariant, // action
+  querySelector, // initial state
+  queryValue, //reducer name
+  isNot,
+  matcherType,
+  matcherValue, // updated state
   suggestions,
 }) => ({
   type: actionTypes.UPDATE_REDUCER,
   id,
-  eventType,
-  eventValue,
   queryVariant,
   querySelector,
   queryValue,
+  isNot,
+  matcherType,
+  matcherValue,
   suggestions,
 });
 

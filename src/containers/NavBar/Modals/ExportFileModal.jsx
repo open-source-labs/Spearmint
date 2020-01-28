@@ -10,6 +10,7 @@ import {
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
+// import { addReducer } from '../../../context/testCaseActions';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
@@ -86,6 +87,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
+        case 'reducer':
+          return addReducer(statement);
         default:
           return statement;
       }
@@ -122,6 +125,12 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
                     (${assertion.queryValue})).${assertion.matcherType}(${
       assertion.matcherValue
     });`;
+  };
+
+  // addReducer function needs to be refactored
+  const addReducer = reducer => {
+    console.log("i'm in exportfile addReducer");
+    testFileCode += `expect(${reducer.queryValue}(${reducer.querySelector},{${reducer.queryVariant}})).toEqual(${reducer.matcherValue})`;
   };
 
   const addRender = (render, methods) => {

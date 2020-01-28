@@ -75,11 +75,12 @@ const createRenderProp = () => ({
 const createReducer = () => ({
   id: statementId++,
   type: 'reducer',
-  eventType: '',
-  eventValue: null,
   queryVariant: '',
   querySelector: '',
   queryValue: '',
+  isNot: false,
+  matcherType: '',
+  matcherValue: '',
   suggestions: [],
 });
 
@@ -190,8 +191,8 @@ export const testCaseReducer = (state, action) => {
           statement.queryValue = action.queryValue;
           statement.isNot = action.isNot;
           statement.matcherType = action.matcherType;
-          statement.suggestions = action.suggestions;
           statement.matcherValue = action.matcherValue;
+          statement.suggestions = action.suggestions;
         }
         return statement;
       });
