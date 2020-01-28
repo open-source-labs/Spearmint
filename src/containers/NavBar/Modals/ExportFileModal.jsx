@@ -86,6 +86,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
+        case 'async':
+          return addAsync(statement);
         default:
           return statement;
       }
@@ -123,6 +125,11 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       assertion.matcherValue
     });`;
   };
+
+  // Thunk
+  const addAsync = async => {
+    testFileCode += `expect(store.getActions()).${async.matcher}(${async.expected}));`;
+  }
 
   const addRender = (render, methods) => {
     let props = createRenderProps(render);
