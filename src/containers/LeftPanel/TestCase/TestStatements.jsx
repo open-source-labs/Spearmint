@@ -35,9 +35,9 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
             key={statement.id}
             reducer={statement}
             index={i}
-            dispatchToTestCase={dispatchtoTestCase}
-            />
-          );
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        );
       case 'async':
         return (
           <Async

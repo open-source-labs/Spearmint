@@ -161,6 +161,8 @@ export const updateReducer = ({
   matcherType,
   matcherValue,
   suggestions,
+});
+
 export const addAsync = () => ({
   type: actionTypes.ADD_ASYNC,
 });
