@@ -2,10 +2,10 @@ import React from 'react';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
 import Rerender from '../Render/Rerender';
+import ActionCreator from '../ActionCreator/ActionCreator';
 import Async from '../Thunk/Thunk';
-
-// imported reducer
 import Reducer from '../Reducer/Reducer';
+
 
 const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
   return statements.map((statement, i) => {
@@ -49,6 +49,15 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
         );
       case 'render':
         return <Rerender key={statement.id} render={statement} index={i} />;
+      case 'action-creator':
+        return (
+          <ActionCreator
+            key={statement.id}
+            actionCreator={statement}
+            index={i}
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        );
       default:
         return <></>;
     }

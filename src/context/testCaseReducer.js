@@ -94,6 +94,18 @@ const createReducer = () => ({
   suggestions: [],
 });
 
+const createActionCreator = () => ({
+  id: statementId++,
+  filePath: '',
+  type: 'action-creator',
+  actionsFolder: '',
+  typesFolder: '',
+  actionCreatorFunc: '',
+  actionType: '',
+  payloadKey: null,
+  payloadType: null,
+});
+
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
@@ -313,6 +325,40 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
 
+    case actionTypes.ADD_ACTIONCREATOR:
+      lastAssertionStatement = statements.pop();
+      statements.push(createActionCreator(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.DELETE_ACTIONCREATOR:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_ACTIONCREATOR:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.actionCreatorFunc = action.actionCreatorFunc;
+          statement.payloadKey = action.payloadKey;
+          statement.payloadType = action.payloadType;
+          statement.actionType = action.actionType;
+          statement.actionsFolder = action.actionsFolder;
+          statement.typesFolder = action.typesFolder;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+      
     case actionTypes.CREATE_NEW_TEST:
       return {
         testStatement: '',

@@ -35,7 +35,37 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     closeExportModal();
   };
 
+  // add teststatements
   const generateTestFile = () => {
+
+    for (let i = 0; i < testCase.statements.length; i++) {
+      if (
+        (testCase.statements[i].type === 'render' && testCase.statements[i].componentName === '') ||
+        (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
+      ) {
+        return (
+          addActionCreatorImportStatement(),
+          addActionCreatorTestStatements(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+      } else {
+        return (
+          addImportStatements(),
+          addMockData(),
+          addTestStatements(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+      }
+    }
+//staging
     addImportStatements();
     addMockData();
     addJestTestStatementsReducer();
@@ -46,6 +76,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       space_in_empty_paren: true,
       e4x: true,
     });
+//staging
+                        
   };
 
   // Function for building Redux tests
@@ -64,10 +96,12 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   
   const addImportStatements = () => {
     addComponentImportStatement();
-    testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
+    testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
     import { build, fake } from 'test-data-bot'; 
-    import 'react-testing-library/cleanup-after-each'; 
-    import 'jest-dom/extend-expect';
+
+    import '@testing-library/jest-dom/extend-expect'
+
+//import statements for thunk
     import configureMockStore from 'redux-mock-store';
     import thunk from 'redux-thunk';
     import fetchMock from 'fetch-mock';
@@ -80,6 +114,23 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
+
+  // import statement for action creator
+  const addActionCreatorImportStatement = () => {
+    let actionCreatorStatement;
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'action-creator') {
+        actionCreatorStatement = statement;
+        return actionCreatorStatement;
+      }
+    });
+    testFileCode += `import '@testing-library/jest-dom/extend-expect';
+    import { build, fake } from 'test-data-bot'; 
+    import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
+    import * as types from '../${actionCreatorStatement.typesFolder}.js';
+    \n`;
+  };
+
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
@@ -115,7 +166,23 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += '});';
   };
 
-  const addJestTestStatementsReducer = () => { //Linda's reducer
+
+  // test statement for action creator
+  const addActionCreatorTestStatements = () => {
+    testFileCode += `test('${testCase.testStatement}', () => {`;
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'action-creator':
+          return addActionCreator(statement);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += '});';
+  };
+
+  //Linda's reducer
+  const addJestTestStatementsReducer = () => { 
     testFileCode += `it('${testCase.testStatement}', () => {`;
     testCase.statements.forEach(statement => {
       switch (statement.type) {
@@ -127,6 +194,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     })
     testFileCode += '});';
   }
+
 
   const identifyMethods = () => {
     const methods = new Set([]);
@@ -199,6 +267,23 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     return render.props.reduce((propsCode, prop) => {
       return propsCode + `${prop.propKey}={${prop.propValue}}`;
     }, '');
+  };
+
+  // actionCreator- export test code
+  const addActionCreator = actionCreator => {
+    if (actionCreator.payloadKey && actionCreator.payloadType) {
+      testFileCode += `const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
+      const expectedAction = { 
+        type: types.${actionCreator.actionType}, 
+        ${actionCreator.payloadKey} 
+      };
+      expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction);`;
+    } else {
+      testFileCode += `const expectedAction = { 
+        type: types.${actionCreator.actionType} 
+      }; 
+      expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction);`;
+    }
   };
 
   const exportTestFile = async () => {
