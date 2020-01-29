@@ -38,8 +38,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     addImportStatements();
     addMockData();
     addJestTestStatements();
-    // addTestStatements();
-    // addAsyncStatements(); // need to define this function
+    // addTestStatements(); // needed for react testing
     testFileCode = beautify(testFileCode, {
       indent_size: 2,
       space_in_empty_paren: true,
@@ -49,12 +48,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Function for building Redux tests
   const addJestTestStatements = () => {
-    //testFileCode += `it('${testCase.testStatement}', () => {`
-    //const methods = identifyJestMethods();
     testCase.statements.forEach(statement => {
       switch (statement.type) {
-        // case 'middleware':
-          // return addMiddleware(statement);
         case 'async':
           return addAsync(statement);
         default:
@@ -109,8 +104,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
-        case 'async':
-          return addAsync(statement);
         default:
           return statement;
       }

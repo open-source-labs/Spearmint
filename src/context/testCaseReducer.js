@@ -62,9 +62,7 @@ const createRerender = (componentName, filePath) => ({
   props: [],
 });
 
-// update key value pairs for Aysnc
 const createAsync = () => ({
-  // UPDATE KEY VALUE PAIRS FOR ASYNC
   id: statementId++,
   type: 'async',
   asyncFunction: '',
