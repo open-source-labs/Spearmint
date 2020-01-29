@@ -63,12 +63,12 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
             <label htmlFor='matcherValue' className={styles.queryLabel}>
               Updated State
             </label>
-            <AutoComplete
+            {/* <AutoComplete
               statement={reducer}
               statementType='reducer'
               dispatchToTestCase={dispatchToTestCase}
               id={styles.autoComplete}
-            />
+            /> */}
             <input type='text' id='matcherValue' onChange={e => handleChangeReducerFields(e, 'matcherValue')} />
           </div>
         </div>
