@@ -2,6 +2,8 @@ import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
 import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
+import { ReduxTestCaseContext, reduxTestCaseState, reduxTestCaseReducer } from './context/reduxTestCaseReducer';
+
 import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
 import ProjectLoader from './containers/ProjectLoader/ProjectLoader';
 import NavBar from './containers/NavBar/NavBar';
@@ -19,6 +21,8 @@ const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState); 
   const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState); /* allows us to use the trst Case reducer in apps child components that need it (test case and export file modal) */
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
+  const [reduxTestCase, dispatchToReduxTestCase] = useReducer(reduxTestCaseReducer, reduxTestCaseState);
+
 
   if (!global.isProjectLoaded) {
     return (
@@ -45,10 +49,12 @@ const App = () => {
       <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
+          <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
               <NavBar />
               <LeftPanel />
             </MockDataContext.Provider>
+            </ReduxTestCaseContext.Provider>
           </TestCaseContext.Provider>
           <RightPanel />
         </GlobalContext.Provider>

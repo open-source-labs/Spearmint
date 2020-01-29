@@ -6,7 +6,10 @@
 import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
 import { TestCaseContext } from '../../../context/testCaseReducer';
+import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
 import { updateTestStatement, updateStatementsOrder } from '../../../context/testCaseActions';
+import { toggleRedux } from '../../../context/reduxTestCaseActions';
+
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import TestMenu from '../TestMenu/TestMenu';
@@ -16,6 +19,8 @@ import FirstRender from '../Render/FirstRender';
 import LastAssertion from '../Assertion/LastAssertion';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
+import ReduxTestCase from './ReduxTestCase'
+
 const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
@@ -24,6 +29,8 @@ const TestCase = () => {
    * the return value of this invocation is equal to the value I passed into the unique provider (ex: the testcaseContext.Provider // will return the [testCase, dispatchToTestCase] array)
    */
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext); 
+  /* will i update redux state here */
+  const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext); 
   const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
 
   /**
@@ -50,6 +57,10 @@ const TestCase = () => {
 
   const handleAddMockData = () => {
     dispatchToMockData(addMockData());
+  };
+
+  const handleToggleRedux = e => {
+    dispatchToReduxTestCase(toggleRedux(e.currentTarget.checked));
   };
 
 
@@ -99,12 +110,17 @@ const TestCase = () => {
   });
 
 
-   /* this is what the tast case component renders */
+
+
+
   return (
     <div>
       <div id='head'>  {/* nav bar at top of page (from testMenu.jsx file) */}
-        <TestMenu dispatchToTestCase={dispatchToTestCase} dispatchToMockData={dispatchToMockData} />
+        <TestMenu dispatchToTestCase={dispatchToTestCase} dispatchToReduxTestCase={dispatchToReduxTestCase} dispatchToMockData={dispatchToMockData} />
       </div>
+
+
+
       <div id={styles.testMockSection}>   {/* input box for test name and check box for mockdata */}
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label> 
@@ -115,6 +131,21 @@ const TestCase = () => {
             onChange={handleUpdateTestStatement}
           />
         </section>
+
+        <section id={styles.mockHeader}>
+          <span>
+            <input
+              type='checkbox'
+              disabled={mockDataJSX.length}
+              checked={hasRedux}
+              onChange={handleToggleRedux}
+            />
+            <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
+              Do you need redux?
+            </label>
+          </span>
+        </section>
+
         <section id={styles.mockHeader}>
           <span>
             <input
@@ -143,7 +174,7 @@ const TestCase = () => {
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {provided => ( /* whats the provided and provided placedholder ?? */
+          {provided => ( 
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <TestStatements
                 statements={draggableStatements}
@@ -161,6 +192,7 @@ const TestCase = () => {
         isLast={true}
       />
     </div>
-  );
+  )
+  
 };
 export default TestCase;

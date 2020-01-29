@@ -9,6 +9,7 @@ import { createNewTest } from '../../../context/testCaseActions';
 import { clearMockData } from '../../../context/mockDataActions';
 import styles from '../../NavBar/Modals/ExportFileModal.module.scss';
 
+/* destructuring or declaring these?  */
 const NewTestModal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchToTestCase }) => {
   const handleNewTest = e => {
     dispatchToMockData(clearMockData());
