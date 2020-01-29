@@ -36,10 +36,10 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // add teststatements
   const generateTestFile = () => {
-    testCase.statements.forEach(statement => {
+    for (let i = 0; i < testCase.statements.length; i++) {
       if (
-        (statement.type === 'render' && statement.componentName === '') ||
-        (statement.type === 'assertion' && statement.queryVariant === '')
+        (testCase.statements[i].type === 'render' && testCase.statements[i].componentName === '') ||
+        (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
       ) {
         return (
           addReduxImportStatement(),
@@ -62,7 +62,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           }))
         );
       }
-    });
+    }
   };
 
   // added ReduxImportStatement
@@ -90,8 +90,11 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         return actionCreatorStatement;
       }
     });
-    testFileCode += `import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
-      import * as types from '../${actionCreatorStatement.typesFolder}.js'; \n`;
+    testFileCode += `import '@testing-library/jest-dom/extend-expect';
+    import { build, fake } from 'test-data-bot'; 
+    import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
+    import * as types from '../${actionCreatorStatement.typesFolder}.js';
+    \n`;
   };
 
   const addMockData = () => {
@@ -195,7 +198,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       const expectedAction = { 
         type: types.${actionCreator.actionType}, 
         ${actionCreator.payloadKey} 
-      }; \n
+      };
       expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction);`;
     } else {
       testFileCode += `const expectedAction = { 
