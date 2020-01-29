@@ -35,9 +35,9 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const generateTestFile = () => {
-    addImportStatements();
+    // addImportStatements();
     addMockData();
-    // addActionsImportStatement(); // this isn't working
+    addActionsImportStatement(); // this isn't working
     addJestTestStatements();
     // addTestStatements();
     // addAsyncStatements(); // need to define this function
@@ -67,7 +67,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
   
   const addImportStatements = () => {
-    // addComponentImportStatement();
+    addComponentImportStatement();
     // addActionsImportStatement();
     testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
     import { build, fake } from 'test-data-bot'; 
@@ -82,12 +82,15 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const addComponentImportStatement = () => {
     const renderStatement = testCase.statements[0];
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
+    console.log('renderStatement.filePath -> ', renderStatement.filePath)
+    console.log('component file path line 85 -> ', filePath)
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
 
   // Import actions file
   const addActionsImportStatement = () => {
+    console.log('this is testCase line 91 -> ', testCase);
     testCase.statements.forEach(statement => {
       switch (statement.type) {
         case 'async':
@@ -99,11 +102,14 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   };
 
+  // Import files to test file
   const createPathToActions = (statement) => {
-    // const renderStatement = testCase.statements[0];
     // let filePath = filePathMap[statement.actionsFile] // need to trace filePath to in global context
-    let filePath = path.relative(projectFilePath, statement.actionsFile);
+    console.log('statement in createPathToActions -> ', statement)
+    let filePath = path.relative(projectFilePath, statement.filePath);
     filePath = filePath.replace(/\\/g, '/');
+    console.log('statement.filePath -> ', statement.filePath)
+    console.log('filePath variable -> ', filePath)
     testFileCode += `import * from '../${filePath}';`;
   }
 
