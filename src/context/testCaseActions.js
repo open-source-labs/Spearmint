@@ -138,6 +138,7 @@ export const deleteAsync = id => ({
 
 export const updateAsync = ({
   id,
+  actionsFile,
   asyncFunction,
   method,
   route,
@@ -147,6 +148,7 @@ export const updateAsync = ({
 }) => ({
   type: actionTypes.UPDATE_ASYNC,
   id,
+  actionsFile,
   asyncFunction,
   method,
   route,

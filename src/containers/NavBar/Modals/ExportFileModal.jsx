@@ -37,6 +37,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const generateTestFile = () => {
     addImportStatements();
     addMockData();
+    // addActionsImportStatement(); // this isn't working
     addJestTestStatements();
     // addTestStatements();
     // addAsyncStatements(); // need to define this function
@@ -66,7 +67,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
   
   const addImportStatements = () => {
-    addComponentImportStatement();
+    // addComponentImportStatement();
+    // addActionsImportStatement();
     testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
     import { build, fake } from 'test-data-bot'; 
     import 'react-testing-library/cleanup-after-each'; 
@@ -83,6 +85,28 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
+
+  // Import actions file
+  const addActionsImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'async':
+          return createPathToActions(statement);
+        default:
+          return statement;
+      }
+    })
+
+  };
+
+  const createPathToActions = (statement) => {
+    // const renderStatement = testCase.statements[0];
+    // let filePath = filePathMap[statement.actionsFile] // need to trace filePath to in global context
+    let filePath = path.relative(projectFilePath, statement.actionsFile);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * from '../${filePath}';`;
+  }
+
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);

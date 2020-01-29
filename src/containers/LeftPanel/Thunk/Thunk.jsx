@@ -69,6 +69,15 @@ const Async = ({ async, index, dispatchToTestCase }) => {
           <div id={styles.thunkFlexBox}>
             <div id={styles.thunkType}>
               <div id={styles.query}>
+                <label htmlFor='actionsFile' className={styles.queryLabel}>
+                  Actions File Name
+                </label>
+                <input
+                  type="text"
+                  name="actionsFile"
+                  onChange={e => handleChangeAsyncFields(e, 'actionsFile')} />
+              </div>
+              <div id={styles.query}>
                 <label htmlFor='asyncFunction' className={styles.queryLabel}>
                   Async Function
                 </label>

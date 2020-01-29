@@ -67,6 +67,7 @@ const createAsync = () => ({
   // UPDATE KEY VALUE PAIRS FOR ASYNC
   id: statementId++,
   type: 'async',
+  actionsFile: '',
   asyncFunction: '',
   method: '',
   route: '',
@@ -255,6 +256,7 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ASYNC:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
+          statement.actionsFile = action.actionsFile;
           statement.asyncFunction = action.asyncFunction;
           statement.method = action.method;
           statement.route = action.route;
