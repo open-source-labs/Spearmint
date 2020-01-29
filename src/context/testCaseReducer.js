@@ -67,7 +67,8 @@ const createAsync = () => ({
   // UPDATE KEY VALUE PAIRS FOR ASYNC
   id: statementId++,
   type: 'async',
-  actionsFile: '',
+  actionsFileName: '',
+  filePath: '',
   asyncFunction: '',
   method: '',
   route: '',
@@ -263,6 +264,20 @@ export const testCaseReducer = (state, action) => {
           statement.store = action.store;
           statement.matcher = action.matcher;
           statement.expectedResponse = action.expectedResponse;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
+      // updates filepath for async
+    case actionTypes.UPDATE_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'async') {
+          statement.actionsFileName = action.actionsFileName;
+          statement.filePath = action.filePath;
         }
         return statement;
       });

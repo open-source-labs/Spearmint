@@ -50,12 +50,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Function for building Redux tests
   const addJestTestStatements = () => {
-    //testFileCode += `it('${testCase.testStatement}', () => {`
-    //const methods = identifyJestMethods();
     testCase.statements.forEach(statement => {
       switch (statement.type) {
-        // case 'middleware':
-          // return addMiddleware(statement);
         case 'async':
           return addAsync(statement);
         default:
@@ -110,7 +106,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     filePath = filePath.replace(/\\/g, '/');
     console.log('statement.filePath -> ', statement.filePath)
     console.log('filePath variable -> ', filePath)
-    testFileCode += `import * from '../${filePath}';`;
+    testFileCode += `import * as actions from '../${filePath}';`;
   }
 
   const addMockData = () => {
