@@ -16,7 +16,7 @@ Download spearmint @ spearmintjs.com. Available for Mac OS and Windows. To run t
 
 ![](https://lh4.googleusercontent.com/CAFpoefRUUxgNosudQuc7gabSReFiI_puZ_WTjrzUSzB6pgOUdQ1babF2mxJql2lC8TQ-jjVLOgG5Qka8SUfF2fi-u2H9xSP7rZ_0Udpj-ISFPAY028UYKIUZcgOApnipVZwE7xh)
 
-2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements.
+2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React, in addition to reducer, action creator, asynchronous action creator, and middleware test statements for Redux.
 
 ![](https://lh5.googleusercontent.com/5VYUlGG5VDdZxdZEh5aokuilhKRp8B5QyVmxvtW_abLYCAzYN-s-el1oV5WMtGuTzbEO2I6l8Ys_yK2gC0fCi8ISHwjh4LlgezsrPWd7mDEtLbPqBYf1J4pgkGmfIV4yq4I_dpQg)
 
