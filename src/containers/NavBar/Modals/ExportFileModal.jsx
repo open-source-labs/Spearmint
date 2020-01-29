@@ -42,8 +42,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         (statement.type === 'assertion' && statement.queryVariant === '')
       ) {
         return (
-          addImportStatements(),
-          addMockData(),
+          addReduxImportStatement(),
           addActionCreatorTestStatements(),
           (testFileCode = beautify(testFileCode, {
             indent_size: 2,
@@ -69,7 +68,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   // added ReduxImportStatement
   const addImportStatements = () => {
     addComponentImportStatement();
-    addReduxImportStatement();
     testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
     import { build, fake } from 'test-data-bot'; 
     import '@testing-library/jest-dom/extend-expect'
