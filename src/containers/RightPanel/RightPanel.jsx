@@ -1,3 +1,8 @@
+/**
+ * main component for right panel
+ * renders either browser or editor view
+ */
+
 import React, { useContext } from 'react';
 import styles from './RightPanel.module.scss';
 import EditorView from './EditorView/EditorView';

@@ -33,6 +33,18 @@ export const testCaseState = {
 let statementId = 2;
 let renderPropsId = 0;
 
+const createMiddleware = () => ({ /* renders the action card when the "action" button is clicked */
+  id: statementId++,  
+  type: 'middleware',  
+  queryType: '',  /* ex: onclick */
+  eventValue: null,  
+  queryVariant: '',  /* drop down to select a query variant */
+  querySelector: '', /* to select an option */
+  queryValue: '', 
+  queryFunction: '', 
+  suggestions: [],
+});
+
 const createAction = () => ({
   id: statementId++,
   type: 'action',
@@ -125,6 +137,38 @@ export const testCaseReducer = (state, action) => {
       return {
         ...state,
         testStatement,
+      };
+    case actionTypes.ADD_MIDDLEWARE:
+      lastAssertionStatement = statements.pop();  /* popping off the last render */
+      statements.push(createMiddleware(), lastAssertionStatement);   /* pushing the new middlewaew the user created into the statements array and then adding back the last render */
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_MIDDLEWARE:
+      lastAssertionStatement = statements.pop();  
+      statements = statements.filter(statement => statement.id !== action.id);  /* if statement id !== acion id, then what?? */
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_MIDDLEWARE:
+      statements = statements.map(statement => {  /* update statements if statement id === action id */
+        if (statement.id === action.id) {
+          statement.queryType = action.queryType;
+          statement.eventValue = action.eventValue;
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
+          statement.queryFunction = action.queryFunction;
+          statement.suggestions = action.suggestions;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
       };
     case actionTypes.ADD_ACTION:
       lastAssertionStatement = statements.pop();

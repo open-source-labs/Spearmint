@@ -5,6 +5,10 @@ export const actionTypes = {
   ADD_ACTION: 'ADD_ACTION',
   DELETE_ACTION: 'DELETE_ACTION',
   UPDATE_ACTION: 'UPDATE_ACTION',
+  
+  ADD_MIDDLEWARE: 'ADD_MIDDLEWARE',
+  DELETE_MIDDLEWARE: 'DELETE_MIDDLEWARE',
+  UPDATE_MIDDLEWARE: 'UPDATE_MIDDLEWARE',
 
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
@@ -42,6 +46,38 @@ export const updateStatementsOrder = draggableStatements => ({
 export const updateTestStatement = testStatement => ({
   type: actionTypes.UPDATE_TEST_STATEMENT,
   testStatement,
+});
+
+export const addMiddleware = () => ({
+  type: actionTypes.ADD_MIDDLEWARE,
+});
+
+export const deleteMiddleware = id => ({
+  type: actionTypes.DELETE_MIDDLEWARE,
+  id,
+});
+
+export const updateMiddleware = ({
+  id,
+  eventType,
+  queryType,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  queryFunction,
+  suggestions,
+}) => ({
+  type: actionTypes.UPDATE_MIDDLEWARE,
+  id,
+  eventType,
+  queryType,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  queryFunction,
+  suggestions,
 });
 
 export const addAction = () => ({

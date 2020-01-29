@@ -1,3 +1,9 @@
+/**
+ * functionlity to add and update assertions
+ * same layout as action.jsx 
+ *  - but for only the last assertion card? 
+ */
+
 import React from 'react';
 import styles from '../Assertion/Assertion.module.scss';
 import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';

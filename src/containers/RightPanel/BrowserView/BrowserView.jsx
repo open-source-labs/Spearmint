@@ -1,3 +1,7 @@
+/**
+ * right pane editor view (shows the code of whatever link you're using)
+ */
+
 import React, { useContext } from 'react';
 import styles from './BrowserView.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';

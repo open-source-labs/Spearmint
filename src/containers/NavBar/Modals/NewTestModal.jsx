@@ -1,3 +1,8 @@
+/**
+ * modal: pop ups windows on click 
+ * create new test modal 
+ */
+
 import React from 'react';
 import ReactModal from 'react-modal';
 import { createNewTest } from '../../../context/testCaseActions';

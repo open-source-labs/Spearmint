@@ -1,3 +1,8 @@
+/**
+ * modal: pop ups windows on click 
+ * browser view modal 
+ */
+
 import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';

@@ -1,15 +1,28 @@
+/**
+ * the boxes where you fill out info for assertion , render, and action
+ */
+
 import React from 'react';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
 import Rerender from '../Render/Rerender';
+import Middleware from '../Middleware/Middleware';
 import ActionCreator from '../ActionCreator/ActionCreator';
 import Async from '../Thunk/Thunk';
 import Reducer from '../Reducer/Reducer';
 
-
-const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
+const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {  /* destructing from the reducer */
   return statements.map((statement, i) => {
     switch (statement.type) {
+      case 'middleware':
+        return (
+          <Middleware
+            key={statement.id}
+            middleware={statement}
+            index={i}
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        );
       case 'action':
         return (
           <Action
