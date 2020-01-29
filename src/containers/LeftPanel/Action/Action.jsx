@@ -52,7 +52,6 @@ const Action = ({ action, index, dispatchToTestCase }) => {
   //     </option>
   //   );
   // });
-
   return (
     <Draggable draggableId={action.id.toString()} index={index}>
       {provided => (
