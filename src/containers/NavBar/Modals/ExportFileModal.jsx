@@ -42,7 +42,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
       ) {
         return (
-          addReduxImportStatement(),
+          addActionCreatorImportStatement(),
           addActionCreatorTestStatements(),
           (testFileCode = beautify(testFileCode, {
             indent_size: 2,
@@ -65,7 +65,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }
   };
 
-  // added ReduxImportStatement
   const addImportStatements = () => {
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
@@ -81,8 +80,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
 
-  // import statement for actions and types
-  const addReduxImportStatement = () => {
+  // import statement for action creator
+  const addActionCreatorImportStatement = () => {
     let actionCreatorStatement;
     testCase.statements.forEach(statement => {
       if (statement.type === 'action-creator') {
@@ -112,7 +111,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }, '');
   };
 
-  // added action creator case
   const addTestStatements = () => {
     testFileCode += `test('${testCase.testStatement}', () => {`;
     const methods = identifyMethods();
@@ -131,7 +129,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += '});';
   };
 
-  // action creator test statement
+  // test statement for action creator
   const addActionCreatorTestStatements = () => {
     testFileCode += `test('${testCase.testStatement}', () => {`;
     testCase.statements.forEach(statement => {
