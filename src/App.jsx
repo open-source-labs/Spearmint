@@ -9,15 +9,10 @@ import LeftPanel from './containers//LeftPanel/LeftPanel';
 import RightPanel from './containers/RightPanel/RightPanel';
 
 const App = () => {
-  /**
-   * useReducer takes in two arguments, the first being the reducer and the second being the initial state. 
-   *  - When invoked, it returns an array with the first value being the actual state, 
-   *  - and the second value being a method to update the state that we assign to new variables using array destructuring.
-   * 
-   * 
-   */
-  const [global, dispatchToGlobal] = useReducer(globalReducer, globalState); 
-  const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState); /* allows us to use the trst Case reducer in apps child components that need it (test case and export file modal) */
+
+  const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
+  // reducer is invoked in App since it's the common parent of testCase and ExportFileModal components
+  const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
   if (!global.isProjectLoaded) {
@@ -44,9 +39,10 @@ const App = () => {
        */
       <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
+          {/* value wrapped in array since Provider only takes in one value */}
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-              <NavBar />
+              <NavBar /> 
               <LeftPanel />
             </MockDataContext.Provider>
           </TestCaseContext.Provider>

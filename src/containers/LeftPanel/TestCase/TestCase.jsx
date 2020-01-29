@@ -5,6 +5,7 @@
 
 import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
+// requiring "TestCaseContext" from testCaseReducer to access updated state
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { updateTestStatement, updateStatementsOrder } from '../../../context/testCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
@@ -19,11 +20,9 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
-  /**
-   * invoke use Context by passing a context ive created (ex: the testCaseContext i created in the testCase reducer)
-   * the return value of this invocation is equal to the value I passed into the unique provider (ex: the testcaseContext.Provider // will return the [testCase, dispatchToTestCase] array)
-   */
-  const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext); 
+  // useContext is invoked with TestCaseContext (from testCaseReducer) passed in as argument
+  const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
+  // useContext is invoked with MockDataContext (from modkDataReducer) passed in as argument
   const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
 
   /**
@@ -34,12 +33,7 @@ const TestCase = () => {
   const lastAssertionStatement = statements[statements.length - 1];
 
 
-  /**
-   * here we are sending actions to the reducer by:
-   *  - invoking the unique dispatch (ex: dispatchToTestCase) in order to dispatch an action object (the return value of an action creator) to the reducer.
-   * 
-   *  I can access these here b.c ( using context and useReducer) i passed the dispatches from the reducer file to navbar and left panel in the app file. 
-   */
+  // invoking dispatchToTestCase to dispatch an action to reducer
   const handleUpdateTestStatement = e => {
     dispatchToTestCase(updateTestStatement(e.target.value));
   };

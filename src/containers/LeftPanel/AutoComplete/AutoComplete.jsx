@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './AutoComplete.module.scss';
-import { updateAction, updateAssertion, updateMiddleware } from '../../../context/testCaseActions';
+import { updateAction, updateAssertion, updateReducer, updateMiddleware } from '../../../context/testCaseActions';
 import { eventTypesList } from '../Action/eventTypesList';
 import { matcherTypesList } from '../Assertion/matcherTypesList';
 import AutoSuggest from 'react-autosuggest';
@@ -10,6 +10,7 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
   let updatedMiddleware = { ...statement };
+  let updatedReducer = { ...statement };
 
   const handleChangeValue = (e, { newValue }) => {
     if (statementType === 'action') {
@@ -22,6 +23,11 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
       updatedAssertion.matcherType = newValue;
       dispatchToTestCase(updateAssertion(updatedAssertion));
     }
+    // added conditional for when statement type is reducer
+    if (statementType === 'reducer') {
+      updatedReducer.matcherType = newValue;
+      dispatchToTestCase(updateReducer(updatedReducer));
+    }
   };
 
   const inputProps = {
@@ -33,10 +39,12 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
         : statementType === 'middleware'
         ? statement.eventType
         : statementType === 'assertion'
-        ? statement.matcherType
-        : statementType === 'assertion' && updatedAssertion.isNot
-        ? `not.${statement.matcherType}`
-        : null,
+          ? statement.matcherType
+          : statementType === 'assertion' && updatedAssertion.isNot
+            ? `not.${statement.matcherType}`
+            : statementType === 'reducer'
+              ? statement.matcherType
+              : null,
 
     onChange: handleChangeValue,
   };
@@ -49,20 +57,14 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
       return inputLength === 0
         ? []
         : eventTypesList.filter(
-            eventType => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
-          );
-    } else if (statementType === 'middleware') {
-      return inputLength === 0
-        ? []
-        : eventTypesList.filter(
-            eventType => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
-          );
+          eventType => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
+        );
     } else {
       return inputLength === 0
         ? []
         : matcherTypesList.filter(
-            matcherType => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
-          );
+          matcherType => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
+        );
     }
   };
 
