@@ -37,7 +37,9 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const generateTestFile = () => {
     addImportStatements();
     addMockData();
-    addTestStatements();
+    addJestTestStatements();
+    // addTestStatements();
+    // addAsyncStatements(); // need to define this function
     testFileCode = beautify(testFileCode, {
       indent_size: 2,
       space_in_empty_paren: true,
@@ -45,12 +47,33 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     });
   };
 
+  // Function for building Redux tests
+  const addJestTestStatements = () => {
+    //testFileCode += `it('${testCase.testStatement}', () => {`
+    //const methods = identifyJestMethods();
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        // case 'middleware':
+          // return addMiddleware(statement);
+        case 'async':
+          return addAsync(statement);
+        default:
+          return statement;
+      }
+    })
+    testFileCode += '});';
+    testFileCode += '\n';
+  };
+  
   const addImportStatements = () => {
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from 'react-testing-library'; 
     import { build, fake } from 'test-data-bot'; 
     import 'react-testing-library/cleanup-after-each'; 
-    import 'jest-dom/extend-expect'
+    import 'jest-dom/extend-expect';
+    import configureMockStore from 'redux-mock-store';
+    import thunk from 'redux-thunk';
+    import fetchMock from 'fetch-mock';
     \n`;
   };
 
@@ -128,8 +151,24 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Thunk
   const addAsync = async => {
-    console.log('this is async -> ', async);
-    testFileCode += `expect(store.getActions()).${async.matcher}(${async.expectedResponse}));`;
+    testFileCode += `const middlewares = [thunk]
+    const mockStore = configureMockStore(middlewares)`
+    
+    testFileCode += '\n'
+
+    testFileCode += `it('${testCase.testStatement}', () => {
+        fetchMock.${async.method}('${async.route}')`
+
+    testFileCode += '\n'
+
+    testFileCode += `const expectedActions = ${async.expectedResponse};
+        const store = mockStore(${async.store})`
+
+    testFileCode += '\n'
+
+    testFileCode += `return store.dispatch(actions.${async.asyncFunction}()).then(() => {
+          expect(store.getActions()).toEqual(expectedActions)
+        })`
   }
 
   const addRender = (render, methods) => {
