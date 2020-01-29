@@ -18,6 +18,10 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 
+  ADD_ASYNC: 'ADD_ASYNC',
+  DELETE_ASYNC: 'DELETE_ASYNC',
+  UPDATE_ASYNC: 'UPDATE_ASYNC',
+
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 
   // Action type for reducer
@@ -157,6 +161,32 @@ export const updateReducer = ({
   matcherType,
   matcherValue,
   suggestions,
+export const addAsync = () => ({
+  type: actionTypes.ADD_ASYNC,
+});
+
+export const deleteAsync = id => ({
+  type: actionTypes.DELETE_ASYNC,
+  id,
+});
+
+export const updateAsync = ({
+  id,
+  asyncFunction,
+  method,
+  route,
+  store,
+  matcher,
+  expectedResponse,
+}) => ({
+  type: actionTypes.UPDATE_ASYNC,
+  id,
+  asyncFunction,
+  method,
+  route,
+  store,
+  matcher,
+  expectedResponse,
 });
 
 export const createNewTest = () => ({

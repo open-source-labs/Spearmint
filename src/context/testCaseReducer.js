@@ -64,6 +64,17 @@ const createRerender = (componentName, filePath) => ({
   props: [],
 });
 
+const createAsync = () => ({
+  id: statementId++,
+  type: 'async',
+  asyncFunction: '',
+  method: '',
+  route: '',
+  store: '',
+  matcher: '',
+  expectedResponse: '',
+});
+
 const createRenderProp = () => ({
   id: renderPropsId++,
   propKey: '',
@@ -71,7 +82,6 @@ const createRenderProp = () => ({
 });
 
 // create reducer function
-// need to figure out what key-value pairs I need to list
 const createReducer = () => ({
   id: statementId++,
   type: 'reducer',
@@ -270,6 +280,39 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+// ASYNC SWITCH CASES
+    case actionTypes.ADD_ASYNC:
+      lastAssertionStatement = statements.pop();
+      statements.push(createAsync(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_ASYNC:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_ASYNC:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.asyncFunction = action.asyncFunction;
+          statement.method = action.method;
+          statement.route = action.route;
+          statement.store = action.store;
+          statement.matcher = action.matcher;
+          statement.expectedResponse = action.expectedResponse;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
     case actionTypes.CREATE_NEW_TEST:
       return {
         testStatement: '',

@@ -2,6 +2,7 @@ import React from 'react';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
 import Rerender from '../Render/Rerender';
+import Async from '../Thunk/Thunk';
 
 // imported reducer
 import Reducer from '../Reducer/Reducer';
@@ -33,6 +34,15 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
           <Reducer
             key={statement.id}
             reducer={statement}
+            index={i}
+            dispatchToTestCase={dispatchtoTestCase}
+            />
+          );
+      case 'async':
+        return (
+          <Async
+            key={statement.id}
+            async={statement}
             index={i}
             dispatchToTestCase={dispatchToTestCase}
           />

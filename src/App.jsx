@@ -29,7 +29,7 @@ const App = () => {
           {/* value wrapped in array since Provider only takes in one value */}
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-              <NavBar />
+              <NavBar /> 
               <LeftPanel />
             </MockDataContext.Provider>
           </TestCaseContext.Provider>
