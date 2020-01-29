@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import { addAction, addAssertion, addRender, addAsync } from '../../../context/testCaseActions';
+import { addAction, addAssertion, addRender, addAsync, addReducer } from '../../../context/testCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
 
 const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
@@ -22,6 +22,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   };
   const handleAddRender = e => {
     dispatchToTestCase(addRender());
+  };
+  const handleAddReducer = e => {
+    dispatchToTestCase(addReducer());
   };
 
   // spearmint2.0 async button
@@ -45,6 +48,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           <button onClick={handleAddAction}>Action</button>
           <button data-testid='assertionButton' onClick={handleAddAssertion}>
             Assertion
+          </button>
+          <button data-testid='reducerButton' onClick={handleAddReducer}>
+            Reducer
           </button>
           <button data-testid='rerenderButton' onClick={handleAddRender}>
             Rerender

@@ -10,6 +10,7 @@ import {
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
+// import { addReducer } from '../../../context/testCaseActions';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
@@ -37,6 +38,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const generateTestFile = () => {
     addImportStatements();
     addMockData();
+    addJestTestStatementsReducer();
     addJestTestStatements();
     // addTestStatements(); // needed for react testing
     testFileCode = beautify(testFileCode, {
@@ -104,12 +106,27 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
+        // case 'reducer':
+        //   return addReducer(statement);
         default:
           return statement;
       }
     });
     testFileCode += '});';
   };
+
+  const addJestTestStatementsReducer = () => { //Linda's reducer
+    testFileCode += `it('${testCase.testStatement}', () => {`;
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'reducer':
+          return addReducer(statement);
+        default:
+          return statement;
+      }
+    })
+    testFileCode += '});';
+  }
 
   const identifyMethods = () => {
     const methods = new Set([]);
@@ -140,6 +157,11 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
                     (${assertion.queryValue})).${assertion.matcherType}(${
       assertion.matcherValue
       });`;
+  };
+  
+  // addReducer function needs to be refactored
+  const addReducer = reducer => {
+    testFileCode += `expect(${reducer.queryValue}(${reducer.querySelector},{${reducer.queryVariant}})).toEqual(${reducer.matcherValue})`;
   };
 
   // Thunk

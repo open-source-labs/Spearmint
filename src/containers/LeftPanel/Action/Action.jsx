@@ -11,6 +11,7 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
+// Action box in middle panel (testCase.jsx)
 const Action = ({ action, index, dispatchToTestCase }) => {
   const [{ mockData }, _] = useContext(MockDataContext);
   const handleChangeActionFields = (e, field) => {

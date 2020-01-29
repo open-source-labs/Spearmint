@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
+// requiring "TestCaseContext" from testCaseReducer to access updated state
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { updateTestStatement, updateStatementsOrder } from '../../../context/testCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
@@ -14,12 +15,15 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
+  // useContext is invoked with TestCaseContext (from testCaseReducer) passed in as argument
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
+  // useContext is invoked with MockDataContext (from modkDataReducer) passed in as argument
   const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
   const firstRenderStatement = statements[0];
   const draggableStatements = statements.slice(1, -1);
   const lastAssertionStatement = statements[statements.length - 1];
 
+  // invoking dispatchToTestCase to dispatch an action to reducer
   const handleUpdateTestStatement = e => {
     dispatchToTestCase(updateTestStatement(e.target.value));
   };

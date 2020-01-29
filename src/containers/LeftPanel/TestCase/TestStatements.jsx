@@ -4,6 +4,9 @@ import Assertion from '../Assertion/Assertion';
 import Rerender from '../Render/Rerender';
 import Async from '../Thunk/Thunk';
 
+// imported reducer
+import Reducer from '../Reducer/Reducer';
+
 const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
   return statements.map((statement, i) => {
     switch (statement.type) {
@@ -25,6 +28,16 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
             dispatchToTestCase={dispatchToTestCase}
           />
         );
+      // reducer
+      case 'reducer':
+        return (
+          <Reducer
+            key={statement.id}
+            reducer={statement}
+            index={i}
+            dispatchToTestCase={dispatchtoTestCase}
+            />
+          );
       case 'async':
         return (
           <Async

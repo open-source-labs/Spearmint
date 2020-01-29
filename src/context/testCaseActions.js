@@ -23,6 +23,11 @@ export const actionTypes = {
   UPDATE_ASYNC: 'UPDATE_ASYNC',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
+
+  // Action type for reducer
+  ADD_REDUCER: 'ADD_REDUCER',
+  DELETE_REDUCER: 'DELETE_REDUCER',
+  UPDATE_REDUCER: 'UPDATE_REDUCER',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -127,6 +132,35 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propValue,
 });
 
+// Functions for Reducer
+export const addReducer = () => ({
+  type: actionTypes.ADD_REDUCER,
+});
+
+export const deleteReducer = id => ({
+  type: actionTypes.DELETE_REDUCER,
+  id,
+});
+
+export const updateReducer = ({
+  id,
+  queryVariant, // action
+  querySelector, // initial state
+  queryValue, //reducer name
+  isNot,
+  matcherType,
+  matcherValue, // updated state
+  suggestions,
+}) => ({
+  type: actionTypes.UPDATE_REDUCER,
+  id,
+  queryVariant,
+  querySelector,
+  queryValue,
+  isNot,
+  matcherType,
+  matcherValue,
+  suggestions,
 export const addAsync = () => ({
   type: actionTypes.ADD_ASYNC,
 });

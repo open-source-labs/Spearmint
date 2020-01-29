@@ -1,8 +1,10 @@
 import { createContext } from 'react';
 import { actionTypes } from './testCaseActions';
 
+// where we createContext for the testCase with default value of null
 export const TestCaseContext = createContext(null);
 
+// initial state
 export const testCaseState = {
   testStatement: '',
   statements: [
@@ -79,7 +81,18 @@ const createRenderProp = () => ({
   propValue: '',
 });
 
-
+// create reducer function
+const createReducer = () => ({
+  id: statementId++,
+  type: 'reducer',
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
+  isNot: false,
+  matcherType: '',
+  matcherValue: '',
+  suggestions: [],
+});
 
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
@@ -155,6 +168,39 @@ export const testCaseReducer = (state, action) => {
           statement.queryValue = action.queryValue;
           statement.isNot = action.isNot;
           statement.matcherType = action.matcherType;
+          statement.matcherValue = action.matcherValue;
+          statement.suggestions = action.suggestions;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+    // switch cases for reducer
+    case actionTypes.ADD_REDUCER:
+      lastAssertionStatement = statements.pop();
+      statements.push(createReducer(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_REDUCER:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_REDUCER:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.queryVariant = action.queryVariant; // action
+          statement.querySelector = action.querySelector; // initial state
+          statement.queryValue = action.queryValue; // reducer name
+          statement.isNot = action.isNot;
+          statement.matcherType = action.matcherType; // updated state
           statement.matcherValue = action.matcherValue;
           statement.suggestions = action.suggestions;
         }
