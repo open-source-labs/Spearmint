@@ -4,6 +4,8 @@
  */
 
 export const actionTypes = {
+  TOGGLE_DISPLAY: 'TOGGLE_DISPLAY',
+
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
 
@@ -29,6 +31,10 @@ export const actionTypes = {
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
+
+export const toggleDisplay = () => ({
+  type: actionTypes.TOGGLE_DISPLAY,
+});
 
 export const updateStatementsOrder = draggableStatements => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,

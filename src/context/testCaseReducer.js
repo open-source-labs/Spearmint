@@ -39,6 +39,7 @@ export const testCaseState = {
       suggestions: [], /* auto complete suggestions? */
     },
   ],
+  displayAutoStatements: true
 };
 
 let statementId = 2; /* to allow us to auto increment ids for other cards being added to the page */
@@ -96,7 +97,7 @@ const createRenderProp = () => ({ /* to render prop form on render and rerender 
 });
 
 export const testCaseReducer = (state, action) => {  /* reducers only pass the state and the action to change that state */
-  Object.freeze(state); /* cannot be changed.  properties can not be added or removed. values cannot be changed. */
+  //Object.freeze(state); /* cannot be changed.  properties can not be added or removed. values cannot be changed. */
   let statements = [...state.statements];  /* getting all elements in states statement array */
   let lastAssertionStatement; /* b.c we reorder the statements */
 
@@ -285,6 +286,19 @@ export const testCaseReducer = (state, action) => {  /* reducers only pass the s
         ...state,
         statements,
       };
+
+
+      case actionTypes.TOGGLE_DISPLAY:
+          if (!state.displayAutoStatements) {
+              statements.pop()
+          }
+          return {
+              ...state,
+              statements,
+              displayAutoStatements: !state.displayAutoStatements,
+      };
+
+
     case actionTypes.CREATE_NEW_TEST:  /* renders the new test card */
       return {
         testStatement: '',

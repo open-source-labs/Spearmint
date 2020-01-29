@@ -7,7 +7,7 @@ import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
-import { updateTestStatement, updateStatementsOrder } from '../../../context/testCaseActions';
+import { updateTestStatement, updateStatementsOrder, toggleDisplay } from '../../../context/testCaseActions';
 import { toggleRedux } from '../../../context/reduxTestCaseActions';
 
 import { MockDataContext } from '../../../context/mockDataReducer';
@@ -28,9 +28,9 @@ const TestCase = () => {
    * invoke use Context by passing a context ive created (ex: the testCaseContext i created in the testCase reducer)
    * the return value of this invocation is equal to the value I passed into the unique provider (ex: the testcaseContext.Provider // will return the [testCase, dispatchToTestCase] array)
    */
-  const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext); 
+  const [{ testStatement, statements, displayAutoStatement }, dispatchToTestCase] = useContext(TestCaseContext); 
   /* will i update redux state here */
-  const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext); 
+  const [{ reduxStatements, hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext); 
   const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
 
   /**
@@ -55,13 +55,26 @@ const TestCase = () => {
     dispatchToMockData(toggleMockData(e.currentTarget.checked));
   };
 
+  // const handleTogglDisplay = e => {
+  //   dispatchToTestCase(toggleDisplay(e.currentTarget.checked));
+  // };
+
   const handleAddMockData = () => {
     dispatchToMockData(addMockData());
   };
 
   const handleToggleRedux = e => {
     dispatchToReduxTestCase(toggleRedux(e.currentTarget.checked));
+    dispatchToTestCase(toggleDisplay(e.currentTarget.checked));
+    //hideDisplays()
   };
+
+  // const hideDisplays = () => {
+  //   let hideableSections = document.querySelectorAll('.displays');
+  //   for (let i=0; i<hideableSections.length; i++){
+  //     hideableSections[i].style.display = 'none';
+  //   }
+  // }
 
 
    /**
@@ -137,7 +150,7 @@ const TestCase = () => {
             <input
               type='checkbox'
               disabled={mockDataJSX.length}
-              checked={hasRedux}
+              checked={hasRedux, displayAutoStatement}
               onChange={handleToggleRedux}
             />
             <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
@@ -160,6 +173,9 @@ const TestCase = () => {
           </span>
         </section>
       </div>
+      
+      {/* Conditional rendering in React works the same way conditions work in JavaScript. 
+      Use JavaScript operators like if or the conditional operator to create elements representing the current state, and let React update the UI to match them. */}
       {hasMockData && ( /* if they have mockdata, render this section */
         <section id={styles.mockDataHeader}>
           <label htmlFor='mock-data'>Mock data</label>
@@ -167,7 +183,15 @@ const TestCase = () => {
           {mockDataJSX}
         </section>
       )}
-      <FirstRender /* the auto render card on the page. the render is always the first statement */
+
+      {hasRedux && ( 
+        <section >
+          <ReduxTestCase/>
+        </section>
+      )}
+
+      <FirstRender
+        className='displays' 
         key={firstRenderStatement.id}
         render={firstRenderStatement}
         dispatchToTestCase={dispatchToTestCase}
@@ -177,6 +201,7 @@ const TestCase = () => {
           {provided => ( 
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <TestStatements
+                className='displays'
                 statements={draggableStatements}
                 dispatchToTestCase={dispatchToTestCase}
               />
@@ -185,7 +210,8 @@ const TestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <LastAssertion   /* assertion is always the last statement */
+      <LastAssertion
+        className='displays'
         key={lastAssertionStatement.id}
         assertion={lastAssertionStatement}
         dispatchToTestCase={dispatchToTestCase}
