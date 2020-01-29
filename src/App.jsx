@@ -10,6 +10,7 @@ import RightPanel from './containers/RightPanel/RightPanel';
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
+  // reducer is invoked in App since it's the common parent of testCase and ExportFileModal components
   const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
@@ -25,9 +26,10 @@ const App = () => {
     return (
       <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
+          {/* value wrapped in array since Provider only takes in one value */}
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-              <NavBar />
+              <NavBar /> 
               <LeftPanel />
             </MockDataContext.Provider>
           </TestCaseContext.Provider>

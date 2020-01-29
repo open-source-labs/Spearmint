@@ -1,0 +1,107 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+@import '../LeftPanel.module.scss';
+
+#reducer {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+}
+
+#close {
+  float: right;
+}
+
+#reducerHeader {
+  @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.queryLabel {
+  margin-bottom: 5px;
+  display: block;
+}
+
+#queryFlexBox {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#reducerNameFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#reducerName {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+}
+
+.eventValue {
+  // width: 50%;
+  input {
+    width: 90%;
+    margin-top: 6px;
+  }
+}
+
+#eventTypeVal {
+  width: 43%;
+}
+
+#querySelector {
+  margin-right: 9%;
+  select {
+    font-family: $raleway;
+    width: 100%;
+    height: 25px;
+    margin: 0 3px 0 0;
+    background-color: white;
+    border: 1px solid $light-gray;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: $dark-gray;
+  }
+}
+
+#dropdownFlex {
+  display: flex;
+  align-items: center;
+  width: 111%;
+}
+
+#query {
+  input {
+    width: 148%;
+  }
+}
+
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+}
+
+#tooltip {
+  min-width: 10em;
+  padding: 0.5em 0.75em;
+
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
+}

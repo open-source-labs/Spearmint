@@ -18,11 +18,20 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 
+  ADD_ASYNC: 'ADD_ASYNC',
+  DELETE_ASYNC: 'DELETE_ASYNC',
+  UPDATE_ASYNC: 'UPDATE_ASYNC',
+  
   ADD_ACTIONCREATOR: 'ADD_ACTIONCREATOR',
   DELETE_ACTIONCREATOR: 'DELETE_ACTIONCREATOR',
   UPDATE_ACTIONCREATOR: 'UPDATE_ACTIONCREATORS',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
+
+  // Action type for reducer
+  ADD_REDUCER: 'ADD_REDUCER',
+  DELETE_REDUCER: 'DELETE_REDUCER',
+  UPDATE_REDUCER: 'UPDATE_REDUCER',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -125,6 +134,65 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propId,
   propKey,
   propValue,
+});
+
+// Functions for Reducer
+export const addReducer = () => ({
+  type: actionTypes.ADD_REDUCER,
+});
+
+export const deleteReducer = id => ({
+  type: actionTypes.DELETE_REDUCER,
+  id,
+});
+
+export const updateReducer = ({
+  id,
+  queryVariant, // action
+  querySelector, // initial state
+  queryValue, //reducer name
+  isNot,
+  matcherType,
+  matcherValue, // updated state
+  suggestions,
+}) => ({
+  type: actionTypes.UPDATE_REDUCER,
+  id,
+  queryVariant,
+  querySelector,
+  queryValue,
+  isNot,
+  matcherType,
+  matcherValue,
+  suggestions,
+});
+
+export const addAsync = () => ({
+  type: actionTypes.ADD_ASYNC,
+});
+
+export const deleteAsync = id => ({
+  type: actionTypes.DELETE_ASYNC,
+  id,
+});
+
+export const updateAsync = ({
+  id,
+  asyncFunction,
+  method,
+  route,
+  store,
+  matcher,
+  expectedResponse,
+}) => ({
+  type: actionTypes.UPDATE_ASYNC,
+  id,
+  asyncFunction,
+  method,
+  route,
+  store,
+  matcher,
+  expectedResponse,
 });
 
 export const addActionCreator = () => ({

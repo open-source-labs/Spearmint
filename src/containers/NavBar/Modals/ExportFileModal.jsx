@@ -10,6 +10,7 @@ import {
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
+// import { addReducer } from '../../../context/testCaseActions';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
@@ -36,6 +37,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // add teststatements
   const generateTestFile = () => {
+
     for (let i = 0; i < testCase.statements.length; i++) {
       if (
         (testCase.statements[i].type === 'render' && testCase.statements[i].componentName === '') ||
@@ -63,13 +65,46 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         );
       }
     }
+//staging
+    addImportStatements();
+    addMockData();
+    addJestTestStatementsReducer();
+    addJestTestStatements();
+    // addTestStatements(); // needed for react testing
+    testFileCode = beautify(testFileCode, {
+      indent_size: 2,
+      space_in_empty_paren: true,
+      e4x: true,
+    });
+//staging
+                        
   };
 
+  // Function for building Redux tests
+  const addJestTestStatements = () => {
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'async':
+          return addAsync(statement);
+        default:
+          return statement;
+      }
+    })
+    testFileCode += '});';
+    testFileCode += '\n';
+  };
+  
   const addImportStatements = () => {
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
     import { build, fake } from 'test-data-bot'; 
+
     import '@testing-library/jest-dom/extend-expect'
+
+//import statements for thunk
+    import configureMockStore from 'redux-mock-store';
+    import thunk from 'redux-thunk';
+    import fetchMock from 'fetch-mock';
     \n`;
   };
 
@@ -122,12 +157,15 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
+        // case 'reducer':
+        //   return addReducer(statement);
         default:
           return statement;
       }
     });
     testFileCode += '});';
   };
+
 
   // test statement for action creator
   const addActionCreatorTestStatements = () => {
@@ -142,6 +180,21 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     });
     testFileCode += '});';
   };
+
+  //Linda's reducer
+  const addJestTestStatementsReducer = () => { 
+    testFileCode += `it('${testCase.testStatement}', () => {`;
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'reducer':
+          return addReducer(statement);
+        default:
+          return statement;
+      }
+    })
+    testFileCode += '});';
+  }
+
 
   const identifyMethods = () => {
     const methods = new Set([]);
@@ -171,8 +224,35 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
                     (${assertion.queryValue})).${assertion.matcherType}(${
       assertion.matcherValue
-    });`;
+      });`;
   };
+  
+  // addReducer function needs to be refactored
+  const addReducer = reducer => {
+    testFileCode += `expect(${reducer.queryValue}(${reducer.querySelector},{${reducer.queryVariant}})).toEqual(${reducer.matcherValue})`;
+  };
+
+  // Thunk
+  const addAsync = async => {
+    testFileCode += `const middlewares = [thunk]
+    const mockStore = configureMockStore(middlewares)`
+    
+    testFileCode += '\n'
+
+    testFileCode += `it('${testCase.testStatement}', () => {
+        fetchMock.${async.method}('${async.route}')`
+
+    testFileCode += '\n'
+
+    testFileCode += `const expectedActions = ${async.expectedResponse};
+        const store = mockStore(${async.store})`
+
+    testFileCode += '\n'
+
+    testFileCode += `return store.dispatch(actions.${async.asyncFunction}()).then(() => {
+          expect(store.getActions()).toEqual(expectedActions)
+        })`
+  }
 
   const addRender = (render, methods) => {
     let props = createRenderProps(render);

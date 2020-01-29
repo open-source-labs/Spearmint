@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import {
-  addAction,
-  addAssertion,
-  addRender,
-  addActionCreator,
-} from '../../../context/testCaseActions';
+import { addAction, addAssertion, addRender, addAsync, addReducer, addActionCreator } from '../../../context/testCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
 
 const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
@@ -28,8 +23,16 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const handleAddRender = e => {
     dispatchToTestCase(addRender());
   };
+  const handleAddReducer = e => {
+    dispatchToTestCase(addReducer());
+  };
   const handleAddActionCreator = e => {
     dispatchToTestCase(addActionCreator());
+  };
+
+  // spearmint2.0 async button
+  const handleAddAsync = e => {
+    dispatchToTestCase(addAsync());
   };
 
   return (
@@ -49,8 +52,14 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           <button data-testid='assertionButton' onClick={handleAddAssertion}>
             Assertion
           </button>
+          <button data-testid='reducerButton' onClick={handleAddReducer}>
+            Reducer
+          </button>
           <button data-testid='rerenderButton' onClick={handleAddRender}>
             Rerender
+          </button>
+          <button data-testid='asyncButton' onClick={handleAddAsync}>
+            Async Action Creator
           </button>
           <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
             Action Creator
