@@ -36,6 +36,10 @@ export const actionTypes = {
   ADD_REDUCER: 'ADD_REDUCER',
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
+
+  // Action types for filepath
+  UPDATE_ACTIONS_FILEPATH: 'UPDATE_ACTIONS_FILEPATH',
+  UPDATE_TYPES_FILEPATH: 'UPDATE_TYPES_FILEPATH',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
