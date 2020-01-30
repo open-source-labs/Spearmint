@@ -90,7 +90,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
                         
   };
 
-  const addImportStatements = () => { 
+  // const addImportStatements = () => { 
   // Function for building Redux tests
     
   const addAsyncTestStatements = () => {
@@ -428,5 +428,6 @@ testFileCode += '\n';
     </ReactModal>
   );
 };
+
 
 export default ExportFileModal;
