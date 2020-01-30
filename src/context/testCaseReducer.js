@@ -101,6 +101,10 @@ const createRenderProp = () => ({
 const createReducer = () => ({
   id: statementId++,
   type: 'reducer',
+  typesFileName: '',
+  typesFilePath: '',
+  reducersFileName: '',
+  reducersFilePath: '',
   queryVariant: '',
   querySelector: '',
   queryValue: '',
@@ -376,7 +380,7 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
 
-    // updates filepath for async
+    // updates filepath
     case actionTypes.UPDATE_ACTIONS_FILEPATH:
       statements = statements.map(statement => {
         if (statement.type === 'async') {
@@ -392,7 +396,8 @@ export const testCaseReducer = (state, action) => {
 
     case actionTypes.UPDATE_TYPES_FILEPATH:
       statements = statements.map(statement => {
-        if (statement.type === 'async') {
+        if (statement.type === 'async' ||
+            statement.type === 'reducer') {
           statement.typesFileName = action.typesFileName;
           statement.typesFilePath = action.typesFilePath;
         }
@@ -403,6 +408,19 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
       
+    case actionTypes.UPDATE_REDUCERS_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'reducer') {
+          statement.reducersFileName = action.reducersFileName;
+          statement.reducersFilePath = action.reducersFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
     case actionTypes.ADD_ACTIONCREATOR:
       lastAssertionStatement = statements.pop();
       statements.push(createActionCreator(), lastAssertionStatement);

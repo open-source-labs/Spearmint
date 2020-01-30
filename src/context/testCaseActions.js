@@ -40,6 +40,7 @@ export const actionTypes = {
   // Action types for filepath
   UPDATE_ACTIONS_FILEPATH: 'UPDATE_ACTIONS_FILEPATH',
   UPDATE_TYPES_FILEPATH: 'UPDATE_TYPES_FILEPATH',
+  UPDATE_REDUCERS_FILEPATH: 'UPDATE_REDUCERS_FILEPATH',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -276,6 +277,12 @@ export const updateTypesFilePath = (typesFileName, typesFilePath) => ({
   type: actionTypes.UPDATE_TYPES_FILEPATH,
   typesFileName,
   typesFilePath,
+})
+
+export const updateReducersFilePath = (reducersFileName, reducersFilePath) => ({
+  type: actionTypes.UPDATE_REDUCERS_FILEPATH,
+  reducersFileName,
+  reducersFilePath,
 })
 
 export const createNewTest = () => ({
