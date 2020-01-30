@@ -1,7 +1,3 @@
-/**
- * the boxes where you fill out info for assertion , render, and action
- */
-
 import React from 'react';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
