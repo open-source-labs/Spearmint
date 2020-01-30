@@ -264,6 +264,10 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_REDUCER:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
+          statement.reducersFileName = action.reducersFileName;
+          statement.reducersFilePath = action.reducersFilePath;
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
           statement.queryVariant = action.queryVariant; // action
           statement.querySelector = action.querySelector; // initial state
           statement.queryValue = action.queryValue; // reducer name
