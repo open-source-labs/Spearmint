@@ -5,7 +5,8 @@
 import React, { useContext } from 'react';
 import styles from '../Thunk/Thunk.module.scss';
 import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
-import { deleteAsync, updateAsync } from '../../../context/testCaseActions';
+import { GlobalContext } from '../../../context/globalReducer';
+import { deleteAsync, updateAsync, updateActionsFilePath, updateTypesFilePath } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
@@ -31,8 +32,9 @@ const dragIcon = require('../../../assets/images/drag-vertical.png');
 // };
 
 const Async = ({ async, index, dispatchToTestCase }) => {
-  console.log('This is Async -> ', async)
-  const [{ mockData }, _] = useContext(MockDataContext);
+  const [{ filePathMap }, _] = useContext(GlobalContext);
+
+  // const [{ mockData }, _] = useContext(MockDataContext);
   const handleChangeAsyncFields = (e, field) => {
     let updatedAsync = { ...async };
     updatedAsync[field] = e.target.value;
@@ -52,6 +54,18 @@ const Async = ({ async, index, dispatchToTestCase }) => {
     return matchersWithValues.includes(matcherType);
   };
 
+  const handleChangeActionsFileName = e => {
+    const actionsFileName = e.target.value;
+    const filePath = filePathMap[actionsFileName] || '';
+    dispatchToTestCase(updateActionsFilePath(actionsFileName, filePath));
+  };
+
+  const handleChangeTypesFileName = e => {
+    const typesFileName = e.target.value;
+    const filePath = filePathMap[typesFileName] || '';
+    dispatchToTestCase(updateTypesFilePath(typesFileName, filePath));
+  };
+
   return (
     <Draggable draggableId={async.id.toString()} index={index}>
       {provided => (
@@ -68,6 +82,33 @@ const Async = ({ async, index, dispatchToTestCase }) => {
           </div>
           <div id={styles.thunkFlexBox}>
             <div id={styles.thunkType}>
+              {/* <div id={styles.query}>
+                <label htmlFor='actionsFile' className={styles.queryLabel}>
+                  Actions File Name
+                </label>
+                <input
+                  type="text"
+                  name="actionsFile"
+                  onChange={e => handleChangeAsyncFields(e, 'actionsFile')} />
+              </div> */}
+              <div>
+                <label htmlFor='actionsFile'>Actions File Name</label>
+                <input
+                  type='text'
+                  id={styles.renderInputBox}
+                  value={async.actionsFile}
+                  onChange={handleChangeActionsFileName}
+                />
+              </div>
+              <div>
+                <label htmlFor='typesFile'>Types File Name</label>
+                <input
+                  type='text'
+                  id={styles.renderInputBox}
+                  value={async.typesFile}
+                  onChange={handleChangeTypesFileName}
+                />
+              </div>
               <div id={styles.query}>
                 <label htmlFor='asyncFunction' className={styles.queryLabel}>
                   Async Function

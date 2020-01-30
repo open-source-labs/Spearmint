@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import styles from '../Middleware/Middleware.module.scss';
 import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
-
-import { deleteMiddleware, updateMiddleware } from '../../../context/testCaseActions';
+import { GlobalContext } from '../../../context/globalReducer';
+import { deleteMiddleware, updateMiddleware, updateMiddlewaresFilePath } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
@@ -19,9 +19,9 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
      * invoke context here ?
      * make new the context in the reducer *** ?
      */
-    const [{ mockData }, _] = useContext(MockDataContext);
+    // const [{ mockData }, _] = useContext(MockDataContext);
      
- 
+    const [{ filePathMap }, _] = useContext(GlobalContext);
      /**
      * create handler function to dispatch action with user input to reducer
      * create handler function for udates to my middleware
@@ -47,6 +47,11 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
         return eventsWithValues.includes(eventType);
       };
 
+    const handleChangeMiddlewaresFileName = e => {
+        const middlewaresFileName = e.target.value;
+        const filePath = filePathMap[middlewaresFileName] || '';
+        dispatchToTestCase(updateMiddlewaresFilePath(middlewaresFileName, filePath));
+    };
 
      return (
          <Draggable draggableId={middleware.id.toString()} index={index}>
@@ -68,6 +73,15 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
 
                     {/* the categories inside the actual box */}
                     <div id={styles.eventTypeFlexBox}>
+                         <div>
+                             <label htmlFor='typesFile'>Types File Name</label>
+                             <input
+                                 type='text'
+                                 id={styles.renderInputBox}
+                                 value={middleware.middlewaresFile}
+                                 onChange={handleChangeMiddlewaresFileName}
+                             />
+                         </div>
                         {/* <div id={styles.eventType}>
                             <label htmlFor='eventType'> Middleware Type</label>
 
@@ -82,7 +96,7 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
 
                         
                            {/* add mock data stuff here *** */} 
-                        <div id={styles.eventTypeVal}>
+                        {/* <div id={styles.eventTypeVal}>
                             {needsEventValue(middleware.eventType) && mockData.length > 0 ? (
                                 <div className={styles.eventValue}>
                                 <label htmlFor='eventValue'> Value </label>
@@ -94,7 +108,7 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                 />
                                 </div>
                             ) : null}
-                        </div>
+                        </div> */}
                     </div>
 
                     <div id={styles.queryFlexBox}>

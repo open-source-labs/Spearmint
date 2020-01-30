@@ -43,54 +43,74 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     closeExportModal();
   };
 
+//   const generateTestFile = () => {
+
+//     for (let i = 0; i < testCase.statements.length; i++) {
+//       if (
+//         (testCase.statements[i].type === 'render' && testCase.statements[i].componentName === '') ||
+//         (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
+//       ) {
+//         return (
+//           addActionCreatorImportStatement(),
+//           addActionCreatorTestStatements(),
+//           (testFileCode = beautify(testFileCode, {
+//             indent_size: 2,
+//             space_in_empty_paren: true,
+//             e4x: true,
+//           }))
+//         );
+//       } else {
+//         return (
+//           addImportStatements(),
+//           addMockData(),
+//           addTestStatements(),
+//           (testFileCode = beautify(testFileCode, {
+//             indent_size: 2,
+//             space_in_empty_paren: true,
+//             e4x: true,
+//           }))
+//         );
+//       }
+//     }
+// //staging
+//     addImportStatements();
+//     addActionsImportStatement();
+//     addTypesImportStatement();
+//     addMockData();
+//     addAsyncTestStatements(); //Dave Corn reducer
+//     addMiddlewareTestStatements(); //Chloe reducer
+//     addTestStatements();
+//     addJestTestStatementsReducer(); // Linda's reducer
+//     // addTestStatements(); // needed for react testing
+
+//     testFileCode = beautify(testFileCode, {
+//       indent_size: 2,
+//       space_in_empty_paren: true,
+//       e4x: true,
+//     });
+// //staging
+                        
+//   };
+
+
   const generateTestFile = () => {
-
-    for (let i = 0; i < testCase.statements.length; i++) {
-      if (
-        (testCase.statements[i].type === 'render' && testCase.statements[i].componentName === '') ||
-        (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
-      ) {
-        return (
-          addActionCreatorImportStatement(),
-          addActionCreatorTestStatements(),
-          (testFileCode = beautify(testFileCode, {
-            indent_size: 2,
-            space_in_empty_paren: true,
-            e4x: true,
-          }))
-        );
-      } else {
-        return (
-          addImportStatements(),
-          addMockData(),
-          addTestStatements(),
-          (testFileCode = beautify(testFileCode, {
-            indent_size: 2,
-            space_in_empty_paren: true,
-            e4x: true,
-          }))
-        );
-      }
-    }
-//staging
-    addImportStatements();
+    // addImportStatements();
     addMockData();
-    addAsyncTestStatements(); //Dave Corn reducer
-    addMiddlewareTestStatements(); //Chloe reducer
-    addTestStatements();
-    addJestTestStatementsReducer(); // Linda's reducer
-    // addTestStatements(); // needed for react testing
-
+    addActionsImportStatement();
+    addTypesImportStatement();
+    addReducersImportStatement();
+    addMiddlewaresImportStatement();
+    // addJestTestStatements();
+    // addTestStatements();
+    // addAsyncStatements(); // need to define this function
     testFileCode = beautify(testFileCode, {
       indent_size: 2,
       space_in_empty_paren: true,
       e4x: true,
     });
-//staging
-                        
   };
 
-  const addImportStatements = () => { 
+  // const addImportStatements = () => { 
   // Function for building Redux tests
     
   const addAsyncTestStatements = () => {
@@ -111,10 +131,10 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
     import { build, fake } from 'test-data-bot'; 
 
-    import '@testing-library/jest-dom/extend-expect'
+    import '@testing-library/jest-dom/extend-expect'`
 
 //import statements for thunk
-    import configureMockStore from 'redux-mock-store';
+    `import configureMockStore from 'redux-mock-store';
     import thunk from 'redux-thunk';
     import fetchMock from 'fetch-mock';
     \n`;
@@ -143,11 +163,96 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
       }
     });
     testFileCode += `import '@testing-library/jest-dom/extend-expect';
-    import { build, fake } from 'test-data-bot'; 
-    import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
-    import * as types from '../${actionCreatorStatement.typesFolder}.js';
-    \n`;
+    import { build, fake } from 'test-data-bot';` 
+    // import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
+    // import * as types from '../${actionCreatorStatement.typesFolder}.js';
   };
+
+  // Add actions import line to the export file
+  const addActionsImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'async' ||
+        statement.type === 'action-creator') {
+          return createPathToActions(statement);
+      } else {
+        return statement;
+      }
+    })
+  };
+
+  // Creates import template for action file
+  const createPathToActions = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.filePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as actions from '../${filePath}';`;
+  }
+
+// Adds Types import line to the export file
+  // const addTypesImportStatement = () => {
+  //   testCase.statements.forEach(statement => {
+  //     switch (statement.type) {
+  //       case 'async':
+  //         return createPathToTypes(statement);
+  //       default:
+  //         return statement;
+  //     }
+  //   })
+  // };
+
+  const addTypesImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'async' ||
+        statement.type === 'action-creator' ||
+        statement.type === 'reducer') {
+        return createPathToTypes(statement);
+      } else {
+        return statement;
+      }
+    })
+  };
+
+  // Creates import template for types file
+  const createPathToTypes = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.typesFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as types from '../${filePath}';`;
+  }
+
+  // Checks if statemnt.type is a Reducer
+  const addReducersImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'reducer') {
+        return createPathToReducers(statement);
+      } else {
+        return statement;
+      }
+    })
+  };
+
+  // Creates import statement and filePath for Reducer file
+  const createPathToReducers = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.reducersFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as reducers from '../${filePath}';`;
+  }
+
+  // Checks if statemnt.type is a Middleware
+  const addMiddlewaresImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'middleware') {
+        return createPathToMiddlewares(statement);
+      } else {
+        return statement;
+      }
+    })
+  };
+
+  // Creates import statement and filePath for Middleware file
+  const createPathToMiddlewares = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as middleware from '../${filePath}';`;
+  }
 
   const addMockData = () => {
     mockData.forEach(mockDatum => {

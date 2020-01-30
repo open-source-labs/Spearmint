@@ -36,6 +36,12 @@ export const actionTypes = {
   ADD_REDUCER: 'ADD_REDUCER',
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
+
+  // Action types for filepath
+  UPDATE_ACTIONS_FILEPATH: 'UPDATE_ACTIONS_FILEPATH',
+  UPDATE_TYPES_FILEPATH: 'UPDATE_TYPES_FILEPATH',
+  UPDATE_REDUCERS_FILEPATH: 'UPDATE_REDUCERS_FILEPATH',
+  UPDATE_MIDDLEWARES_FILEPATH: 'UPDATE_MIDDLEWARES_FILEPATH'
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -260,6 +266,31 @@ export const updateActionCreator = ({
   payloadType,
   filePath,
 });
+
+// update filePath for actions file
+export const updateActionsFilePath = (actionsFileName, filePath) => ({
+  type: actionTypes.UPDATE_ACTIONS_FILEPATH,
+  actionsFileName,
+  filePath,
+})
+
+export const updateTypesFilePath = (typesFileName, typesFilePath) => ({
+  type: actionTypes.UPDATE_TYPES_FILEPATH,
+  typesFileName,
+  typesFilePath,
+})
+
+export const updateReducersFilePath = (reducersFileName, reducersFilePath) => ({
+  type: actionTypes.UPDATE_REDUCERS_FILEPATH,
+  reducersFileName,
+  reducersFilePath,
+})
+
+export const updateMiddlewaresFilePath = (middlewaresFileName, middlewaresFilePath) => ({
+  type: actionTypes.UPDATE_MIDDLEWARES_FILEPATH,
+  middlewaresFileName,
+  middlewaresFilePath,
+})
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
