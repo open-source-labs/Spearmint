@@ -43,53 +43,71 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     closeExportModal();
   };
 
-  const generateTestFile = () => {
+//   const generateTestFile = () => {
 
-    for (let i = 0; i < testCase.statements.length; i++) {
-      if (
-        (testCase.statements[i].type === 'render' && testCase.statements[i].componentName === '') ||
-        (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
-      ) {
-        return (
-          addActionCreatorImportStatement(),
-          addActionCreatorTestStatements(),
-          (testFileCode = beautify(testFileCode, {
-            indent_size: 2,
-            space_in_empty_paren: true,
-            e4x: true,
-          }))
-        );
-      } else {
-        return (
-          addImportStatements(),
-          addMockData(),
-          addTestStatements(),
-          (testFileCode = beautify(testFileCode, {
-            indent_size: 2,
-            space_in_empty_paren: true,
-            e4x: true,
-          }))
-        );
-      }
-    }
-//staging
-    addImportStatements();
+//     for (let i = 0; i < testCase.statements.length; i++) {
+//       if (
+//         (testCase.statements[i].type === 'render' && testCase.statements[i].componentName === '') ||
+//         (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
+//       ) {
+//         return (
+//           addActionCreatorImportStatement(),
+//           addActionCreatorTestStatements(),
+//           (testFileCode = beautify(testFileCode, {
+//             indent_size: 2,
+//             space_in_empty_paren: true,
+//             e4x: true,
+//           }))
+//         );
+//       } else {
+//         return (
+//           addImportStatements(),
+//           addMockData(),
+//           addTestStatements(),
+//           (testFileCode = beautify(testFileCode, {
+//             indent_size: 2,
+//             space_in_empty_paren: true,
+//             e4x: true,
+//           }))
+//         );
+//       }
+//     }
+// //staging
+//     addImportStatements();
+//     addActionsImportStatement();
+//     addTypesImportStatement();
+//     addMockData();
+//     addAsyncTestStatements(); //Dave Corn reducer
+//     addMiddlewareTestStatements(); //Chloe reducer
+//     addTestStatements();
+//     addJestTestStatementsReducer(); // Linda's reducer
+//     // addTestStatements(); // needed for react testing
+
+//     testFileCode = beautify(testFileCode, {
+//       indent_size: 2,
+//       space_in_empty_paren: true,
+//       e4x: true,
+//     });
+// //staging
+                        
+//   };
+
+
+  const generateTestFile = () => {
+    // addImportStatements();
+    addMockData();
     addActionsImportStatement();
     addTypesImportStatement();
-    addMockData();
-    addAsyncTestStatements(); //Dave Corn reducer
-    addMiddlewareTestStatements(); //Chloe reducer
-    addTestStatements();
-    addJestTestStatementsReducer(); // Linda's reducer
-    // addTestStatements(); // needed for react testing
-
+    addReducersImportStatement();
+    addMiddlewaresImportStatement();
+    // addJestTestStatements();
+    // addTestStatements();
+    // addAsyncStatements(); // need to define this function
     testFileCode = beautify(testFileCode, {
       indent_size: 2,
       space_in_empty_paren: true,
       e4x: true,
     });
-//staging
-                        
   };
 
   // const addImportStatements = () => { 
@@ -170,13 +188,25 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
   }
 
 // Adds Types import line to the export file
+  // const addTypesImportStatement = () => {
+  //   testCase.statements.forEach(statement => {
+  //     switch (statement.type) {
+  //       case 'async':
+  //         return createPathToTypes(statement);
+  //       default:
+  //         return statement;
+  //     }
+  //   })
+  // };
+
   const addTypesImportStatement = () => {
     testCase.statements.forEach(statement => {
-      switch (statement.type) {
-        case 'async':
-          return createPathToTypes(statement);
-        default:
-          return statement;
+      if (statement.type === 'async' ||
+        statement.type === 'action-creator' ||
+        statement.type === 'reducer') {
+        return createPathToTypes(statement);
+      } else {
+        return statement;
       }
     })
   };
@@ -186,6 +216,42 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     let filePath = path.relative(projectFilePath, statement.typesFilePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import * as types from '../${filePath}';`;
+  }
+
+  // Checks if statemnt.type is a Reducer
+  const addReducersImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'reducer') {
+        return createPathToReducers(statement);
+      } else {
+        return statement;
+      }
+    })
+  };
+
+  // Creates import statement and filePath for Reducer file
+  const createPathToReducers = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.reducersFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as reducers from '../${filePath}';`;
+  }
+
+  // Checks if statemnt.type is a Middleware
+  const addMiddlewaresImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'middleware') {
+        return createPathToMiddlewares(statement);
+      } else {
+        return statement;
+      }
+    })
+  };
+
+  // Creates import statement and filePath for Middleware file
+  const createPathToMiddlewares = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as middleware from '../${filePath}';`;
   }
 
   const addMockData = () => {
