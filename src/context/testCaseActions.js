@@ -5,7 +5,7 @@ export const actionTypes = {
   ADD_ACTION: 'ADD_ACTION',
   DELETE_ACTION: 'DELETE_ACTION',
   UPDATE_ACTION: 'UPDATE_ACTION',
-  
+
   ADD_MIDDLEWARE: 'ADD_MIDDLEWARE',
   DELETE_MIDDLEWARE: 'DELETE_MIDDLEWARE',
   UPDATE_MIDDLEWARE: 'UPDATE_MIDDLEWARE',
@@ -25,17 +25,16 @@ export const actionTypes = {
   ADD_ASYNC: 'ADD_ASYNC',
   DELETE_ASYNC: 'DELETE_ASYNC',
   UPDATE_ASYNC: 'UPDATE_ASYNC',
-  
+
   ADD_ACTIONCREATOR: 'ADD_ACTIONCREATOR',
   DELETE_ACTIONCREATOR: 'DELETE_ACTIONCREATOR',
   UPDATE_ACTIONCREATOR: 'UPDATE_ACTIONCREATORS',
 
-  CREATE_NEW_TEST: 'CREATE_NEW_TEST',
-
-  // Action type for reducer
   ADD_REDUCER: 'ADD_REDUCER',
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
+
+  CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -172,7 +171,6 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propValue,
 });
 
-// Functions for Reducer
 export const addReducer = () => ({
   type: actionTypes.ADD_REDUCER,
 });
@@ -184,12 +182,12 @@ export const deleteReducer = id => ({
 
 export const updateReducer = ({
   id,
-  queryVariant, // action
-  querySelector, // initial state
-  queryValue, //reducer name
+  queryVariant,
+  querySelector,
+  queryValue,
   isNot,
   matcherType,
-  matcherValue, // updated state
+  matcherValue,
   suggestions,
 }) => ({
   type: actionTypes.UPDATE_REDUCER,
