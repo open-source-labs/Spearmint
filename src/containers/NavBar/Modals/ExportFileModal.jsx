@@ -41,6 +41,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
       ) {
         return (
+          addImportStatements(),
           addActionCreatorImportStatement(),
           addReduxTestStatements(),
           (testFileCode = beautify(testFileCode, {
@@ -51,6 +52,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         );
       } else {
         return (
+          addComponentImportStatement(),
           addImportStatements(),
           addMockData(),
           addTestStatements(),
@@ -64,16 +66,15 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }
   };
 
-  // React import statements
+  // import @testing-library/react, jest-dom, test-data-bot
   const addImportStatements = () => {
-    addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
     import { build, fake } from 'test-data-bot'; 
     import '@testing-library/jest-dom/extend-expect'
     \n`;
   };
 
-  // Render component import statement
+  // Import component name file path for render card
   const addComponentImportStatement = () => {
     const renderStatement = testCase.statements[0];
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
@@ -104,7 +105,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   //Redux test statements
   const addReduxTestStatements = () => {
     testFileCode += `test('${testCase.testStatement}', () => {`;
-    const methods = identifyMethods();
     testCase.statements.forEach(statement => {
       switch (statement.type) {
         case 'async':
@@ -131,7 +131,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     \n`;
   };
 
-  // AC Import Statements
+  // AC Import Statements for actions & types file paths
   const addActionCreatorImportStatement = () => {
     let actionCreatorStatement;
     testCase.statements.forEach(statement => {
@@ -140,9 +140,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         return actionCreatorStatement;
       }
     });
-    testFileCode += `import '@testing-library/jest-dom/extend-expect';
-    import { build, fake } from 'test-data-bot'; 
-    import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
+    testFileCode += `import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
     import * as types from '../${actionCreatorStatement.typesFolder}.js';
     \n`;
   };
