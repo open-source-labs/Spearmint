@@ -10,6 +10,10 @@ export const actionTypes = {
   DELETE_MIDDLEWARE: 'DELETE_MIDDLEWARE',
   UPDATE_MIDDLEWARE: 'UPDATE_MIDDLEWARE',
 
+  ADD_CONTEXT: 'ADD_CONTEXT',
+  DELETE_CONTEXT: 'DELETE_CONTEXT',
+  UPDATE_CONTEXT: 'UPDATE_CONTEXT',
+
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
   UPDATE_ASSERTION: 'UPDATE_ASSERTION',
@@ -178,6 +182,40 @@ export const updateMiddleware = ({
   querySelector,
   queryValue,
   queryFunction,
+});
+
+export const addContexts = () => ({
+  type: actionTypes.ADD_CONTEXT,
+});
+
+export const deleteContexts = id => ({
+  type: actionTypes.DELETE_CONTEXT,
+  id,
+});
+
+export const updateContexts = ({
+  id,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  values,
+  textNode,
+  providerComponent,
+  consumerComponent,
+  context,
+}) => ({
+  type: actionTypes.UPDATE_CONTEXT,
+  id,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  values,
+  textNode,
+  providerComponent,
+  consumerComponent,
+  context,
 });
 
 export const addReducer = () => ({
