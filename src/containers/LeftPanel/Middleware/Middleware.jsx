@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from '../Middleware/Middleware.module.scss';
 import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
-
+import { GlobalContext } from '../../../context/globalReducer';
 import { deleteMiddleware, updateMiddleware, updateMiddlewaresFilePath } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
@@ -96,7 +96,7 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
 
                         
                            {/* add mock data stuff here *** */} 
-                        <div id={styles.eventTypeVal}>
+                        {/* <div id={styles.eventTypeVal}>
                             {needsEventValue(middleware.eventType) && mockData.length > 0 ? (
                                 <div className={styles.eventValue}>
                                 <label htmlFor='eventValue'> Value </label>
@@ -108,7 +108,7 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                 />
                                 </div>
                             ) : null}
-                        </div>
+                        </div> */}
                     </div>
 
                     <div id={styles.queryFlexBox}>
