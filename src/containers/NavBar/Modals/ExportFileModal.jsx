@@ -148,6 +148,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     \n`;
   };
 
+  // Hook: Updates import statements
   const addHookUpdatesImportStatement = () => {
     let hookUpdatesStatement;
     testCase.statements.forEach(statement => {
@@ -305,6 +306,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }
   };
 
+  // Hook: Updates Jest test code
   const addHookUpdates = hookUpdates => {
     testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());
     act(() => {
