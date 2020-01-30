@@ -42,6 +42,7 @@ export const actionTypes = {
   UPDATE_TYPES_FILEPATH: 'UPDATE_TYPES_FILEPATH',
   UPDATE_REDUCERS_FILEPATH: 'UPDATE_REDUCERS_FILEPATH',
   UPDATE_MIDDLEWARES_FILEPATH: 'UPDATE_MIDDLEWARES_FILEPATH',
+  UPDATE_HOOKS_FILEPATH: 'UPDATE_HOOKS_FILEPATH',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
@@ -292,20 +293,20 @@ export const deleteHookUpdates = id => ({
 export const updateHookUpdates = ({
   id,
   hook,
-  hookFile,
+  hookFileName,
+  hookFilePath,
   callbackFunc,
   managedState,
   updatedState,
-  filePath,
 }) => ({
   type: actionTypes.UPDATE_HOOK_UPDATES,
   id,
   hook,
-  hookFile,
+  hookFileName,
+  hookFilePath,
   callbackFunc,
   managedState,
   updatedState,
-  filePath,
 });
 
 export const updateActionsFilePath = (actionsFileName, filePath) => ({
@@ -330,6 +331,12 @@ export const updateMiddlewaresFilePath = (middlewaresFileName, middlewaresFilePa
   type: actionTypes.UPDATE_MIDDLEWARES_FILEPATH,
   middlewaresFileName,
   middlewaresFilePath,
+});
+
+export const updateHooksFilePath = (hookFileName, hookFilePath) => ({
+  type: actionTypes.UPDATE_HOOKS_FILEPATH,
+  hookFileName,
+  hookFilePath,
 });
 
 export const createNewTest = () => ({

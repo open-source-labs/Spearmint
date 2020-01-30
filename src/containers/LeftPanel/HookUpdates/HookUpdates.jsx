@@ -1,11 +1,18 @@
 import React, { useContext } from 'react';
 import styles from '../HookUpdates/HookUpdates.module.scss';
-import { deleteHookUpdates, updateHookUpdates } from '../../../context/testCaseActions';
+import { GlobalContext } from '../../../context/globalReducer';
+import {
+  deleteHookUpdates,
+  updateHookUpdates,
+  updateHooksFilePath,
+} from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const HookUpdates = ({ hookUpdates, index, dispatchToTestCase }) => {
+  const [{ filePathMap }, _] = useContext(GlobalContext);
+
   const handleChangeHookUpdatesFields = (e, field) => {
     let updatedHookUpdates = { ...hookUpdates };
     updatedHookUpdates[field] = e.target.value;
@@ -14,6 +21,12 @@ const HookUpdates = ({ hookUpdates, index, dispatchToTestCase }) => {
 
   const handleClickDeleteHookUpdates = e => {
     dispatchToTestCase(deleteHookUpdates(hookUpdates.id));
+  };
+
+  const handleChangeHookFileName = e => {
+    const hookFileName = e.target.value;
+    const filePath = filePathMap[hookFileName] || '';
+    dispatchToTestCase(updateHooksFilePath(hookFileName, filePath));
   };
 
   return (
@@ -34,17 +47,13 @@ const HookUpdates = ({ hookUpdates, index, dispatchToTestCase }) => {
 
           <div id={styles.hookUpdatesHeader}>
             <img src={dragIcon} alt='drag' />
-            <h3>Hooks: Updates</h3>
+            <h3>Hook: Updates</h3>
           </div>
 
           <div id={styles.hooksFlexBox}>
             <div id={styles.hooks}>
-              <label htmlFor='hookFile'>Import Hook From</label>
-              <input
-                type='text'
-                id='hookFile'
-                onChange={e => handleChangeHookUpdatesFields(e, 'hookFile')}
-              />
+              <label htmlFor='hookFile'>Hook File</label>
+              <input type='text' id='hookFile' onChange={handleChangeHookFileName} />
             </div>
           </div>
 
