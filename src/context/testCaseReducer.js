@@ -31,20 +31,6 @@ export const testCaseState = {
 let statementId = 2;
 let renderPropsId = 0;
 
-const createMiddleware = () => ({
-  id: statementId++,
-  type: 'middleware',
-  middlewaresFileName: '',
-  middlewaresFilePath: '',
-  queryType: '',
-  eventValue: null,
-  queryVariant: '',
-  querySelector: '',
-  queryValue: '',
-  queryFunction: '',
-  suggestions: [],
-});
-
 const createAction = () => ({
   id: statementId++,
   type: 'action',
@@ -76,6 +62,12 @@ const createRerender = (componentName, filePath) => ({
   props: [],
 });
 
+const createRenderProp = () => ({
+  id: renderPropsId++,
+  propKey: '',
+  propValue: '',
+});
+
 const createAsync = () => ({
   id: statementId++,
   type: 'async',
@@ -91,10 +83,17 @@ const createAsync = () => ({
   expectedResponse: '',
 });
 
-const createRenderProp = () => ({
-  id: renderPropsId++,
-  propKey: '',
-  propValue: '',
+const createMiddleware = () => ({
+  id: statementId++,
+  type: 'middleware',
+  middlewaresFileName: '',
+  middlewaresFilePath: '',
+  queryType: '',
+  eventValue: null,
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
+  queryFunction: '',
 });
 
 const createReducer = () => ({
@@ -107,10 +106,7 @@ const createReducer = () => ({
   queryVariant: '',
   querySelector: '',
   queryValue: '',
-  isNot: false,
-  matcherType: '',
   matcherValue: '',
-  suggestions: [],
 });
 
 const createActionCreator = () => ({
@@ -120,8 +116,6 @@ const createActionCreator = () => ({
   typesFileName: '',
   typesFilePath: '',
   type: 'action-creator',
-  actionsFolder: '',
-  typesFolder: '',
   actionCreatorFunc: '',
   actionType: '',
   payloadKey: null,
@@ -157,40 +151,6 @@ export const testCaseReducer = (state, action) => {
       return {
         ...state,
         testStatement,
-      };
-    case actionTypes.ADD_MIDDLEWARE:
-      lastAssertionStatement = statements.pop();
-      statements.push(createMiddleware(), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_MIDDLEWARE:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_MIDDLEWARE:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.middlewaresFileName = action.middlewaresFileName;
-          statement.middlewaresFilePath = action.middlewaresFilePath;
-          statement.queryType = action.queryType;
-          statement.eventValue = action.eventValue;
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.queryFunction = action.queryFunction;
-          statement.suggestions = action.suggestions;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
       };
     case actionTypes.ADD_ACTION:
       lastAssertionStatement = statements.pop();
@@ -255,42 +215,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
-    case actionTypes.ADD_REDUCER:
-      lastAssertionStatement = statements.pop();
-      statements.push(createReducer(), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_REDUCER:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_REDUCER:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.reducersFileName = action.reducersFileName;
-          statement.reducersFilePath = action.reducersFilePath;
-          statement.typesFileName = action.typesFileName;
-          statement.typesFilePath = action.typesFilePath;
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.isNot = action.isNot;
-          statement.matcherType = action.matcherType;
-          statement.matcherValue = action.matcherValue;
-          statement.suggestions = action.suggestions;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
+
     case actionTypes.ADD_RENDER:
       lastAssertionStatement = statements.pop();
       const renderComponentName = state.statements[0].componentName;
@@ -362,6 +287,73 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
 
+    case actionTypes.ADD_MIDDLEWARE:
+      lastAssertionStatement = statements.pop();
+      statements.push(createMiddleware(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_MIDDLEWARE:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_MIDDLEWARE:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.middlewaresFileName = action.middlewaresFileName;
+          statement.middlewaresFilePath = action.middlewaresFilePath;
+          statement.queryType = action.queryType;
+          statement.eventValue = action.eventValue;
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
+          statement.queryFunction = action.queryFunction;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.ADD_REDUCER:
+      lastAssertionStatement = statements.pop();
+      statements.push(createReducer(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_REDUCER:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_REDUCER:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.reducersFileName = action.reducersFileName;
+          statement.reducersFilePath = action.reducersFilePath;
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
+          statement.matcherValue = action.matcherValue;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
     case actionTypes.ADD_ASYNC:
       lastAssertionStatement = statements.pop();
       statements.push(createAsync(), lastAssertionStatement);
@@ -389,6 +381,42 @@ export const testCaseReducer = (state, action) => {
           statement.store = action.store;
           statement.matcher = action.matcher;
           statement.expectedResponse = action.expectedResponse;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.ADD_ACTIONCREATOR:
+      lastAssertionStatement = statements.pop();
+      statements.push(createActionCreator(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.DELETE_ACTIONCREATOR:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_ACTIONCREATOR:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.actionsFile = action.actionsFile;
+          statement.filePath = action.filePath;
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
+          statement.actionCreatorFunc = action.actionCreatorFunc;
+          statement.payloadKey = action.payloadKey;
+          statement.payloadType = action.payloadType;
+          statement.actionType = action.actionType;
         }
         return statement;
       });
@@ -445,43 +473,6 @@ export const testCaseReducer = (state, action) => {
         if (statement.type === 'middleware') {
           statement.middlewaresFileName = action.middlewaresFileName;
           statement.middlewaresFilePath = action.middlewaresFilePath;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.ADD_ACTIONCREATOR:
-      lastAssertionStatement = statements.pop();
-      statements.push(createActionCreator(), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.DELETE_ACTIONCREATOR:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.UPDATE_ACTIONCREATOR:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.actionsFile = action.actionsFile;
-          statement.filePath = action.filePath;
-          statement.typesFileName = action.typesFileName;
-          statement.typesFilePath = action.typesFilePath;
-          statement.actionCreatorFunc = action.actionCreatorFunc;
-          statement.payloadKey = action.payloadKey;
-          statement.payloadType = action.payloadType;
-          statement.actionType = action.actionType;
-          statement.actionsFolder = action.actionsFolder;
-          statement.typesFolder = action.typesFolder;
         }
         return statement;
       });
