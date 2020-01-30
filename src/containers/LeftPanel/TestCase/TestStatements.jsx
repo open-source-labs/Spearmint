@@ -3,6 +3,7 @@ import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
 import Rerender from '../Render/Rerender';
 import Middleware from '../Middleware/Middleware';
+import Context from '../Context/Context';
 import ActionCreator from '../ActionCreator/ActionCreator';
 import Async from '../Thunk/Thunk';
 import Reducer from '../Reducer/Reducer';
@@ -20,6 +21,15 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
             dispatchToTestCase={dispatchToTestCase}
           />
         );
+        case 'context':
+          return ( 
+            <Context
+              key={statement.id}
+              context={statement}
+              index={i}
+              dispatchToTestCase={dispatchToTestCase}
+            />
+          );
       case 'action':
         return (
           <Action
