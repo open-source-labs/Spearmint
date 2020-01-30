@@ -1,11 +1,7 @@
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../assets/stylesheets/colors.scss';
 
-<<<<<<< HEAD
-​ #testMenu {
-=======
 #testMenu {
->>>>>>> 09103478a9a21e382d91b60c7ad544c491d1279b
   padding: 10px;
   text-align: center;
   display: flex;
@@ -23,61 +19,37 @@
     border-radius: 5px;
     border: 0.5px $light-gray solid;
   }
-<<<<<<< HEAD
-  ​ button:hover {
-=======
 
   button:hover {
->>>>>>> 09103478a9a21e382d91b60c7ad544c491d1279b
     background-color: white;
     color: $mint;
     border-radius: 5px;
   }
 }
-<<<<<<< HEAD
-​ #left {
-=======
 
 #left {
->>>>>>> 09103478a9a21e382d91b60c7ad544c491d1279b
   float: left;
   button {
     color: $mint;
     background-color: white;
   }
-<<<<<<< HEAD
-  ​ button:hover {
-=======
 
   button:hover {
->>>>>>> 09103478a9a21e382d91b60c7ad544c491d1279b
     background-color: $mint;
     color: white;
   }
 }
-<<<<<<< HEAD
-​ #right {
-=======
 
 #right {
->>>>>>> 09103478a9a21e382d91b60c7ad544c491d1279b
   button {
     color: white;
     background-color: $mint;
     margin-right: 4px;
     margin-bottom: 4px;
   }
-<<<<<<< HEAD
-  ​ button:hover {
-    background-color: white;
-    color: $mint;
-  }
-}
-=======
 
   button:hover {
     background-color: white;
     color: $mint;
   }
 }
->>>>>>> 09103478a9a21e382d91b60c7ad544c491d1279b
