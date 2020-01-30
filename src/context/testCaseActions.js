@@ -41,6 +41,7 @@ export const actionTypes = {
   UPDATE_ACTIONS_FILEPATH: 'UPDATE_ACTIONS_FILEPATH',
   UPDATE_TYPES_FILEPATH: 'UPDATE_TYPES_FILEPATH',
   UPDATE_REDUCERS_FILEPATH: 'UPDATE_REDUCERS_FILEPATH',
+  UPDATE_MIDDLEWARES_FILEPATH: 'UPDATE_MIDDLEWARES_FILEPATH'
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -283,6 +284,12 @@ export const updateReducersFilePath = (reducersFileName, reducersFilePath) => ({
   type: actionTypes.UPDATE_REDUCERS_FILEPATH,
   reducersFileName,
   reducersFilePath,
+})
+
+export const updateMiddlewaresFilePath = (middlewaresFileName, middlewaresFilePath) => ({
+  type: actionTypes.UPDATE_MIDDLEWARES_FILEPATH,
+  middlewaresFileName,
+  middlewaresFilePath,
 })
 
 export const createNewTest = () => ({
