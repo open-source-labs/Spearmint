@@ -9,7 +9,7 @@
   width: 98%;
   margin-bottom: 10px;
   button {
-    height: 28px;
+    height: 40px;
     width: 100px;
     color: $mint;
     background-color: $light-gray3;
@@ -44,7 +44,8 @@
   button {
     color: white;
     background-color: $mint;
-    margin-right: 2px;
+    margin-right: 4px;
+    margin-bottom: 4px;
   }
 
   button:hover {
