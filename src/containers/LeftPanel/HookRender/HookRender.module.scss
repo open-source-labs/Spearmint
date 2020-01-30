@@ -1,0 +1,69 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+@import '../LeftPanel.module.scss';
+
+#hookRender {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+}
+
+#close {
+  float: right;
+  margin: 0;
+}
+#hookRenderHeader {
+  @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+#hookRenderFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+  
+#hookRenderType {
+    width: 50%;
+    margin-right: 7%;
+    input {
+      margin-top: 6px;
+      width: 100%;
+    }
+}
+// #renderBody {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 10px;
+// }
+// #renderInputBox {
+//   width: 150px;
+// }
+// #renderProp {
+//   font-size: 13px;
+//   margin-bottom: 0;
+//   padding: 6px 0;
+//   display: flex;
+//   width: 60%;
+//   justify-content: space-between;
+// }
+// #renderCheckbox {
+//   float: right;
+// }
+
+// #props {
+//   margin: 5px 0;
+// }

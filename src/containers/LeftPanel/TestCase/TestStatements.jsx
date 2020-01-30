@@ -10,6 +10,7 @@ import Middleware from '../Middleware/Middleware';
 import ActionCreator from '../ActionCreator/ActionCreator';
 import Async from '../Thunk/Thunk';
 import Reducer from '../Reducer/Reducer';
+import HookRender from '../HookRender/HookRender'
 
 const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {  /* destructing from the reducer */
   return statements.map((statement, i) => {
@@ -67,6 +68,15 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
           <ActionCreator
             key={statement.id}
             actionCreator={statement}
+            index={i}
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        );
+      case 'hookRender':
+        return (
+          <HookRender
+            key={statement.id}
+            hookRender={statement}
             index={i}
             dispatchToTestCase={dispatchToTestCase}
           />

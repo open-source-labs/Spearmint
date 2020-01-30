@@ -15,7 +15,7 @@ import {
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
-// import { addReducer } from '../../../context/testCaseActions';
+import { addHookRender } from '../../../context/testCaseActions';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
@@ -72,8 +72,9 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
         );
       }
     }
-//staging
+    //staging
     addImportStatements();
+    addHookRenderImportStatement(); //renderHook Import statement
     addMockData();
     addAsyncTestStatements(); //Dave Corn reducer
     addMiddlewareTestStatements(); //Chloe reducer
@@ -86,13 +87,13 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
       space_in_empty_paren: true,
       e4x: true,
     });
-//staging
-                        
+    //staging
+
   };
 
-  const addImportStatements = () => { 
+  // const addImportStatements = () => { 
   // Function for building Redux tests
-    
+
   const addAsyncTestStatements = () => {
     testCase.statements.forEach(statement => {
       switch (statement.type) {
@@ -105,7 +106,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     testFileCode += '});';
     testFileCode += '\n';
   };
-  
+
   const addImportStatements = () => {
     addComponentImportStatement();
     testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
@@ -118,6 +119,11 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     import thunk from 'redux-thunk';
     import fetchMock from 'fetch-mock';
     \n`;
+
+    //import statements for Hook: Rendering
+    //import { renderHook } from '@testing-library/react-hooks'
+    //hook function from file path
+
   };
 
   /**
@@ -125,9 +131,9 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
    * filepath invokes projectFIlePath (initialized in global reducer. it gets updated in open folderbutton in "setFilePathMap")
    * component name is from open folder in filePathMap object.  
    *  
-  */ 
+  */
   const addComponentImportStatement = () => {
-    const renderStatement = testCase.statements[0]; 
+    const renderStatement = testCase.statements[0];
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
@@ -149,6 +155,20 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     \n`;
   };
 
+  // import statement for hookRender - needs to be tested
+  const addHookRenderImportStatement = () => {
+    let hookRenderStatement;
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'hookRender') {
+        hookRenderStatement = statement;
+        return hookRenderStatement;
+      }
+    });
+    testFileCode += `import '@testing-library/jest-dom/extend-expect';
+    import {render} from '../${hookRenderStatement.hookRenderFolder}'; 
+    import ${hookRenderStatement.hookFunction} from '${hookRenderStatement.hookFuncFolder}.js';
+    \n`;
+  };
   const addMockData = () => {
     mockData.forEach(mockDatum => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
@@ -158,7 +178,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     testFileCode += '\n';
   };
 
-  
+
 
 
   //  const addJestMockData = (statement) => {
@@ -168,8 +188,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
   //   addMiddleware(statement)
   //   testFileCode += '\n';
   //  };
-  
-   
+
+
 
   const createMockDatumFieldKeys = mockDatum => {
     return mockDatum.fieldKeys.reduce((fieldKeysCode, mockDatum) => {
@@ -177,13 +197,13 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     }, '');
   };
 
-/**
- * const createJestMockDatumFieldTypes = mockDatum => {
- *    return mockDatum.fieldTypes.reduce((fieldTypesCode, mockDatum) => {
- *        return fieldTypesCode + `${mockDatum.fieldType},`: 
- *    }, '');
- * };
- */
+  /**
+   * const createJestMockDatumFieldTypes = mockDatum => {
+   *    return mockDatum.fieldTypes.reduce((fieldTypesCode, mockDatum) => {
+   *        return fieldTypesCode + `${mockDatum.fieldType},`: 
+   *    }, '');
+   * };
+   */
 
   const addTestStatements = () => {
     testFileCode += `test('${testCase.testStatement}', () => {`;
@@ -196,8 +216,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
           return addAssertion(statement);
         case 'render':
           return addRender(statement, methods);
-        // case 'reducer':
-        //   return addReducer(statement);
+        case 'hookRender':
+          return addHookRender(statement);
         default:
           return statement;
       }
@@ -207,24 +227,24 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
   };
 
 
-  
+
   const addMiddlewareTestStatements = () => {
-     //testFileCode += `it('${testCase.testStatement}', () => {`
-      //const methods = identifyJestMethods();
-      testCase.statements.forEach(statement => {
-        switch (statement.type) {
-          case 'middleware': 
-            return addMiddleware(statement);
-          // case 'render':
-          //   return addRender(statement, methods);
-          default:
-            return statement;
-        }
-      })
-      testFileCode += '});';
-      testFileCode += '\n';
+    //testFileCode += `it('${testCase.testStatement}', () => {`
+    //const methods = identifyJestMethods();
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'middleware':
+          return addMiddleware(statement);
+        // case 'render':
+        //   return addRender(statement, methods);
+        default:
+          return statement;
+      }
+    })
+    testFileCode += '});';
+    testFileCode += '\n';
   };
-    
+
   // test statement for action creator
   const addActionCreatorTestStatements = () => {
     testFileCode += `test('${testCase.testStatement}', () => {`;
@@ -240,7 +260,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
   };
 
   //Linda's reducer
-  const addJestTestStatementsReducer = () => { 
+  const addJestTestStatementsReducer = () => {
     testFileCode += `it('${testCase.testStatement}', () => {`;
     testCase.statements.forEach(statement => {
       switch (statement.type) {
@@ -277,7 +297,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     }
   };
 
-  
+
   const addMiddleware = middleware => {
     testFileCode += `const ${middleware.queryValue} = () => {
     const store = {
@@ -288,22 +308,22 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     const invoke = action => ${middleware.queryType}(store)(next)(action)
     return { store, next, invoke } 
   }`;
-testFileCode += '\n';
+    testFileCode += '\n';
 
-   if (middleware.queryValue === 'passes_non_functional_arguments') {
-       testFileCode += ` it (${testCase.testStatement}, () => {
+    if (middleware.queryValue === 'passes_non_functional_arguments') {
+      testFileCode += ` it (${testCase.testStatement}, () => {
        const { next, invoke } = ${middleware.queryValue}()
        const action = {type : 'TEST'}
        invoke(action)
        expect(${middleware.querySelector}).${middleware.queryVariant}(action)`
-     } else if (middleware.queryValue === 'calls_the_function') {
-       testFileCode += ` it (${testCase.testStatement}, () => {
+    } else if (middleware.queryValue === 'calls_the_function') {
+      testFileCode += ` it (${testCase.testStatement}, () => {
          const { invoke } = ${middleware.queryValue}()
          const fn = jest.fn()
          invoke(fn)
          expect(${middleware.querySelector}).${middleware.queryVariant}()`
-     } else if(middleware.queryValue === 'passes_functional_arguments'){
-       testFileCode += ` it (${testCase.testStatement}, () => {
+    } else if (middleware.queryValue === 'passes_functional_arguments') {
+      testFileCode += ` it (${testCase.testStatement}, () => {
          const { store, invoke } = ${middleware.queryValue}()
          invoke((dispatch, getState) => {
            dispatch('Test Dispatch')
@@ -313,7 +333,7 @@ testFileCode += '\n';
          expect(${middleware.querySelector}).${middleware.queryVariant}()`
     }
   }
-   
+
 
   const addAssertion = assertion => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
@@ -321,17 +341,21 @@ testFileCode += '\n';
       assertion.matcherValue
       });`;
   };
-  
-  // addReducer function needs to be refactored
+
+  const addHookRender = hookRender => {
+    testFileCode += `const {result} = renderHook((${hookRender.parameterOne}) => ${hookRender.hookFunction}())
+    expect(result.${hookRender.returnValue}).toBe(${hookRender.expectedReturnValue})`
+  };
+
   const addReducer = reducer => {
-    testFileCode += `expect(${reducer.queryValue}(${reducer.querySelector},{${reducer.queryVariant}})).toEqual(${reducer.matcherValue})`;
+    testFileCode += `expect(${reducer.reducerName}(${reducer.initialState},${reducer.actionType})).toEqual(${reducer.updatedState})`;
   };
 
   // Thunk
   const addAsync = async => {
     testFileCode += `const middlewares = [thunk]
     const mockStore = configureMockStore(middlewares)`
-    
+
     testFileCode += '\n'
 
     testFileCode += `it('${testCase.testStatement}', () => {

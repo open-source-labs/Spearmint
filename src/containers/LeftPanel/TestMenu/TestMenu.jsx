@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import { addAction, addAssertion, addRender, addAsync, addReducer, addActionCreator, addMiddleware } from '../../../context/testCaseActions';
+import { addAction, addAssertion, addRender, addAsync, addReducer, addActionCreator, addMiddleware, addHookRender } from '../../../context/testCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
 
 const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
@@ -29,11 +29,14 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const handleAddActionCreator = e => {
     dispatchToTestCase(addActionCreator());
   };
-    const handleAddMiddleware = e => {
+  const handleAddMiddleware = e => {
     dispatchToTestCase(addMiddleware());
   };
   const handleAddAsync = e => {
     dispatchToTestCase(addAsync());
+  };
+  const handleAddHookRender = e => {
+    dispatchToTestCase(addHookRender());
   };
 
   return (
@@ -66,6 +69,7 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
             Action Creator
           </button>
+          <button data-testid='hookRenderButton' onClick={handleAddHookRender}>Hook: Rendering</button>
         </div>
       </div>
     </div>

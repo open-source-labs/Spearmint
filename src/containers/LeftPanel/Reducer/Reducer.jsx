@@ -1,13 +1,7 @@
 import React, { useContext, Fragment } from 'react';
 import styles from '../Reducer/Reducer.module.scss';
-// import styles2 from '../AutoComplete/Au toCompleteMockData.module.scss';
 import { deleteReducer, updateReducer } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
-import AutoComplete from '../AutoComplete/AutoComplete';
-// import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
-import ToolTip from '../ToolTip/ToolTip';
-// import { MockDataContext } from '../../../context/mockDataReducer';
-const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
@@ -39,28 +33,28 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
 
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='queryValue'>Reducer Name</label>
-              <input type='text' id='queryValue' onChange={e => handleChangeReducerFields(e, 'queryValue')} />
+              <label htmlFor='reducerName'>Reducer Name</label>
+              <input type='text' id='reducerName' onChange={e => handleChangeReducerFields(e, 'reducerName')} />
             </div>
           </div>
 
           <div id={styles.queryFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='querySelector'>Initial State</label>
-              <input type='text' id='querySelector' onChange={e => handleChangeReducerFields(e, 'querySelector')} />
+              <label htmlFor='initialState'>Initial State</label>
+              <input type='text' id='initialState' onChange={e => handleChangeReducerFields(e, 'initialState')} />
             </div>
           </div>
 
           <div id={styles.queryFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='queryVariant'>Action</label>
-              <input type='text' id='queryVariant' onChange={e => handleChangeReducerFields(e, 'queryVariant')} />
+              <label htmlFor='actionType'>Action Type</label>
+              <input type='text' id='actionType' onChange={e => handleChangeReducerFields(e, 'actionType')} />
             </div>
           </div>
 
           <div id={styles.queryFlexBox}></div>
           <div id={styles.reducerName}>
-            <label htmlFor='matcherValue' className={styles.queryLabel}>
+            <label htmlFor='updatedState' className={styles.queryLabel}>
               Updated State
             </label>
             {/* <AutoComplete
@@ -69,7 +63,7 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
               dispatchToTestCase={dispatchToTestCase}
               id={styles.autoComplete}
             /> */}
-            <input type='text' id='matcherValue' onChange={e => handleChangeReducerFields(e, 'matcherValue')} />
+            <input type='text' id='updatedState' onChange={e => handleChangeReducerFields(e, 'updatedState')} />
           </div>
         </div>
       )}

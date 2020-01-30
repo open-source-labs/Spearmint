@@ -5,7 +5,7 @@ export const actionTypes = {
   ADD_ACTION: 'ADD_ACTION',
   DELETE_ACTION: 'DELETE_ACTION',
   UPDATE_ACTION: 'UPDATE_ACTION',
-  
+
   ADD_MIDDLEWARE: 'ADD_MIDDLEWARE',
   DELETE_MIDDLEWARE: 'DELETE_MIDDLEWARE',
   UPDATE_MIDDLEWARE: 'UPDATE_MIDDLEWARE',
@@ -25,7 +25,7 @@ export const actionTypes = {
   ADD_ASYNC: 'ADD_ASYNC',
   DELETE_ASYNC: 'DELETE_ASYNC',
   UPDATE_ASYNC: 'UPDATE_ASYNC',
-  
+
   ADD_ACTIONCREATOR: 'ADD_ACTIONCREATOR',
   DELETE_ACTIONCREATOR: 'DELETE_ACTIONCREATOR',
   UPDATE_ACTIONCREATOR: 'UPDATE_ACTIONCREATORS',
@@ -36,6 +36,11 @@ export const actionTypes = {
   ADD_REDUCER: 'ADD_REDUCER',
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
+
+  // Action type for hookRender
+  ADD_HOOKRENDER: 'ADD_HOOKRENDER',
+  DELETE_HOOKRENDER: 'DELETE_HOOKRENDER',
+  UPDATE_HOOKRENDER: 'UPDATE_HOOKRENDER',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -184,23 +189,17 @@ export const deleteReducer = id => ({
 
 export const updateReducer = ({
   id,
-  queryVariant, // action
-  querySelector, // initial state
-  queryValue, //reducer name
-  isNot,
-  matcherType,
-  matcherValue, // updated state
-  suggestions,
+  actionType,
+  initialState,
+  reducerName,
+  updatedState,
 }) => ({
   type: actionTypes.UPDATE_REDUCER,
   id,
-  queryVariant,
-  querySelector,
-  queryValue,
-  isNot,
-  matcherType,
-  matcherValue,
-  suggestions,
+  actionType,
+  initialState,
+  reducerName,
+  updatedState,
 });
 
 export const addAsync = () => ({
@@ -261,6 +260,34 @@ export const updateActionCreator = ({
   filePath,
 });
 
+// hookRender
+export const addHookRender = () => ({
+  type: actionTypes.ADD_HOOKRENDER,
+});
+
+export const deleteHookRender = id => ({
+  type: actionTypes.DELETE_HOOKRENDER,
+  id,
+});
+
+export const updateHookRender = ({
+  id,
+  hookRenderFolder,
+  hookFuncFolder,
+  hookFunction,
+  parameterOne,
+  expectedReturnValue,
+  returnValue,
+}) => ({
+  type: actionTypes.UPDATE_HOOKRENDER,
+  id,
+  hookRenderFolder,
+  hookFuncFolder,
+  hookFunction,
+  parameterOne,
+  expectedReturnValue,
+  returnValue,
+});
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });

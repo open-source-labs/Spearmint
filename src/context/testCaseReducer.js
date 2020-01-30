@@ -34,14 +34,14 @@ let statementId = 2;
 let renderPropsId = 0;
 
 const createMiddleware = () => ({ /* renders the action card when the "action" button is clicked */
-  id: statementId++,  
-  type: 'middleware',  
+  id: statementId++,
+  type: 'middleware',
   queryType: '',  /* ex: onclick */
-  eventValue: null,  
+  eventValue: null,
   queryVariant: '',  /* drop down to select a query variant */
   querySelector: '', /* to select an option */
-  queryValue: '', 
-  queryFunction: '', 
+  queryValue: '',
+  queryFunction: '',
   suggestions: [],
 });
 
@@ -118,6 +118,17 @@ const createActionCreator = () => ({
   payloadType: null,
 });
 
+const createHookRender = () => ({
+  id: statementId++,
+  type: 'hookRender',
+  hookRenderFolder: '',
+  hookFuncFolder: '',
+  hookFunction: '',
+  parameterOne: '',
+  parameterTwo: '',
+  returnValue: '',
+});
+
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
@@ -146,7 +157,7 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
     case actionTypes.DELETE_MIDDLEWARE:
-      lastAssertionStatement = statements.pop();  
+      lastAssertionStatement = statements.pop();
       statements = statements.filter(statement => statement.id !== action.id);  /* if statement id !== acion id, then what?? */
       statements.push(lastAssertionStatement);
       return {
@@ -252,13 +263,10 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_REDUCER:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
-          statement.queryVariant = action.queryVariant; // action
-          statement.querySelector = action.querySelector; // initial state
-          statement.queryValue = action.queryValue; // reducer name
-          statement.isNot = action.isNot;
-          statement.matcherType = action.matcherType; // updated state
-          statement.matcherValue = action.matcherValue;
-          statement.suggestions = action.suggestions;
+          statement.actionType = action.actionType; // action
+          statement.initialState = action.initialState; // initial state
+          statement.reducerName = action.reducerName; // reducer name
+          statement.updatedState = action.updatedState; // updated state
         }
         return statement;
       });
@@ -336,7 +344,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
-// ASYNC SWITCH CASES
+    // ASYNC SWITCH CASES
     case actionTypes.ADD_ASYNC:
       lastAssertionStatement = statements.pop();
       statements.push(createAsync(), lastAssertionStatement);
@@ -402,7 +410,39 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
-      
+    case actionTypes.ADD_HOOKRENDER:
+      lastAssertionStatement = statements.pop();
+      statements.push(createHookRender(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.DELETE_HOOKRENDER:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_HOOKRENDER:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.hookFunction = action.hookFunction;
+          statement.parameterOne = action.parameterOne;
+          statement.expectedReturnValue = action.expectedReturnValue;
+          statement.returnValue = action.returnValue;
+          statement.hookRenderFolder = action.hookRenderFolder;
+          statement.hookFuncFolder = action.hookFuncFolder;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
     case actionTypes.CREATE_NEW_TEST:
       return {
         testStatement: '',
