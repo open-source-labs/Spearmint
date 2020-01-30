@@ -68,10 +68,97 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   // import @testing-library/react, jest-dom, test-data-bot
+  //   const generateTestFile = () => {
+
+  //     for (let i = 0; i < testCase.statements.length; i++) {
+  //       if (
+  //         (testCase.statements[i].type === 'render' && testCase.statements[i].componentName === '') ||
+  //         (testCase.statements[i].type === 'assertion' && testCase.statements[i].queryVariant === '')
+  //       ) {
+  //         return (
+  //           addActionCreatorImportStatement(),
+  //           addActionCreatorTestStatements(),
+  //           (testFileCode = beautify(testFileCode, {
+  //             indent_size: 2,
+  //             space_in_empty_paren: true,
+  //             e4x: true,
+  //           }))
+  //         );
+  //       } else {
+  //         return (
+  //           addImportStatements(),
+  //           addMockData(),
+  //           addTestStatements(),
+  //           (testFileCode = beautify(testFileCode, {
+  //             indent_size: 2,
+  //             space_in_empty_paren: true,
+  //             e4x: true,
+  //           }))
+  //         );
+  //       }
+  //     }
+  // //staging
+  //     addImportStatements();
+  //     addActionsImportStatement();
+  //     addTypesImportStatement();
+  //     addMockData();
+  //     addAsyncTestStatements(); //Dave Corn reducer
+  //     addMiddlewareTestStatements(); //Chloe reducer
+  //     addTestStatements();
+  //     addJestTestStatementsReducer(); // Linda's reducer
+  //     // addTestStatements(); // needed for react testing
+
+  //     testFileCode = beautify(testFileCode, {
+  //       indent_size: 2,
+  //       space_in_empty_paren: true,
+  //       e4x: true,
+  //     });
+  // //staging
+
+  //   };
+
+  const generateTestFile = () => {
+    // addImportStatements();
+    addMockData();
+    addActionsImportStatement();
+    addTypesImportStatement();
+    addReducersImportStatement();
+    addMiddlewaresImportStatement();
+    // addJestTestStatements();
+    // addTestStatements();
+    // addAsyncStatements(); // need to define this function
+    testFileCode = beautify(testFileCode, {
+      indent_size: 2,
+      space_in_empty_paren: true,
+      e4x: true,
+    });
+  };
+
+  // const addImportStatements = () => {
+  // Function for building Redux tests
+
+  const addAsyncTestStatements = () => {
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'async':
+          return addAsync(statement);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += '});';
+    testFileCode += '\n';
+  };
+
   const addImportStatements = () => {
     testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
     import { build, fake } from 'test-data-bot'; 
     import '@testing-library/jest-dom/extend-expect'
+
+    import '@testing-library/jest-dom/extend-expect'`//import statements for thunk
+    `import configureMockStore from 'redux-mock-store';
+    import thunk from 'redux-thunk';
+    import fetchMock from 'fetch-mock';
     \n`;
   };
 
@@ -84,6 +171,139 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   // React test statements
+  // import statement for action creator
+  const addActionCreatorImportStatement = () => {
+    let actionCreatorStatement;
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'action-creator') {
+        actionCreatorStatement = statement;
+        return actionCreatorStatement;
+      }
+    });
+    testFileCode += `import '@testing-library/jest-dom/extend-expect';
+    import { build, fake } from 'test-data-bot';`;
+    // import * as actions from '../${actionCreatorStatement.actionsFolder}.js';
+    // import * as types from '../${actionCreatorStatement.typesFolder}.js';
+  };
+
+  // Add actions import line to the export file
+  const addActionsImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'async' || statement.type === 'action-creator') {
+        return createPathToActions(statement);
+      } else {
+        return statement;
+      }
+    });
+  };
+
+  // Creates import template for action file
+  const createPathToActions = statement => {
+    let filePath = path.relative(projectFilePath, statement.filePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as actions from '../${filePath}';`;
+  };
+
+  // Adds Types import line to the export file
+  // const addTypesImportStatement = () => {
+  //   testCase.statements.forEach(statement => {
+  //     switch (statement.type) {
+  //       case 'async':
+  //         return createPathToTypes(statement);
+  //       default:
+  //         return statement;
+  //     }
+  //   })
+  // };
+
+  const addTypesImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (
+        statement.type === 'async' ||
+        statement.type === 'action-creator' ||
+        statement.type === 'reducer'
+      ) {
+        return createPathToTypes(statement);
+      } else {
+        return statement;
+      }
+    });
+  };
+
+  // Creates import template for types file
+  const createPathToTypes = statement => {
+    let filePath = path.relative(projectFilePath, statement.typesFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as types from '../${filePath}';`;
+  };
+
+  // Checks if statemnt.type is a Reducer
+  const addReducersImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'reducer') {
+        return createPathToReducers(statement);
+      } else {
+        return statement;
+      }
+    });
+  };
+
+  // Creates import statement and filePath for Reducer file
+  const createPathToReducers = statement => {
+    let filePath = path.relative(projectFilePath, statement.reducersFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as reducers from '../${filePath}';`;
+  };
+
+  // Checks if statemnt.type is a Middleware
+  const addMiddlewaresImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'middleware') {
+        return createPathToMiddlewares(statement);
+      } else {
+        return statement;
+      }
+    });
+  };
+
+  // Creates import statement and filePath for Middleware file
+  const createPathToMiddlewares = statement => {
+    let filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as middleware from '../${filePath}';`;
+  };
+
+  const addMockData = () => {
+    mockData.forEach(mockDatum => {
+      let fieldKeys = createMockDatumFieldKeys(mockDatum);
+      testFileCode += `const mock${mockDatum.name.charAt(0).toUpperCase() +
+        mockDatum.name.slice(1)} = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
+    });
+    testFileCode += '\n';
+  };
+
+  //  const addJestMockData = (statement) => {
+  // //  mockData.forEach(mockDatum => {
+  // //    //let fieldTypes = createJestMockDatumFieldTypes(mockDatum);
+  // //    let fieldTypes = `${mockDatum.fieldType}`
+  //   addMiddleware(statement)
+  //   testFileCode += '\n';
+  //  };
+
+  const createMockDatumFieldKeys = mockDatum => {
+    return mockDatum.fieldKeys.reduce((fieldKeysCode, mockDatum) => {
+      return fieldKeysCode + `${mockDatum.fieldKey}: fake(f => f.random.${mockDatum.fieldType}()),`;
+    }, '');
+  };
+
+  /**
+   * const createJestMockDatumFieldTypes = mockDatum => {
+   *    return mockDatum.fieldTypes.reduce((fieldTypesCode, mockDatum) => {
+   *        return fieldTypesCode + `${mockDatum.fieldType},`:
+   *    }, '');
+   * };
+   */
+
   const addTestStatements = () => {
     testFileCode += `test('${testCase.testStatement}', () => {`;
     const methods = identifyMethods();
