@@ -34,19 +34,17 @@ export const actionTypes = {
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
 
-<<<<<<< HEAD
   ADD_HOOK_UPDATES: 'ADD_HOOK_UPDATES',
   DELETE_HOOK_UPDATES: 'DELETE_HOOK_UPDATE',
   UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
 
-  CREATE_NEW_TEST: 'CREATE_NEW_TEST',
-=======
   // Action types for filepath
   UPDATE_ACTIONS_FILEPATH: 'UPDATE_ACTIONS_FILEPATH',
   UPDATE_TYPES_FILEPATH: 'UPDATE_TYPES_FILEPATH',
   UPDATE_REDUCERS_FILEPATH: 'UPDATE_REDUCERS_FILEPATH',
-  UPDATE_MIDDLEWARES_FILEPATH: 'UPDATE_MIDDLEWARES_FILEPATH'
->>>>>>> 694642c302857d79b76becd19f73d4e7eba986bf
+  UPDATE_MIDDLEWARES_FILEPATH: 'UPDATE_MIDDLEWARES_FILEPATH',
+
+  CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
 export const updateStatementsOrder = draggableStatements => ({
@@ -303,25 +301,25 @@ export const updateActionsFilePath = (actionsFileName, filePath) => ({
   type: actionTypes.UPDATE_ACTIONS_FILEPATH,
   actionsFileName,
   filePath,
-})
+});
 
 export const updateTypesFilePath = (typesFileName, typesFilePath) => ({
   type: actionTypes.UPDATE_TYPES_FILEPATH,
   typesFileName,
   typesFilePath,
-})
+});
 
 export const updateReducersFilePath = (reducersFileName, reducersFilePath) => ({
   type: actionTypes.UPDATE_REDUCERS_FILEPATH,
   reducersFileName,
   reducersFilePath,
-})
+});
 
 export const updateMiddlewaresFilePath = (middlewaresFileName, middlewaresFilePath) => ({
   type: actionTypes.UPDATE_MIDDLEWARES_FILEPATH,
   middlewaresFileName,
   middlewaresFilePath,
-})
+});
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
