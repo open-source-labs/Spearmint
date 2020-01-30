@@ -121,7 +121,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         case 'reducer':
           return createPathToReducers(statement), createPathToTypes(statement);
         case 'hook-updates':
-          return createPathToHooks(statement);
+          return addHooksImportStatement(), createPathToHooks(statement);
         default:
           return statement;
       }
@@ -134,6 +134,12 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += ` import configureMockStore from 'redux-mock-store';
     import thunk from 'redux-thunk';
     import fetchMock from 'fetch-mock';
+    \n`;
+  };
+
+  // //Hooks Import Statements
+  const addHooksImportStatement = () => {
+    testFileCode += `import { renderHook, act } from '@testing-library/react-hooks'
     \n`;
   };
 
