@@ -1,3 +1,5 @@
+// styling for Thunk.jsx
+
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../assets/stylesheets/colors.scss';
 @import '../LeftPanel.module.scss';
@@ -7,7 +9,6 @@
   font-family: $raleway;
   letter-spacing: 0.5px;
 }
-
 
 #close {
   float: right;
@@ -41,14 +42,14 @@
   width: 100%;
 }
 
-#eventTypeFlexBox {
+#thunkFlexBox {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
 }
 
-#eventType {
-  width: 50%;
+#thunkType {
+  width: 60%;
   margin-right: 7%;
   input {
     margin-top: 6px;

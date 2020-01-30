@@ -2,18 +2,18 @@
 @import '../../../assets/stylesheets/colors.scss';
 @import '../LeftPanel.module.scss';
 
-#action {
+
+#middleware {
   @include box-styling;
   font-family: $raleway;
   letter-spacing: 0.5px;
 }
 
-
 #close {
   float: right;
 }
 
-#actionHeader {
+#middlewareHeader {
   @include box-header-alignment;
   justify-content: flex-start;
   display: flex;

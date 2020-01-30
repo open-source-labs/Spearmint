@@ -1,3 +1,7 @@
+/**
+ * functionality to open a new folder and generate the file tree for it
+ */
+
 import React, { useContext } from 'react';
 import styles from './OpenFolderButton.module.scss';
 import {

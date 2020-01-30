@@ -2,18 +2,17 @@
 @import '../../../assets/stylesheets/colors.scss';
 @import '../LeftPanel.module.scss';
 
-#action {
+#reducer {
   @include box-styling;
   font-family: $raleway;
   letter-spacing: 0.5px;
 }
 
-
 #close {
   float: right;
 }
 
-#actionHeader {
+#reducerHeader {
   @include box-header-alignment;
   justify-content: flex-start;
   display: flex;
@@ -41,13 +40,13 @@
   width: 100%;
 }
 
-#eventTypeFlexBox {
+#reducerNameFlexBox {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
 }
 
-#eventType {
+#reducerName {
   width: 50%;
   margin-right: 7%;
   input {
