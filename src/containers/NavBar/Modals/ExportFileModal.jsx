@@ -74,6 +74,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     }
 //staging
     addImportStatements();
+    addActionsImportStatement();
+    addTypesImportStatement();
     addMockData();
     addAsyncTestStatements(); //Dave Corn reducer
     addMiddlewareTestStatements(); //Chloe reducer
@@ -90,7 +92,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
                         
   };
 
-  const addImportStatements = () => { 
+  // const addImportStatements = () => { 
   // Function for building Redux tests
     
   const addAsyncTestStatements = () => {
@@ -111,10 +113,10 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
     import { build, fake } from 'test-data-bot'; 
 
-    import '@testing-library/jest-dom/extend-expect'
+    import '@testing-library/jest-dom/extend-expect'`
 
 //import statements for thunk
-    import configureMockStore from 'redux-mock-store';
+    `import configureMockStore from 'redux-mock-store';
     import thunk from 'redux-thunk';
     import fetchMock from 'fetch-mock';
     \n`;
@@ -148,6 +150,45 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
     import * as types from '../${actionCreatorStatement.typesFolder}.js';
     \n`;
   };
+
+  // Add actions import line to the export file
+  const addActionsImportStatement = () => {
+    console.log('this is testCase line 91 -> ', testCase);
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'async':
+          return createPathToActions(statement);
+        default:
+          return statement;
+      }
+    })
+  };
+
+  // Creates import template for action file
+  const createPathToActions = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.filePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as actions from '../${filePath}';`;
+  }
+
+// Adds Types import line to the export file
+  const addTypesImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'async':
+          return createPathToTypes(statement);
+        default:
+          return statement;
+      }
+    })
+  };
+
+  // Creates import template for types file
+  const createPathToTypes = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.typesFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as types from '../${filePath}';`;
+  }
 
   const addMockData = () => {
     mockData.forEach(mockDatum => {

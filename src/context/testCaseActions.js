@@ -261,6 +261,19 @@ export const updateActionCreator = ({
   filePath,
 });
 
+// update filePath for actions file
+export const updateActionsFilePath = (actionsFileName, filePath) => ({
+  type: actionTypes.UPDATE_ACTIONS_FILEPATH,
+  actionsFileName,
+  filePath,
+})
+
+export const updateTypesFilePath = (typesFileName, typesFilePath) => ({
+  type: actionTypes.UPDATE_TYPES_FILEPATH,
+  typesFileName,
+  typesFilePath,
+})
+
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });

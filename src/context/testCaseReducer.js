@@ -79,6 +79,10 @@ const createRerender = (componentName, filePath) => ({
 const createAsync = () => ({
   id: statementId++,
   type: 'async',
+  actionsFileName: '',
+  filePath: '',
+  typesFileName: '',
+  typesFilePath: '',
   asyncFunction: '',
   method: '',
   route: '',
@@ -355,7 +359,10 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ASYNC:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
+          statement.actionsFile = action.actionsFile;
           statement.asyncFunction = action.asyncFunction;
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
           statement.method = action.method;
           statement.route = action.route;
           statement.store = action.store;
@@ -369,6 +376,33 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
 
+    // updates filepath for async
+    case actionTypes.UPDATE_ACTIONS_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'async') {
+          statement.actionsFileName = action.actionsFileName;
+          statement.filePath = action.filePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_TYPES_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'async') {
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+      
     case actionTypes.ADD_ACTIONCREATOR:
       lastAssertionStatement = statements.pop();
       statements.push(createActionCreator(), lastAssertionStatement);
