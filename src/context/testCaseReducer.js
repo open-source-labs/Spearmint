@@ -33,15 +33,15 @@ export const testCaseState = {
 let statementId = 2;
 let renderPropsId = 0;
 
-const createMiddleware = () => ({ /* renders the action card when the "action" button is clicked */
-  id: statementId++,  
-  type: 'middleware',  
-  queryType: '',  /* ex: onclick */
-  eventValue: null,  
-  queryVariant: '',  /* drop down to select a query variant */
-  querySelector: '', /* to select an option */
-  queryValue: '', 
-  queryFunction: '', 
+const createMiddleware = () => ({
+  id: statementId++,
+  type: 'middleware',
+  queryType: '',
+  eventValue: null,
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
+  queryFunction: '',
   suggestions: [],
 });
 
@@ -93,7 +93,6 @@ const createRenderProp = () => ({
   propValue: '',
 });
 
-// create reducer function
 const createReducer = () => ({
   id: statementId++,
   type: 'reducer',
@@ -118,6 +117,16 @@ const createActionCreator = () => ({
   payloadType: null,
 });
 
+const createHookUpdates = () => ({
+  id: statementId++,
+  hookFile: '',
+  type: 'hook-updates',
+  hook: '',
+  callbackFunc: '',
+  managedState: '',
+  updatedState: '',
+});
+
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
@@ -139,22 +148,22 @@ export const testCaseReducer = (state, action) => {
         testStatement,
       };
     case actionTypes.ADD_MIDDLEWARE:
-      lastAssertionStatement = statements.pop();  /* popping off the last render */
-      statements.push(createMiddleware(), lastAssertionStatement);   /* pushing the new middlewaew the user created into the statements array and then adding back the last render */
+      lastAssertionStatement = statements.pop();
+      statements.push(createMiddleware(), lastAssertionStatement);
       return {
         ...state,
         statements,
       };
     case actionTypes.DELETE_MIDDLEWARE:
-      lastAssertionStatement = statements.pop();  
-      statements = statements.filter(statement => statement.id !== action.id);  /* if statement id !== acion id, then what?? */
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
       statements.push(lastAssertionStatement);
       return {
         ...state,
         statements,
       };
     case actionTypes.UPDATE_MIDDLEWARE:
-      statements = statements.map(statement => {  /* update statements if statement id === action id */
+      statements = statements.map(statement => {
         if (statement.id === action.id) {
           statement.queryType = action.queryType;
           statement.eventValue = action.eventValue;
@@ -336,7 +345,7 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
-// ASYNC SWITCH CASES
+
     case actionTypes.ADD_ASYNC:
       lastAssertionStatement = statements.pop();
       statements.push(createAsync(), lastAssertionStatement);
@@ -402,7 +411,40 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
-      
+
+    case actionTypes.ADD_HOOK_UPDATES:
+      lastAssertionStatement = statements.pop();
+      statements.push(createHookUpdates(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.DELETE_HOOK_UPDATES:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_HOOK_UPDATES:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.hook = action.hook;
+          statement.hookFile = action.hookFile;
+          statement.callbackFunc = action.callbackFunc;
+          statement.managedState = action.managedState;
+          statement.updatedState = action.updatedState;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
     case actionTypes.CREATE_NEW_TEST:
       return {
         testStatement: '',

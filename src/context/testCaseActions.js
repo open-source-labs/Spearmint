@@ -34,6 +34,10 @@ export const actionTypes = {
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
 
+  ADD_HOOK_UPDATES: 'ADD_HOOK_UPDATES',
+  DELETE_HOOK_UPDATES: 'DELETE_HOOK_UPDATE',
+  UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
+
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
@@ -256,6 +260,34 @@ export const updateActionCreator = ({
   actionType,
   payloadKey,
   payloadType,
+  filePath,
+});
+
+export const addHookUpdates = () => ({
+  type: actionTypes.ADD_HOOK_UPDATES,
+});
+
+export const deleteHookUpdates = id => ({
+  type: actionTypes.DELETE_HOOK_UPDATES,
+  id,
+});
+
+export const updateHookUpdates = ({
+  id,
+  hook,
+  hookFile,
+  callbackFunc,
+  managedState,
+  updatedState,
+  filePath,
+}) => ({
+  type: actionTypes.UPDATE_HOOK_UPDATES,
+  id,
+  hook,
+  hookFile,
+  callbackFunc,
+  managedState,
+  updatedState,
   filePath,
 });
 

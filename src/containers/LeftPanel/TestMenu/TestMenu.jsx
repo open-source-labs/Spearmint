@@ -8,6 +8,7 @@ import {
   addReducer,
   addActionCreator,
   addMiddleware,
+  addHookUpdates,
 } from '../../../context/testCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
 
@@ -43,6 +44,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const handleAddAsync = e => {
     dispatchToTestCase(addAsync());
   };
+  const handleAddHookUpdates = e => {
+    dispatchToTestCase(addHookUpdates());
+  };
 
   return (
     <div id='test'>
@@ -75,6 +79,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           </button>
           <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
             Action Creator
+          </button>
+          <button data-testid='hookUpdatesButton' onClick={handleAddHookUpdates}>
+            Hooks: Updates
           </button>
         </div>
       </div>

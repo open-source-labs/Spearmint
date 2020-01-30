@@ -42,7 +42,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       ) {
         return (
           addImportStatements(),
-          addActionCreatorImportStatement(),
+          // addActionCreatorImportStatement(),
+          addHookUpdatesImportStatement(),
           addReduxTestStatements(),
           (testFileCode = beautify(testFileCode, {
             indent_size: 2,
@@ -115,6 +116,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addMiddleware(statement);
         case 'reducer':
           return addReducer(statement);
+        case 'hook-updates':
+          return addHookUpdates(statement);
         default:
           return statement;
       }
@@ -142,6 +145,19 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     });
     testFileCode += `import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
     import * as types from '../${actionCreatorStatement.typesFolder}.js';
+    \n`;
+  };
+
+  const addHookUpdatesImportStatement = () => {
+    let hookUpdatesStatement;
+    testCase.statements.forEach(statement => {
+      if (statement.type === 'hook-updates') {
+        hookUpdatesStatement = statement;
+        return hookUpdatesStatement;
+      }
+    });
+    testFileCode += `import { renderHook, act } from '@testing-library/react-hooks'
+    import ${hookUpdatesStatement.hook} from '../${hookUpdatesStatement.hookFile}.js'; 
     \n`;
   };
 
@@ -287,6 +303,14 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       }; 
       expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction);`;
     }
+  };
+
+  const addHookUpdates = hookUpdates => {
+    testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());
+    act(() => {
+      result.current.${hookUpdates.callbackFunc}();
+    });
+    expect(result.current.${hookUpdates.managedState}).toBe(${hookUpdates.updatedState})`;
   };
 
   const exportTestFile = async () => {
