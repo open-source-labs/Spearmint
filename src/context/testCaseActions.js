@@ -38,7 +38,6 @@ export const actionTypes = {
   DELETE_HOOK_UPDATES: 'DELETE_HOOK_UPDATE',
   UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
 
-  // Action types for filepath
   UPDATE_ACTIONS_FILEPATH: 'UPDATE_ACTIONS_FILEPATH',
   UPDATE_TYPES_FILEPATH: 'UPDATE_TYPES_FILEPATH',
   UPDATE_REDUCERS_FILEPATH: 'UPDATE_REDUCERS_FILEPATH',
@@ -296,7 +295,7 @@ export const updateHookUpdates = ({
   updatedState,
   filePath,
 });
-// update filePath for actions file
+
 export const updateActionsFilePath = (actionsFileName, filePath) => ({
   type: actionTypes.UPDATE_ACTIONS_FILEPATH,
   actionsFileName,

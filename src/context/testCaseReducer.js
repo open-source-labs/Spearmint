@@ -1,10 +1,8 @@
 import { createContext } from 'react';
 import { actionTypes } from './testCaseActions';
 
-// where we createContext for the testCase with default value of null
 export const TestCaseContext = createContext(null);
 
-// initial state
 export const testCaseState = {
   testStatement: '',
   statements: [
@@ -34,15 +32,14 @@ let statementId = 2;
 let renderPropsId = 0;
 
 const createMiddleware = () => ({
-  /* renders the action card when the "action" button is clicked */
   id: statementId++,
   type: 'middleware',
   middlewaresFileName: '',
   middlewaresFilePath: '',
-  queryType: '' /* ex: onclick */,
+  queryType: '',
   eventValue: null,
-  queryVariant: '' /* drop down to select a query variant */,
-  querySelector: '' /* to select an option */,
+  queryVariant: '',
+  querySelector: '',
   queryValue: '',
   queryFunction: '',
   suggestions: [],
@@ -258,7 +255,6 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
-    // switch cases for reducer
     case actionTypes.ADD_REDUCER:
       lastAssertionStatement = statements.pop();
       statements.push(createReducer(), lastAssertionStatement);
@@ -281,11 +277,11 @@ export const testCaseReducer = (state, action) => {
           statement.reducersFilePath = action.reducersFilePath;
           statement.typesFileName = action.typesFileName;
           statement.typesFilePath = action.typesFilePath;
-          statement.queryVariant = action.queryVariant; // action
-          statement.querySelector = action.querySelector; // initial state
-          statement.queryValue = action.queryValue; // reducer name
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
           statement.isNot = action.isNot;
-          statement.matcherType = action.matcherType; // updated state
+          statement.matcherType = action.matcherType;
           statement.matcherValue = action.matcherValue;
           statement.suggestions = action.suggestions;
         }
@@ -401,7 +397,6 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
 
-    // updates filepath
     case actionTypes.UPDATE_ACTIONS_FILEPATH:
       statements = statements.map(statement => {
         if (statement.type === 'async' || statement.type === 'action-creator') {
