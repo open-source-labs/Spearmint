@@ -37,7 +37,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const generateTestFile = () => {
     // addImportStatements();
     addMockData();
-    addActionsImportStatement(); // this isn't working
+    addActionsImportStatement();
+    addTypesImportStatement();
     addJestTestStatements();
     // addTestStatements();
     // addAsyncStatements(); // need to define this function
@@ -78,13 +79,11 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const addComponentImportStatement = () => {
     const renderStatement = testCase.statements[0];
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
-    console.log('renderStatement.filePath -> ', renderStatement.filePath)
-    console.log('component file path line 85 -> ', filePath)
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
 
-  // Import actions file
+  // Add actions import line to the export file
   const addActionsImportStatement = () => {
     console.log('this is testCase line 91 -> ', testCase);
     testCase.statements.forEach(statement => {
@@ -95,18 +94,32 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return statement;
       }
     })
-
   };
 
-  // Import files to test file
+  // Creates import template for action file
   const createPathToActions = (statement) => {
-    // let filePath = filePathMap[statement.actionsFile] // need to trace filePath to in global context
-    console.log('statement in createPathToActions -> ', statement)
     let filePath = path.relative(projectFilePath, statement.filePath);
     filePath = filePath.replace(/\\/g, '/');
-    console.log('statement.filePath -> ', statement.filePath)
-    console.log('filePath variable -> ', filePath)
     testFileCode += `import * as actions from '../${filePath}';`;
+  }
+
+// Adds Types import line to the export file
+  const addTypesImportStatement = () => {
+    testCase.statements.forEach(statement => {
+      switch (statement.type) {
+        case 'async':
+          return createPathToTypes(statement);
+        default:
+          return statement;
+      }
+    })
+  };
+
+  // Creates import template for types file
+  const createPathToTypes = (statement) => {
+    let filePath = path.relative(projectFilePath, statement.typesFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode += `import * as types from '../${filePath}';`;
   }
 
   const addMockData = () => {

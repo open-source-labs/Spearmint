@@ -22,7 +22,8 @@ export const actionTypes = {
   DELETE_ASYNC: 'DELETE_ASYNC',
   UPDATE_ASYNC: 'UPDATE_ASYNC',
 
-  UPDATE_FILEPATH: 'UPDATE_FILEPATH',
+  UPDATE_ACTIONS_FILEPATH: 'UPDATE_ACTIONS_FILEPATH',
+  UPDATE_TYPES_FILEPATH: 'UPDATE_TYPES_FILEPATH',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
@@ -112,10 +113,17 @@ export const updateRenderComponent = (componentName, filePath) => ({
 
 // update filePath for actions file
 export const updateActionsFilePath = (actionsFileName, filePath) => ({
-  type: actionTypes.UPDATE_FILEPATH,
+  type: actionTypes.UPDATE_ACTIONS_FILEPATH,
   actionsFileName,
   filePath,
 })
+
+export const updateTypesFilePath = (typesFileName, typesFilePath) => ({
+  type: actionTypes.UPDATE_TYPES_FILEPATH,
+  typesFileName,
+  typesFilePath,
+})
+
 
 export const addRenderProp = renderId => ({
   type: actionTypes.ADD_RENDER_PROP,

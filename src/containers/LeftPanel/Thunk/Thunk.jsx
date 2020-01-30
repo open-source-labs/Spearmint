@@ -6,7 +6,7 @@ import React, { useContext } from 'react';
 import styles from '../Thunk/Thunk.module.scss';
 import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import { deleteAsync, updateAsync, updateActionsFilePath } from '../../../context/testCaseActions';
+import { deleteAsync, updateAsync, updateActionsFilePath, updateTypesFilePath } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
@@ -54,10 +54,16 @@ const Async = ({ async, index, dispatchToTestCase }) => {
     return matchersWithValues.includes(matcherType);
   };
 
-  const handleChangeComponentName = e => {
+  const handleChangeActionsFileName = e => {
     const actionsFileName = e.target.value;
     const filePath = filePathMap[actionsFileName] || '';
     dispatchToTestCase(updateActionsFilePath(actionsFileName, filePath));
+  };
+
+  const handleChangeTypesFileName = e => {
+    const typesFileName = e.target.value;
+    const filePath = filePathMap[typesFileName] || '';
+    dispatchToTestCase(updateTypesFilePath(typesFileName, filePath));
   };
 
   return (
@@ -91,7 +97,16 @@ const Async = ({ async, index, dispatchToTestCase }) => {
                   type='text'
                   id={styles.renderInputBox}
                   value={async.actionsFile}
-                  onChange={handleChangeComponentName}
+                  onChange={handleChangeActionsFileName}
+                />
+              </div>
+              <div>
+                <label htmlFor='typesFile'>Types File Name</label>
+                <input
+                  type='text'
+                  id={styles.renderInputBox}
+                  value={async.typesFile}
+                  onChange={handleChangeTypesFileName}
                 />
               </div>
               <div id={styles.query}>
