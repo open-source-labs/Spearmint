@@ -1,10 +1,8 @@
 import { createContext } from 'react';
 import { actionTypes } from './testCaseActions';
 
-// where we createContext for the testCase with default value of null
 export const TestCaseContext = createContext(null);
 
-// initial state
 export const testCaseState = {
   testStatement: '',
   statements: [
@@ -32,18 +30,6 @@ export const testCaseState = {
 
 let statementId = 2;
 let renderPropsId = 0;
-
-const createMiddleware = () => ({ /* renders the action card when the "action" button is clicked */
-  id: statementId++,
-  type: 'middleware',
-  queryType: '',  /* ex: onclick */
-  eventValue: null,
-  queryVariant: '',  /* drop down to select a query variant */
-  querySelector: '', /* to select an option */
-  queryValue: '',
-  queryFunction: '',
-  suggestions: [],
-});
 
 const createAction = () => ({
   id: statementId++,
@@ -76,9 +62,19 @@ const createRerender = (componentName, filePath) => ({
   props: [],
 });
 
+const createRenderProp = () => ({
+  id: renderPropsId++,
+  propKey: '',
+  propValue: '',
+});
+
 const createAsync = () => ({
   id: statementId++,
   type: 'async',
+  actionsFileName: '',
+  filePath: '',
+  typesFileName: '',
+  typesFilePath: '',
   asyncFunction: '',
   method: '',
   route: '',
@@ -87,31 +83,39 @@ const createAsync = () => ({
   expectedResponse: '',
 });
 
-const createRenderProp = () => ({
-  id: renderPropsId++,
-  propKey: '',
-  propValue: '',
-});
-
-// create reducer function
-const createReducer = () => ({
+const createMiddleware = () => ({
   id: statementId++,
-  type: 'reducer',
+  type: 'middleware',
+  middlewaresFileName: '',
+  middlewaresFilePath: '',
+  queryType: '',
+  eventValue: null,
   queryVariant: '',
   querySelector: '',
   queryValue: '',
-  isNot: false,
-  matcherType: '',
+  queryFunction: '',
+});
+
+const createReducer = () => ({
+  id: statementId++,
+  type: 'reducer',
+  typesFileName: '',
+  typesFilePath: '',
+  reducersFileName: '',
+  reducersFilePath: '',
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
   matcherValue: '',
-  suggestions: [],
 });
 
 const createActionCreator = () => ({
   id: statementId++,
+  actionsFileName: '',
   filePath: '',
+  typesFileName: '',
+  typesFilePath: '',
   type: 'action-creator',
-  actionsFolder: '',
-  typesFolder: '',
   actionCreatorFunc: '',
   actionType: '',
   payloadKey: null,
@@ -127,6 +131,16 @@ const createHookRender = () => ({
   parameterOne: '',
   parameterTwo: '',
   returnValue: '',
+});
+
+const createHookUpdates = () => ({
+  id: statementId++,
+  hookFile: '',
+  type: 'hook-updates',
+  hook: '',
+  callbackFunc: '',
+  managedState: '',
+  updatedState: '',
 });
 
 export const testCaseReducer = (state, action) => {
@@ -148,38 +162,6 @@ export const testCaseReducer = (state, action) => {
       return {
         ...state,
         testStatement,
-      };
-    case actionTypes.ADD_MIDDLEWARE:
-      lastAssertionStatement = statements.pop();  /* popping off the last render */
-      statements.push(createMiddleware(), lastAssertionStatement);   /* pushing the new middlewaew the user created into the statements array and then adding back the last render */
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_MIDDLEWARE:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);  /* if statement id !== acion id, then what?? */
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_MIDDLEWARE:
-      statements = statements.map(statement => {  /* update statements if statement id === action id */
-        if (statement.id === action.id) {
-          statement.queryType = action.queryType;
-          statement.eventValue = action.eventValue;
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.queryFunction = action.queryFunction;
-          statement.suggestions = action.suggestions;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
       };
     case actionTypes.ADD_ACTION:
       lastAssertionStatement = statements.pop();
@@ -237,36 +219,6 @@ export const testCaseReducer = (state, action) => {
           statement.matcherType = action.matcherType;
           statement.matcherValue = action.matcherValue;
           statement.suggestions = action.suggestions;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    // switch cases for reducer
-    case actionTypes.ADD_REDUCER:
-      lastAssertionStatement = statements.pop();
-      statements.push(createReducer(), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_REDUCER:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_REDUCER:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.actionType = action.actionType; // action
-          statement.initialState = action.initialState; // initial state
-          statement.reducerName = action.reducerName; // reducer name
-          statement.updatedState = action.updatedState; // updated state
         }
         return statement;
       });
@@ -344,7 +296,74 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
-    // ASYNC SWITCH CASES
+
+    case actionTypes.ADD_MIDDLEWARE:
+      lastAssertionStatement = statements.pop();
+      statements.push(createMiddleware(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_MIDDLEWARE:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_MIDDLEWARE:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.middlewaresFileName = action.middlewaresFileName;
+          statement.middlewaresFilePath = action.middlewaresFilePath;
+          statement.queryType = action.queryType;
+          statement.eventValue = action.eventValue;
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
+          statement.queryFunction = action.queryFunction;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.ADD_REDUCER:
+      lastAssertionStatement = statements.pop();
+      statements.push(createReducer(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.DELETE_REDUCER:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_REDUCER:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.reducersFileName = action.reducersFileName;
+          statement.reducersFilePath = action.reducersFilePath;
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
+          statement.queryVariant = action.queryVariant;
+          statement.querySelector = action.querySelector;
+          statement.queryValue = action.queryValue;
+          statement.matcherValue = action.matcherValue;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
     case actionTypes.ADD_ASYNC:
       lastAssertionStatement = statements.pop();
       statements.push(createAsync(), lastAssertionStatement);
@@ -363,7 +382,10 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ASYNC:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
+          statement.actionsFile = action.actionsFile;
           statement.asyncFunction = action.asyncFunction;
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
           statement.method = action.method;
           statement.route = action.route;
           statement.store = action.store;
@@ -397,12 +419,14 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ACTIONCREATOR:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
+          statement.actionsFile = action.actionsFile;
+          statement.filePath = action.filePath;
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
           statement.actionCreatorFunc = action.actionCreatorFunc;
           statement.payloadKey = action.payloadKey;
           statement.payloadType = action.payloadType;
           statement.actionType = action.actionType;
-          statement.actionsFolder = action.actionsFolder;
-          statement.typesFolder = action.typesFolder;
         }
         return statement;
       });
@@ -410,6 +434,96 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
+    case actionTypes.UPDATE_ACTIONS_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'async' || statement.type === 'action-creator') {
+          statement.actionsFileName = action.actionsFileName;
+          statement.filePath = action.filePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_TYPES_FILEPATH:
+      statements = statements.map(statement => {
+        if (
+          statement.type === 'async' ||
+          statement.type === 'reducer' ||
+          statement.type === 'action-creator'
+        ) {
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_REDUCERS_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'reducer') {
+          statement.reducersFileName = action.reducersFileName;
+          statement.reducersFilePath = action.reducersFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_MIDDLEWARES_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'middleware') {
+          statement.middlewaresFileName = action.middlewaresFileName;
+          statement.middlewaresFilePath = action.middlewaresFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.ADD_HOOK_UPDATES:
+      lastAssertionStatement = statements.pop();
+      statements.push(createHookUpdates(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.DELETE_HOOK_UPDATES:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_HOOK_UPDATES:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.hook = action.hook;
+          statement.hookFile = action.hookFile;
+          statement.callbackFunc = action.callbackFunc;
+          statement.managedState = action.managedState;
+          statement.updatedState = action.updatedState;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
     case actionTypes.ADD_HOOKRENDER:
       lastAssertionStatement = statements.pop();
       statements.push(createHookRender(), lastAssertionStatement);
@@ -443,6 +557,8 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
+
     case actionTypes.CREATE_NEW_TEST:
       return {
         testStatement: '',

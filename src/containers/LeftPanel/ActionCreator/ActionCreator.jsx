@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import styles from '../ActionCreator/ActionCreator.module.scss';
-import { deleteActionCreator, updateActionCreator } from '../../../context/testCaseActions';
+import { GlobalContext } from '../../../context/globalReducer';
+import { deleteActionCreator, updateActionCreator, updateActionsFilePath, updateTypesFilePath } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
+  const [{ filePathMap }, _] = useContext(GlobalContext);
   const handleChangeActionCreatorFields = (e, field) => {
     let updatedActionCreator = { ...actionCreator };
     updatedActionCreator[field] = e.target.value;
@@ -14,6 +16,18 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
 
   const handleClickDeleteActionCreator = e => {
     dispatchToTestCase(deleteActionCreator(actionCreator.id));
+  };
+
+  const handleChangeActionsFileName = e => {
+    const actionsFileName = e.target.value;
+    const filePath = filePathMap[actionsFileName] || '';
+    dispatchToTestCase(updateActionsFilePath(actionsFileName, filePath));
+  };
+
+  const handleChangeTypesFileName = e => {
+    const typesFileName = e.target.value;
+    const filePath = filePathMap[typesFileName] || '';
+    dispatchToTestCase(updateTypesFilePath(typesFileName, filePath));
   };
 
   return (
@@ -46,7 +60,8 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
               <input
                 type='text'
                 id='actionsFolder'
-                onChange={e => handleChangeActionCreatorFields(e, 'actionsFolder')}
+                value={actionCreator.actionsFile}
+                onChange={handleChangeActionsFileName}
               />
             </div>
 
@@ -55,7 +70,8 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
               <input
                 type='text'
                 id='typesFolder'
-                onChange={e => handleChangeActionCreatorFields(e, 'typesFolder')}
+                value={actionCreator.typesFile}
+                onChange={handleChangeTypesFileName}
               />
             </div>
           </div>

@@ -1,7 +1,3 @@
-/**
- * the boxes where you fill out info for assertion , render, and action
- */
-
 import React from 'react';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
@@ -11,8 +7,9 @@ import ActionCreator from '../ActionCreator/ActionCreator';
 import Async from '../Thunk/Thunk';
 import Reducer from '../Reducer/Reducer';
 import HookRender from '../HookRender/HookRender'
+import HookUpdates from '../HookUpdates/HookUpdates';
 
-const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {  /* destructing from the reducer */
+const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
   return statements.map((statement, i) => {
     switch (statement.type) {
       case 'middleware':
@@ -77,6 +74,16 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
           <HookRender
             key={statement.id}
             hookRender={statement}
+            index={i}
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        );
+
+      case 'hook-updates':
+        return (
+          <HookUpdates
+            key={statement.id}
+            hookUpdates={statement}
             index={i}
             dispatchToTestCase={dispatchToTestCase}
           />
