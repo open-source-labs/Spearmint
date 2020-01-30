@@ -35,7 +35,9 @@ let renderPropsId = 0;
 
 const createMiddleware = () => ({ /* renders the action card when the "action" button is clicked */
   id: statementId++,  
-  type: 'middleware',  
+  type: 'middleware',
+  middlewaresFileName: '',
+  middlewaresFilePath: '',  
   queryType: '',  /* ex: onclick */
   eventValue: null,  
   queryVariant: '',  /* drop down to select a query variant */
@@ -164,6 +166,8 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_MIDDLEWARE:
       statements = statements.map(statement => {  /* update statements if statement id === action id */
         if (statement.id === action.id) {
+          statement.middlewaresFileName = action.middlewaresFileName;
+          statement.middlewaresFilePath = action.middlewaresFilePath;
           statement.queryType = action.queryType;
           statement.eventValue = action.eventValue;
           statement.queryVariant = action.queryVariant;
@@ -421,6 +425,18 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
 
+    case actionTypes.UPDATE_MIDDLEWARES_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'middleware') {
+          statement.middlewaresFileName = action.middlewaresFileName;
+          statement.middlewaresFilePath = action.middlewaresFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
     case actionTypes.ADD_ACTIONCREATOR:
       lastAssertionStatement = statements.pop();
       statements.push(createActionCreator(), lastAssertionStatement);
