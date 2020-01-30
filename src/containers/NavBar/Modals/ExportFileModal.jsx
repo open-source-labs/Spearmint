@@ -145,21 +145,19 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {  /* destr
       }
     });
     testFileCode += `import '@testing-library/jest-dom/extend-expect';
-    import { build, fake } from 'test-data-bot'; 
-    import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
-    import * as types from '../${actionCreatorStatement.typesFolder}.js';
-    \n`;
+    import { build, fake } from 'test-data-bot';` 
+    // import * as actions from '../${actionCreatorStatement.actionsFolder}.js'; 
+    // import * as types from '../${actionCreatorStatement.typesFolder}.js';
   };
 
   // Add actions import line to the export file
   const addActionsImportStatement = () => {
-    console.log('this is testCase line 91 -> ', testCase);
     testCase.statements.forEach(statement => {
-      switch (statement.type) {
-        case 'async':
+      if (statement.type === 'async' ||
+        statement.type === 'action-creator') {
           return createPathToActions(statement);
-        default:
-          return statement;
+      } else {
+        return statement;
       }
     })
   };
