@@ -118,7 +118,10 @@ const createReducer = () => ({
 
 const createActionCreator = () => ({
   id: statementId++,
+  actionsFileName: '',
   filePath: '',
+  typesFileName: '',
+  typesFilePath: '',
   type: 'action-creator',
   actionsFolder: '',
   typesFolder: '',
@@ -391,7 +394,8 @@ export const testCaseReducer = (state, action) => {
     // updates filepath
     case actionTypes.UPDATE_ACTIONS_FILEPATH:
       statements = statements.map(statement => {
-        if (statement.type === 'async') {
+        if (statement.type === 'async' ||
+          statement.type === 'action-creator') {
           statement.actionsFileName = action.actionsFileName;
           statement.filePath = action.filePath;
         }
@@ -405,7 +409,8 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_TYPES_FILEPATH:
       statements = statements.map(statement => {
         if (statement.type === 'async' ||
-            statement.type === 'reducer') {
+            statement.type === 'reducer' ||
+            statement.type === 'action-creator') {
           statement.typesFileName = action.typesFileName;
           statement.typesFilePath = action.typesFilePath;
         }
@@ -461,6 +466,10 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ACTIONCREATOR:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
+          statement.actionsFile = action.actionsFile;
+          statement.filePath = action.filePath;
+          statement.typesFileName = action.typesFileName;
+          statement.typesFilePath = action.typesFilePath;
           statement.actionCreatorFunc = action.actionCreatorFunc;
           statement.payloadKey = action.payloadKey;
           statement.payloadType = action.payloadType;
