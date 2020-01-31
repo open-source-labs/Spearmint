@@ -9,11 +9,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
   const handleAddAction = e => {
     dispatchToTestCase(addAction());
   };
@@ -48,7 +46,7 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             dispatchToTestCase={dispatchToTestCase}
           />
         </div>
-        <div id={styles.right}>
+        <div id={styles.right} style={{display: "flex", flexWrap: "wrap", justifyContent: "center"}}>
           <button onClick={handleAddAction}>Action</button>
           <button data-testid='assertionButton' onClick={handleAddAssertion}>
             Assertion
@@ -62,7 +60,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           <button data-testid='asyncButton' onClick={handleAddAsync}>
             Async Action Creator
           </button>
-          <button data-testid='middlewareButton' onClick={handleAddMiddleware}>Middleware</button>
+          <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
+            Middleware
+          </button>
           <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
             Action Creator
           </button>
