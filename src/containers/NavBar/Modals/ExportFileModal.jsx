@@ -314,7 +314,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Reducer Jest Test Code
   const addReducer = reducer => {
-    testFileCode += `expect(${reducer.reducerName}(${reducer.initialState},${reducer.actionType})).toEqual(${reducer.updatedState})`;
+    testFileCode += `expect(${reducer.queryValue}(${reducer.querySelector},${reducer.queryVariant})).toEqual(${reducer.matcherValue})`;
   };
 
   // Async AC Jest Test Code

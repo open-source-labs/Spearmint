@@ -40,22 +40,14 @@ const HookRender = ({ hookRender, index, dispatchToTestCase }) => {
                     {/* header / h3 name / drag icon */}
                     <div id={styles.hookRenderHeader}>
                         <img src={dragIcon} alt='drag' />
-                        <h3>Hook : Rendering</h3>
+                        <h3>Hooks : Rendering</h3>
                     </div>
 
                     <div id={styles.hookRenderFlexBox}>
                         {/* file path input boxes */}
-                        <div id={styles.hookRenderType}>
-                            <label htmlFor='hookRenderFolder'>Import Render Hook From</label>
-                            <input
-                                type='text'
-                                id='hookRenderFolder'
-                                onChange={e => handleChangeHookRenderFields(e, 'hookRenderFolder')}
-                            />
-                        </div>
 
                         <div id={styles.hookRenderType}>
-                            <label htmlFor='hookFuncFolder'>Import Hook Function File From</label>
+                            <label htmlFor='hookFuncFolder'>Import Hook From</label>
                             <input
                                 type='text'
                                 id='hookFuncFolder'
@@ -65,7 +57,7 @@ const HookRender = ({ hookRender, index, dispatchToTestCase }) => {
                     </div>
                     <div id={styles.hookRenderFlexBox}>
                         <div id={styles.hookRenderType}>
-                            <label htmlFor='hookFunction'>Hook Function</label>
+                            <label htmlFor='hookFunction'>Hook</label>
                             <input
                                 type='text'
                                 id='hookFunction'

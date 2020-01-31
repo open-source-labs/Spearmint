@@ -52,8 +52,8 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
           </div>
 
           <div id={styles.reducerNameFlexBox}>
-            <div>
-              <label htmlFor='typesFile'>Types File Name</label>
+            <div id={styles.reducerName}>
+              <label htmlFor='typesFile'>Action Types File Name</label>
               <input
                 type='text'
                 id={styles.renderInputBox}
@@ -61,7 +61,8 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
                 onChange={handleChangeTypesFileName}
               />
             </div>
-            <div>
+
+            <div id={styles.reducerName}>
               <label htmlFor='typesFile'>Reducer File Name</label>
               <input
                 type='text'
@@ -70,7 +71,8 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
                 onChange={handleChangeReducersFileName}
               />
             </div>
-
+          </div>
+          <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='queryValue'>Reducer Name</label>
               <input
@@ -79,9 +81,7 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
                 onChange={e => handleChangeReducerFields(e, 'queryValue')}
               />
             </div>
-          </div>
 
-          <div id={styles.queryFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='querySelector'>Initial State</label>
               <input
@@ -92,7 +92,7 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
             </div>
           </div>
 
-          <div id={styles.queryFlexBox}>
+          <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='queryVariant'>Action</label>
               <input
@@ -101,23 +101,23 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
                 onChange={e => handleChangeReducerFields(e, 'queryVariant')}
               />
             </div>
-          </div>
 
-          <div id={styles.queryFlexBox}></div>
-          <div id={styles.reducerName}>
-            <label htmlFor='updatedState' className={styles.queryLabel}>
-              Updated State
+            <div id={styles.reducerName}>
+              <label htmlFor='matcherValue'>
+                Updated State
             </label>
-            <input
-              type='text'
-              id='matcherValue'
-              onChange={e => handleChangeReducerFields(e, 'matcherValue')}
-            />
+              <input
+                type='text'
+                id='matcherValue'
+                onChange={e => handleChangeReducerFields(e, 'matcherValue')}
+              />
+            </div>
           </div>
         </div>
-      )}
+      )
+      }
     </Draggable>
-  );
+  )
 };
 
 export default Reducer;
