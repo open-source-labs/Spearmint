@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styles from '../AutoComplete/AutoCompleteMockData.module.scss';
 import AutoSuggest from 'react-autosuggest';
-import { updateAction, updateMiddleware, updateAssertion, updateRenderProp } from '../../../context/testCaseActions';
+import { updateAction, updateAssertion, updateRenderProp } from '../../../context/testCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
 
 const AutoCompleteMockData = ({
@@ -14,7 +14,6 @@ const AutoCompleteMockData = ({
   propKey,
 }) => {
   let updatedAction = { ...statement };
-  let updatedMiddleware = { ...statement };
   let updatedAssertion = { ...statement };
 
   const [{ mockData }, _] = useContext(MockDataContext);
@@ -27,9 +26,6 @@ const AutoCompleteMockData = ({
     if (statementType === 'action') {
       updatedAction.eventValue = newValue;
       dispatchToTestCase(updateAction(updatedAction));
-    } else if (statementType === 'middleware') {
-      updatedMiddleware.eventValue = newValue;
-      dispatchToTestCase(updateMiddleware(updatedMiddleware));
     } else if (statementType === 'assertion') {
       updatedAssertion.queryValue = newValue;
       dispatchToTestCase(updateAssertion(updatedAssertion));

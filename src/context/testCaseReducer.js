@@ -18,6 +18,7 @@ export const TestCaseContext = createContext(null); /* here we create context fo
 /* initial state for testCase */  
 export const testCaseState = {
   testStatement: '', /* the test description */
+  hasReact: false,
   statements: [    /* both of the cards on the page at open. Each card gets an id */
     {
       id: 0, 
@@ -39,7 +40,6 @@ export const testCaseState = {
       suggestions: [], /* auto complete suggestions? */
     },
   ],
-  displayAutoStatements: true
 };
 
 let statementId = 2; /* to allow us to auto increment ids for other cards being added to the page */
@@ -97,7 +97,7 @@ const createRenderProp = () => ({ /* to render prop form on render and rerender 
 });
 
 export const testCaseReducer = (state, action) => {  /* reducers only pass the state and the action to change that state */
-  //Object.freeze(state); /* cannot be changed.  properties can not be added or removed. values cannot be changed. */
+  Object.freeze(state); /* cannot be changed.  properties can not be added or removed. values cannot be changed. */
   let statements = [...state.statements];  /* getting all elements in states statement array */
   let lastAssertionStatement; /* b.c we reorder the statements */
 
@@ -288,15 +288,17 @@ export const testCaseReducer = (state, action) => {  /* reducers only pass the s
       };
 
 
-      case actionTypes.TOGGLE_DISPLAY:
-          if (!state.displayAutoStatements) {
-              statements.pop()
+      case actionTypes.TOGGLE_REACT:
+          let newTestStatement;
+          if (!state.hasReact) {
+           newTestStatement = action.testStatement;
           }
           return {
               ...state,
-              statements,
-              displayAutoStatements: !state.displayAutoStatements,
+              newTestStatement,
+              hasReact: !state.hasReact,
       };
+
 
 
     case actionTypes.CREATE_NEW_TEST:  /* renders the new test card */

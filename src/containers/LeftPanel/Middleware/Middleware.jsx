@@ -6,7 +6,7 @@ import { deleteMiddleware, updateMiddleware } from '../../../context/testCaseAct
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
-import ToolTip from '../ToolTip/ToolTip';
+//import ToolTip from '../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/mockDataReducer';
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
@@ -120,12 +120,12 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                     <option value='calls_the_function'>calls_the_function</option>
                                     <option value='passes_functional_arguments'>passes_functional_arguments</option>
                                 </select>
-                                <span id={styles.hastooltip} role='tooltip'>
+                                {/* <span id={styles.hastooltip} role='tooltip'>
                                     <img src={questionIcon} alt='help' />
                                     <span id={styles.tooltip}>
                                         <ToolTip toolTipType={middleware.queryVariant} />
                                     </span>
-                                </span>
+                                </span> */}
 
 
                                 {/* first drop down */}
@@ -140,12 +140,12 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                     <option value='toHaveBeenCalledWith'>toHaveBeenCalledWith</option>
                                     <option value='toHaveBeenLastCalledWith'>toHaveBeenLastCalledWith</option>
                                 </select>
-                                <span id={styles.hastooltip} role='tooltip'>
+                                {/* <span id={styles.hastooltip} role='tooltip'>
                                     <img src={questionIcon} alt='help' />
                                     <span id={styles.tooltip}>
                                         <ToolTip toolTipType={middleware.queryVariant} />
                                     </span>
-                                </span>
+                                </span> */}
 
                                 {/* second drop down */}
                                 <select
@@ -159,12 +159,12 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                     <option value='store.Dispatch'>store.Dispatch</option>
                                     <option value='store.GetState'>store.GetState</option>
                                 </select>
-                                <span id={styles.hastooltip} role='tooltip'>
+                                {/* <span id={styles.hastooltip} role='tooltip'>
                                     <img src={questionIcon} alt='help' />
                                     <span id={styles.tooltip}>
                                         <ToolTip toolTipType={middleware.querySelector} />
                                     </span>
-                                </span>
+                                </span> */}
 
                                 {/* my added drop down */}
                                 <input 
@@ -183,12 +183,12 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => { /* destructu
                                     <option value='etc'>etc</option>
                                     <option value='other'>other</option>
                                 </select> */}
-                                <span id={styles.hastooltip} role='tooltip'>
+                                {/* <span id={styles.hastooltip} role='tooltip'>
                                     <img src={questionIcon} alt='help' />
                                     <span id={styles.tooltip}>
                                         <ToolTip toolTipType={middleware.querySelector} />
                                     </span>
-                                </span>
+                                </span> */}
                                 
                             </div>
                         </div>
