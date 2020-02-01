@@ -34,6 +34,11 @@ export const actionTypes = {
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
 
+  // Action type for hookRender
+  ADD_HOOKRENDER: 'ADD_HOOKRENDER',
+  DELETE_HOOKRENDER: 'DELETE_HOOKRENDER',
+  UPDATE_HOOKRENDER: 'UPDATE_HOOKRENDER',
+
   ADD_HOOK_UPDATES: 'ADD_HOOK_UPDATES',
   DELETE_HOOK_UPDATES: 'DELETE_HOOK_UPDATE',
   UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
@@ -331,6 +336,39 @@ export const updateMiddlewaresFilePath = (middlewaresFileName, middlewaresFilePa
   type: actionTypes.UPDATE_MIDDLEWARES_FILEPATH,
   middlewaresFileName,
   middlewaresFilePath,
+});
+
+// hookRender
+export const addHookRender = () => ({
+  type: actionTypes.ADD_HOOKRENDER,
+});
+
+export const deleteHookRender = id => ({
+  type: actionTypes.DELETE_HOOKRENDER,
+  id,
+});
+
+export const updateHookRender = ({
+  id,
+  hookFileName,
+  hookFilePath,
+  hookRenderFolder,
+  hookFuncFolder,
+  hookFunction,
+  parameterOne,
+  expectedReturnValue,
+  returnValue,
+}) => ({
+  type: actionTypes.UPDATE_HOOKRENDER,
+  id,
+  hookFileName,
+  hookFilePath,
+  hookRenderFolder,
+  hookFuncFolder,
+  hookFunction,
+  parameterOne,
+  expectedReturnValue,
+  returnValue,
 });
 
 export const updateHooksFilePath = (hookFileName, hookFilePath) => ({

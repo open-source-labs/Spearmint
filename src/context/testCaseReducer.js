@@ -122,6 +122,19 @@ const createActionCreator = () => ({
   payloadType: null,
 });
 
+const createHookRender = () => ({
+  id: statementId++,
+  type: 'hookRender',
+  hookFileName: '',
+  hookFilePath: '',
+  hookRenderFolder: '',
+  hookFuncFolder: '',
+  hookFunction: '',
+  parameterOne: '',
+  parameterTwo: '',
+  returnValue: '',
+});
+
 const createHookUpdates = () => ({
   id: statementId++,
   hookFileName: '',
@@ -216,7 +229,6 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
-
     case actionTypes.ADD_RENDER:
       lastAssertionStatement = statements.pop();
       const renderComponentName = state.statements[0].componentName;
@@ -508,6 +520,40 @@ export const testCaseReducer = (state, action) => {
           statement.callbackFunc = action.callbackFunc;
           statement.managedState = action.managedState;
           statement.updatedState = action.updatedState;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.ADD_HOOKRENDER:
+      lastAssertionStatement = statements.pop();
+      statements.push(createHookRender(), lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.DELETE_HOOKRENDER:
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
+      return {
+        ...state,
+        statements,
+      };
+
+    case actionTypes.UPDATE_HOOKRENDER:
+      statements = statements.map(statement => {
+        if (statement.id === action.id) {
+          statement.hookFunction = action.hookFunction;
+          statement.parameterOne = action.parameterOne;
+          statement.expectedReturnValue = action.expectedReturnValue;
+          statement.returnValue = action.returnValue;
+          statement.hookRenderFolder = action.hookRenderFolder;
+          statement.hookFuncFolder = action.hookFuncFolder;
         }
         return statement;
       });
