@@ -120,15 +120,15 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
             addAsyncImportStatement(), createPathToActions(statement), createPathToTypes(statement)
           );
         case 'action-creator':
-          return (createPathToActions(statement), createPathToTypes(statement));
+          return createPathToActions(statement), createPathToTypes(statement);
         case 'middleware':
           return createPathToMiddlewares(statement);
         case 'reducer':
-          return (createPathToReducers(statement), createPathToTypes(statement));
+          return createPathToReducers(statement), createPathToTypes(statement);
         case 'hook-updates':
-          return (addHooksImportStatement(), createPathToHooks(statement));
+          return addHooksImportStatement(), createPathToHooks(statement);
         case 'hookRender':
-          return (addHooksImportStatement(), createPathToHooks(statement));
+          return addHooksImportStatement(), createPathToHooks(statement);
         default:
           return statement;
       }
