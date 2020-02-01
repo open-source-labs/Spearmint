@@ -1,0 +1,46 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+@import '../LeftPanel.module.scss';
+
+#reducer {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+}
+
+#close {
+  float: right;
+  margin: 0;
+}
+
+#reducerHeader {
+  @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+#reducerNameFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#reducerName {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+}

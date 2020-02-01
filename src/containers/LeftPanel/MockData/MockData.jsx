@@ -1,3 +1,10 @@
+/**
+ * the card for adding mock data
+ * renders :
+ *  - mockDataKey (as mockDataFieldKey) 
+ *  - the labels in the card (name, key, type)
+ */
+
 import React from 'react';
 import styles from './MockData.module.scss';
 import {

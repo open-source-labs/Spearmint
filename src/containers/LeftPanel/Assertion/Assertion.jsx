@@ -1,3 +1,8 @@
+/**
+ * homepage assertion card
+ * renders last assertion component
+ */
+
 import React from 'react';
 import LastAssertion from './LastAssertion';
 import { Draggable } from 'react-beautiful-dnd';
