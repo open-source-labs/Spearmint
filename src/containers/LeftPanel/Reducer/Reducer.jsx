@@ -103,9 +103,7 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
             </div>
 
             <div id={styles.reducerName}>
-              <label htmlFor='matcherValue'>
-                Updated State
-            </label>
+              <label htmlFor='matcherValue'>Updated State</label>
               <input
                 type='text'
                 id='matcherValue'

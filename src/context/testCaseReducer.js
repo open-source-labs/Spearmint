@@ -135,7 +135,8 @@ const createHookRender = () => ({
 
 const createHookUpdates = () => ({
   id: statementId++,
-  hookFile: '',
+  hookFileName: '',
+  hookFilePath: '',
   type: 'hook-updates',
   hook: '',
   callbackFunc: '',
@@ -512,7 +513,8 @@ export const testCaseReducer = (state, action) => {
       statements = statements.map(statement => {
         if (statement.id === action.id) {
           statement.hook = action.hook;
-          statement.hookFile = action.hookFile;
+          statement.hookFileName = action.hookFileName;
+          statement.hookFilePath = action.hookFilePath;
           statement.callbackFunc = action.callbackFunc;
           statement.managedState = action.managedState;
           statement.updatedState = action.updatedState;
@@ -558,6 +560,18 @@ export const testCaseReducer = (state, action) => {
         statements,
       };
 
+    case actionTypes.UPDATE_HOOKS_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'hook-updates') {
+          statement.hookFileName = action.hookFileName;
+          statement.hookFilePath = action.hookFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
 
     case actionTypes.CREATE_NEW_TEST:
       return {
