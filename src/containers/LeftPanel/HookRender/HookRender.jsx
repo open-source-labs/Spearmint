@@ -3,13 +3,16 @@
  */
 import React, { useContext } from 'react';
 import styles from './HookRender.module.scss';
-import { deleteHookRender, updateHookRender } from '../../../context/testCaseActions';
+import { GlobalContext } from '../../../context/globalReducer';
+import { deleteHookRender, updateHookRender, updateHooksFilePath } from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 
 const HookRender = ({ hookRender, index, dispatchToTestCase }) => {
+    const [{ filePathMap }, _] = useContext(GlobalContext);
+
     const handleChangeHookRenderFields = (e, field) => {
         let updatedHookRender = { ...hookRender };
         updatedHookRender[field] = e.target.value;
@@ -20,6 +23,11 @@ const HookRender = ({ hookRender, index, dispatchToTestCase }) => {
         dispatchToTestCase(deleteHookRender(hookRender.id));
     };
 
+    const handleChangeHookFileName = e => {
+        const hookFileName = e.target.value;
+        const filePath = filePathMap[hookFileName] || '';
+        dispatchToTestCase(updateHooksFilePath(hookFileName, filePath));
+    };
     return (
         <Draggable draggableId={hookRender.id.toString()} index={index}>
             {provided => (
@@ -40,7 +48,7 @@ const HookRender = ({ hookRender, index, dispatchToTestCase }) => {
                     {/* header / h3 name / drag icon */}
                     <div id={styles.hookRenderHeader}>
                         <img src={dragIcon} alt='drag' />
-                        <h3>Hooks : Rendering</h3>
+                        <h3>Hook : Rendering</h3>
                     </div>
 
                     <div id={styles.hookRenderFlexBox}>
@@ -51,7 +59,7 @@ const HookRender = ({ hookRender, index, dispatchToTestCase }) => {
                             <input
                                 type='text'
                                 id='hookFuncFolder'
-                                onChange={e => handleChangeHookRenderFields(e, 'hookFuncFolder')}
+                                onChange={handleChangeHookFileName}
                             />
                         </div>
                     </div>

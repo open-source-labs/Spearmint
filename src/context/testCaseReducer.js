@@ -125,6 +125,8 @@ const createActionCreator = () => ({
 const createHookRender = () => ({
   id: statementId++,
   type: 'hookRender',
+  hookFileName: '',
+  hookFilePath: '',
   hookRenderFolder: '',
   hookFuncFolder: '',
   hookFunction: '',

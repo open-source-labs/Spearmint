@@ -86,7 +86,7 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
             Action Creator
           </button>
-          <button data-testid='hookRenderButton' onClick={handleAddHookRender}>Hooks: Rendering</button>
+          <button data-testid='hookRenderButton' onClick={handleAddHookRender}>Hook: Rendering</button>
 
           <button data-testid='hookUpdatesButton' onClick={handleAddHookUpdates}>
             Hook: Updates

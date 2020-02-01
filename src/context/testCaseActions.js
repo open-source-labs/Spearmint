@@ -38,6 +38,7 @@ export const actionTypes = {
   ADD_HOOKRENDER: 'ADD_HOOKRENDER',
   DELETE_HOOKRENDER: 'DELETE_HOOKRENDER',
   UPDATE_HOOKRENDER: 'UPDATE_HOOKRENDER',
+
   ADD_HOOK_UPDATES: 'ADD_HOOK_UPDATES',
   DELETE_HOOK_UPDATES: 'DELETE_HOOK_UPDATE',
   UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
@@ -349,6 +350,8 @@ export const deleteHookRender = id => ({
 
 export const updateHookRender = ({
   id,
+  hookFileName,
+  hookFilePath,
   hookRenderFolder,
   hookFuncFolder,
   hookFunction,
@@ -358,6 +361,8 @@ export const updateHookRender = ({
 }) => ({
   type: actionTypes.UPDATE_HOOKRENDER,
   id,
+  hookFileName,
+  hookFilePath,
   hookRenderFolder,
   hookFuncFolder,
   hookFunction,
