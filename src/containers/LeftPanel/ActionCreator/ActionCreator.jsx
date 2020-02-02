@@ -1,7 +1,12 @@
 import React, { useContext } from 'react';
 import styles from '../ActionCreator/ActionCreator.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import { deleteActionCreator, updateActionCreator, updateActionsFilePath, updateTypesFilePath } from '../../../context/testCaseActions';
+import {
+  deleteActionCreator,
+  updateActionCreator,
+  updateActionsFilePath,
+  updateTypesFilePath,
+} from '../../../context/testCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -39,7 +44,6 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
           {...provided.dragHandleProps}
           id={styles.actionCreator}
         >
-          {/* close icon, handle delete */}
           <img
             src={closeIcon}
             id={styles.close}
@@ -47,16 +51,14 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
             onClick={handleClickDeleteActionCreator}
           />
 
-          {/* header / h3 name / drag icon */}
           <div id={styles.actionCreatorHeader}>
             <img src={dragIcon} alt='drag' />
             <h3>Action Creator</h3>
           </div>
 
           <div id={styles.filesFlexBox}>
-            {/* event type & autocomplete */}
             <div id={styles.files}>
-              <label htmlFor='actionsFolder'>Import Actions File From</label>
+              <label htmlFor='actionsFolder'>Actions File</label>
               <input
                 type='text'
                 id='actionsFolder'
@@ -66,7 +68,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
             </div>
 
             <div id={styles.files}>
-              <label htmlFor='typesFolder'>Import Types File From</label>
+              <label htmlFor='typesFolder'>Action Types File</label>
               <input
                 type='text'
                 id='typesFolder'
@@ -77,7 +79,6 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
           </div>
 
           <div id={styles.actionFlexBox}>
-            {/* event type & autocomplete */}
             <div id={styles.actions}>
               <label htmlFor='actionCreatorFunc'>Action Creator</label>
               <input
@@ -97,7 +98,6 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
             </div>
           </div>
 
-          {/* payload key*/}
           <div id={styles.payloadFlexBox}>
             <div id={styles.payloadKey}>
               <label htmlFor='payloadKey'>Payload Key</label>
@@ -108,7 +108,6 @@ const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
               />
             </div>
 
-            {/* payload type selector dropdown */}
             <div id={styles.payloadType}>
               <label htmlFor='payloadType'>Payload Type</label>
               <select
