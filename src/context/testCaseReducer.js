@@ -5,6 +5,7 @@ export const TestCaseContext = createContext(null);
 
 export const testCaseState = {
   testStatement: '',
+  hasReact: false,
   statements: [
     {
       id: 0,
@@ -94,6 +95,19 @@ const createMiddleware = () => ({
   querySelector: '',
   queryValue: '',
   queryFunction: '',
+});
+
+const createContexts = () => ({ /* renders the action card when the "action" button is clicked */
+  id: statementId++,  
+  type: 'context',    
+  queryVariant: '',  
+  querySelector: '',
+  queryValue: '', 
+  values: '',
+  textNode: '',
+  providerComponent: '',
+  consumerComponent: '',
+  context: '',  
 });
 
 const createReducer = () => ({
@@ -331,6 +345,39 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+      case actionTypes.ADD_CONTEXT:
+          lastAssertionStatement = statements.pop();  /* popping off the last render */
+          statements.push(createContexts(), lastAssertionStatement);   /* pushing the new middlewaew the user created into the statements array and then adding back the last render */
+          return {
+            ...state,
+            statements,
+          };
+        case actionTypes.DELETE_CONTEXT:
+          lastAssertionStatement = statements.pop();  
+          statements = statements.filter(statement => statement.id !== action.id);  /* if statement id !== acion id, then what?? */
+          statements.push(lastAssertionStatement);
+          return {
+            ...state,
+            statements,
+          };
+        case actionTypes.UPDATE_CONTEXT:
+          statements = statements.map(statement => {  /* update statements if statement id === action id */
+            if (statement.id === action.id) {
+              statement.queryVariant = action.queryVariant;
+              statement.querySelector = action.querySelector;
+              statement.queryValue = action.queryValue;
+              statement.values = action.values;
+              statement.textNode = action.textNodes;
+              statement.providerComponent = action.providerComponent;
+              statement.consumerComponent = action.consumerComponent;
+              statement.context = action.context;
+            }
+            return statement;
+          });
+          return {
+            ...state,
+            statements,
+          };
     case actionTypes.ADD_REDUCER:
       lastAssertionStatement = statements.pop();
       statements.push(createReducer(), lastAssertionStatement);
@@ -569,6 +616,17 @@ export const testCaseReducer = (state, action) => {
       return {
         ...state,
         statements,
+      };
+
+    case actionTypes.TOGGLE_REACT:
+      let newTestStatement;
+      if (!state.hasReact) {
+        newTestStatement = action.testStatement;
+      }
+      return {
+          ...state,
+          newTestStatement,
+          hasReact: !state.hasReact,
       };
 
     case actionTypes.CREATE_NEW_TEST:

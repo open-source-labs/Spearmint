@@ -8,6 +8,7 @@ import {
   addReducer,
   addActionCreator,
   addMiddleware,
+  addContexts,
   addHookUpdates,
   addHookRender
 } from '../../../context/testCaseActions';
@@ -39,6 +40,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   };
   const handleAddMiddleware = e => {
     dispatchToTestCase(addMiddleware());
+  };
+  const handleAddContext = e => {
+    dispatchToTestCase(addContexts());
   };
   const handleAddAsync = e => {
     dispatchToTestCase(addAsync());
@@ -82,6 +86,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           </button>
           <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
             Middleware
+          </button>
+          <button data-testid='contextButton' onClick={handleAddContext}>
+            Context
           </button>
           <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
             Action Creator

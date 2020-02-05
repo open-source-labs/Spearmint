@@ -25,10 +25,10 @@ const Middleware = ({ middleware, index, dispatchToTestCase }) => {
     dispatchToTestCase(deleteMiddleware(middleware.id));
   };
 
-  const needsEventValue = eventType => {
-    const eventsWithValues = ['passing non-function arguements'];
-    return eventsWithValues.includes(eventType);
-  };
+  // const needsEventValue = eventType => {
+  //   const eventsWithValues = ['passing non-function arguements'];
+  //   return eventsWithValues.includes(eventType);
+  // };
 
   const handleChangeMiddlewaresFileName = e => {
     const middlewaresFileName = e.target.value;
