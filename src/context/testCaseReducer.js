@@ -127,9 +127,7 @@ const createHookRender = () => ({
   type: 'hookRender',
   hookFileName: '',
   hookFilePath: '',
-  hookRenderFolder: '',
-  hookFuncFolder: '',
-  hookFunction: '',
+  hook: '',
   parameterOne: '',
   parameterTwo: '',
   returnValue: '',
@@ -548,12 +546,10 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.UPDATE_HOOKRENDER:
       statements = statements.map(statement => {
         if (statement.id === action.id) {
-          statement.hookFunction = action.hookFunction;
+          statement.hook = action.hook;
           statement.parameterOne = action.parameterOne;
           statement.expectedReturnValue = action.expectedReturnValue;
           statement.returnValue = action.returnValue;
-          statement.hookRenderFolder = action.hookRenderFolder;
-          statement.hookFuncFolder = action.hookFuncFolder;
         }
         return statement;
       });
@@ -564,7 +560,7 @@ export const testCaseReducer = (state, action) => {
 
     case actionTypes.UPDATE_HOOKS_FILEPATH:
       statements = statements.map(statement => {
-        if (statement.type === 'hook-updates') {
+        if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
           statement.hookFileName = action.hookFileName;
           statement.hookFilePath = action.hookFilePath;
         }
