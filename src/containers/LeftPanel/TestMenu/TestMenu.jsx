@@ -1,36 +1,28 @@
-/**
- * the test nav bar at the top of the screen 
- */
-
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import { addAction, addAssertion, addRender, addMiddleware } from '../../../context/testCaseActions';
+import {
+  addAction,
+  addAssertion,
+  addRender,
+  addAsync,
+  addReducer,
+  addActionCreator,
+  addMiddleware,
+  addContexts,
+  addHookUpdates,
+  addHookRender
+} from '../../../context/testCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
-import ReduxTestModal from '../../NavBar/Modals/ReduxTestModal';
 
-const TestMenu = ({ dispatchToTestCase, dispatchToMockData, dispatchToReduxTestCase }) => {
-  /* making new state for this componenet, naming it isMOdalOpen, making method for it called setIsModalOpen, setting initial state to false */
+const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  /* create new state for redux? */
-  //const [isReduxModalOpen, setIsReduxModalOpen] = useState(false)
 
   const openModal = () => {
     setIsModalOpen(true);
   };
-
-  // const openReduxModal = () => {
-  //   setIsReduxModalOpen(true);
-  // };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  // const closeReduxModal = () => {
-  //   setIsReduxModalOpen(false);
-  // };
-
   const handleAddAction = e => {
     dispatchToTestCase(addAction());
   };
@@ -40,9 +32,28 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData, dispatchToReduxTestC
   const handleAddRender = e => {
     dispatchToTestCase(addRender());
   };
-  // const handleAddMiddleware = e => {
-  //   dispatchToTestCase(addMiddleware());
-  // };
+  const handleAddReducer = e => {
+    dispatchToTestCase(addReducer());
+  };
+  const handleAddActionCreator = e => {
+    dispatchToTestCase(addActionCreator());
+  };
+  const handleAddMiddleware = e => {
+    dispatchToTestCase(addMiddleware());
+  };
+  const handleAddContext = e => {
+    dispatchToTestCase(addContexts());
+  };
+  const handleAddAsync = e => {
+    dispatchToTestCase(addAsync());
+  };
+  const handleAddHookRender = e => {
+    dispatchToTestCase(addHookRender());
+  };
+
+  const handleAddHookUpdates = e => {
+    dispatchToTestCase(addHookUpdates());
+  };
 
   return (
     <div id='test'>
@@ -55,24 +66,37 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData, dispatchToReduxTestC
             dispatchToMockData={dispatchToMockData}
             dispatchToTestCase={dispatchToTestCase}
           />
-
-          {/* <button onClick={openReduxModal}>New Redux Test +</button>
-          <ReduxTestModal
-            isReduxModalOpen={isReduxModalOpen}
-            closeReduxModal={closeReduxModal}
-            //dispatchToMockData={dispatchToMockData}
-            dispatchToReduxTestCase={dispatchToReduxTestCase}
-          /> */}
-
         </div>
-        <div id={styles.right}>
+        <div
+          id={styles.right}
+          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+        >
           <button onClick={handleAddAction}>Action</button>
-          {/* <button onClick={handleAddMiddleware}>Middleware</button> */}
           <button data-testid='assertionButton' onClick={handleAddAssertion}>
             Assertion
           </button>
           <button data-testid='rerenderButton' onClick={handleAddRender}>
             Rerender
+          </button>
+          <button data-testid='reducerButton' onClick={handleAddReducer}>
+            Reducer
+          </button>
+          <button data-testid='asyncButton' onClick={handleAddAsync}>
+            Async Action Creator
+          </button>
+          <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
+            Middleware
+          </button>
+          <button data-testid='contextButton' onClick={handleAddContext}>
+            Context
+          </button>
+          <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
+            Action Creator
+          </button>
+          <button data-testid='hookRenderButton' onClick={handleAddHookRender}>Hook: Rendering</button>
+
+          <button data-testid='hookUpdatesButton' onClick={handleAddHookUpdates}>
+            Hook: Updates
           </button>
         </div>
       </div>
