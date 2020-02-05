@@ -7,6 +7,7 @@ import Context from '../Context/Context';
 import ActionCreator from '../ActionCreator/ActionCreator';
 import Async from '../Thunk/Thunk';
 import Reducer from '../Reducer/Reducer';
+import HookRender from '../HookRender/HookRender'
 import HookUpdates from '../HookUpdates/HookUpdates';
 
 const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
@@ -78,6 +79,16 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
             dispatchToTestCase={dispatchToTestCase}
           />
         );
+      case 'hookRender':
+        return (
+          <HookRender
+            key={statement.id}
+            hookRender={statement}
+            index={i}
+            dispatchToTestCase={dispatchToTestCase}
+          />
+        );
+
       case 'hook-updates':
         return (
           <HookUpdates
