@@ -370,7 +370,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Hook: Renders Jest Test Code
   const addHookRender = hookRender => {
-    testFileCode += `const {result} = renderHook((${hookRender.parameterOne}) => ${hookRender.hookFunction}())
+    testFileCode += `const {result} = renderHook((${hookRender.parameterOne}) => ${hookRender.hook}())
     expect(result.current.${hookRender.returnValue}).toBe(${hookRender.expectedReturnValue})`;
   }
 
