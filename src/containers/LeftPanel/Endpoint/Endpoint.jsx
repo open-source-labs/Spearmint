@@ -7,9 +7,9 @@ import {
   deleteEndpoint,
   updateEndpoint,
   updateServerFilePath,
-} from '../../../context/testCaseServer';
-import ToolTip from '../ToolTip/ToolTip';
-import ToolTipEndpoint from '../ToolTip/ToolTipEndpoint';
+} from '../../../context/testCaseActions';
+// import ToolTip from '../ToolTip/ToolTip';
+// import ToolTipEndpoint from '../ToolTip/ToolTip';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -127,25 +127,7 @@ const Endpoint = ({ endpoint, index, dispatchToTestCase }) => {
                 <span id={styles.hastooltip} role='tooltip'>
                   <img src={questionIcon} alt='help' />
                   <span id={styles.tooltip}>
-                    <ToolTipEndpoint toolTipType={`object`} />
-                  </span>
-                </span>
-              </div>
-            </div>
-
-
-
-
-            <div id={styles.files}>
-              <label htmlFor='store'>
-                Store
-              </label>
-              <div id={styles.payloadFlexBox}>
-                <input type='text' name='store' onChange={e => handleChangeEndpointFields(e, 'store')} />
-                <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
-                  <span id={styles.tooltip}>
-                    <ToolTipEndpoint toolTipType={`object`} />
+                    {/* <ToolTip toolTipType={`object`} /> */}
                   </span>
                 </span>
               </div>
@@ -167,7 +149,7 @@ const Endpoint = ({ endpoint, index, dispatchToTestCase }) => {
                 <span id={styles.hastooltip} role='tooltip'>
                   <img src={questionIcon} alt='help' />
                   <span id={styles.tooltip}>
-                    <ToolTipEndpoint toolTipType={`expectedResponse`} />
+                    {/* <ToolTipEndpoint toolTipType={`expectedResponse`} /> */}
                   </span>
                 </span>
               </div>

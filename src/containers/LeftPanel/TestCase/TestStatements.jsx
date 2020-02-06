@@ -9,6 +9,7 @@ import Async from '../Thunk/Thunk';
 import Reducer from '../Reducer/Reducer';
 import HookRender from '../HookRender/HookRender'
 import HookUpdates from '../HookUpdates/HookUpdates';
+import Endpoint from '../Endpoint/Endpoint';
 
 const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
   return statements.map((statement, i) => {
@@ -59,6 +60,15 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
             dispatchToTestCase={dispatchToTestCase}
           />
         );
+        case 'endpoint':
+          return (
+            <Endpoint
+              key={statement.id}
+              endpoint={statement}
+              index={i}
+              dispatchToTestCase={dispatchToTestCase}
+            />
+          );
       case 'async':
         return (
           <Async
