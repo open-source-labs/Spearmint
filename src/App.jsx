@@ -3,6 +3,7 @@ import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
 import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
 import { ReduxTestCaseContext, reduxTestCaseState, reduxTestCaseReducer } from './context/reduxTestCaseReducer';
+import { ExpressTestCaseContext, expressTestCaseState, expressTestCaseReducer } from './context/expressTestCaseReducer'
 
 import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
 import ProjectLoader from './containers/ProjectLoader/ProjectLoader';
@@ -17,6 +18,7 @@ const App = () => {
   const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(reduxTestCaseReducer, reduxTestCaseState);
+  const [expressTestCase, dispatchToExpressTestCase] = useReducer(expressTestCaseReducer, expressTestCaseState)
 
 
   if (!global.isProjectLoaded) {
@@ -46,10 +48,12 @@ const App = () => {
           {/* value wrapped in array since Provider only takes in one value */}
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
           <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
+          <ExpressTestCaseContext.Provider value={[expressTestCase, dispatchToExpressTestCase]}>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
               <NavBar /> 
               <LeftPanel />
             </MockDataContext.Provider>
+            </ExpressTestCaseContext.Provider>
             </ReduxTestCaseContext.Provider>
           </TestCaseContext.Provider>
           <RightPanel />

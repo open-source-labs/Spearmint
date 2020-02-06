@@ -12,12 +12,16 @@ import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
 import ReduxTestCase from '../TestCase/ReduxTestCase'
 
 /* expressTestCase imports */
-//TBD
+import { toggleExpress } from '../../../context/expressTestCaseActions';
+import { ExpressTestCaseContext } from '../../../context/expressTestCaseReducer';
+import ExpressTestCase from '../TestCase/ExpressTestCase';
+
+
 
 const TestFile = () => {
-  /* updating state to make "hasRedux" true. If true, render ReduxTestCase */
   const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext); 
   const [{ hasReact }, dispatchToTestCase] = useContext(TestCaseContext); 
+  const [{ hasExpress }, dispatchToExpressTestCase] = useContext(ExpressTestCaseContext); 
 
 
   const handleToggleRedux = e => {
@@ -26,6 +30,10 @@ const TestFile = () => {
 
   const handleToggleReact = e => {
     dispatchToTestCase(toggleReact(e.currentTarget.checked));
+  };
+
+  const handleToggleExpress = e => {
+    dispatchToExpressTestCase(toggleExpress(e.currentTarget.checked));
   };
 
   return (
@@ -56,6 +64,19 @@ const TestFile = () => {
         </span>
       </section>
 
+      <section>
+        <span>
+          <input 
+          type='checkbox'
+          checked={hasExpress}
+          onChange={handleToggleExpress}
+          />
+          <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
+            Are You Testing Express?
+          </label>
+        </span>
+      </section>
+
       {hasRedux && ( 
         <section >
           <ReduxTestCase/>
@@ -67,7 +88,12 @@ const TestFile = () => {
           <TestCase/>
         </section>
       )}
-
+ 
+      {hasExpress && ( 
+        <section >
+          <ExpressTestCase/>
+        </section>
+      )}
     </div>
   )
 }

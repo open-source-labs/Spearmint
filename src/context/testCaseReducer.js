@@ -619,13 +619,8 @@ export const testCaseReducer = (state, action) => {
       };
 
     case actionTypes.TOGGLE_REACT:
-      let newTestStatement;
-      if (!state.hasReact) {
-        newTestStatement = action.testStatement;
-      }
       return {
           ...state,
-          newTestStatement,
           hasReact: !state.hasReact,
       };
 
