@@ -284,7 +284,7 @@ export const updateEndpoint = ({
   serverResponse,
   expectedResponse,
 }) => ({
-  type: actionTypes.UPDATE_ASYNC,
+  type: actionTypes.UPDATE_ENDPOINT,
   id,
   serverFileName,
   serverFilePath,
