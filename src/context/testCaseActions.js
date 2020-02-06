@@ -40,6 +40,10 @@ export const actionTypes = {
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
 
+  ADD_ENDPOINT: 'ADD_ENDPOINT',
+  DELETE_ENDPOINT: 'DELETE_ENDPOINT',
+  UPDATE_ENDPOINT: 'UPDATE_ENDPOINT',
+
   // Action type for hookRender
   ADD_HOOKRENDER: 'ADD_HOOKRENDER',
   DELETE_HOOKRENDER: 'DELETE_HOOKRENDER',
@@ -260,6 +264,34 @@ export const updateReducer = ({
   reducersFileName,
   reducersFilePath,
   matcherValue,
+});
+
+export const addEndpoint = () => ({
+  type: actionTypes.ADD_ENDPOINT,
+});
+
+export const deleteEndpoint = id => ({
+  type: actionTypes.DELETE_ENDPOINT,
+  id,
+});
+
+export const updateEndpoint = ({
+  id,
+  serverFileName,
+  serverFilePath,
+  method,
+  route,
+  serverResponse,
+  expectedResponse,
+}) => ({
+  type: actionTypes.UPDATE_ASYNC,
+  id,
+  serverFileName,
+  serverFilePath,
+  method,
+  route,
+  serverResponse,
+  expectedResponse,
 });
 
 export const addAsync = () => ({
