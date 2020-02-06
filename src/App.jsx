@@ -2,6 +2,8 @@ import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
 import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
+import { ReduxTestCaseContext, reduxTestCaseState, reduxTestCaseReducer } from './context/reduxTestCaseReducer';
+
 import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
 import ProjectLoader from './containers/ProjectLoader/ProjectLoader';
 import NavBar from './containers/NavBar/NavBar';
@@ -14,6 +16,8 @@ const App = () => {
   // reducer is invoked in App since it's the common parent of testCase and ExportFileModal components
   const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
+  const [reduxTestCase, dispatchToReduxTestCase] = useReducer(reduxTestCaseReducer, reduxTestCaseState);
+
 
   if (!global.isProjectLoaded) {
     return (
@@ -41,10 +45,12 @@ const App = () => {
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           {/* value wrapped in array since Provider only takes in one value */}
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
+          <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
               <NavBar /> 
               <LeftPanel />
             </MockDataContext.Provider>
+            </ReduxTestCaseContext.Provider>
           </TestCaseContext.Provider>
           <RightPanel />
         </GlobalContext.Provider>

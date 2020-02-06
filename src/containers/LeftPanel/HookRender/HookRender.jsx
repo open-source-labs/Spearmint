@@ -100,34 +100,6 @@ const HookRender = ({ hookRender, index, dispatchToTestCase }) => {
                             />
                         </div>
                     </div>
-
-                    {/* payload key
-          <div id={styles.payloadFlexBox}>
-            <div id={styles.payloadKey}>
-              <label htmlFor='payloadKey'>Payload Key</label>
-              <input
-                type='text'
-                id='payloadKey'
-                onChange={e => handleChangeActionCreatorFields(e, 'payloadKey')}
-              />
-            </div>
-
-            {/* payload type selector dropdown */}
-                    {/* <div id={styles.payloadType}>
-              <label htmlFor='payloadType'>Payload Type</label>
-              <select
-                id='payloadType'
-                onChange={e => handleChangeActionCreatorFields(e, 'payloadType')}
-              >
-                <option value='' />
-                <option value='word'>word</option>
-                <option value='words'>words</option>
-                <option value='number'>number</option>
-                <option value='arrayElement'>arrayElement</option>
-                <option value='objectElement'>objectElement</option>
-              </select>
-            </div> */}
-                    {/* </div> */}
                 </div>
             )
             }

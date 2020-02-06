@@ -1,4 +1,6 @@
 export const actionTypes = {
+  TOGGLE_REACT: 'TOGGLE_REACT',
+
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
 
@@ -9,6 +11,10 @@ export const actionTypes = {
   ADD_MIDDLEWARE: 'ADD_MIDDLEWARE',
   DELETE_MIDDLEWARE: 'DELETE_MIDDLEWARE',
   UPDATE_MIDDLEWARE: 'UPDATE_MIDDLEWARE',
+
+  ADD_CONTEXT: 'ADD_CONTEXT',
+  DELETE_CONTEXT: 'DELETE_CONTEXT',
+  UPDATE_CONTEXT: 'UPDATE_CONTEXT',
 
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
@@ -51,6 +57,10 @@ export const actionTypes = {
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
+
+export const toggleReact = () => ({
+  type: actionTypes.TOGGLE_REACT,
+});
 
 export const updateStatementsOrder = draggableStatements => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
@@ -184,6 +194,40 @@ export const updateMiddleware = ({
   querySelector,
   queryValue,
   queryFunction,
+});
+
+export const addContexts = () => ({
+  type: actionTypes.ADD_CONTEXT,
+});
+
+export const deleteContexts = id => ({
+  type: actionTypes.DELETE_CONTEXT,
+  id,
+});
+
+export const updateContexts = ({
+  id,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  values,
+  textNode,
+  providerComponent,
+  consumerComponent,
+  context,
+}) => ({
+  type: actionTypes.UPDATE_CONTEXT,
+  id,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  values,
+  textNode,
+  providerComponent,
+  consumerComponent,
+  context,
 });
 
 export const addReducer = () => ({
@@ -354,9 +398,7 @@ export const updateHookRender = ({
   id,
   hookFileName,
   hookFilePath,
-  hookRenderFolder,
-  hookFuncFolder,
-  hookFunction,
+  hook,
   parameterOne,
   expectedReturnValue,
   returnValue,
@@ -365,9 +407,7 @@ export const updateHookRender = ({
   id,
   hookFileName,
   hookFilePath,
-  hookRenderFolder,
-  hookFuncFolder,
-  hookFunction,
+  hook,
   parameterOne,
   expectedReturnValue,
   returnValue,

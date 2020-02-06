@@ -1,6 +1,10 @@
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../assets/stylesheets/colors.scss';
 
+.displays {
+  display: block;
+}
+
 div {
   font-size: 13px;
   vertical-align: middle;
