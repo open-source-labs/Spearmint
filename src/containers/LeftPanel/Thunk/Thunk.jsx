@@ -15,37 +15,29 @@ import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const Async = ({ async, index, dispatchToTestCase }) => {
+const Async = ({ async, index, dispatchToReduxTestCase }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
 
   const handleChangeAsyncFields = (e, field) => {
     let updatedAsync = { ...async };
     updatedAsync[field] = e.target.value;
-    dispatchToTestCase(updateAsync(updatedAsync));
+    dispatchToReduxTestCase(updateAsync(updatedAsync));
   };
 
   const handleClickDeleteAsync = e => {
-    dispatchToTestCase(deleteAsync(async.id));
+    dispatchToReduxTestCase(deleteAsync(async.id));
   };
-
-  // const needsMatcherValue = matcherType => {
-  //   const matchersWithValues = [
-  //     'toEqual', //takes in an object Ex: {type: action.ADD_TASK, payload: user defined text }
-  //     'not.toEqual', //takes in an object Ex: {type: action.ADD_TASK, payload: user defined text }
-  //   ];
-  //   return matchersWithValues.includes(matcherType);
-  // };
 
   const handleChangeActionsFileName = e => {
     const actionsFileName = e.target.value;
     const filePath = filePathMap[actionsFileName] || '';
-    dispatchToTestCase(updateActionsFilePath(actionsFileName, filePath));
+    dispatchToReduxTestCase(updateActionsFilePath(actionsFileName, filePath));
   };
 
   const handleChangeTypesFileName = e => {
     const typesFileName = e.target.value;
     const filePath = filePathMap[typesFileName] || '';
-    dispatchToTestCase(updateTypesFilePath(typesFileName, filePath));
+    dispatchToReduxTestCase(updateTypesFilePath(typesFileName, filePath));
   };
 
   return (

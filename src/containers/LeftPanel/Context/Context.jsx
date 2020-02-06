@@ -5,30 +5,30 @@ import {
   deleteContexts,
   updateContexts,
   updateContextFilePath,
-} from '../../../context/testCaseActions';
+} from '../../../context/hooksTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import ToolTip from '../ToolTip/ToolTip';
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const Context = ({ context, index, dispatchToTestCase }) => {
+const Context = ({ context, index, dispatchToHooksTestCase }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
 
   const handleChangeContextFields = (e, field) => {
     let updatedContext = { ...context };
     updatedContext[field] = e.target.value;
-    dispatchToTestCase(updateContexts(updatedContext));
+    dispatchToHooksTestCase(updateContexts(updatedContext));
   };
 
   const handleClickDeleteContext = e => {
-    dispatchToTestCase(deleteContexts(context.id));
+    dispatchToHooksTestCase(deleteContexts(context.id));
   };
 
   const handleChangeContextFileName = e => {
     const contextFileName = e.target.value;
     const filePath = filePathMap[contextFileName] || '';
-    dispatchToTestCase(updateContextFilePath(contextFileName, filePath));
+    dispatchToHooksTestCase(updateContextFilePath(contextFileName, filePath));
   };
 
   return (

@@ -71,19 +71,19 @@ const createReducer = () => ({
 
 export const reduxTestCaseReducer = (state, action) => {
   Object.freeze(state);
-  let reduxStatements = [
-    ...state.reduxStatements,
-  ]; /* getting all elements in states statement array */
+  let reduxStatements = [...state.reduxStatements];
 
   switch (action.type) {
     case actionTypes.TOGGLE_REDUX:
-      if (!state.hasRedux) {
-        reduxStatements.push(createMiddleware());
-      }
       return {
         ...state,
-        reduxStatements,
         hasRedux: !state.hasRedux,
+      };
+    case actionTypes.UPDATE_REDUX_TEST_STATEMENT:
+      let reduxTestStatement = action.reduxTestStatement;
+      return {
+        ...state,
+        reduxTestStatement,
       };
     case actionTypes.ADD_MIDDLEWARE:
       reduxStatements.push(

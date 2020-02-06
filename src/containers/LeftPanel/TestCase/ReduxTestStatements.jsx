@@ -23,7 +23,7 @@ const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchT
             key={statement.id}
             actionCreator={statement}
             index={i}
-            dispatchToTestCase={dispatchToReduxTestCase}
+            dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
         );
       case 'async':
@@ -32,7 +32,7 @@ const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchT
             key={statement.id}
             async={statement}
             index={i}
-            dispatchToTestCase={dispatchToReduxTestCase}
+            dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
         );
       case 'reducer':
@@ -41,7 +41,7 @@ const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchT
             key={statement.id}
             reducer={statement}
             index={i}
-            dispatchToTestCase={dispatchToReduxTestCase}
+            dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
         );
       default:

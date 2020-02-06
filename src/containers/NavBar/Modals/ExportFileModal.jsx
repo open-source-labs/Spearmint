@@ -9,6 +9,7 @@ import {
 } from '../../../context/globalActions';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
+import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
 
@@ -22,6 +23,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
   const [testCase, __] = useContext(TestCaseContext);
   const [reduxTestCase, ____] = useContext(ReduxTestCaseContext);
+  const [hooksTestCase, _] = useContext(HooksTestCaseContext);
   const [{ mockData }, ___] = useContext(MockDataContext);
 
   let testFileCode = 'import React from "react";';
@@ -116,11 +118,14 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Redux Import Statements
   const addReduxImportStatements = () => {
-    reduxTestCase.statements.forEach(statement => {
+    reduxTestCase.reduxStatements.forEach(statement => {
       switch (statement.type) {
         case 'async':
           return (
-            addAsyncImportStatement(), createPathToActions(statement), createPathToTypes(statement)
+            addAsyncImportStatement(),
+            createPathToActions(statement),
+            createPathToTypes(statement),
+            addAsyncVariables()
           );
         case 'action-creator':
           return (
@@ -148,37 +153,35 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += `import '@testing-library/jest-dom/extend-expect';
     import configureMockStore from 'redux-mock-store';
     import thunk from 'redux-thunk';
-    import fetchMock from 'fetch-mock';
-    \n
-    const middlewares = [thunk]
-    const mockStore = configureMockStore(middlewares);
-    \n`;
+    import fetchMock from 'fetch-mock';`;
+  };
+
+  const addAsyncVariables = () => {
+    testFileCode += `\n const middlewares = [thunk];
+    const mockStore = configureMockStore(middlewares);`;
   };
 
   // AC Import Statements
   const addActionCreatorImportStatement = () => {
     testFileCode += `import { fake } from 'test-data-bot';
-    import '@testing-library/jest-dom/extend-expect'
-    \n`;
+    import '@testing-library/jest-dom/extend-expect'`;
   };
 
   // Reducer Import Statements
   const addReducerImportStatement = () => {
     testFileCode += `import { render } from '@testing-library/react';
-    import '@testing-library/jest-dom/extend-expect';
-    \n`;
+    import '@testing-library/jest-dom/extend-expect';`;
   };
 
   // Middleware Import Statements
   const addMiddlewareImportStatement = () => {
-    testFileCode += `import '@testing-library/jest-dom/extend-expect';
-    \n`;
+    testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
   };
 
   // Redux Test Statements
   const addReduxTestStatements = () => {
-    testFileCode += `test('${reduxTestCase.testStatement}', () => {`;
-    reduxTestCase.statements.forEach(statement => {
+    testFileCode += `\n test('${reduxTestCase.reduxTestStatement}', () => {`;
+    reduxTestCase.reduxStatements.forEach(statement => {
       switch (statement.type) {
         case 'async':
           return addAsync(statement);
@@ -200,7 +203,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Hooks & Context Import Statements
   const addHooksImportStatements = () => {
-    hooksTestCase.statements.forEach(statement => {
+    hooksTestCase.hooksStatements.forEach(statement => {
       switch (statement.type) {
         case 'hook-updates':
           return addRenderHooksImportStatement(), createPathToHooks(statement);
@@ -218,21 +221,19 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   // Context Import Statements
   const addContextImportStatements = () => {
     testFileCode += `import { render } from '@testing-library/react'; 
-    import '@testing-library/jest-dom/extend-expect'
-    \n`;
+    import '@testing-library/jest-dom/extend-expect'`;
   };
 
   // Hooks Import Statements
   const addRenderHooksImportStatement = () => {
     testFileCode += `import { renderHook, act } from '@testing-library/react-hooks'
-    import '@testing-library/jest-dom/extend-expect'
-    \n`;
+    import '@testing-library/jest-dom/extend-expect'`;
   };
 
   // Hooks & Context Test Statements
   const addHooksTestStatements = () => {
-    testFileCode += `test('${hooksTestCase.testStatement}', () => {`;
-    hooksTestCase.statements.forEach(statement => {
+    testFileCode += `\n test('${hooksTestCase.hooksTestStatement}', () => {`;
+    hooksTestCase.hooksStatements.forEach(statement => {
       switch (statement.type) {
         case 'hook-updates':
           return addHookUpdates(statement);
@@ -402,7 +403,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += `fetchMock.${async.method}('${async.route}', ${async.requestBody});
     const expectedActions = ${async.expectedResponse};
     const store = mockStore(${async.store});
-    \n
     return store.dispatch(actions.${async.asyncFunction}()).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })`;

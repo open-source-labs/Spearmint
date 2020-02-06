@@ -69,44 +69,6 @@ const createRenderProp = () => ({
   propValue: '',
 });
 
-const createContexts = () => ({
-  /* renders the action card when the "action" button is clicked */
-  id: statementId++,
-  type: 'context',
-  queryVariant: '',
-  querySelector: '',
-  queryValue: '',
-  values: '',
-  textNode: '',
-  providerComponent: '',
-  consumerComponent: '',
-  context: '',
-  contextFileName: '',
-  contextFilePath: '',
-});
-
-const createHookRender = () => ({
-  id: statementId++,
-  type: 'hookRender',
-  hookFileName: '',
-  hookFilePath: '',
-  hook: '',
-  parameterOne: '',
-  parameterTwo: '',
-  returnValue: '',
-});
-
-const createHookUpdates = () => ({
-  id: statementId++,
-  hookFileName: '',
-  hookFilePath: '',
-  type: 'hook-updates',
-  hook: '',
-  callbackFunc: '',
-  managedState: '',
-  updatedState: '',
-});
-
 export const testCaseReducer = (state, action) => {
   Object.freeze(state);
   let statements = [...state.statements];
@@ -114,13 +76,8 @@ export const testCaseReducer = (state, action) => {
 
   switch (action.type) {
     case actionTypes.TOGGLE_REACT:
-      let newTestStatement;
-      if (!state.hasReact) {
-        newTestStatement = action.testStatement;
-      }
       return {
         ...state,
-        newTestStatement,
         hasReact: !state.hasReact,
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
@@ -263,137 +220,6 @@ export const testCaseReducer = (state, action) => {
             }
             return prop;
           });
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.ADD_CONTEXT:
-      lastAssertionStatement = statements.pop(); /* popping off the last render */
-      statements.push(
-        createContexts(),
-        lastAssertionStatement
-      ); /* pushing the new middlewaew the user created into the statements array and then adding back the last render */
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_CONTEXT:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(
-        statement => statement.id !== action.id
-      ); /* if statement id !== acion id, then what?? */
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_CONTEXT:
-      statements = statements.map(statement => {
-        /* update statements if statement id === action id */
-        if (statement.id === action.id) {
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.values = action.values;
-          statement.textNode = action.textNodes;
-          statement.providerComponent = action.providerComponent;
-          statement.consumerComponent = action.consumerComponent;
-          statement.context = action.context;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.ADD_HOOK_UPDATES:
-      lastAssertionStatement = statements.pop();
-      statements.push(createHookUpdates(), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.DELETE_HOOK_UPDATES:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.UPDATE_HOOK_UPDATES:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.hook = action.hook;
-          statement.hookFileName = action.hookFileName;
-          statement.hookFilePath = action.hookFilePath;
-          statement.callbackFunc = action.callbackFunc;
-          statement.managedState = action.managedState;
-          statement.updatedState = action.updatedState;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.ADD_HOOKRENDER:
-      lastAssertionStatement = statements.pop();
-      statements.push(createHookRender(), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.DELETE_HOOKRENDER:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.UPDATE_HOOKRENDER:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.hook = action.hook;
-          statement.parameterOne = action.parameterOne;
-          statement.expectedReturnValue = action.expectedReturnValue;
-          statement.returnValue = action.returnValue;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-
-    case actionTypes.UPDATE_HOOKS_FILEPATH:
-      statements = statements.map(statement => {
-        if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
-          statement.hookFileName = action.hookFileName;
-          statement.hookFilePath = action.hookFilePath;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_CONTEXT_FILEPATH:
-      statements = statements.map(statement => {
-        if (statement.type === 'context') {
-          statement.contextFileName = action.contextFileName;
-          statement.contextFilePath = action.contextFilePath;
         }
         return statement;
       });

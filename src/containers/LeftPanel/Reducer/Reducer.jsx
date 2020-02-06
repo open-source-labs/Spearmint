@@ -11,29 +11,29 @@ import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const Reducer = ({ reducer, index, dispatchToTestCase }) => {
+const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
 
   const handleChangeReducerFields = (e, field) => {
     let updatedReducer = { ...reducer };
     updatedReducer[field] = e.target.value;
-    dispatchToTestCase(updateReducer(updatedReducer));
+    dispatchToReduxTestCase(updateReducer(updatedReducer));
   };
 
   const handleClickDeleteReducer = e => {
-    dispatchToTestCase(deleteReducer(reducer.id));
+    dispatchToReduxTestCase(deleteReducer(reducer.id));
   };
 
   const handleChangeTypesFileName = e => {
     const typesFileName = e.target.value;
     const filePath = filePathMap[typesFileName] || '';
-    dispatchToTestCase(updateTypesFilePath(typesFileName, filePath));
+    dispatchToReduxTestCase(updateTypesFilePath(typesFileName, filePath));
   };
 
   const handleChangeReducersFileName = e => {
     const reducersFileName = e.target.value;
     const filePath = filePathMap[reducersFileName] || '';
-    dispatchToTestCase(updateReducersFilePath(reducersFileName, filePath));
+    dispatchToReduxTestCase(updateReducersFilePath(reducersFileName, filePath));
   };
 
   return (

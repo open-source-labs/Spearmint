@@ -11,28 +11,28 @@ import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const ActionCreator = ({ actionCreator, index, dispatchToTestCase }) => {
+const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
   const handleChangeActionCreatorFields = (e, field) => {
     let updatedActionCreator = { ...actionCreator };
     updatedActionCreator[field] = e.target.value;
-    dispatchToTestCase(updateActionCreator(updatedActionCreator));
+    dispatchToReduxTestCase(updateActionCreator(updatedActionCreator));
   };
 
   const handleClickDeleteActionCreator = e => {
-    dispatchToTestCase(deleteActionCreator(actionCreator.id));
+    dispatchToReduxTestCase(deleteActionCreator(actionCreator.id));
   };
 
   const handleChangeActionsFileName = e => {
     const actionsFileName = e.target.value;
     const filePath = filePathMap[actionsFileName] || '';
-    dispatchToTestCase(updateActionsFilePath(actionsFileName, filePath));
+    dispatchToReduxTestCase(updateActionsFilePath(actionsFileName, filePath));
   };
 
   const handleChangeTypesFileName = e => {
     const typesFileName = e.target.value;
     const filePath = filePathMap[typesFileName] || '';
-    dispatchToTestCase(updateTypesFilePath(typesFileName, filePath));
+    dispatchToReduxTestCase(updateTypesFilePath(typesFileName, filePath));
   };
 
   return (

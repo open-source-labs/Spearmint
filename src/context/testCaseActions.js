@@ -20,23 +20,6 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 
-  // Context
-  ADD_CONTEXT: 'ADD_CONTEXT',
-  DELETE_CONTEXT: 'DELETE_CONTEXT',
-  UPDATE_CONTEXT: 'UPDATE_CONTEXT',
-
-  // Action type for hookRender
-  ADD_HOOKRENDER: 'ADD_HOOKRENDER',
-  DELETE_HOOKRENDER: 'DELETE_HOOKRENDER',
-  UPDATE_HOOKRENDER: 'UPDATE_HOOKRENDER',
-
-  ADD_HOOK_UPDATES: 'ADD_HOOK_UPDATES',
-  DELETE_HOOK_UPDATES: 'DELETE_HOOK_UPDATE',
-  UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
-
-  UPDATE_HOOKS_FILEPATH: 'UPDATE_HOOKS_FILEPATH',
-  UPDATE_CONTEXT_FILEPATH: 'UPDATE_CONTEXT_FILEPATH',
-
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
@@ -144,108 +127,6 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propId,
   propKey,
   propValue,
-});
-
-export const addContexts = () => ({
-  type: actionTypes.ADD_CONTEXT,
-});
-
-export const deleteContexts = id => ({
-  type: actionTypes.DELETE_CONTEXT,
-  id,
-});
-
-export const updateContexts = ({
-  id,
-  eventValue,
-  queryVariant,
-  querySelector,
-  queryValue,
-  values,
-  textNode,
-  providerComponent,
-  consumerComponent,
-  context,
-}) => ({
-  type: actionTypes.UPDATE_CONTEXT,
-  id,
-  eventValue,
-  queryVariant,
-  querySelector,
-  queryValue,
-  values,
-  textNode,
-  providerComponent,
-  consumerComponent,
-  context,
-});
-
-export const addHookUpdates = () => ({
-  type: actionTypes.ADD_HOOK_UPDATES,
-});
-
-export const deleteHookUpdates = id => ({
-  type: actionTypes.DELETE_HOOK_UPDATES,
-  id,
-});
-
-export const updateHookUpdates = ({
-  id,
-  hook,
-  hookFileName,
-  hookFilePath,
-  callbackFunc,
-  managedState,
-  updatedState,
-}) => ({
-  type: actionTypes.UPDATE_HOOK_UPDATES,
-  id,
-  hook,
-  hookFileName,
-  hookFilePath,
-  callbackFunc,
-  managedState,
-  updatedState,
-});
-
-export const addHookRender = () => ({
-  type: actionTypes.ADD_HOOKRENDER,
-});
-
-export const deleteHookRender = id => ({
-  type: actionTypes.DELETE_HOOKRENDER,
-  id,
-});
-
-export const updateHookRender = ({
-  id,
-  hookFileName,
-  hookFilePath,
-  hook,
-  parameterOne,
-  expectedReturnValue,
-  returnValue,
-}) => ({
-  type: actionTypes.UPDATE_HOOKRENDER,
-  id,
-  hookFileName,
-  hookFilePath,
-  hook,
-  parameterOne,
-  expectedReturnValue,
-  returnValue,
-});
-
-export const updateHooksFilePath = (hookFileName, hookFilePath) => ({
-  type: actionTypes.UPDATE_HOOKS_FILEPATH,
-  hookFileName,
-  hookFilePath,
-});
-
-export const updateContextFilePath = (contextFileName, contextFilePath) => ({
-  type: actionTypes.UPDATE_CONTEXT_FILEPATH,
-  contextFileName,
-  contextFilePath,
 });
 
 export const createNewTest = () => ({
