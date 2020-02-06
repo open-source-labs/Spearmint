@@ -124,6 +124,17 @@ const createReducer = () => ({
   matcherValue: '',
 });
 
+const createEndpoint = () => ({
+  id: statementId++,
+  type: 'endpoint',
+  serverFileName: '',
+  serverFilePath: '',
+  method: '',
+  route: '',
+  serverResponse: '',
+  expectedResponse: '',
+})
+
 const createActionCreator = () => ({
   id: statementId++,
   actionsFileName: '',
@@ -412,6 +423,38 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+    
+      case actionTypes.ADD_ENDPOINT:
+        lastAssertionStatement = statements.pop();
+        statements.push(createEndpoint(), lastAssertionStatement);
+        return {
+          ...state,
+          statements,
+        };
+      case actionTypes.DELETE_ENDPOINT:
+        lastAssertionStatement = statements.pop();
+        statements = statements.filter(statement => statement.id !== action.id);
+        statements.push(lastAssertionStatement);
+        return {
+          ...state,
+          statements,
+        };
+      case actionTypes.UPDATE_ENDPOINT:
+        statements = statements.map(statement => {
+          if (statement.id === action.id) {
+            statement.serverFileName = action.serverFileName;
+            statement.serverFilePath = action.serverFilePath;
+            statement.method = action.method;
+            statement.route = action.route;
+            statement.serverResponse = action.serverResponse;
+            statement.expectedResponse = action.expectedResponse;
+          }
+          return statement;
+        });
+        return {
+          ...state,
+          statements,
+        };
 
     case actionTypes.ADD_ASYNC:
       lastAssertionStatement = statements.pop();
