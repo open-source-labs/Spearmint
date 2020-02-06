@@ -1,7 +1,5 @@
 // component to be rendered in the electron app
 
-// Code copied from Actions.jsx
-
 import React, { useContext } from 'react';
 import styles from '../Thunk/Thunk.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
@@ -11,9 +9,12 @@ import {
   updateActionsFilePath,
   updateTypesFilePath,
 } from '../../../context/testCaseActions';
+import ToolTip from '../ToolTip/ToolTip';
+import ToolTipAsync from '../ToolTip/ToolTipAsync';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
+const questionIcon = require('../../../assets/images/help-circle.png');
 
 const Async = ({ async, index, dispatchToTestCase }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
@@ -27,14 +28,6 @@ const Async = ({ async, index, dispatchToTestCase }) => {
   const handleClickDeleteAsync = e => {
     dispatchToTestCase(deleteAsync(async.id));
   };
-
-  // const needsMatcherValue = matcherType => {
-  //   const matchersWithValues = [
-  //     'toEqual', //takes in an object Ex: {type: action.ADD_TASK, payload: user defined text }
-  //     'not.toEqual', //takes in an object Ex: {type: action.ADD_TASK, payload: user defined text }
-  //   ];
-  //   return matchersWithValues.includes(matcherType);
-  // };
 
   const handleChangeActionsFileName = e => {
     const actionsFileName = e.target.value;
@@ -64,6 +57,7 @@ const Async = ({ async, index, dispatchToTestCase }) => {
             <h3>Async</h3>
           </div>
 
+        
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
               <label htmlFor='actionsFile'>Actions File Name</label>
@@ -74,6 +68,10 @@ const Async = ({ async, index, dispatchToTestCase }) => {
                 onChange={handleChangeActionsFileName}
               />
             </div>
+            {/* trying to align question tooltip question mark */}
+          
+   
+            
 
             <div id={styles.files}>
               <label htmlFor='typesFile'>Types File Name</label>
@@ -88,7 +86,7 @@ const Async = ({ async, index, dispatchToTestCase }) => {
 
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
-              <label htmlFor='asyncFunction' className={styles.queryLabel}>
+              <label htmlFor='asyncFunction'>
                 Async Function
               </label>
               <input
@@ -98,9 +96,9 @@ const Async = ({ async, index, dispatchToTestCase }) => {
               />
             </div>
 
-            <div id={styles.queryFlexBox}>
+            {/* <div id={styles.queryFlexBox}> */}
               <div id={styles.querySelector}>
-                <label htmlFor='method' className={styles.queryLabel}>
+                <label htmlFor='method'>
                   Method
                 </label>
                 <div id={styles.dropdownFlex}>
@@ -115,30 +113,76 @@ const Async = ({ async, index, dispatchToTestCase }) => {
                     <option value='put'>put</option>
                     <option value='delete'>delete</option>
                   </select>
-                </div>
+                  {/* <span id={styles.hastooltip} role='tooltip'>
+                    <img src={questionIcon} alt='help' />
+                    <span id={styles.tooltip}>
+                      <ToolTipAsync toolTipType={`method`} />
+                    </span>
+                  </span> */}
+                {/* </div> */}
+              </div>
+            </div>
+            <div id={styles.files}>
+              <label htmlFor='route'>
+                Route
+              </label>
+              <div id={styles.payloadFlexBox}>
+                <input
+                  type='text'
+                  name='route'
+                  placeholder='eg. /route'
+                  onChange={e => handleChangeAsyncFields(e, 'route')} />
+                {/* <span id={styles.hastooltip} role='tooltip'>
+                  <img src={questionIcon} alt='help' />
+                  <span id={styles.tooltip}>
+                    <ToolTipAsync toolTipType={`route`} />
+                  </span>
+                </span> */}
               </div>
             </div>
           </div>
 
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
-              <label htmlFor='route' className={styles.queryLabel}>
-                Route
+              <label htmlFor='requestBody'>
+                Request Body
               </label>
-              <input type='text' name='route' onChange={e => handleChangeAsyncFields(e, 'route')} />
+              <div id={styles.payloadFlexBox}>
+              <input 
+                type='text' 
+                name='requestBody'
+                  onChange={e => handleChangeAsyncFields(e, 'requestBody')} />
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                    <ToolTipAsync toolTipType={`object`} />
+                </span>
+              </span>
+              </div>
             </div>
+            
+           
+           
 
             <div id={styles.files}>
-              <label htmlFor='store' className={styles.queryLabel}>
+              <label htmlFor='store'>
                 Store
               </label>
+              <div id={styles.payloadFlexBox}>
               <input type='text' name='store' onChange={e => handleChangeAsyncFields(e, 'store')} />
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                  <ToolTipAsync toolTipType={`object`} />
+                </span>
+              </span>
+              </div>
             </div>
           </div>
 
           <div id={styles.queryFlexBox}>
             <div id={styles.querySelector}>
-              <label htmlFor='matcher' className={styles.queryLabel}>
+              <label htmlFor='matcher'>
                 Matcher
               </label>
               <div id={styles.dropdownFlex}>
@@ -155,17 +199,26 @@ const Async = ({ async, index, dispatchToTestCase }) => {
             </div>
 
             <div id={styles.files}>
-              <label htmlFor='expectedResponse' className={styles.queryLabel}>
+              <label htmlFor='expectedResponse'>
                 Expected Response
               </label>
+              <div id={styles.payloadFlexBox}>
               <input
                 type='text'
                 name='expectedResponse'
                 onChange={e => handleChangeAsyncFields(e, 'expectedResponse')}
               />
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                    <ToolTipAsync toolTipType={`expectedResponse`} />
+                </span>
+              </span>
+              </div>
             </div>
           </div>
         </div>
+        
       )}
     </Draggable>
   );

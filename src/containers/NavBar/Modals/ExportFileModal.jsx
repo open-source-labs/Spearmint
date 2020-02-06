@@ -322,24 +322,26 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Async AC Jest Test Code
   const addAsync = async => {
-    testFileCode += `const middlewares = [thunk]
-    const mockStore = configureMockStore(middlewares)`;
+    testFileCode += `const middlewares = [thunk];`
+
+    testFileCode += '\n';
+    
+    testFileCode += `const mockStore = configureMockStore(middlewares);`
 
     testFileCode += '\n';
 
-    testFileCode += `it('${testCase.testStatement}', () => {
-        fetchMock.${async.method}('${async.route}')`;
+    testFileCode += `fetchMock.${async.method}('${async.route}', ${async.requestBody});`;
 
     testFileCode += '\n';
 
     testFileCode += `const expectedActions = ${async.expectedResponse};
-        const store = mockStore(${async.store})`;
+        const store = mockStore(${async.store});`;
 
     testFileCode += '\n';
 
     testFileCode += `return store.dispatch(actions.${async.asyncFunction}()).then(() => {
           expect(store.getActions()).toEqual(expectedActions)
-        })`;
+        });`;
   };
 
   // Action Creator Jest Test Code
