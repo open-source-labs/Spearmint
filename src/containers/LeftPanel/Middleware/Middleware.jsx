@@ -5,7 +5,7 @@ import {
   deleteMiddleware,
   updateMiddleware,
   updateMiddlewaresFilePath,
-} from '../../../context/testCaseActions';
+} from '../../../context/reduxTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import ToolTip from '../ToolTip/ToolTip';
 const questionIcon = require('../../../assets/images/help-circle.png');

@@ -8,6 +8,7 @@ import {
   highlightFile,
 } from '../../../context/globalActions';
 import { TestCaseContext } from '../../../context/testCaseReducer';
+import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import styles from './ExportFileModal.module.scss';
 
@@ -74,11 +75,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     import { build, fake } from 'test-data-bot'; 
     import '@testing-library/jest-dom/extend-expect'
     \n`;
-
-    //import statements for Hook: Rendering
-    //import { renderHook } from '@testing-library/react-hooks'
-    //hook function from file path
-
   };
 
   // React Component Import Statement (Render Card)
@@ -372,7 +368,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const addHookRender = hookRender => {
     testFileCode += `const {result} = renderHook((${hookRender.parameterOne}) => ${hookRender.hook}())
     expect(result.current.${hookRender.returnValue}).toBe(${hookRender.expectedReturnValue})`;
-  }
+  };
 
   const exportTestFile = async () => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {

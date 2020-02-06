@@ -10,7 +10,7 @@ import {
   updateAsync,
   updateActionsFilePath,
   updateTypesFilePath,
-} from '../../../context/testCaseActions';
+} from '../../../context/reduxTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
