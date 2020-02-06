@@ -81,6 +81,8 @@ const createContexts = () => ({
   providerComponent: '',
   consumerComponent: '',
   context: '',
+  contextFileName: '',
+  contextFilePath: '',
 });
 
 const createHookRender = () => ({
@@ -380,6 +382,18 @@ export const testCaseReducer = (state, action) => {
         if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
           statement.hookFileName = action.hookFileName;
           statement.hookFilePath = action.hookFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        statements,
+      };
+    case actionTypes.UPDATE_CONTEXT_FILEPATH:
+      statements = statements.map(statement => {
+        if (statement.type === 'context') {
+          statement.contextFileName = action.contextFileName;
+          statement.contextFilePath = action.contextFilePath;
         }
         return statement;
       });

@@ -35,6 +35,7 @@ export const actionTypes = {
   UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
 
   UPDATE_HOOKS_FILEPATH: 'UPDATE_HOOKS_FILEPATH',
+  UPDATE_CONTEXT_FILEPATH: 'UPDATE_CONTEXT_FILEPATH',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
@@ -239,6 +240,12 @@ export const updateHooksFilePath = (hookFileName, hookFilePath) => ({
   type: actionTypes.UPDATE_HOOKS_FILEPATH,
   hookFileName,
   hookFilePath,
+});
+
+export const updateContextFilePath = (contextFileName, contextFilePath) => ({
+  type: actionTypes.UPDATE_CONTEXT_FILEPATH,
+  contextFileName,
+  contextFilePath,
 });
 
 export const createNewTest = () => ({
