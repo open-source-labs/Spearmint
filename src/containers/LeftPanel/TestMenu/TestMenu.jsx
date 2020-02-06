@@ -10,7 +10,8 @@ import {
   addMiddleware,
   addContexts,
   addHookUpdates,
-  addHookRender
+  addHookRender,
+  addEndpoint
 } from '../../../context/testCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
 
@@ -55,6 +56,10 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
     dispatchToTestCase(addHookUpdates());
   };
 
+  const handleAddEndpoint = e => {
+    dispatchToTestCase(addEndpoint());
+  };
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -97,6 +102,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
 
           <button data-testid='hookUpdatesButton' onClick={handleAddHookUpdates}>
             Hook: Updates
+          </button>
+          <button data-testid='endPointButton' onClick={handleAddEndpoint}>
+            Endpoint
           </button>
         </div>
       </div>
