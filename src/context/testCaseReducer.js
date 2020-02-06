@@ -78,6 +78,7 @@ const createAsync = () => ({
   asyncFunction: '',
   method: '',
   route: '',
+  requestBody: '',
   store: '',
   matcher: '',
   expectedResponse: '',
@@ -391,6 +392,7 @@ export const testCaseReducer = (state, action) => {
           statement.typesFilePath = action.typesFilePath;
           statement.method = action.method;
           statement.route = action.route;
+          statement.requestBody = action.requestBody;
           statement.store = action.store;
           statement.matcher = action.matcher;
           statement.expectedResponse = action.expectedResponse;
