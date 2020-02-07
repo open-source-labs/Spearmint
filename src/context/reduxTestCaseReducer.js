@@ -51,6 +51,7 @@ const createAsync = () => ({
   asyncFunction: '',
   method: '',
   route: '',
+  requestBody: '',
   store: '',
   matcher: '',
   expectedResponse: '',
@@ -154,19 +155,22 @@ export const reduxTestCaseReducer = (state, action) => {
       };
 
     case actionTypes.ADD_ASYNC:
-      reduxStatements.push(createAsync());
+      lastAssertionStatement = statements.pop();
+      statements.push(createAsync(), lastAssertionStatement);
       return {
         ...state,
-        reduxStatements,
+        statements,
       };
     case actionTypes.DELETE_ASYNC:
-      reduxStatements = reduxStatements.filter(statement => statement.id !== action.id);
+      lastAssertionStatement = statements.pop();
+      statements = statements.filter(statement => statement.id !== action.id);
+      statements.push(lastAssertionStatement);
       return {
         ...state,
-        reduxStatements,
+        statements,
       };
     case actionTypes.UPDATE_ASYNC:
-      reduxStatements = reduxStatements.map(statement => {
+      statements = statements.map(statement => {
         if (statement.id === action.id) {
           statement.actionsFile = action.actionsFile;
           statement.asyncFunction = action.asyncFunction;
@@ -174,6 +178,7 @@ export const reduxTestCaseReducer = (state, action) => {
           statement.typesFilePath = action.typesFilePath;
           statement.method = action.method;
           statement.route = action.route;
+          statement.requestBody = action.requestBody;
           statement.store = action.store;
           statement.matcher = action.matcher;
           statement.expectedResponse = action.expectedResponse;
@@ -182,7 +187,7 @@ export const reduxTestCaseReducer = (state, action) => {
       });
       return {
         ...state,
-        reduxStatements,
+        statements,
       };
 
     case actionTypes.ADD_REDUCER:
