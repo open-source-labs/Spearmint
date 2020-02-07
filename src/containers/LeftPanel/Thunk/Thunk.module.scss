@@ -44,6 +44,8 @@
   }
 }
 
+
+
 #actionFlexBox {
   display: flex;
   align-items: center;
@@ -93,7 +95,8 @@
 #dropdownFlex {
   display: flex;
   align-items: center;
-  width: 111%;
+  width: 100%;
+  margin-top: 6px;
 }
 
 .queryLabel {
@@ -126,4 +129,16 @@
     letter-spacing: 0.5px;
     color: $dark-gray;
   }
+}
+
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+}
+
+#tooltip {
+  min-width: 10em;
+  padding: 0.5em 0.75em;
+
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
 }

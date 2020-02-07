@@ -5,35 +5,30 @@ import {
   deleteMiddleware,
   updateMiddleware,
   updateMiddlewaresFilePath,
-} from '../../../context/testCaseActions';
+} from '../../../context/reduxTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import ToolTip from '../ToolTip/ToolTip';
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const Middleware = ({ middleware, index, dispatchToTestCase }) => {
+const Middleware = ({ middleware, index, dispatchToReduxTestCase }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
 
   const handleChangeMiddlewareFields = (e, field) => {
     let updatedMiddleware = { ...middleware };
     updatedMiddleware[field] = e.target.value;
-    dispatchToTestCase(updateMiddleware(updatedMiddleware));
+    dispatchToReduxTestCase(updateMiddleware(updatedMiddleware));
   };
 
   const handleClickDeleteMiddleware = e => {
-    dispatchToTestCase(deleteMiddleware(middleware.id));
+    dispatchToReduxTestCase(deleteMiddleware(middleware.id));
   };
-
-  // const needsEventValue = eventType => {
-  //   const eventsWithValues = ['passing non-function arguements'];
-  //   return eventsWithValues.includes(eventType);
-  // };
 
   const handleChangeMiddlewaresFileName = e => {
     const middlewaresFileName = e.target.value;
     const filePath = filePathMap[middlewaresFileName] || '';
-    dispatchToTestCase(updateMiddlewaresFilePath(middlewaresFileName, filePath));
+    dispatchToReduxTestCase(updateMiddlewaresFilePath(middlewaresFileName, filePath));
   };
 
   return (
