@@ -37,3 +37,31 @@ export const updateServerFilePath = (serverFileName, serverFilePath) => ({
     serverFileName,
     serverFilePath,
 });
+
+export const addEndpoint = () => ({
+    type: actionTypes.ADD_ENDPOINT,
+});
+
+export const deleteEndpoint = id => ({
+    type: actionTypes.DELETE_ENDPOINT,
+    id,
+});
+
+export const updateEndpoint = ({
+    id,
+    serverFileName,
+    serverFilePath,
+    method,
+    route,
+    serverResponse,
+    expectedResponse,
+}) => ({
+    type: actionTypes.UPDATE_ENDPOINT,
+    id,
+    serverFileName,
+    serverFilePath,
+    method,
+    route,
+    serverResponse,
+    expectedResponse,
+});
