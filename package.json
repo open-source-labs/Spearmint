@@ -38,6 +38,7 @@
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "test:watch": "jest --watch",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder -mwl",
     "release": "npm run react-build && electron-builder --publish=always",
