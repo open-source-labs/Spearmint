@@ -22,10 +22,6 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
     dispatchToTestCase(addRender());
   };
 
-  const handleAddEndpoint = e => {
-    dispatchToTestCase(addEndpoint());
-  };
-
   return (
     <div id='test'>
       <div id={styles.testMenu}>

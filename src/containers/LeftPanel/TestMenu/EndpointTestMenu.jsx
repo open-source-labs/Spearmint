@@ -22,6 +22,10 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
         dispatchToEndpointTestCase(addMiddleware());
     };*/
 
+      const handleAddEndpoint = e => {
+    dispatchToTestCase(addEndpoint());
+  };
+
     return (
         <div id='test'>
             <div id={styles.testMenu}>
