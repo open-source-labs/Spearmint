@@ -16,10 +16,10 @@ import { toggleHooks } from '../../../context/hooksTestCaseActions';
 import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
 import HooksTestCase from '../TestCase/HooksTestCase';
 
-/* expressTestCase imports */
-import { toggleExpress } from '../../../context/expressTestCaseActions';
-import { ExpressTestCaseContext } from '../../../context/expressTestCaseReducer';
-import ExpressTestCase from '../TestCase/ExpressTestCase';
+/* endpointTestCase imports */
+import { toggleEndpoint } from '../../../context/endpointTestCaseActions';
+import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
+import EndpointTestCase from '../TestCase/EndpointTestCase';
 
 
 
@@ -27,7 +27,7 @@ const TestFile = () => {
   const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
   const [{ hasReact }, dispatchToTestCase] = useContext(TestCaseContext);
   const [{ hasHooks }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
-  const [{ hasExpress }, dispatchToExpressTestCase] = useContext(ExpressTestCaseContext); 
+  const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext); 
 
   const handleToggleRedux = e => {
     dispatchToReduxTestCase(toggleRedux(e.currentTarget.checked));
@@ -37,8 +37,8 @@ const TestFile = () => {
     dispatchToTestCase(toggleReact(e.currentTarget.checked));
   };
 
-  const handleToggleExpress = e => {
-    dispatchToExpressTestCase(toggleExpress(e.currentTarget.checked))
+  const handleToggleEndpoint = e => {
+    dispatchToEndpointTestCase(toggleEndpoint(e.currentTarget.checked))
   };
 
   const handleToggleHooks = e => {
@@ -69,11 +69,11 @@ const TestFile = () => {
         <span>
           <input 
           type='checkbox'
-          checked={hasExpress}
-          onChange={handleToggleExpress}
+          checked={hasEndpoint}
+          onChange={handleToggleEndpoint}
           />
           <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
-            Are You Testing Express?
+            Are You Testing Endpoint?
           </label>
           </span>
       </section>
@@ -99,9 +99,9 @@ const TestFile = () => {
         </section>
       )}
 
-      {hasExpress && ( 
+      {hasEndpoint && ( 
         <section >
-          <ExpressTestCase/>
+          <EndpointTestCase/>
         </section >
       )}
 

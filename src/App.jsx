@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
 import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
-import { ExpressTestCaseContext, expressTestCaseState, expressTestCaseReducer } from './context/expressTestCaseReducer'
+import { EndpointTestCaseContext, endpointTestCaseState, endpointTestCaseReducer } from './context/endpointTestCaseReducer'
 import {
   ReduxTestCaseContext,
   reduxTestCaseState,
@@ -24,7 +24,7 @@ const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
   const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
-  const [expressTestCase, dispatchToExpressTestCase] = useReducer(expressTestCaseReducer, expressTestCaseState)
+  const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(endpointTestCaseReducer, endpointTestCaseState)
 
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
     reduxTestCaseReducer,
@@ -62,14 +62,14 @@ const App = () => {
           {/* value wrapped in array since Provider only takes in one value */}
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-            <ExpressTestCaseContext.Provider value={[expressTestCase, dispatchToExpressTestCase]}>
+            <EndpointTestCaseContext.Provider value={[endpointTestCase, dispatchToEndpointTestCase]}>
               <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
                 <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
                   <NavBar />
                   <LeftPanel />
                 </MockDataContext.Provider>
               </HooksTestCaseContext.Provider>
-              </ExpressTestCaseContext.Provider>
+              </EndpointTestCaseContext.Provider>
             </ReduxTestCaseContext.Provider>
           </TestCaseContext.Provider>
           <RightPanel />

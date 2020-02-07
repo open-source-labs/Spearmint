@@ -4,8 +4,8 @@ Add imports here. Ex:
 import Middleware from '../Middleware/Middleware'
 */;
 
-const ExpressTestStatements = function expressTestStatements({ expressStatements, dispatchToexpressTestCase }) { 
-    return expressStatements.map((statement, i) => {
+const EndpointTestStatements = function endpointTestStatements({ endpointStatements, dispatchToendpointTestCase }) { 
+    return endpointStatements.map((statement, i) => {
         switch (statement.type) {
           /* add statements here. Ex: */
           /*case 'middleware':
@@ -14,7 +14,7 @@ const ExpressTestStatements = function expressTestStatements({ expressStatements
                 key={statement.id}
                 middleware={statement}
                 index={i}
-                dispatchToexpressTestCase={dispatchToexpressTestCase}
+                dispatchToendpointTestCase={dispatchToendpointTestCase}
               />
             );*/
         default:
@@ -24,4 +24,4 @@ const ExpressTestStatements = function expressTestStatements({ expressStatements
 
 };
 
-export default ExpressTestStatements;
+export default EndpointTestStatements;

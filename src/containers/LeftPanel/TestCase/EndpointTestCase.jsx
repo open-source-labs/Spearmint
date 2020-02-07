@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
-import { ExpressTestCaseContext } from '../../../context/expressTestCaseReducer';
-import { updateExpressTestStatement, updateExpressStatementsOrder } from '../../../context/expressTestCaseActions';
-import ExpressTestMenu from '../TestMenu/ExpressTestMenu';
-import ExpressTestStatements from './ExpressTestStatements';
+import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
+import { updateEndpointTestStatement, updateEndpointStatementsOrder } from '../../../context/endpointTestCaseActions';
+import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
+import EndpointTestStatements from './EndpointTestStatements';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const plusIcon = require('../../../assets/images/plus-box.png');
 
-const ExpressTestCase = () => {
-    const [{ expressTestStatement, expressStatements }, dispatchToExpressTestCase] = useContext(ExpressTestCaseContext);
+const EndpointTestCase = () => {
+    const [{ endpointTestStatement, endpointStatements }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
-    const draggableStatements = expressStatements.slice(1, -1);
+    const draggableStatements = endpointStatements.slice(1, -1);
 
-    const handleUpdateExpressTestStatements = e => {
-        dispatchToExpressTestCase(updateExpressTestStatement(e.target.value))
+    const handleUpdateEndpointTestStatements = e => {
+        dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value))
     };
 
     const reorder = (list, startIndex, endIndex) => {
@@ -37,14 +37,14 @@ const ExpressTestCase = () => {
             result.source.index,
             result.destination.index
         );
-        dispatchToExpressTestCase(updateExpressStatementsOrder(reorderedStatements));
+        dispatchToEndpointTestCase(updateEndpointStatementsOrder(reorderedStatements));
     }
 
 
     return (
         <div>
             <div id='head'>
-                <ExpressTestMenu dispatchToExpressTestCase={dispatchToExpressTestCase}/>
+                <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase}/>
             </div>
 
             <div id={styles.testMockSection}>
@@ -53,8 +53,8 @@ const ExpressTestCase = () => {
                     <input
                     type='text'
                     id={styles.testStatement}
-                    value={expressTestStatement}
-                    onChange={handleUpdateExpressTestStatements}
+                    value={endpointTestStatement}
+                    onChange={handleUpdateEndpointTestStatements}
                     />
                 </section>
             </div>
@@ -63,9 +63,9 @@ const ExpressTestCase = () => {
                 <Droppable droppableId='droppable'>
                     {provided => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
-                        <ExpressTestStatements
-                            expressStatements={draggableStatements}
-                            dispatchToExpressTestCase={dispatchToExpressTestCase}
+                        <EndpointTestStatements
+                            endpointStatements={draggableStatements}
+                            dispatchToEndpointTestCase={dispatchToEndpointTestCase}
                         />
                         {provided.placeholder}
                         </div>                        
@@ -76,4 +76,4 @@ const ExpressTestCase = () => {
     )
 }
 
-export default ExpressTestCase;
+export default EndpointTestCase;
