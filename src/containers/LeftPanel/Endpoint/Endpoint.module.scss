@@ -131,6 +131,27 @@
   }
 }
 
+#filesFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#stateFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#state {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+}
+
 #hastooltip {
   @include hastooltip($tooltip-transition-in-duration: 0.3s);
 }

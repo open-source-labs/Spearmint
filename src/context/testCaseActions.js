@@ -58,6 +58,7 @@ export const actionTypes = {
   UPDATE_REDUCERS_FILEPATH: 'UPDATE_REDUCERS_FILEPATH',
   UPDATE_MIDDLEWARES_FILEPATH: 'UPDATE_MIDDLEWARES_FILEPATH',
   UPDATE_HOOKS_FILEPATH: 'UPDATE_HOOKS_FILEPATH',
+  UPDATE_SERVER_FILEPATH: 'UPDATE_SERVER_FILEPATH',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
@@ -414,6 +415,12 @@ export const updateMiddlewaresFilePath = (middlewaresFileName, middlewaresFilePa
   type: actionTypes.UPDATE_MIDDLEWARES_FILEPATH,
   middlewaresFileName,
   middlewaresFilePath,
+});
+
+export const updateServerFilePath = (serverFileName, serverFilePath) => ({
+  type: actionTypes.UPDATE_SERVER_FILEPATH,
+  serverFileName,
+  serverFilePath,
 });
 
 // hookRender
