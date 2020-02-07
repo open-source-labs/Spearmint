@@ -20,6 +20,7 @@ import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { exportAllDeclaration } from '@babel/types';
 import Rerender from '../Render/Rerender';
+import Assertion from '../Assertion/Assertion';
 configure({ adapter: new Adapter() });
 
 let wrapper, globalM, dispatchToGlobal, testCase, dispatchToTestCase, mockData, dispatchToMockData;
@@ -92,7 +93,10 @@ describe('testing left panel', () => {
     expect(wrapper.text()).toContain('Rerender');
   });
 
-  it('new assertion card is produced when assertion button is clicked', () => {});
+  // Rachel's tests from here
+  it('new assertion card is produced when assertion button is clicked', () => {
+    
+  });
 
   it('action card is removed when delete button is clicked', () => {});
 

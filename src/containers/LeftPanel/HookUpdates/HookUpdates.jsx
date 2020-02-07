@@ -5,28 +5,28 @@ import {
   deleteHookUpdates,
   updateHookUpdates,
   updateHooksFilePath,
-} from '../../../context/testCaseActions';
+} from '../../../context/hooksTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const HookUpdates = ({ hookUpdates, index, dispatchToTestCase }) => {
+const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
 
   const handleChangeHookUpdatesFields = (e, field) => {
     let updatedHookUpdates = { ...hookUpdates };
     updatedHookUpdates[field] = e.target.value;
-    dispatchToTestCase(updateHookUpdates(updatedHookUpdates));
+    dispatchToHooksTestCase(updateHookUpdates(updatedHookUpdates));
   };
 
   const handleClickDeleteHookUpdates = e => {
-    dispatchToTestCase(deleteHookUpdates(hookUpdates.id));
+    dispatchToHooksTestCase(deleteHookUpdates(hookUpdates.id));
   };
 
   const handleChangeHookFileName = e => {
     const hookFileName = e.target.value;
     const filePath = filePathMap[hookFileName] || '';
-    dispatchToTestCase(updateHooksFilePath(hookFileName, filePath));
+    dispatchToHooksTestCase(updateHooksFilePath(hookFileName, filePath));
   };
 
   return (
