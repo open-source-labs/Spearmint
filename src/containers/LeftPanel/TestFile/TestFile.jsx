@@ -16,13 +16,18 @@ import { toggleHooks } from '../../../context/hooksTestCaseActions';
 import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
 import HooksTestCase from '../TestCase/HooksTestCase';
 
-/* expressTestCase imports */
-//TBD
+/* endpointTestCase imports */
+import { toggleEndpoint } from '../../../context/endpointTestCaseActions';
+import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
+import EndpointTestCase from '../TestCase/EndpointTestCase';
+
+
 
 const TestFile = () => {
   const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
   const [{ hasReact }, dispatchToTestCase] = useContext(TestCaseContext);
   const [{ hasHooks }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+  const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext); 
 
   const handleToggleRedux = e => {
     dispatchToReduxTestCase(toggleRedux(e.currentTarget.checked));
@@ -30,6 +35,10 @@ const TestFile = () => {
 
   const handleToggleReact = e => {
     dispatchToTestCase(toggleReact(e.currentTarget.checked));
+  };
+
+  const handleToggleEndpoint = e => {
+    dispatchToEndpointTestCase(toggleEndpoint(e.currentTarget.checked))
   };
 
   const handleToggleHooks = e => {
@@ -58,6 +67,19 @@ const TestFile = () => {
 
       <section>
         <span>
+          <input 
+          type='checkbox'
+          checked={hasEndpoint}
+          onChange={handleToggleEndpoint}
+          />
+          <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
+            Are You Testing Endpoint?
+          </label>
+          </span>
+      </section>
+
+      <section>
+        <span>
           <input type='checkbox' checked={hasHooks} onChange={handleToggleHooks} />
           <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
             Are You Testing Hooks / Context?
@@ -65,9 +87,9 @@ const TestFile = () => {
         </span>
       </section>
 
-      {hasRedux && (
-        <section>
-          <ReduxTestCase />
+      {hasRedux && ( 
+        <section >
+          <ReduxTestCase/>
         </section>
       )}
 
@@ -75,6 +97,12 @@ const TestFile = () => {
         <section>
           <TestCase />
         </section>
+      )}
+
+      {hasEndpoint && ( 
+        <section >
+          <EndpointTestCase/>
+        </section >
       )}
 
       {hasHooks && (
