@@ -6,12 +6,22 @@ export const EndpointTestCaseContext = createContext(null);
 export const endpointTestCaseState = {
     endpointTestStatement: '',
     endpointStatements: [],
-    hasEndpoint: false
+    hasEndpoint: false,
 };
 
 let statementId = 0;
 
-/* add helper functions here */
+const createEndpoint = () => ({
+    id: statementId++,
+    type: 'endpoint',
+    serverFileName: '',
+    serverFilePath: '',
+    method: '',
+    route: '',
+    serverResponse: '',
+    expectedResponse: '',
+});
+
 
 
 export const endpointTestCaseReducer = (state, action) => {
@@ -36,6 +46,35 @@ export const endpointTestCaseReducer = (state, action) => {
             return {
                 endpointTestStatement: '',
                 endpointStatements: [],
+            };
+
+        case actionTypes.ADD_ENDPOINT:
+            endpointStatements.push(createEndpoint());
+            return {
+                ...state,
+                endpointStatements,
+            };
+        case actionTypes.DELETE_ENDPOINT:
+            endpointStatements = endpointStatements.filter(statement => statement.id !== action.id);
+            return {
+                ...state,
+                endpointStatements,
+            };
+        case actionTypes.UPDATE_ENDPOINT:
+            endpointStatements = endpointStatements.map(statement => {
+                if (statement.id === action.id) {
+                    statement.serverFileName = action.serverFileName;
+                    statement.serverFilePath = action.serverFilePath;
+                    statement.method = action.method;
+                    statement.route = action.route;
+                    statement.serverResponse = action.serverResponse;
+                    statement.expectedResponse = action.expectedResponse;
+                }
+                return statement;
+            });
+            return {
+                ...state,
+                endpointStatements,
             };
 
         default:
