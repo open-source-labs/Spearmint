@@ -8,7 +8,9 @@ import {
   addReducer,
   addActionCreator,
   addMiddleware,
+  addContexts,
   addHookUpdates,
+  addHookRender
 } from '../../../context/testCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
 
@@ -39,9 +41,16 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const handleAddMiddleware = e => {
     dispatchToTestCase(addMiddleware());
   };
+  const handleAddContext = e => {
+    dispatchToTestCase(addContexts());
+  };
   const handleAddAsync = e => {
     dispatchToTestCase(addAsync());
   };
+  const handleAddHookRender = e => {
+    dispatchToTestCase(addHookRender());
+  };
+
   const handleAddHookUpdates = e => {
     dispatchToTestCase(addHookUpdates());
   };
@@ -78,9 +87,14 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
             Middleware
           </button>
+          <button data-testid='contextButton' onClick={handleAddContext}>
+            Context
+          </button>
           <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
             Action Creator
           </button>
+          <button data-testid='hookRenderButton' onClick={handleAddHookRender}>Hook: Rendering</button>
+
           <button data-testid='hookUpdatesButton' onClick={handleAddHookUpdates}>
             Hook: Updates
           </button>

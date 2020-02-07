@@ -1,4 +1,6 @@
 export const actionTypes = {
+  TOGGLE_REACT: 'TOGGLE_REACT',
+
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
 
@@ -9,6 +11,10 @@ export const actionTypes = {
   ADD_MIDDLEWARE: 'ADD_MIDDLEWARE',
   DELETE_MIDDLEWARE: 'DELETE_MIDDLEWARE',
   UPDATE_MIDDLEWARE: 'UPDATE_MIDDLEWARE',
+
+  ADD_CONTEXT: 'ADD_CONTEXT',
+  DELETE_CONTEXT: 'DELETE_CONTEXT',
+  UPDATE_CONTEXT: 'UPDATE_CONTEXT',
 
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
@@ -34,6 +40,11 @@ export const actionTypes = {
   DELETE_REDUCER: 'DELETE_REDUCER',
   UPDATE_REDUCER: 'UPDATE_REDUCER',
 
+  // Action type for hookRender
+  ADD_HOOKRENDER: 'ADD_HOOKRENDER',
+  DELETE_HOOKRENDER: 'DELETE_HOOKRENDER',
+  UPDATE_HOOKRENDER: 'UPDATE_HOOKRENDER',
+
   ADD_HOOK_UPDATES: 'ADD_HOOK_UPDATES',
   DELETE_HOOK_UPDATES: 'DELETE_HOOK_UPDATE',
   UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
@@ -46,6 +57,10 @@ export const actionTypes = {
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
+
+export const toggleReact = () => ({
+  type: actionTypes.TOGGLE_REACT,
+});
 
 export const updateStatementsOrder = draggableStatements => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
@@ -181,6 +196,40 @@ export const updateMiddleware = ({
   queryFunction,
 });
 
+export const addContexts = () => ({
+  type: actionTypes.ADD_CONTEXT,
+});
+
+export const deleteContexts = id => ({
+  type: actionTypes.DELETE_CONTEXT,
+  id,
+});
+
+export const updateContexts = ({
+  id,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  values,
+  textNode,
+  providerComponent,
+  consumerComponent,
+  context,
+}) => ({
+  type: actionTypes.UPDATE_CONTEXT,
+  id,
+  eventValue,
+  queryVariant,
+  querySelector,
+  queryValue,
+  values,
+  textNode,
+  providerComponent,
+  consumerComponent,
+  context,
+});
+
 export const addReducer = () => ({
   type: actionTypes.ADD_REDUCER,
 });
@@ -231,6 +280,7 @@ export const updateAsync = ({
   asyncFunction,
   method,
   route,
+  requestBody,
   store,
   matcher,
   expectedResponse,
@@ -244,6 +294,7 @@ export const updateAsync = ({
   asyncFunction,
   method,
   route,
+  requestBody,
   store,
   matcher,
   expectedResponse,
@@ -331,6 +382,35 @@ export const updateMiddlewaresFilePath = (middlewaresFileName, middlewaresFilePa
   type: actionTypes.UPDATE_MIDDLEWARES_FILEPATH,
   middlewaresFileName,
   middlewaresFilePath,
+});
+
+// hookRender
+export const addHookRender = () => ({
+  type: actionTypes.ADD_HOOKRENDER,
+});
+
+export const deleteHookRender = id => ({
+  type: actionTypes.DELETE_HOOKRENDER,
+  id,
+});
+
+export const updateHookRender = ({
+  id,
+  hookFileName,
+  hookFilePath,
+  hook,
+  parameterOne,
+  expectedReturnValue,
+  returnValue,
+}) => ({
+  type: actionTypes.UPDATE_HOOKRENDER,
+  id,
+  hookFileName,
+  hookFilePath,
+  hook,
+  parameterOne,
+  expectedReturnValue,
+  returnValue,
 });
 
 export const updateHooksFilePath = (hookFileName, hookFilePath) => ({

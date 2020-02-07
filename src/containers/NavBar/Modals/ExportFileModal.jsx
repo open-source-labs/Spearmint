@@ -74,6 +74,11 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     import { build, fake } from 'test-data-bot'; 
     import '@testing-library/jest-dom/extend-expect'
     \n`;
+
+    //import statements for Hook: Rendering
+    //import { renderHook } from '@testing-library/react-hooks'
+    //hook function from file path
+
   };
 
   // React Component Import Statement (Render Card)
@@ -122,6 +127,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return createPathToReducers(statement), createPathToTypes(statement);
         case 'hook-updates':
           return addHooksImportStatement(), createPathToHooks(statement);
+        case 'hookRender':
+          return addHooksImportStatement(), createPathToHooks(statement);
         default:
           return statement;
       }
@@ -158,6 +165,8 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return addReducer(statement);
         case 'hook-updates':
           return addHookUpdates(statement);
+        case 'hookRender':
+          return addHookRender(statement);
         default:
           return statement;
       }
@@ -306,31 +315,33 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }
   };
 
-  // Reducer Jest Test Code
+  // Reducer Jest Test Code - Linda to refactor 2/1
   const addReducer = reducer => {
-    testFileCode += `expect(${reducer.queryValue}(${reducer.querySelector},{${reducer.queryVariant}})).toEqual(${reducer.matcherValue})`;
+    testFileCode += `expect(${reducer.queryValue}(${reducer.querySelector},${reducer.queryVariant})).toEqual(${reducer.matcherValue})`;
   };
 
   // Async AC Jest Test Code
   const addAsync = async => {
-    testFileCode += `const middlewares = [thunk]
-    const mockStore = configureMockStore(middlewares)`;
+    testFileCode += `const middlewares = [thunk];`
+
+    testFileCode += '\n';
+    
+    testFileCode += `const mockStore = configureMockStore(middlewares);`
 
     testFileCode += '\n';
 
-    testFileCode += `it('${testCase.testStatement}', () => {
-        fetchMock.${async.method}('${async.route}')`;
+    testFileCode += `fetchMock.${async.method}('${async.route}', ${async.requestBody});`;
 
     testFileCode += '\n';
 
     testFileCode += `const expectedActions = ${async.expectedResponse};
-        const store = mockStore(${async.store})`;
+        const store = mockStore(${async.store});`;
 
     testFileCode += '\n';
 
     testFileCode += `return store.dispatch(actions.${async.asyncFunction}()).then(() => {
           expect(store.getActions()).toEqual(expectedActions)
-        })`;
+        });`;
   };
 
   // Action Creator Jest Test Code
@@ -358,6 +369,12 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     });
     expect(result.current.${hookUpdates.managedState}).toBe(${hookUpdates.updatedState})`;
   };
+
+  // Hook: Renders Jest Test Code
+  const addHookRender = hookRender => {
+    testFileCode += `const {result} = renderHook((${hookRender.parameterOne}) => ${hookRender.hook}())
+    expect(result.current.${hookRender.returnValue}).toBe(${hookRender.expectedReturnValue})`;
+  }
 
   const exportTestFile = async () => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {

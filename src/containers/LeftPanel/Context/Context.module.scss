@@ -2,7 +2,8 @@
 @import '../../../assets/stylesheets/colors.scss';
 @import '../LeftPanel.module.scss';
 
-#actionCreator {
+
+#context {
   @include box-styling;
   font-family: $raleway;
   letter-spacing: 0.5px;
@@ -12,7 +13,7 @@
   float: right;
 }
 
-#actionCreatorHeader {
+#contextHeader {
   @include box-header-alignment;
   justify-content: flex-start;
   display: flex;
@@ -29,91 +30,42 @@
   }
 }
 
-#filesFlexBox {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-#files {
-  width: 50%;
-  margin-right: 7%;
-  input {
-    margin-top: 6px;
-    width: 100%;
-  }
-}
-
-
-
-#actionFlexBox {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-#actions {
-  width: 50%;
-  margin-right: 7%;
-  input {
-    margin-top: 6px;
-    width: 100%;
-  }
-}
-
-#payloadFlexBox {
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-#payloadKey {
-  width: 50%;
-  margin-right: 7%;
-  input {
-    margin-top: 6px;
-    width: 100%;
-  }
-}
-
-#payloadType {
-  margin-right: 7%;
-  width: 50%;
-  select {
-    margin-top: 6px;
-    font-family: $raleway;
-    width: 100%;
-    height: 25px;
-    background-color: white;
-    border: 1px solid $light-gray;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    color: $dark-gray;
-  }
-}
-
-#dropdownFlex {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-top: 6px;
-}
-
 .queryLabel {
   margin-bottom: 5px;
   display: block;
-}
-
-#dropdownFlex {
-  display: flex;
-  align-items: center;
-  width: 111%;
 }
 
 #queryFlexBox {
   display: flex;
   align-items: center;
   width: 100%;
+}
+
+#eventTypeFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#eventType {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+}
+
+.eventValue {
+  // width: 50%;
+  input {
+    width: 90%;
+    margin-top: 6px;
+  }
+}
+
+#eventTypeVal {
+  width: 43%;
 }
 
 #querySelector {
@@ -128,6 +80,18 @@
     font-size: 12px;
     letter-spacing: 0.5px;
     color: $dark-gray;
+  }
+}
+
+#dropdownFlex {
+  display: flex;
+  align-items: center;
+  width: 111%;
+}
+
+#query {
+  input {
+    width: 148%;
   }
 }
 

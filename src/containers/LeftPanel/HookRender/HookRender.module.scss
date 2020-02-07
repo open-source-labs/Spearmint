@@ -2,7 +2,7 @@
 @import '../../../assets/stylesheets/colors.scss';
 @import '../LeftPanel.module.scss';
 
-#reducer {
+#hookRender {
   @include box-styling;
   font-family: $raleway;
   letter-spacing: 0.5px;
@@ -12,8 +12,7 @@
   float: right;
   margin: 0;
 }
-
-#reducerHeader {
+#hookRenderHeader {
   @include box-header-alignment;
   justify-content: flex-start;
   display: flex;
@@ -30,17 +29,41 @@
   }
 }
 
-#reducerNameFlexBox {
+#hookRenderFlexBox {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
 }
-
-#reducerName  {
-  width: 50%;
+  
+#hookRenderType {
+    width: 50%;
     margin-right: 7%;
     input {
       margin-top: 6px;
       width: 100%;
     }
 }
+// #renderBody {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-bottom: 10px;
+// }
+// #renderInputBox {
+//   width: 150px;
+// }
+// #renderProp {
+//   font-size: 13px;
+//   margin-bottom: 0;
+//   padding: 6px 0;
+//   display: flex;
+//   width: 60%;
+//   justify-content: space-between;
+// }
+// #renderCheckbox {
+//   float: right;
+// }
+
+// #props {
+//   margin: 5px 0;
+// }

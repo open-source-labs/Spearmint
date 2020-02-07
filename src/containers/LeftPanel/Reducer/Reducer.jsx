@@ -112,9 +112,10 @@ const Reducer = ({ reducer, index, dispatchToTestCase }) => {
             </div>
           </div>
         </div>
-      )}
+      )
+      }
     </Draggable>
-  );
+  )
 };
 
 export default Reducer;
