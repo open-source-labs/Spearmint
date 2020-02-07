@@ -1,5 +1,3 @@
-// component to be rendered in the electron app
-
 import React, { useContext } from 'react';
 import styles from '../Endpoint/Endpoint.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
@@ -25,7 +23,6 @@ const Endpoint = ({ endpoint, index, dispatchToTestCase }) => {
     dispatchToTestCase(deleteEndpoint(endpoint.id));
   };
 
-  // Might need to uncomment if filepath does not update
   const handleChangeServerFileName = e => {
     const serverFileName = e.target.value;
     const filePath = filePathMap[serverFileName] || '';
@@ -58,7 +55,6 @@ const Endpoint = ({ endpoint, index, dispatchToTestCase }) => {
                   id={styles.renderInputBox}
                   value={endpoint.serverFile}
                   onChange={handleChangeServerFileName}
-                  // onChange={handleChangeEndpointFields}
                 />
               </div>
             </div>
