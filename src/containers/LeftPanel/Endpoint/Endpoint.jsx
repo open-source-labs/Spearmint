@@ -7,7 +7,7 @@ import {
   deleteEndpoint,
   updateEndpoint,
   updateServerFilePath,
-} from '../../../context/testCaseActions';
+} from '../../../context/endpointTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
