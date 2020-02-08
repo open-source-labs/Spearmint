@@ -16,6 +16,7 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
     };
 
     const handleAddEndpoint = e => {
+        console.log('HIT HANDLEADDENDPOINT')
         dispatchToEndpointTestCase(addEndpoint());
     };
 
@@ -23,7 +24,7 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
         <div id='test'>
             <div id={styles.testMenu}>
                 <div  id={styles.left}>
-                <button onClick={openEndpointModal}>New Redux Test +</button>
+                <button onClick={openEndpointModal}>New Test +</button>
                 <EndpointTestModal
                     isEndpointModalOpen={isEndpointModalOpen}
                     closeEndpointModal={closeEndpointModal}
