@@ -10,23 +10,23 @@ import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const Endpoint = ({ endpoint, index, dispatchToTestCase }) => {
+const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
 
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
     updatedEndpoint[field] = e.target.value;
-    dispatchToTestCase(updateEndpoint(updatedEndpoint));
+    dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
   };
 
   const handleClickDeleteEndpoint = e => {
-    dispatchToTestCase(deleteEndpoint(endpoint.id));
+    dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
 
   const handleChangeServerFileName = e => {
     const serverFileName = e.target.value;
     const filePath = filePathMap[serverFileName] || '';
-    dispatchToTestCase(updateServerFilePath(serverFileName, filePath));
+    dispatchToEndpointTestCase(updateServerFilePath(serverFileName, filePath));
   };
 
   return (
