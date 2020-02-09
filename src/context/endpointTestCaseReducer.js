@@ -20,6 +20,7 @@ const createEndpoint = () => ({
     route: '',
     serverResponse: '',
     expectedResponse: '',
+    value: '',
 });
 
 
@@ -69,6 +70,7 @@ export const endpointTestCaseReducer = (state, action) => {
                     statement.route = action.route;
                     statement.serverResponse = action.serverResponse;
                     statement.expectedResponse = action.expectedResponse;
+                    statement.value = action.value;
                 }
                 return statement;
             });
