@@ -163,3 +163,8 @@
   box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
   @include tooltip;
 }
+
+#matcher {
+  margin-top: 1em;
+  margin-right: 3em;
+}
