@@ -76,7 +76,18 @@ export const endpointTestCaseReducer = (state, action) => {
                 ...state,
                 endpointStatements,
             };
-
+        case actionTypes.UPDATE_SERVER_FILEPATH:
+            endpointStatements = endpointStatements.map(statement => {
+                if (statement.type === 'endpoint') {
+                    statement.serverFileName = action.serverFileName;
+                    statement.serverFilePath = action.serverFilePath;
+                }
+                return statement;
+            });
+            return {
+                ...state,
+                endpointStatements,
+            };
         default:
             return state;
     }
