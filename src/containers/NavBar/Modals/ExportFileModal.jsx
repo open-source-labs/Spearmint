@@ -509,7 +509,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const createPathToServer = statement => {
     let filePath = path.relative(projectFilePath, statement.serverFilePath);
     filePath = filePath.replace(/\\/g, '/');
-    testFileCode += `const app = require('${filePath}');
+    testFileCode += `const app = require('../${filePath}');
   const supertest = require('supertest')
   const superReq = supertest(app)\n`
 
@@ -536,11 +536,11 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const addEndpoint = statement => {
-    testFileCode += `const response = await superReq.${statement.method}('${statement.path}')`
+    testFileCode += `const response = await superReq.${statement.method}('${statement.route}')`
 
     testFileCode += '\n';
 
-    testFileCode += `expect(${statement.serverResponse}).toBe(${statement.expectedResponse});`
+    testFileCode += `expect(response.${statement.expectedResponse}).toBe(${statement.value});`
   }
 
 
