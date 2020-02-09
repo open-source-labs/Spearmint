@@ -94,29 +94,46 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             </div>
           </div>
 
-            <div id={styles.stateFlexBox}>
-              <div id={styles.state}>
+          <div id={styles.stateFlexBox}>
+            <div id={styles.state}>
               <label htmlFor='requestBody'>
                 Server Response
               </label>
-                <div id={styles.payloadFlexBox}>
-                  <input
-                    type='text'
-                    name='serverResponse'
-                    placeholder="json( {message: 'pass!'} )"
-                    onChange={e => handleChangeEndpointFields(e, 'serverResponse')} />
-                </div>
-                </div>
-             
-                <div id={styles.state}>
-                <label htmlFor='expectedResponse'>
-                  Expected Response
+              <div id={styles.payloadFlexBox}>
+                <input
+                  type='text'
+                  name='serverResponse'
+                  placeholder="json( {message: 'pass!'} )"
+                  onChange={e => handleChangeEndpointFields(e, 'serverResponse')} />
+              </div>
+            </div>
+          </div>
+
+            <div id={styles.stateFlexBox}>
+              <div id={styles.state}>
+              <label htmlFor='requestBody'>
+                Expected Response
               </label>
                 <div id={styles.payloadFlexBox}>
                   <input
                     type='text'
                     name='expectedResponse'
-                    onChange={e => handleChangeEndpointFields(e, 'expectedResponse')}
+                    placeholder="body.yourKey or status"
+                    onChange={e => handleChangeEndpointFields(e, 'expectedResponse')} />
+                </div>
+              </div>
+
+            <span id={styles.matcher}>toBe</span>
+
+                <div id={styles.state}>
+                <label htmlFor='value'>
+                  Value
+              </label>
+                <div id={styles.payloadFlexBox}>
+                  <input
+                    type='text'
+                    name='value'
+                    onChange={e => handleChangeEndpointFields(e, 'value')}
                   />
                 </div>
               </div>
