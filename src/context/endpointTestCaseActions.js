@@ -19,9 +19,9 @@ export const updateEndpointStatementsOrder = draggableStatements => ({
     draggableStatements,
 });
 
-export const updateEndpointTestStatement = TestStatement => ({
+export const updateEndpointTestStatement = endpointTestStatement => ({
     type: actionTypes.UPDATE_ENDPOINT_TEST_STATEMENT,
-    TestStatement
+    endpointTestStatement
 })
 
 export const toggleEndpoint = () => ({
@@ -55,6 +55,7 @@ export const updateEndpoint = ({
     route,
     serverResponse,
     expectedResponse,
+    value,
 }) => ({
     type: actionTypes.UPDATE_ENDPOINT,
     id,
@@ -64,4 +65,5 @@ export const updateEndpoint = ({
     route,
     serverResponse,
     expectedResponse,
+    value
 });
