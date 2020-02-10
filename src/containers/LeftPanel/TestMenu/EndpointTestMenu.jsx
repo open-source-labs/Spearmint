@@ -16,7 +16,6 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
     };
 
     const handleAddEndpoint = e => {
-        console.log('HIT HANDLEADDENDPOINT')
         dispatchToEndpointTestCase(addEndpoint());
     };
 
