@@ -2,7 +2,11 @@ import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
 import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
-import { EndpointTestCaseContext, endpointTestCaseState, endpointTestCaseReducer } from './context/endpointTestCaseReducer'
+import {
+  EndpointTestCaseContext,
+  endpointTestCaseState,
+  endpointTestCaseReducer,
+} from './context/endpointTestCaseReducer';
 import {
   ReduxTestCaseContext,
   reduxTestCaseState,
@@ -13,6 +17,11 @@ import {
   hooksTestCaseState,
   hooksTestCaseReducer,
 } from './context/hooksTestCaseReducer';
+import {
+  TestFileModalContext,
+  testFileModalState,
+  testFileModalReducer,
+} from './context/testFileModalReducer';
 
 import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
 import ProjectLoader from './containers/ProjectLoader/ProjectLoader';
@@ -24,7 +33,10 @@ const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
   const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
-  const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(endpointTestCaseReducer, endpointTestCaseState)
+  const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
+    endpointTestCaseReducer,
+    endpointTestCaseState
+  );
 
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
     reduxTestCaseReducer,
@@ -33,6 +45,10 @@ const App = () => {
   const [hooksTestCase, dispatchToHooksTestCase] = useReducer(
     hooksTestCaseReducer,
     hooksTestCaseState
+  );
+  const [testFileModal, dispatchToTestFileModal] = useReducer(
+    testFileModalReducer,
+    testFileModalState
   );
 
   if (!global.isProjectLoaded) {
@@ -62,13 +78,17 @@ const App = () => {
           {/* value wrapped in array since Provider only takes in one value */}
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-            <EndpointTestCaseContext.Provider value={[endpointTestCase, dispatchToEndpointTestCase]}>
-              <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
-                <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-                  <NavBar />
-                  <LeftPanel />
-                </MockDataContext.Provider>
-              </HooksTestCaseContext.Provider>
+              <EndpointTestCaseContext.Provider
+                value={[endpointTestCase, dispatchToEndpointTestCase]}
+              >
+                <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
+                  <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
+                    <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+                      <NavBar />
+                      <LeftPanel />
+                    </MockDataContext.Provider>
+                  </TestFileModalContext.Provider>
+                </HooksTestCaseContext.Provider>
               </EndpointTestCaseContext.Provider>
             </ReduxTestCaseContext.Provider>
           </TestCaseContext.Provider>

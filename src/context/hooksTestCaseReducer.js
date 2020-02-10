@@ -6,7 +6,7 @@ export const HooksTestCaseContext = createContext(null);
 export const hooksTestCaseState = {
   hooksTestStatement: '',
   hooksStatements: [],
-  hasHooks: false,
+  hasHooks: 0,
 };
 
 let statementId = 0;
@@ -61,7 +61,7 @@ export const hooksTestCaseReducer = (state, action) => {
       return {
         ...state,
         newTestStatement,
-        hasHooks: !state.hasHooks,
+        hasHooks: state.hasHooks + 1,
       };
     case actionTypes.UPDATE_HOOKS_TEST_STATEMENT:
       let hooksTestStatement = action.hooksTestStatement;
@@ -187,6 +187,7 @@ export const hooksTestCaseReducer = (state, action) => {
 
     case actionTypes.CREATE_NEW_HOOKS_TEST:
       return {
+        hasHooks: 0,
         hooksTestStatement: '',
         hooksStatements: [],
       };

@@ -10,7 +10,7 @@ export const ReduxTestCaseContext = createContext(
 export const reduxTestCaseState = {
   reduxTestStatement: '' /* the test description */,
   reduxStatements: [] /* both of the cards on the page at open. Each card gets an id */,
-  hasRedux: false,
+  hasRedux: 0,
 };
 
 let statementId = 0;
@@ -71,7 +71,6 @@ const createReducer = () => ({
 });
 
 export const reduxTestCaseReducer = (state, action) => {
-  Object.freeze(state);
   let reduxStatements = [...state.reduxStatements];
 
   switch (action.type) {
@@ -278,6 +277,7 @@ export const reduxTestCaseReducer = (state, action) => {
       return {
         reduxTestStatement: '',
         reduxStatements: [],
+        hasRedux: 0,
       };
     default:
       return state;

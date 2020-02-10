@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewEndpointTest } from '../../../context/endpointTestCaseActions';
 import styles from '../../NavBar/Modals/ExportFileModal.module.scss';
+import { toggleModal } from '../../../context/testFileModalActions';
+import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
 const EndpointTestModal = ({
   isEndpointModalOpen,
   closeEndpointModal,
   dispatchToEndpointTestCase,
 }) => {
+  const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+
   const handleNewEndpointTest = e => {
     dispatchToEndpointTestCase(createNewEndpointTest());
     closeEndpointModal();
+    dispatchToTestFileModal(toggleModal());
   };
 
   return (

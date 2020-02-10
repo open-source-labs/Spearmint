@@ -1,20 +1,25 @@
 /**
- * modal: pop ups windows on click 
- * create new test modal 
+ * modal: pop ups windows on click
+ * create new test modal
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewTest } from '../../../context/testCaseActions';
 import { clearMockData } from '../../../context/mockDataActions';
 import styles from '../../NavBar/Modals/ExportFileModal.module.scss';
+import { toggleModal } from '../../../context/testFileModalActions';
+import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
 /* destructuring or declaring these?  */
 const NewTestModal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchToTestCase }) => {
+  const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+
   const handleNewTest = e => {
     dispatchToMockData(clearMockData());
     dispatchToTestCase(createNewTest());
     closeModal();
+    dispatchToTestFileModal(toggleModal());
   };
   return (
     <ReactModal

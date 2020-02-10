@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewHooksTest } from '../../../context/hooksTestCaseActions';
 import styles from '../../NavBar/Modals/ExportFileModal.module.scss';
+import { toggleModal } from '../../../context/testFileModalActions';
+import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
 const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTestCase }) => {
+  const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+
   const handleNewHooksTest = e => {
-    return dispatchToHooksTestCase(createNewHooksTest()), closeHooksModal();
+    dispatchToHooksTestCase(createNewHooksTest());
+    closeHooksModal();
+    dispatchToTestFileModal(toggleModal());
   };
 
   return (
