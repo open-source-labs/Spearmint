@@ -53,7 +53,6 @@ export const updateEndpoint = ({
     serverFilePath,
     method,
     route,
-    serverResponse,
     expectedResponse,
     value,
 }) => ({
@@ -63,7 +62,6 @@ export const updateEndpoint = ({
     serverFilePath,
     method,
     route,
-    serverResponse,
     expectedResponse,
     value
 });
