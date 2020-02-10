@@ -5,6 +5,12 @@ export const actionTypes = {
     TOGGLE_ENDPOINT: 'TOGGLE_ENDPOINT',
 
     CREATE_NEW_ENDPOINT_TEST: 'CREATE_NEW_ENDPOINT_TEST',
+
+    UPDATE_SERVER_FILEPATH: 'UPDATE_SERVER_FILEPATH',
+
+    ADD_ENDPOINT: 'ADD_ENDPOINT',
+    DELETE_ENDPOINT: 'DELETE_ENDPOINT',
+    UPDATE_ENDPOINT: 'UPDATE_ENDPOINT',
 };
 
 
@@ -13,9 +19,9 @@ export const updateEndpointStatementsOrder = draggableStatements => ({
     draggableStatements,
 });
 
-export const updateEndpointTestStatement = TestStatement => ({
+export const updateEndpointTestStatement = endpointTestStatement => ({
     type: actionTypes.UPDATE_ENDPOINT_TEST_STATEMENT,
-    TestStatement
+    endpointTestStatement
 })
 
 export const toggleEndpoint = () => ({
@@ -24,4 +30,38 @@ export const toggleEndpoint = () => ({
 
 export const createNewEndpointTest = () => ({
     type: actionTypes.CREATE_NEW_ENDPOINT_TEST,
+});
+
+export const updateServerFilePath = (serverFileName, serverFilePath) => ({
+    type: actionTypes.UPDATE_SERVER_FILEPATH,
+    serverFileName,
+    serverFilePath,
+});
+
+export const addEndpoint = () => ({
+    type: actionTypes.ADD_ENDPOINT,
+});
+
+export const deleteEndpoint = id => ({
+    type: actionTypes.DELETE_ENDPOINT,
+    id,
+});
+
+export const updateEndpoint = ({
+    id,
+    serverFileName,
+    serverFilePath,
+    method,
+    route,
+    expectedResponse,
+    value,
+}) => ({
+    type: actionTypes.UPDATE_ENDPOINT,
+    id,
+    serverFileName,
+    serverFilePath,
+    method,
+    route,
+    expectedResponse,
+    value
 });

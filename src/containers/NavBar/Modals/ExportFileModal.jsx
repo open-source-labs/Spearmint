@@ -11,6 +11,7 @@ import { TestCaseContext } from '../../../context/testCaseReducer';
 import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
 import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
+import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
 import styles from './ExportFileModal.module.scss';
 
 const remote = window.require('electron').remote;
@@ -25,6 +26,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [reduxTestCase, ____] = useContext(ReduxTestCaseContext);
   const [hooksTestCase, _] = useContext(HooksTestCaseContext);
   const [{ mockData }, ___] = useContext(MockDataContext);
+  const [endpointTestCase, _____] = useContext(EndpointTestCaseContext);
 
   let testFileCode = 'import React from "react";';
 
@@ -67,6 +69,17 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       return (
         addHooksImportStatements(),
         addHooksTestStatements(),
+        (testFileCode = beautify(testFileCode, {
+          indent_size: 2,
+          space_in_empty_paren: true,
+          e4x: true,
+        }))
+      );
+    }
+    if (endpointTestCase.hasEndpoint === true) {
+      return (
+        addEndpointImportStatements(),
+        addEndpointTestStatements(),
         (testFileCode = beautify(testFileCode, {
           indent_size: 2,
           space_in_empty_paren: true,
@@ -477,6 +490,56 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
     }
   };
+
+/* --------------------------------ENDPOINT FUNCTIONS ------------------------------------------ */
+
+
+  const addEndpointImportStatements = () => {
+    endpointTestCase.endpointStatements.forEach(statement => {
+      switch (statement.type) {
+        case 'endpoint':
+          return createPathToServer(statement);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += '\n';
+  };
+
+  const createPathToServer = statement => {
+    let filePath = path.relative(projectFilePath, statement.serverFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode = `const app = require('../${filePath}');
+  const supertest = require('supertest')
+  const request = supertest(app)\n`
+
+    testFileCode += '\n';
+
+  };
+
+  const addEndpointTestStatements = () => {
+    testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async (done) => {`;
+    endpointTestCase.endpointStatements.forEach(statement => {
+      switch (statement.type) {
+        case 'endpoint':
+          return addEndpoint(statement);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += 'done();'
+    testFileCode += '});';
+    testFileCode += '\n';
+  };
+
+  const addEndpoint = statement => {
+    testFileCode += `const response = await request.${statement.method}('${statement.route}')`
+
+    testFileCode += '\n';
+
+    testFileCode += `expect(response.${statement.expectedResponse}).toBe(${statement.value});`
+  }
+
 
   const exportTestFile = async () => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {

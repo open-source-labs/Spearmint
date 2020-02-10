@@ -11,7 +11,16 @@ export const endpointTestCaseState = {
 
 let statementId = 0;
 
-/* add helper functions here */
+const createEndpoint = () => ({
+  id: statementId++,
+  type: 'endpoint',
+  serverFileName: '',
+  serverFilePath: '',
+  method: '',
+  route: '',
+  expectedResponse: '',
+  value: '',
+});
 
 export const endpointTestCaseReducer = (state, action) => {
   Object.freeze(state);
@@ -31,13 +40,52 @@ export const endpointTestCaseReducer = (state, action) => {
         hasEndpoint: state.hasEndpoint + 1,
       };
 
+    case actionTypes.ADD_ENDPOINT:
+      endpointStatements.push(createEndpoint());
+      return {
+        ...state,
+        endpointStatements,
+      };
+    case actionTypes.DELETE_ENDPOINT:
+      endpointStatements = endpointStatements.filter(statement => statement.id !== action.id);
+      return {
+        ...state,
+        endpointStatements,
+      };
+    case actionTypes.UPDATE_ENDPOINT:
+      endpointStatements = endpointStatements.map(statement => {
+        if (statement.id === action.id) {
+          statement.serverFileName = action.serverFileName;
+          statement.serverFilePath = action.serverFilePath;
+          statement.method = action.method;
+          statement.route = action.route;
+          statement.expectedResponse = action.expectedResponse;
+          statement.value = action.value;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        endpointStatements,
+      };
+    case actionTypes.UPDATE_SERVER_FILEPATH:
+      endpointStatements = endpointStatements.map(statement => {
+        if (statement.type === 'endpoint') {
+          statement.serverFileName = action.serverFileName;
+          statement.serverFilePath = action.serverFilePath;
+        }
+        return statement;
+      });
+      return {
+        ...state,
+        endpointStatements,
+      };
     case actionTypes.CREATE_NEW_ENDPOINT_TEST:
       return {
         hasEndpoint: 0,
         endpointTestStatement: '',
         endpointStatements: [],
       };
-
     default:
       return state;
   }

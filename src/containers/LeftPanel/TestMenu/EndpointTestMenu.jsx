@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import EndpointTestModal from '../../NavBar/Modals/EndpointTestModal';
-/**
- * import actions here.Ex:
- * import { addMiddleware } from '../../../context/endpointTestCaseActions';
- */
+import { addEndpoint } from '../../../context/endpointTestCaseActions';
 
 const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
   const [isEndpointModalOpen, setIsEndpointModalOpen] = useState(false);
@@ -17,10 +14,9 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
     setIsEndpointModalOpen(false);
   };
 
-  /* add dispatches here. Ex:
-    const handleAddMiddleware = e => {
-        dispatchToEndpointTestCase(addMiddleware());
-    };*/
+  const handleAddEndpoint = e => {
+    dispatchToEndpointTestCase(addEndpoint());
+  };
 
   return (
     <div id='test'>
@@ -34,8 +30,9 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
           />
         </div>
         <div id={styles.right}>
-          {/* add buttons here. EX: */}
-          {/* <button onClick={handleAddMiddleware}>Middleware</button> */}
+          <button data-testid='endPointButton' onClick={handleAddEndpoint}>
+            Endpoint
+          </button>
         </div>
       </div>
     </div>
