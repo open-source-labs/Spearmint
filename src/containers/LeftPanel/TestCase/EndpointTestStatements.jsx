@@ -1,22 +1,19 @@
 import React from 'react';
-/* 
-Add imports here. Ex: 
-import Middleware from '../Middleware/Middleware'
-*/;
+import Endpoint from '../Endpoint/Endpoint';
 
-const EndpointTestStatements = function endpointTestStatements({ endpointStatements, dispatchToendpointTestCase }) { 
+const EndpointTestStatements = function endpointTestStatements({ endpointStatements, dispatchToEndpointTestCase }) { 
     return endpointStatements.map((statement, i) => {
         switch (statement.type) {
           /* add statements here. Ex: */
-          /*case 'middleware':
+          case 'endpoint':
             return (
-              <Middleware
+              <Endpoint
                 key={statement.id}
-                middleware={statement}
+                endpoint={statement}
                 index={i}
-                dispatchToendpointTestCase={dispatchToendpointTestCase}
+                dispatchToEndpointTestCase={dispatchToEndpointTestCase}
               />
-            );*/
+            );
         default:
             return <></>;
         }
