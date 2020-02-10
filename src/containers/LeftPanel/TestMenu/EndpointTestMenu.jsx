@@ -7,39 +7,39 @@ import EndpointTestModal from '../../NavBar/Modals/EndpointTestModal';
  */
 
 const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
-    const [isEndpointModalOpen, setIsEndpointModalOpen] = useState(false)
+  const [isEndpointModalOpen, setIsEndpointModalOpen] = useState(false);
 
-    const openEndpointModal = () => {
-        setIsEndpointModalOpen(true);
-    };
+  const openEndpointModal = () => {
+    setIsEndpointModalOpen(true);
+  };
 
-    const closeEndpointModal = () => {
-        setIsEndpointModalOpen(false);
-    };
+  const closeEndpointModal = () => {
+    setIsEndpointModalOpen(false);
+  };
 
-    /* add dispatches here. Ex:
+  /* add dispatches here. Ex:
     const handleAddMiddleware = e => {
         dispatchToEndpointTestCase(addMiddleware());
     };*/
 
-    return (
-        <div id='test'>
-            <div id={styles.testMenu}>
-                <div  id={styles.left}>
-                <button onClick={openEndpointModal}>New Redux Test +</button>
-                <EndpointTestModal
-                    isEndpointModalOpen={isEndpointModalOpen}
-                    closeEndpointModal={closeEndpointModal}
-                    dispatchToEndpointTestCase={dispatchToEndpointTestCase}
-                />                    
-                </div>
-                <div id={styles.right}>
-                    {/* add buttons here. EX: */}
-                    {/* <button onClick={handleAddMiddleware}>Middleware</button> */}
-                </div>
-            </div>
+  return (
+    <div id='test'>
+      <div id={styles.testMenu}>
+        <div id={styles.left}>
+          <button onClick={openEndpointModal}>New Test +</button>
+          <EndpointTestModal
+            isEndpointModalOpen={isEndpointModalOpen}
+            closeEndpointModal={closeEndpointModal}
+            dispatchToEndpointTestCase={dispatchToEndpointTestCase}
+          />
         </div>
-    )
-}
+        <div id={styles.right}>
+          {/* add buttons here. EX: */}
+          {/* <button onClick={handleAddMiddleware}>Middleware</button> */}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default EndpointTestMenu;

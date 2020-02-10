@@ -37,7 +37,7 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }) => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openReduxModal}>New Redux Test +</button>
+          <button onClick={openReduxModal}>New Test +</button>
           <ReduxTestModal
             isReduxModalOpen={isReduxModalOpen}
             closeReduxModal={closeReduxModal}

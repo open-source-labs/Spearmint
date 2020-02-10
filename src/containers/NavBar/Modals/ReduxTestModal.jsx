@@ -19,11 +19,11 @@ const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTest
       shouldCloseOnEsc={true}
     >
       <div id={styles.title}>
-        <p>New Redux Test</p>
+        <p>New Test</p>
       </div>
       <div id={styles.body}>
         <p id={styles.text}>
-          Do you want to switch to testing redux? All unsaved changes <br />
+          Do you want to start a new test? All unsaved changes <br />
           will be lost.
         </p>
         <span id={styles.newTestButtons}>

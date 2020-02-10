@@ -1,5 +1,9 @@
 import styles from '../TestCase/TestCase.module.scss';
-import React, { useContext } from 'react';
+import styles2 from '../../NavBar/Modals/ExportFileModal.module.scss';
+import React, { useContext, useState } from 'react';
+import ReactModal from 'react-modal';
+import HooksTestMenu from '../TestMenu/HooksTestMenu';
+import HooksTestModal from '../../NavBar/Modals/HooksTestModal';
 
 /* testCase imports */
 import TestCase from '../TestCase/TestCase';
@@ -21,33 +25,78 @@ import { toggleEndpoint } from '../../../context/endpointTestCaseActions';
 import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
 import EndpointTestCase from '../TestCase/EndpointTestCase';
 
-
-
 const TestFile = () => {
   const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
   const [{ hasReact }, dispatchToTestCase] = useContext(TestCaseContext);
   const [{ hasHooks }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
-  const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext); 
+  const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [isTestModalOpen, setIsTestModalOpen] = useState(true);
+
+  const openTestModal = () => {
+    setIsTestModalOpen(true);
+  };
+
+  const closeTestModal = () => {
+    setIsTestModalOpen(false);
+  };
 
   const handleToggleRedux = e => {
-    dispatchToReduxTestCase(toggleRedux(e.currentTarget.checked));
+    dispatchToReduxTestCase(toggleRedux());
+    dispatchToReduxTestCase(hasRedux);
+    closeTestModal();
   };
 
   const handleToggleReact = e => {
-    dispatchToTestCase(toggleReact(e.currentTarget.checked));
+    dispatchToTestCase(toggleReact());
+    dispatchToTestCase(hasReact);
+    closeTestModal();
   };
 
   const handleToggleEndpoint = e => {
-    dispatchToEndpointTestCase(toggleEndpoint(e.currentTarget.checked))
+    dispatchToEndpointTestCase(toggleEndpoint());
+    dispatchToEndpointTestCase(hasEndpoint);
+    closeTestModal();
   };
 
   const handleToggleHooks = e => {
-    dispatchToHooksTestCase(toggleHooks(e.currentTarget.checked));
+    dispatchToHooksTestCase(toggleHooks());
+    dispatchToHooksTestCase(hasHooks);
+    closeTestModal();
   };
 
   return (
     <div>
-      <section>
+      <ReactModal
+        className={styles2.modal}
+        isOpen={isTestModalOpen}
+        onRequestClose={closeTestModal}
+        contentLabel='Save?'
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        ariaHideApp={false}
+      >
+        <div id={styles2.title}>
+          <p>Test</p>
+        </div>
+        <div id={styles2.body}>
+          <p id={styles2.text}>What would you like to test?</p>
+          <span id={styles2.newTestButtons}>
+            <button id={styles2.save} onClick={handleToggleReact}>
+              React
+            </button>
+            <button id={styles2.save} onClick={handleToggleRedux}>
+              Redux
+            </button>
+            <button id={styles2.save} onClick={handleToggleHooks}>
+              Hooks/Context
+            </button>
+            <button id={styles2.save} onClick={handleToggleEndpoint}>
+              Endpoints
+            </button>
+          </span>
+        </div>
+      </ReactModal>
+      {/* <section>
         <span>
           <input type='checkbox' checked={hasRedux} onChange={handleToggleRedux} />
           <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
@@ -85,11 +134,11 @@ const TestFile = () => {
             Are You Testing Hooks / Context?
           </label>
         </span>
-      </section>
+      </section> */}
 
-      {hasRedux && ( 
-        <section >
-          <ReduxTestCase/>
+      {hasRedux && (
+        <section>
+          <ReduxTestCase />
         </section>
       )}
 
@@ -99,10 +148,10 @@ const TestFile = () => {
         </section>
       )}
 
-      {hasEndpoint && ( 
-        <section >
-          <EndpointTestCase/>
-        </section >
+      {hasEndpoint && (
+        <section>
+          <EndpointTestCase />
+        </section>
       )}
 
       {hasHooks && (
