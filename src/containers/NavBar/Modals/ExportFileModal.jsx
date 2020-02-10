@@ -509,19 +509,16 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const createPathToServer = statement => {
     let filePath = path.relative(projectFilePath, statement.serverFilePath);
     filePath = filePath.replace(/\\/g, '/');
-    testFileCode += `const app = require('../${filePath}');
+    testFileCode = `const app = require('../${filePath}');
   const supertest = require('supertest')
-  const superReq = supertest(app)\n`
+  const request = supertest(app)\n`
 
     testFileCode += '\n';
 
-    testFileCode += `app.${statement.method}('${statement.route}', async (req, res) => {
-  res.${statement.serverResponse}
-})`
   };
 
   const addEndpointTestStatements = () => {
-    testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async userFunc => {`;
+    testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async (done) => {`;
     endpointTestCase.endpointStatements.forEach(statement => {
       switch (statement.type) {
         case 'endpoint':
@@ -530,13 +527,13 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return statement;
       }
     });
-    testFileCode += 'userFunc();'
+    testFileCode += 'done();'
     testFileCode += '});';
     testFileCode += '\n';
   };
 
   const addEndpoint = statement => {
-    testFileCode += `const response = await superReq.${statement.method}('${statement.route}')`
+    testFileCode += `const response = await request.${statement.method}('${statement.route}')`
 
     testFileCode += '\n';
 
