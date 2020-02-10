@@ -94,21 +94,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             </div>
           </div>
 
-          <div id={styles.stateFlexBox}>
-            <div id={styles.state}>
-              <label htmlFor='requestBody'>
-                Server Response
-              </label>
-              <div id={styles.payloadFlexBox}>
-                <input
-                  type='text'
-                  name='serverResponse'
-                  placeholder="json( {message: 'pass!'} )"
-                  onChange={e => handleChangeEndpointFields(e, 'serverResponse')} />
-              </div>
-            </div>
-          </div>
-
             <div id={styles.stateFlexBox}>
               <div id={styles.state}>
               <label htmlFor='requestBody'>

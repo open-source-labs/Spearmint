@@ -18,7 +18,6 @@ const createEndpoint = () => ({
     serverFilePath: '',
     method: '',
     route: '',
-    serverResponse: '',
     expectedResponse: '',
     value: '',
 });
@@ -68,7 +67,6 @@ export const endpointTestCaseReducer = (state, action) => {
                     statement.serverFilePath = action.serverFilePath;
                     statement.method = action.method;
                     statement.route = action.route;
-                    statement.serverResponse = action.serverResponse;
                     statement.expectedResponse = action.expectedResponse;
                     statement.value = action.value;
                 }
