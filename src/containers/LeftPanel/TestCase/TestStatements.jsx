@@ -24,7 +24,6 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
             dispatchToTestCase={dispatchToTestCase}
           />
         );
-
       case 'render':
         return <Rerender key={statement.id} render={statement} index={i} />;
       default:
