@@ -56,7 +56,7 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
               <input
                 type='text'
                 id='hookFile'
-                placeholder='e.g. useCounter'
+                placeholder='File Name'
                 onChange={handleChangeHookFileName}
               />
             </div>

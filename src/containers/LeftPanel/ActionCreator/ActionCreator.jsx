@@ -64,7 +64,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
                 id='actionsFolder'
                 value={actionCreator.actionsFile}
                 onChange={handleChangeActionsFileName}
-                placeholder='e.g. actions'
+                placeholder='File Name'
               />
             </div>
 
@@ -75,7 +75,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
                 id='typesFolder'
                 value={actionCreator.typesFile}
                 onChange={handleChangeTypesFileName}
-                placeholder='e.g. actionTypes'
+                placeholder='File Name'
               />
             </div>
           </div>
