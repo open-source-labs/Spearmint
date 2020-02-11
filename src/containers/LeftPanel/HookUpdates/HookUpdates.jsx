@@ -52,8 +52,13 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
 
           <div id={styles.hooksFlexBox}>
             <div id={styles.hooks}>
-              <label htmlFor='hookFile'>Hook File</label>
-              <input type='text' id='hookFile' onChange={handleChangeHookFileName} />
+              <label htmlFor='hookFile'>Import Hook From</label>
+              <input
+                type='text'
+                id='hookFile'
+                placeholder='e.g. useCounter'
+                onChange={handleChangeHookFileName}
+              />
             </div>
           </div>
 
@@ -64,6 +69,7 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
                 type='text'
                 id='hook'
                 onChange={e => handleChangeHookUpdatesFields(e, 'hook')}
+                placeholder='e.g. useCounter'
               />
             </div>
             <div id={styles.cb}>
@@ -72,6 +78,7 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
                 type='text'
                 id='callbackFunc'
                 onChange={e => handleChangeHookUpdatesFields(e, 'callbackFunc')}
+                placeholder='e.g. incrementCount'
               />
             </div>
           </div>
@@ -83,6 +90,7 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
                 type='text'
                 id='managedState'
                 onChange={e => handleChangeHookUpdatesFields(e, 'managedState')}
+                placeholder='e.g. count'
               />
             </div>
             <div id={styles.state}>
@@ -91,6 +99,7 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
                 type='text'
                 id='updatedState'
                 onChange={e => handleChangeHookUpdatesFields(e, 'updatedState')}
+                placeholder='e.g. 1'
               />
             </div>
           </div>
