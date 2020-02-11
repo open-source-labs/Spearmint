@@ -53,88 +53,75 @@ const Middleware = ({ middleware, index, dispatchToReduxTestCase }) => {
           </div>
 
           <div id={styles.eventTypeFlexBox}>
-            <div>
-              <label htmlFor='typesFile'>Types File Name</label>
+            <div id={styles.middlewareBox}>
+              <label htmlFor='typesFile'>Import Middleware From</label>
               <input
                 type='text'
                 id={styles.renderInputBox}
+                placeholder='File Name'
                 value={middleware.middlewaresFile}
                 onChange={handleChangeMiddlewaresFileName}
               />
             </div>
           </div>
 
-          <div id={styles.queryFlexBox}>
-            <div id={styles.querySelector}>
-              <label htmlFor='queryVariant' className={styles.queryLabel}>
-                Query Selector
-              </label>
+          <div >
               <div id={styles.dropdownFlex}>
-                <select
-                  id='queryValue'
-                  onChange={e => handleChangeMiddlewareFields(e, 'queryValue')}
-                >
-                  {' '}
-                  <option value='' />
-                  <option value='passes_non_functional_arguments'>
-                    passes_non_functional_arguments
-                  </option>
-                  <option value='calls_the_function'>calls_the_function</option>
-                  <option value='passes_functional_arguments'>passes_functional_arguments</option>
-                </select>
-                <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
-                  <span id={styles.tooltip}>
-                    <ToolTip toolTipType={middleware.queryVariant} />
-                  </span>
-                </span>
-                <select
-                  id='queryVariant'
-                  onChange={e => handleChangeMiddlewareFields(e, 'queryVariant')}
-                >
-                  <option value='' />
-                  <option value='toBeCalled'>toBeCalled</option>
-                  <option value='toHaveBeenCalled'>toHaveBeenCalled</option>
-                  <option value='toHaveBeenCalledWith'>toHaveBeenCalledWith</option>
-                  <option value='toHaveBeenLastCalledWith'>toHaveBeenLastCalledWith</option>
-                </select>
-                <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
-                  <span id={styles.tooltip}>
-                    <ToolTip toolTipType={middleware.queryVariant} />
-                  </span>
-                </span>
-                <select
-                  id='querySelector'
-                  onChange={e => handleChangeMiddlewareFields(e, 'querySelector')}
-                >
-                  <option value='' />
-                  <option value='next'>next</option>
-                  <option value='function'>function</option>
-                  <option value='store.Dispatch'>store.Dispatch</option>
-                  <option value='store.GetState'>store.GetState</option>
-                </select>
-                <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
-                  <span id={styles.tooltip}>
-                    <ToolTip toolTipType={middleware.querySelector} />
-                  </span>
-                </span>
+                <div id={styles.middlewareDrop}>
+                <label htmlFor='typesFile'>Query Value</label>
+                  <select
+                    id='queryValue'
+                    onChange={e => handleChangeMiddlewareFields(e, 'queryValue')}
+                  >
+                    {' '}
+                    <option value='' />
+                    <option value='passes_non_functional_arguments'>
+                      passes_non_functional_arguments
+                    </option>
+                    <option value='calls_the_function'>calls_the_function</option>
+                    <option value='passes_functional_arguments'>passes_functional_arguments</option>
+                  </select>
+                </div>
+
+                <div id={styles.middlewareDrop}>
+                <label htmlFor='typesFile'>Query Variant</label>
+                  <select
+                    id='queryVariant'
+                    onChange={e => handleChangeMiddlewareFields(e, 'queryVariant')}
+                  >
+                    <option value='' />
+                    <option value='toBeCalled'>toBeCalled</option>
+                    <option value='toHaveBeenCalled'>toHaveBeenCalled</option>
+                    <option value='toHaveBeenCalledWith'>toHaveBeenCalledWith</option>
+                    <option value='toHaveBeenLastCalledWith'>toHaveBeenLastCalledWith</option>
+                  </select>
+                </div>
+
+                <div id={styles.middlewareDrop}>
+                <label htmlFor='typesFile'>Query Selector</label>
+                  <select
+                    id='querySelector'
+                    onChange={e => handleChangeMiddlewareFields(e, 'querySelector')}
+                  >
+                    <option value='' />
+                    <option value='next'>next</option>
+                    <option value='function'>function</option>
+                    <option value='store.Dispatch'>store.Dispatch</option>
+                    <option value='store.GetState'>store.GetState</option>
+                  </select>
+                </div>
+              </div>
+
+                <div id={styles.middlewareBox}>
+                <label htmlFor='typesFile'>Query Type</label>
                 <input
                   id='queryType'
+                  placeholder='eg. thunk'
                   onChange={e => handleChangeMiddlewareFields(e, 'queryType')}
                 ></input>
-                <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
-                  <span id={styles.tooltip}>
-                    <ToolTip toolTipType={middleware.querySelector} />
-                  </span>
-                </span>
-              </div>
-            </div>
-
-            <div id={styles.query}></div>
+                </div>
           </div>
+
         </div>
       )}
     </Draggable>
