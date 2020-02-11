@@ -30,7 +30,7 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }) => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openHooksModal}>New Hooks / Context Test +</button>
+          <button onClick={openHooksModal}>New Test +</button>
           <HooksTestModal
             isHooksModalOpen={isHooksModalOpen}
             closeHooksModal={closeHooksModal}

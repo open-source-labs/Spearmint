@@ -5,7 +5,7 @@ export const TestCaseContext = createContext(null);
 
 export const testCaseState = {
   testStatement: '',
-  hasReact: false,
+  hasReact: 0,
   statements: [
     {
       id: 0,
@@ -78,7 +78,7 @@ export const testCaseReducer = (state, action) => {
     case actionTypes.TOGGLE_REACT:
       return {
         ...state,
-        hasReact: !state.hasReact,
+        hasReact: state.hasReact + 1,
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       const firstRenderStatement = statements[0];
@@ -230,6 +230,7 @@ export const testCaseReducer = (state, action) => {
 
     case actionTypes.CREATE_NEW_TEST:
       return {
+        hasReact: 0,
         testStatement: '',
         statements: [
           {

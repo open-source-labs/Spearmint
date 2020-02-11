@@ -41,7 +41,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const generateTestFile = () => {
-    if (testCase.hasReact === true) {
+    if (testCase.hasReact > 0) {
       return (
         addComponentImportStatement(),
         addReactImportStatements(),
@@ -54,7 +54,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         }))
       );
     }
-    if (reduxTestCase.hasRedux === true) {
+    if (reduxTestCase.hasRedux > 0) {
       return (
         addReduxImportStatements(),
         addReduxTestStatements(),
@@ -65,7 +65,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         }))
       );
     }
-    if (hooksTestCase.hasHooks === true) {
+    if (hooksTestCase.hasHooks > 0) {
       return (
         addHooksImportStatements(),
         addHooksTestStatements(),
@@ -76,7 +76,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         }))
       );
     }
-    if (endpointTestCase.hasEndpoint === true) {
+    if (endpointTestCase.hasEndpoint > 0) {
       return (
         addEndpointImportStatements(),
         addEndpointTestStatements(),
@@ -491,8 +491,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }
   };
 
-/* --------------------------------ENDPOINT FUNCTIONS ------------------------------------------ */
-
+  /* --------------------------------ENDPOINT FUNCTIONS ------------------------------------------ */
 
   const addEndpointImportStatements = () => {
     endpointTestCase.endpointStatements.forEach(statement => {
@@ -511,10 +510,9 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     filePath = filePath.replace(/\\/g, '/');
     testFileCode = `const app = require('../${filePath}');
   const supertest = require('supertest')
-  const request = supertest(app)\n`
+  const request = supertest(app)\n`;
 
     testFileCode += '\n';
-
   };
 
   const addEndpointTestStatements = () => {
@@ -527,19 +525,18 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           return statement;
       }
     });
-    testFileCode += 'done();'
+    testFileCode += 'done();';
     testFileCode += '});';
     testFileCode += '\n';
   };
 
   const addEndpoint = statement => {
-    testFileCode += `const response = await request.${statement.method}('${statement.route}')`
+    testFileCode += `const response = await request.${statement.method}('${statement.route}')`;
 
     testFileCode += '\n';
 
-    testFileCode += `expect(response.${statement.expectedResponse}).toBe(${statement.value});`
-  }
-
+    testFileCode += `expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+  };
 
   const exportTestFile = async () => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {

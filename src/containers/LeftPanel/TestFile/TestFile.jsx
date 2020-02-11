@@ -1,5 +1,6 @@
-import styles from '../TestCase/TestCase.module.scss';
-import React, { useContext } from 'react';
+import styles from '../../NavBar/Modals/ExportFileModal.module.scss';
+import React, { useContext, useState, useEffect } from 'react';
+import ReactModal from 'react-modal';
 
 /* testCase imports */
 import TestCase from '../TestCase/TestCase';
@@ -21,91 +22,92 @@ import { toggleEndpoint } from '../../../context/endpointTestCaseActions';
 import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
 import EndpointTestCase from '../TestCase/EndpointTestCase';
 
-
+import { toggleModal } from '../../../context/testFileModalActions';
+import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
 const TestFile = () => {
   const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
   const [{ hasReact }, dispatchToTestCase] = useContext(TestCaseContext);
   const [{ hasHooks }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
-  const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext); 
+  const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+
+  const closeTestModal = () => {
+    dispatchToTestFileModal(toggleModal());
+  };
 
   const handleToggleRedux = e => {
-    dispatchToReduxTestCase(toggleRedux(e.currentTarget.checked));
+    dispatchToReduxTestCase(toggleRedux());
+    closeTestModal();
   };
 
   const handleToggleReact = e => {
-    dispatchToTestCase(toggleReact(e.currentTarget.checked));
+    dispatchToTestCase(toggleReact());
+    closeTestModal();
   };
 
   const handleToggleEndpoint = e => {
-    dispatchToEndpointTestCase(toggleEndpoint(e.currentTarget.checked))
+    dispatchToEndpointTestCase(toggleEndpoint());
+    closeTestModal();
   };
 
   const handleToggleHooks = e => {
-    dispatchToHooksTestCase(toggleHooks(e.currentTarget.checked));
+    dispatchToHooksTestCase(toggleHooks());
+    closeTestModal();
   };
 
   return (
     <div>
-      <section>
-        <span>
-          <input type='checkbox' checked={hasRedux} onChange={handleToggleRedux} />
-          <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
-            Are You Testing Redux?
-          </label>
-        </span>
-      </section>
-
-      <section>
-        <span>
-          <input type='checkbox' checked={hasReact} onChange={handleToggleReact} />
-          <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
-            Are You Testing React?
-          </label>
-        </span>
-      </section>
-
-      <section>
-        <span>
-          <input 
-          type='checkbox'
-          checked={hasEndpoint}
-          onChange={handleToggleEndpoint}
-          />
-          <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
-            Are You Testing Endpoint?
-          </label>
+      <ReactModal
+        className={styles.modal}
+        isOpen={isTestModalOpen}
+        onRequestClose={closeTestModal}
+        contentLabel='Save?'
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        ariaHideApp={false}
+      >
+        <div id={styles.title}>
+          <p>Test</p>
+        </div>
+        <div id={styles.body}>
+          <p id={styles.text}>What would you like to test?</p>
+          <span id={styles.newTestButtons}>
+            <button id={styles.save} onClick={handleToggleReact}>
+              React
+            </button>
+            <button id={styles.save} onClick={handleToggleRedux}>
+              Redux
+            </button>
+            <button id={styles.save} onClick={handleToggleHooks}>
+              Hooks/Context
+            </button>
+            <button id={styles.save} onClick={handleToggleEndpoint}>
+              Endpoints
+            </button>
           </span>
-      </section>
+        </div>
+      </ReactModal>
 
-      <section>
-        <span>
-          <input type='checkbox' checked={hasHooks} onChange={handleToggleHooks} />
-          <label htmlFor='mock-data-checkbox' id={styles.checkboxLabel}>
-            Are You Testing Hooks / Context?
-          </label>
-        </span>
-      </section>
-
-      {hasRedux && ( 
-        <section >
-          <ReduxTestCase/>
+      {hasRedux > 0 && (
+        <section>
+          <ReduxTestCase />
         </section>
       )}
 
-      {hasReact && (
+      {hasReact > 0 && (
         <section>
           <TestCase />
         </section>
       )}
 
-      {hasEndpoint && ( 
-        <section >
-          <EndpointTestCase/>
-        </section >
+      {hasEndpoint > 0 && (
+        <section>
+          <EndpointTestCase />
+        </section>
       )}
 
-      {hasHooks && (
+      {hasHooks > 0 && (
         <section>
           <HooksTestCase />
         </section>
