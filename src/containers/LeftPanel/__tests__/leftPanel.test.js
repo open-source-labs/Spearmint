@@ -93,10 +93,7 @@ describe('testing left panel', () => {
     expect(wrapper.text()).toContain('Rerender');
   });
 
-  // Rachel's tests from here
-  it('new assertion card is produced when assertion button is clicked', () => {
-    
-  });
+  it('new assertion card is produced when assertion button is clicked', () => {});
 
   it('action card is removed when delete button is clicked', () => {});
 
