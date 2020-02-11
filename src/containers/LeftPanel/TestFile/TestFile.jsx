@@ -83,7 +83,7 @@ const TestFile = () => {
               Hooks/Context
             </button>
             <button id={styles.save} onClick={handleToggleEndpoint}>
-              Endpoints
+              Endpoint
             </button>
           </span>
         </div>
