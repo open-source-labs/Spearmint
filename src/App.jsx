@@ -75,7 +75,6 @@ const App = () => {
        */
       <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          {/* value wrapped in array since Provider only takes in one value */}
           <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
               <EndpointTestCaseContext.Provider
