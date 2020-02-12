@@ -1,6 +1,7 @@
 import React from 'react';
 import LeftPanel from '../LeftPanel';
 import TestCase from '../TestCase/TestCase';
+import ReduxTestCase from '../TestCase/ReduxTestCase';
 import TestFile from '../TestFile/TestFile';
 import TestMenu from '../../LeftPanel/TestMenu/TestMenu';
 import { GlobalContext } from '../../../context/globalReducer';
@@ -50,7 +51,7 @@ beforeEach(() => {
     <GlobalContext.Provider value={[global, dispatchToGlobal]}>
       <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
         <LeftPanel />
-        {/* <TestCase /> */}
+        <ReduxTestCase />
       </ReduxTestCaseContext.Provider>
     </GlobalContext.Provider>
   );
@@ -61,7 +62,7 @@ beforeEach(() => {
 describe('testing left panel', () => {
   it('renders the left panel with initial buttons and first render boxes', () => {
     expect(1).toEqual(1)
-    expect(wrapper.text()).toContain('Reducer');
+    // expect(wrapper.text()).toContain('Reducer');
     // expect(wrapper.text()).toContain('Action Creator');
     // expect(wrapper.text()).toContain('Async Action Creator');
     // expect(wrapper.text()).toContain('Middleware');
