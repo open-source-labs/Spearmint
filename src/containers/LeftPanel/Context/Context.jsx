@@ -48,129 +48,119 @@ const Context = ({ context, index, dispatchToHooksTestCase }) => {
           </div>
 
           <div>
-            <div id={styles.queryFlexBox}>
               <div id={styles.querySelector}>
-                <label htmlFor='queryVariant' className={styles.queryLabel}>
-                  Query Selector
-                </label>
+                <div id={styles.contextBox}> 
+                  <label htmlFor='contextFile'>Import Context From</label>
+                    <input
+                      type='text'
+                      id='contextFile'
+                      placeholder='File Name'
+                      value={context.contextFile}
+                      onChange={handleChangeContextFileName}
+                    />
+                </div>
+
                 <div id={styles.dropdownFlex}>
                   {/* drop downs */}
-                  <select
-                    id='queryValue'
-                    onChange={e => handleChangeContextFields(e, 'queryValue')}
-                  >
-                    <option value='' />
-                    <option value='shows_default_value'>shows_default_value</option>
-                    <option value='shows_value_from_provider'>shows_value_from_provider</option>
-                    <option value='component_provides_context_value'>
-                      component_provides_context_value
-                    </option>
-                    <option value='renders_providers_+_consumers_normally'>
-                      renders_providers_+_consumers_normally
-                    </option>
-                  </select>
-                  <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTip toolTipType={context.queryVariant} />
-                    </span>
-                  </span>
+                  <div id={styles.contextDrop}> 
+                    <label htmlFor='queryVariant' className={styles.queryLabel}>
+                    Test Type
+                    </label>
+                    <select
+                      id='queryValue'
+                      onChange={e => handleChangeContextFields(e, 'queryValue')}
+                    >
+                      <option value='' />
+                      <option value='shows_default_value'>shows_default_value</option>
+                      <option value='shows_value_from_provider'>shows_value_from_provider</option>
+                      <option value='component_provides_context_value'>
+                        component_provides_context_value
+                      </option>
+                      <option value='renders_providers_+_consumers_normally'>
+                        renders_providers_+_consumers_normally
+                      </option>
+                    </select>
+                  </div>
 
-                  <select
-                    id='queryVariant'
-                    onChange={e => handleChangeContextFields(e, 'queryVariant')}
-                  >
-                    <option value='' />
-                    <option value='toHaveTextContext'>toHaveTextContext</option>
-                    <option value='toBeInTheDocument'>toBeInTheDocument</option>
-                    <option value='toBe'>toBe</option>
-                  </select>
-                  <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTip toolTipType={context.queryVariant} />
-                    </span>
-                  </span>
+                  <div id={styles.contextDrop}> 
+                    <label htmlFor='queryVariant' className={styles.queryLabel}>
+                    Query Variant
+                    </label>
+                    <select
+                      id='queryVariant'
+                      onChange={e => handleChangeContextFields(e, 'queryVariant')}
+                    >
+                      <option value='' />
+                      <option value='toHaveTextContext'>toHaveTextContext</option>
+                      <option value='toBeInTheDocument'>toBeInTheDocument</option>
+                      <option value='toBe'>toBe</option>
+                    </select>
+                  </div>
 
-                  <select
-                    id='querySelector'
-                    onChange={e => handleChangeContextFields(e, 'querySelector')}
-                  >
-                    <option value='' />
-                    <option value='getByText'>getByText</option>
-                  </select>
-                  <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTip toolTipType={context.queryVariant} />
-                    </span>
-                  </span>
+                  <div id={styles.contextDrop}> 
+                    <label htmlFor='queryVariant' className={styles.queryLabel}>
+                    Query Selector
+                    </label>
+                    <select
+                      id='querySelector'
+                      onChange={e => handleChangeContextFields(e, 'querySelector')}
+                    >
+                      <option value='' />
+                      <option value='getByText'>getByText</option>
+                    </select>
+                  </div>
                 </div>
+
                 <div id={styles.queryFlexBox}>
                   {/* input boxes */}
-                  <input
-                    id='consumerComponent'
-                    onChange={e => handleChangeContextFields(e, 'consumerComponent')}
-                  ></input>
-                  <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTip toolTipType={context.querySelector} />
-                    </span>
-                  </span>
+                  <div id={styles.contextBox}> 
+                    <label htmlFor='queryVariant' className={styles.queryLabel}>
+                    Consumer Component
+                    </label>
+                    <input
+                      id='consumerComponent'
+                      placeholder='eg. nameOfConsumer'
+                      onChange={e => handleChangeContextFields(e, 'consumerComponent')}
+                    ></input>
+                  </div>
 
-                  <input
-                    id='providerComponent'
-                    onChange={e => handleChangeContextFields(e, 'providerComponent')}
-                  ></input>
-                  <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTip toolTipType={context.querySelector} />
-                    </span>
-                  </span>
+                  <div id={styles.contextBox}> 
+                    <label htmlFor='queryVariant' className={styles.queryLabel}>
+                    Provider Component
+                    </label>
+                    <input
+                      id='providerComponent'
+                      placeholder='eg. nameOfProvider'
+                      onChange={e => handleChangeContextFields(e, 'providerComponent')}
+                    ></input>
+                  </div>
                 </div>
+
                 <div id={styles.queryFlexBox}>
+                <div id={styles.contextBox}> 
+                  <label htmlFor='queryVariant' className={styles.queryLabel}>
+                    Context
+                  </label>
                   <input
                     id='context'
+                    placeholder='eg. nameOfContext'
                     onChange={e => handleChangeContextFields(e, 'context')}
                   ></input>
-                  <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTip toolTipType={context.querySelector} />
-                    </span>
-                  </span>
+                  </div>
 
-                  <input id='values' onChange={e => handleChangeContextFields(e, 'values')}></input>
-                  <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTip toolTipType={context.querySelector} />
-                    </span>
-                  </span>
-
-                  <input
-                    id='textNode'
-                    onChange={e => handleChangeContextFields(e, 'textNode')}
-                  ></input>
-                  <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTip toolTipType={context.querySelector} />
-                    </span>
-                  </span>
-                  <label htmlFor='contextFile'>Context File</label>
-                  <input
-                    type='text'
-                    id='contextFile'
-                    value={context.contextFile}
-                    onChange={handleChangeContextFileName}
-                  />
+                <div id={styles.contextBox}> 
+                  <label htmlFor='queryVariant' className={styles.queryLabel}>
+                  Value To Pass
+                  </label>
+                  <input 
+                  id='values' 
+                  placeholder='eg. theValueToPassWithContext'
+                  onChange={e => handleChangeContextFields(e, 'values')}></input>
+                </div>
                 </div>
               </div>
+
             </div>
-          </div>
         </div>
       )}
     </Draggable>
