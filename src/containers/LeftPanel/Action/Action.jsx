@@ -37,22 +37,6 @@ const Action = ({ action, index, dispatchToTestCase }) => {
     return eventsWithValues.includes(eventType);
   };
 
-  // const dropDownMockOptions = [];
-  // mockData.forEach(mockDatum => {
-  //   mockDatum.fieldKeys.forEach(key => {
-  //     dropDownMockOptions.push(`mock${mockDatum.name}.${key.fieldKey}`);
-  //   });
-  //   dropDownMockOptions.push(`[mock${mockDatum.name}]`);
-  //   dropDownMockOptions.push(`{mock${mockDatum.name}}`);
-  // });
-
-  // let options = dropDownMockOptions.map(option => {
-  //   return (
-  //     <option id='eventValue' value={option}>
-  //       {option}
-  //     </option>
-  //   );
-  // });
   return (
     <Draggable draggableId={action.id.toString()} index={index}>
       {provided => (

@@ -11,7 +11,6 @@ const ReduxTestCase = () => {
     ReduxTestCaseContext
   );
 
-  /* here we are sending actions to the reducer  */
   const handleUpdateReduxTestStatement = e => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));
   };

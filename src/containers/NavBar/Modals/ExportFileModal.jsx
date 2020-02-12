@@ -275,7 +275,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const createPathToReducers = statement => {
     let filePath = path.relative(projectFilePath, statement.reducersFilePath);
     filePath = filePath.replace(/\\/g, '/');
-    testFileCode += `import * as reducers from '../${filePath}';`;
+    testFileCode += `import ${statement.reducerName} from '../${filePath}';`;
   };
 
   // Types Filepath
@@ -406,9 +406,9 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }
   };
 
-  // Reducer Jest Test Code - Linda to refactor 2/1
+  // Reducer Jest Test Code 
   const addReducer = reducer => {
-    testFileCode += `expect(${reducer.queryValue}(${reducer.querySelector},${reducer.queryVariant})).toEqual(${reducer.matcherValue})`;
+    testFileCode += `expect(${reducer.reducerName}(${reducer.initialState},{${reducer.reducerAction}})).toEqual(${reducer.expectedState})`;
   };
 
   // Async AC Jest Test Code
@@ -449,7 +449,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // Hook: Renders Jest Test Code
   const addHookRender = hookRender => {
-    testFileCode += `const {result} = renderHook((${hookRender.parameterOne}) => ${hookRender.hook}())
+    testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameterOne}))
     expect(result.current.${hookRender.returnValue}).toBe(${hookRender.expectedReturnValue})`;
   };
 
