@@ -52,35 +52,38 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
 
           <div id={styles.hookRenderFlexBox}>
             <div id={styles.hookRenderType}>
-              <label htmlFor='hookFuncFolder' placeholder='File Name'>Import Hook From</label>
-              <input type='text' id='hookFuncFolder' onChange={handleChangeHookFileName} />
+              <label htmlFor='hookFuncFolder'>Import Hook From</label>
+              <input type='text' id='hookFuncFolder' placeholder='File Name' onChange={handleChangeHookFileName} />
             </div>
           </div>
           <div id={styles.hookRenderFlexBox}>
             <div id={styles.hookRenderType}>
-              <label htmlFor='hook' placeholder='Hook Name'>Hook</label>
+              <label htmlFor='hook'>Hook</label>
               <input
                 type='text'
                 id='hook'
+                placeholder='Hook Name'
                 onChange={e => handleChangeHookRenderFields(e, 'hook')}
               />
             </div>
 
             <div id={styles.hookRenderType}>
-              <label htmlFor='parameterOne' placeholder='Hook Function Parameter'>Parameter (optional)</label>
+              <label htmlFor='parameterOne'>Parameter (optional)</label>
               <input
                 type='text'
                 id='parameterOne'
+                placeholder='Hook Function Parameter'
                 onChange={e => handleChangeHookRenderFields(e, 'parameterOne')}
               />
             </div>
           </div>
           <div id={styles.hookRenderFlexBox}>
             <div id={styles.hookRenderType}>
-              <label htmlFor='returnValue' placeholder='Return Value'>Return Value</label>
+              <label htmlFor='returnValue'>Return Value</label>
               <input
                 type='text'
                 id='returnValue'
+                placeholder='Return Value'
                 onChange={e => handleChangeHookRenderFields(e, 'returnValue')}
               />
             </div>
