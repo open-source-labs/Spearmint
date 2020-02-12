@@ -1,5 +1,3 @@
-// component to be rendered in the electron app
-
 import React, { useContext } from 'react';
 import styles from '../Thunk/Thunk.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
@@ -9,7 +7,6 @@ import {
   updateActionsFilePath,
   updateTypesFilePath,
 } from '../../../context/reduxTestCaseActions';
-import ToolTip from '../ToolTip/ToolTip';
 import ToolTipAsync from '../ToolTip/ToolTipAsync';
 import { Draggable } from 'react-beautiful-dnd';
 const closeIcon = require('../../../assets/images/close.png');
@@ -59,20 +56,21 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
 
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
-              <label htmlFor='actionsFile'>Actions File Name</label>
+              <label htmlFor='actionsFile'>Import Actions From</label>
               <input
                 type='text'
+                placeholder='File Name'
                 id={styles.renderInputBox}
                 value={async.actionsFile}
                 onChange={handleChangeActionsFileName}
               />
             </div>
-            {/* trying to align question tooltip question mark */}
 
             <div id={styles.files}>
-              <label htmlFor='typesFile'>Types File Name</label>
+              <label htmlFor='typesFile'>Import Actions Types From</label>
               <input
                 type='text'
+                placeholder='File Name'
                 id={styles.renderInputBox}
                 value={async.typesFile}
                 onChange={handleChangeTypesFileName}
@@ -90,7 +88,6 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
               />
             </div>
 
-            {/* <div id={styles.queryFlexBox}> */}
             <div id={styles.querySelector}>
               <label htmlFor='method'>Method</label>
               <div id={styles.dropdownFlex}>
@@ -105,13 +102,6 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
                   <option value='put'>put</option>
                   <option value='delete'>delete</option>
                 </select>
-                {/* <span id={styles.hastooltip} role='tooltip'>
-                    <img src={questionIcon} alt='help' />
-                    <span id={styles.tooltip}>
-                      <ToolTipAsync toolTipType={`method`} />
-                    </span>
-                  </span> */}
-                {/* </div> */}
               </div>
             </div>
             <div id={styles.files}>
@@ -123,12 +113,6 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
                   placeholder='eg. /route'
                   onChange={e => handleChangeAsyncFields(e, 'route')}
                 />
-                {/* <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
-                  <span id={styles.tooltip}>
-                    <ToolTipAsync toolTipType={`route`} />
-                  </span>
-                </span> */}
               </div>
             </div>
           </div>
