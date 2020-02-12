@@ -95,7 +95,10 @@ describe('testing left panel', () => {
 
   // Rachel's tests from here
   it('new assertion card is produced when assertion button is clicked', () => {
-    
+        const button = wrapper.find('.assertionButton')
+    // button.simulate('click');
+    expect(button.text()).toBe('Assertion');
+    // expect(testCase.statements.length).toEqual(3);
   });
 
   it('action card is removed when delete button is clicked', () => {});
