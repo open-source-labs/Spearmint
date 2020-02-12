@@ -48,10 +48,11 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
 
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
-              <label htmlFor='endpointFile'>Server File Name</label>
+              <label htmlFor='endpointFile'>Import Server From</label>
               <div id={styles.payloadFlexBox}>
                 <input
                   type='text'
+                  placeholder='File Name'
                   id={styles.renderInputBox}
                   value={endpoint.serverFile}
                   onChange={handleChangeServerFileName}
@@ -103,7 +104,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                   <input
                     type='text'
                     name='expectedResponse'
-                    placeholder="body.yourKey or status"
+                    placeholder="body.key or status"
                     onChange={e => handleChangeEndpointFields(e, 'expectedResponse')} />
                 </div>
               </div>
