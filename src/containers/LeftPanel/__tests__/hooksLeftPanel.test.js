@@ -6,7 +6,6 @@ import { GlobalContext } from '../../../context/globalReducer';
 import { TestFileModalContext } from '../../../context/testFileModalReducer';
 import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
 
-import '@testing-library/jest-dom/extend-expect';
 import { mount } from 'enzyme';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
