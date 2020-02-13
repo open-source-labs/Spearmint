@@ -41,13 +41,13 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }) => {
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
         >
-          <button data-testid='hookRenderButton' onClick={handleAddHookRender}>
+          <button className='hookRenderButton' onClick={handleAddHookRender}>
             Hook: Rendering
           </button>
-          <button data-testid='hookUpdatesButton' onClick={handleAddHookUpdates}>
+          <button className='hookUpdatesButton' onClick={handleAddHookUpdates}>
             Hook: Updates
           </button>
-          <button data-testid='contextButton' onClick={handleAddContexts}>
+          <button className='contextButton' onClick={handleAddContexts}>
             Context
           </button>
         </div>
