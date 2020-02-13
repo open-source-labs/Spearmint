@@ -262,6 +262,36 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += '\n';
   };
 
+  /* ------------------------------------------ ENDPOINT IMPORT + TEST STATEMENTS ------------------------------------------ */
+
+  // Endpoint Import Statements
+  const addEndpointImportStatements = () => {
+    endpointTestCase.endpointStatements.forEach(statement => {
+      switch (statement.type) {
+        case 'endpoint':
+          return createPathToServer(statement);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += '\n';
+  };
+
+  const addEndpointTestStatements = () => {
+    testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async (done) => {`;
+    endpointTestCase.endpointStatements.forEach(statement => {
+      switch (statement.type) {
+        case 'endpoint':
+          return addEndpoint(statement);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += 'done();';
+    testFileCode += '});';
+    testFileCode += '\n';
+  };
+
   /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
   // Actions Filepath
@@ -306,6 +336,17 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
   };
 
+  // Endpoint Filepath
+  const createPathToServer = statement => {
+    let filePath = path.relative(projectFilePath, statement.serverFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode = `const app = require('../${filePath}');
+  const supertest = require('supertest')
+  const request = supertest(app)\n`;
+
+    testFileCode += '\n';
+  };
+
   /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
 
   const addMockData = () => {
@@ -338,6 +379,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
+
   // Action Jest Test Code
   const addAction = action => {
     if (action.eventValue) {
@@ -491,52 +533,13 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }
   };
 
-  /* --------------------------------ENDPOINT FUNCTIONS ------------------------------------------ */
-
-  const addEndpointImportStatements = () => {
-    endpointTestCase.endpointStatements.forEach(statement => {
-      switch (statement.type) {
-        case 'endpoint':
-          return createPathToServer(statement);
-        default:
-          return statement;
-      }
-    });
-    testFileCode += '\n';
-  };
-
-  const createPathToServer = statement => {
-    let filePath = path.relative(projectFilePath, statement.serverFilePath);
-    filePath = filePath.replace(/\\/g, '/');
-    testFileCode = `const app = require('../${filePath}');
-  const supertest = require('supertest')
-  const request = supertest(app)\n`;
-
-    testFileCode += '\n';
-  };
-
-  const addEndpointTestStatements = () => {
-    testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async (done) => {`;
-    endpointTestCase.endpointStatements.forEach(statement => {
-      switch (statement.type) {
-        case 'endpoint':
-          return addEndpoint(statement);
-        default:
-          return statement;
-      }
-    });
-    testFileCode += 'done();';
-    testFileCode += '});';
-    testFileCode += '\n';
-  };
-
+  // Endpoint Jest Test Code
   const addEndpoint = statement => {
-    testFileCode += `const response = await request.${statement.method}('${statement.route}')`;
-
-    testFileCode += '\n';
-
-    testFileCode += `expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+    testFileCode += `const response = await request.${statement.method}('${statement.route}')
+    expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
   };
+
+  /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
 
   const exportTestFile = async () => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {
