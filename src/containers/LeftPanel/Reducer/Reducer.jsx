@@ -80,7 +80,7 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
               <input
                 type='text'
                 id='reducerName'
-                placeholder='Reducer Name'
+                placeholder='eg. todoReducer'
                 onChange={e => handleChangeReducerFields(e, 'reducerName')}
               />
             </div>
@@ -90,7 +90,7 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
               <input
                 type='text'
                 id='initialState'
-                placeholder='Initial State'
+                placeholder="eg. { key: value }"
                 onChange={e => handleChangeReducerFields(e, 'initialState')}
               />
             </div>
@@ -102,7 +102,7 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
               <input
                 type='text'
                 id='reducerAction'
-                placeholder='Action'
+                placeholder="eg. type: types.ADD_TASK"
                 onChange={e => handleChangeReducerFields(e, 'reducerAction')}
               />
             </div>
@@ -111,7 +111,7 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
               <label htmlFor='expectedState'>Updated State</label>
               <input
                 type='text'
-                placeholder='Expected State'
+                placeholder="eg. { key: updated-value }"
                 id='expectedState'
                 onChange={e => handleChangeReducerFields(e, 'expectedState')}
               />

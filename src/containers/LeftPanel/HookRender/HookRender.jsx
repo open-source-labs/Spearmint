@@ -62,17 +62,17 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
               <input
                 type='text'
                 id='hook'
-                placeholder='Hook Name'
+                placeholder='eg. useCounter'
                 onChange={e => handleChangeHookRenderFields(e, 'hook')}
               />
             </div>
 
             <div id={styles.hookRenderType}>
-              <label htmlFor='parameterOne'>Parameter (optional)</label>
+              <label htmlFor='parameterOne'>Hook Parameter (optional)</label>
               <input
                 type='text'
                 id='parameterOne'
-                placeholder='Hook Function Parameter'
+                placeholder='eg. 9000'
                 onChange={e => handleChangeHookRenderFields(e, 'parameterOne')}
               />
             </div>
@@ -83,7 +83,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
               <input
                 type='text'
                 id='returnValue'
-                placeholder='Return Value'
+                placeholder='eg. count'
                 onChange={e => handleChangeHookRenderFields(e, 'returnValue')}
               />
             </div>
@@ -92,7 +92,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
               <input
                 type='text'
                 id='expectedReturnValue'
-                placeholder='Expected Return Value'
+                placeholder='eg. 0'
                 onChange={e => handleChangeHookRenderFields(e, 'expectedReturnValue')}
               />
             </div>

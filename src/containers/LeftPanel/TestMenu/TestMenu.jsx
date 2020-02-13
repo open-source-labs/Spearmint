@@ -38,8 +38,8 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
         >
-          <button onClick={handleAddAction}>Action</button>
-          <button data-testid='assertionButton' onClick={handleAddAssertion}>
+          <button data-testid="actionButton" onClick={handleAddAction}>Action</button>
+          <button data-testid='assertionButton' className='assertionButton' onClick={handleAddAssertion}>
             Assertion
           </button>
           <button data-testid='rerenderButton' onClick={handleAddRender}>
