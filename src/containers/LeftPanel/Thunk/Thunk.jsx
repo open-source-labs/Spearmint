@@ -45,17 +45,17 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          id={styles.actionCreator}
+          id={styles.modal}
         >
           <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAsync} />
 
-          <div id={styles.actionCreatorHeader}>
+          <div id={styles.header}>
             <img src={dragIcon} alt='drag' />
             <h3>Async</h3>
           </div>
 
-          <div id={styles.filesFlexBox}>
-            <div id={styles.files}>
+          <div id={styles.groupFlexbox}>
+            <div id={styles.labelInput}>
               <label htmlFor='actionsFile'>Import Actions From</label>
               <input
                 type='text'
@@ -66,7 +66,7 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
               />
             </div>
 
-            <div id={styles.files}>
+            <div id={styles.labelInput}>
               <label htmlFor='typesFile'>Import Actions Types From</label>
               <input
                 type='text'
@@ -78,8 +78,8 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
             </div>
           </div>
 
-          <div id={styles.filesFlexBox}>
-            <div id={styles.files}>
+          <div id={styles.groupFlexbox}>
+            <div id={styles.labelInput}>
               <label htmlFor='asyncFunction'>Async Function</label>
               <input
                 type='text'
@@ -88,7 +88,7 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
               />
             </div>
 
-            <div id={styles.querySelector}>
+            <div id={styles.dropdownWrapper}>
               <label htmlFor='method'>Method</label>
               <div id={styles.dropdownFlex}>
                 <select
@@ -104,9 +104,9 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
                 </select>
               </div>
             </div>
-            <div id={styles.files}>
+            <div id={styles.labelInput}>
               <label htmlFor='route'>Route</label>
-              <div id={styles.payloadFlexBox}>
+              <div id={styles.inputFlexBox}>
                 <input
                   type='text'
                   name='route'
@@ -117,10 +117,10 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
             </div>
           </div>
 
-          <div id={styles.filesFlexBox}>
-            <div id={styles.files}>
+          <div id={styles.groupFlexbox}>
+            <div id={styles.labelInput}>
               <label htmlFor='requestBody'>Request Body</label>
-              <div id={styles.payloadFlexBox}>
+              <div id={styles.inputFlexBox}>
                 <input
                   type='text'
                   name='requestBody'
@@ -135,9 +135,9 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
               </div>
             </div>
 
-            <div id={styles.files}>
+            <div id={styles.labelInput}>
               <label htmlFor='store'>Store</label>
-              <div id={styles.payloadFlexBox}>
+              <div id={styles.inputFlexBox}>
                 <input
                   type='text'
                   name='store'
@@ -153,8 +153,8 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
             </div>
           </div>
 
-          <div id={styles.queryFlexBox}>
-            <div id={styles.querySelector}>
+          <div id={styles.groupFlexbox}>
+            <div id={styles.dropdownWrapper}>
               <label htmlFor='matcher'>Matcher</label>
               <div id={styles.dropdownFlex}>
                 <select
@@ -169,9 +169,9 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
               </div>
             </div>
 
-            <div id={styles.files}>
+            <div id={styles.labelInput}>
               <label htmlFor='expectedResponse'>Expected Response</label>
-              <div id={styles.payloadFlexBox}>
+              <div id={styles.inputFlexBox}>
                 <input
                   type='text'
                   name='expectedResponse'

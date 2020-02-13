@@ -36,7 +36,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          id={styles.actionCreator}
+          id={styles.modal}
         >
           <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteEndpoint} />
 
@@ -46,8 +46,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
           </div>
 
 
-          <div id={styles.filesFlexBox}>
-            <div id={styles.files}>
+          <div id={styles.groupFlexbox}>
+            <div id={styles.labelInput}>
               <label htmlFor='endpointFile'>Import Server From</label>
               <div id={styles.payloadFlexBox}>
                 <input
@@ -61,8 +61,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             </div>
           </div>
 
-          <div id={styles.filesFlexBox}>
-            <div id={styles.querySelector}>
+          <div id={styles.groupFlexbox}>
+            <div id={styles.dropdownWrapper}>
               <label htmlFor='method'>
                 Method
                 </label>
@@ -81,11 +81,11 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
               </div>
             </div>
 
-            <div id={styles.files}>
+            <div id={styles.labelInput}>
               <label htmlFor='route'>
                 Route
               </label>
-              <div id={styles.payloadFlexBox}>
+              <div id={styles.inputFlexBox}>
                 <input
                   type='text'
                   name='route'
@@ -95,12 +95,12 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             </div>
           </div>
 
-            <div id={styles.stateFlexBox}>
-              <div id={styles.state}>
+          <div id={styles.groupFlexbox}>
+            <div id={styles.labelInput}>
               <label htmlFor='requestBody'>
                 Expected Response
               </label>
-                <div id={styles.payloadFlexBox}>
+              <div id={styles.inputFlexBox}>
                   <input
                     type='text'
                     name='expectedResponse'
@@ -111,11 +111,11 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
 
             <span id={styles.matcher}>toBe</span>
 
-                <div id={styles.state}>
+            <div id={styles.labelInput}>
                 <label htmlFor='value'>
                   Value
               </label>
-                <div id={styles.payloadFlexBox}>
+              <div id={styles.inputFlexBox}>
                   <input
                     type='text'
                     name='value'
