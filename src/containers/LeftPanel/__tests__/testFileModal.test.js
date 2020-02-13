@@ -8,7 +8,6 @@ import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
 import { TestCaseContext } from '../../../context/testCaseReducer';
 import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
 
-import '@testing-library/jest-dom/extend-expect';
 import { mount } from 'enzyme';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
