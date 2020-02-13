@@ -1,8 +1,3 @@
-/**
- * Spearmint app homepage
- * to import a project file or enter url
- */
-
 import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/globalReducer';

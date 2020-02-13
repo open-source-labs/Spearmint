@@ -1,7 +1,3 @@
-/**
- * left hand window pane for file tree
- */
-
 import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
