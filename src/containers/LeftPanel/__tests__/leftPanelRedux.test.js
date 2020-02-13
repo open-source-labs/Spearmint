@@ -85,12 +85,4 @@ describe('testing left panel redux test menu', () => {
   it('there should be 5 buttons', () => {
     expect(wrapper.find('button').length).toEqual(5)
   });
-
-  xit('action card is removed when delete button is clicked', () => { });
-
-  xit('clicking the mock data checkbox renders mock data input fields', () => { });
-
-  xit('props table displays when prop checkbox on Render card is clicked', () => { });
-
-  xit('wipes existing test statements when new test button is clicked ', () => { });
 });
