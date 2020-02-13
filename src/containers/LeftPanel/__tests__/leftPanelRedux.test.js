@@ -1,29 +1,15 @@
 import React from 'react';
-import LeftPanel from '../LeftPanel';
-import TestCase from '../TestCase/TestCase';
 import ReduxTestCase from '../TestCase/ReduxTestCase';
-import TestFile from '../TestFile/TestFile';
-import TestMenu from '../../LeftPanel/TestMenu/TestMenu';
 import { GlobalContext } from '../../../context/globalReducer';
 import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
-
-import { render, fireEvent } from '@testing-library/react';
-import { build, fake } from 'test-data-bot';
-import '@testing-library/react/cleanup-after-each';
-import 'jest-dom/extend-expect';
-
-import { shallow, mount } from 'enzyme';
-import ReactDOM from 'react-dom';
-import { act } from 'react-dom/test-utils';
-
-import { configure } from 'enzyme';
+import { TestFileModalContext } from '../../../context/testFileModalReducer';
+import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import { exportAllDeclaration } from '@babel/types';
-import Rerender from '../Render/Rerender';
-import Assertion from '../Assertion/Assertion';
+import Reducer from '../Reducer/Reducer';
+
 configure({ adapter: new Adapter() });
 
-let wrapper, globalM, dispatchToGlobal, reduxTestCase, dispatchToReduxTestCase;
+let wrapper, globalM, dispatchToGlobal, reduxTestCase, dispatchToReduxTestCase, testFileModal, dispatchToTestFileModal;
 
 beforeEach(() => {
   globalM = {
@@ -41,39 +27,63 @@ beforeEach(() => {
   };
   dispatchToGlobal = jest.fn();
   reduxTestCase = {
-    testStatement: '',
-    statements: [],
+    reduxTestStatement: '',
+    reduxStatements: [],
     hasRedux: 1,
   };
+
+  testFileModal = {}
+  dispatchToTestFileModal = jest.fn();
+
   dispatchToReduxTestCase = jest.fn();
 
   wrapper = mount(
     <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-      <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-        <LeftPanel />
-        <ReduxTestCase />
-      </ReduxTestCaseContext.Provider>
+      <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
+        <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
+          <ReduxTestCase />
+        </ReduxTestCaseContext.Provider>
+      </TestFileModalContext.Provider>
     </GlobalContext.Provider>
   );
 
   jest.resetModules();
 });
 
-describe('testing left panel', () => {
-  it('renders the left panel with initial buttons and first render boxes', () => {
-    expect(1).toEqual(1)
-    // expect(wrapper.text()).toContain('Reducer');
-    // expect(wrapper.text()).toContain('Action Creator');
-    // expect(wrapper.text()).toContain('Async Action Creator');
-    // expect(wrapper.text()).toContain('Middleware');
+describe('testing left panel redux test menu', () => {
+  it('renders the redux menu with initial buttons and first render boxes', () => {
+    expect(wrapper.text()).toContain('Reducer');
+    expect(wrapper.text()).toContain('Action Creator');
+    expect(wrapper.text()).toContain('Async Action Creator');
+    expect(wrapper.text()).toContain('Middleware');
   });
 
-  // Rachel's tests from here
-  xit('new assertion card is produced when assertion button is clicked', () => {
-    // const button = wrapper.find('.assertionButton')
-    // button.simulate('click');
-    // expect(button.text()).toBe('Assertion');
-    // expect(testCase.statements.length).toEqual(3);
+  it('onclick function is invoked when reducer button is clicked', () => {
+    const button = wrapper.find('[data-testid="reducerButton"]')
+    button.simulate('click');
+    expect(dispatchToReduxTestCase).toHaveBeenCalled();
+  });
+
+  it('onclick function is invoked when action creator button is clicked', () => {
+    const button = wrapper.find('[data-testid="actionCreatorButton"]')
+    button.simulate('click');
+    expect(dispatchToReduxTestCase).toHaveBeenCalled();
+  });
+
+  it('onclick function is invoked when async action creator button is clicked', () => {
+    const button = wrapper.find('[data-testid="asyncButton"]')
+    button.simulate('click');
+    expect(dispatchToReduxTestCase).toHaveBeenCalled();
+  });
+
+  it('onclick function is invoked when middleware button is clicked', () => {
+    const button = wrapper.find('[data-testid="middlewareButton"]')
+    button.simulate('click');
+    expect(dispatchToReduxTestCase).toHaveBeenCalled();
+  });
+
+  it('there should be 5 buttons', () => {
+    expect(wrapper.find('button').length).toEqual(5)
   });
 
   xit('action card is removed when delete button is clicked', () => { });

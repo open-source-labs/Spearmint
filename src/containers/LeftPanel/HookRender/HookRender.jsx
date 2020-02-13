@@ -37,7 +37,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
           {...provided.dragHandleProps}
           id={styles.hookRender}
         >
-          {/* close icon, handle delete */}
+
           <img
             src={closeIcon}
             id={styles.close}
@@ -45,35 +45,34 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
             onClick={handleClickDeleteHookRender}
           />
 
-          {/* header / h3 name / drag icon */}
           <div id={styles.hookRenderHeader}>
             <img src={dragIcon} alt='drag' />
             <h3>Hook : Rendering</h3>
           </div>
 
           <div id={styles.hookRenderFlexBox}>
-            {/* file path input boxes */}
-
             <div id={styles.hookRenderType}>
               <label htmlFor='hookFuncFolder'>Import Hook From</label>
-              <input type='text' id='hookFuncFolder' onChange={handleChangeHookFileName} />
+              <input type='text' id='hookFuncFolder' placeholder='File Name' onChange={handleChangeHookFileName} />
             </div>
           </div>
           <div id={styles.hookRenderFlexBox}>
             <div id={styles.hookRenderType}>
-              <label htmlFor='hookFunction'>Hook</label>
+              <label htmlFor='hook'>Hook</label>
               <input
                 type='text'
-                id='hookFunction'
-                onChange={e => handleChangeHookRenderFields(e, 'hookFunction')}
+                id='hook'
+                placeholder='eg. useCounter'
+                onChange={e => handleChangeHookRenderFields(e, 'hook')}
               />
             </div>
 
             <div id={styles.hookRenderType}>
-              <label htmlFor='parameterOne'>1st Parameter</label>
+              <label htmlFor='parameterOne'>Hook Parameter (optional)</label>
               <input
                 type='text'
                 id='parameterOne'
+                placeholder='eg. 9000'
                 onChange={e => handleChangeHookRenderFields(e, 'parameterOne')}
               />
             </div>
@@ -84,6 +83,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
               <input
                 type='text'
                 id='returnValue'
+                placeholder='eg. count'
                 onChange={e => handleChangeHookRenderFields(e, 'returnValue')}
               />
             </div>
@@ -92,6 +92,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
               <input
                 type='text'
                 id='expectedReturnValue'
+                placeholder='eg. 0'
                 onChange={e => handleChangeHookRenderFields(e, 'expectedReturnValue')}
               />
             </div>

@@ -58,22 +58,24 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
 
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
-              <label htmlFor='actionsFolder'>Actions File</label>
+              <label htmlFor='actionsFolder'>Import Actions From</label>
               <input
                 type='text'
                 id='actionsFolder'
                 value={actionCreator.actionsFile}
                 onChange={handleChangeActionsFileName}
+                placeholder='File Name'
               />
             </div>
 
             <div id={styles.files}>
-              <label htmlFor='typesFolder'>Action Types File</label>
+              <label htmlFor='typesFolder'>Import Action Types From</label>
               <input
                 type='text'
                 id='typesFolder'
                 value={actionCreator.typesFile}
                 onChange={handleChangeTypesFileName}
+                placeholder='File Name'
               />
             </div>
           </div>
@@ -85,6 +87,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
                 type='text'
                 id='actionCreatorFunc'
                 onChange={e => handleChangeActionCreatorFields(e, 'actionCreatorFunc')}
+                placeholder='e.g. addTodo'
               />
             </div>
 
@@ -94,6 +97,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
                 type='text'
                 id='actionType'
                 onChange={e => handleChangeActionCreatorFields(e, 'actionType')}
+                placeholder='e.g. ADD_TODO'
               />
             </div>
           </div>
@@ -105,6 +109,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
                 type='text'
                 id='payloadKey'
                 onChange={e => handleChangeActionCreatorFields(e, 'payloadKey')}
+                placeholder='e.g. todo'
               />
             </div>
 

@@ -149,25 +149,25 @@ export const deleteReducer = id => ({
 
 export const updateReducer = ({
   id,
-  queryVariant,
-  querySelector,
-  queryValue,
+  reducerAction,
+  initialState,
+  reducerName,
   typesFileName,
   typesFilePath,
   reducersFileName,
   reducersFilePath,
-  matcherValue,
+  expectedState,
 }) => ({
   type: actionTypes.UPDATE_REDUCER,
   id,
-  queryVariant,
-  querySelector,
-  queryValue,
+  reducerAction,
+  initialState,
+  reducerName,
   typesFileName,
   typesFilePath,
   reducersFileName,
   reducersFilePath,
-  matcherValue,
+  expectedState,
 });
 
 export const updateActionsFilePath = (actionsFileName, filePath) => ({

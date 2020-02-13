@@ -53,9 +53,10 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
 
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Action Types File Name</label>
+              <label htmlFor='typesFile'>Import Action Types From</label>
               <input
                 type='text'
+                placeholder='File Name'
                 id={styles.renderInputBox}
                 value={reducer.typesFile}
                 onChange={handleChangeTypesFileName}
@@ -63,9 +64,10 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
             </div>
 
             <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Reducer File Name</label>
+              <label htmlFor='typesFile'>Import Reducer From</label>
               <input
                 type='text'
+                placeholder='File Name'
                 id={styles.renderInputBox}
                 value={reducer.reducerFile}
                 onChange={handleChangeReducersFileName}
@@ -74,40 +76,44 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
           </div>
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='queryValue'>Reducer Name</label>
+              <label htmlFor='reducerName'>Reducer Name</label>
               <input
                 type='text'
-                id='queryValue'
-                onChange={e => handleChangeReducerFields(e, 'queryValue')}
+                id='reducerName'
+                placeholder='eg. todoReducer'
+                onChange={e => handleChangeReducerFields(e, 'reducerName')}
               />
             </div>
 
             <div id={styles.reducerName}>
-              <label htmlFor='querySelector'>Initial State</label>
+              <label htmlFor='initialState'>Initial State</label>
               <input
                 type='text'
-                id='querySelector'
-                onChange={e => handleChangeReducerFields(e, 'querySelector')}
+                id='initialState'
+                placeholder="eg. { key: value }"
+                onChange={e => handleChangeReducerFields(e, 'initialState')}
               />
             </div>
           </div>
 
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='queryVariant'>Action</label>
+              <label htmlFor='reducerAction'>Action</label>
               <input
                 type='text'
-                id='queryVariant'
-                onChange={e => handleChangeReducerFields(e, 'queryVariant')}
+                id='reducerAction'
+                placeholder="eg. type: types.ADD_TASK"
+                onChange={e => handleChangeReducerFields(e, 'reducerAction')}
               />
             </div>
 
             <div id={styles.reducerName}>
-              <label htmlFor='matcherValue'>Updated State</label>
+              <label htmlFor='expectedState'>Updated State</label>
               <input
                 type='text'
-                id='matcherValue'
-                onChange={e => handleChangeReducerFields(e, 'matcherValue')}
+                placeholder="eg. { key: updated-value }"
+                id='expectedState'
+                onChange={e => handleChangeReducerFields(e, 'expectedState')}
               />
             </div>
           </div>

@@ -64,10 +64,10 @@ const createReducer = () => ({
   typesFilePath: '',
   reducersFileName: '',
   reducersFilePath: '',
-  queryVariant: '',
-  querySelector: '',
-  queryValue: '',
-  matcherValue: '',
+  reducerAction: '',
+  initialState: '',
+  reducerName: '',
+  expectedState: '',
 });
 
 export const reduxTestCaseReducer = (state, action) => {
@@ -205,10 +205,10 @@ export const reduxTestCaseReducer = (state, action) => {
           statement.reducersFilePath = action.reducersFilePath;
           statement.typesFileName = action.typesFileName;
           statement.typesFilePath = action.typesFilePath;
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.matcherValue = action.matcherValue;
+          statement.reducerAction = action.reducerAction;
+          statement.initialState = action.initialState;
+          statement.reducerName = action.reducerName;
+          statement.expectedState = action.expectedState;
         }
         return statement;
       });
