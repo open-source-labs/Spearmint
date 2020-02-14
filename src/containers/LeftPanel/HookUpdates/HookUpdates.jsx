@@ -94,7 +94,7 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
               />
             </div>
             <div id={styles.state}>
-              <label htmlFor='updatedState'>Updated State</label>
+              <label htmlFor='updatedState'>Updated Value</label>
               <input
                 type='text'
                 id='updatedState'

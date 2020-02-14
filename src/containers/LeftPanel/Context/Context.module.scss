@@ -31,7 +31,7 @@
 }
 
 .queryLabel {
-  margin-bottom: 5px;
+  margin-bottom: 1px;
   display: block;
 }
 
@@ -110,8 +110,9 @@
 #contextBox {
   width: 50%;
   margin-right: 7%;
+  // margin-bottom: 5px;
   input {
-    margin-top: 6px;
+    margin-top: 1px;
     width: 100%;
     margin-bottom: 7%
 

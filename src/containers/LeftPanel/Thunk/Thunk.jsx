@@ -51,7 +51,7 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
 
           <div id={styles.header}>
             <img src={dragIcon} alt='drag' />
-            <h3>Async</h3>
+            <h3>Asynchronous Action Creator</h3>
           </div>
 
           <div id={styles.groupFlexbox}>

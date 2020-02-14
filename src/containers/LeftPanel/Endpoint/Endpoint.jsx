@@ -40,16 +40,16 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
         >
           <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteEndpoint} />
 
-          <div id={styles.actionCreatorHeader}>
+          <div id={styles.header}>
             <img src={dragIcon} alt='drag' />
             <h3>Endpoint</h3>
           </div>
 
 
           <div id={styles.groupFlexbox}>
-            <div id={styles.labelInput}>
+            <div id={styles.serverInput}>
               <label htmlFor='endpointFile'>Import Server From</label>
-              <div id={styles.payloadFlexBox}>
+              <div id={styles.inputFlexBox}>
                 <input
                   type='text'
                   placeholder='File Name'
@@ -63,7 +63,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
 
           <div id={styles.groupFlexbox}>
             <div id={styles.dropdownWrapper}>
-              <label htmlFor='method'>
+              <label htmlFor='method' >
                 Method
                 </label>
               <div id={styles.dropdownFlex}>
@@ -81,7 +81,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
               </div>
             </div>
 
-            <div id={styles.labelInput}>
+            <div id={styles.alignRight}>
               <label htmlFor='route'>
                 Route
               </label>
@@ -104,21 +104,22 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                   <input
                     type='text'
                     name='expectedResponse'
-                    placeholder="body.key or status"
+                    placeholder="eg. status"
                     onChange={e => handleChangeEndpointFields(e, 'expectedResponse')} />
                 </div>
               </div>
 
-            <span id={styles.matcher}>toBe</span>
+            {/* <span id={styles.matcher}>toBe</span> */}
 
             <div id={styles.labelInput}>
                 <label htmlFor='value'>
-                  Value
+                  Expected Value
               </label>
               <div id={styles.inputFlexBox}>
                   <input
                     type='text'
                     name='value'
+                    placeholder='eg. 200'
                     onChange={e => handleChangeEndpointFields(e, 'value')}
                   />
                 </div>
