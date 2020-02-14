@@ -47,7 +47,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
 
           <div id={styles.hookRenderHeader}>
             <img src={dragIcon} alt='drag' />
-            <h3>Hook : Rendering</h3>
+            <h3>Hook: Rendering</h3>
           </div>
 
           <div id={styles.hookRenderFlexBox}>
@@ -79,7 +79,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
           </div>
           <div id={styles.hookRenderFlexBox}>
             <div id={styles.hookRenderType}>
-              <label htmlFor='returnValue'>Return Value</label>
+              <label htmlFor='returnValue'>Managed State</label>
               <input
                 type='text'
                 id='returnValue'
@@ -88,7 +88,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
               />
             </div>
             <div id={styles.hookRenderType}>
-              <label htmlFor='expectedReturnValue'>Expected Return Value</label>
+              <label htmlFor='expectedReturnValue'>Current Value</label>
               <input
                 type='text'
                 id='expectedReturnValue'

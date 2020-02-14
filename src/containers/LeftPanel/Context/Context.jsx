@@ -50,7 +50,7 @@ const Context = ({ context, index, dispatchToHooksTestCase }) => {
           <div>
               <div id={styles.querySelector}>
                 <div id={styles.contextBox}> 
-                  <label htmlFor='contextFile'>Import Context From</label>
+                <label htmlFor='contextFile' className={styles.queryLabel}>Import Context From</label>
                     <input
                       type='text'
                       id='contextFile'
