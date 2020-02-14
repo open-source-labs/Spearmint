@@ -1,9 +1,7 @@
-test('displays browser view of when URL is correctly inputted', () => {});
+it('displays browser view of when URL is correctly inputted', () => {});
 
-test(`omitting 'www' from URL still displays browser view`, () => {});
+it(`omitting 'www' from URL still displays browser view`, () => {});
 
-test('localhost URL displays on the browser view', () => {});
+it('displays file directory of project that is loaded', () => {});
 
-test('displays file directory of project that is loaded', () => {});
-
-test(`displays project's name on the top of the file directory view`, () => {});
+it(`displays project's name on the top of the file directory view`, () => {});

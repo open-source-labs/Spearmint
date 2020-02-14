@@ -9,11 +9,9 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
   const handleAddAction = e => {
     dispatchToTestCase(addAction());
   };
@@ -36,9 +34,12 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             dispatchToTestCase={dispatchToTestCase}
           />
         </div>
-        <div id={styles.right}>
-          <button onClick={handleAddAction}>Action</button>
-          <button data-testid='assertionButton' onClick={handleAddAssertion}>
+        <div
+          id={styles.right}
+          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+        >
+          <button data-testid="actionButton" onClick={handleAddAction}>Action</button>
+          <button data-testid='assertionButton' className='assertionButton' onClick={handleAddAssertion}>
             Assertion
           </button>
           <button data-testid='rerenderButton' onClick={handleAddRender}>

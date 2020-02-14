@@ -1,4 +1,6 @@
 export const actionTypes = {
+  TOGGLE_REACT: 'TOGGLE_REACT',
+
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
 
@@ -20,6 +22,10 @@ export const actionTypes = {
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
+
+export const toggleReact = () => ({
+  type: actionTypes.TOGGLE_REACT,
+});
 
 export const updateStatementsOrder = draggableStatements => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
@@ -122,6 +128,7 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propKey,
   propValue,
 });
+
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });

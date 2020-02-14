@@ -1,3 +1,7 @@
+/**
+ * functionlity to add and update props for the render
+ */
+
 import React, { useContext } from 'react';
 import styles from './Render.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
