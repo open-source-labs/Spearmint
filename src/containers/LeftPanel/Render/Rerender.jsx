@@ -1,3 +1,7 @@
+/**
+ * the actual card you fill out
+ */
+
 import React from 'react';
 import FirstRender from './FirstRender';
 import { Draggable } from 'react-beautiful-dnd';

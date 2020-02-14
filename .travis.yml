@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - 'node'
+cache:
+  directories:
+    - node_modules
+script:
+  - npm run build
+deplloy:
+  skip_cleanup: true
+  on: master

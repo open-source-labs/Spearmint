@@ -5,6 +5,7 @@ export const TestCaseContext = createContext(null);
 
 export const testCaseState = {
   testStatement: '',
+  hasReact: 0,
   statements: [
     {
       id: 0,
@@ -74,6 +75,11 @@ export const testCaseReducer = (state, action) => {
   let lastAssertionStatement;
 
   switch (action.type) {
+    case actionTypes.TOGGLE_REACT:
+      return {
+        ...state,
+        hasReact: state.hasReact + 1,
+      };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       const firstRenderStatement = statements[0];
       lastAssertionStatement = statements[statements.length - 1];
@@ -221,8 +227,10 @@ export const testCaseReducer = (state, action) => {
         ...state,
         statements,
       };
+
     case actionTypes.CREATE_NEW_TEST:
       return {
+        hasReact: 0,
         testStatement: '',
         statements: [
           {
