@@ -60,17 +60,21 @@ const NavBar = () => {
     <div id={styles.navBar}>
       <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
         <img src={menuIcon} className={styles.icons} alt='fileExplorer' />
+        <span className={styles.tooltip}>Expand File Explorer</span>
       </button>
       <button className={styles.navBtn} onClick={openExportModal}>
         <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
+        <span className={styles.tooltip}>Export</span>
       </button>
       <ExportFileModal isExportModalOpen={isExportModalOpen} closeExportModal={closeExportModal} />
       <OpenFolder />
       <button className={styles.navBtn} onClick={handleEditorToggle}>
         <img src={codeIcon} className={styles.icons} alt='codeview' title='Code View' />
+        <span className={styles.tooltip}>Code View</span>
       </button>
       <button className={styles.navBtn} onClick={handleBrowserToggle}>
         <img src={browserIcon} className={styles.icons} alt='browserview' title='Browser view' />
+        <span className={styles.tooltip}>Browser View</span>
       </button>
       <BrowserModal isBrowserModalOpen={isBrowserModalOpen} closeBrowserModal={closeBrowserModal} />
 

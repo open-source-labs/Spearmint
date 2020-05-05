@@ -7,8 +7,6 @@ import {
   updateMiddlewaresFilePath,
 } from '../../../context/reduxTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
-import ToolTip from '../ToolTip/ToolTip';
-const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
