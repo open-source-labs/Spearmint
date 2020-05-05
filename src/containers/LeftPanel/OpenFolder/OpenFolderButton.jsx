@@ -89,6 +89,7 @@ const OpenFolder = () => {
             title='open a new folder'
             onClick={handleOpenFolder}
           />
+          <span className={styles.tooltip}>Open Folder</span>
         </button>
       )}
     </span>

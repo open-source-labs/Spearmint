@@ -6,7 +6,6 @@ import React, { useContext } from 'react';
 import styles from './Render.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
 import { TestCaseContext } from '../../../context/testCaseReducer';
-import ToolTip from '../ToolTip/ToolTip';
 
 import {
   deleteRender,
@@ -18,7 +17,6 @@ import RenderProp from './RenderProp';
 const plusIcon = require('../../../assets/images/plus.png');
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
-const questionIcon = require('../../../assets/images/help-circle.png');
 
 const FirstRender = ({ render }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);

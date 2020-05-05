@@ -29,3 +29,23 @@
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background: black;
+  color: white;
+  position: absolute;
+  padding: 5px 0;
+  text-align: center;
+  border-radius: 8px;
+  margin: 0 auto;
+}
+
+.navBtn:hover .tooltip {
+  visibility: visible;
+}
+
+.navBtn:active .tooltip {
+  visibility: hidden;
+}

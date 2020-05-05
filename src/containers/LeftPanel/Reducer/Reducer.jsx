@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext } from 'react';
 import styles from '../Reducer/Reducer.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
 import {
