@@ -1,0 +1,20 @@
+
+ul.options li:hover {
+  font-weight: bold;
+  color: #00b4cc;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+ul.options li.option-active {
+  background: whitesmoke;
+  color: #00b4cc;
+}
+
+.options {
+  background-color: white;
+  overflow: auto;
+  position: absolute;
+  z-index: 1;
+  width: -webkit-fill-available ;
+}

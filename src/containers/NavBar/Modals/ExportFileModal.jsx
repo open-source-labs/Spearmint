@@ -558,6 +558,11 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
   };
+  const modalStyles = {
+    overlay: {
+      zIndex: 3,
+    },
+  };
 
   return (
     <ReactModal
@@ -568,6 +573,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
       ariaHideApp={false}
+      style={modalStyles}
     >
       <div id={styles.title}>
         <p>Convert to Javascript Code</p>

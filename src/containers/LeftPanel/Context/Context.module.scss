@@ -87,6 +87,7 @@
   display: flex;
   align-items: center;
   width: 111%;
+  margin-top: 1rem;
 }
 
 #query {
@@ -110,13 +111,11 @@
 #contextBox {
   width: 50%;
   margin-right: 7%;
-  // margin-bottom: 5px;
   input {
     margin-top: 1px;
     width: 100%;
-    margin-bottom: 7%
-
   }
+  position: relative;
 }
 
 #contextDrop {

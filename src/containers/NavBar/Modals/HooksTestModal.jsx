@@ -13,6 +13,12 @@ const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTest
     closeHooksModal();
     dispatchToTestFileModal(toggleModal());
   };
+  
+  const modalStyles = {
+    overlay: {
+      zIndex: 3,
+    },
+  };
 
   return (
     <div>
@@ -24,6 +30,7 @@ const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTest
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
+        style={modalStyles}
       >
         <div id={styles.title}>
           <p>New Test</p>

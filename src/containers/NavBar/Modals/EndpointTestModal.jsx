@@ -18,6 +18,12 @@ const EndpointTestModal = ({
     dispatchToTestFileModal(toggleModal());
   };
 
+  const modalStyles = {
+    overlay: {
+      zIndex: 3,
+    },
+  };
+
   return (
     <ReactModal
       className={styles.modal}
@@ -26,6 +32,7 @@ const EndpointTestModal = ({
       contentLabel='Save?'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      style={modalStyles}
     >
       <div id={styles.title}>
         <p>New Test</p>
