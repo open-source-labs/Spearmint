@@ -36,10 +36,11 @@
 }
   
 #hookRenderType {
-    width: 50%;
-    margin-right: 7%;
-    input {
-      margin-top: 6px;
-      width: 100%;
-    }
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+  position: relative;
 }

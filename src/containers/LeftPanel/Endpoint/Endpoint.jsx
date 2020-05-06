@@ -7,6 +7,7 @@ import {
   updateServerFilePath,
 } from '../../../context/endpointTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
+import SearchInput from '../SearchInput/SearchInput';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
@@ -21,12 +22,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
 
   const handleClickDeleteEndpoint = e => {
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
-  };
-
-  const handleChangeServerFileName = e => {
-    const serverFileName = e.target.value;
-    const filePath = filePathMap[serverFileName] || '';
-    dispatchToEndpointTestCase(updateServerFilePath(serverFileName, filePath));
   };
 
   return (
@@ -49,14 +44,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
           <div id={styles.groupFlexbox}>
             <div id={styles.serverInput}>
               <label htmlFor='endpointFile'>Import Server From</label>
-              <div id={styles.inputFlexBox}>
-                <input
-                  type='text'
-                  placeholder='File Name'
-                  id={styles.renderInputBox}
-                  value={endpoint.serverFile}
-                  onChange={handleChangeServerFileName}
-                />
+              <div id={styles.labelInput}>
+                <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToEndpointTestCase} action={updateServerFilePath} filePathMap={filePathMap}/>  
               </div>
             </div>
           </div>
@@ -108,8 +97,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                     onChange={e => handleChangeEndpointFields(e, 'expectedResponse')} />
                 </div>
               </div>
-
-            {/* <span id={styles.matcher}>toBe</span> */}
 
             <div id={styles.labelInput}>
                 <label htmlFor='value'>

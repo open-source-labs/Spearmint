@@ -8,6 +8,8 @@ import {
   updateReducersFilePath,
 } from '../../../context/reduxTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
+import SearchInput from '../SearchInput/SearchInput';
+
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
@@ -22,18 +24,6 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
 
   const handleClickDeleteReducer = e => {
     dispatchToReduxTestCase(deleteReducer(reducer.id));
-  };
-
-  const handleChangeTypesFileName = e => {
-    const typesFileName = e.target.value;
-    const filePath = filePathMap[typesFileName] || '';
-    dispatchToReduxTestCase(updateTypesFilePath(typesFileName, filePath));
-  };
-
-  const handleChangeReducersFileName = e => {
-    const reducersFileName = e.target.value;
-    const filePath = filePathMap[reducersFileName] || '';
-    dispatchToReduxTestCase(updateReducersFilePath(reducersFileName, filePath));
   };
 
   return (
@@ -54,24 +44,12 @@ const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='typesFile'>Import Action Types From</label>
-              <input
-                type='text'
-                placeholder='File Name'
-                id={styles.renderInputBox}
-                value={reducer.typesFile}
-                onChange={handleChangeTypesFileName}
-              />
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateTypesFilePath} filePathMap={filePathMap}/>
             </div>
 
             <div id={styles.reducerName}>
               <label htmlFor='typesFile'>Import Reducer From</label>
-              <input
-                type='text'
-                placeholder='File Name'
-                id={styles.renderInputBox}
-                value={reducer.reducerFile}
-                onChange={handleChangeReducersFileName}
-              />
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateReducersFilePath} filePathMap={filePathMap}/>
             </div>
           </div>
           <div id={styles.reducerNameFlexBox}>

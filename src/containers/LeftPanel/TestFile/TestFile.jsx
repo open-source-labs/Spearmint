@@ -56,6 +56,12 @@ const TestFile = () => {
     closeTestModal();
   };
 
+  const modalStyles = {
+    overlay: {
+      zIndex: 3,
+    },
+  };
+
   return (
     <div>
       <ReactModal
@@ -66,6 +72,7 @@ const TestFile = () => {
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
+        style={modalStyles}
       >
         <div id={styles.title}>
           <p>Test</p>
