@@ -5,7 +5,7 @@
 
 import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
-import { createNewTest } from '../../../context/testCaseActions';
+import { createNewTest } from '../../../context/reactTestCaseActions';
 import { clearMockData } from '../../../context/mockDataActions';
 import styles from '../../NavBar/Modals/ExportFileModal.module.scss';
 import { toggleModal } from '../../../context/testFileModalActions';

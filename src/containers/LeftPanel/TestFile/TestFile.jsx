@@ -1,11 +1,11 @@
 import styles from '../../NavBar/Modals/ExportFileModal.module.scss';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 
 /* testCase imports */
 import TestCase from '../TestCase/TestCase';
-import { TestCaseContext } from '../../../context/testCaseReducer';
-import { toggleReact } from '../../../context/testCaseActions';
+import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
+import { toggleReact } from '../../../context/reactTestCaseActions';
 
 /* reduxTestCase imports */
 import { toggleRedux } from '../../../context/reduxTestCaseActions';
@@ -27,7 +27,7 @@ import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
 const TestFile = () => {
   const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
-  const [{ hasReact }, dispatchToTestCase] = useContext(TestCaseContext);
+  const [{ hasReact }, dispatchToTestCase] = useContext(ReactTestCaseContext);
   const [{ hasHooks }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
   const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);

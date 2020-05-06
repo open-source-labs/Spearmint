@@ -7,7 +7,7 @@ import {
   toggleFolderView,
   highlightFile,
 } from '../../../context/globalActions';
-import { TestCaseContext } from '../../../context/testCaseReducer';
+import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
 import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
 import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
@@ -22,11 +22,11 @@ const beautify = remote.require('js-beautify');
 const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [fileName, setFileName] = useState('');
   const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
-  const [testCase, __] = useContext(TestCaseContext);
-  const [reduxTestCase, ____] = useContext(ReduxTestCaseContext);
-  const [hooksTestCase, _] = useContext(HooksTestCaseContext);
-  const [{ mockData }, ___] = useContext(MockDataContext);
-  const [endpointTestCase, _____] = useContext(EndpointTestCaseContext);
+  const [testCase] = useContext(ReactTestCaseContext);
+  const [reduxTestCase] = useContext(ReduxTestCaseContext);
+  const [hooksTestCase] = useContext(HooksTestCaseContext);
+  const [{ mockData }] = useContext(MockDataContext);
+  const [endpointTestCase] = useContext(EndpointTestCaseContext);
 
   let testFileCode = 'import React from "react";';
 

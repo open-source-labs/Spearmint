@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
-import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
+import { ReactTestCaseContext, reactTestCaseState, reactTestCaseReducer } from './context/reactTestCaseReducer';
 import {
   EndpointTestCaseContext,
   endpointTestCaseState,
@@ -31,7 +31,7 @@ import RightPanel from './containers/RightPanel/RightPanel';
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
-  const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState);
+  const [reactTestCase, dispatchToReactTestCase] = useReducer(reactTestCaseReducer, reactTestCaseState);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
   const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
     endpointTestCaseReducer,
@@ -75,8 +75,8 @@ const App = () => {
        */
       <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
             <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
+          <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
               <EndpointTestCaseContext.Provider
                 value={[endpointTestCase, dispatchToEndpointTestCase]}
               >
@@ -89,8 +89,8 @@ const App = () => {
                   </TestFileModalContext.Provider>
                 </HooksTestCaseContext.Provider>
               </EndpointTestCaseContext.Provider>
+          </ReactTestCaseContext.Provider>
             </ReduxTestCaseContext.Provider>
-          </TestCaseContext.Provider>
           <RightPanel />
         </GlobalContext.Provider>
       </div>

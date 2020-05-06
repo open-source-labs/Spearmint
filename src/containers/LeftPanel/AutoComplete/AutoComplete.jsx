@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './AutoComplete.module.scss';
-import { updateAction, updateAssertion } from '../../../context/testCaseActions';
+import { updateAction, updateAssertion } from '../../../context/reactTestCaseActions';
 import { eventTypesList } from '../Action/eventTypesList';
 import { matcherTypesList } from '../Assertion/matcherTypesList';
 import AutoSuggest from 'react-autosuggest';

@@ -5,13 +5,13 @@
 import React, { useContext } from 'react';
 import styles from './Render.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
-import { TestCaseContext } from '../../../context/testCaseReducer';
+import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
 
 import {
   deleteRender,
   updateRenderComponent,
   addRenderProp,
-} from '../../../context/testCaseActions';
+} from '../../../context/reactTestCaseActions';
 import RenderProp from './RenderProp';
 
 const plusIcon = require('../../../assets/images/plus.png');
@@ -20,7 +20,7 @@ const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const FirstRender = ({ render }) => {
   const [{ filePathMap }, _] = useContext(GlobalContext);
-  const [{ statements, hasProp }, dispatchToTestCase] = useContext(TestCaseContext);
+  const [{ statements, hasProp }, dispatchToTestCase] = useContext(ReactTestCaseContext);
 
   const handleChangeComponentName = e => {
     const componentName = e.target.value;
