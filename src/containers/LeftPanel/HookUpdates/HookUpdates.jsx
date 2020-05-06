@@ -7,6 +7,7 @@ import {
   updateHooksFilePath,
 } from '../../../context/hooksTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
+import SearchInput from '../SearchInput/SearchInput';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
@@ -21,12 +22,6 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
 
   const handleClickDeleteHookUpdates = e => {
     dispatchToHooksTestCase(deleteHookUpdates(hookUpdates.id));
-  };
-
-  const handleChangeHookFileName = e => {
-    const hookFileName = e.target.value;
-    const filePath = filePathMap[hookFileName] || '';
-    dispatchToHooksTestCase(updateHooksFilePath(hookFileName, filePath));
   };
 
   return (
@@ -53,12 +48,7 @@ const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
           <div id={styles.hooksFlexBox}>
             <div id={styles.hooks}>
               <label htmlFor='hookFile'>Import Hook From</label>
-              <input
-                type='text'
-                id='hookFile'
-                placeholder='File Name'
-                onChange={handleChangeHookFileName}
-              />
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToHooksTestCase} action={updateHooksFilePath} filePathMap={filePathMap}/>
             </div>
           </div>
 

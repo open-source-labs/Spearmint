@@ -7,6 +7,7 @@ import {
   updateContextFilePath,
 } from '../../../context/hooksTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
+import SearchInput from '../SearchInput/SearchInput';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
@@ -21,12 +22,6 @@ const Context = ({ context, index, dispatchToHooksTestCase }) => {
 
   const handleClickDeleteContext = e => {
     dispatchToHooksTestCase(deleteContexts(context.id));
-  };
-
-  const handleChangeContextFileName = e => {
-    const contextFileName = e.target.value;
-    const filePath = filePathMap[contextFileName] || '';
-    dispatchToHooksTestCase(updateContextFilePath(contextFileName, filePath));
   };
 
   return (
@@ -49,13 +44,7 @@ const Context = ({ context, index, dispatchToHooksTestCase }) => {
               <div id={styles.querySelector}>
                 <div id={styles.contextBox}> 
                 <label htmlFor='contextFile' className={styles.queryLabel}>Import Context From</label>
-                    <input
-                      type='text'
-                      id='contextFile'
-                      placeholder='File Name'
-                      value={context.contextFile}
-                      onChange={handleChangeContextFileName}
-                    />
+                <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToHooksTestCase} action={updateContextFilePath} filePathMap={filePathMap}/>
                 </div>
 
                 <div id={styles.dropdownFlex}>

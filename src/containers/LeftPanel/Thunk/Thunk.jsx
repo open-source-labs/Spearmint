@@ -9,6 +9,7 @@ import {
 } from '../../../context/reduxTestCaseActions';
 import ToolTipAsync from '../ToolTip/ToolTipAsync';
 import { Draggable } from 'react-beautiful-dnd';
+import SearchInput from '../SearchInput/SearchInput';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
@@ -24,18 +25,6 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
 
   const handleClickDeleteAsync = e => {
     dispatchToReduxTestCase(deleteAsync(async.id));
-  };
-
-  const handleChangeActionsFileName = e => {
-    const actionsFileName = e.target.value;
-    const filePath = filePathMap[actionsFileName] || '';
-    dispatchToReduxTestCase(updateActionsFilePath(actionsFileName, filePath));
-  };
-
-  const handleChangeTypesFileName = e => {
-    const typesFileName = e.target.value;
-    const filePath = filePathMap[typesFileName] || '';
-    dispatchToReduxTestCase(updateTypesFilePath(typesFileName, filePath));
   };
 
   return (
@@ -57,24 +46,13 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
               <label htmlFor='actionsFile'>Import Actions From</label>
-              <input
-                type='text'
-                placeholder='File Name'
-                id={styles.renderInputBox}
-                value={async.actionsFile}
-                onChange={handleChangeActionsFileName}
-              />
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateActionsFilePath} filePathMap={filePathMap}/>
+
             </div>
 
             <div id={styles.labelInput}>
               <label htmlFor='typesFile'>Import Actions Types From</label>
-              <input
-                type='text'
-                placeholder='File Name'
-                id={styles.renderInputBox}
-                value={async.typesFile}
-                onChange={handleChangeTypesFileName}
-              />
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateTypesFilePath} filePathMap={filePathMap}/>
             </div>
           </div>
 

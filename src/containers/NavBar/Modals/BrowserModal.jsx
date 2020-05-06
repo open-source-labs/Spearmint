@@ -27,6 +27,12 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
     const testSiteURL = addHttps(e.target.value);
     dispatchToGlobal(setProjectUrl(testSiteURL));
   };
+  
+  const modalStyles = {
+    overlay: {
+      zIndex: 3,
+    },
+  };
 
   return (
     <ReactModal
@@ -37,6 +43,7 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
       ariaHideApp={false}
+      style={modalStyles}
     >
       <div id={styles.title}>
         <p>Open the test site</p>

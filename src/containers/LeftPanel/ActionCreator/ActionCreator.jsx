@@ -8,6 +8,7 @@ import {
   updateTypesFilePath,
 } from '../../../context/reduxTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
+import SearchInput from '../SearchInput/SearchInput';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
@@ -21,18 +22,6 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
 
   const handleClickDeleteActionCreator = e => {
     dispatchToReduxTestCase(deleteActionCreator(actionCreator.id));
-  };
-
-  const handleChangeActionsFileName = e => {
-    const actionsFileName = e.target.value;
-    const filePath = filePathMap[actionsFileName] || '';
-    dispatchToReduxTestCase(updateActionsFilePath(actionsFileName, filePath));
-  };
-
-  const handleChangeTypesFileName = e => {
-    const typesFileName = e.target.value;
-    const filePath = filePathMap[typesFileName] || '';
-    dispatchToReduxTestCase(updateTypesFilePath(typesFileName, filePath));
   };
 
   return (
@@ -50,7 +39,6 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
             alt='close'
             onClick={handleClickDeleteActionCreator}
           />
-
           <div id={styles.actionCreatorHeader}>
             <img src={dragIcon} alt='drag' />
             <h3>Action Creator</h3>
@@ -59,24 +47,12 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
               <label htmlFor='actionsFolder'>Import Actions From</label>
-              <input
-                type='text'
-                id='actionsFolder'
-                value={actionCreator.actionsFile}
-                onChange={handleChangeActionsFileName}
-                placeholder='File Name'
-              />
+               <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateActionsFilePath} filePathMap={filePathMap}/>
             </div>
 
             <div id={styles.files}>
               <label htmlFor='typesFolder'>Import Action Types From</label>
-              <input
-                type='text'
-                id='typesFolder'
-                value={actionCreator.typesFile}
-                onChange={handleChangeTypesFileName}
-                placeholder='File Name'
-              />
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateTypesFilePath} filePathMap={filePathMap}/>
             </div>
           </div>
 

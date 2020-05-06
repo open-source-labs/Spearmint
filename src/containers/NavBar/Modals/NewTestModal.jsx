@@ -21,6 +21,13 @@ const NewTestModal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchToT
     closeModal();
     dispatchToTestFileModal(toggleModal());
   };
+  
+  const modalStyles = {
+    overlay: {
+      zIndex: 3,
+    },
+  };
+  
   return (
     <ReactModal
       className={styles.modal}
@@ -29,6 +36,7 @@ const NewTestModal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchToT
       contentLabel='Save?'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      style={modalStyles}
     >
       <div id={styles.title}>
         <p>New Test</p>

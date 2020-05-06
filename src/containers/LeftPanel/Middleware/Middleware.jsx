@@ -7,6 +7,7 @@ import {
   updateMiddlewaresFilePath,
 } from '../../../context/reduxTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
+import SearchInput from '../SearchInput/SearchInput';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
@@ -21,12 +22,6 @@ const Middleware = ({ middleware, index, dispatchToReduxTestCase }) => {
 
   const handleClickDeleteMiddleware = e => {
     dispatchToReduxTestCase(deleteMiddleware(middleware.id));
-  };
-
-  const handleChangeMiddlewaresFileName = e => {
-    const middlewaresFileName = e.target.value;
-    const filePath = filePathMap[middlewaresFileName] || '';
-    dispatchToReduxTestCase(updateMiddlewaresFilePath(middlewaresFileName, filePath));
   };
 
   return (
@@ -53,13 +48,7 @@ const Middleware = ({ middleware, index, dispatchToReduxTestCase }) => {
           <div id={styles.eventTypeFlexBox}>
             <div id={styles.middlewareBox}>
               <label htmlFor='typesFile'>Import Middleware From</label>
-              <input
-                type='text'
-                id={styles.renderInputBox}
-                placeholder='File Name'
-                value={middleware.middlewaresFile}
-                onChange={handleChangeMiddlewaresFileName}
-              />
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateMiddlewaresFilePath} filePathMap={filePathMap}/>
             </div>
           </div>
 
