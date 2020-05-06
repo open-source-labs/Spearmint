@@ -9,6 +9,7 @@
   padding-top: 4px;
   font-family: $raleway;
   justify-content: space-evenly;
+  min-width: 600px; // changed this to make dev easier w/ dev tools open
   overflow: auto;
   border-right: 0.5px dotted $mint;
 
