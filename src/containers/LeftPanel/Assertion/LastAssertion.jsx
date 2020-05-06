@@ -6,7 +6,7 @@
 
 import React from 'react';
 import styles from '../Assertion/Assertion.module.scss';
-import { deleteAssertion, updateAssertion } from '../../../context/testCaseActions';
+import { deleteAssertion, updateAssertion } from '../../../context/reactTestCaseActions';
 import ToolTip from '../ToolTip/ToolTip';
 import ToolTipMatcher from '../ToolTip/ToolTipMatcher';
 import AutoComplete from '../AutoComplete/AutoComplete';

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
-import { TestCaseContext } from '../../../context/testCaseReducer';
-import { updateTestStatement, updateStatementsOrder } from '../../../context/testCaseActions';
+import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
+import { updateTestStatement, updateStatementsOrder } from '../../../context/reactTestCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import TestMenu from '../TestMenu/TestMenu';
@@ -14,7 +14,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 const plusIcon = require('../../../assets/images/plus-box.png');
 
 const TestCase = () => {
-  const [{ testStatement, statements }, dispatchToTestCase] = useContext(TestCaseContext);
+  const [{ testStatement, statements }, dispatchToTestCase] = useContext(ReactTestCaseContext);
   const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
   const firstRenderStatement = statements[0];
   const draggableStatements = statements.slice(1, -1);

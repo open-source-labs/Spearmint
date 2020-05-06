@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from '../Action/Action.module.scss';
 import styles2 from '../AutoComplete/AutoCompleteMockData.module.scss';
-import { deleteAction, updateAction } from '../../../context/testCaseActions';
+import { deleteAction, updateAction } from '../../../context/reactTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import AutoComplete from '../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
