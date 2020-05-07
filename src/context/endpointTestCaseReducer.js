@@ -86,6 +86,12 @@ export const endpointTestCaseReducer = (state, action) => {
         endpointTestStatement: '',
         endpointStatements: [],
       };
+      case actionTypes.UPDATE_STATEMENTS_ORDER:
+        endpointStatements = [...action.draggableStatements];
+        return {
+          ...state,
+          endpointStatements,
+        };
     default:
       return state;
   }
