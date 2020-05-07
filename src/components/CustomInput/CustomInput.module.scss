@@ -2,8 +2,9 @@
 @import '../../assets/stylesheets/colors.scss';
 
 .customInputContainer {
-  width: 100%;
+  width: 90%;
   margin: 1rem;
+  box-sizing: border-box;
 
   .customInput {
     width: 100%;
@@ -18,5 +19,15 @@
       outline: none;
       border-bottom: 1.5px solid $mint;
     }
+
   }
+  
+  .label {
+    margin-bottom: 2rem;
+  }
+
+  .bold {
+        font-weight: bold;
+        font-size: 1.1rem;
+   }
 }

@@ -6,12 +6,15 @@ import { MockDataContext } from '../../../context/mockDataReducer';
 import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
-import TestStatements from './TestStatements';
+import TestStatements from './ReactTestStatements';
 import FirstRender from '../Render/FirstRender';
 import LastAssertion from '../Assertion/LastAssertion';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+// EDITS
+import ReactContainer from './ReactContainer'
 
 const plusIcon = require('../../../assets/images/plus-box.png');
+
 
 const ReactTestCase = () => {
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(ReactTestCaseContext);
@@ -73,7 +76,7 @@ const ReactTestCase = () => {
       </div>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Test</label>
+          <label htmlFor='test-statement'>Testing</label>
           <input
             type='text'
             id={styles.testStatement}
@@ -126,6 +129,7 @@ const ReactTestCase = () => {
         dispatchToTestCase={dispatchToTestCase}
         isLast={true}
       />
+      <ReactContainer/>
     </div>
   );
 };

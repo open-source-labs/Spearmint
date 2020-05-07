@@ -1,0 +1,17 @@
+@import '../../../assets/stylesheets/colors.scss';
+
+
+#ReactContainer {
+  .describeBlockContainer {
+    background-color: white;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  
+    .describe {
+      font-size: 1.25rem;
+    }
+  }
+}

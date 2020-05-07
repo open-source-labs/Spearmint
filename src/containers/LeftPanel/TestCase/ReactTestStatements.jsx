@@ -3,7 +3,7 @@ import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
 import Rerender from '../Render/Rerender';
 
-const TestStatements = function TestStatements({ statements, dispatchToTestCase }) {
+const ReactTestStatements = ({ statements, dispatchToTestCase }) => {
   return statements.map((statement, i) => {
     switch (statement.type) {
       case 'action':
@@ -32,4 +32,4 @@ const TestStatements = function TestStatements({ statements, dispatchToTestCase 
   });
 };
 
-export default TestStatements;
+export default ReactTestStatements;
