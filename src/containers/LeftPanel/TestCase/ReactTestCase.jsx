@@ -4,7 +4,7 @@ import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
 import { updateTestStatement, updateStatementsOrder } from '../../../context/reactTestCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { toggleMockData, addMockData } from '../../../context/mockDataActions';
-import TestMenu from '../TestMenu/TestMenu';
+import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
 import TestStatements from './TestStatements';
 import FirstRender from '../Render/FirstRender';
@@ -13,7 +13,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 const plusIcon = require('../../../assets/images/plus-box.png');
 
-const TestCase = () => {
+const ReactTestCase = () => {
   const [{ testStatement, statements }, dispatchToTestCase] = useContext(ReactTestCaseContext);
   const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
   const firstRenderStatement = statements[0];
@@ -69,7 +69,7 @@ const TestCase = () => {
   return (
     <div>
       <div id='head'>
-        <TestMenu dispatchToTestCase={dispatchToTestCase} dispatchToMockData={dispatchToMockData} />
+        <ReactTestMenu dispatchToTestCase={dispatchToTestCase} dispatchToMockData={dispatchToMockData} />
       </div>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
@@ -129,4 +129,4 @@ const TestCase = () => {
     </div>
   );
 };
-export default TestCase;
+export default ReactTestCase;

@@ -3,7 +3,7 @@ import styles from '../TestMenu/TestMenu.module.scss';
 import { addAction, addAssertion, addRender } from '../../../context/reactTestCaseActions';
 import NewTestModal from '../../NavBar/Modals/NewTestModal';
 
-const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
+const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -51,4 +51,4 @@ const TestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   );
 };
 
-export default TestMenu;
+export default ReactTestMenu;

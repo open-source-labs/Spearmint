@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 
 /* testCase imports */
-import TestCase from '../TestCase/TestCase';
+import ReactTestCase from '../TestCase/ReactTestCase';
 import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
 import { toggleReact } from '../../../context/reactTestCaseActions';
 
@@ -104,7 +104,7 @@ const TestFile = () => {
 
       {hasReact > 0 && (
         <section>
-          <TestCase />
+          <ReactTestCase />
         </section>
       )}
 
