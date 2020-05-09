@@ -28,6 +28,7 @@ const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTest
       contentLabel='Save?' /* whats this? */
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      ariaHideApp={false}
       style={modalStyles}
     >
       <div id={styles.title}>
