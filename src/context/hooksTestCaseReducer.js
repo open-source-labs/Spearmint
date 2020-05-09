@@ -191,6 +191,12 @@ export const hooksTestCaseReducer = (state, action) => {
         hooksTestStatement: '',
         hooksStatements: [],
       };
+    case actionTypes.UPDATE_STATEMENTS_ORDER:
+      hooksStatements = [...action.draggableStatements];
+      return {
+        ...state,
+        hooksStatements,
+      };
     default:
       return state;
   }

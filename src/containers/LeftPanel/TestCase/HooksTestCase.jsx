@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
 import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
-import { updateHooksTestStatement } from '../../../context/hooksTestCaseActions';
+import { updateHooksTestStatement, updateStatementsOrder } from '../../../context/hooksTestCaseActions';
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
@@ -14,6 +14,29 @@ const HooksTestCase = () => {
   const handleUpdateHooksTestStatement = e => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
   };
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  const onDragEnd = result => {
+    if (!result.destination) {
+      return;
+    }
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+    const reorderedStatements = reorder(
+      hooksStatements,
+      result.source.index,
+      result.destination.index
+    );
+    dispatchToHooksTestCase(updateStatementsOrder(reorderedStatements));
+  };
+
 
   return (
     <div>
@@ -33,7 +56,7 @@ const HooksTestCase = () => {
         </section>
       </div>
 
-      <DragDropContext>
+      <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {provided => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
