@@ -3,6 +3,11 @@ import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
 import { ReactTestCaseContext, reactTestCaseState, reactTestCaseReducer } from './context/reactTestCaseReducer';
 import {
+  PuppeteerTestCaseContext,
+  puppeteerTestCaseState,
+  puppeteerTestCaseReducer,
+} from './context/puppeteerTestCaseReducer';
+import {
   EndpointTestCaseContext,
   endpointTestCaseState,
   endpointTestCaseReducer,
@@ -46,10 +51,15 @@ const App = () => {
     hooksTestCaseReducer,
     hooksTestCaseState
   );
+  const [puppeteerTestCase, dispatchToPuppeteerTestCase] = useReducer(
+    puppeteerTestCaseReducer,
+    puppeteerTestCaseState
+  );
   const [testFileModal, dispatchToTestFileModal] = useReducer(
     testFileModalReducer,
     testFileModalState
   );
+
 
   if (!global.isProjectLoaded) {
     return (
@@ -75,22 +85,22 @@ const App = () => {
        */
       <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-            <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-          <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
-              <EndpointTestCaseContext.Provider
-                value={[endpointTestCase, dispatchToEndpointTestCase]}
-              >
-                <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
-                  <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
-                    <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-                      <NavBar />
-                      <LeftPanel />
-                    </MockDataContext.Provider>
-                  </TestFileModalContext.Provider>
-                </HooksTestCaseContext.Provider>
-              </EndpointTestCaseContext.Provider>
-          </ReactTestCaseContext.Provider>
-            </ReduxTestCaseContext.Provider>
+          <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
+            <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
+                <EndpointTestCaseContext.Provider value={[endpointTestCase, dispatchToEndpointTestCase]}>
+                  <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
+                    <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
+                      <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+                        <PuppeteerTestCaseContext.Provider value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}>
+                          <NavBar />
+                          <LeftPanel />
+                        </PuppeteerTestCaseContext.Provider>
+                      </MockDataContext.Provider>
+                    </TestFileModalContext.Provider>
+                  </HooksTestCaseContext.Provider>
+                </EndpointTestCaseContext.Provider>
+            </ReactTestCaseContext.Provider>
+          </ReduxTestCaseContext.Provider>
           <RightPanel />
         </GlobalContext.Provider>
       </div>

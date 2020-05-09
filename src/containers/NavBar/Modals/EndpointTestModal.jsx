@@ -32,6 +32,7 @@ const EndpointTestModal = ({
       contentLabel='Save?'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      ariaHideApp={false}
       style={modalStyles}
     >
       <div id={styles.title}>
