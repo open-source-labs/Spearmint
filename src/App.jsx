@@ -83,7 +83,10 @@ const App = () => {
        *
        * We access the value that we gave to the Provider through useContext
        */
-      <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
+      <div id={global.isFileDirectoryOpen ? 
+        (global.isRightPanelOpen? styles.fileDirectoryOpenRightPanelOpen : styles.fileDirectoryOpenRightPanelClosed) :
+        (global.isRightPanelOpen? styles.fileDirectoryClosedRightPanelOpen : styles.fileDirectoryClosedRightPanelClosed) 
+      }>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
             <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
@@ -101,7 +104,7 @@ const App = () => {
                 </EndpointTestCaseContext.Provider>
             </ReactTestCaseContext.Provider>
           </ReduxTestCaseContext.Provider>
-          <RightPanel />
+          {global.isRightPanelOpen ?  <RightPanel /> : ''}
         </GlobalContext.Provider>
       </div>
     );
