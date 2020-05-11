@@ -16,6 +16,11 @@ const createPuppeteerForm = () => ({
   type: 'puppeteerForm',
 });
 
+const createPuppeteerPaintTiming = () => ({
+  id: statementId++,
+  type: 'paintTiming',
+});
+
 export const puppeteerTestCaseReducer = (state, action) => {
   Object.freeze(state);
   let puppeteerStatements = [...state.puppeteerStatements];
@@ -33,8 +38,15 @@ export const puppeteerTestCaseReducer = (state, action) => {
         ...state,
         puppeteerStatements,
       };
-    case actionTypes.DELETE_PUPPETEERFORM:
+    case actionTypes.DELETE_PUPPETEER_TEST:
       puppeteerStatements = puppeteerStatements.filter(statement => statement.id !== action.id);
+      return {
+        ...state,
+        puppeteerStatements,
+      };
+
+    case actionTypes.ADD_PUPPETEER_PAINT_TIMING:
+      puppeteerStatements.push(createPuppeteerPaintTiming());
       return {
         ...state,
         puppeteerStatements,

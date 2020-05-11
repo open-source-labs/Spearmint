@@ -14,12 +14,6 @@ const PuppeteerTestCase = () => {
         <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}/>
       </div>
 
-      <div id={styles.testMockSection}>
-        <section  id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Test</label>
-        </section>
-      </div>
-
       <DragDropContext>
           <Droppable droppableId='droppable'>
             {provided => (
