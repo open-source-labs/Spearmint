@@ -1,31 +1,34 @@
 import React from 'react';
 import Action from '../Action/Action';
 import Assertion from '../Assertion/Assertion';
-import Rerender from '../Render/Rerender';
+import Render from '../Render/Render';
 
-const ReactTestStatements = ({ statements, dispatchToTestCase }) => {
-  return statements.map((statement, i) => {
-    switch (statement.type) {
+const ReactTestStatements = ({ statements, itId, describeId }) => {
+  // filter out ids not belonging to the correct describe block and itStatement
+  const filterStatements = statements.allIds.filter((id) => {
+    return statements.byId[id].describeId === describeId && statements.byId[id].itId === itId;
+  });
+
+  return filterStatements.map((id, i) => {
+    switch (statements.byId[id].type) {
       case 'action':
         return (
-          <Action
-            key={statement.id}
-            action={statement}
-            index={i}
-            dispatchToTestCase={dispatchToTestCase}
-          />
+          <Action key={`action-${id}-${i}`} statementId={id} describeId={describeId} itId={itId} statement={statements.byId[id]} />
         );
       case 'assertion':
         return (
           <Assertion
-            key={statement.id}
-            assertion={statement}
-            index={i}
-            dispatchToTestCase={dispatchToTestCase}
+            statement={statements.byId[id]}
+            key={`assertion-${id}-${i}`}
+            statementId={id}
+            describeId={describeId}
+            itId={itId}
           />
         );
       case 'render':
-        return <Rerender key={statement.id} render={statement} index={i} />;
+        return (
+          <Render key={`render-${id}-${i}`} statementId={id} describeId={describeId} itId={itId} />
+        );
       default:
         return <></>;
     }

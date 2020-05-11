@@ -2,70 +2,56 @@
 @import '../../../assets/stylesheets/colors.scss';
 @import '../LeftPanel.module.scss';
 
-#render {
-  @include box-styling;
-  padding-bottom: 10px;
-  vertical-align: middle;
+#RenderContainer {
+  position: relative;
+  height: auto;
+  border: 1px solid black;
+  padding: 1rem;
 
-  button:hover {
-    color: $mint;
-  }
-  button {
-    font-size: 12px;
-    padding-top: 5px;
-    border: none;
-    font-family: $raleway;
-    font-weight: bold;
-    text-align: left;
-  }
-  hr {
-    border: 1px solid $light-gray;
-    margin-top: 0;
-  }
-}
+  .renderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-#closeBtn {
-  float: right;
-  margin: 0;
-}
-#renderHeader {
-  @include box-header-alignment;
-  justify-content: flex-start;
-  display: flex;
-  align-items: center;
-  img {
-    width: 20px;
-    height: 20px;
-    margin: 0;
-    padding: 0;
-  }
-  h3 {
-    margin: 0;
-    padding: 0;
-  }
-}
+    .header {
+      font-size: 0.9rem;
+      font-weight: bold;
 
-#renderBody {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-#renderInputBox {
-  width: 150px;
-}
-#renderProp {
-  font-size: 13px;
-  margin-bottom: 0;
-  padding: 6px 0;
-  display: flex;
-  width: 60%;
-  justify-content: space-between;
-}
-#renderCheckbox {
-  float: right;
-}
+      .componentName {
+        font-family: 'Lucida Console', monospace;
+      }
+    }
 
-#props {
-  margin: 5px 0;
+    i {
+      font-size: 1rem;
+      cursor: pointer;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+
+      &:hover {
+        color: red;
+      }
+    }
+    .addProps {
+      height: auto;
+      font-size: 0.85rem;
+      background-color: rgba(0,0,0,0);
+      border: none;
+      min-width: 150px;
+      border-radius: 3px;
+      font-family: $oxygen;
+      text-align: center;
+      transition: 150ms;
+  
+      &:hover {
+        font-size: 0.9rem;
+      }
+  
+      i {
+        margin-right: 0.5rem;
+        position: static;
+      }
+    }
+  }
 }

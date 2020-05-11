@@ -43,7 +43,7 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             Assertion
           </button>
           <button data-testid='rerenderButton' onClick={handleAddRender}>
-            Rerender
+            Render
           </button>
         </div>
       </div>

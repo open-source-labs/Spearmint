@@ -1,38 +1,54 @@
 import React, { useContext } from 'react';
 import styles from '../TestCase/TestCase.module.scss';
 import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
-import { updateTestStatement, updateStatementsOrder } from '../../../context/reactTestCaseActions';
+import {
+  updateDescribeText,
+  updateStatementsOrder,
+  updateRenderComponent,
+  updateItStatementText,
+} from '../../../context/reactTestCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
-import TestStatements from './ReactTestStatements';
-import FirstRender from '../Render/FirstRender';
-import LastAssertion from '../Assertion/LastAssertion';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-// EDITS
-import ReactContainer from './ReactContainer'
+import DecribeRenderer from '../../../components/DescribeRenderer/DescribeRenderer';
 
 const plusIcon = require('../../../assets/images/plus-box.png');
 
-
 const ReactTestCase = () => {
-  const [{ testStatement, statements }, dispatchToTestCase] = useContext(ReactTestCaseContext);
+  const [
+    { describeBlocks, itStatements, statements },
+    dispatchToReactTestCase,
+  ] = useContext(ReactTestCaseContext);
   const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
-  const firstRenderStatement = statements[0];
-  const draggableStatements = statements.slice(1, -1);
-  const lastAssertionStatement = statements[statements.length - 1];
+  const draggableStatements = describeBlocks.allIds;
 
-  const handleUpdateTestStatement = e => {
-    dispatchToTestCase(updateTestStatement(e.target.value));
-  };
-
-  const handleToggleMockData = e => {
+  const handleToggleMockData = (e) => {
     dispatchToMockData(toggleMockData(e.currentTarget.checked));
   };
 
   const handleAddMockData = () => {
     dispatchToMockData(addMockData());
+  };
+
+  const handleChangeDescribeText = (e) => {
+    const text = e.target.value;
+    const describeId = e.target.id;
+    dispatchToReactTestCase(updateDescribeText(text, describeId));
+  };
+
+  const handleChangeItStatementText = (e) => {
+    const text = e.target.value;
+    const itId = e.target.id;
+    dispatchToReactTestCase(updateItStatementText(text, itId));
+  };
+
+  const handleChangeComponentName = (e) => {
+    const componentName = e.target.value;
+    // const filePath = filePathMap[componentName] || '';
+    const filePath = '';
+    dispatchToReactTestCase(updateRenderComponent(componentName, filePath));
   };
 
   const reorder = (list, startIndex, endIndex) => {
@@ -42,7 +58,7 @@ const ReactTestCase = () => {
     return result;
   };
 
-  const onDragEnd = result => {
+  const onDragEnd = (result) => {
     if (!result.destination) {
       return;
     }
@@ -55,10 +71,10 @@ const ReactTestCase = () => {
       result.source.index,
       result.destination.index
     );
-    dispatchToTestCase(updateStatementsOrder(reorderedStatements));
+    dispatchToReactTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  const mockDataJSX = mockData.map(mockDatum => {
+  const mockDataJSX = mockData.map((mockDatum) => {
     return (
       <MockData
         key={mockDatum.id}
@@ -72,18 +88,12 @@ const ReactTestCase = () => {
   return (
     <div>
       <div id='head'>
-        <ReactTestMenu dispatchToTestCase={dispatchToTestCase} dispatchToMockData={dispatchToMockData} />
+        <ReactTestMenu
+          dispatchToTestCase={dispatchToReactTestCase}
+          dispatchToMockData={dispatchToMockData}
+        />
       </div>
       <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Testing</label>
-          <input
-            type='text'
-            id={styles.testStatement}
-            value={testStatement}
-            onChange={handleUpdateTestStatement}
-          />
-        </section>
         <section id={styles.mockHeader}>
           <span>
             <input
@@ -105,31 +115,45 @@ const ReactTestCase = () => {
           {mockDataJSX}
         </section>
       )}
-      <FirstRender
+      {/* <FirstRender
         key={firstRenderStatement.id}
         render={firstRenderStatement}
         dispatchToTestCase={dispatchToTestCase}
+      /> */}
+      <input
+        onChange={handleChangeComponentName}
+        type='text'
+        name='component-name'
+        value={statements.componentName}
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {provided => (
+          {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <TestStatements
+              {/* <TestStatements
                 statements={draggableStatements}
                 dispatchToTestCase={dispatchToTestCase}
+              /> */}
+              <DecribeRenderer
+                draggableStatements={draggableStatements}
+                describeBlocks={describeBlocks}
+                itStatements={itStatements}
+                statements={statements}
+                handleChangeDescribeText={handleChangeDescribeText}
+                handleChangeItStatementText={handleChangeItStatementText}
+                type='react'
               />
               {provided.placeholder}
             </div>
           )}
         </Droppable>
       </DragDropContext>
-      <LastAssertion
+      {/* <LastAssertion
         key={lastAssertionStatement.id}
         assertion={lastAssertionStatement}
         dispatchToTestCase={dispatchToTestCase}
         isLast={true}
-      />
-      <ReactContainer/>
+      /> */}
     </div>
   );
 };

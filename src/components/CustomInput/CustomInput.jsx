@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './CustomInput.module.scss';
 import cn from 'classnames';
 
-const CustomInput = ({ label, placeholder, handleChange, value, bold }) => {
+const CustomInput = ({ id, label, placeholder, handleChange, value, bold }) => {
 
   return (
     <div className={styles.customInputContainer}>
@@ -13,6 +13,7 @@ const CustomInput = ({ label, placeholder, handleChange, value, bold }) => {
         className={cn(styles.customInput, {[styles.bold]: bold})}
         name='custom-input'
         type='text'
+        id={id}
         placeholder={placeholder}
         onChange={handleChange}
         defaultValue={value || ''}

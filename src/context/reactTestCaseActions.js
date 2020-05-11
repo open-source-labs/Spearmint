@@ -4,7 +4,7 @@ export const actionTypes = {
   TOGGLE_REACT: 'TOGGLE_REACT',
 
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
-  UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
+  UPDATE_DESCRIBE_TEXT: 'UPDATE_DESCRIBE_TEXT',
 
   ADD_ACTION: 'ADD_ACTION',
   DELETE_ACTION: 'DELETE_ACTION',
@@ -22,6 +22,8 @@ export const actionTypes = {
   DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
   UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
 
+  UPDATE_ITSTATEMENT_TEXT: 'UPDATE_ITSTATEMENT_TEXT',
+
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
@@ -36,18 +38,21 @@ export const updateStatementsOrder = draggableStatements => ({
   draggableStatements,
 });
 
-export const updateTestStatement = testStatement => ({
-  type: actionTypes.UPDATE_TEST_STATEMENT,
-  testStatement,
+export const updateDescribeText = (text, describeId) => ({
+  type: actionTypes.UPDATE_DESCRIBE_TEXT,
+  text,
+  describeId
 });
 
-export const addAction = () => ({
+export const addAction = (describeId, itId) => ({
   type: actionTypes.ADD_ACTION,
+  describeId,
+  itId
 });
 
-export const deleteAction = id => ({
+export const deleteAction = statementId => ({
   type: actionTypes.DELETE_ACTION,
-  id,
+  statementId,
 });
 
 export const updateAction = ({
@@ -69,13 +74,15 @@ export const updateAction = ({
   suggestions,
 });
 
-export const addAssertion = () => ({
+export const addAssertion = (describeId, itId) => ({
   type: actionTypes.ADD_ASSERTION,
+  describeId,
+  itId
 });
 
-export const deleteAssertion = id => ({
+export const deleteAssertion = statementId => ({
   type: actionTypes.DELETE_ASSERTION,
-  id,
+  statementId,
 });
 
 export const updateAssertion = ({
@@ -99,13 +106,15 @@ export const updateAssertion = ({
   suggestions,
 });
 
-export const addRender = () => ({
+export const addRender = (describeId, itId) => ({
   type: actionTypes.ADD_RENDER,
+  describeId,
+  itId
 });
 
-export const deleteRender = id => ({
+export const deleteRender = statementId=> ({
   type: actionTypes.DELETE_RENDER,
-  id,
+  statementId,
 });
 
 export const updateRenderComponent = (componentName, filePath) => ({
@@ -132,6 +141,12 @@ export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
   propKey,
   propValue,
 });
+
+export const updateItStatementText = (text, itId) => ({
+  type: actionTypes.UPDATE_ITSTATEMENT_TEXT,
+  itId,
+  text,
+})
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,

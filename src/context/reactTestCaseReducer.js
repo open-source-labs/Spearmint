@@ -5,35 +5,77 @@ export const ReactTestCaseContext = createContext(null);
 
 export const reactTestCaseState = {
   testStatement: '',
+  // TODO: Make Boolean
   hasReact: 0,
-  statements: [
-    {
-      id: 0,
-      type: 'render',
-      componentName: '',
-      filePath: '',
-      props: [],
-      hasProp: false,
+  describeId: 2,
+  itId: 2,
+  statementId: 2,
+  describeBlocks: {
+    byId: {
+      describe0: {
+        id: 'describe0',
+        text: '',
+      },
+      describe1: {
+        id: 'describe1',
+        text: '',
+      },
     },
-    {
-      id: 1,
-      type: 'assertion',
-      queryVariant: '',
-      querySelector: '',
-      queryValue: '',
-      isNot: false,
-      matcherType: '',
-      matcherValue: '',
-      suggestions: [],
+    allIds: ['describe0', 'describe1'],
+  },
+  itStatements: {
+    byId: {
+      it0: {
+        id: 'it0',
+        describeId: 'describe0',
+        text: '',
+      },
+      it1: {
+        id: 'it1',
+        describeId: 'describe1',
+        text: '',
+      },
     },
-  ],
+    allIds: ['it0', 'it1'],
+  },
+  statements: {
+    byId: {
+      statement0: {
+        id: 'statement0',
+        itId: 'it0',
+        describeId: 'describe0',
+        type: 'render',
+        componentName: '',
+        filePath: '',
+        props: [],
+        hasProp: false,
+      },
+      statement1: {
+        id: 'statement1',
+        itId: 'it1',
+        describeId: 'describe1',
+        type: 'render',
+        componentName: '',
+        filePath: '',
+        props: [],
+        hasProp: false,
+      },
+    },
+    allIds: ['statement0', 'statement1'],
+    componentPath: '',
+    componentName: ''
+  },
 };
 
-let statementId = 2;
+// let statementId = 0;
 let renderPropsId = 0;
 
-const createAction = () => ({
-  id: statementId++,
+/* ---------------------------- Helper Functions ---------------------------- */
+
+const createAction = (describeId, itId, statementId) => ({
+  id: statementId,
+  itId: itId,
+  describeId: describeId,
   type: 'action',
   eventType: '',
   eventValue: null,
@@ -43,8 +85,10 @@ const createAction = () => ({
   suggestions: [],
 });
 
-const createAssertion = () => ({
-  id: statementId++,
+const createAssertion = (describeId, itId, statementId) => ({
+  id: statementId,
+  itId: itId,
+  describeId: describeId,
   type: 'assertion',
   queryVariant: '',
   querySelector: '',
@@ -55,205 +99,347 @@ const createAssertion = () => ({
   suggestions: [],
 });
 
-const createRerender = (componentName, filePath) => ({
-  id: statementId++,
+const createRender = (describeId, itId, statementId, componentName, filePath) => ({
+  id: statementId,
+  itId: itId,
+  describeId: describeId,
   type: 'render',
   componentName,
   filePath,
   props: [],
 });
 
+// TODO
 const createRenderProp = () => ({
   id: renderPropsId++,
   propKey: '',
   propValue: '',
 });
 
+/* ------------------------- React Test Case Reducer ------------------------ */
+
 export const reactTestCaseReducer = (state, action) => {
   Object.freeze(state);
-  let statements = [...state.statements];
-  let lastAssertionStatement;
+
+  let describeBlocks = { ...state.describeBlocks };
+  let itStatements = { ...state.itStatements };
+  let statements = { ...state.statements };
 
   switch (action.type) {
-    case actionTypes.TOGGLE_REACT:
+    case actionTypes.TOGGLE_REACT: {
       return {
         ...state,
         hasReact: state.hasReact + 1,
       };
-    case actionTypes.UPDATE_STATEMENTS_ORDER:
-      const firstRenderStatement = statements[0];
-      lastAssertionStatement = statements[statements.length - 1];
-      statements = [firstRenderStatement, ...action.draggableStatements, lastAssertionStatement];
+    }
+    case actionTypes.UPDATE_STATEMENTS_ORDER: {
+      // TODO
       return {
         ...state,
-        statements,
       };
-    case actionTypes.UPDATE_TEST_STATEMENT:
-      let testStatement = action.testStatement;
+    }
+    case actionTypes.UPDATE_DESCRIBE_TEXT: {
+      const { describeId, text } = action;
+      const byIds = { ...describeBlocks.byId };
+      const block = { ...describeBlocks.byId[describeId] };
       return {
         ...state,
-        testStatement,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...byIds,
+            [describeId]: {
+              ...block,
+              text: text,
+            },
+          },
+        },
       };
-    case actionTypes.ADD_ACTION:
-      lastAssertionStatement = statements.pop();
-      statements.push(createAction(), lastAssertionStatement);
+    }
+    case actionTypes.UPDATE_ITSTATEMENT_TEXT: {
+      const { itId, text } = action;
+      const byIds = { ...itStatements.byId };
+      const block = { ...itStatements.byId[itId] };
       return {
         ...state,
-        statements,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...byIds,
+            [itId]: {
+              ...block,
+              text: text,
+            },
+          },
+        },
       };
-    case actionTypes.DELETE_ACTION:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
+    }
+    case actionTypes.ADD_ACTION: {
+      const { describeId, itId } = action;
+      const byIds = { ...statements.byId };
+      const allIds = [...statements.allIds];
+      const statementId = `statement${state.statementId}`;
+      let updatedStatementId = state.statementId
+
       return {
         ...state,
-        statements,
+        statementId: ++updatedStatementId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byIds,
+            [statementId]: createAction(describeId, itId, statementId),
+          },
+          allIds: [...allIds, statementId],
+        },
       };
-    case actionTypes.UPDATE_ACTION:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.eventType = action.eventType;
-          statement.eventValue = action.eventValue;
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.suggestions = action.suggestions;
-        }
-        return statement;
-      });
+    }
+    case actionTypes.DELETE_ACTION: {
+      const { statementId } = action;
+      const byId = { ...statements.byId };
+      delete byId[statementId];
+      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
       return {
         ...state,
-        statements,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds]
+
+        },
       };
-    case actionTypes.ADD_ASSERTION:
-      lastAssertionStatement = statements.pop();
-      statements.push(createAssertion(), lastAssertionStatement);
+    }
+    case actionTypes.UPDATE_ACTION: {
+      const {
+        id,
+        eventType,
+        eventValue,
+        queryVariant,
+        querySelector,
+        queryValue,
+        suggestions,
+      } = action;
+      const byId = {...statements.byId}
+      const  oldStatement = {...statements.byId[id]}
+      const newStatement = {
+        ...oldStatement,
+        eventType: eventType,
+        eventValue: eventValue,
+        queryVariant: queryVariant,
+        querySelector: querySelector,
+        queryValue: queryValue,
+        suggestions: suggestions,
+      };
       return {
         ...state,
-        statements,
-      };
-    case actionTypes.DELETE_ASSERTION:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_ASSERTION:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.isNot = action.isNot;
-          statement.matcherType = action.matcherType;
-          statement.matcherValue = action.matcherValue;
-          statement.suggestions = action.suggestions;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.ADD_RENDER:
-      lastAssertionStatement = statements.pop();
-      const renderComponentName = state.statements[0].componentName;
-      const renderFilePath = state.statements[0].filePath;
-      statements.push(createRerender(renderComponentName, renderFilePath), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_RENDER:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-        lastAssertionStatement,
-      };
-    case actionTypes.UPDATE_RENDER_COMPONENT:
-      statements = statements.map(statement => {
-        if (statement.type === 'render') {
-          statement.componentName = action.componentName;
-          statement.filePath = action.filePath;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.ADD_RENDER_PROP:
-      statements = statements.map(statement => {
-        if (statement.id === action.renderId) {
-          statement.props.push(createRenderProp());
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-        hasProp: !statements[0].hasProp,
-      };
-    case actionTypes.DELETE_RENDER_PROP:
-      statements = statements.map(statement => {
-        if (statement.id === action.renderId) {
-          statement.props = statement.props.filter(prop => prop.id !== action.propId);
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_RENDER_PROP:
-      statements = statements.map(statement => {
-        if (statement.id === action.renderId) {
-          statement.props.map(prop => {
-            if (prop.id === action.propId) {
-              prop.propKey = action.propKey;
-              prop.propValue = action.propValue;
+        statements: {
+          ...statements,
+            byId: {
+              ...byId,
+              [id]: {
+                ...newStatement
+              }
             }
-            return prop;
-          });
+          }
         }
-        return statement;
-      });
+      };
+    case actionTypes.ADD_ASSERTION: {
+      const { describeId, itId } = action;
+      const byIds = { ...statements.byId };
+      const allIds = [...statements.allIds];
+      const statementId = `statement${state.statementId}`;
+      let updatedStatementId = state.statementId
+
+      return {
+        ...state,
+        statementId: ++updatedStatementId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byIds,
+            [statementId]: createAssertion(describeId, itId, statementId),
+          },
+          allIds: [...allIds, statementId],
+        },
+      };
+    }
+    case actionTypes.DELETE_ASSERTION: {
+      const { statementId } = action;
+      const byId = { ...statements.byId };
+      delete byId[statementId];
+      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds],
+        },
+      };
+    }
+    case actionTypes.UPDATE_ASSERTION: {
+      const {
+        id,
+        eventType,
+        eventValue,
+        queryVariant,
+        querySelector,
+        queryValue,
+        isNot,
+        matcherType,
+        matcherValue,
+        suggestions,
+      } = action;
+      const  oldStatement = {...statements.byId[id]}
+      const byId = {...statements.byId}
+      const newStatement = {
+        ...oldStatement,
+        eventType: eventType,
+        eventValue: eventValue,
+        queryVariant: queryVariant,
+        querySelector: querySelector,
+        queryValue: queryValue,
+        isNot: isNot,
+        matcherType: matcherType,
+        matcherValue: matcherValue,
+        suggestions: suggestions,
+      };
+      return {
+        ...state,
+        statements: {
+          ...statements,
+            byId: {
+              ...byId,
+              [id]: {
+                ...newStatement
+              }
+            }
+          }
+        }
+      };
+    case actionTypes.ADD_RENDER: {
+      const { describeId, itId } = action;
+      const byIds = { ...statements.byId };
+      const allIds = [...statements.allIds];
+      const statementId = `statement${state.statementId}`;
+      let updatedStatementId = state.statementId
+
+      return {
+        ...state,
+        statementId: ++updatedStatementId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byIds,
+            [statementId]: createRender(describeId, itId, statementId),
+          },
+          allIds: [...allIds, statementId],
+        },
+      };
+    }
+    case actionTypes.DELETE_RENDER: {
+      const { statementId } = action;
+      const byId = { ...statements.byId };
+      delete byId[statementId];
+      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds]
+        },
+      };
+    }
+    case actionTypes.UPDATE_RENDER_COMPONENT: {
+      const {
+        componentName,
+        filePath
+      } = action;
+      statements.componentName = componentName;
+      statements.filePath = filePath;
       return {
         ...state,
         statements,
       };
+    }
+    case actionTypes.ADD_RENDER_PROP:
+      // statements = statements.map((statement) => {
+      //   if (statement.id === action.renderId) {
+      //     statement.props.push(createRenderProp());
+      //   }
+      //   return statement;
+      // });
+      // return {
+      //   ...state,
+      //   statements,
+      //   hasProp: !statements[0].hasProp,
+      // };
+      return {...state}
+    case actionTypes.DELETE_RENDER_PROP:
+      // statements = statements.map((statement) => {
+      //   if (statement.id === action.renderId) {
+      //     statement.props = statement.props.filter((prop) => prop.id !== action.propId);
+      //   }
+      //   return statement;
+      // });
+      // return {
+      //   ...state,
+      //   statements,
+      // };
+      return {...state}
+    case actionTypes.UPDATE_RENDER_PROP:
+      // statements = statements.map((statement) => {
+      //   if (statement.id === action.renderId) {
+      //     statement.props.map((prop) => {
+      //       if (prop.id === action.propId) {
+      //         prop.propKey = action.propKey;
+      //         prop.propValue = action.propValue;
+      //       }
+      //       return prop;
+      //     });
+      //   }
+      //   return statement;
+      // });
+      // return {
+      //   ...state,
+      //   statements,
+      // };
+      return {...state}
 
     case actionTypes.CREATE_NEW_TEST:
-      return {
-        hasReact: 0,
-        testStatement: '',
-        statements: [
-          {
-            id: 0,
-            type: 'render',
-            componentName: '',
-            filePath: '',
-            props: [],
-            hasProp: false,
-          },
-          {
-            id: 1,
-            type: 'assertion',
-            queryVariant: '',
-            querySelector: '',
-            queryValue: '',
-            isNot: false,
-            matcherType: '',
-            matcherValue: '',
-            suggestions: [],
-          },
-        ],
-      };
+      // return {
+      //   hasReact: 0,
+      //   testStatement: '',
+      //   statements: [
+      //     {
+      //       id: 0,
+      //       type: 'render',
+      //       componentName: '',
+      //       filePath: '',
+      //       props: [],
+      //       hasProp: false,
+      //     },
+      //     {
+      //       id: 1,
+      //       type: 'assertion',
+      //       queryVariant: '',
+      //       querySelector: '',
+      //       queryValue: '',
+      //       isNot: false,
+      //       matcherType: '',
+      //       matcherValue: '',
+      //       suggestions: [],
+      //     },
+      //   ],
+      // };
+      return {...state}
     default:
       return state;
   }
