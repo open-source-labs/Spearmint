@@ -3,7 +3,17 @@
 @import 'assets/stylesheets/fonts';
 @import 'assets/stylesheets/colors';
 
-#appGridOpen {
+//file directory is open but right panel is closed
+#fileDirectoryOpenRightPanelClosed {
+  display: grid;
+  grid-template-columns: 280px auto;
+  grid-template-rows: 100vh;
+  grid-template-areas: 'navBar leftPanel';
+  background-color: $light-gray3;
+}
+
+//both open 
+#fileDirectoryOpenRightPanelOpen {
   display: grid;
   grid-template-columns: 280px auto 40%;
   grid-template-rows: 100vh;
@@ -11,10 +21,22 @@
   background-color: $light-gray3;
 }
 
-#appGridClose {
+//file directory is closed but right panel is open
+#fileDirectoryClosedRightPanelOpen {
   display: grid;
   grid-template-columns: 48px auto 50%;
   grid-template-rows: 100vh;
   grid-template-areas: 'navBar leftPanel rightPanel';
   background-color: $light-gray3;
 }
+
+//both closed
+#fileDirectoryClosedRightPanelClosed {
+  display: grid;
+  grid-template-columns: 48px auto;
+  grid-template-rows: 100vh;
+  grid-template-areas: 'navBar leftPanel';
+  background-color: $light-gray3;
+}
+
+
