@@ -556,6 +556,19 @@ export const reactTestCaseReducer = (state, action) => {
     case actionTypes.CREATE_NEW_TEST: {
       return {
         ...state,
+        describeBlocks: {
+          byId: {},
+          allIds: []
+        },
+        itStatements: {
+          byId: {},
+          allIds: []
+        },
+        statements: {
+          byId: {},
+          allIds: []
+        },
+        hasReact: 0
       };
     }
     default:
