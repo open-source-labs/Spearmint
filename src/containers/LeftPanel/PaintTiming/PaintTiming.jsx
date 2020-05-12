@@ -1,60 +1,24 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from './PaintTiming.module.scss';
 import {
   deletePuppeteerTest,
-  addBrowserOption,
-  deleteBrowserOption,
   updatePaintTiming,
-  updateBrowserOption,
 } from '../../../context/puppeteerTestCaseActions';
+import ToolTip from '../ToolTip/ToolTip';
 import { Draggable } from 'react-beautiful-dnd';
-
+import PuppeteerBrowserSetting from '../PuppeteerBrowerSetting/PuppeteerBrowserSetting'
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
-const plusIcon = require('../../../assets/images/plus.png');
-const minusIcon = require('../../../assets/images/minus-box-outline.png');
+const questionIcon = require('../../../assets/images/help-circle.png');
 
 const PaintTiming = ({ paintTiming, index, dispatchToPuppeteerTestCase }) => {
   const handleChangePaintTimingFields = (e, field) => {
     dispatchToPuppeteerTestCase(updatePaintTiming(paintTiming.id, field, e.target.value));
   };
-
-  const handleChangeBrowserOptionFields = (e, field, optionId) => {
-    dispatchToPuppeteerTestCase(updateBrowserOption(paintTiming.id, field, e.target.value, optionId));
-  };
-
   const handleClickDeletePaintTiming = e => {
     dispatchToPuppeteerTestCase(deletePuppeteerTest(paintTiming.id));
   };
 
-  const handleAddBrowserOptions = e => {
-    dispatchToPuppeteerTestCase(addBrowserOption(paintTiming.id));
-  };
-
-  const handleClickDeleteBrowserOption = e => {
-    dispatchToPuppeteerTestCase(deleteBrowserOption(paintTiming.id, Number(e.target.id)));
-  }
-
-
-  const browserOptionsJSX = paintTiming.browserOptions.map(option => {
-    return (
-      <div id={styles.browserOptionsFlexBox} key={option.id}>
-        <input 
-          type='text' 
-          key={`key${option.id}`} 
-          id={`key${option.id}`} 
-          onChange={e => handleChangeBrowserOptionFields(e, 'optionKey', option.id)} 
-        />
-        <input 
-          type='text' 
-          key={`value${option.id}`} 
-          id={`value${option.id}`} 
-          onChange={e => handleChangeBrowserOptionFields(e, 'optionValue', option.id)}  
-        />
-        <img src={minusIcon} alt='delete' id={option.id} onClick={handleClickDeleteBrowserOption} />
-      </div>
-    );
-  });
 
   return (
     <Draggable draggableId={paintTiming.id.toString()} index={index}>
@@ -72,64 +36,13 @@ const PaintTiming = ({ paintTiming, index, dispatchToPuppeteerTestCase }) => {
             <h3>Paint Timing</h3>
           </div>
           
-          <div id={styles.groupFlexbox}>
-            <label htmlFor='test'>
-              Test
-            </label>
-            <div id={styles.inputFlexBox}>
-              <input
-                type='text'
-                name='test'
-                onChange={e => handleChangePaintTimingFields(e, 'test')} 
-              />
-            </div>
-          </div>
-          
-          <div id={styles.groupFlexbox}>
-            <label htmlFor='url'>
-              URL
-            </label>
-            <div id={styles.inputFlexBox}>
-              <input
-                type='text'
-                name='url'
-                placeholder='http://localhost:8080/'
-                onChange={e => handleChangePaintTimingFields(e, 'url')} 
-              />
-            </div>
-            <div id={styles.renderCheckbox}>
-              <input
-                type='checkbox'
-                id='render-checkbox'
-                disabled={paintTiming.browserOptions.length}
-                checked={paintTiming.hasBrowserOption}
-                onChange={handleAddBrowserOptions}
-              />
-              <label htmlFor='render-checkbox'>Add Browser Options? </label>
-            </div>
-          </div>
-          {paintTiming.browserOptions.length !== 0 && (
-            <div>
-              <div id={styles.browserOptions}>
-                <label htmlFor='option-key'>
-                  Option key
-                </label>
-                <label htmlFor='option-value'>
-                  Option value
-                </label>
-              </div>
-              <hr />
-              {browserOptionsJSX}
-              <div id={styles.options}>
-                <button onClick={handleAddBrowserOptions}>
-                  <img src={plusIcon} alt='add' />
-                  Add Prop
-                </button>
-              </div>
-            </div>
-          )}
+          <PuppeteerBrowserSetting 
+            puppeteer={paintTiming} 
+            dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
+            updatePuppeteer={updatePaintTiming}
+            handleChangePuppeteerFields={handleChangePaintTimingFields}
+          />
 
-          {/* -------------------------------------- */}
           <div id={styles.groupFlexbox}>
             <label htmlFor='first-paint'>
               First Paint
@@ -138,13 +51,23 @@ const PaintTiming = ({ paintTiming, index, dispatchToPuppeteerTestCase }) => {
               <input
                 type='text'
                 name='first-paint-it'
+                placeholder='should have its first paint in less than 100 ms'
                 onChange={e => handleChangePaintTimingFields(e, 'firstPaintIt')} 
               />
-              <input
-                type='text'
-                name='first-paint-benchmark'
-                onChange={e => handleChangePaintTimingFields(e, 'firstPaintTime')} 
-              />
+              <div id={styles.time}>
+                <input
+                  type='text'
+                  name='first-paint-benchmark'
+                  placeholder={100}
+                  onChange={e => handleChangePaintTimingFields(e, 'firstPaintTime')} 
+                />
+              </div>
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                  <ToolTip toolTipType={'FPTarget'} />
+                </span>
+              </span>
             </div>
           </div>
           <div id={styles.groupFlexbox}>
@@ -155,13 +78,23 @@ const PaintTiming = ({ paintTiming, index, dispatchToPuppeteerTestCase }) => {
               <input
                 type='text'
                 name='first-contentful-paint-it'
+                placeholder='should have its first meaningful paint in less than 100 ms'
                 onChange={e => handleChangePaintTimingFields(e, 'FCPIt')} 
               />
-              <input
-                type='text'
-                name='first-contentful-paint-benchmark'
-                onChange={e => handleChangePaintTimingFields(e, 'FCPtTime')} 
-              />
+              <div id={styles.time}>
+                <input
+                  type='text'
+                  name='first-contentful-paint-benchmark'
+                  placeholder={100}
+                  onChange={e => handleChangePaintTimingFields(e, 'FCPtTime')} 
+                />
+              </div>
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                  <ToolTip toolTipType={'FCPTarget'} />
+                </span>
+              </span>
             </div>
           </div>
           <div id={styles.groupFlexbox}>
@@ -172,13 +105,23 @@ const PaintTiming = ({ paintTiming, index, dispatchToPuppeteerTestCase }) => {
               <input
                 type='text'
                 name='largest-contentful-paint-it'
-                onChange={e => handleChangePaintTimingFields(e, 'LCPPaint')} 
+                placeholder='should have its largest meaningful paint in less than 250 ms'
+                onChange={e => handleChangePaintTimingFields(e, 'LCPIt')} 
               />
-              <input
-                type='text'
-                name='largest-contentful-paint-benchmark'
-                onChange={e => handleChangePaintTimingFields(e, 'LCPTime')} 
-              />
+              <div id={styles.time}>
+                <input
+                  type='text'
+                  name='largest-contentful-paint-benchmark'
+                  placeholder={250}
+                  onChange={e => handleChangePaintTimingFields(e, 'LCPTime')} 
+                />
+              </div>
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                  <ToolTip toolTipType={'LCPTarget'} />
+                </span>
+              </span>
             </div>
           </div>
         </div>

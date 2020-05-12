@@ -4,7 +4,6 @@ import { actionTypes } from './puppeteerTestCaseActions';
 export const PuppeteerTestCaseContext = createContext(null);
 
 export const puppeteerTestCaseState = {
-  puppeteerTestStatement: '',
   puppeteerStatements: [],
   hasPuppeteer: 0,
 };
@@ -26,7 +25,7 @@ const createPuppeteerPaintTiming = () => ({
   firstPaintTime: null,
   FCPIt: '',
   FCPtTime: null,
-  LCPPaint: '',
+  LCPIt: '',
   LCPTime: null,
   hasBrowserOption: false,
   browserOptionId: 0,
@@ -72,7 +71,6 @@ export const puppeteerTestCaseReducer = (state, action) => {
 
     case actionTypes.CREATE_NEW_PUPPETEER_TEST:
       return {
-        puppeteerTestStatement: '',
         puppeteerStatements: [],
         hasPuppeteer: 0,
       };
@@ -82,6 +80,8 @@ export const puppeteerTestCaseReducer = (state, action) => {
         if (statement.id === action.id) {
           statement.browserOptions = statement.browserOptions.filter(option => option.id !== action.optionId);
         }
+
+        if(statement.browserOptions.length === 0) statement.hasBrowserOption = false
         return statement;
       });
       return {
@@ -105,8 +105,8 @@ export const puppeteerTestCaseReducer = (state, action) => {
       puppeteerStatements = puppeteerStatements.map(statement => {
         if (statement.id === action.id) {
           statement.browserOptions.push(createBrowserOption(statement.browserOptionId));
+          statement.hasBrowserOption = true
         }
-        statement.hasBrowserOption = true
         statement.browserOptionId++
         return statement;
       });
@@ -125,11 +125,20 @@ export const puppeteerTestCaseReducer = (state, action) => {
             return option
           })
         }
-        return {
-          ...state,
-          puppeteerStatements,
-        }
+        return statement
       })
+      return {
+        ...state,
+        puppeteerStatements
+      }
+
+    case actionTypes.UPDATE_STATEMENTS_ORDER:
+      puppeteerStatements = [...action.draggableStatements];
+      return {
+        ...state,
+        puppeteerStatements,
+      };
+
     default:
       return state;
   }

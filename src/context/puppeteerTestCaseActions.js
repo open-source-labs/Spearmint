@@ -6,8 +6,10 @@ export const actionTypes = {
   ADD_PUPPETEER_PAINT_TIMING: 'ADD_PUPPETEER_PAINT_TIMING',
   DELETE_PUPPETEER_PAINT_TIMING: 'DELETE_PUPPETEER_PAINT_TIMING',
   ADD_BROWSER_OPTIONS: 'ADD_BROWSER_OPTIONS',
+  UPDATE_PAINT_TIMING: 'UPDATE_PAINT_TIMING',
   DELETE_BROWSER_OPTION: 'DELETE_BROWSER_OPTION',
   UPDATE_BROWSER_OPTION: 'UPDATE_BROWSER_OPTION',
+  UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
 };
 
 export const togglePuppeteer = () => ({
@@ -55,4 +57,9 @@ export const updateBrowserOption = (id, field, value, optionId) => ({
   field,
   value,
   optionId,
+})
+
+export const updateStatementsOrder = draggableStatements => ({
+  type: actionTypes.UPDATE_STATEMENTS_ORDER,
+  draggableStatements,
 })
