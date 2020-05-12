@@ -10,6 +10,7 @@ export const reactTestCaseState = {
   describeId: 2,
   itId: 2,
   statementId: 2,
+  propId: 1,
   describeBlocks: {
     byId: {
       describe0: {
@@ -47,7 +48,13 @@ export const reactTestCaseState = {
         type: 'render',
         componentName: '',
         filePath: '',
-        props: [],
+        props: [
+          {
+            id: 0,
+            propKey: 'PROP KEY!',
+            propValue: 'PROP VALUE!',
+          },
+        ],
         hasProp: false,
       },
       statement1: {
@@ -63,14 +70,24 @@ export const reactTestCaseState = {
     },
     allIds: ['statement0', 'statement1'],
     componentPath: '',
-    componentName: ''
+    componentName: '',
   },
 };
 
-// let statementId = 0;
-let renderPropsId = 0;
-
 /* ---------------------------- Helper Functions ---------------------------- */
+
+const createDescribeBlock = (describeId) => {
+  return {
+    id: describeId,
+    text: ''
+  }
+}
+
+const createItStatement = (describeId, itId) => ({
+  id: itId,
+  describeId: describeId,
+  text: ''
+})
 
 const createAction = (describeId, itId, statementId) => ({
   id: statementId,
@@ -109,12 +126,25 @@ const createRender = (describeId, itId, statementId, componentName, filePath) =>
   props: [],
 });
 
-// TODO
-const createRenderProp = () => ({
-  id: renderPropsId++,
+const createProp = (propId, statementId) => ({
+  id: propId,
+  statementId: statementId,
   propKey: '',
   propValue: '',
 });
+
+const deleteChildren = (object, deletionId, lookup) => {
+
+  const allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
+
+  object.allIds.forEach((id) => {
+    if (object.byId[id][lookup] === deletionId) {
+      delete object.byId[id];
+    }
+  });
+
+  return allIdCopy;
+};
 
 /* ------------------------- React Test Case Reducer ------------------------ */
 
@@ -136,6 +166,102 @@ export const reactTestCaseReducer = (state, action) => {
       // TODO
       return {
         ...state,
+      };
+    }
+    case actionTypes.ADD_DESCRIBE_BLOCK: {
+      let updatedDescribeId = state.describeId
+      const describeId = `describe${state.describeId}`
+
+      return {
+        ...state,
+        describeId: ++updatedDescribeId,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...describeBlocks.byId,
+            [describeId]: createDescribeBlock(describeId)  
+          },
+          allIds: [...describeBlocks.allIds, describeId]
+        }
+      };
+    }
+
+    case actionTypes.DELETE_DESCRIBE_BLOCK: {
+      console.log('reducer called')
+      const {describeId} = action;
+      const byId = {...describeBlocks.byId};
+      delete byId[describeId]
+      const allIds = describeBlocks.allIds.filter(id => id !== describeId)
+
+      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId')
+      const statementAllIds = deleteChildren(statements, describeId, 'describeId')
+
+      return {
+        ...state,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...byId
+          },
+          allIds: [...allIds]
+        },
+        itStatements: {
+          byId: {
+            ...itStatements.byId
+          },
+          allIds: [...itStatementAllIds]
+        },
+        statements: {
+          byId: {
+            ...statements.byId
+          },
+          allIds: [...statementAllIds]
+        },
+      };
+    }
+
+    case actionTypes.ADD_ITSTATEMENT: {
+      const { describeId } = action
+      const itId = `it${state.itId}`
+       let updatedItId = state.itId
+     
+
+      return {
+        ...state,
+        itId: ++updatedItId,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...itStatements.byId,
+            [itId]: createItStatement(describeId, itId)
+          },
+          allIds: [...itStatements.allIds, itId]
+        }
+      };
+    }
+    case actionTypes.DELETE_ITSTATEMENT: {
+      const {itId} = action;
+      const byId = {...itStatements.byId};
+      delete byId[itId]
+      const allIds = itStatements.allIds.filter(id => id !== itId)
+      const statementAllIds = deleteChildren(statements, itId, 'itId')
+
+
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...byId
+          },
+          allIds: [...allIds]
+        },
+        statements: {
+          byId: {
+            ...statements.byId
+          },
+          allIds: [...statementAllIds]
+        },
       };
     }
     case actionTypes.UPDATE_DESCRIBE_TEXT: {
@@ -179,7 +305,7 @@ export const reactTestCaseReducer = (state, action) => {
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
-      let updatedStatementId = state.statementId
+      let updatedStatementId = state.statementId;
 
       return {
         ...state,
@@ -206,8 +332,7 @@ export const reactTestCaseReducer = (state, action) => {
           byId: {
             ...byId,
           },
-          allIds: [...allIds]
-
+          allIds: [...allIds],
         },
       };
     }
@@ -221,8 +346,8 @@ export const reactTestCaseReducer = (state, action) => {
         queryValue,
         suggestions,
       } = action;
-      const byId = {...statements.byId}
-      const  oldStatement = {...statements.byId[id]}
+      const byId = { ...statements.byId };
+      const oldStatement = { ...statements.byId[id] };
       const newStatement = {
         ...oldStatement,
         eventType: eventType,
@@ -236,21 +361,21 @@ export const reactTestCaseReducer = (state, action) => {
         ...state,
         statements: {
           ...statements,
-            byId: {
-              ...byId,
-              [id]: {
-                ...newStatement
-              }
-            }
-          }
-        }
+          byId: {
+            ...byId,
+            [id]: {
+              ...newStatement,
+            },
+          },
+        },
       };
+    }
     case actionTypes.ADD_ASSERTION: {
       const { describeId, itId } = action;
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
-      let updatedStatementId = state.statementId
+      let updatedStatementId = state.statementId;
 
       return {
         ...state,
@@ -284,8 +409,6 @@ export const reactTestCaseReducer = (state, action) => {
     case actionTypes.UPDATE_ASSERTION: {
       const {
         id,
-        eventType,
-        eventValue,
         queryVariant,
         querySelector,
         queryValue,
@@ -294,12 +417,10 @@ export const reactTestCaseReducer = (state, action) => {
         matcherValue,
         suggestions,
       } = action;
-      const  oldStatement = {...statements.byId[id]}
-      const byId = {...statements.byId}
+      const oldStatement = { ...statements.byId[id] };
+      const byId = { ...statements.byId };
       const newStatement = {
         ...oldStatement,
-        eventType: eventType,
-        eventValue: eventValue,
         queryVariant: queryVariant,
         querySelector: querySelector,
         queryValue: queryValue,
@@ -312,21 +433,21 @@ export const reactTestCaseReducer = (state, action) => {
         ...state,
         statements: {
           ...statements,
-            byId: {
-              ...byId,
-              [id]: {
-                ...newStatement
-              }
-            }
-          }
-        }
+          byId: {
+            ...byId,
+            [id]: {
+              ...newStatement,
+            },
+          },
+        },
       };
+    }
     case actionTypes.ADD_RENDER: {
       const { describeId, itId } = action;
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
-      let updatedStatementId = state.statementId
+      let updatedStatementId = state.statementId;
 
       return {
         ...state,
@@ -353,15 +474,12 @@ export const reactTestCaseReducer = (state, action) => {
           byId: {
             ...byId,
           },
-          allIds: [...allIds]
+          allIds: [...allIds],
         },
       };
     }
     case actionTypes.UPDATE_RENDER_COMPONENT: {
-      const {
-        componentName,
-        filePath
-      } = action;
+      const { componentName, filePath } = action;
       statements.componentName = componentName;
       statements.filePath = filePath;
       return {
@@ -369,78 +487,79 @@ export const reactTestCaseReducer = (state, action) => {
         statements,
       };
     }
-    case actionTypes.ADD_RENDER_PROP:
-      // statements = statements.map((statement) => {
-      //   if (statement.id === action.renderId) {
-      //     statement.props.push(createRenderProp());
-      //   }
-      //   return statement;
-      // });
-      // return {
-      //   ...state,
-      //   statements,
-      //   hasProp: !statements[0].hasProp,
-      // };
-      return {...state}
-    case actionTypes.DELETE_RENDER_PROP:
-      // statements = statements.map((statement) => {
-      //   if (statement.id === action.renderId) {
-      //     statement.props = statement.props.filter((prop) => prop.id !== action.propId);
-      //   }
-      //   return statement;
-      // });
-      // return {
-      //   ...state,
-      //   statements,
-      // };
-      return {...state}
-    case actionTypes.UPDATE_RENDER_PROP:
-      // statements = statements.map((statement) => {
-      //   if (statement.id === action.renderId) {
-      //     statement.props.map((prop) => {
-      //       if (prop.id === action.propId) {
-      //         prop.propKey = action.propKey;
-      //         prop.propValue = action.propValue;
-      //       }
-      //       return prop;
-      //     });
-      //   }
-      //   return statement;
-      // });
-      // return {
-      //   ...state,
-      //   statements,
-      // };
-      return {...state}
+    case actionTypes.ADD_PROP: {
+      const { statementId } = action;
+      const propId = `prop${state.propId}`;
+      const byId = statements.byId;
+      let updatedPropId = state.propId;
 
-    case actionTypes.CREATE_NEW_TEST:
-      // return {
-      //   hasReact: 0,
-      //   testStatement: '',
-      //   statements: [
-      //     {
-      //       id: 0,
-      //       type: 'render',
-      //       componentName: '',
-      //       filePath: '',
-      //       props: [],
-      //       hasProp: false,
-      //     },
-      //     {
-      //       id: 1,
-      //       type: 'assertion',
-      //       queryVariant: '',
-      //       querySelector: '',
-      //       queryValue: '',
-      //       isNot: false,
-      //       matcherType: '',
-      //       matcherValue: '',
-      //       suggestions: [],
-      //     },
-      //   ],
-      // };
-      return {...state}
+      return {
+        ...state,
+        propId: ++updatedPropId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              props: [...statements.byId[statementId].props, createProp(propId, statementId)],
+              hasProp: true,
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.DELETE_PROP: {
+      const { id, statementId } = action;
+      const props = statements.byId[statementId].props.filter((prop) => prop.id !== id);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              props: props,
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.UPDATE_PROP: {
+      const { id, statementId, propKey, propValue } = action;
+      console.log(statementId);
+      const updatedProps = [...statements.byId[statementId].props]
+      
+      updatedProps.forEach(prop => {
+        if(prop.id === id) {
+          prop.propKey = propKey
+          prop.propValue = propValue
+        }
+      })
+
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              props: updatedProps,
+            },
+          },
+        },
+      };
+    }
+
+    case actionTypes.CREATE_NEW_TEST: {
+      return {
+        ...state,
+      };
+    }
     default:
       return state;
   }
 };
+

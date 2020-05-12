@@ -22,7 +22,7 @@
       }
     }
 
-    i {
+    .addPropBtn {
       font-size: 1rem;
       cursor: pointer;
       position: absolute;
@@ -47,10 +47,19 @@
       &:hover {
         font-size: 0.9rem;
       }
-  
-      i {
-        margin-right: 0.5rem;
-        position: static;
+    }
+
+    .deleteRender {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      transition: 250ms;
+
+      &:hover {
+        cursor: pointer;
+        color: red;
+        font-size: 1rem;
+        font-weight: bold;
       }
     }
   }

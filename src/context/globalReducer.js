@@ -5,7 +5,7 @@ export const GlobalContext = createContext(null);
 
 export const globalState = {
   url: null,
-  isProjectLoaded: true, // for dev
+  isProjectLoaded: true, //for dev
   fileTree: null,
   componentName: '',
   isFileDirectoryOpen: true,

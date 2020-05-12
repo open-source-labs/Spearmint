@@ -4,30 +4,23 @@
 
 import React, { useContext } from 'react';
 import styles from './Render.module.scss';
+import cn from 'classnames';
 import { GlobalContext } from '../../../context/globalReducer';
 import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
 
 import {
   deleteRender,
   updateRenderComponent,
-  addRenderProp,
+  addProp,
 } from '../../../context/reactTestCaseActions';
-import RenderProp from './RenderProp';
+import Prop from './Prop';
 
-const plusIcon = require('../../../assets/images/plus.png');
-const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
-
-const Render = ({ statementId, describeId, itId }) => {
+const Render = ({ statement, statementId, describeId, itId }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
 
-  const handleToggleProps = () => {
-    dispatchToReactTestCase(addRenderProp(statementId.id));
-  };
-
   const handleClickAddProp = () => {
-    dispatchToReactTestCase(addRenderProp(statementId));
+    dispatchToReactTestCase(addProp(statementId));
   };
 
   const handleClickDeleteRender = () => {
@@ -37,13 +30,40 @@ const Render = ({ statementId, describeId, itId }) => {
   return (
     <div id={styles.RenderContainer}>
       <div className={styles.renderHeader}>
-        <span className={styles.header}>Rendering: <span>{statements.componentName}</span> </span>
-        <button className={styles.addProps}>
+        <span className={styles.header}>
+          Rendering: <span>{statements.componentName}</span>{' '}
+        </span>
+        <button className={styles.addProps} onClick={handleClickAddProp}>
           <i class='fas fa-plus'></i> Add Props
         </button>
-        <i onClick={handleClickDeleteRender} className='far fa-window-close'></i>
+        <i onClick={handleClickDeleteRender} className={cn(styles.deleteRender,'far fa-window-close')}></i>
       </div>
-      <div className={styles.renderInputs}>
+      <div className={'props'}>
+        {statement.props.length > 0 && (
+          <div>
+            <div id={styles.renderProp}>
+              <label htmlFor='prop-key' id={styles.propKeyLabel}>
+                Prop key
+              </label>
+              <label htmlFor='prop-value' id={styles.propValLabel}>
+                Prop value
+              </label>
+            </div>
+            <hr />
+            {statement.props.map((prop, i) => {
+              return (
+                <Prop
+                  statementId={statementId}
+                  key={`prop-${prop.id}-${i}`}
+                  propId={prop.id}
+                  propKey={prop.propKey}
+                  propValue={prop.propValue}
+                  dispatchToTestCase={dispatchToReactTestCase}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

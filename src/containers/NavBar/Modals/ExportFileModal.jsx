@@ -22,7 +22,7 @@ const beautify = remote.require('js-beautify');
 const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [fileName, setFileName] = useState('');
   const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
-  const [testCase] = useContext(ReactTestCaseContext);
+  const [reactTestCase] = useContext(ReactTestCaseContext);
   const [reduxTestCase] = useContext(ReduxTestCaseContext);
   const [hooksTestCase] = useContext(HooksTestCaseContext);
   const [{ mockData }] = useContext(MockDataContext);
@@ -41,12 +41,12 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const generateTestFile = () => {
-    if (testCase.hasReact > 0) {
+    if (reactTestCase.hasReact > 0) {
       return (
         addComponentImportStatement(),
         addReactImportStatements(),
         addMockData(),
-        addTestStatements(),
+        addReactTestStatements(),
         (testFileCode = beautify(testFileCode, {
           indent_size: 2,
           space_in_empty_paren: true,
@@ -101,17 +101,17 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // React Component Import Statement (Render Card)
   const addComponentImportStatement = () => {
-    const renderStatement = testCase.statements[0];
+    const renderStatement = reactTestCase.statements[0];
     let filePath = path.relative(projectFilePath, renderStatement.filePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
   };
 
   // React Test Statements
-  const addTestStatements = () => {
-    testFileCode += `test('${testCase.testStatement}', () => {`;
+  const addReactTestStatements = () => {
+    testFileCode += `test('${reactTestCase.testStatement}', () => {`;
     const methods = identifyMethods();
-    testCase.statements.forEach(statement => {
+    reactTestCase.statements.forEach(statement => {
       switch (statement.type) {
         case 'action':
           return addAction(statement);
@@ -367,7 +367,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const identifyMethods = () => {
     const methods = new Set([]);
     let renderCount = 0;
-    testCase.statements.forEach(statement => {
+    reactTestCase.statements.forEach(statement => {
       if (statement.type === 'action' || statement.type === 'assertion') {
         methods.add(statement.queryVariant + statement.querySelector);
       } else if (statement.type === 'render') {

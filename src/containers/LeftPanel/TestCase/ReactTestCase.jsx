@@ -95,6 +95,7 @@ const ReactTestCase = () => {
       </div>
       <div id={styles.testMockSection}>
         <section id={styles.mockHeader}>
+          <button onClick={handleToggleMockData}>{hasMockData ? 'Hide Mock Data' : 'Show Mock Data'}</button>
           <span>
             <input
               type='checkbox'
@@ -115,26 +116,20 @@ const ReactTestCase = () => {
           {mockDataJSX}
         </section>
       )}
-      {/* <FirstRender
-        key={firstRenderStatement.id}
-        render={firstRenderStatement}
-        dispatchToTestCase={dispatchToTestCase}
-      /> */}
+      <label htmlFor="component-name">Please Enter Component Name</label>
       <input
         onChange={handleChangeComponentName}
         type='text'
         name='component-name'
         value={statements.componentName}
+        placeholder='App'
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              {/* <TestStatements
-                statements={draggableStatements}
-                dispatchToTestCase={dispatchToTestCase}
-              /> */}
               <DecribeRenderer
+                dispatcher={dispatchToReactTestCase}
                 draggableStatements={draggableStatements}
                 describeBlocks={describeBlocks}
                 itStatements={itStatements}
@@ -148,12 +143,6 @@ const ReactTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
-      {/* <LastAssertion
-        key={lastAssertionStatement.id}
-        assertion={lastAssertionStatement}
-        dispatchToTestCase={dispatchToTestCase}
-        isLast={true}
-      /> */}
     </div>
   );
 };

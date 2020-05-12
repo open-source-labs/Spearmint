@@ -3,21 +3,21 @@
  */
 
 import React from 'react';
-import styles from '../Render/RenderProp.module.scss';
-import { deleteRenderProp, updateRenderProp } from '../../../context/reactTestCaseActions';
+import styles from '../Render/Prop.module.scss';
+import { deleteProp, updateProp } from '../../../context/reactTestCaseActions';
 import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
-const RenderProp = ({ renderId, propId, propKey, propValue, dispatchToTestCase }) => {
+const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase }) => {
   const handleClickDeleteProp = e => {
     e.stopPropagation();
-    dispatchToTestCase(deleteRenderProp(renderId, propId));
+    dispatchToTestCase(deleteProp(statementId, propId));
   };
 
   const handleChangeUpdatePropKey = e => {
     e.stopPropagation();
-    dispatchToTestCase(updateRenderProp(renderId, propId, e.target.value, propValue));
+    dispatchToTestCase(updateProp(statementId, propId, e.target.value, propValue));
   };
 
   return (
@@ -26,15 +26,15 @@ const RenderProp = ({ renderId, propId, propKey, propValue, dispatchToTestCase }
       <AutoCompleteMockData
         id='propValue'
         propType='prop'
-        renderId={renderId}
+        renderId={statementId}
         propId={propId}
         propKey={propKey}
         dispatchToTestCase={dispatchToTestCase}
       />
-      {/* <input type='text' id='propValue' value={propValue} onChange={handleChangeUpdatePropValue} /> */}
+      {/* <input type='text' id='propValue' value={propValue} /> */}
       <img src={minusIcon} alt='delete' onClick={handleClickDeleteProp} />
     </div>
   );
 };
 
-export default RenderProp;
+export default Prop;

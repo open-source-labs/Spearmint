@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import ReactTestStatements from '../../containers/LeftPanel/TestCase/ReactTestStatements';
 import CustomInput from '../CustomInput/CustomInput';
-import { addRender, addAction, addAssertion } from '../../context/reactTestCaseActions';
+import { addRender, addAction, addAssertion, deleteItStatement  } from '../../context/reactTestCaseActions';
 import { ReactTestCaseContext } from '../../context/reactTestCaseReducer';
+import cn from 'classnames'
 import styles from './ItRenderer.module.scss';
 
 const ItRenderer = ({
@@ -23,17 +24,29 @@ const ItRenderer = ({
     const itId = e.target.id;
     dispatchToReactTestCase(addRender(describeId, itId));
   };
+
+  const deleteItStatementHandleClick = (e) => {
+    const itId = e.target.id;
+    dispatchToReactTestCase(deleteItStatement(describeId, itId))
+  }
   const addActionHandleClick = (e) => {
     const itId = e.target.id;
     dispatchToReactTestCase(addAction(describeId, itId));
   };
   const addAssertionHandleClick = (e) => {
     const itId = e.target.id;
-    dispatchToReactTestCase(addRender(describeId, itId));
+    dispatchToReactTestCase(addAssertion(describeId, itId));
   };
+
+
 
   return filteredIds.map((id, i) => (
     <div id={styles.ItRenderer}>
+      <i
+        onClick={deleteItStatementHandleClick}
+        id={id}
+        className={cn(styles.itClose, 'far fa-window-close')}
+      ></i>
       <CustomInput
         key={`input-${id}-${i}`}
         id={id}
@@ -42,6 +55,7 @@ const ItRenderer = ({
         value={itStatements.byId[id].text}
         handleChange={handleChangeItStatementText}
       />
+      <hr/>
       <ReactTestStatements
         key={`statement-${id}-${i}`}
         statements={statements}

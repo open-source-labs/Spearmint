@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styles from '../AutoComplete/AutoCompleteMockData.module.scss';
 import AutoSuggest from 'react-autosuggest';
-import { updateAction, updateAssertion, updateRenderProp } from '../../../context/reactTestCaseActions';
+import { updateAction, updateAssertion, updateProp } from '../../../context/reactTestCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
 
 const AutoCompleteMockData = ({
@@ -30,7 +30,7 @@ const AutoCompleteMockData = ({
       updatedAssertion.queryValue = newValue;
       dispatchToTestCase(updateAssertion(updatedAssertion));
     } else if (propType === 'prop') {
-      dispatchToTestCase(updateRenderProp(renderId, propId, propKey, newValue));
+      dispatchToTestCase(updateProp(renderId, propId, propKey, newValue));
     }
   };
 

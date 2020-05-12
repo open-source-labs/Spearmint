@@ -13,21 +13,33 @@ const ReactTestStatements = ({ statements, itId, describeId }) => {
     switch (statements.byId[id].type) {
       case 'action':
         return (
-          <Action key={`action-${id}-${i}`} statementId={id} describeId={describeId} itId={itId} statement={statements.byId[id]} />
+          <Action
+            key={`action-${id}-${i}`}
+            statementId={id}
+            describeId={describeId}
+            itId={itId}
+            statement={statements.byId[id]}
+          />
         );
       case 'assertion':
         return (
           <Assertion
-            statement={statements.byId[id]}
             key={`assertion-${id}-${i}`}
             statementId={id}
             describeId={describeId}
             itId={itId}
+            statement={statements.byId[id]}
           />
         );
       case 'render':
         return (
-          <Render key={`render-${id}-${i}`} statementId={id} describeId={describeId} itId={itId} />
+          <Render
+            key={`render-${id}-${i}`}
+            statementId={id}
+            describeId={describeId}
+            itId={itId}
+            statement={statements.byId[id]}
+          />
         );
       default:
         return <></>;

@@ -1,18 +1,31 @@
 import React from 'react';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from './DescribeRenderer.module.scss';
-import cn from 'classnames'
+import { deleteDescribeBlock, addItstatement } from '../../context/reactTestCaseActions';
+import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 
 const DescribeRenderer = ({
+  dispatcher,
   describeBlocks,
   itStatements,
   statements,
   draggableStatements,
   handleChangeDescribeText,
   handleChangeItStatementText,
-  type
+  type,
 }) => {
+  const deleteDescribeBlockHandleClick = (e) => {
+    e.stopPropagation()
+    const describeId = e.target.id;
+    dispatcher(deleteDescribeBlock(describeId));
+  };
+
+  const addItStatementHandleClick = (e) => {
+    const describeId = e.target.id;
+    dispatcher(addItstatement(describeId));
+  };
+
   return draggableStatements.map((id, i) => {
     return (
       <Draggable draggableId={`draggable-${id}-${i}`} index={i}>
@@ -24,8 +37,14 @@ const DescribeRenderer = ({
             id={styles.describeBlock}
             className={styles.describeBlock}
           >
-            <label htmlFor='describe-label' className={styles.describeLabel}>Describe Block</label>
-            <i className={cn("far fa-window-close", styles.describeClose)}></i>
+            <label htmlFor='describe-label' className={styles.describeLabel}>
+              Describe Block
+            </label>
+            <i
+              onClick={deleteDescribeBlockHandleClick}
+              id={id}
+              className={cn('far fa-window-close', styles.describeClose)}
+            ></i>
             <input
               id={id}
               className={styles.describeInput}
@@ -45,6 +64,9 @@ const DescribeRenderer = ({
               describeId={id}
               handleChangeItStatementText={handleChangeItStatementText}
             />
+            <div className={styles.buttonContainer}>
+              <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>+It Statement</button>
+            </div>
           </div>
         )}
       </Draggable>

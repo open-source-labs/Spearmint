@@ -3,6 +3,11 @@
 export const actionTypes = {
   TOGGLE_REACT: 'TOGGLE_REACT',
 
+  ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',
+  DELETE_DESCRIBE_BLOCK: 'DELETE_DESCRIBE_BLOCK',
+
+  ADD_ITSTATEMENT: 'ADD_ITSTATEMENT',
+
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   UPDATE_DESCRIBE_TEXT: 'UPDATE_DESCRIBE_TEXT',
 
@@ -18,9 +23,9 @@ export const actionTypes = {
   DELETE_RENDER: 'DELETE_RENDER',
   UPDATE_RENDER_COMPONENT: 'UPDATE_RENDER_COMPONENT',
 
-  ADD_RENDER_PROP: 'ADD_RENDER_PROP',
-  DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
-  UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
+  ADD_PROP: 'ADD_PROP',
+  DELETE_PROP: 'DELETE_PROP',
+  UPDATE_PROP: 'UPDATE_PROP',
 
   UPDATE_ITSTATEMENT_TEXT: 'UPDATE_ITSTATEMENT_TEXT',
 
@@ -28,6 +33,30 @@ export const actionTypes = {
 };
 
 /* --------------------------------- Actions -------------------------------- */
+
+export const addDescribeBlock = () => {
+  return {
+    type: actionTypes.ADD_DESCRIBE_BLOCK
+  }
+};
+
+export const deleteDescribeBlock = (describeId) => {
+  return {
+    type: actionTypes.DELETE_DESCRIBE_BLOCK,
+    describeId,  
+  }
+};
+
+export const addItstatement = (describeId) => ({
+  type: actionTypes.ADD_ITSTATEMENT,
+  describeId,
+});
+
+export const deleteItStatement = (describeId, itId) => ({
+  type: actionTypes.DELETE_ITSTATEMENT,
+  describeId,
+  itId
+});
 
 export const toggleReact = () => ({
   type: actionTypes.TOGGLE_REACT,
@@ -123,21 +152,23 @@ export const updateRenderComponent = (componentName, filePath) => ({
   filePath,
 });
 
-export const addRenderProp = renderId => ({
-  type: actionTypes.ADD_RENDER_PROP,
-  renderId,
+export const addProp = statementId => ({
+  type: actionTypes.ADD_PROP,
+  statementId,
 });
 
-export const deleteRenderProp = (renderId, propId) => ({
-  type: actionTypes.DELETE_RENDER_PROP,
-  renderId,
-  propId,
-});
+export const deleteProp = (statementId, id) => {
+  return {
+    type: actionTypes.DELETE_PROP,
+    id,
+    statementId,
+  };
+};
 
-export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
-  type: actionTypes.UPDATE_RENDER_PROP,
-  renderId,
-  propId,
+export const updateProp = (statementId, id, propKey, propValue) => ({
+  type: actionTypes.UPDATE_PROP,
+  id,
+  statementId,
   propKey,
   propValue,
 });

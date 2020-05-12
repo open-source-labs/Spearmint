@@ -11,17 +11,21 @@
   display: flex;
   flex-direction: column;
   z-index: 3;
+  margin-top: 1rem;
 
   .describeClose {
     position: absolute;
     top: 5px;
     right: 5px;
-    font-size: 1rem;
+    font-size: 1.25rem;
     z-index: 3;
+    transition: 250ms;
 
     &:hover {
       color: red;
       cursor: pointer;
+      font-size: 1.50rem;
+      font-weight: bold;
     }
   }
 
@@ -55,4 +59,27 @@
     z-index: 3;
 
   }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    margin-top: 1rem;
+
+    .addIt {
+      height: auto;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 5px;
+      background-color: $mint;
+  
+      &:hover {
+        background-color: white;
+        color: $mint;
+      }
+    }
+  }
+
+
 }
