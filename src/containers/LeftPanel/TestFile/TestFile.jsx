@@ -22,6 +22,11 @@ import { toggleEndpoint } from '../../../context/endpointTestCaseActions';
 import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
 import EndpointTestCase from '../TestCase/EndpointTestCase';
 
+/* puppeteerTestCase imports */
+import { togglePuppeteer } from '../../../context/puppeteerTestCaseActions';
+import { PuppeteerTestCaseContext } from '../../../context/puppeteerTestCaseReducer';
+import PuppeteerTestCase from '../TestCase/PuppeteerTestCase';
+
 import { toggleModal } from '../../../context/testFileModalActions';
 import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
@@ -30,6 +35,7 @@ const TestFile = () => {
   const [{ hasReact }, dispatchToTestCase] = useContext(ReactTestCaseContext);
   const [{ hasHooks }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
   const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [{ hasPuppeteer }, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
   const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
 
   const closeTestModal = () => {
@@ -53,6 +59,11 @@ const TestFile = () => {
 
   const handleToggleHooks = e => {
     dispatchToHooksTestCase(toggleHooks());
+    closeTestModal();
+  };
+  
+  const handleTogglePuppeteer = e => {
+    dispatchToPuppeteerTestCase(togglePuppeteer());
     closeTestModal();
   };
 
@@ -92,6 +103,9 @@ const TestFile = () => {
             <button id={styles.save} onClick={handleToggleEndpoint}>
               Endpoint
             </button>
+            <button id={styles.save} onClick={handleTogglePuppeteer}>
+              Puppeteer
+            </button>
           </span>
         </div>
       </ReactModal>
@@ -119,6 +133,13 @@ const TestFile = () => {
           <HooksTestCase />
         </section>
       )}
+
+      {hasPuppeteer > 0 && (
+        <section>
+          <PuppeteerTestCase />
+        </section>
+      )}
+
     </div>
   );
 };

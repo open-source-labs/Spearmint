@@ -8,6 +8,8 @@ export const actionTypes = {
 
     UPDATE_SERVER_FILEPATH: 'UPDATE_SERVER_FILEPATH',
 
+    UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
+
     ADD_ENDPOINT: 'ADD_ENDPOINT',
     DELETE_ENDPOINT: 'DELETE_ENDPOINT',
     UPDATE_ENDPOINT: 'UPDATE_ENDPOINT',
@@ -65,3 +67,10 @@ export const updateEndpoint = ({
     expectedResponse,
     value
 });
+
+export const updateStatementsOrder = draggableStatements => {
+      return {
+      type: actionTypes.UPDATE_STATEMENTS_ORDER,
+      draggableStatements,
+    }};
+  

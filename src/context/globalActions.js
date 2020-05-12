@@ -4,6 +4,7 @@ export const actionTypes = {
   CREATE_FILE_TREE: 'CREATE_FILE_TREE',
   SET_COMPONENT_NAME: 'SET_COMPONENT_NAME',
   TOGGLE_FILE_DIRECTORY: 'TOGGLE_FILE_DIRECTORY',
+  CLOSE_RIGHT_PANEL: 'CLOSE_RIGHT_PANEL',
   TOGGLE_RIGHT_PANEL: 'TOGGLE_RIGHT_PANEL',
   DISPLAY_FILE_CODE: 'DISPLAY_FILE_CODE',
   TOGGLE_FOLDER_VIEW: 'TOGGLE_FOLDER_VIEW',
@@ -35,6 +36,10 @@ export const setComponentName = componentName => ({
 
 export const toggleFileDirectory = () => ({
   type: actionTypes.TOGGLE_FILE_DIRECTORY,
+});
+
+export const closeRightPanel = () => ({
+  type: actionTypes.CLOSE_RIGHT_PANEL,
 });
 
 export const toggleRightPanel = display => ({

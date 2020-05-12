@@ -9,6 +9,7 @@ export const globalState = {
   fileTree: null,
   componentName: '',
   isFileDirectoryOpen: true,
+  isRightPanelOpen: true,
   rightPanelDisplay: 'browserView',
   displayedFileCode: '',
   isFolderOpen: {},
@@ -50,11 +51,17 @@ export const globalReducer = (state, action) => {
         ...state,
         isFileDirectoryOpen,
       };
+    case actionTypes.CLOSE_RIGHT_PANEL:
+      return {
+        ...state,
+        isRightPanelOpen: false,
+      };
     case actionTypes.TOGGLE_RIGHT_PANEL:
       const rightPanelDisplay = action.display;
       return {
         ...state,
         rightPanelDisplay,
+        isRightPanelOpen: true,
       };
     case actionTypes.DISPLAY_FILE_CODE:
       const displayedFileCode = action.displayedFileCode;

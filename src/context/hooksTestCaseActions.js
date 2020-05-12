@@ -18,6 +18,8 @@ export const actionTypes = {
   UPDATE_HOOKS_FILEPATH: 'UPDATE_HOOKS_FILEPATH',
   UPDATE_CONTEXT_FILEPATH: 'UPDATE_CONTEXT_FILEPATH',
 
+  UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
+
   CREATE_NEW_HOOKS_TEST: 'CREATE_NEW_HOOKS_TEST',
 };
 
@@ -135,3 +137,9 @@ export const updateContextFilePath = (contextFileName, contextFilePath) => ({
 export const createNewHooksTest = () => ({
   type: actionTypes.CREATE_NEW_HOOKS_TEST,
 });
+
+export const updateStatementsOrder = draggableStatements => {
+    return {
+    type: actionTypes.UPDATE_STATEMENTS_ORDER,
+    draggableStatements,
+  }};
