@@ -39,7 +39,6 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
           </button>
           <button data-testid='puppeteerPaintTimingButton' onClick={handleAddPuppeteerPaintTiming}>
             Paint Timing
-            {/* Web Performance (Paint) */}
           </button>
         </div>
       </div>

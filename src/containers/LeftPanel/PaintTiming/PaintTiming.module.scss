@@ -30,6 +30,10 @@
   }
 }
 
+#testingFieldsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr
+}
 #groupFlexbox {
   display: flex;
   align-items: center;
@@ -37,75 +41,55 @@
   justify-content: space-between;
 }
 
-#alignRight {
-  width: 43%;
-  margin-right: 7%;
-  input {
-    margin-top: 6px;
-    width: 100%;
-  }
-}
-
-#serverInput {
-  width: 43%;
-  margin-right: 7%;
-  input {
-    margin-top: 6px;
-    width: 100%;
-  }
-}
-
-#labelInput {
-  width: 100%;
-  margin-right: 7%;
-  input {
-    margin-top: 6px;
-    width: 100%;
-  }
-  position: relative;
-}
-
-#dropdownWrapper {
-  margin-right: 9%;
-  select {
-    font-family: $raleway;
-    width: 100%;
-    height: 25px;
-    margin: 0 3px 0 0;
-    background-color: white;
-    border: 1px solid $light-gray;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    color: $dark-gray;
-  }
-}
-
-#dropdownFlex {
-  display: flex;
-  align-items: center;
-  width: 340%;
-  margin-top: 6px;
-}
-
 #inputFlexBox {
   display: flex;
   align-items: center;
   width: 100%;
+  input {
+    width: inherit;
+  }
 }
 
-#hastooltip {
-  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+#renderCheckbox {
+  margin-left: 2rem;
+  display: flex;
+  input {
+    align-self: center;
+  }
 }
 
-#tooltip {
-  min-width: 10em;
-  padding: 0.5em 0.75em;
+#browserOptionsFlexBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
-  @include tooltip;
+  input {
+    width: 240px;
+    margin: 0 4px 4px 0px;
+  }
+
+  img {
+    margin-bottom: 5px;
+  }
 }
 
-#matcher {
-  margin-top: 1em;
-  margin-right: 3em;
+#browserOptions {
+  font-size: 13px;
+  margin-bottom: 0;
+  padding: 6px 0;
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+}
+
+#options {
+  margin: 5px 0 15px;
+  button {
+    font-size: 12px;
+    padding-top: 5px;
+    border: none;
+    font-family: $raleway;
+    font-weight: bold;
+    text-align: left;
+  }
 }
