@@ -39,7 +39,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
   };
 
   return (
-    <div>
+    <div id={styles.action}>
       <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAction} />
       <div id={styles.actionHeader}>
         <h3>Action</h3>
@@ -59,10 +59,6 @@ const Action = ({ statement, statementId, describeId, itId }) => {
           {needsEventValue(statement.eventType) && mockData.length > 0 ? (
             <div className={styles.eventValue}>
               <label htmlFor='eventValue'> Value </label>
-              {/* <select onChange={e => handleChangeActionFields(e, 'eventValue')}>
-                  <option id='eventValue' value='' />
-                  {options}
-                </select> */}
               <AutoCompleteMockData
                 statement={statement}
                 dispatchToTestCase={dispatchToReactTestCase}

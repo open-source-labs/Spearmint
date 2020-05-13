@@ -7,15 +7,21 @@
   height: auto;
   border: 1px solid black;
   padding: 1rem;
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
 
   .renderHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    margin-bottom: 1rem;
+    
+    
     .header {
       font-size: 0.9rem;
       font-weight: bold;
+      color: $mint;
 
       .componentName {
         font-family: 'Lucida Console', monospace;
@@ -30,7 +36,7 @@
       right: 5px;
 
       &:hover {
-        color: red;
+        color: green;
       }
     }
     .addProps {

@@ -31,7 +31,7 @@ const Render = ({ statement, statementId, describeId, itId }) => {
     <div id={styles.RenderContainer}>
       <div className={styles.renderHeader}>
         <span className={styles.header}>
-          Rendering: <span>{statements.componentName}</span>{' '}
+          Rendering: <span style={{color: 'black'}}>{statements.componentName}</span>
         </span>
         <button className={styles.addProps} onClick={handleClickAddProp}>
           <i className='fas fa-plus'></i> Add Props

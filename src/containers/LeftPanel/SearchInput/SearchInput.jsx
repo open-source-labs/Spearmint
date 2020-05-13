@@ -7,7 +7,7 @@ export const Autocomplete = ({dispatch, action, filePathMap, options}) => {
   const [filteredOptions, setFilteredOptions] = useState([])
   const [showOptions, setShowOptions] = useState(false)
   const [userInput, setUserInput] = useState('')
-
+  
  const onChange = (e) => {
     const userInput = e.currentTarget.value; 
 

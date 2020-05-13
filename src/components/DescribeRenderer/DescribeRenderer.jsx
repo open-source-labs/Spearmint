@@ -28,7 +28,7 @@ const DescribeRenderer = ({
 
   return draggableStatements.map((id, i) => {
     return (
-      <div id={styles.describeBlock}>
+      <div id={styles.describeBlock} key={i}>
             <label htmlFor='describe-label' className={styles.describeLabel}>
               Describe Block
             </label>

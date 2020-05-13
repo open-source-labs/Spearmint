@@ -41,7 +41,7 @@ const ItRenderer = ({
 
 
   return filteredIds.map((id, i) => (
-    <div id={styles.ItRenderer}>
+    <div id={styles.ItRenderer} key={i}>
       <i
         onClick={deleteItStatementHandleClick}
         id={id}
@@ -66,15 +66,15 @@ const ItRenderer = ({
         {type === 'react' && (
           <div className={styles.buttonsContainer}>
             <button id={id} onClick={addRenderHandleClick} className={styles.reactButton}>
-              <i class='fas fa-plus'></i>
+              <i className='fas fa-plus'></i>
               Render
             </button>
             <button id={id} onClick={addActionHandleClick} className={styles.reactButton}>
-              <i class='fas fa-plus'></i>
+              <i className='fas fa-plus'></i>
               Action
             </button>
             <button id={id} onClick={addAssertionHandleClick} className={styles.reactButton}>
-              <i class='fas fa-plus'></i>
+              <i className='fas fa-plus'></i>
               Assertion
             </button>
           </div>

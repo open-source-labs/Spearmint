@@ -4,96 +4,44 @@ import { actionTypes } from './reactTestCaseActions';
 export const ReactTestCaseContext = createContext(null);
 
 export const reactTestCaseState = {
-  // TODO: Make Boolean
   hasReact: 0,
-  describeId: 2,
-  itId: 2,
-  statementId: 2,
+  describeId: 1,
+  itId: 1,
+  statementId: 1,
   propId: 1,
   describeBlocks: {
     byId: {
       describe0: {
         id: 'describe0',
-        text: 'this is describe block 0',
-      },
-      describe1: {
-        id: 'describe1',
-        text: 'this is describe block 1',
+        text: '',
       },
     },
-    allIds: ['describe0', 'describe1'],
+    allIds: ['describe0'],
   },
   itStatements: {
     byId: {
       it0: {
         id: 'it0',
         describeId: 'describe0',
-        text: 'This is itStatement 0',
-      },
-      it1: {
-        id: 'it1',
-        describeId: 'describe1',
-        text: 'This is itStatement 1',
+        text: '',
       },
     },
-    allIds: ['it0', 'it1'],
+    allIds: ['it0'],
   },
   statements: {
     byId: {
-     
-      // statement0: {
-      //   id: 'statement0',
-      //   itId: 'it0',
-      //   describeId: 'describe0',
-      //   type: 'render',
-      //   componentName: '',
-      //   filePath: '',
-      //   props: [
-      //     {
-      //       id: 0,
-      //       propKey: 'PROP KEY!',
-      //       propValue: 'PROP VALUE!',
-      //     },
-      //   ],
-      //   hasProp: false,
-      // },
-      // statement1: {
-      //   id: 'statement1',
-      //   itId: 'it1',
-      //   describeId: 'describe1',
-      //   type: 'render',
-      //   componentName: '',
-      //   filePath: '',
-      //   props: [],
-      //   hasProp: false,
-      // },
       statement0: {
         id: 'statement0',
         itId: 'it0',
         describeId: 'describe0',
-        type: 'action',
-        eventType: 'submit',
-        eventValue: 'click',
-        queryVariant: 'getBy',
-        querySelector: 'LabelText',
-        queryValue: 'hello',
-        suggestions: []
-      },
-      statement1: {
-        id: 'statement1',
-        itId: 'it1',
-        describeId: 'describe1',
-        type: 'assertion',
-        queryVariant: 'getBy',
-        querySelector: 'Role',
-        queryValue: 'hello1',
-        isNot: false,
-        matcherType: 'toHaveTextValue',
-        matcherValue: 'texter',
-        suggestions: [],
+        type: 'render',
+        componentName: '',
+        filePath: '',
+        props: [],
+        hasProp: false,
       },
     },
-    allIds: ['statement0', 'statement1'],
+    allIds: ['statement0'],
     componentPath: '',
     componentName: '',
   },
