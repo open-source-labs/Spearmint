@@ -35,6 +35,12 @@ const ToolTip = ({ toolTipType }) => {
       'A shortcut to container.querySelector(`[role="${yourRole}"]`) (and it also accepts a TextMatch).',
     TestId:
       'A shortcut to container.querySelector(`[data-testid="${yourId}"]`) (and it also accepts a TextMatch).',
+    LCPTarget: 
+      'The Largest Contentful Paint (LCP) metric reports the render time of the largest content element visible within the viewport. Provide a target value in ms.',
+    FPTarget: 
+      'The First Paint (FP) metric reports the time between navigation and when the browser renders the first pixels to the screen, rendering anything that is visually different from what was on the screen prior to navigation. Provide a target value in ms.',
+    FCPTarget: 
+      "The First Contentful Paint (FCP) metric measures the time from when the page starts loading to when any part of the page's content is rendered on the screen. Provide a target value in ms.",
   };
 
   return <span id={styles.tooltip}>{TOOLTIP_MAP[toolTipType]}</span>;
