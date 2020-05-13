@@ -12,6 +12,7 @@ import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
 import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
+import { PuppeteerTestCaseContext } from '../../../context/puppeteerTestCaseReducer';
 import styles from './ExportFileModal.module.scss';
 
 const remote = window.require('electron').remote;
@@ -27,6 +28,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [hooksTestCase] = useContext(HooksTestCaseContext);
   const [{ mockData }] = useContext(MockDataContext);
   const [endpointTestCase] = useContext(EndpointTestCaseContext);
+  const [puppeteerTestCase] = useContext(PuppeteerTestCaseContext);
 
   let testFileCode = 'import React from "react";';
 
@@ -86,6 +88,17 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
           e4x: true,
         }))
       );
+    }
+    if (puppeteerTestCase.hasPuppeteer > 0) {
+      return (
+        addPuppeteerImportStatements(),
+        addPuppeteerTestStatements(),
+        (testFileCode = beautify(testFileCode, {
+          indent_size: 2,
+          space_in_empty_paren: true,
+          e4x: true,
+        }))
+      )
     }
   };
 
@@ -291,6 +304,54 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     testFileCode += '});';
     testFileCode += '\n';
   };
+
+ /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
+  const addLCPfunction = () => {
+    testFileCode += `      
+      function calcLCP() {
+        window.largestContentfulPaint = 0;
+    
+        const observer = new PerformanceObserver((entryList) => {
+          const entries = entryList.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          window.largestContentfulPaint = lastEntry.renderTime || lastEntry.loadTime;
+        });
+    
+        observer.observe({ type: 'largest-contentful-paint', buffered: true });
+    
+        document.addEventListener('visibilitychange', () => {
+          if (document.visibilityState === 'hidden') {
+              observer.takeRecords();
+              observer.disconnect();
+          }
+        });
+      }`
+  }
+ 
+  const addPuppeteerImportStatements = () => {
+    puppeteerTestCase.puppeteerStatements.forEach(statement => {
+      switch (statement.type) {
+        case 'paintTiming':
+          testFileCode = `import puppeteer from 'puppeteer';\n`;
+          addLCPfunction();
+          return 
+        default:
+          return statement;
+      }
+    });
+    testFileCode += '\n';
+  }
+
+  const addPuppeteerTestStatements = () => {
+    puppeteerTestCase.puppeteerStatements.forEach(statement => {
+      switch (statement.type) {
+        case 'paintTiming':
+          return addPuppeteerPaintTiming(statement);
+        default:
+          return statement;
+      }
+    });
+  }
 
   /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
@@ -539,6 +600,56 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
   };
 
+  // Puppeteer Form Jest Test Code
+  const addPuppeteerPaintTiming = statement => {
+    const browserOptions = {};
+    
+    if(statement.browserOptions.length > 0) {
+      statement.browserOptions.map(option => {
+        if(option.optionValue === 'true') option.optionValue = true
+        else if(option.optionValue === 'false') option.optionValue = false
+        //if optionValue is a stringified number, convert it back to number 
+        else if(!isNaN(Number(option.optionValue))) option.optionValue = Number(option.optionValue)
+        browserOptions[option.optionKey] = option.optionValue
+      })
+    }
+    
+    testFileCode += `
+      describe('${statement.describe}', () => {
+        let paints, lcp;
+        beforeAll( async () => {
+          let app = '${statement.url}';
+          let browser = await puppeteer.launch(${statement.browserOptions.length? JSON.stringify(browserOptions).replace(/"([^"]+)":/g, '$1:') : '{}'});
+          const page = await browser.newPage();
+          await page.target().createCDPSession();
+          await page.evaluateOnNewDocument(calcLCP);
+          await page.goto(app);
+
+          lcp = await page.evaluate(() => window.largestContentfulPaint);
+          
+          paints = await page.evaluate(_ => {
+            const result = {};
+            performance.getEntriesByType('paint').map(entry => {
+              result[entry.name] = entry.startTime;
+            });
+            return result;
+          });
+          await browser.close();
+        })
+          
+        it('${statement.firstPaintIt}', async () => {
+          expect(paints['first-paint']).toBeLessThan(${statement.firstPaintTime})
+        })
+        it('${statement.FCPIt}', async () => {
+          expect(paints['first-contentful-paint']).toBeLessThan(${statement.FCPtTime})
+        })
+        it('${statement.LCPIt}', async () => {
+          expect(paints['first-contentful-paint']).toBeLessThan(${statement.LCPTime})
+        })
+      });
+    `;
+  };
+
   /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
 
   const exportTestFile = async () => {
@@ -558,6 +669,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
   };
+
   const modalStyles = {
     overlay: {
       zIndex: 3,

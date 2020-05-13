@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import PuppeteerTestModal from '../../NavBar/Modals/PuppeteerTestModal';
-import { addPuppeteerForm } from '../../../context/puppeteerTestCaseActions';
+import { addPuppeteerForm, addPuppeteerPaintTiming } from '../../../context/puppeteerTestCaseActions';
 
 const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
   const [isPuppeteerModalOpen, setIsPuppeteerModalOpen] = useState(false);
 
   const openPuppeteerModal = () => {
-    console.log('inside openPuppeteerModal')
     setIsPuppeteerModalOpen(true);
   };
 
@@ -16,8 +15,11 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
   };
 
   const handleAddPuppeteerForm = e => {
-    console.log('in handleAddPuppeteerForm')
     dispatchToPuppeteerTestCase(addPuppeteerForm());
+  };
+
+  const handleAddPuppeteerPaintTiming = e => {
+    dispatchToPuppeteerTestCase(addPuppeteerPaintTiming());
   };
 
   return (
@@ -34,6 +36,9 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
         <div id={styles.right}>
           <button data-testid='puppeteerFormButton' onClick={handleAddPuppeteerForm}>
             Form
+          </button>
+          <button data-testid='puppeteerPaintTimingButton' onClick={handleAddPuppeteerPaintTiming}>
+            Paint Timing
           </button>
         </div>
       </div>
