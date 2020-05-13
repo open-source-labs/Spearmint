@@ -37,7 +37,7 @@ const TestFile = () => {
   const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   const [{ hasPuppeteer }, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
   const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
-
+  
   const closeTestModal = () => {
     dispatchToTestFileModal(toggleModal());
   };
@@ -138,6 +138,14 @@ const TestFile = () => {
         <section>
           <PuppeteerTestCase />
         </section>
+      )}
+
+      {hasHooks + hasReact + hasHooks + hasPuppeteer + hasEndpoint === 0 && (
+        <div id={styles.testMenu}>
+          <div id={styles.left}>
+            <button id={styles.newTestBtn} onClick={closeTestModal}>New Test +</button>
+          </div>
+        </div>
       )}
 
     </div>

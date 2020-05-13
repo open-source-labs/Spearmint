@@ -22,6 +22,7 @@ const beautify = remote.require('js-beautify');
 
 const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [fileName, setFileName] = useState('');
+  const [invalidFileName, setInvalidFileName] = useState(false);
   const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
   const [testCase] = useContext(ReactTestCaseContext);
   const [reduxTestCase] = useContext(ReduxTestCaseContext);
@@ -37,9 +38,18 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const handleClickSave = () => {
+    // file name uniqueness check
+    if (fs.existsSync(projectFilePath + `/__tests__/${fileName}.test.js` )) {
+      setInvalidFileName(true)
+      return
+    }
     generateTestFile();
     exportTestFile();
     closeExportModal();
+    
+    // reset fileName and invalidFileName
+    setInvalidFileName(false);
+    setFileName('');
   };
 
   const generateTestFile = () => {
@@ -696,6 +706,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       <div id={styles.body}>
         <p>File Name</p>
         <input type='text' value={fileName} onChange={handleChangeFileName} />
+        {invalidFileName && <p>A file with the name '{fileName}' already exists.</p>}
         <button id={styles.save} onClick={closeExportModal}>
           Cancel
         </button>
