@@ -4,7 +4,6 @@ import { actionTypes } from './reactTestCaseActions';
 export const ReactTestCaseContext = createContext(null);
 
 export const reactTestCaseState = {
-  testStatement: '',
   // TODO: Make Boolean
   hasReact: 0,
   describeId: 2,
@@ -15,11 +14,11 @@ export const reactTestCaseState = {
     byId: {
       describe0: {
         id: 'describe0',
-        text: '',
+        text: 'this is describe block 0',
       },
       describe1: {
         id: 'describe1',
-        text: '',
+        text: 'this is describe block 1',
       },
     },
     allIds: ['describe0', 'describe1'],
@@ -29,43 +28,69 @@ export const reactTestCaseState = {
       it0: {
         id: 'it0',
         describeId: 'describe0',
-        text: '',
+        text: 'This is itStatement 0',
       },
       it1: {
         id: 'it1',
         describeId: 'describe1',
-        text: '',
+        text: 'This is itStatement 1',
       },
     },
     allIds: ['it0', 'it1'],
   },
   statements: {
     byId: {
+     
+      // statement0: {
+      //   id: 'statement0',
+      //   itId: 'it0',
+      //   describeId: 'describe0',
+      //   type: 'render',
+      //   componentName: '',
+      //   filePath: '',
+      //   props: [
+      //     {
+      //       id: 0,
+      //       propKey: 'PROP KEY!',
+      //       propValue: 'PROP VALUE!',
+      //     },
+      //   ],
+      //   hasProp: false,
+      // },
+      // statement1: {
+      //   id: 'statement1',
+      //   itId: 'it1',
+      //   describeId: 'describe1',
+      //   type: 'render',
+      //   componentName: '',
+      //   filePath: '',
+      //   props: [],
+      //   hasProp: false,
+      // },
       statement0: {
         id: 'statement0',
         itId: 'it0',
         describeId: 'describe0',
-        type: 'render',
-        componentName: '',
-        filePath: '',
-        props: [
-          {
-            id: 0,
-            propKey: 'PROP KEY!',
-            propValue: 'PROP VALUE!',
-          },
-        ],
-        hasProp: false,
+        type: 'action',
+        eventType: 'submit',
+        eventValue: 'click',
+        queryVariant: 'getBy',
+        querySelector: 'LabelText',
+        queryValue: 'hello',
+        suggestions: []
       },
       statement1: {
         id: 'statement1',
         itId: 'it1',
         describeId: 'describe1',
-        type: 'render',
-        componentName: '',
-        filePath: '',
-        props: [],
-        hasProp: false,
+        type: 'assertion',
+        queryVariant: 'getBy',
+        querySelector: 'Role',
+        queryValue: 'hello1',
+        isNot: false,
+        matcherType: 'toHaveTextValue',
+        matcherValue: 'texter',
+        suggestions: [],
       },
     },
     allIds: ['statement0', 'statement1'],
@@ -481,7 +506,7 @@ export const reactTestCaseReducer = (state, action) => {
     case actionTypes.UPDATE_RENDER_COMPONENT: {
       const { componentName, filePath } = action;
       statements.componentName = componentName;
-      statements.filePath = filePath;
+      statements.componentPath = filePath;
       return {
         ...state,
         statements,

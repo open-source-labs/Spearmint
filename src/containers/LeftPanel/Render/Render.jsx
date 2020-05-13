@@ -34,7 +34,7 @@ const Render = ({ statement, statementId, describeId, itId }) => {
           Rendering: <span>{statements.componentName}</span>{' '}
         </span>
         <button className={styles.addProps} onClick={handleClickAddProp}>
-          <i class='fas fa-plus'></i> Add Props
+          <i className='fas fa-plus'></i> Add Props
         </button>
         <i onClick={handleClickDeleteRender} className={cn(styles.deleteRender,'far fa-window-close')}></i>
       </div>

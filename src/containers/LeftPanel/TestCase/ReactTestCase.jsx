@@ -7,6 +7,7 @@ import {
   updateRenderComponent,
   updateItStatementText,
 } from '../../../context/reactTestCaseActions';
+import {GlobalContext} from '../../../context/globalReducer'
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { toggleMockData, addMockData } from '../../../context/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
@@ -22,6 +23,7 @@ const ReactTestCase = () => {
     dispatchToReactTestCase,
   ] = useContext(ReactTestCaseContext);
   const [{ mockData, hasMockData }, dispatchToMockData] = useContext(MockDataContext);
+  const [{ filePathMap }] = useContext(GlobalContext);
   const draggableStatements = describeBlocks.allIds;
 
   const handleToggleMockData = (e) => {
@@ -46,8 +48,7 @@ const ReactTestCase = () => {
 
   const handleChangeComponentName = (e) => {
     const componentName = e.target.value;
-    // const filePath = filePathMap[componentName] || '';
-    const filePath = '';
+    const filePath = filePathMap[componentName] || '';
     dispatchToReactTestCase(updateRenderComponent(componentName, filePath));
   };
 
@@ -124,7 +125,22 @@ const ReactTestCase = () => {
         value={statements.componentName}
         placeholder='App'
       />
-      <DragDropContext onDragEnd={onDragEnd}>
+              <DecribeRenderer
+                dispatcher={dispatchToReactTestCase}
+                draggableStatements={draggableStatements}
+                describeBlocks={describeBlocks}
+                itStatements={itStatements}
+                statements={statements}
+                handleChangeDescribeText={handleChangeDescribeText}
+                handleChangeItStatementText={handleChangeItStatementText}
+                type='react'
+              />
+    </div>
+  );
+};
+export default ReactTestCase;
+
+{/* <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -142,8 +158,4 @@ const ReactTestCase = () => {
             </div>
           )}
         </Droppable>
-      </DragDropContext>
-    </div>
-  );
-};
-export default ReactTestCase;
+      </DragDropContext> */}

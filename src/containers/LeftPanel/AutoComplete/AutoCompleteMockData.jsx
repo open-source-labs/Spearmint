@@ -35,11 +35,12 @@ const AutoCompleteMockData = ({
   };
 
   mockData.forEach(mockDatum => {
+    let name = mockDatum.name.charAt(0).toUpperCase() + mockDatum.name.slice(1)
     mockDatum.fieldKeys.forEach(key => {
-      mockOptionsList.push({ value: `mock${mockDatum.name}.${key.fieldKey}` });
+      mockOptionsList.push({ value: `mock${name}.${key.fieldKey}` });
     });
-    mockOptionsList.push({ value: `[mock${mockDatum.name}]` });
-    mockOptionsList.push({ value: `{mock${mockDatum.name}}` });
+    mockOptionsList.push({ value: `[mock${name}]` });
+    mockOptionsList.push({ value: `{mock${name}}` });
   });
 
   const getSuggestions = mockDataValue => {

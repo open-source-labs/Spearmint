@@ -28,7 +28,44 @@ const DescribeRenderer = ({
 
   return draggableStatements.map((id, i) => {
     return (
-      <Draggable draggableId={`draggable-${id}-${i}`} index={i}>
+      <div id={styles.describeBlock}>
+            <label htmlFor='describe-label' className={styles.describeLabel}>
+              Describe Block
+            </label>
+            <i
+              onClick={deleteDescribeBlockHandleClick}
+              id={id}
+              className={cn('far fa-window-close', styles.describeClose)}
+            ></i>
+            <input
+              id={id}
+              className={styles.describeInput}
+              name='describe-label'
+              type='text'
+              placeholder={'The component has basic functionality'}
+              value={describeBlocks.byId[id].text || ''}
+              onChange={handleChangeDescribeText}
+            />
+            <div className={styles.separator}></div>
+            <ItRenderer
+              type={type}
+              key={`it-${id}-${i}`}
+              itStatements={itStatements}
+              statements={statements}
+              describeId={id}
+              handleChangeItStatementText={handleChangeItStatementText}
+            />
+            <div className={styles.buttonContainer}>
+              <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>+It Statement</button>
+            </div>
+        </div>
+    );
+  });
+};
+
+export default DescribeRenderer;
+
+{/* <Draggable draggableId={`draggable-${id}-${i}`} index={i}>
         {(provided) => (
           <div
             ref={provided.innerRef}
@@ -69,9 +106,4 @@ const DescribeRenderer = ({
             </div>
           </div>
         )}
-      </Draggable>
-    );
-  });
-};
-
-export default DescribeRenderer;
+      </Draggable> */}
