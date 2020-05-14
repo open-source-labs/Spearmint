@@ -5,7 +5,7 @@ import OpenFolder from '../LeftPanel/OpenFolder/OpenFolderButton';
 import { setProjectUrl } from '../../context/globalActions';
 
 const ProjectLoader = () => {
-  const [_, dispatchToGlobal] = useContext(GlobalContext);
+  const [, dispatchToGlobal] = useContext(GlobalContext);
 
   const addHttps = url => {
     if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {

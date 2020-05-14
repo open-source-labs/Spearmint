@@ -140,7 +140,7 @@ const TestFile = () => {
         </section>
       )}
 
-      {hasHooks + hasReact + hasHooks + hasPuppeteer + hasEndpoint === 0 && (
+      {hasHooks + hasReact + hasRedux + hasPuppeteer + hasEndpoint === 0 && (
         <div id={styles.testMenu}>
           <div id={styles.left}>
             <button id={styles.newTestBtn} onClick={closeTestModal}>New Test +</button>

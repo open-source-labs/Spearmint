@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './SearchInput.scss';
+import './SearchInput.scss';
 
 export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestCase}) => {
   

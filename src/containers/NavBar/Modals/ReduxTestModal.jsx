@@ -6,7 +6,7 @@ import { toggleModal } from '../../../context/testFileModalActions';
 import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
 const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }) => {
-  const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
 
   const handleNewReduxTest = e => {
     dispatchToReduxTestCase(createNewReduxTest());

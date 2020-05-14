@@ -10,7 +10,7 @@ const PuppeteerTestModal = ({
     closePuppeteerModal,
     dispatchToPuppeteerTestCase,
   }) => {
-    const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+    const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
 
     const handleNewPuppeteerTest = e => {
       dispatchToPuppeteerTestCase(createNewPuppeteerTest());

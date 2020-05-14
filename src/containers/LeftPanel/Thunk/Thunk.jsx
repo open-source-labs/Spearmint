@@ -15,7 +15,7 @@ const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
 const Async = ({ async, index, dispatchToReduxTestCase }) => {
-  const [{ filePathMap }, _] = useContext(GlobalContext);
+  const [{ filePathMap }] = useContext(GlobalContext);
 
   const handleChangeAsyncFields = (e, field) => {
     let updatedAsync = { ...async };

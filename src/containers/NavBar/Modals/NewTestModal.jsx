@@ -13,7 +13,7 @@ import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
 /* destructuring or declaring these?  */
 const NewTestModal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchToTestCase }) => {
-  const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
 
   const handleNewTest = e => {
     dispatchToMockData(clearMockData());
