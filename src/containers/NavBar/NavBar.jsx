@@ -42,11 +42,6 @@ const NavBar = () => {
     setIsExportModalOpen(true);
   };
 
-  /* cancel export file (when false) */
-  const closeExportModal = () => {
-    setIsExportModalOpen(false);
-  };
-
   /* closes the browser modal (box users type url in) */
   const closeBrowserModal = () => {
     setIsBrowserModalOpen(false);
@@ -66,7 +61,7 @@ const NavBar = () => {
         <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
         <span className={styles.tooltip}>Export</span>
       </button>
-      <ExportFileModal isExportModalOpen={isExportModalOpen} closeExportModal={closeExportModal} />
+      <ExportFileModal isExportModalOpen={isExportModalOpen} setIsExportModalOpen={setIsExportModalOpen}/>
       <OpenFolder />
       <button className={styles.navBtn} onClick={handleEditorToggle}>
         <img src={codeIcon} className={styles.icons} alt='codeview' title='Code View' />

@@ -10,7 +10,7 @@ const EndpointTestModal = ({
   closeEndpointModal,
   dispatchToEndpointTestCase,
 }) => {
-  const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
 
   const handleNewEndpointTest = e => {
     dispatchToEndpointTestCase(createNewEndpointTest());

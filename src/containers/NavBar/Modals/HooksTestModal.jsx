@@ -6,7 +6,7 @@ import { toggleModal } from '../../../context/testFileModalActions';
 import { TestFileModalContext } from '../../../context/testFileModalReducer';
 
 const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTestCase }) => {
-  const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
 
   const handleNewHooksTest = e => {
     dispatchToHooksTestCase(createNewHooksTest());

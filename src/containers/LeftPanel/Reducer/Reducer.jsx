@@ -14,7 +14,7 @@ const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Reducer = ({ reducer, index, dispatchToReduxTestCase }) => {
-  const [{ filePathMap }, _] = useContext(GlobalContext);
+  const [{ filePathMap }] = useContext(GlobalContext);
 
   const handleChangeReducerFields = (e, field) => {
     let updatedReducer = { ...reducer };

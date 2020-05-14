@@ -13,7 +13,7 @@ const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
-  const [{ filePathMap }, _] = useContext(GlobalContext);
+  const [{ filePathMap }] = useContext(GlobalContext);
   const handleChangeActionCreatorFields = (e, field) => {
     let updatedActionCreator = { ...actionCreator };
     updatedActionCreator[field] = e.target.value;
