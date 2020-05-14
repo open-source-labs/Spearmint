@@ -13,8 +13,7 @@ function addDevTools() {
 };
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1400,
-    minWidth: 1400,
+    width: 1550,
     height: 750,
     minHeight: 750,
     icon: path.join(__dirname, 'public/icon.png'),
