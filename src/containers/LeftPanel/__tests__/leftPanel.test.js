@@ -1,7 +1,7 @@
 import React from 'react';
-import TestCase from '../TestCase/TestCase';
+import ReactTestCase from '../TestCase/ReactTestCase';
 import { GlobalContext } from '../../../context/globalReducer';
-import { TestCaseContext } from '../../../context/testCaseReducer';
+import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
 import { MockDataContext } from '../../../context/mockDataReducer';
 import { TestFileModalContext } from '../../../context/testFileModalReducer'
 import { mount, configure } from 'enzyme';
@@ -29,28 +29,47 @@ beforeEach(() => {
   dispatchToGlobal = jest.fn();
 
   testCase = {
-    testStatement: '',
-    statements: [
-      {
-        id: 0,
-        type: 'render',
-        componentName: '',
-        filePath: '',
-        props: [],
-        hasProp: false,
+    hasReact: 0,
+    describeId: 1,
+    itId: 1,
+    statementId: 1,
+    propId: 1,
+    describeBlocks: {
+      byId: {
+        describe0: {
+          id: 'describe0',
+          text: '',
+        },
       },
-      {
-        id: 1,
-        type: 'assertion',
-        queryVariant: '',
-        querySelector: '',
-        queryValue: '',
-        isNot: false,
-        matcherType: '',
-        matcherValue: '',
-        suggestions: [],
+      allIds: ['describe0'],
+    },
+    itStatements: {
+      byId: {
+        it0: {
+          id: 'it0',
+          describeId: 'describe0',
+          text: '',
+        },
       },
-    ],
+      allIds: ['it0'],
+    },
+    statements: {
+      byId: {
+        statement0: {
+          id: 'statement0',
+          itId: 'it0',
+          describeId: 'describe0',
+          type: 'render',
+          componentName: '',
+          filePath: '',
+          props: [],
+          hasProp: false,
+        },
+      },
+      allIds: ['statement0'],
+      componentPath: '',
+      componentName: '',
+    },
   };
 
   dispatchToTestCase = jest.fn();
@@ -66,13 +85,13 @@ beforeEach(() => {
 
   wrapper = mount(
     <GlobalContext.Provider value={[globalM, dispatchToGlobal]}>
-      <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
+      <ReactTestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
         <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
           <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
-            <TestCase />
+            <ReactTestCase />
           </TestFileModalContext.Provider>
         </MockDataContext.Provider>
-      </TestCaseContext.Provider>
+      </ReactTestCaseContext.Provider>
     </GlobalContext.Provider>
   );
 
@@ -80,34 +99,16 @@ beforeEach(() => {
 });
 
 describe('testing left panel react test menu', () => {
-  it('renders the react menu with initial buttons and first render boxes', () => {
-    expect(wrapper.text()).toContain('Do you need mock data?');
-    expect(wrapper.text()).toContain('Do you need props?');
-    expect(wrapper.text()).toContain('Action');
-    expect(wrapper.text()).toContain('Assertion');
-    expect(wrapper.text()).toContain('Rerender');
+  it('renders the react menu with initial buttons, component input, first Describe Block', () => {
+    expect(wrapper.text()).toContain('Enter Component Name:');
+    expect(wrapper.text()).toContain('Mock Data');
+    expect(wrapper.text()).toContain('+Describe Block');
     expect(wrapper.text()).toContain('New Test +');
   });
 
-  it('onclick function is invoked when assertion button is clicked', () => {
-    const btn = wrapper.find('button[data-testid="assertionButton"]');
+  it('onclick function is invoked when add Describe Block button is clicked', () => {
+    const btn = wrapper.find("button[data-testid='addDescribeButton']");
     btn.simulate('click');
     expect(dispatchToTestCase).toHaveBeenCalled();
-  });
-
-  it('onclick function is invoked when action button is clicked', () => {
-    const btn = wrapper.find('button[data-testid="actionButton"]');
-    btn.simulate('click');
-    expect(dispatchToTestCase).toHaveBeenCalled();
-  });
-
-  it('onclick function is invoked when rerender button is clicked', () => {
-    const btn = wrapper.find('button[data-testid="rerenderButton"]');
-    btn.simulate('click');
-    expect(dispatchToTestCase).toHaveBeenCalled();
-  });
-
-  it('there should be 4 buttons', () => {
-    expect(wrapper.find('button').length).toEqual(4)
   });
 });

@@ -18,3 +18,22 @@ ul.options li.option-active {
   z-index: 1;
   width: -webkit-fill-available ;
 }
+
+.react-test-options {
+  background-color: white;
+  overflow: auto;
+  position: absolute;
+  z-index: 4;
+  width: 137px;
+}
+ul.react-test-options li:hover {
+  font-weight: bold;
+  color: #00b4cc;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+ul.react-test-options li.option-active {
+  background: whitesmoke;
+  color: #00b4cc;
+}

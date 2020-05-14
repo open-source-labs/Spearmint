@@ -5,8 +5,9 @@ import { GlobalContext } from '../../../context/globalReducer';
 import { TestFileModalContext } from '../../../context/testFileModalReducer';
 import { HooksTestCaseContext } from '../../../context/hooksTestCaseReducer';
 import { ReduxTestCaseContext } from '../../../context/reduxTestCaseReducer';
-import { TestCaseContext } from '../../../context/testCaseReducer';
+import { ReactTestCaseContext } from '../../../context/reactTestCaseReducer';
 import { EndpointTestCaseContext } from '../../../context/endpointTestCaseReducer';
+import { PuppeteerTestCaseContext } from '../../../context/puppeteerTestCaseReducer';
 
 import { mount } from 'enzyme';
 import { configure } from 'enzyme';
@@ -26,7 +27,9 @@ let wrapper,
   testCase,
   dispatchToTestCase,
   endpointTestCaseState,
-  dispatchToEndpointTestCase;
+  dispatchToEndpointTestCase,
+  pupeteerTestCaseState,
+  dispatchToPuppeteerTestCase;
 
 beforeEach(() => {
   globalM = {
@@ -96,18 +99,26 @@ beforeEach(() => {
   };
   dispatchToEndpointTestCase = jest.fn();
 
+  pupeteerTestCaseState =  {
+    puppeteerStatements: [],
+    hasPuppeteer: 0,
+  };
+  dispatchToPuppeteerTestCase = jest.fn();
+
   wrapper = mount(
     <GlobalContext.Provider value={[globalM, dispatchToGlobal]}>
       <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
         <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
           <ReduxTestCaseContext.Provider value={[reduxTestCaseState, dispatchToReduxTestCase]}>
-            <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
+            <ReactTestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
               <EndpointTestCaseContext.Provider
                 value={[endpointTestCaseState, dispatchToEndpointTestCase]}
               >
-                <TestFile />
+                <PuppeteerTestCaseContext.Provider value={[pupeteerTestCaseState, dispatchToPuppeteerTestCase]}>
+                  <TestFile />
+                </PuppeteerTestCaseContext.Provider>
               </EndpointTestCaseContext.Provider>
-            </TestCaseContext.Provider>
+            </ReactTestCaseContext.Provider>
           </ReduxTestCaseContext.Provider>
         </HooksTestCaseContext.Provider>
       </TestFileModalContext.Provider>

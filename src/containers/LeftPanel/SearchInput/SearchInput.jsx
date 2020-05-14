@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './SearchInput.scss';
 
-export const Autocomplete = ({dispatch, action, filePathMap, options}) => {
+export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestCase}) => {
   
   const [activeOption, setActiveOption] = useState(0)
   const [filteredOptions, setFilteredOptions] = useState([])
@@ -54,10 +54,14 @@ export const Autocomplete = ({dispatch, action, filePathMap, options}) => {
     }
   };
   let optionList;
+  let optionStyles = 'options'
   if (showOptions && userInput) {
     if (filteredOptions.length) {
+      if(reactTestCase) {
+        optionStyles = 'react-test-options'
+      }
       optionList = (
-        <ul className="options">
+        <ul className={optionStyles}>
           {filteredOptions.map((optionName, index) => {
             let className;
             if (index === activeOption) {
