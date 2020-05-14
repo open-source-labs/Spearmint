@@ -53,6 +53,7 @@ const ReactTestCase = () => {
             Enter Component Name:
           </label>
           <SearchInput
+            reactTestCase={true}
             dispatch={dispatchToReactTestCase}
             action={updateRenderComponent}
             filePathMap={filePathMap}
