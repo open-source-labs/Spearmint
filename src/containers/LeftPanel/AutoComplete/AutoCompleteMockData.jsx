@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styles from '../AutoComplete/AutoCompleteMockData.module.scss';
 import AutoSuggest from 'react-autosuggest';
-import { updateAction, updateAssertion, updateRenderProp } from '../../../context/reactTestCaseActions';
+import { updateAction, updateAssertion, updateProp } from '../../../context/reactTestCaseActions';
 import { MockDataContext } from '../../../context/mockDataReducer';
 
 const AutoCompleteMockData = ({
@@ -30,16 +30,17 @@ const AutoCompleteMockData = ({
       updatedAssertion.queryValue = newValue;
       dispatchToTestCase(updateAssertion(updatedAssertion));
     } else if (propType === 'prop') {
-      dispatchToTestCase(updateRenderProp(renderId, propId, propKey, newValue));
+      dispatchToTestCase(updateProp(renderId, propId, propKey, newValue));
     }
   };
 
   mockData.forEach(mockDatum => {
+    let name = mockDatum.name.charAt(0).toUpperCase() + mockDatum.name.slice(1)
     mockDatum.fieldKeys.forEach(key => {
-      mockOptionsList.push({ value: `mock${mockDatum.name}.${key.fieldKey}` });
+      mockOptionsList.push({ value: `mock${name}.${key.fieldKey}` });
     });
-    mockOptionsList.push({ value: `[mock${mockDatum.name}]` });
-    mockOptionsList.push({ value: `{mock${mockDatum.name}}` });
+    mockOptionsList.push({ value: `[mock${name}]` });
+    mockOptionsList.push({ value: `{mock${name}}` });
   });
 
   const getSuggestions = mockDataValue => {

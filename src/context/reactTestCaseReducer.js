@@ -4,36 +4,68 @@ import { actionTypes } from './reactTestCaseActions';
 export const ReactTestCaseContext = createContext(null);
 
 export const reactTestCaseState = {
-  testStatement: '',
   hasReact: 0,
-  statements: [
-    {
-      id: 0,
-      type: 'render',
-      componentName: '',
-      filePath: '',
-      props: [],
-      hasProp: false,
+  describeId: 1,
+  itId: 1,
+  statementId: 1,
+  propId: 1,
+  describeBlocks: {
+    byId: {
+      describe0: {
+        id: 'describe0',
+        text: '',
+      },
     },
-    {
-      id: 1,
-      type: 'assertion',
-      queryVariant: '',
-      querySelector: '',
-      queryValue: '',
-      isNot: false,
-      matcherType: '',
-      matcherValue: '',
-      suggestions: [],
+    allIds: ['describe0'],
+  },
+  itStatements: {
+    byId: {
+      it0: {
+        id: 'it0',
+        describeId: 'describe0',
+        text: '',
+      },
     },
-  ],
+    allIds: ['it0'],
+  },
+  statements: {
+    byId: {
+      statement0: {
+        id: 'statement0',
+        itId: 'it0',
+        describeId: 'describe0',
+        type: 'render',
+        componentName: '',
+        filePath: '',
+        props: [],
+        hasProp: false,
+      },
+    },
+    allIds: ['statement0'],
+    componentPath: '',
+    componentName: '',
+  },
 };
 
-let statementId = 2;
-let renderPropsId = 0;
+/* ---------------------------- Helper Functions ---------------------------- */
 
-const createAction = () => ({
-  id: statementId++,
+const createDescribeBlock = (describeId) => {
+  return {
+    id: describeId,
+    text: ''
+  }
+}
+
+const createItStatement = (describeId, itId) => ({
+  id: itId,
+  describeId: describeId,
+  text: ''
+})
+
+const createAction = (describeId, itId, statementId) => ({
+  id: statementId,
+  itId: itId,
+  describeId: describeId,
   type: 'action',
   eventType: '',
   eventValue: null,
@@ -43,8 +75,10 @@ const createAction = () => ({
   suggestions: [],
 });
 
-const createAssertion = () => ({
-  id: statementId++,
+const createAssertion = (describeId, itId, statementId) => ({
+  id: statementId,
+  itId: itId,
+  describeId: describeId,
   type: 'assertion',
   queryVariant: '',
   querySelector: '',
@@ -55,206 +89,463 @@ const createAssertion = () => ({
   suggestions: [],
 });
 
-const createRerender = (componentName, filePath) => ({
-  id: statementId++,
+const createRender = (describeId, itId, statementId, componentName, filePath) => ({
+  id: statementId,
+  itId: itId,
+  describeId: describeId,
   type: 'render',
   componentName,
   filePath,
   props: [],
 });
 
-const createRenderProp = () => ({
-  id: renderPropsId++,
+const createProp = (propId, statementId) => ({
+  id: propId,
+  statementId: statementId,
   propKey: '',
   propValue: '',
 });
 
+const deleteChildren = (object, deletionId, lookup) => {
+
+  const allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
+
+  object.allIds.forEach((id) => {
+    if (object.byId[id][lookup] === deletionId) {
+      delete object.byId[id];
+    }
+  });
+
+  return allIdCopy;
+};
+
+/* ------------------------- React Test Case Reducer ------------------------ */
+
 export const reactTestCaseReducer = (state, action) => {
   Object.freeze(state);
-  let statements = [...state.statements];
-  let lastAssertionStatement;
+
+  let describeBlocks = { ...state.describeBlocks };
+  let itStatements = { ...state.itStatements };
+  let statements = { ...state.statements };
 
   switch (action.type) {
-    case actionTypes.TOGGLE_REACT:
+    case actionTypes.TOGGLE_REACT: {
       return {
         ...state,
         hasReact: state.hasReact + 1,
       };
-    case actionTypes.UPDATE_STATEMENTS_ORDER:
-      const firstRenderStatement = statements[0];
-      lastAssertionStatement = statements[statements.length - 1];
-      statements = [firstRenderStatement, ...action.draggableStatements, lastAssertionStatement];
+    }
+    case actionTypes.UPDATE_STATEMENTS_ORDER: {
+      // TODO
       return {
         ...state,
-        statements,
       };
-    case actionTypes.UPDATE_TEST_STATEMENT:
-      let testStatement = action.testStatement;
-      return {
-        ...state,
-        testStatement,
-      };
-    case actionTypes.ADD_ACTION:
-      lastAssertionStatement = statements.pop();
-      statements.push(createAction(), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_ACTION:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_ACTION:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.eventType = action.eventType;
-          statement.eventValue = action.eventValue;
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.suggestions = action.suggestions;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.ADD_ASSERTION:
-      lastAssertionStatement = statements.pop();
-      statements.push(createAssertion(), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_ASSERTION:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_ASSERTION:
-      statements = statements.map(statement => {
-        if (statement.id === action.id) {
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.isNot = action.isNot;
-          statement.matcherType = action.matcherType;
-          statement.matcherValue = action.matcherValue;
-          statement.suggestions = action.suggestions;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.ADD_RENDER:
-      lastAssertionStatement = statements.pop();
-      const renderComponentName = state.statements[0].componentName;
-      const renderFilePath = state.statements[0].filePath;
-      statements.push(createRerender(renderComponentName, renderFilePath), lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.DELETE_RENDER:
-      lastAssertionStatement = statements.pop();
-      statements = statements.filter(statement => statement.id !== action.id);
-      statements.push(lastAssertionStatement);
-      return {
-        ...state,
-        statements,
-        lastAssertionStatement,
-      };
-    case actionTypes.UPDATE_RENDER_COMPONENT:
-      statements = statements.map(statement => {
-        if (statement.type === 'render') {
-          statement.componentName = action.componentName;
-          statement.filePath = action.filePath;
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.ADD_RENDER_PROP:
-      statements = statements.map(statement => {
-        if (statement.id === action.renderId) {
-          statement.props.push(createRenderProp());
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-        hasProp: !statements[0].hasProp,
-      };
-    case actionTypes.DELETE_RENDER_PROP:
-      statements = statements.map(statement => {
-        if (statement.id === action.renderId) {
-          statement.props = statement.props.filter(prop => prop.id !== action.propId);
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
-    case actionTypes.UPDATE_RENDER_PROP:
-      statements = statements.map(statement => {
-        if (statement.id === action.renderId) {
-          statement.props.map(prop => {
-            if (prop.id === action.propId) {
-              prop.propKey = action.propKey;
-              prop.propValue = action.propValue;
-            }
-            return prop;
-          });
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        statements,
-      };
+    }
+    case actionTypes.ADD_DESCRIBE_BLOCK: {
+      let updatedDescribeId = state.describeId
+      const describeId = `describe${state.describeId}`
 
-    case actionTypes.CREATE_NEW_TEST:
       return {
-        hasReact: 0,
-        testStatement: '',
-        statements: [
-          {
-            id: 0,
-            type: 'render',
-            componentName: '',
-            filePath: '',
-            props: [],
-            hasProp: false,
+        ...state,
+        describeId: ++updatedDescribeId,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...describeBlocks.byId,
+            [describeId]: createDescribeBlock(describeId)  
           },
-          {
-            id: 1,
-            type: 'assertion',
-            queryVariant: '',
-            querySelector: '',
-            queryValue: '',
-            isNot: false,
-            matcherType: '',
-            matcherValue: '',
-            suggestions: [],
-          },
-        ],
+          allIds: [...describeBlocks.allIds, describeId]
+        }
       };
+    }
+
+    case actionTypes.DELETE_DESCRIBE_BLOCK: {
+      console.log('reducer called')
+      const {describeId} = action;
+      const byId = {...describeBlocks.byId};
+      delete byId[describeId]
+      const allIds = describeBlocks.allIds.filter(id => id !== describeId)
+
+      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId')
+      const statementAllIds = deleteChildren(statements, describeId, 'describeId')
+
+      return {
+        ...state,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...byId
+          },
+          allIds: [...allIds]
+        },
+        itStatements: {
+          byId: {
+            ...itStatements.byId
+          },
+          allIds: [...itStatementAllIds]
+        },
+        statements: {
+          byId: {
+            ...statements.byId
+          },
+          allIds: [...statementAllIds]
+        },
+      };
+    }
+
+    case actionTypes.ADD_ITSTATEMENT: {
+      const { describeId } = action
+      const itId = `it${state.itId}`
+       let updatedItId = state.itId
+     
+
+      return {
+        ...state,
+        itId: ++updatedItId,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...itStatements.byId,
+            [itId]: createItStatement(describeId, itId)
+          },
+          allIds: [...itStatements.allIds, itId]
+        }
+      };
+    }
+    case actionTypes.DELETE_ITSTATEMENT: {
+      const {itId} = action;
+      const byId = {...itStatements.byId};
+      delete byId[itId]
+      const allIds = itStatements.allIds.filter(id => id !== itId)
+      const statementAllIds = deleteChildren(statements, itId, 'itId')
+
+
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...byId
+          },
+          allIds: [...allIds]
+        },
+        statements: {
+          byId: {
+            ...statements.byId
+          },
+          allIds: [...statementAllIds]
+        },
+      };
+    }
+    case actionTypes.UPDATE_DESCRIBE_TEXT: {
+      const { describeId, text } = action;
+      const byIds = { ...describeBlocks.byId };
+      const block = { ...describeBlocks.byId[describeId] };
+      return {
+        ...state,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...byIds,
+            [describeId]: {
+              ...block,
+              text: text,
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.UPDATE_ITSTATEMENT_TEXT: {
+      const { itId, text } = action;
+      const byIds = { ...itStatements.byId };
+      const block = { ...itStatements.byId[itId] };
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...byIds,
+            [itId]: {
+              ...block,
+              text: text,
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.ADD_ACTION: {
+      const { describeId, itId } = action;
+      const byIds = { ...statements.byId };
+      const allIds = [...statements.allIds];
+      const statementId = `statement${state.statementId}`;
+      let updatedStatementId = state.statementId;
+
+      return {
+        ...state,
+        statementId: ++updatedStatementId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byIds,
+            [statementId]: createAction(describeId, itId, statementId),
+          },
+          allIds: [...allIds, statementId],
+        },
+      };
+    }
+    case actionTypes.DELETE_ACTION: {
+      const { statementId } = action;
+      const byId = { ...statements.byId };
+      delete byId[statementId];
+      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds],
+        },
+      };
+    }
+    case actionTypes.UPDATE_ACTION: {
+      const {
+        id,
+        eventType,
+        eventValue,
+        queryVariant,
+        querySelector,
+        queryValue,
+        suggestions,
+      } = action;
+      const byId = { ...statements.byId };
+      const oldStatement = { ...statements.byId[id] };
+      const newStatement = {
+        ...oldStatement,
+        eventType: eventType,
+        eventValue: eventValue,
+        queryVariant: queryVariant,
+        querySelector: querySelector,
+        queryValue: queryValue,
+        suggestions: suggestions,
+      };
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+            [id]: {
+              ...newStatement,
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.ADD_ASSERTION: {
+      const { describeId, itId } = action;
+      const byIds = { ...statements.byId };
+      const allIds = [...statements.allIds];
+      const statementId = `statement${state.statementId}`;
+      let updatedStatementId = state.statementId;
+
+      return {
+        ...state,
+        statementId: ++updatedStatementId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byIds,
+            [statementId]: createAssertion(describeId, itId, statementId),
+          },
+          allIds: [...allIds, statementId],
+        },
+      };
+    }
+    case actionTypes.DELETE_ASSERTION: {
+      const { statementId } = action;
+      const byId = { ...statements.byId };
+      delete byId[statementId];
+      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds],
+        },
+      };
+    }
+    case actionTypes.UPDATE_ASSERTION: {
+      const {
+        id,
+        queryVariant,
+        querySelector,
+        queryValue,
+        isNot,
+        matcherType,
+        matcherValue,
+        suggestions,
+      } = action;
+      const oldStatement = { ...statements.byId[id] };
+      const byId = { ...statements.byId };
+      const newStatement = {
+        ...oldStatement,
+        queryVariant: queryVariant,
+        querySelector: querySelector,
+        queryValue: queryValue,
+        isNot: isNot,
+        matcherType: matcherType,
+        matcherValue: matcherValue,
+        suggestions: suggestions,
+      };
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+            [id]: {
+              ...newStatement,
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.ADD_RENDER: {
+      const { describeId, itId } = action;
+      const byIds = { ...statements.byId };
+      const allIds = [...statements.allIds];
+      const statementId = `statement${state.statementId}`;
+      let updatedStatementId = state.statementId;
+
+      return {
+        ...state,
+        statementId: ++updatedStatementId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byIds,
+            [statementId]: createRender(describeId, itId, statementId),
+          },
+          allIds: [...allIds, statementId],
+        },
+      };
+    }
+    case actionTypes.DELETE_RENDER: {
+      const { statementId } = action;
+      const byId = { ...statements.byId };
+      delete byId[statementId];
+      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds],
+        },
+      };
+    }
+    case actionTypes.UPDATE_RENDER_COMPONENT: {
+      const { componentName, filePath } = action;
+      statements.componentName = componentName;
+      statements.componentPath = filePath;
+      return {
+        ...state,
+        statements,
+      };
+    }
+    case actionTypes.ADD_PROP: {
+      const { statementId } = action;
+      const propId = `prop${state.propId}`;
+      const byId = statements.byId;
+      let updatedPropId = state.propId;
+
+      return {
+        ...state,
+        propId: ++updatedPropId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              props: [...statements.byId[statementId].props, createProp(propId, statementId)],
+              hasProp: true,
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.DELETE_PROP: {
+      const { id, statementId } = action;
+      const props = statements.byId[statementId].props.filter((prop) => prop.id !== id);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              props: props,
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.UPDATE_PROP: {
+      const { id, statementId, propKey, propValue } = action;
+      console.log(statementId);
+      const updatedProps = [...statements.byId[statementId].props]
+      
+      updatedProps.forEach(prop => {
+        if(prop.id === id) {
+          prop.propKey = propKey
+          prop.propValue = propValue
+        }
+      })
+
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              props: updatedProps,
+            },
+          },
+        },
+      };
+    }
+
+    case actionTypes.CREATE_NEW_TEST: {
+      return {
+        ...state,
+        describeBlocks: {
+          byId: {},
+          allIds: []
+        },
+        itStatements: {
+          byId: {},
+          allIds: []
+        },
+        statements: {
+          byId: {},
+          allIds: []
+        },
+        hasReact: 0
+      };
+    }
     default:
       return state;
   }
 };
+

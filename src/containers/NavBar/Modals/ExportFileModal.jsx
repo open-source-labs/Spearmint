@@ -24,12 +24,14 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
   const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
-  const [testCase] = useContext(ReactTestCaseContext);
+  const [reactTestCase] = useContext(ReactTestCaseContext);
   const [reduxTestCase] = useContext(ReduxTestCaseContext);
   const [hooksTestCase] = useContext(HooksTestCaseContext);
   const [{ mockData }] = useContext(MockDataContext);
   const [endpointTestCase] = useContext(EndpointTestCaseContext);
   const [puppeteerTestCase] = useContext(PuppeteerTestCaseContext);
+
+
 
   let testFileCode = 'import React from "react";';
 
@@ -53,13 +55,14 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   };
 
   const generateTestFile = () => {
-    if (testCase.hasReact > 0) {
+    if (reactTestCase.hasReact > 0) {
       return (
         addComponentImportStatement(),
         addReactImportStatements(),
         addMockData(),
-        addTestStatements(),
+        addDescribeBlocks(),
         (testFileCode = beautify(testFileCode, {
+          brace_style: "collapse, preserve-inline",
           indent_size: 2,
           space_in_empty_paren: true,
           e4x: true,
@@ -124,30 +127,79 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
 
   // React Component Import Statement (Render Card)
   const addComponentImportStatement = () => {
-    const renderStatement = testCase.statements[0];
-    let filePath = path.relative(projectFilePath, renderStatement.filePath);
+    const componentPath = reactTestCase.statements.componentPath;
+    let filePath = path.relative(projectFilePath, componentPath);
     filePath = filePath.replace(/\\/g, '/');
-    testFileCode += `import ${renderStatement.componentName} from '../${filePath}';`;
+    testFileCode += `import ${reactTestCase.statements.componentName} from '../${filePath}';`;
   };
 
-  // React Test Statements
-  const addTestStatements = () => {
-    testFileCode += `test('${testCase.testStatement}', () => {`;
-    const methods = identifyMethods();
-    testCase.statements.forEach(statement => {
-      switch (statement.type) {
-        case 'action':
-          return addAction(statement);
-        case 'assertion':
-          return addAssertion(statement);
-        case 'render':
-          return addRender(statement, methods);
-        default:
-          return statement;
+  const addDescribeBlocks = () => {
+    const describeBlocks = reactTestCase.describeBlocks;
+
+    describeBlocks.allIds.forEach((id) => {
+      testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`
+      addReactItStatement(id)
+      testFileCode += `}); \n`
+    })
+  }
+
+  // React It Statements
+  const addReactItStatement = (describeId) => {
+    const itStatements = reactTestCase.itStatements;
+    itStatements.allIds.forEach((itId) => {
+      if (itStatements.byId[itId].describeId === describeId) {
+        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
+        addReactStatements(itId)
+        testFileCode += '})'
+      }
+      testFileCode += '\n';
+    });
+  };
+
+  const addReactStatements = (itId) => {
+    const statements = reactTestCase.statements
+    const methods = identifyMethods(itId);
+    statements.allIds.forEach((id) => {
+      let statement = statements.byId[id];
+      if (statement.itId === itId) {
+        switch (statement.type) {
+          case 'action':
+            return addAction(statement);
+          case 'assertion':
+            return addAssertion(statement);
+          case 'render':
+            return addRender(statement, methods);
+          default:
+            return statement;
+        }
       }
     });
-    testFileCode += '});';
-    testFileCode += '\n';
+  }
+
+  const identifyMethods = (itId) => {
+    const methods = new Set([]);
+    reactTestCase.statements.allIds.forEach(id => {
+      let statement = reactTestCase.statements.byId[id];
+      if (statement.itId === itId) {
+        if (statement.type === 'action' || statement.type === 'assertion') {
+          methods.add(statement.queryVariant + statement.querySelector);
+      }
+    };
+  })
+    return Array.from(methods).join(', ');
+  };
+
+   // Render Jest Test Code
+   const addRender = (statement, methods) => {
+    let props = createRenderProps(statement.props);
+    testFileCode += `const {${methods}} = render(<${reactTestCase.statements.componentName} ${props}/>);`;
+  };
+
+  // Render Props Jest Test Code
+  const createRenderProps = props => {
+    return props.reduce((acc, prop) => {
+      return acc + `${prop.propKey}={${prop.propValue}}`;
+    }, '');
   };
 
   /* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
@@ -435,19 +487,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     }, '');
   };
 
-  const identifyMethods = () => {
-    const methods = new Set([]);
-    let renderCount = 0;
-    testCase.statements.forEach(statement => {
-      if (statement.type === 'action' || statement.type === 'assertion') {
-        methods.add(statement.queryVariant + statement.querySelector);
-      } else if (statement.type === 'render') {
-        renderCount++;
-      }
-    });
-    if (renderCount > 1) methods.add('rerender');
-    return Array.from(methods).join(', ');
-  };
+
 
   /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
@@ -468,22 +508,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
       (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
   };
 
-  // Render Jest Test Code
-  const addRender = (render, methods) => {
-    let props = createRenderProps(render);
-    if (render.id === 0) {
-      testFileCode += `const {${methods}} = render(<${render.componentName} ${props}/>);`;
-    } else {
-      testFileCode += `rerender(<${render.componentName} ${props}/>);`;
-    }
-  };
-
-  // Render Props Jest Test Code
-  const createRenderProps = render => {
-    return render.props.reduce((propsCode, prop) => {
-      return propsCode + `${prop.propKey}={${prop.propValue}}`;
-    }, '');
-  };
 
   // Middleware Jest Test Code
   const addMiddleware = middleware => {

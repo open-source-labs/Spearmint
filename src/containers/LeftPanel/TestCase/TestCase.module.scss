@@ -46,3 +46,50 @@ div {
     width: 15px;
   }
 }
+
+#ReactTestCase {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    .renderComponent {
+      
+      .renderLabel {
+        display: block;
+        font-family: $oxygen;
+        font-size: 0.9rem;
+      }
+
+      .renderInput {
+        display: block;
+        margin-top: 0.5rem;
+        width: 300px;
+        border: none;
+        border-bottom: 1px solid $mint;
+      }
+    }
+
+    .mockBtn {
+      height: auto;
+      font-size: 0.85rem;
+      background-color: rgba(0,0,0,0);
+      border: none;
+      min-width: 150px;
+      border-radius: 3px;
+      font-family: $oxygen;
+      text-align: center;
+      transition: 150ms;
+  
+      &:hover {
+        font-size: 0.9rem;
+      }
+    }
+
+    .addIcon {
+      margin-right: 0.25rem;
+    }
+  }
+}

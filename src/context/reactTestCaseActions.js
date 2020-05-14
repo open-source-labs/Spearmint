@@ -3,8 +3,13 @@
 export const actionTypes = {
   TOGGLE_REACT: 'TOGGLE_REACT',
 
+  ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',
+  DELETE_DESCRIBE_BLOCK: 'DELETE_DESCRIBE_BLOCK',
+
+  ADD_ITSTATEMENT: 'ADD_ITSTATEMENT',
+
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
-  UPDATE_TEST_STATEMENT: 'UPDATE_TEST_STATEMENT',
+  UPDATE_DESCRIBE_TEXT: 'UPDATE_DESCRIBE_TEXT',
 
   ADD_ACTION: 'ADD_ACTION',
   DELETE_ACTION: 'DELETE_ACTION',
@@ -18,14 +23,40 @@ export const actionTypes = {
   DELETE_RENDER: 'DELETE_RENDER',
   UPDATE_RENDER_COMPONENT: 'UPDATE_RENDER_COMPONENT',
 
-  ADD_RENDER_PROP: 'ADD_RENDER_PROP',
-  DELETE_RENDER_PROP: 'DELETE_RENDER_PROP',
-  UPDATE_RENDER_PROP: 'UPDATE_RENDER_PROPS',
+  ADD_PROP: 'ADD_PROP',
+  DELETE_PROP: 'DELETE_PROP',
+  UPDATE_PROP: 'UPDATE_PROP',
+
+  UPDATE_ITSTATEMENT_TEXT: 'UPDATE_ITSTATEMENT_TEXT',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
 };
 
 /* --------------------------------- Actions -------------------------------- */
+
+export const addDescribeBlock = () => {
+  return {
+    type: actionTypes.ADD_DESCRIBE_BLOCK
+  }
+};
+
+export const deleteDescribeBlock = (describeId) => {
+  return {
+    type: actionTypes.DELETE_DESCRIBE_BLOCK,
+    describeId,  
+  }
+};
+
+export const addItstatement = (describeId) => ({
+  type: actionTypes.ADD_ITSTATEMENT,
+  describeId,
+});
+
+export const deleteItStatement = (describeId, itId) => ({
+  type: actionTypes.DELETE_ITSTATEMENT,
+  describeId,
+  itId
+});
 
 export const toggleReact = () => ({
   type: actionTypes.TOGGLE_REACT,
@@ -36,18 +67,21 @@ export const updateStatementsOrder = draggableStatements => ({
   draggableStatements,
 });
 
-export const updateTestStatement = testStatement => ({
-  type: actionTypes.UPDATE_TEST_STATEMENT,
-  testStatement,
+export const updateDescribeText = (text, describeId) => ({
+  type: actionTypes.UPDATE_DESCRIBE_TEXT,
+  text,
+  describeId
 });
 
-export const addAction = () => ({
+export const addAction = (describeId, itId) => ({
   type: actionTypes.ADD_ACTION,
+  describeId,
+  itId
 });
 
-export const deleteAction = id => ({
+export const deleteAction = statementId => ({
   type: actionTypes.DELETE_ACTION,
-  id,
+  statementId,
 });
 
 export const updateAction = ({
@@ -69,13 +103,15 @@ export const updateAction = ({
   suggestions,
 });
 
-export const addAssertion = () => ({
+export const addAssertion = (describeId, itId) => ({
   type: actionTypes.ADD_ASSERTION,
+  describeId,
+  itId
 });
 
-export const deleteAssertion = id => ({
+export const deleteAssertion = statementId => ({
   type: actionTypes.DELETE_ASSERTION,
-  id,
+  statementId,
 });
 
 export const updateAssertion = ({
@@ -99,13 +135,15 @@ export const updateAssertion = ({
   suggestions,
 });
 
-export const addRender = () => ({
+export const addRender = (describeId, itId) => ({
   type: actionTypes.ADD_RENDER,
+  describeId,
+  itId
 });
 
-export const deleteRender = id => ({
+export const deleteRender = statementId=> ({
   type: actionTypes.DELETE_RENDER,
-  id,
+  statementId,
 });
 
 export const updateRenderComponent = (componentName, filePath) => ({
@@ -114,24 +152,32 @@ export const updateRenderComponent = (componentName, filePath) => ({
   filePath,
 });
 
-export const addRenderProp = renderId => ({
-  type: actionTypes.ADD_RENDER_PROP,
-  renderId,
+export const addProp = statementId => ({
+  type: actionTypes.ADD_PROP,
+  statementId,
 });
 
-export const deleteRenderProp = (renderId, propId) => ({
-  type: actionTypes.DELETE_RENDER_PROP,
-  renderId,
-  propId,
-});
+export const deleteProp = (statementId, id) => {
+  return {
+    type: actionTypes.DELETE_PROP,
+    id,
+    statementId,
+  };
+};
 
-export const updateRenderProp = (renderId, propId, propKey, propValue) => ({
-  type: actionTypes.UPDATE_RENDER_PROP,
-  renderId,
-  propId,
+export const updateProp = (statementId, id, propKey, propValue) => ({
+  type: actionTypes.UPDATE_PROP,
+  id,
+  statementId,
   propKey,
   propValue,
 });
+
+export const updateItStatementText = (text, itId) => ({
+  type: actionTypes.UPDATE_ITSTATEMENT_TEXT,
+  itId,
+  text,
+})
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,

@@ -18,6 +18,7 @@
   "homepage": "./",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.6",
     "concurrently": "^4.1.2",
     "cross-env": "^5.2.1",
     "electron-is-dev": "^1.1.0",
