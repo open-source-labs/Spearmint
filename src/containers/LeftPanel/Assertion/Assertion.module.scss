@@ -91,16 +91,39 @@
   align-items: center;
   margin-bottom: 8px;
 }
+
+#valueFlexBox {
+  display: flex;
+  div {
+    font-size: 12px;
+  }
+  justify-content: space-between;
+  width: 185px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
 #matcherFlexBox {
   display: flex;
+  div {
+    font-size: 12px;
+  }
   justify-content: space-between;
-  // width%;
+  width: 250px;
+  align-items: flex-end;
+  margin-bottom: 8px;
+  padding-top: -2rem;
+
+}
+#autoTool {
+  display: flex;
   align-items: center;
-  margin-right: 182px;
+  justify-content: space-between;
 }
 #matcherLeft {
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 #matcherAuto {
   margin-right: 15%;
@@ -115,6 +138,20 @@
 }
 
 #matcherVal {
-  display: inline-block;
-  padding-left: 2.1rem;
+  display: flex;
+  div {
+    font-size: 12px;
+  }
+  margin-left: 78px;
+  justify-content: space-between;
+  width: 185px;
+  align-items: center;
+
+
+  input {
+    width: 185px;
+    display: block;
+    margin-top: 6px;
+
+  }
 }

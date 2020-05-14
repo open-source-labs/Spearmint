@@ -56,11 +56,17 @@
   }
 }
 
-.eventValue {
-  // width: 50%;
+.eventValueMock {
   input {
-    width: 90%;
     margin-top: 6px;
+  }
+}
+
+.eventValue {
+  input {
+    width: 185px;
+    margin-top: 6px;
+    display: block;
   }
 }
 

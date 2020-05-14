@@ -57,13 +57,13 @@ const Action = ({ statement, statementId, describeId, itId }) => {
         </div>
         <div id={styles.eventTypeVal}>
           {needsEventValue(statement.eventType) && mockData.length > 0 ? (
-            <div className={styles.eventValue}>
+            <div className={styles.eventValueMock}>
               <label htmlFor='eventValue'> Value </label>
               <AutoCompleteMockData
                 statement={statement}
                 dispatchToTestCase={dispatchToReactTestCase}
                 statementType='action'
-                id={styles2.autoCompleteMockData}
+                // id={styles2.autoCompleteMockData}
               />
             </div>
           ) : needsEventValue(statement.eventType) ? (

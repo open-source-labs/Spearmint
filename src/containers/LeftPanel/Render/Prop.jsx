@@ -31,7 +31,6 @@ const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase }) =
         propKey={propKey}
         dispatchToTestCase={dispatchToTestCase}
       />
-      {/* <input type='text' id='propValue' value={propValue} /> */}
       <img src={minusIcon} alt='delete' onClick={handleClickDeleteProp} />
     </div>
   );

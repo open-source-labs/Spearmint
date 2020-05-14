@@ -7,12 +7,13 @@
 
 .input {
   // width: 185px;
-  width: 130%;
+  width: 185px;
   padding: '10px 20px';
   font-family: $oxygen;
   font-weight: 300;
   font-size: 12;
   letter-spacing: 0.5px;
+  background-color: red($color: #ed0909);
   border: '1px solid #aaa';
 }
 
@@ -33,7 +34,7 @@
   display: block;
   position: absolute;
   top: 26px;
-  width: 100%;
+  width: 185px;
   border: 1px solid $light-gray;
   background-color: #fff;
   font-family: $oxygen;

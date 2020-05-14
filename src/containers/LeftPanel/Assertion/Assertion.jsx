@@ -120,6 +120,9 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
           />
         </div>
       </div>
+      <div>
+        <div id={styles.matcherFlexBox}>
+          <div id={styles.matcherLeft}>
       <div id={styles.matcherLabelFlexBox}>
         <div>
           <label htmlFor='matcher'>Matcher</label>
@@ -133,9 +136,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
           />
         </div>
       </div>
-      <div>
-        <div id={styles.matcherFlexBox}>
-          <div id={styles.matcherLeft}>
+        <div id={styles.autoTool}>
             <AutoComplete
               statement={statement}
               statementType='assertion'
@@ -149,19 +150,22 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
                 <ToolTipMatcher toolTipType={statement.matcherType} />
               </span>
             </span>
+        </div>
           </div>
           {needsMatcherValue(statement.matcherType) && (
+            <div>
             <span id={styles.matcherVal}>
-              <label htmlFor='matcherValue'>Value</label>
               <input
                 type='text'
                 id={styles.matcherInput}
                 onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
+                placeholder='Value'
               />
             </span>
+            </div>
           )}
         </div>
-      </div>
+        </div>
     </section>
   );
 };
