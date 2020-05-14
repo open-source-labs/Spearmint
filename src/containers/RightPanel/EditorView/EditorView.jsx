@@ -23,7 +23,7 @@ const Editor = () => {
   return (
     <div>
       <MonacoEditor
-        height='98vh'
+        height='95vh'
         language='javascript'
         theme='light-dark'
         value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
