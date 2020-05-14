@@ -10,7 +10,7 @@ import { GlobalContext } from '../../../context/globalReducer';
 import { setProjectUrl } from '../../../context/globalActions';
 
 const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
-  const [_, dispatchToGlobal] = useContext(GlobalContext);
+  const [, dispatchToGlobal] = useContext(GlobalContext);
   const addHttps = url => {
     if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
       return url;

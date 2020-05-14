@@ -39,17 +39,6 @@ const ReactTestCase = () => {
     dispatchToReactTestCase(updateItStatementText(text, itId));
   };
 
-  const mockDataJSX = mockData.map((mockDatum) => {
-    return (
-      <MockData
-        key={mockDatum.id}
-        mockDatumId={mockDatum.id}
-        dispatchToMockData={dispatchToMockData}
-        fieldKeys={mockDatum.fieldKeys}
-      />
-    );
-  });
-
   return (
     <div id={styles.ReactTestCase}>
       <div id='head'>

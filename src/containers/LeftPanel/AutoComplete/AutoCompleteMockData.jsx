@@ -16,7 +16,7 @@ const AutoCompleteMockData = ({
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
 
-  const [{ mockData }, _] = useContext(MockDataContext);
+  const [{ mockData }] = useContext(MockDataContext);
   const [mockDataValue, setMockDataValue] = useState('');
   const [mockDataSuggestions, setMockDataSuggestions] = useState([]);
   const mockOptionsList = [];

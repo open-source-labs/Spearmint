@@ -12,7 +12,7 @@ const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const HookUpdates = ({ hookUpdates, index, dispatchToHooksTestCase }) => {
-  const [{ filePathMap }, _] = useContext(GlobalContext);
+  const [{ filePathMap }] = useContext(GlobalContext);
 
   const handleChangeHookUpdatesFields = (e, field) => {
     let updatedHookUpdates = { ...hookUpdates };

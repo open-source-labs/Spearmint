@@ -12,7 +12,7 @@ const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Context = ({ context, index, dispatchToHooksTestCase }) => {
-  const [{ filePathMap }, _] = useContext(GlobalContext);
+  const [{ filePathMap }] = useContext(GlobalContext);
 
   const handleChangeContextFields = (e, field) => {
     let updatedContext = { ...context };

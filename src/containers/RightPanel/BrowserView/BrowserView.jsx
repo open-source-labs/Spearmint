@@ -3,7 +3,7 @@ import styles from './BrowserView.module.scss';
 import { GlobalContext } from '../../../context/globalReducer';
 
 const BrowserView = () => {
-  const [{ url }, _] = useContext(GlobalContext);
+  const [{ url }] = useContext(GlobalContext);
 
   return (
     <>

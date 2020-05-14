@@ -20,7 +20,7 @@ const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
 
-const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
+const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
   const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
@@ -31,12 +31,20 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
   const [endpointTestCase] = useContext(EndpointTestCaseContext);
   const [puppeteerTestCase] = useContext(PuppeteerTestCaseContext);
 
-
-
   let testFileCode = 'import React from "react";';
 
   const handleChangeFileName = e => {
     setFileName(e.target.value);
+    setInvalidFileName(false);
+  };
+
+  /* cancel export file (when false) */
+  const closeExportModal = () => {
+    setIsExportModalOpen(false);
+
+    // reset fileName and invalidFileName
+    setInvalidFileName(false);
+    setFileName('');
   };
 
   const handleClickSave = () => {
@@ -48,10 +56,6 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
     generateTestFile();
     exportTestFile();
     closeExportModal();
-    
-    // reset fileName and invalidFileName
-    setInvalidFileName(false);
-    setFileName('');
   };
 
   const generateTestFile = () => {
@@ -645,6 +649,7 @@ const ExportFileModal = ({ isExportModalOpen, closeExportModal }) => {
         //if optionValue is a stringified number, convert it back to number 
         else if(!isNaN(Number(option.optionValue))) option.optionValue = Number(option.optionValue)
         browserOptions[option.optionKey] = option.optionValue
+        return option
       })
     }
     
