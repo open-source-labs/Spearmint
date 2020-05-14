@@ -69,4 +69,13 @@
       }
     }
   }
+  
+  #renderProp {
+    font-size: 13px;
+    margin-bottom: 0;
+    padding: 6px 0;
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+  }
 }
