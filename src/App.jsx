@@ -1,38 +1,38 @@
 import React, { useReducer } from 'react';
 import styles from './App.module.scss';
-import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
-import { ReactTestCaseContext, reactTestCaseState, reactTestCaseReducer } from './context/reactTestCaseReducer';
+import { GlobalContext, globalState, globalReducer } from './context/reducers/globalReducer';
+import { ReactTestCaseContext, reactTestCaseState, reactTestCaseReducer } from './context/reducers/reactTestCaseReducer';
 import {
   PuppeteerTestCaseContext,
   puppeteerTestCaseState,
   puppeteerTestCaseReducer,
-} from './context/puppeteerTestCaseReducer';
+} from './context/reducers/puppeteerTestCaseReducer';
 import {
   EndpointTestCaseContext,
   endpointTestCaseState,
   endpointTestCaseReducer,
-} from './context/endpointTestCaseReducer';
+} from './context/reducers/endpointTestCaseReducer';
 import {
   ReduxTestCaseContext,
   reduxTestCaseState,
   reduxTestCaseReducer,
-} from './context/reduxTestCaseReducer';
+} from './context/reducers/reduxTestCaseReducer';
 import {
   HooksTestCaseContext,
   hooksTestCaseState,
   hooksTestCaseReducer,
-} from './context/hooksTestCaseReducer';
+} from './context/reducers/hooksTestCaseReducer';
 import {
   TestFileModalContext,
   testFileModalState,
   testFileModalReducer,
-} from './context/testFileModalReducer';
+} from './context/reducers/testFileModalReducer';
 
-import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
-import ProjectLoader from './containers/ProjectLoader/ProjectLoader';
-import NavBar from './containers/NavBar/NavBar';
-import LeftPanel from './containers//LeftPanel/LeftPanel';
-import RightPanel from './containers/RightPanel/RightPanel';
+import { MockDataContext, mockDataState, mockDataReducer } from './context/reducers/mockDataReducer';
+import ProjectLoader from './pages/ProjectLoader/ProjectLoader';
+import NavBar from './components/NavBar/NavBar';
+import LeftPanel from './pages//LeftPanel/LeftPanel';
+import RightPanel from './pages/RightPanel/RightPanel';
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);

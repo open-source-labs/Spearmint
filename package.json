@@ -18,6 +18,7 @@
   "homepage": "./",
   "private": true,
   "dependencies": {
+    "@types/react-dom": "^16.9.8",
     "classnames": "^2.2.6",
     "concurrently": "^4.1.2",
     "cross-env": "^5.2.1",
@@ -31,8 +32,8 @@
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
     "react-monaco-editor": "^0.25.1",
-    "react-scripts": "3.0.1",
-    "typescript": "^3.5.1",
+    "react-scripts": "3.4.1",
+    "typescript": "^3.9.2",
     "wait-on": "^3.3.0"
   },
   "scripts": {
@@ -45,9 +46,6 @@
     "release": "npm run react-build && electron-builder --publish=always",
     "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -64,6 +62,8 @@
   "devDependencies": {
     "@testing-library/react": "^8.0.1",
     "@testing-library/react-hooks": "^3.2.1",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
     "electron": "^5.0.3",
     "electron-builder": "^20.43.0",
     "electron-devtools-installer": "^3.0.0",

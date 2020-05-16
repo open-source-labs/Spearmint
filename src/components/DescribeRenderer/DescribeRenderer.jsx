@@ -1,7 +1,7 @@
 import React from 'react';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from './DescribeRenderer.module.scss';
-import { deleteDescribeBlock, addItstatement } from '../../context/reactTestCaseActions';
+import { deleteDescribeBlock, addItstatement } from '../../context/actions/reactTestCaseActions';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 
