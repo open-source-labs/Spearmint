@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import ReactTestStatements from '../../containers/LeftPanel/TestCase/ReactTestStatements';
+import ReactTestStatements from '../TestCase/ReactTestStatements';
 import CustomInput from '../CustomInput/CustomInput';
-import { addRender, addAction, addAssertion, deleteItStatement  } from '../../context/reactTestCaseActions';
-import { ReactTestCaseContext } from '../../context/reactTestCaseReducer';
+import { addRender, addAction, addAssertion, deleteItStatement  } from '../../context/actions/reactTestCaseActions';
+import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import cn from 'classnames'
 import styles from './ItRenderer.module.scss';
 
