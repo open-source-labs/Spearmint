@@ -139,7 +139,8 @@ export const createNewHooksTest = () => ({
 });
 
 export const updateStatementsOrder = draggableStatements => {
-    return {
-    type: actionTypes.UPDATE_STATEMENTS_ORDER,
-    draggableStatements,
-  }};
+  return {
+    type: actionTypes.UPDATE_STATEMENTS_ORDER,
+    draggableStatements,
+  };
+};

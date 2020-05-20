@@ -3,16 +3,29 @@ import { actionTypes } from '../actions/hooksTestCaseActions';
 
 export const HooksTestCaseContext = createContext(null);
 
+interface hooksTestCaseState {
+  hooksTestStatement: string;
+  hooksStatements: Array<hooksStatements>;
+  hasHooks: number;
+  statementId: number;
+}
+
+// hookStatments must have id and type properties
+interface hooksStatements {
+  id: number;
+  type: string;
+  [key: string]: any
+}
+
 export const hooksTestCaseState = {
   hooksTestStatement: '',
   hooksStatements: [],
   hasHooks: 0,
+  statementId: 0,
 };
 
-let statementId = 0;
-
-const createContexts = () => ({
-  id: statementId++,
+const createContexts = (statementId: number) => ({
+  id: statementId,
   type: 'context',
   queryVariant: '',
   querySelector: '',
@@ -26,8 +39,8 @@ const createContexts = () => ({
   contextFilePath: '',
 });
 
-const createHookRender = () => ({
-  id: statementId++,
+const createHookRender = (statementId: number) => ({
+  id: statementId,
   type: 'hookRender',
   hookFileName: '',
   hookFilePath: '',
@@ -37,8 +50,8 @@ const createHookRender = () => ({
   returnValue: '',
 });
 
-const createHookUpdates = () => ({
-  id: statementId++,
+const createHookUpdates = (statementId: number) => ({
+  id: statementId,
   hookFileName: '',
   hookFilePath: '',
   type: 'hook-updates',
@@ -48,12 +61,12 @@ const createHookUpdates = () => ({
   updatedState: '',
 });
 
-export const hooksTestCaseReducer = (state, action) => {
+export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => {
   Object.freeze(state);
   let hooksStatements = [...state.hooksStatements];
 
   switch (action.type) {
-    case actionTypes.TOGGLE_HOOKS:
+    case actionTypes.TOGGLE_HOOKS: {
       let newTestStatement;
       if (!state.hasHooks) {
         newTestStatement = action.testStatement;
@@ -63,35 +76,41 @@ export const hooksTestCaseReducer = (state, action) => {
         newTestStatement,
         hasHooks: state.hasHooks + 1,
       };
-    case actionTypes.UPDATE_HOOKS_TEST_STATEMENT:
-      let hooksTestStatement = action.hooksTestStatement;
+    }
+    case actionTypes.UPDATE_HOOKS_TEST_STATEMENT: {
       return {
         ...state,
-        hooksTestStatement,
+        hooksTestStatement: action.hooksTestStatement,
       };
+    }
     case actionTypes.ADD_CONTEXT:
-      hooksStatements.push(createContexts());
+      hooksStatements.push(createContexts(state.statementId + 1));
       return {
         ...state,
         hooksStatements,
+        statementId: state.statementId + 1,
       };
     case actionTypes.DELETE_CONTEXT:
-      hooksStatements = hooksStatements.filter(statement => statement.id !== action.id);
+      hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         hooksStatements,
       };
+
     case actionTypes.UPDATE_CONTEXT:
-      hooksStatements = hooksStatements.map(statement => {
+      hooksStatements = hooksStatements.map((statement) => {
         if (statement.id === action.id) {
-          statement.queryVariant = action.queryVariant;
-          statement.querySelector = action.querySelector;
-          statement.queryValue = action.queryValue;
-          statement.values = action.values;
-          statement.textNode = action.textNodes;
-          statement.providerComponent = action.providerComponent;
-          statement.consumerComponent = action.consumerComponent;
-          statement.context = action.context;
+          return {
+            ...statement,
+            queryVariant: action.queryVariant,
+            querySelector: action.querySelector,
+            queryValue: action.queryValue,
+            values: action.values,
+            textNode: action.textNodes,
+            providerComponent: action.providerComponent,
+            consumerComponent: action.consumerComponent,
+            context: action.context,
+          };
         }
         return statement;
       });
@@ -99,30 +118,33 @@ export const hooksTestCaseReducer = (state, action) => {
         ...state,
         hooksStatements,
       };
-
     case actionTypes.ADD_HOOK_UPDATES:
-      hooksStatements.push(createHookUpdates());
+      hooksStatements.push(createHookUpdates(state.statementId + 1));
       return {
         ...state,
         hooksStatements,
+        statementId: state.statementId + 1,
       };
 
     case actionTypes.DELETE_HOOK_UPDATES:
-      hooksStatements = hooksStatements.filter(statement => statement.id !== action.id);
+      hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         hooksStatements,
       };
 
     case actionTypes.UPDATE_HOOK_UPDATES:
-      hooksStatements = hooksStatements.map(statement => {
+      hooksStatements = hooksStatements.map((statement) => {
         if (statement.id === action.id) {
-          statement.hook = action.hook;
-          statement.hookFileName = action.hookFileName;
-          statement.hookFilePath = action.hookFilePath;
-          statement.callbackFunc = action.callbackFunc;
-          statement.managedState = action.managedState;
-          statement.updatedState = action.updatedState;
+          return {
+            ...statement,
+            hook: action.hook,
+            hookFileName: action.hookFileName,
+            hookFilePath: action.hookFilePath,
+            callbackFunc: action.callbackFunc,
+            managedState: action.managedState,
+            updatedState: action.updatedState,
+          };
         }
         return statement;
       });
@@ -132,26 +154,30 @@ export const hooksTestCaseReducer = (state, action) => {
       };
 
     case actionTypes.ADD_HOOKRENDER:
-      hooksStatements.push(createHookRender());
+      hooksStatements.push(createHookRender(state.statementId + 1));
       return {
         ...state,
         hooksStatements,
+        statementId: state.statementId + 1,
       };
 
     case actionTypes.DELETE_HOOKRENDER:
-      hooksStatements = hooksStatements.filter(statement => statement.id !== action.id);
+      hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         hooksStatements,
       };
 
     case actionTypes.UPDATE_HOOKRENDER:
-      hooksStatements = hooksStatements.map(statement => {
+      hooksStatements = hooksStatements.map((statement) => {
         if (statement.id === action.id) {
-          statement.hook = action.hook;
-          statement.parameterOne = action.parameterOne;
-          statement.expectedReturnValue = action.expectedReturnValue;
-          statement.returnValue = action.returnValue;
+          return {
+            ...statement,
+            hook: action.hook,
+            parameterOne: action.parameterOne,
+            expectedReturnValue: action.expectedReturnValue,
+            returnValue: action.returnValue,
+          };
         }
         return statement;
       });
@@ -161,10 +187,13 @@ export const hooksTestCaseReducer = (state, action) => {
       };
 
     case actionTypes.UPDATE_HOOKS_FILEPATH:
-      hooksStatements = hooksStatements.map(statement => {
+      hooksStatements = hooksStatements.map((statement) => {
         if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
-          statement.hookFileName = action.hookFileName;
-          statement.hookFilePath = action.hookFilePath;
+          return {
+            ...statement,
+            hookFileName: action.hookFileName,
+            hookFilePath: action.hookFilePath,
+          };
         }
         return statement;
       });
@@ -173,10 +202,13 @@ export const hooksTestCaseReducer = (state, action) => {
         hooksStatements,
       };
     case actionTypes.UPDATE_CONTEXT_FILEPATH:
-      hooksStatements = hooksStatements.map(statement => {
+      hooksStatements = hooksStatements.map((statement) => {
         if (statement.type === 'context') {
-          statement.contextFileName = action.contextFileName;
-          statement.contextFilePath = action.contextFilePath;
+          return {
+            ...statement,
+            contextFileName: action.contextFileName,
+            contextFilePath: action.contextFilePath,
+          };
         }
         return statement;
       });
