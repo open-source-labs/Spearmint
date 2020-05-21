@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SearchInput.scss';
 
-export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestCase}) => {
+export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestCase, updateTypesFilePath, id}) => {
   
   const [activeOption, setActiveOption] = useState(0)
   const [filteredOptions, setFilteredOptions] = useState([])
@@ -30,7 +30,8 @@ export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestC
 
     const selectedOption = e.target.id;
     const filePath = filePathMap[selectedOption] || '';
-    dispatch(action(selectedOption, filePath))
+    if(updateTypesFilePath && id) dispatch(updateTypesFilePath(selectedOption, filePath, id))
+    else dispatch(action(selectedOption, filePath))
   };
  const onKeyDown = (e) => {
     if (e.keyCode === 13) {

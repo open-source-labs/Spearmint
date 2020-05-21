@@ -52,7 +52,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
 
             <div id={styles.files}>
               <label htmlFor='typesFolder'>Import Action Types From</label>
-              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateTypesFilePath} filePathMap={filePathMap}/>
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} updateTypesFilePath={updateTypesFilePath} id={actionCreator.id} filePathMap={filePathMap}/>
             </div>
           </div>
 

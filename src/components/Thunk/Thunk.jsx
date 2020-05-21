@@ -52,7 +52,7 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
 
             <div id={styles.labelInput}>
               <label htmlFor='typesFile'>Import Actions Types From</label>
-              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateTypesFilePath} filePathMap={filePathMap}/>
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} updateTypesFilePath={updateTypesFilePath} id={async.id}  filePathMap={filePathMap}/>
             </div>
           </div>
 
