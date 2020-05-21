@@ -4,43 +4,6 @@ export const ReduxTestCaseContext = createContext(
   null
 ); 
 
-//interface object to show shape of what a each redux statement may contain
-// interface ReduxStatement {
-//   id?: number,
-//   type?: string,
-//   middlewaresFileName?: string,
-//   middlewaresFilePath?: string,
-//   queryType?: string,
-//   eventValue?: null | string,
-//   queryVariant?: string,
-//   querySelector?: string,
-//   queryValue?: string,
-//   queryFunction?: string,
-//   actionCreatorFunc?: string,
-//   actionType?: string,
-//   payloadKey?: null | string,
-//   payloadType?: null | string,
-//   actionsFileName?: string,
-//   filePath?: string,
-//   asyncFunction?: string,
-//   method?: string,
-//   route?: string,
-//   requestBody?: string,
-//   store?: string,
-//   matcher?: string,
-//   expectedResponse?: string,
-//   typesFileName?: string,
-//   typesFilePath?: string,
-//   reducersFileName?: string,
-//   reducersFilePath?: string,
-//   reducerAction?: string,
-//   initialState?: string,
-//   reducerName?: string,
-//   expectedState?: string,
-//   actionsFile?: string,
-//   suggestions?: string,
-// }
-
 //interface object to show what the shape of the intial state should be
 interface ReduxTestCaseState {
   reduxTestStatment: string,

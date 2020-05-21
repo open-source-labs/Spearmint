@@ -255,4 +255,3 @@ export type ReduxActionTypes =  ToggleReduxAction|
                                 UpdateReducerFilePathAction|
                                 UpdateMiddlewaresFilePathAction|
                                 CreateNewReduxTestAction 
-
