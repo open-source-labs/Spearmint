@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { actionTypes } from '../actions/hooksTestCaseActions';
 
 export const HooksTestCaseContext = createContext(null);
 
@@ -10,12 +9,23 @@ interface hooksTestCaseState {
   statementId: number;
 }
 
-// hookStatments must have id and type properties
 interface hooksStatements {
   id: number;
   type: string;
   [key: string]: any
 }
+
+type HooksStatementType =
+ | { type: 'TOGGLE_HOOKS' | 'ADD_CONTEXT' | 'ADD_HOOKRENDER' | 'ADD_HOOK_UPDATES' | 'ADD_HOOKRENDER' | 'CREATE_NEW_HOOKS_TEST' }
+ | { type: 'UPDATE_HOOKS_TEST_STATEMENT'; hooksTestStatement: string }
+ | { type: 'DELETE_CONTEXT' | 'DELETE_HOOKRENDER' | 'DELETE_HOOK_UPDATES'; id: number }
+ | { type: 'UPDATE_CONTEXT'; id: number; queryVariant: string; querySelector: string; queryValue: string; values: string; textNodes: string; providerComponent: string; consumerComponent: string; context: string; }
+ | { type: 'UPDATE_HOOKRENDER'; id: number; hook: string; parameterOne: string; expectedReturnValue: string; returnValue: string; }
+ | { type: 'UPDATE_HOOK_UPDATES'; id: number; hook: string; hookFileName: string; hookFilePath: string; callbackFunc: string; managedState: string; updatedState: string;}
+ | { type: 'UPDATE_HOOKS_FILEPATH'; hookFileName: string; hookFilePath: string }
+ | { type: 'UPDATE_CONTEXT_FILEPATH'; contextFileName: string; contextFilePath: string }
+ | { type: 'UPDATE_STATEMENTS_ORDER'; draggableStatements: object[] };
+
 
 export const hooksTestCaseState = {
   hooksTestStatement: '',
@@ -61,43 +71,38 @@ const createHookUpdates = (statementId: number) => ({
   updatedState: '',
 });
 
-export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => {
+export const hooksTestCaseReducer = (state: hooksStatements, action: HooksStatementType) => {
   Object.freeze(state);
   let hooksStatements = [...state.hooksStatements];
 
   switch (action.type) {
-    case actionTypes.TOGGLE_HOOKS: {
-      let newTestStatement;
-      if (!state.hasHooks) {
-        newTestStatement = action.testStatement;
-      }
+    case 'TOGGLE_HOOKS': {
       return {
         ...state,
-        newTestStatement,
         hasHooks: state.hasHooks + 1,
       };
     }
-    case actionTypes.UPDATE_HOOKS_TEST_STATEMENT: {
+    case 'UPDATE_HOOKS_TEST_STATEMENT': {
       return {
         ...state,
         hooksTestStatement: action.hooksTestStatement,
       };
     }
-    case actionTypes.ADD_CONTEXT:
+    case 'ADD_CONTEXT':
       hooksStatements.push(createContexts(state.statementId + 1));
       return {
         ...state,
         hooksStatements,
         statementId: state.statementId + 1,
       };
-    case actionTypes.DELETE_CONTEXT:
+    case 'DELETE_CONTEXT':
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         hooksStatements,
       };
 
-    case actionTypes.UPDATE_CONTEXT:
+    case 'UPDATE_CONTEXT':
       hooksStatements = hooksStatements.map((statement) => {
         if (statement.id === action.id) {
           return {
@@ -118,7 +123,7 @@ export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => 
         ...state,
         hooksStatements,
       };
-    case actionTypes.ADD_HOOK_UPDATES:
+    case 'ADD_HOOK_UPDATES':
       hooksStatements.push(createHookUpdates(state.statementId + 1));
       return {
         ...state,
@@ -126,14 +131,14 @@ export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => 
         statementId: state.statementId + 1,
       };
 
-    case actionTypes.DELETE_HOOK_UPDATES:
+    case 'DELETE_HOOK_UPDATES':
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         hooksStatements,
       };
 
-    case actionTypes.UPDATE_HOOK_UPDATES:
+    case 'UPDATE_HOOK_UPDATES':
       hooksStatements = hooksStatements.map((statement) => {
         if (statement.id === action.id) {
           return {
@@ -153,7 +158,7 @@ export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => 
         hooksStatements,
       };
 
-    case actionTypes.ADD_HOOKRENDER:
+    case 'ADD_HOOKRENDER':
       hooksStatements.push(createHookRender(state.statementId + 1));
       return {
         ...state,
@@ -161,14 +166,14 @@ export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => 
         statementId: state.statementId + 1,
       };
 
-    case actionTypes.DELETE_HOOKRENDER:
+    case 'DELETE_HOOKRENDER':
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         hooksStatements,
       };
 
-    case actionTypes.UPDATE_HOOKRENDER:
+    case 'UPDATE_HOOKRENDER':
       hooksStatements = hooksStatements.map((statement) => {
         if (statement.id === action.id) {
           return {
@@ -186,7 +191,7 @@ export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => 
         hooksStatements,
       };
 
-    case actionTypes.UPDATE_HOOKS_FILEPATH:
+    case 'UPDATE_HOOKS_FILEPATH':
       hooksStatements = hooksStatements.map((statement) => {
         if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
           return {
@@ -201,7 +206,7 @@ export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => 
         ...state,
         hooksStatements,
       };
-    case actionTypes.UPDATE_CONTEXT_FILEPATH:
+    case 'UPDATE_CONTEXT_FILEPATH':
       hooksStatements = hooksStatements.map((statement) => {
         if (statement.type === 'context') {
           return {
@@ -217,13 +222,13 @@ export const hooksTestCaseReducer = (state: hooksTestCaseState, action: any) => 
         hooksStatements,
       };
 
-    case actionTypes.CREATE_NEW_HOOKS_TEST:
+    case 'CREATE_NEW_HOOKS_TEST':
       return {
         hasHooks: 0,
         hooksTestStatement: '',
         hooksStatements: [],
       };
-    case actionTypes.UPDATE_STATEMENTS_ORDER:
+    case 'UPDATE_STATEMENTS_ORDER':
       hooksStatements = [...action.draggableStatements];
       return {
         ...state,
