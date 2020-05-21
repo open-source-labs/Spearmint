@@ -197,8 +197,7 @@ export interface UpdateMiddlewaresFilePath {
    middlewaresFileName: string,
    middlewaresFilePath: string,
 };
-
-export interface ReduxStatements {
+interface Middleware {
   id?: number,
   type?: string,
   middlewaresFileName?: string,
@@ -209,12 +208,27 @@ export interface ReduxStatements {
   querySelector?: string,
   queryValue?: string,
   queryFunction?: string,
+  suggestions?: string,
+};
+interface ActionCreator {
+  id?: number,
+  actionsFileName?: string,
+  filePath?: string,
+  typesFileName?: string,
+  typesFilePath?: string,
+  type?: string,
   actionCreatorFunc?: string,
   actionType?: string,
   payloadKey?: null | string,
   payloadType?: null | string,
+};
+interface Async {
+  id?: number,
+  type?: string,
   actionsFileName?: string,
   filePath?: string,
+  typesFileName?: string,
+  typesFilePath?: string,
   asyncFunction?: string,
   method?: string,
   route?: string,
@@ -222,6 +236,12 @@ export interface ReduxStatements {
   store?: string,
   matcher?: string,
   expectedResponse?: string,
+  actionsFile?: string,
+};
+
+interface Reducer {
+  id?: number,
+  type?: string,
   typesFileName?: string,
   typesFilePath?: string,
   reducersFileName?: string,
@@ -230,10 +250,14 @@ export interface ReduxStatements {
   initialState?: string,
   reducerName?: string,
   expectedState?: string,
-  actionsFile?: string,
-  suggestions?: string,
 };
 
+//type interface shape for all redux test statments
+export interface ReduxStatements extends Middleware, Reducer, ActionCreator, Async {
+
+};
+
+// Combines all type interfaces for redux actions
 export type ReduxActionTypes =  ToggleReduxAction|
                                 UpdateReduxTestStatementAction|
                                 UpdateMiddlewareAction|
@@ -254,4 +278,4 @@ export type ReduxActionTypes =  ToggleReduxAction|
                                 UpdateTypesFilePathAction|
                                 UpdateReducerFilePathAction|
                                 UpdateMiddlewaresFilePathAction|
-                                CreateNewReduxTestAction 
+                                CreateNewReduxTestAction; 
