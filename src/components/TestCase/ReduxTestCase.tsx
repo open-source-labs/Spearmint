@@ -5,24 +5,25 @@ import { updateReduxTestStatement, updateStatementsOrder } from '../../context/a
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { ReduxStatements, ReduxTestCaseState } from '../../context/reduxTypes/reduxTypes'
 
 const ReduxTestCase = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
     ReduxTestCaseContext
   );
 
-  const handleUpdateReduxTestStatement = e => {
+  const handleUpdateReduxTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));
   };
 
-  const reorder = (list, startIndex, endIndex) => {
+  const reorder = (list: ReduxStatements[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result;
   };
 
-  const onDragEnd = result => {
+  const onDragEnd = (result: any) => {
     if (!result.destination) {
       return;
     }

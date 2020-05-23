@@ -1,19 +1,16 @@
 import { createContext } from 'react';
-import { actionTypes, ReduxStatements} from '../reduxTypes/reduxTypes';
-export const ReduxTestCaseContext = createContext(
-  null
-); 
+import { actionTypes, ReduxTestCaseState } from '../reduxTypes/reduxTypes';
+// export const ReduxTestCaseContext = createContext<ReduxTestCaseState[]>([
+//   {  reduxTestStatement: '' /* the test description */,
+//   reduxStatements: [] /* both of the cards on the page at open. Each card gets an id */,
+//   hasRedux: 0,}
+// ]);
+export const ReduxTestCaseContext: any = createContext(null)
 
-//interface object to show what the shape of the intial state should be
-interface ReduxTestCaseState {
-  reduxTestStatment: string,
-  reduxStatements: Array<ReduxStatements> ,
-  hasRedux: number,
-}
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
 /* initial state for testCase */
 export const reduxTestCaseState: ReduxTestCaseState = {
-  reduxTestStatment: '' /* the test description */,
+  reduxTestStatement: '' /* the test description */,
   reduxStatements: [] /* both of the cards on the page at open. Each card gets an id */,
   hasRedux: 0,
 };

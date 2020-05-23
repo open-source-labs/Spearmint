@@ -4,11 +4,12 @@ import { createNewReduxTest } from '../../context/actions/reduxTestCaseActions';
 import styles from './ExportFileModal.module.scss';
 import { toggleModal } from '../../context/actions/testFileModalActions';
 import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
+import { ReduxTestModalProps } from '../../context/reduxTypes/reduxTypes';
 
-const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }) => {
-  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
+const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }: ReduxTestModalProps) => {
+  const [, dispatchToTestFileModal]: any = useContext(TestFileModalContext);
 
-  const handleNewReduxTest = e => {
+  const handleNewReduxTest = () => {
     dispatchToReduxTestCase(createNewReduxTest());
     closeReduxModal();
     dispatchToTestFileModal(toggleModal());
