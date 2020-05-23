@@ -4,16 +4,16 @@ import { createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
 import styles from './ExportFileModal.module.scss';
 import { toggleModal } from '../../context/actions/testFileModalActions';
 import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
+import { HooksTestModalProps } from '../../utils/hooks';
 
-const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTestCase }) => {
-  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
-
-  const handleNewHooksTest = e => {
+const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTestCase }: HooksTestModalProps) => {
+  const [, dispatchToTestFileModal] = useContext<any>(TestFileModalContext);
+  const handleNewHooksTest = () => {
     dispatchToHooksTestCase(createNewHooksTest());
     closeHooksModal();
     dispatchToTestFileModal(toggleModal());
   };
-  
+
   const modalStyles = {
     overlay: {
       zIndex: 3,
@@ -26,9 +26,9 @@ const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTest
         className={styles.modal}
         isOpen={isHooksModalOpen}
         onRequestClose={closeHooksModal}
-        contentLabel='Save?'
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
+        contentLabel="Save?"
+        shouldCloseOnOverlayClick
+        shouldCloseOnEsc
         ariaHideApp={false}
         style={modalStyles}
       >
@@ -37,16 +37,17 @@ const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTest
         </div>
         <div id={styles.body}>
           <p id={styles.text}>
-            Do you want to start a new test? All unsaved changes <br />
+            Do you want to start a new test? All unsaved changes
+            <br />
             will be lost.
           </p>
           <span id={styles.newTestButtons}>
             <div>
-              <button id={styles.save} onClick={handleNewHooksTest}>
+              <button type="button" id={styles.save} onClick={handleNewHooksTest}>
                 Continue
               </button>
             </div>
-            <button id={styles.save} onClick={closeHooksModal}>
+            <button type="button" id={styles.save} onClick={closeHooksModal}>
               Cancel
             </button>
           </span>
