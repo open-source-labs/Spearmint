@@ -160,7 +160,6 @@ export const reactTestCaseReducer = (state, action) => {
     }
 
     case actionTypes.DELETE_DESCRIBE_BLOCK: {
-      console.log('reducer called')
       const {describeId} = action;
       const byId = {...describeBlocks.byId};
       delete byId[describeId]
