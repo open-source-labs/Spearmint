@@ -32,11 +32,11 @@ const createPuppeteerPaintTiming = () => ({
 });
 
 
-const createBrowserOption = browserOptionId => ({
+const createBrowserOption = (browserOptionId) => ({
   id: browserOptionId++,
   optionKey: '',
   optionValue: '',
-})
+});
 
 export const puppeteerTestCaseReducer = (state, action) => {
   Object.freeze(state);
@@ -56,7 +56,7 @@ export const puppeteerTestCaseReducer = (state, action) => {
         puppeteerStatements,
       };
     case actionTypes.DELETE_PUPPETEER_TEST:
-      puppeteerStatements = puppeteerStatements.filter(statement => statement.id !== action.id);
+      puppeteerStatements = puppeteerStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         puppeteerStatements,
@@ -76,12 +76,12 @@ export const puppeteerTestCaseReducer = (state, action) => {
       };
 
     case actionTypes.DELETE_BROWSER_OPTION:
-      puppeteerStatements = puppeteerStatements.map(statement => {
+      puppeteerStatements = puppeteerStatements.map((statement) => {
         if (statement.id === action.id) {
-          statement.browserOptions = statement.browserOptions.filter(option => option.id !== action.optionId);
+          statement.browserOptions = statement.browserOptions.filter((option) => option.id !== action.optionId);
         }
 
-        if(statement.browserOptions.length === 0) statement.hasBrowserOption = false
+        if(statement.browserOptions.length === 0) statement.hasBrowserOption = false;
         return statement;
       });
       return {
@@ -89,23 +89,23 @@ export const puppeteerTestCaseReducer = (state, action) => {
         puppeteerStatements,
       };
 
-    case actionTypes.UPDATE_PAINT_TIMING: 
-    puppeteerStatements = puppeteerStatements.map(statement => {
-      if(statement.id === action.id) {
-        statement[action.field] = action.value
-      }
-      return statement
-    })
-    return {
-      ...state,
+    case actionTypes.UPDATE_PAINT_TIMING:
+      puppeteerStatements = puppeteerStatements.map((statement) => {
+        if (statement.id === action.id) {
+          statement[action.field] = action.value;
+        }
+        return statement;
+      });
+      return {
+        ...state,
         puppeteerStatements,
-    }
+      };
 
     case actionTypes.ADD_BROWSER_OPTIONS:
-      puppeteerStatements = puppeteerStatements.map(statement => {
+      puppeteerStatements = puppeteerStatements.map((statement) => {
         if (statement.id === action.id) {
           statement.browserOptions.push(createBrowserOption(statement.browserOptionId));
-          statement.hasBrowserOption = true
+          statement.hasBrowserOption = true;
         }
         statement.browserOptionId++
         return statement;
@@ -113,24 +113,24 @@ export const puppeteerTestCaseReducer = (state, action) => {
       return {
         ...state,
         puppeteerStatements,
-      };  
+      };
 
     case actionTypes.UPDATE_BROWSER_OPTION:
-      puppeteerStatements = puppeteerStatements.map(statement => {
+      puppeteerStatements = puppeteerStatements.map((statement) => {
         if (statement.id === action.id) {
-          statement.browserOptions.map(option => {
+          statement.browserOptions.map((option) => {
             if (option.id === action.optionId) {
-              option[action.field] = action.value
+              option[action.field] = action.value;
             }
-            return option
-          })
+            return option;
+          });
         }
-        return statement
-      })
+        return statement;
+      });
       return {
         ...state,
-        puppeteerStatements
-      }
+        puppeteerStatements,
+      };
 
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       puppeteerStatements = [...action.draggableStatements];
