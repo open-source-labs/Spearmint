@@ -34,9 +34,6 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
           />
         </div>
         <div id={styles.right}>
-          <button data-testid='puppeteerFormButton' onClick={handleAddPuppeteerForm}>
-            Form
-          </button>
           <button data-testid='puppeteerPaintTimingButton' onClick={handleAddPuppeteerPaintTiming}>
             Paint Timing
           </button>
