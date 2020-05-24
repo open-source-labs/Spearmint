@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { HooksTestCaseState, HooksStatementType } from '../../utils/hooks';
+import { HooksTestCaseState, HooksStatementType } from '../../utils/hooksTypes';
 
 export const HooksTestCaseContext: any = createContext(null);
 

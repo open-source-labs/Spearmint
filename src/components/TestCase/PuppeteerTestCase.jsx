@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
-import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
+import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu.tsx';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
