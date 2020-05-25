@@ -7,6 +7,10 @@ export interface PuppeteerTestModalProps extends PuppeteerTestMenuProps {
   closePuppeteerModal: () => void;
 }
 
+export interface PuppeteerTestStatementsProps extends PuppeteerTestMenuProps {
+  puppeteerStatements: Array<PuppeteerStatements>;
+}
+
 export interface PuppeteerTestCaseState {
   puppeteerStatements: Array<PuppeteerStatements>;
   hasPuppeteer: number;
