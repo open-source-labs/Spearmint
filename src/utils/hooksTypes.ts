@@ -11,7 +11,7 @@ export interface HooksTestCaseState {
   statementId: number;
 }
 
-export type HooksStatementType =
+export type HooksAction =
  | { type: 'TOGGLE_HOOKS' | 'ADD_CONTEXT' | 'ADD_HOOKRENDER' | 'ADD_HOOK_UPDATES' | 'ADD_HOOKRENDER' | 'CREATE_NEW_HOOKS_TEST' }
  | { type: 'UPDATE_HOOKS_TEST_STATEMENT'; hooksTestStatement: string }
  | { type: 'DELETE_CONTEXT' | 'DELETE_HOOKRENDER' | 'DELETE_HOOK_UPDATES'; id: number }
@@ -30,7 +30,3 @@ export interface HooksTestModalProps extends HooksTestMenuProps {
   isHooksModalOpen: boolean;
   closeHooksModal: () => void;
 }
-
-// export interface HooksTestStatementsProps extends HooksTestMenuProps {
-//   hooksStatements: Array<HooksStatements>;
-// }

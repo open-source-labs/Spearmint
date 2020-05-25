@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { HooksTestCaseState, HooksStatementType } from '../../utils/hooksTypes';
+import { HooksTestCaseState, HooksAction } from '../../utils/hooksTypes';
 
 export const HooksTestCaseContext: any = createContext(null);
 
@@ -47,7 +47,7 @@ const createHookUpdates = (statementId: number) => ({
   updatedState: '',
 });
 
-export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksStatementType) => {
+export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAction) => {
   Object.freeze(state);
   let hooksStatements = [...state.hooksStatements];
 
