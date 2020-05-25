@@ -2,5 +2,8 @@
   "extends": ["airbnb-typescript"],
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "rules": {
+    "arrow-body-style": "off"
   }
 }
