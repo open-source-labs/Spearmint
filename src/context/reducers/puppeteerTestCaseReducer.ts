@@ -1,22 +1,17 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/puppeteerTestCaseActions';
+import { PuppeteerTestCaseState, PuppeteerAction } from '../../utils/puppeteerTypes';
 
-export const PuppeteerTestCaseContext = createContext(null);
+export const PuppeteerTestCaseContext = createContext<any>(null);
 
 export const puppeteerTestCaseState = {
   puppeteerStatements: [],
   hasPuppeteer: 0,
+  statementId: 0,
 };
 
-let statementId = 0;
-
-const createPuppeteerForm = () => ({
-  id: statementId++,
-  type: 'puppeteerForm',
-});
-
-const createPuppeteerPaintTiming = () => ({
-  id: statementId++,
+const createPuppeteerPaintTiming = (statementId: number) => ({
+  id: statementId,
   type: 'paintTiming',
   describe: '',
   url: '',
@@ -31,14 +26,13 @@ const createPuppeteerPaintTiming = () => ({
   browserOptionId: 0,
 });
 
-
-const createBrowserOption = (browserOptionId) => ({
-  id: browserOptionId++,
+const createBrowserOption = (browserOptionId: number) => ({
+  id: browserOptionId,
   optionKey: '',
   optionValue: '',
 });
 
-export const puppeteerTestCaseReducer = (state, action) => {
+export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: PuppeteerAction) => {
   Object.freeze(state);
   let puppeteerStatements = [...state.puppeteerStatements];
 
@@ -49,39 +43,47 @@ export const puppeteerTestCaseReducer = (state, action) => {
         hasPuppeteer: state.hasPuppeteer + 1,
       };
 
-    case actionTypes.ADD_PUPPETEERFORM:
-      puppeteerStatements.push(createPuppeteerForm());
-      return {
-        ...state,
-        puppeteerStatements,
-      };
-    case actionTypes.DELETE_PUPPETEER_TEST:
+    case 'DELETE_PUPPETEER_TEST':
       puppeteerStatements = puppeteerStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         puppeteerStatements,
       };
 
-    case actionTypes.ADD_PUPPETEER_PAINT_TIMING:
-      puppeteerStatements.push(createPuppeteerPaintTiming());
+    case 'ADD_PUPPETEER_PAINT_TIMING': {
+      const newPuppeteerPaintTiming = createPuppeteerPaintTiming(state.statementId + 1);
       return {
         ...state,
-        puppeteerStatements,
+        puppeteerStatements: [
+          ...puppeteerStatements,
+          newPuppeteerPaintTiming,
+        ],
+        statementId: state.statementId + 1,
       };
+    }
 
-    case actionTypes.CREATE_NEW_PUPPETEER_TEST:
+    case 'CREATE_NEW_PUPPETEER_TEST':
       return {
         puppeteerStatements: [],
         hasPuppeteer: 0,
       };
 
-    case actionTypes.DELETE_BROWSER_OPTION:
+    case 'DELETE_BROWSER_OPTION':
       puppeteerStatements = puppeteerStatements.map((statement) => {
         if (statement.id === action.id) {
-          statement.browserOptions = statement.browserOptions.filter((option) => option.id !== action.optionId);
+          const newBrowserOptions = statement.browserOptions.filter((option) => option.id !== action.optionId);
+          if (newBrowserOptions.length === 0) {
+            return {
+              ...statement,
+              browserOptions: newBrowserOptions,
+              hasBrowserOption: false,
+            };
+          }
+          return {
+            ...statement,
+            browserOptions: newBrowserOptions,
+          };
         }
-
-        if(statement.browserOptions.length === 0) statement.hasBrowserOption = false;
         return statement;
       });
       return {
@@ -89,7 +91,7 @@ export const puppeteerTestCaseReducer = (state, action) => {
         puppeteerStatements,
       };
 
-    case actionTypes.UPDATE_PAINT_TIMING:
+    case 'UPDATE_PAINT_TIMING':
       puppeteerStatements = puppeteerStatements.map((statement) => {
         if (statement.id === action.id) {
           statement[action.field] = action.value;
@@ -101,13 +103,21 @@ export const puppeteerTestCaseReducer = (state, action) => {
         puppeteerStatements,
       };
 
-    case actionTypes.ADD_BROWSER_OPTIONS:
+    case 'ADD_BROWSER_OPTIONS':
       puppeteerStatements = puppeteerStatements.map((statement) => {
+        // revisit
         if (statement.id === action.id) {
-          statement.browserOptions.push(createBrowserOption(statement.browserOptionId));
-          statement.hasBrowserOption = true;
+          const newBrowserOption = createBrowserOption(statement.browserOptionId + 1);
+          return {
+            ...statement,
+            hasBrowserOption: true,
+            browserOptions: [
+              ...statement.browserOptions,
+              newBrowserOption,
+            ],
+            browserOptionId: statement.browserOptionId + 1,
+          };
         }
-        statement.browserOptionId++
         return statement;
       });
       return {
@@ -115,7 +125,7 @@ export const puppeteerTestCaseReducer = (state, action) => {
         puppeteerStatements,
       };
 
-    case actionTypes.UPDATE_BROWSER_OPTION:
+    case 'UPDATE_BROWSER_OPTION':
       puppeteerStatements = puppeteerStatements.map((statement) => {
         if (statement.id === action.id) {
           statement.browserOptions.map((option) => {
@@ -132,11 +142,10 @@ export const puppeteerTestCaseReducer = (state, action) => {
         puppeteerStatements,
       };
 
-    case actionTypes.UPDATE_STATEMENTS_ORDER:
-      puppeteerStatements = [...action.draggableStatements];
+    case 'UPDATE_STATEMENTS_ORDER':
       return {
         ...state,
-        puppeteerStatements,
+        puppeteerStatements: [...action.draggableStatements],
       };
 
     default:

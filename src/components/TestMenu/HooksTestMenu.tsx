@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './TestMenu.module.scss';
 import { addContexts, addHookUpdates, addHookRender } from '../../context/actions/hooksTestCaseActions';
 import HooksTestModal from '../Modals/HooksTestModal';
-import { HooksTestMenuProps } from '../../utils/hooks';
+import { HooksTestMenuProps } from '../../utils/hooksTypes';
 
 const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
   const [isHooksModalOpen, setIsHooksModalOpen] = useState(false);

@@ -5,7 +5,7 @@ import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReduce
 import { updateHooksTestStatement, updateStatementsOrder } from '../../context/actions/hooksTestCaseActions';
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
-import { HooksStatements } from '../../utils/hooks';
+import { HooksStatements } from '../../utils/hooksTypes';
 
 const HooksTestCase = () => {
   const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
