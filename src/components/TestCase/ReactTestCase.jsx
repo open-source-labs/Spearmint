@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import styles from '../TestCase/TestCase.module.scss';
 import cn from 'classnames';
+import styles from './TestCase.module.scss';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import {
   updateDescribeText,
@@ -17,7 +17,7 @@ import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';
 
 const ReactTestCase = () => {
   const [{ describeBlocks, itStatements, statements }, dispatchToReactTestCase] = useContext(
-    ReactTestCaseContext
+    ReactTestCaseContext,
   );
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap }] = useContext(GlobalContext);
@@ -41,7 +41,7 @@ const ReactTestCase = () => {
 
   return (
     <div id={styles.ReactTestCase}>
-      <div id='head'>
+      <div id="head">
         <ReactTestMenu
           dispatchToTestCase={dispatchToReactTestCase}
           dispatchToMockData={dispatchToMockData}
@@ -49,19 +49,19 @@ const ReactTestCase = () => {
       </div>
       <div className={styles.header}>
         <div className={styles.renderComponent}>
-          <label className={styles.renderLabel} htmlFor='component-name'>
+          <span className={styles.renderLabel}>
             Enter Component Name:
-          </label>
+          </span>
           <SearchInput
-            reactTestCase={true}
+            reactTestCase
             dispatch={dispatchToReactTestCase}
             action={updateRenderComponent}
             filePathMap={filePathMap}
             options={Object.keys(filePathMap)}
           />
         </div>
-        <button className={styles.mockBtn} onClick={handleAddMockData}>
-          <i className={cn(styles.addIcon, 'fas fa-plus')}></i>
+        <button type="button" className={styles.mockBtn} onClick={handleAddMockData}>
+          <i className={cn(styles.addIcon, 'fas fa-plus')} />
           Mock Data
         </button>
       </div>
@@ -87,7 +87,7 @@ const ReactTestCase = () => {
         statements={statements}
         handleChangeDescribeText={handleChangeDescribeText}
         handleChangeItStatementText={handleChangeItStatementText}
-        type='react'
+        type="react"
       />
     </div>
   );

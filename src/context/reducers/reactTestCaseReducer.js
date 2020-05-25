@@ -52,20 +52,20 @@ export const reactTestCaseState = {
 const createDescribeBlock = (describeId) => {
   return {
     id: describeId,
-    text: ''
-  }
-}
+    text: '',
+  };
+};
 
 const createItStatement = (describeId, itId) => ({
   id: itId,
-  describeId: describeId,
-  text: ''
-})
+  describeId,
+  text: '',
+});
 
 const createAction = (describeId, itId, statementId) => ({
   id: statementId,
-  itId: itId,
-  describeId: describeId,
+  itId,
+  describeId,
   type: 'action',
   eventType: '',
   eventValue: null,
@@ -77,8 +77,8 @@ const createAction = (describeId, itId, statementId) => ({
 
 const createAssertion = (describeId, itId, statementId) => ({
   id: statementId,
-  itId: itId,
-  describeId: describeId,
+  itId,
+  describeId,
   type: 'assertion',
   queryVariant: '',
   querySelector: '',
@@ -91,8 +91,8 @@ const createAssertion = (describeId, itId, statementId) => ({
 
 const createRender = (describeId, itId, statementId, componentName, filePath) => ({
   id: statementId,
-  itId: itId,
-  describeId: describeId,
+  itId,
+  describeId,
   type: 'render',
   componentName,
   filePath,
@@ -101,13 +101,12 @@ const createRender = (describeId, itId, statementId, componentName, filePath) =>
 
 const createProp = (propId, statementId) => ({
   id: propId,
-  statementId: statementId,
+  statementId,
   propKey: '',
   propValue: '',
 });
 
 const deleteChildren = (object, deletionId, lookup) => {
-
   const allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
 
   object.allIds.forEach((id) => {
@@ -124,9 +123,9 @@ const deleteChildren = (object, deletionId, lookup) => {
 export const reactTestCaseReducer = (state, action) => {
   Object.freeze(state);
 
-  let describeBlocks = { ...state.describeBlocks };
-  let itStatements = { ...state.itStatements };
-  let statements = { ...state.statements };
+  const describeBlocks = { ...state.describeBlocks };
+  const itStatements = { ...state.itStatements };
+  const statements = { ...state.statements };
 
   switch (action.type) {
     case actionTypes.TOGGLE_REACT: {
@@ -142,8 +141,8 @@ export const reactTestCaseReducer = (state, action) => {
       };
     }
     case actionTypes.ADD_DESCRIBE_BLOCK: {
-      let updatedDescribeId = state.describeId
-      const describeId = `describe${state.describeId}`
+      let updatedDescribeId = state.describeId;
+      const describeId = `describe${state.describeId}`;
 
       return {
         ...state,
@@ -152,51 +151,52 @@ export const reactTestCaseReducer = (state, action) => {
           ...describeBlocks,
           byId: {
             ...describeBlocks.byId,
-            [describeId]: createDescribeBlock(describeId)  
+            [describeId]: createDescribeBlock(describeId),
           },
-          allIds: [...describeBlocks.allIds, describeId]
-        }
+          allIds: [...describeBlocks.allIds, describeId],
+        },
       };
     }
 
     case actionTypes.DELETE_DESCRIBE_BLOCK: {
-      const {describeId} = action;
-      const byId = {...describeBlocks.byId};
-      delete byId[describeId]
-      const allIds = describeBlocks.allIds.filter(id => id !== describeId)
+      const { describeId } = action;
+      const byId = { ...describeBlocks.byId };
+      delete byId[describeId];
+      const allIds = describeBlocks.allIds.filter((id) => id !== describeId);
 
-      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId')
-      const statementAllIds = deleteChildren(statements, describeId, 'describeId')
+      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId');
+      const statementAllIds = deleteChildren(statements, describeId, 'describeId');
 
       return {
         ...state,
         describeBlocks: {
           ...describeBlocks,
           byId: {
-            ...byId
+            ...byId,
           },
-          allIds: [...allIds]
+          allIds: [...allIds],
         },
         itStatements: {
+          ...itStatements,
           byId: {
-            ...itStatements.byId
+            ...itStatements.byId,
           },
-          allIds: [...itStatementAllIds]
+          allIds: [...itStatementAllIds],
         },
         statements: {
+          ...statements,
           byId: {
-            ...statements.byId
+            ...statements.byId,
           },
-          allIds: [...statementAllIds]
+          allIds: [...statementAllIds],
         },
       };
     }
 
     case actionTypes.ADD_ITSTATEMENT: {
-      const { describeId } = action
-      const itId = `it${state.itId}`
-       let updatedItId = state.itId
-     
+      const { describeId } = action;
+      const itId = `it${state.itId}`;
+      let updatedItId = state.itId;
 
       return {
         ...state,
@@ -205,34 +205,35 @@ export const reactTestCaseReducer = (state, action) => {
           ...itStatements,
           byId: {
             ...itStatements.byId,
-            [itId]: createItStatement(describeId, itId)
+            [itId]: createItStatement(describeId, itId),
           },
-          allIds: [...itStatements.allIds, itId]
-        }
+          allIds: [...itStatements.allIds, itId],
+        },
       };
     }
     case actionTypes.DELETE_ITSTATEMENT: {
-      const {itId} = action;
-      const byId = {...itStatements.byId};
-      delete byId[itId]
-      const allIds = itStatements.allIds.filter(id => id !== itId)
-      const statementAllIds = deleteChildren(statements, itId, 'itId')
-
+      const { itId } = action;
+      const byId = { ...itStatements.byId };
+      delete byId[itId];
+      const allIds = itStatements.allIds.filter((id) => id !== itId);
+      const statementAllIds = deleteChildren(statements, itId, 'itId');
 
       return {
         ...state,
         itStatements: {
           ...itStatements,
           byId: {
-            ...byId
+            ...byId,
           },
-          allIds: [...allIds]
+          allIds: [...allIds],
         },
         statements: {
+          ...statements,
           byId: {
-            ...statements.byId
+            ...statements.byId,
           },
-          allIds: [...statementAllIds]
+          allIds: [...statementAllIds],
+
         },
       };
     }
@@ -248,7 +249,7 @@ export const reactTestCaseReducer = (state, action) => {
             ...byIds,
             [describeId]: {
               ...block,
-              text: text,
+              text,
             },
           },
         },
@@ -266,7 +267,7 @@ export const reactTestCaseReducer = (state, action) => {
             ...byIds,
             [itId]: {
               ...block,
-              text: text,
+              text,
             },
           },
         },
@@ -322,12 +323,12 @@ export const reactTestCaseReducer = (state, action) => {
       const oldStatement = { ...statements.byId[id] };
       const newStatement = {
         ...oldStatement,
-        eventType: eventType,
-        eventValue: eventValue,
-        queryVariant: queryVariant,
-        querySelector: querySelector,
-        queryValue: queryValue,
-        suggestions: suggestions,
+        eventType,
+        eventValue,
+        queryVariant,
+        querySelector,
+        queryValue,
+        suggestions,
       };
       return {
         ...state,
@@ -393,13 +394,13 @@ export const reactTestCaseReducer = (state, action) => {
       const byId = { ...statements.byId };
       const newStatement = {
         ...oldStatement,
-        queryVariant: queryVariant,
-        querySelector: querySelector,
-        queryValue: queryValue,
-        isNot: isNot,
-        matcherType: matcherType,
-        matcherValue: matcherValue,
-        suggestions: suggestions,
+        queryVariant,
+        querySelector,
+        queryValue,
+        isNot,
+        matcherType,
+        matcherValue,
+        suggestions,
       };
       return {
         ...state,
@@ -462,7 +463,7 @@ export const reactTestCaseReducer = (state, action) => {
     case actionTypes.ADD_PROP: {
       const { statementId } = action;
       const propId = `prop${state.propId}`;
-      const byId = statements.byId;
+      const { byId } = statements;
       let updatedPropId = state.propId;
 
       return {
@@ -492,23 +493,24 @@ export const reactTestCaseReducer = (state, action) => {
             ...statements.byId,
             [statementId]: {
               ...statements.byId[statementId],
-              props: props,
+              props,
             },
           },
         },
       };
     }
     case actionTypes.UPDATE_PROP: {
-      const { id, statementId, propKey, propValue } = action;
-      console.log(statementId);
-      const updatedProps = [...statements.byId[statementId].props]
-      
-      updatedProps.forEach(prop => {
-        if(prop.id === id) {
-          prop.propKey = propKey
-          prop.propValue = propValue
+      const {
+        id, statementId, propKey, propValue,
+      } = action;
+      const updatedProps = [...statements.byId[statementId].props];
+
+      updatedProps.forEach((prop) => {
+        if (prop.id === id) {
+          prop.propKey = propKey;
+          prop.propValue = propValue;
         }
-      })
+      });
 
       return {
         ...state,
@@ -530,21 +532,20 @@ export const reactTestCaseReducer = (state, action) => {
         ...state,
         describeBlocks: {
           byId: {},
-          allIds: []
+          allIds: [],
         },
         itStatements: {
           byId: {},
-          allIds: []
+          allIds: [],
         },
         statements: {
           byId: {},
-          allIds: []
+          allIds: [],
         },
-        hasReact: 0
+        hasReact: 0,
       };
     }
     default:
       return state;
   }
 };
-
