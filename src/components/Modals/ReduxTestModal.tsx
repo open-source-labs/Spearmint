@@ -5,10 +5,16 @@ import styles from './ExportFileModal.module.scss';
 import { toggleModal } from '../../context/actions/testFileModalActions';
 import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
 
-const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }) => {
-  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
+interface ReduxTestModalProps {
+  isReduxModalOpen: boolean;
+  closeReduxModal: () => boolean | void;
+  dispatchToReduxTestCase: (action: object) => void;
+}
 
-  const handleNewReduxTest = e => {
+const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }: ReduxTestModalProps) => {
+  const [, dispatchToTestFileModal]= useContext<any>(TestFileModalContext);
+
+  const handleNewReduxTest = () => {
     dispatchToReduxTestCase(createNewReduxTest());
     closeReduxModal();
     dispatchToTestFileModal(toggleModal());

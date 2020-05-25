@@ -46,13 +46,13 @@ const Async = ({ async, index, dispatchToReduxTestCase }) => {
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
               <label htmlFor='actionsFile'>Import Actions From</label>
-              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateActionsFilePath} filePathMap={filePathMap}/>
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} updateActionsFilePath={updateActionsFilePath} id={async.id} filePathMap={filePathMap}/>
 
             </div>
 
             <div id={styles.labelInput}>
               <label htmlFor='typesFile'>Import Actions Types From</label>
-              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateTypesFilePath} filePathMap={filePathMap}/>
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} updateTypesFilePath={updateTypesFilePath} id={async.id}  filePathMap={filePathMap}/>
             </div>
           </div>
 
