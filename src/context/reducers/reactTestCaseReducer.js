@@ -500,15 +500,6 @@ export const reactTestCaseReducer = (state, action) => {
       };
     }
     case actionTypes.UPDATE_PROP: {
-<<<<<<< HEAD
-      const { id, statementId, propKey, propValue } = action;
-      const updatedProps = [...statements.byId[statementId].props]
-      
-      updatedProps.forEach(prop => {
-        if(prop.id === id) {
-          prop.propKey = propKey
-          prop.propValue = propValue
-=======
       const {
         id, statementId, propKey, propValue,
       } = action;
@@ -518,7 +509,6 @@ export const reactTestCaseReducer = (state, action) => {
         if (prop.id === id) {
           prop.propKey = propKey;
           prop.propValue = propValue;
->>>>>>> 2568d21b2c1084938416e6a026d94c00428970d2
         }
       });
 

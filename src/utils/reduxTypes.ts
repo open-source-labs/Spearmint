@@ -130,6 +130,7 @@ interface CreateNewReduxTestAction {
 
 //-------------Reducer Types--------------
 
+
 export interface ReduxTestCaseState {
   reduxTestStatement: string,
   reduxStatements: Array<ReduxStatements> ,

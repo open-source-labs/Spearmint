@@ -12,7 +12,7 @@ interface ReduxTestModalProps {
 }
 
 const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }: ReduxTestModalProps) => {
-  const [, dispatchToTestFileModal]: any = useContext(TestFileModalContext);
+  const [, dispatchToTestFileModal]= useContext<any>(TestFileModalContext);
 
   const handleNewReduxTest = () => {
     dispatchToReduxTestCase(createNewReduxTest());

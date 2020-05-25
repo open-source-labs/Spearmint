@@ -7,7 +7,7 @@ import {
   UpdateReducer,
   ReduxStatements,
 
-} from '../reduxTypes/reduxTypes';
+} from '../../utils/reduxTypes';
 
 export const toggleRedux = (): ReduxActionTypes => ({
   type: actionTypes.TOGGLE_REDUX,
@@ -93,10 +93,9 @@ export const updateMiddlewaresFilePath = (middlewaresFileName: string, middlewar
 export const createNewReduxTest = (): ReduxActionTypes => ({
   type: actionTypes.CREATE_NEW_REDUX_TEST,
 });
-export const updateStatementsOrder = (draggableStatements: any[]) => {
-  console.log('action', draggableStatements)
+export const updateStatementsOrder = (draggableStatements: Array<ReduxStatements>): ReduxActionTypes => {
   return {
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
-  payload: draggableStatements,
+  payload: draggableStatements,
 }};
   

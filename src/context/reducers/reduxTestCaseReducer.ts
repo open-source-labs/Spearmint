@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { actionTypes, ReduxTestCaseState } from '../reduxTypes/reduxTypes';
+import { actionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
 export const ReduxTestCaseContext: any = createContext(null)
 
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
@@ -272,7 +272,6 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       };
       case actionTypes.UPDATE_STATEMENTS_ORDER:
         reduxStatements = [...action.payload];
-        console.log('reducer', reduxStatements)
         return {
           ...state,
           reduxStatements,

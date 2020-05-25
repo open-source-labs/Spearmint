@@ -5,7 +5,7 @@ import { updateReduxTestStatement, updateStatementsOrder } from '../../context/a
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { ReduxStatements, ReduxTestCaseState } from '../../context/reduxTypes/reduxTypes'
+import { ReduxStatements, ReduxTestCaseState } from '../../utils/reduxTypes'
 
 const ReduxTestCase = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
@@ -16,7 +16,7 @@ const ReduxTestCase = () => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));
   };
 
-  const reorder = (list: ReduxStatements[], startIndex: any, endIndex: any) => {
+  const reorder = (list: ReduxStatements[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -30,7 +30,7 @@ const ReduxTestCase = () => {
     if (result.destination.index === result.source.index) {
       return;
     }
-    const reorderedStatements = reorder(
+    const reorderedStatements: Array<ReduxStatements> = reorder(
       reduxStatements,
       result.source.index,
       result.destination.index
