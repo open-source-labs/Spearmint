@@ -372,13 +372,19 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
  /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
-  const addLCPfunction = () => {
+ 
+ /* getLargestContentfulPaint()
+    - creating a new PerformanceObserver object which will call the callback function when observed performance events happen
+    - setting observer() method to observe the LCP performance entries
+ */
+ 
+ const addLCPfunction = () => {
     testFileCode += `      
-      function calcLCP() {
+      function getLargestContentfulPaint() {
         window.largestContentfulPaint = 0;
     
-        const observer = new PerformanceObserver((entryList) => {
-          const entries = entryList.getEntries();
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
           const lastEntry = entries[entries.length - 1];
           window.largestContentfulPaint = lastEntry.renderTime || lastEntry.loadTime;
         });
@@ -661,7 +667,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
           let browser = await puppeteer.launch(${statement.browserOptions.length? JSON.stringify(browserOptions).replace(/"([^"]+)":/g, '$1:') : '{}'});
           const page = await browser.newPage();
           await page.target().createCDPSession();
-          await page.evaluateOnNewDocument(calcLCP);
+          await page.evaluateOnNewDocument(getLargestContentfulPaint);
           await page.goto(app);
 
           lcp = await page.evaluate(() => window.largestContentfulPaint);

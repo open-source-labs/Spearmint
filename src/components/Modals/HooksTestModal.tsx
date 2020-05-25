@@ -4,9 +4,13 @@ import { createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
 import styles from './ExportFileModal.module.scss';
 import { toggleModal } from '../../context/actions/testFileModalActions';
 import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
-import { HooksTestModalProps } from '../../utils/hooks';
+import { HooksTestModalProps } from '../../utils/hooksTypes';
 
-const HooksTestModal = ({ isHooksModalOpen, closeHooksModal, dispatchToHooksTestCase }: HooksTestModalProps) => {
+const HooksTestModal = ({
+  isHooksModalOpen,
+  closeHooksModal,
+  dispatchToHooksTestCase,
+}: HooksTestModalProps) => {
   const [, dispatchToTestFileModal] = useContext<any>(TestFileModalContext);
   const handleNewHooksTest = () => {
     dispatchToHooksTestCase(createNewHooksTest());

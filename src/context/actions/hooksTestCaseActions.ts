@@ -1,3 +1,5 @@
+import { HooksStatements } from '../../utils/hooksTypes';
+
 export const actionTypes = {
   TOGGLE_HOOKS: 'TOGGLE_HOOKS',
   UPDATE_HOOKS_TEST_STATEMENT: 'UPDATE_HOOKS_TEST_STATEMENT',
@@ -83,7 +85,7 @@ export const createNewHooksTest = () => ({
   type: actionTypes.CREATE_NEW_HOOKS_TEST,
 });
 
-export const updateStatementsOrder = (draggableStatements: object[]) => ({
+export const updateStatementsOrder = (draggableStatements: Array<HooksStatements>) => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
   draggableStatements,
 });
