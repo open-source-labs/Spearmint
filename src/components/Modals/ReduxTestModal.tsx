@@ -4,7 +4,12 @@ import { createNewReduxTest } from '../../context/actions/reduxTestCaseActions';
 import styles from './ExportFileModal.module.scss';
 import { toggleModal } from '../../context/actions/testFileModalActions';
 import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
-import { ReduxTestModalProps } from '../../context/reduxTypes/reduxTypes';
+
+interface ReduxTestModalProps {
+  isReduxModalOpen: boolean;
+  closeReduxModal: () => boolean | void;
+  dispatchToReduxTestCase: (action: object) => void;
+}
 
 const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }: ReduxTestModalProps) => {
   const [, dispatchToTestFileModal]: any = useContext(TestFileModalContext);

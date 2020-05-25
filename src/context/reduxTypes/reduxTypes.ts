@@ -288,13 +288,3 @@ export type ReduxActionTypes =  ToggleReduxAction|
                                 UpdateMiddlewaresFilePathAction|
                                 CreateNewReduxTestAction; 
                                 
-//---------------React Component Types-------------------
-export interface ReduxTestMenuProps {
-  dispatchToReduxTestCase: (action: object) => void;
-}
-
-export interface ReduxTestModalProps {
-  isReduxModalOpen: boolean;
-  closeReduxModal: () => boolean | void;
-  dispatchToReduxTestCase: (action: object) => void;
-}

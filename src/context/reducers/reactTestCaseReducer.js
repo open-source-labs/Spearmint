@@ -160,7 +160,6 @@ export const reactTestCaseReducer = (state, action) => {
     }
 
     case actionTypes.DELETE_DESCRIBE_BLOCK: {
-      console.log('reducer called')
       const {describeId} = action;
       const byId = {...describeBlocks.byId};
       delete byId[describeId]
@@ -501,7 +500,6 @@ export const reactTestCaseReducer = (state, action) => {
     }
     case actionTypes.UPDATE_PROP: {
       const { id, statementId, propKey, propValue } = action;
-      console.log(statementId);
       const updatedProps = [...statements.byId[statementId].props]
       
       updatedProps.forEach(prop => {

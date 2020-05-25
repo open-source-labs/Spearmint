@@ -19,7 +19,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
     updatedActionCreator[field] = e.target.value;
     dispatchToReduxTestCase(updateActionCreator(updatedActionCreator));
   };
-
+  
   const handleClickDeleteActionCreator = e => {
     dispatchToReduxTestCase(deleteActionCreator(actionCreator.id));
   };
@@ -47,7 +47,7 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
               <label htmlFor='actionsFolder'>Import Actions From</label>
-               <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateActionsFilePath} filePathMap={filePathMap}/>
+               <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} updateActionFilePath={updateActionsFilePath} id={actionCreator.id} filePathMap={filePathMap}/>
             </div>
 
             <div id={styles.files}>

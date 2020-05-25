@@ -4,6 +4,6 @@ node_js:
 cache:
   directories:
     - node_modules
-deplloy:
+deploy:
   skip_cleanup: true
   on: master

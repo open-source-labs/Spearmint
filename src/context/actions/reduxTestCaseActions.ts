@@ -60,11 +60,12 @@ export const updateReducer = (updatedReducer: UpdateReducer): ReduxActionTypes =
   type: actionTypes.UPDATE_REDUCER,
   payload: updatedReducer,
 });
-export const updateActionsFilePath = (actionsFileName: string, filePath: string): ReduxActionTypes => ({
+export const updateActionsFilePath = (actionsFileName: string, filePath: string, id: number): ReduxActionTypes => ({
   type: actionTypes.UPDATE_ACTIONS_FILEPATH,
   payload: {
     actionsFileName,
     filePath,
+    id,
   }
 });
 export const updateTypesFilePath = (typesFileName: string, typesFilePath: string, id: number): ReduxActionTypes => ({
@@ -92,7 +93,8 @@ export const updateMiddlewaresFilePath = (middlewaresFileName: string, middlewar
 export const createNewReduxTest = (): ReduxActionTypes => ({
   type: actionTypes.CREATE_NEW_REDUX_TEST,
 });
-export const updateStatementsOrder = (draggableStatements: ReduxStatements[]): ReduxActionTypes => {
+export const updateStatementsOrder = (draggableStatements: any[]) => {
+  console.log('action', draggableStatements)
   return {
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
   payload: draggableStatements,

@@ -1,10 +1,5 @@
 import { createContext } from 'react';
 import { actionTypes, ReduxTestCaseState } from '../reduxTypes/reduxTypes';
-// export const ReduxTestCaseContext = createContext<ReduxTestCaseState[]>([
-//   {  reduxTestStatement: '' /* the test description */,
-//   reduxStatements: [] /* both of the cards on the page at open. Each card gets an id */,
-//   hasRedux: 0,}
-// ]);
 export const ReduxTestCaseContext: any = createContext(null)
 
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
@@ -142,7 +137,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements,
       };
     case actionTypes.UPDATE_ACTIONCREATOR:
-      reduxStatements = reduxStatements.map((statement) => {
+     reduxStatements.map((statement) => {
         if (statement.id === action.payload.id) {
           statement.actionsFile = action.payload.actionsFile;
           statement.filePath = action.payload.filePath;
@@ -222,44 +217,48 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements,
       };
     case actionTypes.UPDATE_ACTIONS_FILEPATH:
-      reduxStatements.forEach((statement) => {
-        if (statement.type === 'async' || statement.type === 'action-creator') {
+      reduxStatements = reduxStatements.map((statement) => {
+        if (statement.id === action.payload.id) {
           statement.actionsFileName = action.payload.actionsFileName;
           statement.filePath = action.payload.filePath;
         }
+        return statement
       });
       return {
         ...state,
         reduxStatements,
       };
     case actionTypes.UPDATE_TYPES_FILEPATH:
-      reduxStatements.forEach((statement) => {
+      reduxStatements = reduxStatements.map((statement) => {
         if(statement.id === action.payload.id) {
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
         }
+        return statement
       });
       return {
         ...state,
         reduxStatements,
       };
     case actionTypes.UPDATE_REDUCERS_FILEPATH:
-      reduxStatements.forEach((statement) => {
+      reduxStatements = reduxStatements.map((statement) => {
         if (statement.type === 'reducer') {
           statement.reducersFileName = action.payload.reducersFileName;
           statement.reducersFilePath = action.payload.reducersFilePath;
         }
+        return statement
       });
       return {
         ...state,
         reduxStatements,
       };
     case actionTypes.UPDATE_MIDDLEWARES_FILEPATH:
-      reduxStatements.forEach((statement) => {
+   reduxStatements = reduxStatements.map((statement) => {
         if (statement.type === 'middleware') {
           statement.middlewaresFileName = action.payload.middlewaresFileName;
           statement.middlewaresFilePath = action.payload.middlewaresFilePath;
         }
+        return statement
       });
       return {
         ...state,
@@ -273,6 +272,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       };
       case actionTypes.UPDATE_STATEMENTS_ORDER:
         reduxStatements = [...action.payload];
+        console.log('reducer', reduxStatements)
         return {
           ...state,
           reduxStatements,

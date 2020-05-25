@@ -7,7 +7,9 @@ import {
   addMiddleware,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestModal from '../Modals/ReduxTestModal';
-import { ReduxTestMenuProps } from '../../context/reduxTypes/reduxTypes';
+interface ReduxTestMenuProps {
+  dispatchToReduxTestCase: (action: object) => void;
+}
 
 const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
   /* making new state for this componenet, naming it isMOdalOpen, making method for it called setIsModalOpen, setting initial state to false */
