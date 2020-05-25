@@ -7,15 +7,14 @@ export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestC
   const [filteredOptions, setFilteredOptions] = useState([])
   const [showOptions, setShowOptions] = useState(false)
   const [userInput, setUserInput] = useState('')
-  
- const onChange = (e) => {
-    const userInput = e.currentTarget.value; 
+
+  const onChange = (e) => {
+    const input = e.currentTarget.value; 
 
     const filteredOptions = options.filter(
-      (optionName) =>
-        optionName.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+      (optionName) => optionName.toLowerCase().indexOf(input.toLowerCase()) > -1,
     );
-    
+
     setActiveOption(0)
     setFilteredOptions(filteredOptions)
     setShowOptions(true)
@@ -86,7 +85,7 @@ export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestC
     }
   }
   return (
-    <React.Fragment>
+    <div className='search-container'>
       <div className="search">
         <input
           type="text"
@@ -98,7 +97,7 @@ export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestC
         />
       </div>
       {optionList}
-    </React.Fragment>
+    </div>
   );
 }
 

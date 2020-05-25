@@ -56,11 +56,14 @@ div {
     padding: 1rem;
 
     .renderComponent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       
       .renderLabel {
-        display: block;
         font-family: $oxygen;
         font-size: 0.9rem;
+        margin-right: 0.5rem;
       }
 
       .renderInput {

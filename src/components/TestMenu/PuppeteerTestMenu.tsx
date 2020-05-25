@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import styles from '../TestMenu/TestMenu.module.scss';
+import styles from './TestMenu.module.scss';
 import PuppeteerTestModal from '../Modals/PuppeteerTestModal';
-import { addPuppeteerForm, addPuppeteerPaintTiming } from '../../context/actions/puppeteerTestCaseActions';
+import { addPuppeteerPaintTiming } from '../../context/actions/puppeteerTestCaseActions';
+import { PuppeteerTestMenuProps } from '../../utils/puppeteerTypes';
 
-const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
+const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuProps) => {
   const [isPuppeteerModalOpen, setIsPuppeteerModalOpen] = useState(false);
 
   const openPuppeteerModal = () => {
@@ -14,19 +15,15 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
     setIsPuppeteerModalOpen(false);
   };
 
-  const handleAddPuppeteerForm = e => {
-    dispatchToPuppeteerTestCase(addPuppeteerForm());
-  };
-
-  const handleAddPuppeteerPaintTiming = e => {
+  const handleAddPuppeteerPaintTiming = () => {
     dispatchToPuppeteerTestCase(addPuppeteerPaintTiming());
   };
 
   return (
-    <div id='test'>
+    <div id="test">
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openPuppeteerModal}>New Test +</button>
+          <button type="button" onClick={openPuppeteerModal}>New Test +</button>
           <PuppeteerTestModal
             isPuppeteerModalOpen={isPuppeteerModalOpen}
             closePuppeteerModal={closePuppeteerModal}
@@ -34,10 +31,7 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }) => {
           />
         </div>
         <div id={styles.right}>
-          <button data-testid='puppeteerFormButton' onClick={handleAddPuppeteerForm}>
-            Form
-          </button>
-          <button data-testid='puppeteerPaintTimingButton' onClick={handleAddPuppeteerPaintTiming}>
+          <button type="button" data-testid="puppeteerPaintTimingButton" onClick={handleAddPuppeteerPaintTiming}>
             Paint Timing
           </button>
         </div>
