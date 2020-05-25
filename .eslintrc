@@ -4,6 +4,8 @@
     "project": "./tsconfig.json"
   },
   "rules": {
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
+    "no-plusplus": "off",
+    "no-param-reassign": "off"
   }
 }
