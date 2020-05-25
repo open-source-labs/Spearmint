@@ -7,5 +7,8 @@
     "arrow-body-style": "off",
     "no-plusplus": "off",
     "no-param-reassign": "off"
+  },
+  "env": {
+    "jest": true
   }
 }
