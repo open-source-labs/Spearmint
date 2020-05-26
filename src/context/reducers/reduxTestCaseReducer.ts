@@ -137,7 +137,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements,
       };
     case actionTypes.UPDATE_ACTIONCREATOR:
-     reduxStatements.map((statement) => {
+     reduxStatements = reduxStatements.map((statement) => {
         if (statement.id === action.payload.id) {
           statement.actionsFile = action.payload.actionsFile;
           statement.filePath = action.payload.filePath;
@@ -271,7 +271,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         hasRedux: 0,
       };
       case actionTypes.UPDATE_STATEMENTS_ORDER:
-        reduxStatements = [...action.payload];
+        reduxStatements = action.payload;
         return {
           ...state,
           reduxStatements,
