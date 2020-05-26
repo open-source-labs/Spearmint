@@ -65,7 +65,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
       };
     }
     case 'ADD_CONTEXT':
-      hooksStatements.push(createContexts(state.statementId + 1));
+      hooksStatements.push(createContexts(state.statementId));
       return {
         ...state,
         hooksStatements,
@@ -100,7 +100,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         hooksStatements,
       };
     case 'ADD_HOOK_UPDATES':
-      hooksStatements.push(createHookUpdates(state.statementId + 1));
+      hooksStatements.push(createHookUpdates(state.statementId));
       return {
         ...state,
         hooksStatements,
@@ -135,7 +135,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
       };
 
     case 'ADD_HOOKRENDER':
-      hooksStatements.push(createHookRender(state.statementId + 1));
+      hooksStatements.push(createHookRender(state.statementId));
       return {
         ...state,
         hooksStatements,

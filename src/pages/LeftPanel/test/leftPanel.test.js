@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactTestCase from '../TestCase/ReactTestCase';
-import { GlobalContext } from '../../../context/reducers/globalReduceralReducerobalReducer';
+import ReactTestCase from '../../../components/TestCase/ReactTestCase';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { MockDataContext } from '../../../context/reducers/mockDataReducer';
-import { TestFileModalContext } from '../../../context/reducers/testFileModalReducer'
+import { TestFileModalContext } from '../../../context/reducers/testFileModalReducer';
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 

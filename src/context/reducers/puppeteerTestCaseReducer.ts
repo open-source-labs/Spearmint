@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { actionTypes } from '../actions/puppeteerTestCaseActions';
 import { PuppeteerTestCaseState, PuppeteerAction } from '../../utils/puppeteerTypes';
 
 export const PuppeteerTestCaseContext = createContext<any>(null);
@@ -37,7 +36,7 @@ export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: 
   let puppeteerStatements = [...state.puppeteerStatements];
 
   switch (action.type) {
-    case actionTypes.TOGGLE_PUPPETEER:
+    case 'TOGGLE_PUPPETEER':
       return {
         ...state,
         hasPuppeteer: state.hasPuppeteer + 1,
@@ -51,7 +50,7 @@ export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: 
       };
 
     case 'ADD_PUPPETEER_PAINT_TIMING': {
-      const newPuppeteerPaintTiming = createPuppeteerPaintTiming(state.statementId + 1);
+      const newPuppeteerPaintTiming = createPuppeteerPaintTiming(state.statementId);
       return {
         ...state,
         puppeteerStatements: [
@@ -66,6 +65,7 @@ export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: 
       return {
         puppeteerStatements: [],
         hasPuppeteer: 0,
+        statementId: 0,
       };
 
     case 'DELETE_BROWSER_OPTION':
@@ -105,9 +105,8 @@ export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: 
 
     case 'ADD_BROWSER_OPTIONS':
       puppeteerStatements = puppeteerStatements.map((statement) => {
-        // revisit
         if (statement.id === action.id) {
-          const newBrowserOption = createBrowserOption(statement.browserOptionId + 1);
+          const newBrowserOption = createBrowserOption(statement.browserOptionId);
           return {
             ...statement,
             hasBrowserOption: true,

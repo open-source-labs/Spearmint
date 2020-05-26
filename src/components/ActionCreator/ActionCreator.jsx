@@ -47,12 +47,12 @@ const ActionCreator = ({ actionCreator, index, dispatchToReduxTestCase }) => {
           <div id={styles.filesFlexBox}>
             <div id={styles.files}>
               <label htmlFor='actionsFolder'>Import Actions From</label>
-               <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateActionsFilePath} filePathMap={filePathMap}/>
+               <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} updateActionsFilePath={updateActionsFilePath} id={actionCreator.id} filePathMap={filePathMap}/>
             </div>
 
             <div id={styles.files}>
               <label htmlFor='typesFolder'>Import Action Types From</label>
-              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} action={updateTypesFilePath} filePathMap={filePathMap}/>
+              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToReduxTestCase} updateTypesFilePath={updateTypesFilePath} id={actionCreator.id} filePathMap={filePathMap}/>
             </div>
           </div>
 

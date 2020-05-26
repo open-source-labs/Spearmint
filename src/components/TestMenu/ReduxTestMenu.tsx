@@ -7,8 +7,11 @@ import {
   addMiddleware,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestModal from '../Modals/ReduxTestModal';
+interface ReduxTestMenuProps {
+  dispatchToReduxTestCase: (action: object) => void;
+}
 
-const ReduxTestMenu = ({ dispatchToReduxTestCase }) => {
+const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
   /* making new state for this componenet, naming it isMOdalOpen, making method for it called setIsModalOpen, setting initial state to false */
   const [isReduxModalOpen, setIsReduxModalOpen] = useState(false);
 
@@ -20,16 +23,16 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }) => {
     setIsReduxModalOpen(false);
   };
 
-  const handleAddMiddleware = e => {
+  const handleAddMiddleware = () => {
     dispatchToReduxTestCase(addMiddleware());
   };
-  const handleAddActionCreator = e => {
+  const handleAddActionCreator = () => {
     dispatchToReduxTestCase(addActionCreator());
   };
-  const handleAddAsync = e => {
+  const handleAddAsync = () => {
     dispatchToReduxTestCase(addAsync());
   };
-  const handleAddReducer = e => {
+  const handleAddReducer = () => {
     dispatchToReduxTestCase(addReducer());
   };
 
