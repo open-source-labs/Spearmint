@@ -9,6 +9,7 @@
     "no-param-reassign": "off"
   },
   "env": {
-    "jest": true
+    "jest": true,
+    "browser": true
   }
 }

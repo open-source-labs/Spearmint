@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/reactTestCaseActions';
 
-export const ReactTestCaseContext = createContext(null);
+export const ReactTestCaseContext = createContext([]);
 
 export const reactTestCaseState = {
   hasReact: 0,
