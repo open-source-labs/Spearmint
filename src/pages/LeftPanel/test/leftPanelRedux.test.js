@@ -1,11 +1,10 @@
 import React from 'react';
-import ReduxTestCase from '../TestCase/ReduxTestCase';
+import ReduxTestCase from '../../../components/TestCase/ReduxTestCase';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { TestFileModalContext } from '../../../context/reducers/testFileModalReducer';
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import Reducer from '../Reducer/Reducer';
 
 configure({ adapter: new Adapter() });
 

@@ -1,7 +1,5 @@
 import React from 'react';
-import HooksTestCase from '../TestCase/HooksTestCase';
-import HookUpdates from '../HookUpdates/HookUpdates';
-import HookRender from '../HookRender/HookRender';
+import HooksTestCase from '../../../components/TestCase/HooksTestCase';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { TestFileModalContext } from '../../../context/reducers/testFileModalReducer';
 import { HooksTestCaseContext } from '../../../context/reducers/hooksTestCaseReducer';
