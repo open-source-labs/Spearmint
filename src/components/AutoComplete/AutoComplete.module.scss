@@ -1,0 +1,61 @@
+@import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
+
+.container {
+  position: relative;
+}
+
+.input {
+  width: 185px;
+  padding: '10px 20px';
+  font-family: $oxygen;
+  font-weight: 300;
+  font-size: 12;
+  letter-spacing: 0.5px;
+  border: '1px solid #aaa';
+}
+
+.inputFocused {
+  outline: none;
+}
+
+.inputOpen {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.suggestionsContainer {
+  display: none;
+}
+
+.suggestionsContainerOpen {
+  display: block;
+  position: absolute;
+  top: 26px;
+  width: 100%;
+  border: 1px solid $light-gray;
+  background-color: #fff;
+  font-family: $oxygen;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  font-size: 16px;
+  border-radius: 0 0 4px 4px;
+  z-index: 2;
+}
+
+.suggestionsList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.suggestionHighlighted {
+  background-color: $light-gray4;
+}
