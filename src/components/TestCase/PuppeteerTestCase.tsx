@@ -8,14 +8,14 @@ import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 
 const PuppeteerTestCase = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
-  
+
   const reorder = (list: Array<PuppeteerStatements>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result;
   };
-  
+
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
@@ -51,7 +51,7 @@ const PuppeteerTestCase = () => {
           </Droppable>
       </DragDropContext>
     </div>
-  )
-}
+  );
+};
 
 export default PuppeteerTestCase;
