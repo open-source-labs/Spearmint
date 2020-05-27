@@ -105,7 +105,7 @@ const PaintTiming = ({ paintTiming, index, dispatchToPuppeteerTestCase }) => {
               <input
                 type='text'
                 name='largest-contentful-paint-it'
-                placeholder='should have its largest meaningful paint in less than 250 ms'
+                placeholder='should have its largest contentful paint in less than 250 ms'
                 onChange={e => handleChangePaintTimingFields(e, 'LCPIt')} 
               />
               <div id={styles.time}>

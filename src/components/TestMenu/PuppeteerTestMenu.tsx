@@ -23,7 +23,7 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuPro
     <div id="test">
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button type="button" onClick={openPuppeteerModal}>New Test +</button>
+          <button type="button" data-testid="puppeteerNewTestButton" onClick={openPuppeteerModal}>New Test +</button>
           <PuppeteerTestModal
             isPuppeteerModalOpen={isPuppeteerModalOpen}
             closePuppeteerModal={closePuppeteerModal}

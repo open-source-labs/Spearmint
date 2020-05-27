@@ -21,7 +21,7 @@ describe('puppeteerTestCaseReducer', () => {
             optionValue: 'false',
           },
         ],
-        FCPIt: 'should have its first meaningful paint in less than 200 ms',
+        FCPIt: 'should have its first contentful paint in less than 200 ms',
         FCPtTime: '200',
         LCPIt: 'should have its largest contentful paint paint in less than 300 ms',
         LCPTime: '300',
