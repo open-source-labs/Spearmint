@@ -1,0 +1,98 @@
+@import '/../../assets/stylesheets/fonts.scss';
+@import '/../../assets/stylesheets/colors.scss';
+
+.displays {
+  display: block;
+}
+
+div {
+  font-size: 13px;
+  vertical-align: middle;
+}
+#head {
+  position: fixed;
+  z-index: 9999;
+}
+
+#testCaseHeader {
+  margin: 15px 25px 15px 15px;
+}
+
+#testStatement {
+  margin-left: 15px;
+  width: 92%;
+}
+
+#mockHeader {
+  float: right;
+  margin: 5px 26px;
+}
+
+#checkboxLabel {
+  margin: 10px;
+}
+
+#testMockSection {
+  margin-bottom: 50px;
+}
+
+#mockDataHeader {
+  padding: 0 2%;
+  label {
+    margin: 5px;
+    vertical-align: middle;
+  }
+  img {
+    width: 15px;
+  }
+}
+
+#ReactTestCase {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 1rem;
+
+    .renderComponent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      .renderLabel {
+        font-family: $oxygen;
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+      }
+
+      .renderInput {
+        display: block;
+        margin-top: 0.5rem;
+        width: 300px;
+        border: none;
+        border-bottom: 1px solid $mint;
+      }
+    }
+
+    .mockBtn {
+      height: auto;
+      font-size: 0.85rem;
+      background-color: rgba(0,0,0,0);
+      border: none;
+      min-width: 150px;
+      border-radius: 3px;
+      font-family: $oxygen;
+      text-align: center;
+      transition: 150ms;
+  
+      &:hover {
+        font-size: 0.9rem;
+      }
+    }
+
+    .addIcon {
+      margin-right: 0.25rem;
+    }
+  }
+}
