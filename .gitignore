@@ -18,6 +18,7 @@
 .env.test.local
 .env.production.local
 .env
+.vscode
 
 /package-lock.json
 npm-debug.log*
