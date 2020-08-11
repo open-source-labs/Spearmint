@@ -82,7 +82,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.1",
-    "jest-dom": "^3.5.0",
     "react-test-renderer": "^16.12.0",
     "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"

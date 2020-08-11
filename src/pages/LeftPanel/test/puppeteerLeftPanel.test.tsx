@@ -3,7 +3,7 @@ import { render, cleanup } from '@testing-library/react';
 import { PuppeteerTestCaseContext } from '../../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestCase from '../../../components/TestCase/PuppeteerTestCase';
 import { TestFileModalContext } from '../../../context/reducers/testFileModalReducer';
-import 'jest-dom/extend-expect';
+import "@testing-library/jest-dom/extend-expect";
 
 const testFileModal = {
   isTestModalOpen: false,

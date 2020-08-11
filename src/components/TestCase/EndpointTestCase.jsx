@@ -8,12 +8,12 @@ import {
 import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-
-// EndpointTestCase component. Renders EndPointTestMenu intially
+import EndpointModal from '../Endpoint/EndpointModal';
 const EndpointTestCase = () => {
-  const [{ endpointTestStatement, endpointStatements }, dispatchToEndpointTestCase] = useContext(
-    EndpointTestCaseContext
-  );
+  const [
+    { endpointTestStatement, endpointStatements, modalOpen },
+    dispatchToEndpointTestCase,
+  ] = useContext(EndpointTestCaseContext);
 
   const handleUpdateEndpointTestStatements = (e) => {
     dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));

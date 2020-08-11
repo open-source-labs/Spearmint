@@ -13,6 +13,8 @@ export const actionTypes = {
     ADD_ENDPOINT: 'ADD_ENDPOINT',
     DELETE_ENDPOINT: 'DELETE_ENDPOINT',
     UPDATE_ENDPOINT: 'UPDATE_ENDPOINT',
+    OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
+    CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
 };
 
 
@@ -74,3 +76,10 @@ export const updateStatementsOrder = draggableStatements => {
       draggableStatements,
     }};
   
+export const openInfoModal = () => {
+    return {type: actionTypes.OPEN_INFO_MODAL,}
+};
+
+export const closeInfoModal = () => {
+    return {type: actionTypes.CLOSE_INFO_MODAL,}
+};
