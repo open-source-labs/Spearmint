@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import styles from '../Endpoint/Endpoint.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer'
 import {
   deleteEndpoint,
   updateEndpoint,
   updateServerFilePath,
+  openInfoModal,
 } from '../../context/actions/endpointTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import SearchInput from '../SearchInput/SearchInput';
@@ -13,7 +15,7 @@ const dragIcon = require('../../assets/images/drag-vertical.png');
 
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
-
+  const [{modalOpen}] = useContext(EndpointTestCaseContext);
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
     updatedEndpoint[field] = e.target.value;
@@ -24,7 +26,12 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
 
+  const modalOpener = () => {
+    dispatchToEndpointTestCase(openInfoModal())
+  };
+
   return (
+    <div>
     <Draggable draggableId={endpoint.id.toString()} index={index}>
       {provided => (
         <div
@@ -38,8 +45,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
           <div id={styles.header}>
             <img src={dragIcon} alt='drag' />
             <h3>Endpoint</h3>
+            <button onClick= {modalOpener}>Example</button>
           </div>
-
 
           <div id={styles.groupFlexbox}>
             <div id={styles.serverInput}>
@@ -112,11 +119,11 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 </div>
               </div>
             </div>
- 
-        </div>
-
+         
+        </div> 
       )}
     </Draggable>
+    </div>
   );
 };
 

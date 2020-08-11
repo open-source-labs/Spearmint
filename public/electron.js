@@ -1,10 +1,11 @@
-require('dotenv').config()
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 let mainWindow;
 
-if (process.env.NODE_ENV === 'development') {
+if (isDev) console.log('electron version', process.versions.electron)
+
+if (isDev) {
   const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
   function addDevTools() {
     app.whenReady().then(() => {
@@ -31,7 +32,7 @@ function createWindow() {
   mainWindow.on('closed', () => (mainWindow = null));
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (isDev) {
   app.on('ready', addDevTools);
 }
 
