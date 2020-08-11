@@ -12,7 +12,7 @@ import { setProjectUrl } from '../../context/actions/globalActions';
 const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
   const addHttps = url => {
-    if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
+    if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
     } else if (url.startsWith('localhost')) {
       url = 'http://' + url;

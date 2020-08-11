@@ -5,9 +5,9 @@ import { updateEndpointTestStatement, updateStatementsOrder } from '../../contex
 import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-
+import EndpointModal from '../Endpoint/EndpointModal'
 const EndpointTestCase = () => {
-    const [{ endpointTestStatement, endpointStatements }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+    const [{ endpointTestStatement, endpointStatements, modalOpen }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
     const handleUpdateEndpointTestStatements = e => {
         dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value))
@@ -35,6 +35,9 @@ const EndpointTestCase = () => {
         dispatchToEndpointTestCase(updateStatementsOrder(reorderedStatements));
       };
 
+      let endpointInfoModal = null
+      if (modalOpen) endpointInfoModal = <EndpointModal/>
+
     return (
         <div>
             <div id='head'>
@@ -52,7 +55,7 @@ const EndpointTestCase = () => {
                     />
                 </section>
             </div>
-
+            {endpointInfoModal}
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId='droppable'>
                     {provided => (
