@@ -12,8 +12,8 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  
-  const handleAddDescribeBlock = e => {
+
+  const handleAddDescribeBlock = (e) => {
     dispatchToTestCase(addDescribeBlock());
   };
 
@@ -33,7 +33,9 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
         >
-          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>+Describe Block</button>
+          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+            +Describe Block
+          </button>
         </div>
       </div>
     </div>
