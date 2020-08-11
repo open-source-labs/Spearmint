@@ -4,6 +4,7 @@ import { actionTypes } from '../actions/endpointTestCaseActions';
 export const EndpointTestCaseContext = createContext(null);
 
 export const endpointTestCaseState = {
+  modalOpen: false,
   endpointTestStatement: '',
   endpointStatements: [],
   hasEndpoint: 0,
@@ -45,6 +46,7 @@ export const endpointTestCaseReducer = (state, action) => {
       return {
         ...state,
         endpointStatements,
+        modalOpen: false,
       };
     case actionTypes.DELETE_ENDPOINT:
       endpointStatements = endpointStatements.filter(statement => statement.id !== action.id);
@@ -92,6 +94,17 @@ export const endpointTestCaseReducer = (state, action) => {
           ...state,
           endpointStatements,
         };
+      case actionTypes.OPEN_INFO_MODAL:
+        return {
+          ...state,
+          modalOpen: true,
+        };
+      case actionTypes.CLOSE_INFO_MODAL:
+        return {
+          ...state,
+          modalOpen: false,
+        };
+
     default:
       return state;
   }
