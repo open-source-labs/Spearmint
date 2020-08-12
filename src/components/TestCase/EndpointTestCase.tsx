@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
+import { createFile } from '../../context/actions/globalActions';
 import {
   updateEndpointTestStatement,
   updateStatementsOrder,
@@ -10,12 +12,17 @@ import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
 import EndpointModal from '../Endpoint/EndpointModal';
+const remote = window.require('electron').remote;
+const beautify = remote.require('js-beautify');
+const path = remote.require('path');
 
 const EndpointTestCase = () => {
   const [
     { endpointTestStatement, endpointStatements, modalOpen },
     dispatchToEndpointTestCase,
   ] = useContext(EndpointTestCaseContext);
+
+  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const handleUpdateEndpointTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
@@ -43,6 +50,63 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase(updateStatementsOrder(reorderedStatements));
   };
 
+  let testFileCode = 'import React from "react";';
+  const generatEndFile = () => {
+    return (
+      addEndpointImportStatements(),
+      addEndpointTestStatements(),
+      (testFileCode = beautify(testFileCode, {
+        indent_size: 2,
+        space_in_empty_paren: true,
+        e4x: true,
+      }))
+    );
+  };
+  const addEndpointImportStatements = () => {
+    endpointStatements.forEach((statement: any) => {
+      switch (statement.type) {
+        case 'endpoint':
+          return createPathToServer(statement);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += '\n';
+  };
+
+  const addEndpointTestStatements = () => {
+    testFileCode += `\n test('${endpointTestStatement}', async (done) => {`;
+    endpointStatements.forEach((statement: any) => {
+      switch (statement.type) {
+        case 'endpoint':
+          return addEndpoint(statement);
+        default:
+          return statement;
+      }
+    });
+    testFileCode += 'done();';
+    testFileCode += '});';
+    testFileCode += '\n';
+  };
+  const createPathToServer = (statement: any) => {
+    let filePath = path.relative(projectFilePath, statement.serverFilePath);
+    filePath = filePath.replace(/\\/g, '/');
+    testFileCode = `const app = require('../${filePath}');
+  const supertest = require('supertest')
+  const request = supertest(app)\n`;
+
+    testFileCode += '\n';
+  };
+
+  const addEndpoint = (statement: any) => {
+    testFileCode += `const response = await request.${statement.method}('${statement.route}')
+    expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+  };
+
+  const fileHandle = () => {
+    dispatchToGlobal(createFile(generatEndFile()));
+  };
+
   let endpointInfoModal = null;
   if (modalOpen) endpointInfoModal = <EndpointModal />;
 
@@ -51,7 +115,7 @@ const EndpointTestCase = () => {
       <div id='head'>
         <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
       </div>
-
+      <button onClick={fileHandle}>save me</button>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
