@@ -37,32 +37,33 @@ const TestFile = () => {
   const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   const [{ hasPuppeteer }, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
   const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
-  
+
+  //what is happening here exactly?
   const closeTestModal = () => {
     dispatchToTestFileModal(toggleModal());
   };
 
-  const handleToggleRedux = e => {
+  const handleToggleRedux = (e) => {
     dispatchToReduxTestCase(toggleRedux());
     closeTestModal();
   };
 
-  const handleToggleReact = e => {
+  const handleToggleReact = (e) => {
     dispatchToTestCase(toggleReact());
     closeTestModal();
   };
 
-  const handleToggleEndpoint = e => {
+  const handleToggleEndpoint = (e) => {
     dispatchToEndpointTestCase(toggleEndpoint());
     closeTestModal();
   };
 
-  const handleToggleHooks = e => {
+  const handleToggleHooks = (e) => {
     dispatchToHooksTestCase(toggleHooks());
     closeTestModal();
   };
-  
-  const handleTogglePuppeteer = e => {
+
+  const handleTogglePuppeteer = (e) => {
     dispatchToPuppeteerTestCase(togglePuppeteer());
     closeTestModal();
   };
@@ -74,6 +75,7 @@ const TestFile = () => {
   };
 
   return (
+    // landing modal which displays button choices
     <div>
       <ReactModal
         className={styles.modal}
@@ -140,14 +142,16 @@ const TestFile = () => {
         </section>
       )}
 
+      {/* if no choice is selected render empty page with button */}
       {hasHooks + hasReact + hasRedux + hasPuppeteer + hasEndpoint === 0 && (
         <div id={styles.testMenu}>
           <div id={styles.left}>
-            <button id={styles.newTestBtn} onClick={closeTestModal}>New Test +</button>
+            <button id={styles.newTestBtn} onClick={closeTestModal}>
+              New Test +
+            </button>
           </div>
         </div>
       )}
-
     </div>
   );
 };
