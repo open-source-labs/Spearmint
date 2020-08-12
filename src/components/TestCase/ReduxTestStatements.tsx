@@ -14,7 +14,7 @@ const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchT
   /* destructing from the reducer */
   return (
     <>
-    {
+      {
       reduxStatements.map((statement, i) => {
         switch (statement.type) {
           case 'middleware':
@@ -59,7 +59,7 @@ const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchT
       })
     }
     </>
-  )
+  );
 };
 
 export default ReduxTestStatements;
