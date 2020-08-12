@@ -1,8 +1,14 @@
 import React from 'react';
 import Endpoint from '../Endpoint/Endpoint';
+import { EndpointTestStatementsProps } from '../../utils/endpointTypes';
 
-const EndpointTestStatements = function endpointTestStatements({ endpointStatements, dispatchToEndpointTestCase }) { 
-    return endpointStatements.map((statement, i) => {
+const EndpointTestStatements = ({
+  endpointStatements,
+  dispatchToEndpointTestCase,
+}: EndpointTestStatementsProps) => {
+  return (
+    <>
+      {endpointStatements.map((statement, i) => {
         switch (statement.type) {
           /* add statements here. Ex: */
           case 'endpoint':
@@ -14,11 +20,12 @@ const EndpointTestStatements = function endpointTestStatements({ endpointStateme
                 dispatchToEndpointTestCase={dispatchToEndpointTestCase}
               />
             );
-        default:
+          default:
             return <></>;
         }
-     });
-
+      })}
+    </>
+  );
 };
 
 export default EndpointTestStatements;

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import styles from './HookRender.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
@@ -6,8 +7,8 @@ import {
   updateHookRender,
   updateHooksFilePath,
 } from '../../context/actions/hooksTestCaseActions';
-import { Draggable } from 'react-beautiful-dnd';
 import SearchInput from '../SearchInput/SearchInput';
+
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 
@@ -20,20 +21,19 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
     dispatchToHooksTestCase(updateHookRender(updatedHookRender));
   };
 
-  const handleClickDeleteHookRender = e => {
+  const handleClickDeleteHookRender = (e) => {
     dispatchToHooksTestCase(deleteHookRender(hookRender.id));
   };
 
   return (
     <Draggable draggableId={hookRender.id.toString()} index={index}>
-      {provided => (
+      {(provided) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           id={styles.hookRender}
         >
-
           <img
             src={closeIcon}
             id={styles.close}
@@ -49,7 +49,12 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
           <div id={styles.hookRenderFlexBox}>
             <div id={styles.hookRenderType}>
               <label htmlFor='hookFuncFolder'>Import Hook From</label>
-              <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToHooksTestCase} action={updateHooksFilePath} filePathMap={filePathMap}/>
+              <SearchInput
+                options={Object.keys(filePathMap)}
+                dispatch={dispatchToHooksTestCase}
+                action={updateHooksFilePath}
+                filePathMap={filePathMap}
+              />
             </div>
           </div>
           <div id={styles.hookRenderFlexBox}>
@@ -59,7 +64,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
                 type='text'
                 id='hook'
                 placeholder='eg. useCounter'
-                onChange={e => handleChangeHookRenderFields(e, 'hook')}
+                onChange={(e) => handleChangeHookRenderFields(e, 'hook')}
               />
             </div>
 
@@ -69,7 +74,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
                 type='text'
                 id='parameterOne'
                 placeholder='eg. 9000'
-                onChange={e => handleChangeHookRenderFields(e, 'parameterOne')}
+                onChange={(e) => handleChangeHookRenderFields(e, 'parameterOne')}
               />
             </div>
           </div>
@@ -80,7 +85,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
                 type='text'
                 id='returnValue'
                 placeholder='eg. count'
-                onChange={e => handleChangeHookRenderFields(e, 'returnValue')}
+                onChange={(e) => handleChangeHookRenderFields(e, 'returnValue')}
               />
             </div>
             <div id={styles.hookRenderType}>
@@ -89,7 +94,7 @@ const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
                 type='text'
                 id='expectedReturnValue'
                 placeholder='eg. 0'
-                onChange={e => handleChangeHookRenderFields(e, 'expectedReturnValue')}
+                onChange={(e) => handleChangeHookRenderFields(e, 'expectedReturnValue')}
               />
             </div>
           </div>
