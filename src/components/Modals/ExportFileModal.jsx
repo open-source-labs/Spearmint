@@ -33,7 +33,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   let testFileCode = 'import React from "react";';
 
-  const handleChangeFileName = e => {
+  const handleChangeFileName = (e) => {
     setFileName(e.target.value);
     setInvalidFileName(false);
   };
@@ -49,9 +49,9 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   const handleClickSave = () => {
     // file name uniqueness check
-    if (fs.existsSync(projectFilePath + `/__tests__/${fileName}.test.js` )) {
-      setInvalidFileName(true)
-      return
+    if (fs.existsSync(projectFilePath + `/__tests__/${fileName}.test.js`)) {
+      setInvalidFileName(true);
+      return;
     }
     generateTestFile();
     exportTestFile();
@@ -66,7 +66,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
         addMockData(),
         addDescribeBlocks(),
         (testFileCode = beautify(testFileCode, {
-          brace_style: "collapse, preserve-inline",
+          brace_style: 'collapse, preserve-inline',
           indent_size: 2,
           space_in_empty_paren: true,
           e4x: true,
@@ -115,7 +115,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
           space_in_empty_paren: true,
           e4x: true,
         }))
-      )
+      );
     }
   };
 
@@ -141,11 +141,11 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     const describeBlocks = reactTestCase.describeBlocks;
 
     describeBlocks.allIds.forEach((id) => {
-      testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`
-      addReactItStatement(id)
-      testFileCode += `}); \n`
-    })
-  }
+      testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+      addReactItStatement(id);
+      testFileCode += `}); \n`;
+    });
+  };
 
   // React It Statements
   const addReactItStatement = (describeId) => {
@@ -153,15 +153,15 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     itStatements.allIds.forEach((itId) => {
       if (itStatements.byId[itId].describeId === describeId) {
         testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
-        addReactStatements(itId)
-        testFileCode += '})'
+        addReactStatements(itId);
+        testFileCode += '})';
       }
       testFileCode += '\n';
     });
   };
 
   const addReactStatements = (itId) => {
-    const statements = reactTestCase.statements
+    const statements = reactTestCase.statements;
     const methods = identifyMethods(itId);
     statements.allIds.forEach((id) => {
       let statement = statements.byId[id];
@@ -178,29 +178,29 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
         }
       }
     });
-  }
+  };
 
   const identifyMethods = (itId) => {
     const methods = new Set([]);
-    reactTestCase.statements.allIds.forEach(id => {
+    reactTestCase.statements.allIds.forEach((id) => {
       let statement = reactTestCase.statements.byId[id];
       if (statement.itId === itId) {
         if (statement.type === 'action' || statement.type === 'assertion') {
           methods.add(statement.queryVariant + statement.querySelector);
+        }
       }
-    };
-  })
+    });
     return Array.from(methods).join(', ');
   };
 
-   // Render Jest Test Code
-   const addRender = (statement, methods) => {
+  // Render Jest Test Code
+  const addRender = (statement, methods) => {
     let props = createRenderProps(statement.props);
     testFileCode += `const {${methods}} = render(<${reactTestCase.statements.componentName} ${props}/>);`;
   };
 
   // Render Props Jest Test Code
-  const createRenderProps = props => {
+  const createRenderProps = (props) => {
     return props.reduce((acc, prop) => {
       return acc + `${prop.propKey}={${prop.propValue}}`;
     }, '');
@@ -210,7 +210,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   // Redux Import Statements
   const addReduxImportStatements = () => {
-    reduxTestCase.reduxStatements.forEach(statement => {
+    reduxTestCase.reduxStatements.forEach((statement) => {
       switch (statement.type) {
         case 'async':
           return (
@@ -273,7 +273,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   // Redux Test Statements
   const addReduxTestStatements = () => {
     testFileCode += `\n test('${reduxTestCase.reduxTestStatement}', () => {`;
-    reduxTestCase.reduxStatements.forEach(statement => {
+    reduxTestCase.reduxStatements.forEach((statement) => {
       switch (statement.type) {
         case 'async':
           return addAsync(statement);
@@ -295,7 +295,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   // Hooks & Context Import Statements
   const addHooksImportStatements = () => {
-    hooksTestCase.hooksStatements.forEach(statement => {
+    hooksTestCase.hooksStatements.forEach((statement) => {
       switch (statement.type) {
         case 'hook-updates':
           return addRenderHooksImportStatement(), createPathToHooks(statement);
@@ -325,7 +325,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   // Hooks & Context Test Statements
   const addHooksTestStatements = () => {
     testFileCode += `\n test('${hooksTestCase.hooksTestStatement}', () => {`;
-    hooksTestCase.hooksStatements.forEach(statement => {
+    hooksTestCase.hooksStatements.forEach((statement) => {
       switch (statement.type) {
         case 'hook-updates':
           return addHookUpdates(statement);
@@ -345,7 +345,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   // Endpoint Import Statements
   const addEndpointImportStatements = () => {
-    endpointTestCase.endpointStatements.forEach(statement => {
+    endpointTestCase.endpointStatements.forEach((statement) => {
       switch (statement.type) {
         case 'endpoint':
           return createPathToServer(statement);
@@ -358,7 +358,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   const addEndpointTestStatements = () => {
     testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async (done) => {`;
-    endpointTestCase.endpointStatements.forEach(statement => {
+    endpointTestCase.endpointStatements.forEach((statement) => {
       switch (statement.type) {
         case 'endpoint':
           return addEndpoint(statement);
@@ -371,14 +371,14 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     testFileCode += '\n';
   };
 
- /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
- 
- /* getLargestContentfulPaint()
+  /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
+
+  /* getLargestContentfulPaint()
     - creating a new PerformanceObserver object which will call the callback function when observed performance events happen
     - setting observer() method to observe the LCP performance entries
  */
- 
- const addLCPfunction = () => {
+
+  const addLCPfunction = () => {
     testFileCode += `      
       function getLargestContentfulPaint() {
         window.largestContentfulPaint = 0;
@@ -397,25 +397,25 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
               observer.disconnect();
           }
         });
-      }`
-  }
- 
+      }`;
+  };
+
   const addPuppeteerImportStatements = () => {
-    puppeteerTestCase.puppeteerStatements.forEach(statement => {
+    puppeteerTestCase.puppeteerStatements.forEach((statement) => {
       switch (statement.type) {
         case 'paintTiming':
           testFileCode = `import puppeteer from 'puppeteer';\n`;
           addLCPfunction();
-          return 
+          return;
         default:
           return statement;
       }
     });
     testFileCode += '\n';
-  }
+  };
 
   const addPuppeteerTestStatements = () => {
-    puppeteerTestCase.puppeteerStatements.forEach(statement => {
+    puppeteerTestCase.puppeteerStatements.forEach((statement) => {
       switch (statement.type) {
         case 'paintTiming':
           return addPuppeteerPaintTiming(statement);
@@ -423,54 +423,54 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
           return statement;
       }
     });
-  }
+  };
 
   /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
   // Actions Filepath
-  const createPathToActions = statement => {
+  const createPathToActions = (statement) => {
     let filePath = path.relative(projectFilePath, statement.filePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import * as actions from '../${filePath}';`;
   };
 
   // Reducer Filepath
-  const createPathToReducers = statement => {
+  const createPathToReducers = (statement) => {
     let filePath = path.relative(projectFilePath, statement.reducersFilePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${statement.reducerName} from '../${filePath}';`;
   };
 
   // Types Filepath
-  const createPathToTypes = statement => {
+  const createPathToTypes = (statement) => {
     let filePath = path.relative(projectFilePath, statement.typesFilePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import * as types from '../${filePath}';`;
   };
 
   // Middleware Filepath
-  const createPathToMiddlewares = statement => {
+  const createPathToMiddlewares = (statement) => {
     let filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import * as middleware from '../${filePath}';`;
   };
 
   // Hooks Filepath
-  const createPathToHooks = statement => {
+  const createPathToHooks = (statement) => {
     let filePath = path.relative(projectFilePath, statement.hookFilePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import ${statement.hook} from '../${filePath}';`;
   };
 
   // Context Filepath
-  const createPathToContext = statement => {
+  const createPathToContext = (statement) => {
     let filePath = path.relative(projectFilePath, statement.contextFilePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
   };
 
   // Endpoint Filepath
-  const createPathToServer = statement => {
+  const createPathToServer = (statement) => {
     let filePath = path.relative(projectFilePath, statement.serverFilePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode = `const app = require('../${filePath}');
@@ -483,26 +483,25 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
 
   const addMockData = () => {
-    mockData.forEach(mockDatum => {
+    mockData.forEach((mockDatum) => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
-      testFileCode += `const mock${mockDatum.name.charAt(0).toUpperCase() +
-        mockDatum.name.slice(1)} = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
+      testFileCode += `const mock${
+        mockDatum.name.charAt(0).toUpperCase() + mockDatum.name.slice(1)
+      } = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
     });
     testFileCode += '\n';
   };
 
-  const createMockDatumFieldKeys = mockDatum => {
+  const createMockDatumFieldKeys = (mockDatum) => {
     return mockDatum.fieldKeys.reduce((fieldKeysCode, mockDatum) => {
       return fieldKeysCode + `${mockDatum.fieldKey}: fake(f => f.random.${mockDatum.fieldType}()),`;
     }, '');
   };
 
-
-
   /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
   // Action Jest Test Code
-  const addAction = action => {
+  const addAction = (action) => {
     if (action.eventValue) {
       testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
                       ('${action.queryValue}'), { target: { value: ${action.eventValue} } });`;
@@ -513,14 +512,13 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
   // Assertion Jest Test Code
-  const addAssertion = assertion => {
+  const addAssertion = (assertion) => {
     testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
       (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
   };
 
-
   // Middleware Jest Test Code
-  const addMiddleware = middleware => {
+  const addMiddleware = (middleware) => {
     testFileCode += `const ${middleware.queryValue} = () => {
       const store = {
         getState: jest.fn(() => ({})),
@@ -553,13 +551,13 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     }
   };
 
-  // Reducer Jest Test Code 
-  const addReducer = reducer => {
+  // Reducer Jest Test Code
+  const addReducer = (reducer) => {
     testFileCode += `expect(${reducer.reducerName}(${reducer.initialState},{${reducer.reducerAction}})).toEqual(${reducer.expectedState})`;
   };
 
   // Async AC Jest Test Code
-  const addAsync = async => {
+  const addAsync = (async) => {
     testFileCode += `fetchMock.${async.method}('${async.route}', ${async.requestBody});
     const expectedActions = ${async.expectedResponse};
     const store = mockStore(${async.store});
@@ -569,7 +567,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
   // Action Creator Jest Test Code
-  const addActionCreator = actionCreator => {
+  const addActionCreator = (actionCreator) => {
     if (actionCreator.payloadKey && actionCreator.payloadType) {
       testFileCode += `const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
       const expectedAction = { 
@@ -586,7 +584,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
   // Hook: Updates Jest Test Code
-  const addHookUpdates = hookUpdates => {
+  const addHookUpdates = (hookUpdates) => {
     testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());
     act(() => {
       result.current.${hookUpdates.callbackFunc}();
@@ -595,13 +593,13 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
   // Hook: Renders Jest Test Code
-  const addHookRender = hookRender => {
+  const addHookRender = (hookRender) => {
     testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameterOne}))
     expect(result.current.${hookRender.returnValue}).toBe(${hookRender.expectedReturnValue})`;
   };
 
   // Context Jest Test Code
-  const addContext = context => {
+  const addContext = (context) => {
     if (context.queryValue === 'shows_default_value') {
       testFileCode += `const mockValue = {Data: '${context.values}'}
       const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
@@ -639,32 +637,37 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
   // Endpoint Jest Test Code
-  const addEndpoint = statement => {
+  const addEndpoint = (statement) => {
     testFileCode += `const response = await request.${statement.method}('${statement.route}')
     expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
   };
 
   // Puppeteer Form Jest Test Code
-  const addPuppeteerPaintTiming = statement => {
+  const addPuppeteerPaintTiming = (statement) => {
     const browserOptions = {};
-    
-    if(statement.browserOptions.length > 0) {
-      statement.browserOptions.map(option => {
-        if(option.optionValue === 'true') option.optionValue = true
-        else if(option.optionValue === 'false') option.optionValue = false
-        //if optionValue is a stringified number, convert it back to number 
-        else if(!isNaN(Number(option.optionValue))) option.optionValue = Number(option.optionValue)
-        browserOptions[option.optionKey] = option.optionValue
-        return option
-      })
+
+    if (statement.browserOptions.length > 0) {
+      statement.browserOptions.map((option) => {
+        if (option.optionValue === 'true') option.optionValue = true;
+        else if (option.optionValue === 'false') option.optionValue = false;
+        //if optionValue is a stringified number, convert it back to number
+        else if (!isNaN(Number(option.optionValue)))
+          option.optionValue = Number(option.optionValue);
+        browserOptions[option.optionKey] = option.optionValue;
+        return option;
+      });
     }
-    
+
     testFileCode += `
       describe('${statement.describe}', () => {
         let paints, lcp;
         beforeAll( async () => {
           let app = '${statement.url}';
-          let browser = await puppeteer.launch(${statement.browserOptions.length? JSON.stringify(browserOptions).replace(/"([^"]+)":/g, '$1:') : '{}'});
+          let browser = await puppeteer.launch(${
+            statement.browserOptions.length
+              ? JSON.stringify(browserOptions).replace(/"([^"]+)":/g, '$1:')
+              : '{}'
+          });
           const page = await browser.newPage();
           await page.target().createCDPSession();
           await page.evaluateOnNewDocument(getLargestContentfulPaint);
@@ -701,13 +704,13 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {
       fs.mkdirSync(projectFilePath + '/__tests__');
     }
-    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, err => {
+    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, (err) => {
       if (err) throw err;
     });
     displayTestFile(projectFilePath + '/__tests__');
   };
 
-  const displayTestFile = testFolderFilePath => {
+  const displayTestFile = (testFolderFilePath) => {
     const fileContent = fs.readFileSync(testFolderFilePath + `/${fileName}.test.js`, 'utf8');
     dispatchToGlobal(displayFileCode(fileContent));
     dispatchToGlobal(loadProject('reload'));
@@ -722,34 +725,45 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
   return (
-    <ReactModal
-      className={styles.modal}
-      isOpen={isExportModalOpen}
-      onRequestClose={closeExportModal}
-      contentLabel='Save testing file'
-      shouldCloseOnOverlayClick={true}
-      shouldCloseOnEsc={true}
-      ariaHideApp={false}
-      style={modalStyles}
-    >
-      <div id={styles.title}>
-        <p>Convert to Javascript Code</p>
-        <svg id={styles.close} onClick={closeExportModal}>
-          <path d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' />
-        </svg>
-      </div>
-      <div id={styles.body}>
-        <p>File Name</p>
-        <input type='text' value={fileName} onChange={handleChangeFileName} />
-        {invalidFileName && <p>A file with the name '{fileName}' already exists.</p>}
-        <button id={styles.save} onClick={closeExportModal}>
-          Cancel
-        </button>
-        <button id={styles.save} onClick={handleClickSave}>
-          Save
-        </button>
-      </div>
-    </ReactModal>
+    <div>
+      <button
+        onClick={() => {
+          alert(generateTestFile());
+        }}
+      >
+        {' '}
+        hi
+      </button>
+
+      <ReactModal
+        className={styles.modal}
+        isOpen={isExportModalOpen}
+        onRequestClose={closeExportModal}
+        contentLabel='Save testing file'
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        ariaHideApp={false}
+        style={modalStyles}
+      >
+        <div id={styles.title}>
+          <p>Convert to Javascript Code</p>
+          <svg id={styles.close} onClick={closeExportModal}>
+            <path d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' />
+          </svg>
+        </div>
+        <div id={styles.body}>
+          <p>File Name</p>
+          <input type='text' value={fileName} onChange={handleChangeFileName} />
+          {invalidFileName && <p>A file with the name '{fileName}' already exists.</p>}
+          <button id={styles.save} onClick={closeExportModal}>
+            Cancel
+          </button>
+          <button id={styles.save} onClick={handleClickSave}>
+            Save
+          </button>
+        </div>
+      </ReactModal>
+    </div>
   );
 };
 
