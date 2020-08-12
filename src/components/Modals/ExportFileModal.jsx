@@ -726,15 +726,6 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          alert(generateTestFile());
-        }}
-      >
-        {' '}
-        hi
-      </button>
-
       <ReactModal
         className={styles.modal}
         isOpen={isExportModalOpen}

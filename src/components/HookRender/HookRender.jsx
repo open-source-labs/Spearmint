@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import styles from './HookRender.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
@@ -6,8 +7,8 @@ import {
   updateHookRender,
   updateHooksFilePath,
 } from '../../context/actions/hooksTestCaseActions';
-import { Draggable } from 'react-beautiful-dnd';
 import SearchInput from '../SearchInput/SearchInput';
+
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 
