@@ -1,9 +1,11 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/endpointTestCaseActions';
+import { EndpointTestCaseState } from '../../utils/endpointTypes';
 
-export const EndpointTestCaseContext = createContext(null);
+export const EndpointTestCaseContext: any = createContext(null);
 
 export const endpointTestCaseState = {
+  modalOpen: false,
   endpointTestStatement: '',
   endpointStatements: [],
   hasEndpoint: 0,
@@ -22,13 +24,13 @@ const createEndpoint = () => ({
   value: '',
 });
 
-export const endpointTestCaseReducer = (state, action) => {
+export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: any) => {
   Object.freeze(state);
   let endpointStatements = [...state.endpointStatements];
 
   switch (action.type) {
     case actionTypes.UPDATE_ENDPOINT_TEST_STATEMENT:
-      let endpointTestStatement = action.endpointTestStatement;
+      const { endpointTestStatement } = action;
       return {
         ...state,
         endpointTestStatement,
@@ -45,15 +47,16 @@ export const endpointTestCaseReducer = (state, action) => {
       return {
         ...state,
         endpointStatements,
+        modalOpen: false,
       };
     case actionTypes.DELETE_ENDPOINT:
-      endpointStatements = endpointStatements.filter(statement => statement.id !== action.id);
+      endpointStatements = endpointStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         endpointStatements,
       };
     case actionTypes.UPDATE_ENDPOINT:
-      endpointStatements = endpointStatements.map(statement => {
+      endpointStatements = endpointStatements.map((statement) => {
         if (statement.id === action.id) {
           statement.serverFileName = action.serverFileName;
           statement.serverFilePath = action.serverFilePath;
@@ -69,7 +72,7 @@ export const endpointTestCaseReducer = (state, action) => {
         endpointStatements,
       };
     case actionTypes.UPDATE_SERVER_FILEPATH:
-      endpointStatements = endpointStatements.map(statement => {
+      endpointStatements = endpointStatements.map((statement) => {
         if (statement.type === 'endpoint') {
           statement.serverFileName = action.serverFileName;
           statement.serverFilePath = action.serverFilePath;
@@ -86,12 +89,23 @@ export const endpointTestCaseReducer = (state, action) => {
         endpointTestStatement: '',
         endpointStatements: [],
       };
-      case actionTypes.UPDATE_STATEMENTS_ORDER:
-        endpointStatements = [...action.draggableStatements];
-        return {
-          ...state,
-          endpointStatements,
-        };
+    case actionTypes.UPDATE_STATEMENTS_ORDER:
+      endpointStatements = [...action.draggableStatements];
+      return {
+        ...state,
+        endpointStatements,
+      };
+    case actionTypes.OPEN_INFO_MODAL:
+      return {
+        ...state,
+        modalOpen: true,
+      };
+    case actionTypes.CLOSE_INFO_MODAL:
+      return {
+        ...state,
+        modalOpen: false,
+      };
+
     default:
       return state;
   }

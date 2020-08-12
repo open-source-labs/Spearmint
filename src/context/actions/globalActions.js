@@ -12,6 +12,7 @@ export const actionTypes = {
   HIGHLIGHT_FILE: 'HIGHLIGHT_FILE',
   SET_PROJECT_FILE_PATH: 'SET_PROJECT_FILE_PATH',
   SET_FILE_PATH_MAP: 'SET_FILE_PATH_MAP',
+  CREATE_FILE_SHOW: 'CREATE_FILE_SHOW',
 };
 
 export const setProjectUrl = (url) => ({
@@ -72,10 +73,7 @@ export const setFilePathMap = (filePathMap) => ({
   filePathMap,
 });
 
-//added for Endpoint test case functionality
-export const setFileTestCode = (testFileCode) => {
-  return {
-    type: actionTypes.SET_TEST_FILE_CODE,
-    testFileCode: testFileCode,
-  };
-};
+export const createFile = (testString) => ({
+  type: actionTypes.CREATE_FILE_SHOW,
+  testString,
+});
