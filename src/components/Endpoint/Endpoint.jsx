@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-import styles from '../Endpoint/Endpoint.module.scss';
+import { Draggable } from 'react-beautiful-dnd';
+import styles from './Endpoint.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   deleteEndpoint,
   updateEndpoint,
   updateServerFilePath,
 } from '../../context/actions/endpointTestCaseActions';
-import { Draggable } from 'react-beautiful-dnd';
 import SearchInput from '../SearchInput/SearchInput';
+
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 
@@ -20,13 +21,13 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
   };
 
-  const handleClickDeleteEndpoint = e => {
+  const handleClickDeleteEndpoint = (e) => {
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
 
   return (
     <Draggable draggableId={endpoint.id.toString()} index={index}>
-      {provided => (
+      {(provided) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
@@ -40,26 +41,28 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             <h3>Endpoint</h3>
           </div>
 
-
           <div id={styles.groupFlexbox}>
             <div id={styles.serverInput}>
               <label htmlFor='endpointFile'>Import Server From</label>
               <div id={styles.labelInput}>
-                <SearchInput options={Object.keys(filePathMap)} dispatch={dispatchToEndpointTestCase} action={updateServerFilePath} filePathMap={filePathMap}/>  
+                <SearchInput
+                  options={Object.keys(filePathMap)}
+                  dispatch={dispatchToEndpointTestCase}
+                  action={updateServerFilePath}
+                  filePathMap={filePathMap}
+                />
               </div>
             </div>
           </div>
 
           <div id={styles.groupFlexbox}>
             <div id={styles.dropdownWrapper}>
-              <label htmlFor='method' >
-                Method
-                </label>
+              <label htmlFor='method'>Method</label>
               <div id={styles.dropdownFlex}>
                 <select
                   id='method'
                   value={endpoint.method}
-                  onChange={e => handleChangeEndpointFields(e, 'method')}
+                  onChange={(e) => handleChangeEndpointFields(e, 'method')}
                 >
                   <option value='' />
                   <option value='get'>get</option>
@@ -71,50 +74,44 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             </div>
 
             <div id={styles.alignRight}>
-              <label htmlFor='route'>
-                Route
-              </label>
+              <label htmlFor='route'>Route</label>
               <div id={styles.inputFlexBox}>
                 <input
                   type='text'
                   name='route'
                   placeholder='eg. /route'
-                  onChange={e => handleChangeEndpointFields(e, 'route')} />
+                  onChange={(e) => handleChangeEndpointFields(e, 'route')}
+                />
               </div>
             </div>
           </div>
 
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
-              <label htmlFor='requestBody'>
-                Expected Response
-              </label>
+              <label htmlFor='requestBody'>Expected Response</label>
               <div id={styles.inputFlexBox}>
-                  <input
-                    type='text'
-                    name='expectedResponse'
-                    placeholder="eg. status"
-                    onChange={e => handleChangeEndpointFields(e, 'expectedResponse')} />
-                </div>
-              </div>
-
-            <div id={styles.labelInput}>
-                <label htmlFor='value'>
-                  Expected Value
-              </label>
-              <div id={styles.inputFlexBox}>
-                  <input
-                    type='text'
-                    name='value'
-                    placeholder='eg. 200'
-                    onChange={e => handleChangeEndpointFields(e, 'value')}
-                  />
-                </div>
+                <input
+                  type='text'
+                  name='expectedResponse'
+                  placeholder='eg. status'
+                  onChange={(e) => handleChangeEndpointFields(e, 'expectedResponse')}
+                />
               </div>
             </div>
- 
-        </div>
 
+            <div id={styles.labelInput}>
+              <label htmlFor='value'>Expected Value</label>
+              <div id={styles.inputFlexBox}>
+                <input
+                  type='text'
+                  name='value'
+                  placeholder='eg. 200'
+                  onChange={(e) => handleChangeEndpointFields(e, 'value')}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </Draggable>
   );
