@@ -1,76 +1,83 @@
 export const actionTypes = {
-    UPDATE_ENDPOINT_STATEMENTS_ORDER: 'UPDATE_ENDPOINT_STATEMENTS_ORDER',
-    UPDATE_ENDPOINT_TEST_STATEMENT: 'UPDATE_ENDPOINT_TEST_STATEMENT',
+  UPDATE_ENDPOINT_STATEMENTS_ORDER: 'UPDATE_ENDPOINT_STATEMENTS_ORDER',
+  UPDATE_ENDPOINT_TEST_STATEMENT: 'UPDATE_ENDPOINT_TEST_STATEMENT',
 
-    TOGGLE_ENDPOINT: 'TOGGLE_ENDPOINT',
+  TOGGLE_ENDPOINT: 'TOGGLE_ENDPOINT',
 
-    CREATE_NEW_ENDPOINT_TEST: 'CREATE_NEW_ENDPOINT_TEST',
+  CREATE_NEW_ENDPOINT_TEST: 'CREATE_NEW_ENDPOINT_TEST',
 
-    UPDATE_SERVER_FILEPATH: 'UPDATE_SERVER_FILEPATH',
+  UPDATE_SERVER_FILEPATH: 'UPDATE_SERVER_FILEPATH',
 
-    UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
+  UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
 
-    ADD_ENDPOINT: 'ADD_ENDPOINT',
-    DELETE_ENDPOINT: 'DELETE_ENDPOINT',
-    UPDATE_ENDPOINT: 'UPDATE_ENDPOINT',
+  ADD_ENDPOINT: 'ADD_ENDPOINT',
+  DELETE_ENDPOINT: 'DELETE_ENDPOINT',
+  UPDATE_ENDPOINT: 'UPDATE_ENDPOINT',
 };
 
-
-export const updateEndpointStatementsOrder = draggableStatements => ({
-    type: actionTypes.UPDATE_ENDPOINT_STATEMENTS_ORDER,
-    draggableStatements,
+export const updateEndpointStatementsOrder = (draggableStatements) => ({
+  type: actionTypes.UPDATE_ENDPOINT_STATEMENTS_ORDER,
+  draggableStatements,
 });
 
-export const updateEndpointTestStatement = endpointTestStatement => ({
-    type: actionTypes.UPDATE_ENDPOINT_TEST_STATEMENT,
-    endpointTestStatement
-})
+export const updateEndpointTestStatement = (endpointTestStatement) => ({
+  type: actionTypes.UPDATE_ENDPOINT_TEST_STATEMENT,
+  endpointTestStatement,
+});
 
 export const toggleEndpoint = () => ({
-    type: actionTypes.TOGGLE_ENDPOINT,
+  type: actionTypes.TOGGLE_ENDPOINT,
 });
 
 export const createNewEndpointTest = () => ({
-    type: actionTypes.CREATE_NEW_ENDPOINT_TEST,
+  type: actionTypes.CREATE_NEW_ENDPOINT_TEST,
 });
 
 export const updateServerFilePath = (serverFileName, serverFilePath) => ({
-    type: actionTypes.UPDATE_SERVER_FILEPATH,
-    serverFileName,
-    serverFilePath,
+  type: actionTypes.UPDATE_SERVER_FILEPATH,
+  serverFileName,
+  serverFilePath,
 });
 
 export const addEndpoint = () => ({
-    type: actionTypes.ADD_ENDPOINT,
+  type: actionTypes.ADD_ENDPOINT,
 });
 
-export const deleteEndpoint = id => ({
-    type: actionTypes.DELETE_ENDPOINT,
-    id,
+export const deleteEndpoint = (id) => ({
+  type: actionTypes.DELETE_ENDPOINT,
+  id,
 });
 
 export const updateEndpoint = ({
-    id,
-    serverFileName,
-    serverFilePath,
-    method,
-    route,
-    expectedResponse,
-    value,
+  id,
+  serverFileName,
+  serverFilePath,
+  method,
+  route,
+  expectedResponse,
+  value,
 }) => ({
-    type: actionTypes.UPDATE_ENDPOINT,
-    id,
-    serverFileName,
-    serverFilePath,
-    method,
-    route,
-    expectedResponse,
-    value
+  type: actionTypes.UPDATE_ENDPOINT,
+  id,
+  serverFileName,
+  serverFilePath,
+  method,
+  route,
+  expectedResponse,
+  value,
 });
 
-export const updateStatementsOrder = draggableStatements => {
-      return {
-      type: actionTypes.UPDATE_STATEMENTS_ORDER,
-      draggableStatements,
-    }};
-  
+export const updateStatementsOrder = (draggableStatements) => {
+  return {
+    type: actionTypes.UPDATE_STATEMENTS_ORDER,
+    draggableStatements,
+  };
+};
+
+//added for Endpoint test case functionality
+export const setFileTestCode = (testFileCode) => {
+  return {
+    type: actionTypes.SET_TEST_FILE_CODE,
+    testFileCode,
+  };
+};

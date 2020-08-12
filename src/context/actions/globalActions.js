@@ -14,7 +14,7 @@ export const actionTypes = {
   SET_FILE_PATH_MAP: 'SET_FILE_PATH_MAP',
 };
 
-export const setProjectUrl = url => ({
+export const setProjectUrl = (url) => ({
   type: actionTypes.SET_PROJECT_URL,
   url,
 });
@@ -24,12 +24,12 @@ export const loadProject = (load) => ({
   load,
 });
 
-export const createFileTree = fileTree => ({
+export const createFileTree = (fileTree) => ({
   type: actionTypes.CREATE_FILE_TREE,
   fileTree,
 });
 
-export const setComponentName = componentName => ({
+export const setComponentName = (componentName) => ({
   type: actionTypes.SET_COMPONENT_NAME,
   componentName,
 });
@@ -42,32 +42,40 @@ export const closeRightPanel = () => ({
   type: actionTypes.CLOSE_RIGHT_PANEL,
 });
 
-export const toggleRightPanel = display => ({
+export const toggleRightPanel = (display) => ({
   type: actionTypes.TOGGLE_RIGHT_PANEL,
   display,
 });
 
-export const displayFileCode = displayedFileCode => ({
+export const displayFileCode = (displayedFileCode) => ({
   type: actionTypes.DISPLAY_FILE_CODE,
   displayedFileCode,
 });
 
-export const toggleFolderView = filePath => ({
+export const toggleFolderView = (filePath) => ({
   type: actionTypes.TOGGLE_FOLDER_VIEW,
   filePath,
 });
 
-export const highlightFile = fileName => ({
+export const highlightFile = (fileName) => ({
   type: actionTypes.HIGHLIGHT_FILE,
   fileName,
 });
 
-export const setProjectFilePath = projectFilePath => ({
+export const setProjectFilePath = (projectFilePath) => ({
   type: actionTypes.SET_PROJECT_FILE_PATH,
   projectFilePath,
 });
 
-export const setFilePathMap = filePathMap => ({
+export const setFilePathMap = (filePathMap) => ({
   type: actionTypes.SET_FILE_PATH_MAP,
   filePathMap,
 });
+
+//added for Endpoint test case functionality
+export const setFileTestCode = (testFileCode) => {
+  return {
+    type: actionTypes.SET_TEST_FILE_CODE,
+    testFileCode: testFileCode,
+  };
+};

@@ -16,6 +16,9 @@ export const globalState = {
   isFileHighlighted: '',
   projectFilePath: '',
   filePathMap: {},
+
+  //added shit for Endpoint testing
+  testFileCode: '',
 };
 
 export const globalReducer = (state, action) => {
@@ -95,6 +98,13 @@ export const globalReducer = (state, action) => {
         filePathMap,
       };
 
+    //added for endpoint functionality test
+    case actionTypes.SET_TEST_FILE_CODE:
+      const testFileCode = action.testFileCode;
+      return {
+        ...state,
+        testFileCode,
+      };
     default:
       return state;
   }

@@ -4,7 +4,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { editor } from 'monaco-editor';
 
 const Editor = () => {
-  const [{ displayedFileCode }] = useContext(GlobalContext);
+  let [{ displayedFileCode, testFileCode }] = useContext(GlobalContext);
+  if (testFileCode.length > 0) displayedFileCode = testFileCode;
 
   const options = {
     selectOnLineNumbers: true,

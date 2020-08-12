@@ -11,6 +11,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 //imports from Export Modal
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { setFileTestCode } from '../../context/actions/globalActions';
 
 let testFileCode = 'import React from "react";';
 
@@ -57,15 +58,15 @@ const EndpointTestCase = () => {
 ----------------------------------------------------------------------------*/
   const generateTestFile = () => {
     if (endpointTestCase.hasEndpoint > 0) {
-      let test =
-        (addEndpointImportStatements(),
+      return (
+        addEndpointImportStatements(),
         addEndpointTestStatements(),
         (testFileCode = beautify(testFileCode, {
           indent_size: 2,
           space_in_empty_paren: true,
           e4x: true,
-        })));
-      alert(test);
+        }))
+      );
     }
   };
 
@@ -124,7 +125,9 @@ const EndpointTestCase = () => {
         <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
       </div>
       {/* added component */}
-      <button onClick={generateTestFile}>Click me to save</button>
+      <button onClick={() => dispatchToGlobal(setFileTestCode(generateTestFile()))}>
+        Click me to save
+      </button>
       {/* added component */}
 
       <div id={styles.testMockSection}>
