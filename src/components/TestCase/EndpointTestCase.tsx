@@ -2,13 +2,20 @@ import React, { useContext } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { updateEndpointTestStatement, updateStatementsOrder } from '../../context/actions/endpointTestCaseActions';
+import {
+  updateEndpointTestStatement,
+  updateStatementsOrder,
+} from '../../context/actions/endpointTestCaseActions';
 import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
+import EndpointModal from '../Endpoint/EndpointModal';
 
 const EndpointTestCase = () => {
-  const [{ endpointTestStatement, endpointStatements }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [
+    { endpointTestStatement, endpointStatements, modalOpen },
+    dispatchToEndpointTestCase,
+  ] = useContext(EndpointTestCaseContext);
 
   const handleUpdateEndpointTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
@@ -31,31 +38,35 @@ const EndpointTestCase = () => {
     const reorderedStatements: Array<EndpointStatements> = reorder(
       endpointStatements,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
     dispatchToEndpointTestCase(updateStatementsOrder(reorderedStatements));
   };
 
+  let endpointInfoModal = null;
+  if (modalOpen) endpointInfoModal = <EndpointModal />;
+
   return (
     <div>
-      <div id="head">
+      <div id='head'>
         <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
       </div>
 
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
-          <label htmlFor="test-statement">Test</label>
+          <label htmlFor='test-statement'>Test</label>
           <input
-            type="text"
+            type='text'
             id={styles.testStatement}
             value={endpointTestStatement}
             onChange={handleUpdateEndpointTestStatements}
           />
         </section>
       </div>
+      {endpointInfoModal}
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
+        <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <EndpointTestStatements

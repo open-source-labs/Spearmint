@@ -10,6 +10,8 @@ export const actionTypes = {
   ADD_ENDPOINT: 'ADD_ENDPOINT',
   DELETE_ENDPOINT: 'DELETE_ENDPOINT',
   UPDATE_ENDPOINT: 'UPDATE_ENDPOINT',
+  OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
+  CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
 };
 
 // Never used
@@ -56,4 +58,12 @@ export const updateStatementsOrder = (draggableStatements: Array<EndpointStateme
     type: actionTypes.UPDATE_STATEMENTS_ORDER,
     draggableStatements,
   };
+};
+
+export const openInfoModal = () => {
+  return { type: actionTypes.OPEN_INFO_MODAL };
+};
+
+export const closeInfoModal = () => {
+  return { type: actionTypes.CLOSE_INFO_MODAL };
 };
