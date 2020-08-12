@@ -6,13 +6,12 @@ import {
   deleteEndpoint,
   updateEndpoint,
   updateServerFilePath,
-  openInfoModal,
 } from '../../context/actions/endpointTestCaseActions';
 import { Draggable } from 'react-beautiful-dnd';
 import SearchInput from '../SearchInput/SearchInput';
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
-// test comment for pulldown
+
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
   const [{ modalOpen }] = useContext(EndpointTestCaseContext);
@@ -25,10 +24,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   const handleClickDeleteEndpoint = (e) => {
     // delete endpoing returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
-  };
-
-  const modalOpener = () => {
-    dispatchToEndpointTestCase(openInfoModal());
   };
 
   return (
@@ -51,7 +46,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             <div id={styles.header}>
               <img src={dragIcon} alt='drag' />
               <h3>Endpoint</h3>
-              <button onClick={modalOpener}>Example</button>
             </div>
 
             <div id={styles.groupFlexbox}>

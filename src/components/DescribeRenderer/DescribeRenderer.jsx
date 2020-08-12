@@ -4,6 +4,7 @@ import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../context/actions/reactTestCaseActions';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
+
 const questionIcon = require('../../assets/images/help-circle.png');
 
 const DescribeRenderer = ({
@@ -33,6 +34,7 @@ const DescribeRenderer = ({
         <label htmlFor='describe-label' className={styles.describeLabel}>
           Describe Block
         </label>
+
         <i
           onClick={deleteDescribeBlockHandleClick}
           id={id}

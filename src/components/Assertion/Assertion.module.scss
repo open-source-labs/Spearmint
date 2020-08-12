@@ -75,7 +75,7 @@
 }
 
 #tooltip {
-  min-width: 10em;
+  min-width: 15em;
   padding: 0.5em 0.75em;
   box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
   @include tooltip;
@@ -113,7 +113,6 @@
   align-items: flex-end;
   margin-bottom: 8px;
   padding-top: -2rem;
-
 }
 #autoTool {
   display: flex;
@@ -147,11 +146,9 @@
   width: 185px;
   align-items: center;
 
-
   input {
     width: 185px;
     display: block;
     margin-top: 6px;
-
   }
 }

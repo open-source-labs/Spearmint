@@ -8,7 +8,7 @@ import {
 import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import EndpointModal from '../Endpoint/EndpointModal';
+import EndpointModal from '../TestHelpModals/EndpointHelpModal';
 
 const EndpointTestCase = () => {
   const [

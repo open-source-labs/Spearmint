@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import { addDescribeBlock } from '../../context/actions/reactTestCaseActions';
+import { addDescribeBlock, openInfoModal } from '../../context/actions/reactTestCaseActions';
 import NewTestModal from '../Modals/NewTestModal';
 
 const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
@@ -17,6 +17,10 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
     dispatchToTestCase(addDescribeBlock());
   };
 
+  const modalOpener = () => {
+    dispatchToTestCase(openInfoModal());
+  };
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -29,6 +33,9 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             dispatchToTestCase={dispatchToTestCase}
           />
         </div>
+        <button id={styles.example} onClick={modalOpener}>
+          example
+        </button>
         <div
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}

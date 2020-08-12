@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import EndpointTestModal from '../Modals/EndpointTestModal';
-import { addEndpoint } from '../../context/actions/endpointTestCaseActions';
-
+import { addEndpoint, openInfoModal } from '../../context/actions/endpointTestCaseActions';
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
   const [isEndpointModalOpen, setIsEndpointModalOpen] = useState(false);
@@ -19,6 +18,10 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
     dispatchToEndpointTestCase(addEndpoint());
   };
 
+  const modalOpener = () => {
+    dispatchToEndpointTestCase(openInfoModal());
+  };
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -30,6 +33,9 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
             closeEndpointModal={closeEndpointModal}
             dispatchToEndpointTestCase={dispatchToEndpointTestCase}
           />
+          <button id={styles.example} onClick={modalOpener}>
+            example
+          </button>
         </div>
         <div id={styles.right}>
           <button data-testid='endPointButton' onClick={handleAddEndpoint}>
