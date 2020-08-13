@@ -13,6 +13,7 @@ export const actionTypes = {
   SET_PROJECT_FILE_PATH: 'SET_PROJECT_FILE_PATH',
   SET_FILE_PATH_MAP: 'SET_FILE_PATH_MAP',
   CREATE_FILE_SHOW: 'CREATE_FILE_SHOW',
+  UPDATE_FILE_SHOW: 'UPDATE_FILE_SHOW',
 };
 
 export const setProjectUrl = (url) => ({
@@ -75,5 +76,10 @@ export const setFilePathMap = (filePathMap) => ({
 
 export const createFile = (testString) => ({
   type: actionTypes.CREATE_FILE_SHOW,
+  testString,
+});
+
+export const updateFile = (testString) => ({
+  type: actionTypes.UPDATE_FILE_SHOW,
   testString,
 });
