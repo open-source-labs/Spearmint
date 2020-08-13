@@ -148,7 +148,7 @@ export const reactTestCaseReducer = (state, action) => {
             ...describeBlocks.byId,
             [describeId]: createDescribeBlock(describeId),
           },
-          allIds: [...describeBlocks.allIds || [], describeId],
+          allIds: [...(describeBlocks.allIds || []), describeId],
         },
       };
     }
@@ -219,7 +219,7 @@ export const reactTestCaseReducer = (state, action) => {
             ...itStatements.byId,
             [itId]: createItStatement(describeId, itId),
           },
-          allIds: [...itStatements.allIds || [], itId],
+          allIds: [...(itStatements.allIds || []), itId],
         },
       };
     }
@@ -263,7 +263,6 @@ export const reactTestCaseReducer = (state, action) => {
             ...statements.byId,
           },
           allIds: [...statementAllIds],
-
         },
       };
     }
@@ -476,9 +475,7 @@ export const reactTestCaseReducer = (state, action) => {
       };
     }
     case actionTypes.UPDATE_PROP: {
-      const {
-        id, statementId, propKey, propValue,
-      } = action;
+      const { id, statementId, propKey, propValue } = action;
       const updatedProps = [...statements.byId[statementId].props];
 
       updatedProps.forEach((prop) => {

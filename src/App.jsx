@@ -1,7 +1,11 @@
 import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/reducers/globalReducer';
-import { ReactTestCaseContext, reactTestCaseState, reactTestCaseReducer } from './context/reducers/reactTestCaseReducer';
+import {
+  ReactTestCaseContext,
+  reactTestCaseState,
+  reactTestCaseReducer,
+} from './context/reducers/reactTestCaseReducer';
 import {
   PuppeteerTestCaseContext,
   puppeteerTestCaseState,
@@ -23,12 +27,16 @@ import {
   hooksTestCaseReducer,
 } from './context/reducers/hooksTestCaseReducer';
 import {
-  TestFileModalContext,
+  // TestFileModalContext,
   testFileModalState,
   testFileModalReducer,
 } from './context/reducers/testFileModalReducer';
 
-import { MockDataContext, mockDataState, mockDataReducer } from './context/reducers/mockDataReducer';
+import {
+  // MockDataContext,
+  mockDataState,
+  mockDataReducer,
+} from './context/reducers/mockDataReducer';
 import ProjectLoader from './pages/ProjectLoader/ProjectLoader';
 import NavBar from './components/NavBar/NavBar';
 import LeftPanel from './pages//LeftPanel/LeftPanel';
@@ -36,8 +44,11 @@ import RightPanel from './pages/RightPanel/RightPanel';
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
-  const [reactTestCase, dispatchToReactTestCase] = useReducer(reactTestCaseReducer, reactTestCaseState);
-  const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
+  const [reactTestCase, dispatchToReactTestCase] = useReducer(
+    reactTestCaseReducer,
+    reactTestCaseState
+  );
+  // const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
   const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
     endpointTestCaseReducer,
     endpointTestCaseState
@@ -59,7 +70,6 @@ const App = () => {
     testFileModalReducer,
     testFileModalState
   );
-
 
   if (!global.isProjectLoaded) {
     return (
@@ -83,28 +93,39 @@ const App = () => {
        *
        * We access the value that we gave to the Provider through useContext
        */
-      <div id={global.isFileDirectoryOpen ? 
-        (global.isRightPanelOpen? styles.fileDirectoryOpenRightPanelOpen : styles.fileDirectoryOpenRightPanelClosed) :
-        (global.isRightPanelOpen? styles.fileDirectoryClosedRightPanelOpen : styles.fileDirectoryClosedRightPanelClosed) 
-      }>
+      <div
+        id={
+          global.isFileDirectoryOpen
+            ? global.isRightPanelOpen
+              ? styles.fileDirectoryOpenRightPanelOpen
+              : styles.fileDirectoryOpenRightPanelClosed
+            : global.isRightPanelOpen
+            ? styles.fileDirectoryClosedRightPanelOpen
+            : styles.fileDirectoryClosedRightPanelClosed
+        }
+      >
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-            <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
-                <EndpointTestCaseContext.Provider value={[endpointTestCase, dispatchToEndpointTestCase]}>
-                  <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
-                    <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
-                      <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-                        <PuppeteerTestCaseContext.Provider value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}>
-                          <NavBar />
-                          <LeftPanel />
-                        </PuppeteerTestCaseContext.Provider>
-                      </MockDataContext.Provider>
-                    </TestFileModalContext.Provider>
-                  </HooksTestCaseContext.Provider>
-                </EndpointTestCaseContext.Provider>
-            </ReactTestCaseContext.Provider>
+            {/* <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}> */}
+            <EndpointTestCaseContext.Provider
+              value={[endpointTestCase, dispatchToEndpointTestCase]}
+            >
+              <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
+                <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
+                  <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+                    <PuppeteerTestCaseContext.Provider
+                      value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}
+                    >
+                      <NavBar />
+                      <LeftPanel />
+                    </PuppeteerTestCaseContext.Provider>
+                  </MockDataContext.Provider>
+                </TestFileModalContext.Provider>
+              </HooksTestCaseContext.Provider>
+            </EndpointTestCaseContext.Provider>
+            {/* </ReactTestCaseContext.Provider> */}
           </ReduxTestCaseContext.Provider>
-          {global.isRightPanelOpen ?  <RightPanel /> : ''}
+          {global.isRightPanelOpen ? <RightPanel /> : ''}
         </GlobalContext.Provider>
       </div>
     );

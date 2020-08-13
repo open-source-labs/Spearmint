@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useReducer } from 'react';
 import cn from 'classnames';
 import styles from './TestCase.module.scss';
-import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import {
   updateDescribeText,
   updateRenderComponent,
@@ -15,13 +14,25 @@ import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
 import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';
 
+//changes to pull down context
+import {
+  ReactTestCaseContext,
+  reactTestCaseState,
+  reactTestCaseReducer,
+} from '../../context/reducers/reactTestCaseReducer';
+//
+
 const ReactTestCase = () => {
-  const [{ describeBlocks, itStatements, statements }, dispatchToReactTestCase] = useContext(
-    ReactTestCaseContext,
+  //changes to pull down context
+  const [reactTestCase, dispatchToReactTestCase] = useReducer(
+    reactTestCaseReducer,
+    reactTestCaseState
   );
+  //
+
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap }] = useContext(GlobalContext);
-  const draggableStatements = describeBlocks.allIds;
+  const draggableStatements = reactTestCase.describeBlocks.allIds;
 
   const handleAddMockData = () => {
     dispatchToMockData(addMockData());
@@ -40,56 +51,56 @@ const ReactTestCase = () => {
   };
 
   return (
-    <div id={styles.ReactTestCase}>
-      <div id="head">
-        <ReactTestMenu
-          dispatchToTestCase={dispatchToReactTestCase}
-          dispatchToMockData={dispatchToMockData}
-        />
-      </div>
-      <div className={styles.header}>
-        <div className={styles.renderComponent}>
-          <span className={styles.renderLabel}>
-            Enter Component Name:
-          </span>
-          <SearchInput
-            reactTestCase
-            dispatch={dispatchToReactTestCase}
-            action={updateRenderComponent}
-            filePathMap={filePathMap}
-            options={Object.keys(filePathMap)}
+    <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
+      <div id={styles.ReactTestCase}>
+        <div id='head'>
+          <ReactTestMenu
+            dispatchToTestCase={dispatchToReactTestCase}
+            dispatchToMockData={dispatchToMockData}
           />
         </div>
-        <button type="button" className={styles.mockBtn} onClick={handleAddMockData}>
-          <i className={cn(styles.addIcon, 'fas fa-plus')} />
-          Mock Data
-        </button>
+        <div className={styles.header}>
+          <div className={styles.renderComponent}>
+            <span className={styles.renderLabel}>Enter Component Name:</span>
+            <SearchInput
+              reactTestCase
+              dispatch={dispatchToReactTestCase}
+              action={updateRenderComponent}
+              filePathMap={filePathMap}
+              options={Object.keys(filePathMap)}
+            />
+          </div>
+          <button type='button' className={styles.mockBtn} onClick={handleAddMockData}>
+            <i className={cn(styles.addIcon, 'fas fa-plus')} />
+            Mock Data
+          </button>
+        </div>
+        {mockData.length > 0 && (
+          <section id={styles.mockDataHeader}>
+            {mockData.map((data) => {
+              return (
+                <MockData
+                  key={data.id}
+                  mockDatumId={data.id}
+                  dispatchToMockData={dispatchToMockData}
+                  fieldKeys={data.fieldKeys}
+                />
+              );
+            })}
+          </section>
+        )}
+        <DecribeRenderer
+          dispatcher={dispatchToReactTestCase}
+          draggableStatements={draggableStatements}
+          describeBlocks={reactTestCase.describeBlocks}
+          itStatements={reactTestCase.itStatements}
+          statements={reactTestCase.statements}
+          handleChangeDescribeText={handleChangeDescribeText}
+          handleChangeItStatementText={handleChangeItStatementText}
+          type='react'
+        />
       </div>
-      {mockData.length > 0 && (
-        <section id={styles.mockDataHeader}>
-          {mockData.map((data) => {
-            return (
-              <MockData
-                key={data.id}
-                mockDatumId={data.id}
-                dispatchToMockData={dispatchToMockData}
-                fieldKeys={data.fieldKeys}
-              />
-            );
-          })}
-        </section>
-      )}
-      <DecribeRenderer
-        dispatcher={dispatchToReactTestCase}
-        draggableStatements={draggableStatements}
-        describeBlocks={describeBlocks}
-        itStatements={itStatements}
-        statements={statements}
-        handleChangeDescribeText={handleChangeDescribeText}
-        handleChangeItStatementText={handleChangeItStatementText}
-        type="react"
-      />
-    </div>
+    </ReactTestCaseContext.Provider>
   );
 };
 export default ReactTestCase;

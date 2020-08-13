@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewReduxTest } from '../../context/actions/reduxTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal } from '../../context/actions/testFileModalActions';
-import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
+// import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
+
+import { toggleModal } from '../../context/actions/globalActions';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 interface ReduxTestModalProps {
   isReduxModalOpen: boolean;
@@ -11,13 +13,17 @@ interface ReduxTestModalProps {
   dispatchToReduxTestCase: (action: object) => void;
 }
 
-const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }: ReduxTestModalProps) => {
-  const [, dispatchToTestFileModal]= useContext<any>(TestFileModalContext);
+const ReduxTestModal = ({
+  isReduxModalOpen,
+  closeReduxModal,
+  dispatchToReduxTestCase,
+}: ReduxTestModalProps) => {
+  const [, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const handleNewReduxTest = () => {
     dispatchToReduxTestCase(createNewReduxTest());
     closeReduxModal();
-    dispatchToTestFileModal(toggleModal());
+    dispatchToGlobal(toggleModal());
   };
 
   const modalStyles = {
@@ -25,7 +31,7 @@ const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTest
       zIndex: 3,
     },
   };
-  
+
   return (
     <ReactModal
       className={styles.modal}
