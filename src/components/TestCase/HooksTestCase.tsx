@@ -96,8 +96,12 @@ const HooksTestCase = () => {
 
   // Hooks Import Statements
   const addRenderHooksImportStatement = () => {
-    testFileCode += `import { renderHook, act } from '@testing-library/react-hooks'
-    import '@testing-library/jest-dom/extend-expect'`;
+    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
+      testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+    }
+    if (!testFileCode.includes(`import { renderHook, act } from '@testing-library/react-hooks';`)) {
+      testFileCode += `import { renderHook, act } from '@testing-library/react-hooks';`;
+    }
   };
 
   // Hooks Filepath
@@ -109,8 +113,12 @@ const HooksTestCase = () => {
 
   // Context Import Statements
   const addContextImportStatements = () => {
-    testFileCode += `import { render } from '@testing-library/react'; 
-    import '@testing-library/jest-dom/extend-expect'`;
+    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
+      testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+    }
+    if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+      testFileCode += `import { render } from '@testing-library/react';`;
+    }
   };
 
   // Context Filepath
