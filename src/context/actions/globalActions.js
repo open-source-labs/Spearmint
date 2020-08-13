@@ -14,6 +14,8 @@ export const actionTypes = {
   SET_FILE_PATH_MAP: 'SET_FILE_PATH_MAP',
   CREATE_FILE_SHOW: 'CREATE_FILE_SHOW',
   UPDATE_FILE_SHOW: 'UPDATE_FILE_SHOW',
+  OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
+  CLOSE_BROWSER_DOCS: 'CLOSE_BROWSER_DOCS',
 };
 
 export const setProjectUrl = (url) => ({
@@ -82,4 +84,8 @@ export const createFile = (testString) => ({
 export const updateFile = (testString) => ({
   type: actionTypes.UPDATE_FILE_SHOW,
   testString,
+});
+export const openBrowserDocs = (docsUrl) => ({
+  type: actionTypes.OPEN_BROWSER_DOCS,
+  docsUrl,
 });

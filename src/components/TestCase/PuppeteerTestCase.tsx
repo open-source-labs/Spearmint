@@ -5,9 +5,12 @@ import PuppeteerTestStatements from './PuppeteerTestStatements';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerStatements } from '../../utils/puppeteerTypes';
+import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 const PuppeteerTestCase = () => {
-  const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
+  const [{ puppeteerStatements, modalOpen }, dispatchToPuppeteerTestCase] = useContext(
+    PuppeteerTestCaseContext
+  );
 
   const reorder = (list: Array<PuppeteerStatements>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
@@ -23,7 +26,7 @@ const PuppeteerTestCase = () => {
     if (result.destination.index === result.source.index) {
       return;
     }
-    const reorderedStatements: Array<PuppeteerStatements>  = reorder(
+    const reorderedStatements: Array<PuppeteerStatements> = reorder(
       puppeteerStatements,
       result.source.index,
       result.destination.index
@@ -34,21 +37,21 @@ const PuppeteerTestCase = () => {
   return (
     <div>
       <div id='head'>
-        <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}/>
+        <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase} />
       </div>
-
+      {modalOpen ? <PuppeteerHelpModal /> : null}
       <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='droppable'>
-            {provided => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                <PuppeteerTestStatements
-                  puppeteerStatements={puppeteerStatements}
-                  dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
-                />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
+        <Droppable droppableId='droppable'>
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              <PuppeteerTestStatements
+                puppeteerStatements={puppeteerStatements}
+                dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
+              />
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </DragDropContext>
     </div>
   );

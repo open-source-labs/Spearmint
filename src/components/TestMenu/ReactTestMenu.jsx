@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
-import { addDescribeBlock } from '../../context/actions/reactTestCaseActions';
+import { addDescribeBlock, openInfoModal } from '../../context/actions/reactTestCaseActions';
 import NewTestModal from '../Modals/NewTestModal';
 
 const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
@@ -12,9 +12,13 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  
-  const handleAddDescribeBlock = e => {
+
+  const handleAddDescribeBlock = (e) => {
     dispatchToTestCase(addDescribeBlock());
+  };
+
+  const modalOpener = () => {
+    dispatchToTestCase(openInfoModal());
   };
 
   return (
@@ -28,12 +32,18 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             dispatchToMockData={dispatchToMockData}
             dispatchToTestCase={dispatchToTestCase}
           />
+          <button id={styles.example} onClick={modalOpener}>
+            Need Help?
+          </button>
         </div>
+
         <div
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
         >
-          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>+Describe Block</button>
+          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+            +Describe Block
+          </button>
         </div>
       </div>
     </div>

@@ -16,6 +16,8 @@ export const actionTypes = {
   UPDATE_CONTEXT_FILEPATH: 'UPDATE_CONTEXT_FILEPATH',
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   CREATE_NEW_HOOKS_TEST: 'CREATE_NEW_HOOKS_TEST',
+  OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
+  CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
 };
 
 export const toggleHooks = () => ({
@@ -88,4 +90,12 @@ export const createNewHooksTest = () => ({
 export const updateStatementsOrder = (draggableStatements: Array<HooksStatements>) => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
   draggableStatements,
+});
+
+export const openInfoModal = () => ({
+  type: actionTypes.OPEN_INFO_MODAL,
+});
+
+export const closeInfoModal = () => ({
+  type: actionTypes.CLOSE_INFO_MODAL,
 });

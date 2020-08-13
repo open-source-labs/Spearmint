@@ -11,12 +11,13 @@ import {
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
+import HooksHelpModal from '../TestHelpModals/HooksHelpModal';
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
 const path = remote.require('path');
 
 const HooksTestCase = () => {
-  const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
+  const [{ hooksTestStatement, hooksStatements, modalOpen }, dispatchToHooksTestCase] = useContext(
     HooksTestCaseContext
   );
 
@@ -96,8 +97,8 @@ const HooksTestCase = () => {
 
   // Hooks Import Statements
   const addRenderHooksImportStatement = () => {
-    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
-      testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+      testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
     }
     if (!testFileCode.includes(`import { renderHook, act } from '@testing-library/react-hooks';`)) {
       testFileCode += `import { renderHook, act } from '@testing-library/react-hooks';`;
@@ -113,8 +114,8 @@ const HooksTestCase = () => {
 
   // Context Import Statements
   const addContextImportStatements = () => {
-    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
-      testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+      testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
     }
     if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
       testFileCode += `import { render } from '@testing-library/react';`;
@@ -191,6 +192,7 @@ const HooksTestCase = () => {
         <HooksTestMenu dispatchToHooksTestCase={dispatchToHooksTestCase} />
       </div>
       <button onClick={fileHandle}>save me</button>
+      {modalOpen ? <HooksHelpModal /> : null}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>

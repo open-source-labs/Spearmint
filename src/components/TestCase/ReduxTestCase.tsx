@@ -11,13 +11,14 @@ import {
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { ReduxStatements, ReduxTestCaseState } from '../../utils/reduxTypes';
+import ReduxHelpModal from '../TestHelpModals/ReduxHelpModal';
 
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
 const path = remote.require('path');
 
 const ReduxTestCase = () => {
-  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
+  const [{ reduxTestStatement, reduxStatements, modalOpen }, dispatchToReduxTestCase] = useContext(
     ReduxTestCaseContext
   );
 
@@ -265,6 +266,7 @@ const ReduxTestCase = () => {
       <div id='head'>
         <ReduxTestMenu dispatchToReduxTestCase={dispatchToReduxTestCase} />
       </div>
+      {modalOpen ? <ReduxHelpModal /> : null}
       <button onClick={fileHandle}>save me</button>
 
       <div id={styles.testMockSection}>
