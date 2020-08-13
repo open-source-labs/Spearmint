@@ -13,12 +13,6 @@ const ReactHelpModal = () => {
     dispatchToTestCase(closeInfoModal());
   };
 
-  // const modalStyles = {
-  //   overlay: {
-  //     zIndex: 3,
-  //   },
-  // };
-
   return (
     <ReactModal
       className={styles.modal}
