@@ -15,15 +15,17 @@ import { addMockData } from '../../context/actions/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
 import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';
+import ReactHelpModal from '../TestHelpModals/ReactHelpModal';
 
 const remote = window.require('electron').remote;
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
 
 const ReactTestCase = () => {
-  const [{ describeBlocks, itStatements, statements }, dispatchToReactTestCase] = useContext(
-    ReactTestCaseContext
-  );
+  const [
+    { describeBlocks, itStatements, statements, modalOpen },
+    dispatchToReactTestCase,
+  ] = useContext(ReactTestCaseContext);
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
 
@@ -188,6 +190,7 @@ const ReactTestCase = () => {
           dispatchToMockData={dispatchToMockData}
         />
       </div>
+      {modalOpen ? <ReactHelpModal /> : null}
       <button onClick={fileHandle}>save me</button>
       <div className={styles.header}>
         <div className={styles.renderComponent}>

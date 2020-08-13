@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import EndpointTestModal from '../Modals/EndpointTestModal';
-import { addEndpoint } from '../../context/actions/endpointTestCaseActions';
-
+import { addEndpoint, openInfoModal } from '../../context/actions/endpointTestCaseActions';
+// child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
   const [isEndpointModalOpen, setIsEndpointModalOpen] = useState(false);
 
@@ -14,8 +14,12 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
     setIsEndpointModalOpen(false);
   };
 
-  const handleAddEndpoint = e => {
+  const handleAddEndpoint = (e) => {
     dispatchToEndpointTestCase(addEndpoint());
+  };
+
+  const modalOpener = () => {
+    dispatchToEndpointTestCase(openInfoModal());
   };
 
   return (
@@ -24,10 +28,14 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
         <div id={styles.left}>
           <button onClick={openEndpointModal}>New Test +</button>
           <EndpointTestModal
+            // passing methods down as props to be used when EndpointTestModal is opened
             isEndpointModalOpen={isEndpointModalOpen}
             closeEndpointModal={closeEndpointModal}
             dispatchToEndpointTestCase={dispatchToEndpointTestCase}
           />
+          <button id={styles.example} onClick={modalOpener}>
+            example
+          </button>
         </div>
         <div id={styles.right}>
           <button data-testid='endPointButton' onClick={handleAddEndpoint}>

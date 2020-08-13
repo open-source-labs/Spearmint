@@ -7,7 +7,6 @@ import {
   deleteEndpoint,
   updateEndpoint,
   updateServerFilePath,
-  openInfoModal,
 } from '../../context/actions/endpointTestCaseActions';
 import SearchInput from '../SearchInput/SearchInput';
 
@@ -24,11 +23,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   };
 
   const handleClickDeleteEndpoint = (e) => {
+    // delete endpoint returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
-  };
-
-  const modalOpener = () => {
-    dispatchToEndpointTestCase(openInfoModal());
   };
 
   return (
@@ -51,7 +47,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             <div id={styles.header}>
               <img src={dragIcon} alt='drag' />
               <h3>Endpoint</h3>
-              <button onClick={modalOpener}>Example</button>
             </div>
 
             <div id={styles.groupFlexbox}>
