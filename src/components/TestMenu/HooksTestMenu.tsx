@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import styles from './TestMenu.module.scss';
-import { addContexts, addHookUpdates, addHookRender } from '../../context/actions/hooksTestCaseActions';
+import {
+  addContexts,
+  addHookUpdates,
+  addHookRender,
+  openInfoModal,
+} from '../../context/actions/hooksTestCaseActions';
 import HooksTestModal from '../Modals/HooksTestModal';
 import { HooksTestMenuProps } from '../../utils/hooksTypes';
 
@@ -27,28 +32,37 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
     dispatchToHooksTestCase(addHookRender());
   };
 
+  const helpModalOpener = () => {
+    dispatchToHooksTestCase(openInfoModal());
+  };
+
   return (
-    <div id="test">
+    <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button type="button" onClick={openHooksModal}>New Test +</button>
+          <button type='button' onClick={openHooksModal}>
+            New Test +
+          </button>
           <HooksTestModal
             isHooksModalOpen={isHooksModalOpen}
             closeHooksModal={closeHooksModal}
             dispatchToHooksTestCase={dispatchToHooksTestCase}
           />
+          <button id={styles.example} onClick={helpModalOpener}>
+            Need Help?
+          </button>
         </div>
         <div
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
         >
-          <button className="hookRenderButton" type="button" onClick={handleAddHookRender}>
+          <button className='hookRenderButton' type='button' onClick={handleAddHookRender}>
             Hook: Rendering
           </button>
-          <button className="hookUpdatesButton" type="button" onClick={handleAddHookUpdates}>
+          <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
             Hook: Updates
           </button>
-          <button className="contextButton" type="button" onClick={handleAddContexts}>
+          <button className='contextButton' type='button' onClick={handleAddContexts}>
             Context
           </button>
         </div>

@@ -41,9 +41,6 @@ const ReactTestCase = () => {
     dispatchToReactTestCase(updateItStatementText(text, itId));
   };
 
-  // let ReactInfoModal = null;
-  // if (modalOpen) ReactInfoModal = <ReactHelpModal />;
-
   return (
     <div id={styles.ReactTestCase}>
       <div id='head'>

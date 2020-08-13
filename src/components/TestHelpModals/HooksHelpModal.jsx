@@ -3,21 +3,21 @@ import ReactModal from 'react-modal';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { closeInfoModal } from '../../context/actions/reactTestCaseActions';
-import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
-import styles from '../../components/TestHelpModals/ReactHelpModal.module.scss';
+import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
+import styles from './HooksHelpModal.module.scss';
 
 const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describe.png');
 
-const ReactHelpModal = () => {
+const HooksHelpModal = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
   // Hooks testing docs url
-  const reactUrl = 'https://testing-library.com/docs/dom-testing-library/example-intro';
+  const hooksUrl = 'https://react-hooks-testing-library.com/usage/basic-hooks';
 
-  const [{ modalOpen }, dispatchToTestCase] = useContext(ReactTestCaseContext);
+  const [{ modalOpen }, dispatchToTestCase] = useContext(HooksTestCaseContext);
 
   const openDocs = () => {
-    dispatchToGlobal(openBrowserDocs(reactUrl));
+    dispatchToGlobal(openBrowserDocs(hooksUrl));
     dispatchToTestCase(closeInfoModal());
   };
 
@@ -49,4 +49,4 @@ const ReactHelpModal = () => {
   );
 };
 
-export default ReactHelpModal;
+export default HooksHelpModal;

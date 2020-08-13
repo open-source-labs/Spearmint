@@ -1,9 +1,11 @@
 import { createContext } from 'react';
-import { HooksTestCaseState, HooksAction } from '../../utils/hooksTypes';
+import { actionTypes } from '../actions/hooksTestCaseActions';
+import { HooksTestCaseState } from '../../utils/hooksTypes';
 
 export const HooksTestCaseContext: any = createContext(null);
 
 export const hooksTestCaseState = {
+  modalOpen: false,
   hooksTestStatement: '',
   hooksStatements: [],
   hasHooks: 0,
@@ -47,7 +49,7 @@ const createHookUpdates = (statementId: number) => ({
   updatedState: '',
 });
 
-export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAction) => {
+export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => {
   Object.freeze(state);
   let hooksStatements = [...state.hooksStatements];
 
@@ -211,6 +213,16 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         hooksStatements: newHooksStatements,
       };
     }
+    case 'OPEN_INFO_MODAL':
+      return {
+        ...state,
+        modalOpen: true,
+      };
+    case 'CLOSE_INFO_MODAL':
+      return {
+        ...state,
+        modalOpen: false,
+      };
     default:
       return state;
   }
