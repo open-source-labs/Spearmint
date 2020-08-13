@@ -12,7 +12,7 @@ const describe = require('../../assets/images/describe.png');
 const ReactHelpModal = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
   // Hooks testing docs url
-  const reactUrl = 'https://testing-library.com/docs/dom-testing-library/example-intro';
+  const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
 
   const [{ modalOpen }, dispatchToTestCase] = useContext(ReactTestCaseContext);
 
