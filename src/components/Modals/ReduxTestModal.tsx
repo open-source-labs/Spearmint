@@ -11,8 +11,12 @@ interface ReduxTestModalProps {
   dispatchToReduxTestCase: (action: object) => void;
 }
 
-const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTestCase }: ReduxTestModalProps) => {
-  const [, dispatchToTestFileModal]= useContext<any>(TestFileModalContext);
+const ReduxTestModal = ({
+  isReduxModalOpen,
+  closeReduxModal,
+  dispatchToReduxTestCase,
+}: ReduxTestModalProps) => {
+  const [, dispatchToTestFileModal] = useContext<any>(TestFileModalContext);
 
   const handleNewReduxTest = () => {
     dispatchToReduxTestCase(createNewReduxTest());
@@ -25,7 +29,7 @@ const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal, dispatchToReduxTest
       zIndex: 3,
     },
   };
-  
+
   return (
     <ReactModal
       className={styles.modal}

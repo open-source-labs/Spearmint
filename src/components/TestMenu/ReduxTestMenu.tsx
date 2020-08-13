@@ -5,8 +5,10 @@ import {
   addReducer,
   addActionCreator,
   addMiddleware,
+  openInfoModal,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestModal from '../Modals/ReduxTestModal';
+
 interface ReduxTestMenuProps {
   dispatchToReduxTestCase: (action: object) => void;
 }
@@ -35,7 +37,9 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
   const handleAddReducer = () => {
     dispatchToReduxTestCase(addReducer());
   };
-
+  const modalOpener = () => {
+    dispatchToReduxTestCase(openInfoModal());
+  };
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -46,6 +50,9 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
             closeReduxModal={closeReduxModal}
             dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
+          <button id={styles.example} onClick={modalOpener}>
+            example
+          </button>
         </div>
         <div
           id={styles.right}

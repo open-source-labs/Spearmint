@@ -11,7 +11,7 @@ import {
 import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
-import EndpointModal from '../Endpoint/EndpointModal';
+import EndpointHelpModal from '../TestHelpModals/EndpointHelpModal';
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
 const path = remote.require('path');
@@ -108,7 +108,7 @@ const EndpointTestCase = () => {
   };
 
   let endpointInfoModal = null;
-  if (modalOpen) endpointInfoModal = <EndpointModal />;
+  if (modalOpen) endpointInfoModal = <EndpointHelpModal />;
 
   return (
     <div>

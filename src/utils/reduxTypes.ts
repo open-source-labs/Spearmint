@@ -20,6 +20,8 @@ export const actionTypes = {
   UPDATE_REDUCERS_FILEPATH: 'UPDATE_REDUCERS_FILEPATH',
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   CREATE_NEW_REDUX_TEST: 'CREATE_NEW_REDUX_TEST',
+  OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
+  CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
 };
 
 interface ToggleReduxAction {
@@ -127,12 +129,23 @@ interface CreateNewReduxTestAction {
   payload?: null;
 }
 
+// interface OpenModalAction {
+//   type: typeof actionTypes.OPEN_INFO_MODAL;
+//   payload?: null;
+// }
+
+// interface CloseModalAction {
+//   type: typeof actionTypes.CLOSE_INFO_MODAL;
+//   payload?: null;
+// }
+
 // -------------Reducer Types--------------
 
 export interface ReduxTestCaseState {
-  reduxTestStatement: string,
-  reduxStatements: Array<ReduxStatements>,
-  hasRedux: number,
+  reduxTestStatement: string;
+  reduxStatements: Array<ReduxStatements>;
+  hasRedux: number;
+  modalOpen: boolean;
 }
 export interface UpdateMiddleware {
   id: number;
@@ -260,29 +273,28 @@ interface Reducer {
 }
 
 // type interface shape for all redux test statments
-export interface ReduxStatements extends Middleware, Reducer, ActionCreator, Async {
-
-}
+export interface ReduxStatements extends Middleware, Reducer, ActionCreator, Async {}
 
 // Combines all type interfaces for redux actions
-export type ReduxActionTypes = ToggleReduxAction|
-UpdateReduxTestStatementAction|
-UpdateMiddlewareAction|
-UpdateActionCreatorAction|
-UpdateAsyncAction|
-UpdateReducerAction|
-UpdateActionsFilePathAction|
-UpdateStatementsOrderAction|
-DeleteMiddlewareAction|
-AddMiddlewareAction|
-AddActionCreatorAction|
-DeleteActionCreatorAction|
-AddAsyncAction|
-DeleteAsyncAction|
-AddReducerAction|
-DeleteReducer|
-UpdateActionsFilePathActions|
-UpdateTypesFilePathAction|
-UpdateReducerFilePathAction|
-UpdateMiddlewaresFilePathAction|
-CreateNewReduxTestAction;
+export type ReduxActionTypes =
+  | ToggleReduxAction
+  | UpdateReduxTestStatementAction
+  | UpdateMiddlewareAction
+  | UpdateActionCreatorAction
+  | UpdateAsyncAction
+  | UpdateReducerAction
+  | UpdateActionsFilePathAction
+  | UpdateStatementsOrderAction
+  | DeleteMiddlewareAction
+  | AddMiddlewareAction
+  | AddActionCreatorAction
+  | DeleteActionCreatorAction
+  | AddAsyncAction
+  | DeleteAsyncAction
+  | AddReducerAction
+  | DeleteReducer
+  | UpdateActionsFilePathActions
+  | UpdateTypesFilePathAction
+  | UpdateReducerFilePathAction
+  | UpdateMiddlewaresFilePathAction
+  | CreateNewReduxTestAction;

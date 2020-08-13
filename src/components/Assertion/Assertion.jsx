@@ -1,7 +1,7 @@
 /**
  * functionlity to add and update assertions
- * same layout as action.jsx 
- *  - but for only the last assertion card? 
+ * same layout as action.jsx
+ *  - but for only the last assertion card?
  */
 
 import React, { useContext } from 'react';
@@ -13,14 +13,13 @@ import AutoComplete from '../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../AutoComplete/AutoCompleteMockData';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 
-
 const questionIcon = require('../../assets/images/help-circle.png');
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
   const [{}, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
-  
+
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...statement };
     field === 'isNot'
@@ -29,11 +28,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
   };
 
-  const handleClickDelete = e => {
+  const handleClickDelete = (e) => {
     dispatchToReactTestCase(deleteAssertion(statementId));
   };
 
-  const needsMatcherValue = matcherType => {
+  const needsMatcherValue = (matcherType) => {
     const matchersWithValues = [
       'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
       'toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
@@ -68,7 +67,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
             <select
               id='queryVariant'
               value={statement.queryVariant}
-              onChange={e => handleChangeAssertionFields(e, 'queryVariant')}
+              onChange={(e) => handleChangeAssertionFields(e, 'queryVariant')}
             >
               <option value='' />
               <option value='getBy'>getBy</option>
@@ -79,7 +78,6 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <option value='findAllBy'>findAllBy</option>
             </select>
             <span id={styles.hastooltip} role='tooltip'>
-              <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
@@ -87,7 +85,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
             <select
               id='querySelector'
               value={statement.querySelector}
-              onChange={e => handleChangeAssertionFields(e, 'querySelector')}
+              onChange={(e) => handleChangeAssertionFields(e, 'querySelector')}
             >
               <option value='' />
               <option value='LabelText'>LabelText</option>
@@ -123,49 +121,49 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
       <div>
         <div id={styles.matcherFlexBox}>
           <div id={styles.matcherLeft}>
-      <div id={styles.matcherLabelFlexBox}>
-        <div>
-          <label htmlFor='matcher'>Matcher</label>
-        </div>
-        <div>
-          Not?
-          <input
-            type='checkbox'
-            checked={statement.isNot}
-            onChange={e => handleChangeAssertionFields(e, 'isNot')}
-          />
-        </div>
-      </div>
-        <div id={styles.autoTool}>
-            <AutoComplete
-              statement={statement}
-              statementType='assertion'
-              dispatchToTestCase={dispatchToReactTestCase}
-              id={styles.matcherAuto}
-            />
+            <div id={styles.matcherLabelFlexBox}>
+              <div>
+                <label htmlFor='matcher'>Matcher</label>
+              </div>
+              <div>
+                Not?
+                <input
+                  type='checkbox'
+                  checked={statement.isNot}
+                  onChange={(e) => handleChangeAssertionFields(e, 'isNot')}
+                />
+              </div>
+            </div>
+            <div id={styles.autoTool}>
+              <AutoComplete
+                statement={statement}
+                statementType='assertion'
+                dispatchToTestCase={dispatchToReactTestCase}
+                id={styles.matcherAuto}
+              />
 
-            <span id={styles.hastooltip} role='tooltip'>
-              <img src={questionIcon} alt='help' />
-              <span id={styles.tooltip}>
-                <ToolTipMatcher toolTipType={statement.matcherType} />
+              <span id={styles.hastooltip} role='tooltip'>
+                <img src={questionIcon} alt='help' />
+                <span id={styles.tooltip}>
+                  <ToolTipMatcher toolTipType={statement.matcherType} />
+                </span>
               </span>
-            </span>
-        </div>
+            </div>
           </div>
           {needsMatcherValue(statement.matcherType) && (
             <div>
-            <span id={styles.matcherVal}>
-              <input
-                type='text'
-                id={styles.matcherInput}
-                onChange={e => handleChangeAssertionFields(e, 'matcherValue')}
-                placeholder='Value'
-              />
-            </span>
+              <span id={styles.matcherVal}>
+                <input
+                  type='text'
+                  id={styles.matcherInput}
+                  onChange={(e) => handleChangeAssertionFields(e, 'matcherValue')}
+                  placeholder='Value'
+                />
+              </span>
             </div>
           )}
         </div>
-        </div>
+      </div>
     </section>
   );
 };
