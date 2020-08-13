@@ -17,6 +17,8 @@ export const globalState = {
   projectFilePath: '',
   filePathMap: {},
   file: '',
+  testCase: '',
+  isTestModalOpen: true,
 };
 
 export const globalReducer = (state, action) => {
@@ -102,6 +104,20 @@ export const globalReducer = (state, action) => {
         file,
       };
 
+    //added
+    case actionTypes.SET_TEST_CASE:
+      const testCase = action.testCase;
+      return {
+        ...state,
+        testCase,
+      };
+
+    case actionTypes.TOGGLE_MODAL:
+      return {
+        ...state,
+        isTestModalOpen: !globalState.isTestModalOpen,
+      };
+    //
     default:
       return state;
   }
