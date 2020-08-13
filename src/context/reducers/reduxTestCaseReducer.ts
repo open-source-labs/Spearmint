@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 import { actionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
-export const ReduxTestCaseContext: any = createContext(null)
+
+export const ReduxTestCaseContext: any = createContext(null);
 
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
 /* initial state for testCase */
@@ -8,6 +9,7 @@ export const reduxTestCaseState: ReduxTestCaseState = {
   reduxTestStatement: '' /* the test description */,
   reduxStatements: [] /* both of the cards on the page at open. Each card gets an id */,
   hasRedux: 0,
+  modalOpen: false,
 };
 
 let statementId = 0;
@@ -85,7 +87,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         hasRedux: !state.hasRedux,
       };
     case actionTypes.UPDATE_REDUX_TEST_STATEMENT:
-      reduxTestStatement = action.payload
+      reduxTestStatement = action.payload;
       return {
         ...state,
         reduxTestStatement,
@@ -107,7 +109,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements,
       };
     case actionTypes.UPDATE_MIDDLEWARE:
-      reduxStatements = reduxStatements.map(statement => {
+      reduxStatements = reduxStatements.map((statement) => {
         /* update statements if statement id === action id */
         if (statement.id === action.payload.id) {
           statement.queryType = action.payload.queryType;
@@ -137,7 +139,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements,
       };
     case actionTypes.UPDATE_ACTIONCREATOR:
-     reduxStatements = reduxStatements.map((statement) => {
+      reduxStatements = reduxStatements.map((statement) => {
         if (statement.id === action.payload.id) {
           statement.actionsFile = action.payload.actionsFile;
           statement.filePath = action.payload.filePath;
@@ -222,7 +224,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           statement.actionsFileName = action.payload.actionsFileName;
           statement.filePath = action.payload.filePath;
         }
-        return statement
+        return statement;
       });
       return {
         ...state,
@@ -230,11 +232,11 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       };
     case actionTypes.UPDATE_TYPES_FILEPATH:
       reduxStatements = reduxStatements.map((statement) => {
-        if(statement.id === action.payload.id) {
+        if (statement.id === action.payload.id) {
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
         }
-        return statement
+        return statement;
       });
       return {
         ...state,
@@ -246,19 +248,19 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           statement.reducersFileName = action.payload.reducersFileName;
           statement.reducersFilePath = action.payload.reducersFilePath;
         }
-        return statement
+        return statement;
       });
       return {
         ...state,
         reduxStatements,
       };
     case actionTypes.UPDATE_MIDDLEWARES_FILEPATH:
-   reduxStatements = reduxStatements.map((statement) => {
+      reduxStatements = reduxStatements.map((statement) => {
         if (statement.type === 'middleware') {
           statement.middlewaresFileName = action.payload.middlewaresFileName;
           statement.middlewaresFilePath = action.payload.middlewaresFilePath;
         }
-        return statement
+        return statement;
       });
       return {
         ...state,
@@ -270,12 +272,24 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements: [],
         hasRedux: 0,
       };
-      case actionTypes.UPDATE_STATEMENTS_ORDER:
-        reduxStatements = action.payload;
-        return {
-          ...state,
-          reduxStatements,
-        };
+    case actionTypes.UPDATE_STATEMENTS_ORDER:
+      reduxStatements = action.payload;
+      return {
+        ...state,
+        reduxStatements,
+      };
+    case actionTypes.OPEN_INFO_MODAL:
+      console.log('in here');
+      return {
+        ...state,
+        modalOpen: true,
+      };
+    case actionTypes.CLOSE_INFO_MODAL:
+      return {
+        ...state,
+        modalOpen: false,
+      };
+
     default:
       return state;
   }
