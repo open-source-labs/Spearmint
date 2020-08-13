@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useReducer } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { createFile } from '../../context/actions/globalActions';
 import {
   updateEndpointTestStatement,
@@ -16,11 +15,21 @@ const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
 const path = remote.require('path');
 
+//changes
+import {
+  EndpointTestCaseContext,
+  endpointTestCaseState,
+  endpointTestCaseReducer,
+} from '../../context/reducers/endpointTestCaseReducer';
+
 const EndpointTestCase = () => {
-  const [
-    { endpointTestStatement, endpointStatements, modalOpen },
-    dispatchToEndpointTestCase,
-  ] = useContext(EndpointTestCaseContext);
+  //changes
+  const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
+    endpointTestCaseReducer,
+    endpointTestCaseState
+  );
+
+  const { endpointTestStatement, endpointStatements, modalOpen } = endpointTestCase;
 
   const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
@@ -111,38 +120,40 @@ const EndpointTestCase = () => {
   if (modalOpen) endpointInfoModal = <EndpointModal />;
 
   return (
-    <div>
-      <div id='head'>
-        <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
-      </div>
-      <button onClick={fileHandle}>save me</button>
-      <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Test</label>
-          <input
-            type='text'
-            id={styles.testStatement}
-            value={endpointTestStatement}
-            onChange={handleUpdateEndpointTestStatements}
-          />
-        </section>
-      </div>
-      {endpointInfoModal}
+    <EndpointTestCaseContext.Provider value={[endpointTestCase, dispatchToEndpointTestCase]}>
+      <div>
+        <div id='head'>
+          <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
+        </div>
+        <button onClick={fileHandle}>save me</button>
+        <div id={styles.testMockSection}>
+          <section id={styles.testCaseHeader}>
+            <label htmlFor='test-statement'>Test</label>
+            <input
+              type='text'
+              id={styles.testStatement}
+              value={endpointTestStatement}
+              onChange={handleUpdateEndpointTestStatements}
+            />
+          </section>
+        </div>
+        {endpointInfoModal}
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='droppable'>
-          {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <EndpointTestStatements
-                endpointStatements={endpointStatements}
-                dispatchToEndpointTestCase={dispatchToEndpointTestCase}
-              />
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId='droppable'>
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                <EndpointTestStatements
+                  endpointStatements={endpointStatements}
+                  dispatchToEndpointTestCase={dispatchToEndpointTestCase}
+                />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
+    </EndpointTestCaseContext.Provider>
   );
 };
 

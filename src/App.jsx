@@ -48,7 +48,7 @@ const App = () => {
     reactTestCaseReducer,
     reactTestCaseState
   );
-  const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
+  // const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
   const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
     endpointTestCaseReducer,
     endpointTestCaseState
