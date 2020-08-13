@@ -2,14 +2,18 @@ import React, { useContext } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import { updateReduxTestStatement, updateStatementsOrder } from '../../context/actions/reduxTestCaseActions';
+import {
+  updateReduxTestStatement,
+  updateStatementsOrder,
+} from '../../context/actions/reduxTestCaseActions';
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { ReduxStatements, ReduxTestCaseState } from '../../utils/reduxTypes';
+import ReduxHelpModal from '../TestHelpModals/ReduxHelpModal';
 
 const ReduxTestCase = () => {
-  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
-    ReduxTestCaseContext,
+  const [{ reduxTestStatement, reduxStatements, modalOpen }, dispatchToReduxTestCase] = useContext(
+    ReduxTestCaseContext
   );
 
   const handleUpdateReduxTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,22 +37,22 @@ const ReduxTestCase = () => {
     const reorderedStatements: Array<ReduxStatements> = reorder(
       reduxStatements,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
     dispatchToReduxTestCase(updateStatementsOrder(reorderedStatements));
   };
 
   return (
     <div>
-      <div id="head">
+      <div id='head'>
         <ReduxTestMenu dispatchToReduxTestCase={dispatchToReduxTestCase} />
       </div>
-
+      {modalOpen ? <ReduxHelpModal /> : null}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
-          <label htmlFor="test-statement">Test</label>
+          <label htmlFor='test-statement'>Test</label>
           <input
-            type="text"
+            type='text'
             id={styles.testStatement}
             value={reduxTestStatement}
             onChange={handleUpdateReduxTestStatement}
@@ -57,7 +61,7 @@ const ReduxTestCase = () => {
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
+        <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <ReduxTestStatements
