@@ -30,7 +30,7 @@ const PuppeteerTestModal = ({
       className={styles.modal}
       isOpen={isPuppeteerModalOpen}
       onRequestClose={closePuppeteerModal}
-      contentLabel="Save?"
+      contentLabel='Save?'
       shouldCloseOnOverlayClick
       shouldCloseOnEsc
       ariaHideApp={false}
@@ -41,15 +41,15 @@ const PuppeteerTestModal = ({
       </div>
       <div id={styles.body}>
         <p id={styles.text}>
-          Do you want to start a new test? All unsaved changes 
+          Do you want to start a new test? All unsaved changes
           <br />
           will be lost.
         </p>
         <span id={styles.newTestButtons}>
-          <button type="button" id={styles.save} onClick={handleNewPuppeteerTest}>
+          <button type='button' id={styles.save} onClick={handleNewPuppeteerTest}>
             Continue
           </button>
-          <button type="button" id={styles.save} onClick={closePuppeteerModal}>
+          <button type='button' id={styles.save} onClick={closePuppeteerModal}>
             Cancel
           </button>
         </span>

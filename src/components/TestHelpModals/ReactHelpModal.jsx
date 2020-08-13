@@ -13,18 +13,23 @@ const ReactHelpModal = () => {
     dispatchToTestCase(closeInfoModal());
   };
 
-  const modalStyles = {
-    overlay: {
-      zIndex: 3,
-    },
-  };
+  // const modalStyles = {
+  //   overlay: {
+  //     zIndex: 3,
+  //   },
+  // };
 
   return (
     <ReactModal
       className={styles.modal}
       shouldCloseOnEsc={true}
       isOpen={modalOpen}
-      // style={modalStyles}
+      style={{
+        overlay: {
+          zIndex: 3,
+        },
+      }}
+      ariaHideApp={false}
     >
       <img src={closeIcon} onClick={closeModal} />
       <h2>Describe(name, fn)</h2>

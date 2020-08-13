@@ -536,6 +536,7 @@ export const reactTestCaseReducer = (state, action) => {
       };
     }
     case actionTypes.OPEN_INFO_MODAL:
+      // console.log('react reducer');
       return {
         ...state,
         modalOpen: true,

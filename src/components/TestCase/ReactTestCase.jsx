@@ -14,11 +14,13 @@ import { addMockData } from '../../context/actions/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
 import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';
+import ReactHelpModal from '../TestHelpModals/ReactHelpModal';
 
 const ReactTestCase = () => {
-  const [{ describeBlocks, itStatements, statements }, dispatchToReactTestCase] = useContext(
-    ReactTestCaseContext,
-  );
+  const [
+    { describeBlocks, itStatements, statements, modalOpen },
+    dispatchToReactTestCase,
+  ] = useContext(ReactTestCaseContext);
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap }] = useContext(GlobalContext);
   const draggableStatements = describeBlocks.allIds;
@@ -39,19 +41,21 @@ const ReactTestCase = () => {
     dispatchToReactTestCase(updateItStatementText(text, itId));
   };
 
+  // let ReactInfoModal = null;
+  // if (modalOpen) ReactInfoModal = <ReactHelpModal />;
+
   return (
     <div id={styles.ReactTestCase}>
-      <div id="head">
+      <div id='head'>
         <ReactTestMenu
           dispatchToTestCase={dispatchToReactTestCase}
           dispatchToMockData={dispatchToMockData}
         />
       </div>
+      {modalOpen ? <ReactHelpModal /> : null}
       <div className={styles.header}>
         <div className={styles.renderComponent}>
-          <span className={styles.renderLabel}>
-            Enter Component Name:
-          </span>
+          <span className={styles.renderLabel}>Enter Component Name:</span>
           <SearchInput
             reactTestCase
             dispatch={dispatchToReactTestCase}
@@ -60,7 +64,7 @@ const ReactTestCase = () => {
             options={Object.keys(filePathMap)}
           />
         </div>
-        <button type="button" className={styles.mockBtn} onClick={handleAddMockData}>
+        <button type='button' className={styles.mockBtn} onClick={handleAddMockData}>
           <i className={cn(styles.addIcon, 'fas fa-plus')} />
           Mock Data
         </button>
@@ -87,7 +91,7 @@ const ReactTestCase = () => {
         statements={statements}
         handleChangeDescribeText={handleChangeDescribeText}
         handleChangeItStatementText={handleChangeItStatementText}
-        type="react"
+        type='react'
       />
     </div>
   );

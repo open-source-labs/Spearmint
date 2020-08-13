@@ -32,10 +32,11 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             dispatchToMockData={dispatchToMockData}
             dispatchToTestCase={dispatchToTestCase}
           />
+          <button id={styles.example} onClick={modalOpener}>
+            example
+          </button>
         </div>
-        <button id={styles.example} onClick={modalOpener}>
-          example
-        </button>
+
         <div
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}

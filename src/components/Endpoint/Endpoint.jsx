@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import styles from '../Endpoint/Endpoint.module.scss';
+import { Draggable } from 'react-beautiful-dnd';
+import styles from './Endpoint.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import {
@@ -7,8 +8,8 @@ import {
   updateEndpoint,
   updateServerFilePath,
 } from '../../context/actions/endpointTestCaseActions';
-import { Draggable } from 'react-beautiful-dnd';
 import SearchInput from '../SearchInput/SearchInput';
+
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 
@@ -22,7 +23,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   };
 
   const handleClickDeleteEndpoint = (e) => {
-    // delete endpoing returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
+    // delete endpoint returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
 
