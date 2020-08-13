@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { actionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
+
 export const ReduxTestCaseContext: any = createContext(null);
 
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
@@ -278,6 +279,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements,
       };
     case actionTypes.OPEN_INFO_MODAL:
+      console.log('in here');
       return {
         ...state,
         modalOpen: true,

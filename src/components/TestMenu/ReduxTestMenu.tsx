@@ -8,6 +8,7 @@ import {
   openInfoModal,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestModal from '../Modals/ReduxTestModal';
+
 interface ReduxTestMenuProps {
   dispatchToReduxTestCase: (action: object) => void;
 }
