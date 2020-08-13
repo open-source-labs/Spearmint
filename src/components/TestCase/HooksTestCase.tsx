@@ -2,13 +2,19 @@ import React, { useContext } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
-import { updateHooksTestStatement, updateStatementsOrder } from '../../context/actions/hooksTestCaseActions';
+import {
+  updateHooksTestStatement,
+  updateStatementsOrder,
+} from '../../context/actions/hooksTestCaseActions';
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
+import HooksHelpModal from '../TestHelpModals/HooksHelpModal';
 
 const HooksTestCase = () => {
-  const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+  const [{ hooksTestStatement, hooksStatements, modalOpen }, dispatchToHooksTestCase] = useContext(
+    HooksTestCaseContext
+  );
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
@@ -31,23 +37,23 @@ const HooksTestCase = () => {
     const reorderedStatements: Array<HooksStatements> = reorder(
       hooksStatements,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
     dispatchToHooksTestCase(updateStatementsOrder(reorderedStatements));
   };
 
   return (
     <div>
-      <div id="head">
+      <div id='head'>
         <HooksTestMenu dispatchToHooksTestCase={dispatchToHooksTestCase} />
       </div>
-
+      {modalOpen ? <HooksHelpModal /> : null}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
-          <label htmlFor="test-statement">
+          <label htmlFor='test-statement'>
             Test
             <input
-              type="text"
+              type='text'
               id={styles.testStatement}
               value={hooksTestStatement}
               onChange={handleUpdateHooksTestStatement}
@@ -57,7 +63,7 @@ const HooksTestCase = () => {
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
+        <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <HooksTestStatements
