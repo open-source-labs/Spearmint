@@ -33,7 +33,11 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             dispatchToTestCase={dispatchToTestCase}
           />
           <button id={styles.example} onClick={modalOpener}>
+<<<<<<< HEAD
             example
+=======
+            Need Help?
+>>>>>>> 0698f4709fc4a74a66f12c08ce4b9ade580ddc28
           </button>
         </div>
 

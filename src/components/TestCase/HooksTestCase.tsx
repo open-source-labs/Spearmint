@@ -11,6 +11,7 @@ import {
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
+<<<<<<< HEAD
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
 const path = remote.require('path');
@@ -21,6 +22,14 @@ const HooksTestCase = () => {
   );
 
   const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+=======
+import HooksHelpModal from '../TestHelpModals/HooksHelpModal';
+
+const HooksTestCase = () => {
+  const [{ hooksTestStatement, hooksStatements, modalOpen }, dispatchToHooksTestCase] = useContext(
+    HooksTestCaseContext
+  );
+>>>>>>> 0698f4709fc4a74a66f12c08ce4b9ade580ddc28
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
@@ -182,7 +191,11 @@ const HooksTestCase = () => {
       <div id='head'>
         <HooksTestMenu dispatchToHooksTestCase={dispatchToHooksTestCase} />
       </div>
+<<<<<<< HEAD
       <button onClick={fileHandle}>save me</button>
+=======
+      {modalOpen ? <HooksHelpModal /> : null}
+>>>>>>> 0698f4709fc4a74a66f12c08ce4b9ade580ddc28
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>
