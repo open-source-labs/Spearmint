@@ -73,6 +73,7 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         displayedFileCode,
+        file: '',
       };
     case actionTypes.TOGGLE_FOLDER_VIEW:
       const isFolderOpen = { ...state.isFolderOpen };
@@ -104,6 +105,12 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         file,
+      };
+    case actionTypes.UPDATE_FILE_SHOW:
+      const fileUp = action.testString;
+      return {
+        ...state,
+        file: fileUp,
       };
     case actionTypes.OPEN_BROWSER_DOCS:
       const docsUrl = action.docsUrl;

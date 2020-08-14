@@ -115,10 +115,55 @@ const ReduxTestCase = () => {
   };
 
   const addAsyncImportStatement = () => {
-    testFileCode += `import '@testing-library/jest-dom/extend-expect';
-    import configureMockStore from 'redux-mock-store';
+    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+      testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+    }
+    if (
+      !testFileCode.includes(`import configureMockStore from 'redux-mock-store';
+    import thunk from 'redux-thunk';
+    import fetchMock from 'fetch-mock';`)
+    ) {
+      testFileCode += `import configureMockStore from 'redux-mock-store';
     import thunk from 'redux-thunk';
     import fetchMock from 'fetch-mock';`;
+    }
+  };
+
+  const addAsyncVariables = () => {
+    if (
+      !testFileCode.includes(`\n const middlewares = [thunk];
+    const mockStore = configureMockStore(middlewares);`)
+    ) {
+      testFileCode += `\n const middlewares = [thunk];
+    const mockStore = configureMockStore(middlewares);`;
+    }
+  };
+
+  // AC Import Statements
+  const addActionCreatorImportStatement = () => {
+    if (!testFileCode.includes(`import { fake } from 'test-data-bot';`)) {
+      testFileCode += `import { fake } from 'test-data-bot';`;
+    }
+    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+      testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+    }
+  };
+
+  // Reducer Import Statements
+  const addReducerImportStatement = () => {
+    if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+      testFileCode += `import { render } from '@testing-library/react';`;
+    }
+    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+      testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+    }
+  };
+
+  // Middleware Import Statements
+  const addMiddlewareImportStatement = () => {
+    if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+      testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+    }
   };
 
   const createPathToActions = (statement: any) => {
@@ -146,28 +191,6 @@ const ReduxTestCase = () => {
     let filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
     filePath = filePath.replace(/\\/g, '/');
     testFileCode += `import * as middleware from '../${filePath}';`;
-  };
-
-  const addAsyncVariables = () => {
-    testFileCode += `\n const middlewares = [thunk];
-    const mockStore = configureMockStore(middlewares);`;
-  };
-
-  // AC Import Statements
-  const addActionCreatorImportStatement = () => {
-    testFileCode += `import { fake } from 'test-data-bot';
-    import '@testing-library/jest-dom/extend-expect'`;
-  };
-
-  // Reducer Import Statements
-  const addReducerImportStatement = () => {
-    testFileCode += `import { render } from '@testing-library/react';
-    import '@testing-library/jest-dom/extend-expect';`;
-  };
-
-  // Middleware Import Statements
-  const addMiddlewareImportStatement = () => {
-    testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
   };
 
   const addReducer = (reducer: any) => {
