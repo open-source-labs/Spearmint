@@ -41,7 +41,7 @@ import {
 } from '../../context/reducers/mockDataReducer';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { toggleTestCase, toggleModal } from '../../context/actions/globalActions';
+import { setTestCase, toggleModal } from '../../context/actions/globalActions';
 
 const TestFile = () => {
   let [{ testCase, isTestModalOpen }, dispatchToGlobal] = useContext(GlobalContext);
@@ -70,8 +70,7 @@ const TestFile = () => {
   };
 
   const handleToggle = (test) => {
-    dispatchToGlobal(toggleTestCase(test));
-    dispatchToGlobal(toggleModal());
+    dispatchToGlobal(setTestCase(test));
     closeTestModal();
   };
 
