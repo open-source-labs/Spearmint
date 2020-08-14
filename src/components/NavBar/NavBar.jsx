@@ -47,9 +47,8 @@ const NavBar = () => {
     setIsBrowserModalOpen(false);
   };
 
-
   /**
-   * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory 
+   * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
   return (
     <div id={styles.navBar}>
@@ -61,7 +60,10 @@ const NavBar = () => {
         <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
         <span className={styles.tooltip}>Export</span>
       </button>
-      <ExportFileModal isExportModalOpen={isExportModalOpen} setIsExportModalOpen={setIsExportModalOpen}/>
+      <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+      />
       <OpenFolder />
       <button className={styles.navBtn} onClick={handleEditorToggle}>
         <img src={codeIcon} className={styles.icons} alt='codeview' title='Code View' />
