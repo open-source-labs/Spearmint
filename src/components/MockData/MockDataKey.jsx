@@ -8,17 +8,17 @@ import { deleteMockDataKey, updateMockDataKey } from '../../context/actions/mock
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const MockDataKey = ({ dispatchToMockData, mockDatumId, mockDatumKeyId, fieldKey, fieldType }) => {
-  const handleChangeDelete = e => {
+  const handleChangeDelete = (e) => {
     e.stopPropagation();
     dispatchToMockData(deleteMockDataKey(mockDatumId, mockDatumKeyId));
   };
 
-  const handleChangeUpdateFieldKey = e => {
+  const handleChangeUpdateFieldKey = (e) => {
     e.stopPropagation();
     dispatchToMockData(updateMockDataKey(mockDatumId, mockDatumKeyId, e.target.value, fieldType));
   };
 
-  const handleChangeUpdateFieldType = e => {
+  const handleChangeUpdateFieldType = (e) => {
     e.stopPropagation();
     dispatchToMockData(updateMockDataKey(mockDatumId, mockDatumKeyId, fieldKey, e.target.value));
   };

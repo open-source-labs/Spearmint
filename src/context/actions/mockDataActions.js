@@ -19,7 +19,7 @@ export const addMockData = () => ({
   type: actionTypes.ADD_MOCK_DATA,
 });
 
-export const deleteMockData = id => ({
+export const deleteMockData = (id) => ({
   type: actionTypes.DELETE_MOCK_DATA,
   id,
 });
@@ -30,7 +30,7 @@ export const updateMockDataName = (id, name) => ({
   name,
 });
 
-export const addMockDataKey = id => ({
+export const addMockDataKey = (id) => ({
   type: actionTypes.ADD_MOCK_DATA_KEY,
   id,
 });

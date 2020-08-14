@@ -28,10 +28,6 @@ const ReactTestCase = () => {
 
   const draggableStatements = describeBlocks.allIds;
 
-  const handleAddMockData = () => {
-    dispatchToMockData(addMockData());
-  };
-
   const handleChangeDescribeText = (e) => {
     const text = e.target.value;
     const describeId = e.target.id;
@@ -60,7 +56,6 @@ const ReactTestCase = () => {
       }))
     );
   };
-
   const addMockData = () => {
     mockData.forEach((mockDatum) => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
@@ -69,6 +64,9 @@ const ReactTestCase = () => {
       } = build('${mockDatum.name}').fields({ ${fieldKeys} })();`;
     });
     testFileCode += '\n';
+  };
+  const handleAddMockData = () => {
+    dispatchToMockData(addMockData());
   };
 
   const createMockDatumFieldKeys = (mockDatum) => {

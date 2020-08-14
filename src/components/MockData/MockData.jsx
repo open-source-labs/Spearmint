@@ -1,7 +1,7 @@
 /**
  * the card for adding mock data
  * renders :
- *  - mockDataKey (as mockDataFieldKey) 
+ *  - mockDataKey (as mockDataFieldKey)
  *  - the labels in the card (name, key, type)
  */
 
@@ -23,17 +23,17 @@ const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
     dispatchToMockData(addMockDataKey(id));
   };
 
-  const handleClickDelete = e => {
+  const handleClickDelete = (e) => {
     e.stopPropagation();
     dispatchToMockData(deleteMockData(mockDatumId));
   };
 
-  const handleClickUpdate = e => {
+  const handleClickUpdate = (e) => {
     e.stopPropagation();
     dispatchToMockData(updateMockDataName(mockDatumId, e.target.value));
   };
 
-  const mockDataFieldKeys = fieldKeys.map(key => (
+  const mockDataFieldKeys = fieldKeys.map((key) => (
     <MockDataFieldKey
       key={key.id}
       dispatchToMockData={dispatchToMockData}
@@ -62,7 +62,7 @@ const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
       <hr />
       <div id={styles.keyList}>
         {mockDataFieldKeys}
-        <button id={styles.addKeyBtn} onClick={e => handleClickAdd(e, mockDatumId)}>
+        <button id={styles.addKeyBtn} onClick={(e) => handleClickAdd(e, mockDatumId)}>
           <img src={plusIcon} alt='add' />
           Add Key
         </button>
