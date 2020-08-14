@@ -18,7 +18,7 @@ const beautify = remote.require('js-beautify');
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
-  const [{ projectFilePath, testFileCode }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file }, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
@@ -50,7 +50,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     if (!fs.existsSync(projectFilePath + '/__tests__')) {
       fs.mkdirSync(projectFilePath + '/__tests__');
     }
-    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, testFileCode, (err) => {
+    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, file, (err) => {
       if (err) throw err;
     });
     displayTestFile(projectFilePath + '/__tests__');
