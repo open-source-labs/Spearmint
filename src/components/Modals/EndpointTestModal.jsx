@@ -2,20 +2,20 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewEndpointTest } from '../../context/actions/endpointTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal } from '../../context/actions/testFileModalActions';
-import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
+import { toggleModal } from '../../context/actions/globalActions';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const EndpointTestModal = ({
   isEndpointModalOpen,
   closeEndpointModal,
   dispatchToEndpointTestCase,
 }) => {
-  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
+  const [, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleNewEndpointTest = e => {
+  const handleNewEndpointTest = (e) => {
     dispatchToEndpointTestCase(createNewEndpointTest());
     closeEndpointModal();
-    dispatchToTestFileModal(toggleModal());
+    dispatchToGlobal(toggleModal());
   };
 
   const modalStyles = {

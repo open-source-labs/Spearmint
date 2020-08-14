@@ -2,20 +2,20 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal } from '../../context/actions/testFileModalActions';
-import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
+import { toggleModal } from '../../context/actions/globalActions';
 import { HooksTestModalProps } from '../../utils/hooksTypes';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const HooksTestModal = ({
   isHooksModalOpen,
   closeHooksModal,
   dispatchToHooksTestCase,
 }: HooksTestModalProps) => {
-  const [, dispatchToTestFileModal] = useContext<any>(TestFileModalContext);
+  const [, dispatchToGlobal] = useContext<any>(GlobalContext);
   const handleNewHooksTest = () => {
     dispatchToHooksTestCase(createNewHooksTest());
     closeHooksModal();
-    dispatchToTestFileModal(toggleModal());
+    dispatchToGlobal(toggleModal());
   };
 
   const modalStyles = {
@@ -30,7 +30,7 @@ const HooksTestModal = ({
         className={styles.modal}
         isOpen={isHooksModalOpen}
         onRequestClose={closeHooksModal}
-        contentLabel="Save?"
+        contentLabel='Save?'
         shouldCloseOnOverlayClick
         shouldCloseOnEsc
         ariaHideApp={false}
@@ -47,11 +47,11 @@ const HooksTestModal = ({
           </p>
           <span id={styles.newTestButtons}>
             <div>
-              <button type="button" id={styles.save} onClick={handleNewHooksTest}>
+              <button type='button' id={styles.save} onClick={handleNewHooksTest}>
                 Continue
               </button>
             </div>
-            <button type="button" id={styles.save} onClick={closeHooksModal}>
+            <button type='button' id={styles.save} onClick={closeHooksModal}>
               Cancel
             </button>
           </span>

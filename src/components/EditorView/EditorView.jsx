@@ -6,7 +6,7 @@ import { updateFile } from '../../context/actions/globalActions';
 
 const Editor = () => {
   let [{ displayedFileCode, file }, dispatchToGlobal] = useContext(GlobalContext);
-  if (file.length > 0) displayedFileCode = file;
+  if (file) displayedFileCode = file;
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'wordWrapColumn',
@@ -21,12 +21,21 @@ const Editor = () => {
     editor.setTheme('light-dark');
   };
 
-  // const updatafile = (newValue, e) => {
-  //   dispatchToGlobal(updateFile(newValue));
-  // };
+  let value = null;
+  const updatafile = (newValue, e) => {
+    value = newValue;
+  };
 
   return (
     <div>
+      <button
+        onClick={() => {
+          dispatchToGlobal(updateFile(value));
+        }}
+      >
+        {' '}
+        save the updates
+      </button>
       <MonacoEditor
         height='95vh'
         language='javascript'
@@ -34,7 +43,7 @@ const Editor = () => {
         value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
         options={options}
         editorDidMount={editorDidMount}
-        // onChange={updatafile}
+        onChange={updatafile}
       />
     </div>
   );
