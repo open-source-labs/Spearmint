@@ -1,12 +1,13 @@
 import { createContext } from 'react';
 import { PuppeteerTestCaseState, PuppeteerAction } from '../../utils/puppeteerTypes';
-
+//import { actionTypes } from '../actions/puppeteerTestCaseActions';
 export const PuppeteerTestCaseContext = createContext<any>(null);
 
 export const puppeteerTestCaseState = {
   puppeteerStatements: [],
   hasPuppeteer: 0,
   statementId: 0,
+  modalOpen: false,
 };
 
 const createPuppeteerPaintTiming = (statementId: number) => ({
@@ -31,7 +32,10 @@ const createBrowserOption = (browserOptionId: number) => ({
   optionValue: '',
 });
 
-export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: PuppeteerAction) => {
+export const puppeteerTestCaseReducer = (
+  state: PuppeteerTestCaseState,
+  action: PuppeteerAction
+) => {
   Object.freeze(state);
   let puppeteerStatements = [...state.puppeteerStatements];
 
@@ -53,10 +57,7 @@ export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: 
       const newPuppeteerPaintTiming = createPuppeteerPaintTiming(state.statementId);
       return {
         ...state,
-        puppeteerStatements: [
-          ...puppeteerStatements,
-          newPuppeteerPaintTiming,
-        ],
+        puppeteerStatements: [...puppeteerStatements, newPuppeteerPaintTiming],
         statementId: state.statementId + 1,
       };
     }
@@ -71,7 +72,9 @@ export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: 
     case 'DELETE_BROWSER_OPTION':
       puppeteerStatements = puppeteerStatements.map((statement) => {
         if (statement.id === action.id) {
-          const newBrowserOptions = statement.browserOptions.filter((option) => option.id !== action.optionId);
+          const newBrowserOptions = statement.browserOptions.filter(
+            (option) => option.id !== action.optionId
+          );
           if (newBrowserOptions.length === 0) {
             return {
               ...statement,
@@ -110,10 +113,7 @@ export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: 
           return {
             ...statement,
             hasBrowserOption: true,
-            browserOptions: [
-              ...statement.browserOptions,
-              newBrowserOption,
-            ],
+            browserOptions: [...statement.browserOptions, newBrowserOption],
             browserOptionId: statement.browserOptionId + 1,
           };
         }
@@ -146,7 +146,17 @@ export const puppeteerTestCaseReducer = (state: PuppeteerTestCaseState, action: 
         ...state,
         puppeteerStatements: [...action.draggableStatements],
       };
-
+    case 'OPEN_INFO_MODAL':
+      console.log('reducer');
+      return {
+        ...state,
+        modalOpen: true,
+      };
+    case 'CLOSE_INFO_MODAL':
+      return {
+        ...state,
+        modalOpen: false,
+      };
     default:
       return state;
   }

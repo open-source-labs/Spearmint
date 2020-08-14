@@ -1,13 +1,15 @@
 import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/reducers/globalReducer';
-
 import ProjectLoader from './pages/ProjectLoader/ProjectLoader';
 import NavBar from './components/NavBar/NavBar';
 import LeftPanel from './pages//LeftPanel/LeftPanel';
 import RightPanel from './pages/RightPanel/RightPanel';
 
 const App = () => {
+  // useReducer takes a reducer and initial state as
+  // args and return the current state paired with a dispatch method
+  // distpatchTo method invokes associated reducer function
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   if (!global.isProjectLoaded) {

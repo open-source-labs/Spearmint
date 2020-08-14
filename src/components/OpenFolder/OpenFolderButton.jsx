@@ -43,8 +43,8 @@ const OpenFolder = () => {
   };
 
   //reads contents within the selected directory and checks if it is a file/folder
-  const generateFileTreeObject = directoryPath => {
-    const fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
+  const generateFileTreeObject = (directoryPath) => {
+    const fileArray = electronFs.readdirSync(directoryPath).map((fileName) => {
       //replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       let filePath = `${directoryPath}/${fileName}`;
@@ -58,7 +58,7 @@ const OpenFolder = () => {
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (fileData.isDirectory()) {
           file.files = generateFileTreeObject(file.filePath);
-          file.files.forEach(file => {
+          file.files.forEach((file) => {
             let javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
             let fileType = file.fileName.split('.')[1];
             if (javaScriptFileTypes.includes(fileType)) {

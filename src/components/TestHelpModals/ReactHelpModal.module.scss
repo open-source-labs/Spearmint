@@ -6,12 +6,26 @@
   top: 35%;
   left: 30%;
   width: 500px;
-  height: 200px;
+  height: 250px;
   font-family: $openSans;
-  background-color: $mint;
-  border: 8px solid $mint;
+  background-color: white;
+  border: 2px solid $mint;
   border-radius: 5px;
   box-shadow: 0 0 0 1px white inset;
+}
+h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 5px;
+}
+
+p {
+  padding: 5px;
+}
+
+a {
+  font-family: $openSans;
+  color: blue;
 }
 
 #title {

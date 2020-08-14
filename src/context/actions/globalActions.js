@@ -17,6 +17,9 @@ export const actionTypes = {
   //added
   SET_TEST_CASE: 'SET_TEST_CASE',
   TOGGLE_MODAL: 'TOGGLE_MODAL',
+  UPDATE_FILE_SHOW: 'UPDATE_FILE_SHOW',
+  OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
+  CLOSE_BROWSER_DOCS: 'CLOSE_BROWSER_DOCS',
 };
 
 export const setProjectUrl = (url) => ({
@@ -90,4 +93,14 @@ export const setTestCase = (testCase) => ({
 
 export const toggleModal = () => ({
   type: actionTypes.TOGGLE_MODAL,
+});
+
+export const updateFile = (testString) => ({
+  type: actionTypes.UPDATE_FILE_SHOW,
+  testString,
+});
+
+export const openBrowserDocs = (docsUrl) => ({
+  type: actionTypes.OPEN_BROWSER_DOCS,
+  docsUrl,
 });

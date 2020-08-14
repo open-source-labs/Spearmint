@@ -4,6 +4,7 @@ import { actionTypes } from '../actions/reactTestCaseActions';
 export const ReactTestCaseContext = createContext([]);
 
 export const reactTestCaseState = {
+  modalOpen: false,
   hasReact: 0,
   describeId: 1,
   itId: 1,
@@ -534,6 +535,16 @@ export const reactTestCaseReducer = (state, action) => {
         hasReact: 0,
       };
     }
+    case actionTypes.OPEN_INFO_MODAL:
+      return {
+        ...state,
+        modalOpen: true,
+      };
+    case actionTypes.CLOSE_INFO_MODAL:
+      return {
+        ...state,
+        modalOpen: false,
+      };
     default:
       return state;
   }

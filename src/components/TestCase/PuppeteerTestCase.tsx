@@ -5,6 +5,7 @@ import PuppeteerTestStatements from './PuppeteerTestStatements';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerStatements } from '../../utils/puppeteerTypes';
+import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -16,7 +17,7 @@ const beautify = remote.require('js-beautify');
 //
 
 const PuppeteerTestCase = () => {
-  const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
+  const [{ puppeteerStatements, modalOpen }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
 
@@ -135,6 +136,7 @@ const PuppeteerTestCase = () => {
         <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase} />
       </div>
       <button onClick={fileHandle}>Save my tests!!!</button>
+      {modalOpen ? <PuppeteerHelpModal /> : null}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
