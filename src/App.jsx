@@ -111,16 +111,15 @@ const App = () => {
               value={[endpointTestCase, dispatchToEndpointTestCase]}
             >
               <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
-                <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
-                  <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-                    <PuppeteerTestCaseContext.Provider
-                      value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}
-                    >
-                      <NavBar />
-                      <LeftPanel />
-                    </PuppeteerTestCaseContext.Provider>
-                  </MockDataContext.Provider>
-                </TestFileModalContext.Provider>
+                {/* <MockDataContext.Provider value={[mockData, dispatchToMockData]}> */}
+                <PuppeteerTestCaseContext.Provider
+                  value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}
+                >
+                  <NavBar />
+                  <LeftPanel />
+                </PuppeteerTestCaseContext.Provider>
+                {/* </MockDataContext.Provider>
+                </TestFileModalContext.Provider> */}
               </HooksTestCaseContext.Provider>
             </EndpointTestCaseContext.Provider>
             {/* </ReactTestCaseContext.Provider> */}
