@@ -5,8 +5,8 @@
   position: fixed;
   top: 35%;
   left: 30%;
-  width: 500px;
-  height: 250px;
+  width: 600px;
+  height: 350px;
   font-family: $openSans;
   background-color: white;
   border: 2px solid $mint;
@@ -18,7 +18,6 @@ h2 {
   font-weight: bold;
   padding: 5px;
 }
-
 p {
   padding: 5px;
 }
@@ -118,5 +117,28 @@ p {
   #newTestBtn:hover {
     background-color: $mint;
     color: white;
+  }
+}
+
+.describe {
+  margin: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.describeClose {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1.25rem;
+  z-index: 3;
+  transition: 250ms;
+
+  &:hover {
+    color: red;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
   }
 }
