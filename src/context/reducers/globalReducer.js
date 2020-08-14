@@ -113,9 +113,10 @@ export const globalReducer = (state, action) => {
       };
 
     case actionTypes.TOGGLE_MODAL:
+      console.log(!state.isTestModalOpen);
       return {
         ...state,
-        isTestModalOpen: !globalState.isTestModalOpen,
+        isTestModalOpen: !state.isTestModalOpen,
       };
     //
     default:
