@@ -8,26 +8,27 @@ import ReactModal from 'react-modal';
 import { createNewTest } from '../../context/actions/reactTestCaseActions';
 import { clearMockData } from '../../context/actions/mockDataActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal } from '../../context/actions/testFileModalActions';
-import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
+import { toggleModal, setTestCase } from '../../context/actions/globalActions';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 /* destructuring or declaring these?  */
 const NewTestModal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchToTestCase }) => {
-  const [, dispatchToTestFileModal] = useContext(TestFileModalContext);
+  const [, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleNewTest = e => {
+  const handleNewTest = (e) => {
     dispatchToMockData(clearMockData());
     dispatchToTestCase(createNewTest());
     closeModal();
-    dispatchToTestFileModal(toggleModal());
+    dispatchToGlobal(setTestCase(''));
+    dispatchToGlobal(toggleModal());
   };
-  
+
   const modalStyles = {
     overlay: {
       zIndex: 3,
     },
   };
-  
+
   return (
     <ReactModal
       className={styles.modal}
