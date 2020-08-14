@@ -36,6 +36,7 @@ const ReactHelpModal = () => {
         Describe creates a block that groups together several related tests. The name argument is
         simply the name of component you're testing. fn argument is the test callback function{' '}
       </p>
+      <p>Testing a new paragraph</p>
       <img className={styles.describe} src={describe} />
     </ReactModal>
   );
