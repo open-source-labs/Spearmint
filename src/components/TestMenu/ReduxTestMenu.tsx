@@ -51,7 +51,7 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
             dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
           <button id={styles.example} onClick={modalOpener}>
-            example
+            Need Help?
           </button>
         </div>
         <div
