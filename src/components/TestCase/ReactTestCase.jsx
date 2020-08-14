@@ -10,15 +10,11 @@ import { createFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
-import { addMockData } from '../../context/actions/mockDataActions';
+import { createMockData } from '../../context/actions/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
 import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';
 import ReactHelpModal from '../TestHelpModals/ReactHelpModal';
-
-const remote = window.require('electron').remote;
-const path = remote.require('path');
-const beautify = remote.require('js-beautify');
 
 //changes to pull down context
 import {
@@ -27,6 +23,9 @@ import {
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
 //
+const remote = window.require('electron').remote;
+const path = remote.require('path');
+const beautify = remote.require('js-beautify');
 
 const ReactTestCase = () => {
   //changes to pull down context
@@ -41,7 +40,7 @@ const ReactTestCase = () => {
   const draggableStatements = describeBlocks.allIds;
 
   const handleAddMockData = () => {
-    dispatchToMockData(addMockData());
+    dispatchToMockData(createMockData());
   };
 
   const handleChangeDescribeText = (e) => {
