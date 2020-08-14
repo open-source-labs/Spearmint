@@ -11,7 +11,6 @@ import { createFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
-import { addMockData } from '../../context/actions/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
 import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';

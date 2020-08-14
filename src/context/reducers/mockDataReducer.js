@@ -11,7 +11,7 @@ export const mockDataState = {
 let mockDatumId = 0;
 let mockDatumKeyId = 0;
 
-const createMockDatum = id => ({
+const createMockDatum = (id) => ({
   id: mockDatumId++,
   name: '',
   fieldKeys: [],
@@ -19,7 +19,7 @@ const createMockDatum = id => ({
   type: 'mockData',
 });
 
-const createFieldKeys = id => ({
+const createFieldKeys = (id) => ({
   id: mockDatumKeyId++,
   fieldKey: '',
   fieldType: '',
@@ -46,13 +46,13 @@ export const mockDataReducer = (state, action) => {
         mockData,
       };
     case actionTypes.DELETE_MOCK_DATA:
-      mockData = mockData.filter(mockDatum => mockDatum.id !== action.id);
+      mockData = mockData.filter((mockDatum) => mockDatum.id !== action.id);
       return {
         ...state,
         mockData,
       };
     case actionTypes.UPDATE_MOCK_DATA_NAME:
-      mockData = mockData.map(mockDatum => {
+      mockData = mockData.map((mockDatum) => {
         if (mockDatum.id === action.id) {
           mockDatum.name = action.name;
         }
@@ -63,7 +63,7 @@ export const mockDataReducer = (state, action) => {
         mockData,
       };
     case actionTypes.ADD_MOCK_DATA_KEY:
-      mockData = mockData.map(mockDatum => {
+      mockData = mockData.map((mockDatum) => {
         if (mockDatum.id === action.id) {
           mockDatum.fieldKeys.push(createFieldKeys());
         }
@@ -74,9 +74,11 @@ export const mockDataReducer = (state, action) => {
         mockData,
       };
     case actionTypes.DELETE_MOCK_DATA_KEY:
-      mockData = mockData.map(mockDatum => {
+      mockData = mockData.map((mockDatum) => {
         if (mockDatum.id === action.mockDatumId) {
-          mockDatum.fieldKeys = mockDatum.fieldKeys.filter(key => key.id !== action.mockDatumKeyId);
+          mockDatum.fieldKeys = mockDatum.fieldKeys.filter(
+            (key) => key.id !== action.mockDatumKeyId
+          );
         }
         return mockDatum;
       });
@@ -85,9 +87,9 @@ export const mockDataReducer = (state, action) => {
         mockData,
       };
     case actionTypes.UPDATE_MOCK_DATA_KEY:
-      mockData = mockData.map(mockDatum => {
+      mockData = mockData.map((mockDatum) => {
         if (mockDatum.id === action.mockDatumId) {
-          mockDatum.fieldKeys.map(fieldKey => {
+          mockDatum.fieldKeys.map((fieldKey) => {
             if (fieldKey.id === action.mockDatumKeyId) {
               fieldKey.fieldKey = action.fieldKey;
               fieldKey.fieldType = action.fieldType;
