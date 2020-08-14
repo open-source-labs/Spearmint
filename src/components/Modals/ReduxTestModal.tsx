@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewReduxTest } from '../../context/actions/reduxTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-// import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
 
 import { toggleModal } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';

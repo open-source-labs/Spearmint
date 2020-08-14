@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewPuppeteerTest } from '../../context/actions/puppeteerTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-// import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
 import { PuppeteerTestModalProps } from '../../utils/puppeteerTypes';
 
 import { toggleModal } from '../../context/actions/globalActions';

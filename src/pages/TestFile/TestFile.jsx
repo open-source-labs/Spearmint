@@ -4,36 +4,35 @@ import ReactModal from 'react-modal';
 
 //may be able to delete toggleReact, etc. from their respective action files
 
-// /* testCase imports */
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
-// import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
-// import { toggleReact } from '../../context/actions/reactTestCaseActions';
 
-// /* reduxTestCase imports */
-// import { toggleRedux } from '../../context/actions/reduxTestCaseActions';
-// import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
+import {
+  ReduxTestCaseContext,
+  reduxTestCaseState,
+  reduxTestCaseReducer,
+} from '../../context/reducers/reduxTestCaseReducer';
 import ReduxTestCase from '../../components/TestCase/ReduxTestCase';
 
-// /* hooksTestCase imports */
-// import { toggleHooks } from '../../context/actions/hooksTestCaseActions';
-// import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
+import {
+  HooksTestCaseContext,
+  hooksTestCaseState,
+  hooksTestCaseReducer,
+} from '../../context/reducers/hooksTestCaseReducer';
 import HooksTestCase from '../../components/TestCase/HooksTestCase';
 
-// /* endpointTestCase imports */
-// import { toggleEndpoint } from '../../context/actions/endpointTestCaseActions';
-// import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
+import {
+  EndpointTestCaseContext,
+  endpointTestCaseState,
+  endpointTestCaseReducer,
+} from '../../context/reducers/endpointTestCaseReducer';
 import EndpointTestCase from '../../components/TestCase/EndpointTestCase';
 
-// /* puppeteerTestCase imports */
-// import { togglePuppeteer } from '../../context/actions/puppeteerTestCaseActions';
-// import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
+import {
+  puppeteerTestCaseState,
+  puppeteerTestCaseReducer,
+  PuppeteerTestCaseContext,
+} from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestCase from '../../components/TestCase/PuppeteerTestCase';
-
-// import { toggleModal } from '../../context/actions/testFileModalActions';
-// import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
-
-import { GlobalContext } from '../../context/reducers/globalReducer';
-import { toggleTestCase, toggleModal } from '../../context/actions/globalActions';
 
 import {
   MockDataContext,
@@ -41,48 +40,38 @@ import {
   mockDataReducer,
 } from '../../context/reducers/mockDataReducer';
 
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { toggleTestCase, toggleModal } from '../../context/actions/globalActions';
+
 const TestFile = () => {
   let [{ testCase, isTestModalOpen }, dispatchToGlobal] = useContext(GlobalContext);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
-  // const [{ hasRedux }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
-  // const [{ hasReact }, dispatchToTestCase] = useContext(ReactTestCaseContext);
-  // const [{ hasHooks }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
-  // const [{ hasEndpoint }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
-  // const [{ hasPuppeteer }, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
-  // const [{ isTestModalOpen }, dispatchToTestFileModal] = useContext(TestFileModalContext);
+  const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
+    endpointTestCaseReducer,
+    endpointTestCaseState
+  );
+
+  const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
+    reduxTestCaseReducer,
+    reduxTestCaseState
+  );
+  const [hooksTestCase, dispatchToHooksTestCase] = useReducer(
+    hooksTestCaseReducer,
+    hooksTestCaseState
+  );
+  const [puppeteerTestCase, dispatchToPuppeteerTestCase] = useReducer(
+    puppeteerTestCaseReducer,
+    puppeteerTestCaseState
+  );
 
   const closeTestModal = () => {
     dispatchToGlobal(toggleModal());
   };
 
-  // const handleToggleRedux = (e) => {
-  //   dispatchToReduxTestCase(toggleRedux());
-  //   closeTestModal();
-  // };
-
-  // const handleToggleReact = (e) => {
-  //   dispatchToTestCase(toggleReact());
-  //   closeTestModal();
-  // };
-
-  // const handleToggleEndpoint = (e) => {
-  //   dispatchToEndpointTestCase(toggleEndpoint());
-  //   closeTestModal();
-  // };
-
-  // const handleToggleHooks = (e) => {
-  //   dispatchToHooksTestCase(toggleHooks());
-  //   closeTestModal();
-  // };
-
-  // const handleTogglePuppeteer = (e) => {
-  //   dispatchToPuppeteerTestCase(togglePuppeteer());
-  //   closeTestModal();
-  // };
-
   const handleToggle = (test) => {
     dispatchToGlobal(toggleTestCase(test));
+    dispatchToGlobal(toggleModal());
     closeTestModal();
   };
 
@@ -131,7 +120,9 @@ const TestFile = () => {
 
       {testCase === 'redux' && (
         <section>
-          <ReduxTestCase />
+          <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
+            <ReduxTestCase />
+          </ReduxTestCaseContext.Provider>
         </section>
       )}
 
@@ -145,19 +136,27 @@ const TestFile = () => {
 
       {testCase === 'endpoint' && (
         <section>
-          <EndpointTestCase />
+          <EndpointTestCaseContext.Provider value={[endpointTestCase, dispatchToEndpointTestCase]}>
+            <EndpointTestCase />
+          </EndpointTestCaseContext.Provider>
         </section>
       )}
 
       {testCase === 'hooks' && (
         <section>
-          <HooksTestCase />
+          <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
+            <HooksTestCase />
+          </HooksTestCaseContext.Provider>
         </section>
       )}
 
       {testCase === 'puppeteer' && (
         <section>
-          <PuppeteerTestCase />
+          <PuppeteerTestCaseContext.Provider
+            value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}
+          >
+            <PuppeteerTestCase />
+          </PuppeteerTestCaseContext.Provider>
         </section>
       )}
 
