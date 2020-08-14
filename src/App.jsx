@@ -1,42 +1,7 @@
 import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/reducers/globalReducer';
-import {
-  ReactTestCaseContext,
-  reactTestCaseState,
-  reactTestCaseReducer,
-} from './context/reducers/reactTestCaseReducer';
-import {
-  PuppeteerTestCaseContext,
-  puppeteerTestCaseState,
-  puppeteerTestCaseReducer,
-} from './context/reducers/puppeteerTestCaseReducer';
-import {
-  EndpointTestCaseContext,
-  endpointTestCaseState,
-  endpointTestCaseReducer,
-} from './context/reducers/endpointTestCaseReducer';
-import {
-  ReduxTestCaseContext,
-  reduxTestCaseState,
-  reduxTestCaseReducer,
-} from './context/reducers/reduxTestCaseReducer';
-import {
-  HooksTestCaseContext,
-  hooksTestCaseState,
-  hooksTestCaseReducer,
-} from './context/reducers/hooksTestCaseReducer';
-import {
-  // TestFileModalContext,
-  testFileModalState,
-  testFileModalReducer,
-} from './context/reducers/testFileModalReducer';
 
-import {
-  // MockDataContext,
-  mockDataState,
-  mockDataReducer,
-} from './context/reducers/mockDataReducer';
 import ProjectLoader from './pages/ProjectLoader/ProjectLoader';
 import NavBar from './components/NavBar/NavBar';
 import LeftPanel from './pages//LeftPanel/LeftPanel';
@@ -44,32 +9,6 @@ import RightPanel from './pages/RightPanel/RightPanel';
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
-  const [reactTestCase, dispatchToReactTestCase] = useReducer(
-    reactTestCaseReducer,
-    reactTestCaseState
-  );
-  // const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
-  const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
-    endpointTestCaseReducer,
-    endpointTestCaseState
-  );
-
-  const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
-    reduxTestCaseReducer,
-    reduxTestCaseState
-  );
-  const [hooksTestCase, dispatchToHooksTestCase] = useReducer(
-    hooksTestCaseReducer,
-    hooksTestCaseState
-  );
-  const [puppeteerTestCase, dispatchToPuppeteerTestCase] = useReducer(
-    puppeteerTestCaseReducer,
-    puppeteerTestCaseState
-  );
-  const [testFileModal, dispatchToTestFileModal] = useReducer(
-    testFileModalReducer,
-    testFileModalState
-  );
 
   if (!global.isProjectLoaded) {
     return (
@@ -105,26 +44,8 @@ const App = () => {
         }
       >
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-            {/* <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}> */}
-            <EndpointTestCaseContext.Provider
-              value={[endpointTestCase, dispatchToEndpointTestCase]}
-            >
-              <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
-                <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
-                  <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-                    <PuppeteerTestCaseContext.Provider
-                      value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}
-                    >
-                      <NavBar />
-                      <LeftPanel />
-                    </PuppeteerTestCaseContext.Provider>
-                  </MockDataContext.Provider>
-                </TestFileModalContext.Provider>
-              </HooksTestCaseContext.Provider>
-            </EndpointTestCaseContext.Provider>
-            {/* </ReactTestCaseContext.Provider> */}
-          </ReduxTestCaseContext.Provider>
+          <NavBar />
+          <LeftPanel />
           {global.isRightPanelOpen ? <RightPanel /> : ''}
         </GlobalContext.Provider>
       </div>

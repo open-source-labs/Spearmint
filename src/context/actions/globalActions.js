@@ -83,7 +83,7 @@ export const createFile = (testString) => ({
 });
 
 //added
-export const toggleTestCase = (testCase) => ({
+export const setTestCase = (testCase) => ({
   type: actionTypes.SET_TEST_CASE,
   testCase,
 });

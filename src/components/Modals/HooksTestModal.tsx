@@ -3,7 +3,6 @@ import ReactModal from 'react-modal';
 import { createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
 import styles from './ExportFileModal.module.scss';
 import { toggleModal } from '../../context/actions/globalActions';
-// import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
 import { HooksTestModalProps } from '../../utils/hooksTypes';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 

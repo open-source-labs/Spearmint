@@ -3,7 +3,6 @@ import ReactModal from 'react-modal';
 import { createNewEndpointTest } from '../../context/actions/endpointTestCaseActions';
 import styles from './ExportFileModal.module.scss';
 import { toggleModal } from '../../context/actions/globalActions';
-import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const EndpointTestModal = ({
