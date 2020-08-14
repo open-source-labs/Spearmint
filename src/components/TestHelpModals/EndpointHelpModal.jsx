@@ -4,7 +4,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { closeInfoModal } from '../../context/actions/endpointTestCaseActions';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import styles from '../../components/TestHelpModals/EndpointHelpModal.module.scss';
+import styles from './EndpointHelpModal.module.scss';
+
 const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describe.png');
 
