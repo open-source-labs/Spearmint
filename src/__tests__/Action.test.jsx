@@ -39,12 +39,7 @@ describe('Assertion ', () => {
         <MockDataContext.Provider value={[mockDataState, dispatchToMockData]}>
           <Action {...reactTestCaseState} />
         </MockDataContext.Provider>
-<<<<<<< HEAD
-      </ReactTestCaseContext.Provider>,
-      div
-=======
       </ReactTestCaseContext.Provider>
->>>>>>> master
     );
   });
 });
