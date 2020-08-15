@@ -1,0 +1,33 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+
+.customInputContainer {
+  width: 90%;
+  margin: 1rem;
+  box-sizing: border-box;
+
+  .customInput {
+    width: 100%;
+    padding: 0.1rem;
+    padding-left: 0.4rem;
+    font-size: 0.75rem;
+    font-family: $openSans;
+    border: none;
+    border-bottom: 1px solid $mint;
+    background-color: rgba(0, 0, 0, 0);
+
+    &:focus {
+      outline: none;
+      border-bottom: 1.5px solid $mint;
+    }
+  }
+
+  .label {
+    margin-bottom: 2rem;
+  }
+
+  .bold {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+}

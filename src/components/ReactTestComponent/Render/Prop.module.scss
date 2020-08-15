@@ -1,0 +1,16 @@
+@import '/../../../assets/stylesheets/colors.scss';
+
+#renderPropsFlexBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  input {
+    width: 240px;
+    margin: 0 4px 4px 0px;
+  }
+
+  img {
+    margin-bottom: 5px;
+  }
+}

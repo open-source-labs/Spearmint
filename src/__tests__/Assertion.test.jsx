@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { ReactTestCaseContext } from '../context/reducers/reactTestCaseReducer';
 import { MockDataContext } from '../context/reducers/mockDataReducer';
-import Assertion from '../components/Assertion/Assertion';
+import Assertion from '../components/ReactTestComponent/Assertion/Assertion';
 
 const dispatchToReactTextCase = jest.fn();
 const dispatchToMockData = jest.fn();
@@ -41,7 +41,7 @@ describe('Assertion ', () => {
         <MockDataContext.Provider value={[mockDataState, dispatchToMockData]}>
           <Assertion {...reactTestCaseState} />
         </MockDataContext.Provider>
-      </ReactTestCaseContext.Provider>, div,
+      </ReactTestCaseContext.Provider>
     );
   });
 });
