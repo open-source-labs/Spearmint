@@ -2,21 +2,22 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewPuppeteerTest } from '../../context/actions/puppeteerTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal } from '../../context/actions/testFileModalActions';
-import { TestFileModalContext } from '../../context/reducers/testFileModalReducer';
 import { PuppeteerTestModalProps } from '../../utils/puppeteerTypes';
+
+import { toggleModal } from '../../context/actions/globalActions';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const PuppeteerTestModal = ({
   isPuppeteerModalOpen,
   closePuppeteerModal,
   dispatchToPuppeteerTestCase,
 }: PuppeteerTestModalProps) => {
-  const [, dispatchToTestFileModal] = useContext<any>(TestFileModalContext);
+  const [, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const handleNewPuppeteerTest = () => {
     dispatchToPuppeteerTestCase(createNewPuppeteerTest());
     closePuppeteerModal();
-    dispatchToTestFileModal(toggleModal());
+    dispatchToGlobal(toggleModal());
   };
 
   const modalStyles = {
