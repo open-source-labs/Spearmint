@@ -12,7 +12,6 @@ export const globalState = {
   isFileDirectoryOpen: true,
   isRightPanelOpen: true,
   rightPanelDisplay: 'browserView',
-  displayedFileCode: '',
   isFolderOpen: {},
   isFileHighlighted: '',
   projectFilePath: '',

@@ -9,12 +9,8 @@ import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
-<<<<<<< HEAD
 import { updateFile } from '../../context/actions/globalActions';
-=======
-import { createFile } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
->>>>>>> master
 
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
@@ -152,11 +148,8 @@ const PuppeteerTestCase = () => {
       <div id='head'>
         <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase} />
       </div>
-<<<<<<< HEAD
-      <button onClick={fileHandle}>Preview</button>
-=======
       <div id={styles.testMockSection}>
-        <button onClick={fileHandle}>Save my tests!!!</button>
+        <button onClick={fileHandle}>Preview</button>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
           <input
@@ -167,7 +160,6 @@ const PuppeteerTestCase = () => {
           />
         </section>
       </div>
->>>>>>> master
       {modalOpen ? <PuppeteerHelpModal /> : null}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>

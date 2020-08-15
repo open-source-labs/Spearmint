@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal } from '../../context/actions/globalActions';
+import { toggleModal, updateFile } from '../../context/actions/globalActions';
 import { HooksTestModalProps } from '../../utils/hooksTypes';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
@@ -16,6 +16,7 @@ const HooksTestModal = ({
     dispatchToHooksTestCase(createNewHooksTest());
     closeHooksModal();
     dispatchToGlobal(toggleModal());
+    dispatchToGlobal(updateFile(''));
   };
 
   const modalStyles = {
