@@ -1,12 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { editor } from 'monaco-editor';
 import { updateFile } from '../../context/actions/globalActions';
 
+const remote = window.require('electron').remote;
+const fs = remote.require('fs');
+
 const Editor = () => {
-  let [{ displayedFileCode, file }, dispatchToGlobal] = useContext(GlobalContext);
-  if (file.length > 0) displayedFileCode = file;
+  let [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
+  let editedText = '';
+  const [ifFileExists, setIfFileExists] = useState(false);
+
+  // console.log('rendered');
+
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'wordWrapColumn',
@@ -21,20 +28,35 @@ const Editor = () => {
     editor.setTheme('light-dark');
   };
 
-  // const updatafile = (newValue, e) => {
-  //   dispatchToGlobal(updateFile(newValue));
-  // };
+  const updatafile = (newValue, e) => {
+    editedText = newValue;
+  };
+
+  const saveFile = async () => {
+    dispatchToGlobal(updateFile(editedText));
+    if (filePath.length) {
+      if (editedText.length) {
+        setIfFileExists(false);
+        await fs.writeFile(filePath, editedText, (err) => {
+          if (err) throw err;
+        });
+      }
+    } else setIfFileExists(true);
+  };
 
   return (
     <div>
+      <button onClick={saveFile}>Save Changes</button>
+      {ifFileExists && <p>File does not exist! Use the Export Button to create your test file.</p>}
+      <hr></hr>
       <MonacoEditor
         height='95vh'
         language='javascript'
         theme='light-dark'
-        value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
+        value={file ? file : '// Open a file or click preview to view your code.'}
         options={options}
         editorDidMount={editorDidMount}
-        // onChange={updatafile}
+        onChange={updatafile}
       />
     </div>
   );

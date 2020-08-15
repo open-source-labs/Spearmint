@@ -6,14 +6,14 @@ import {
   updateRenderComponent,
   updateItStatementText,
 } from '../../context/actions/reactTestCaseActions';
-import { createFile } from '../../context/actions/globalActions';
+import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import { createMockData } from '../../context/actions/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
-import MockData from '../MockData/MockData';
-import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';
+import MockData from '../ReactTestComponent/MockData/MockData';
+import DecribeRenderer from '../ReactTestComponent/DescribeRenderer/DescribeRenderer';
 import ReactHelpModal from '../TestHelpModals/ReactHelpModal';
 
 //changes to pull down context
@@ -36,7 +36,9 @@ const ReactTestCase = () => {
   //
   const { describeBlocks, itStatements, statements, modalOpen } = reactTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [{ filePathMap, projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ filePathMap, projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(
+    GlobalContext
+  );
   const draggableStatements = describeBlocks.allIds;
 
   const handleAddMockData = () => {
@@ -71,7 +73,6 @@ const ReactTestCase = () => {
       }))
     );
   };
-
   const addMockData = () => {
     mockData.forEach((mockDatum) => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
@@ -81,6 +82,9 @@ const ReactTestCase = () => {
     });
     testFileCode += '\n';
   };
+  // const handleAddMockData = () => {
+  //   dispatchToMockData(addMockData());
+  // };
 
   const createMockDatumFieldKeys = (mockDatum) => {
     return mockDatum.fieldKeys.reduce((fieldKeysCode, mockDatum) => {
@@ -187,8 +191,11 @@ const ReactTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatReactFile()));
+    dispatchToGlobal(updateFile(generatReactFile()));
+    dispatchToGlobal(setFilePath(''));
   };
+
+  if (!file && exportBool) dispatchToGlobal(updateFile(generatReactFile()));
 
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
@@ -200,7 +207,7 @@ const ReactTestCase = () => {
           />
         </div>
         {modalOpen ? <ReactHelpModal /> : null}
-        <button onClick={fileHandle}>save me</button>
+        <button onClick={fileHandle}>Preview</button>
         <div className={styles.header}>
           <div className={styles.renderComponent}>
             <span className={styles.renderLabel}>Enter Component Name:</span>

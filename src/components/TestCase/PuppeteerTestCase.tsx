@@ -1,15 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { updateFile } from '../../context/actions/globalActions';
+import styles from './TestCase.module.scss';
 
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
@@ -21,6 +22,16 @@ const PuppeteerTestCase = () => {
     PuppeteerTestCaseContext
   );
 
+  interface Ref {
+    current: any;
+  }
+
+  const testDescription: Ref = useRef(null);
+
+  useEffect(() => {
+    testDescription.current.focus();
+  }, []);
+
   const reorder = (list: Array<PuppeteerStatements>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -29,7 +40,7 @@ const PuppeteerTestCase = () => {
   };
 
   /*----------added functionality from Export File Modal-----------------------------------------*/
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   let testFileCode = 'import React from "react";';
 
@@ -110,7 +121,7 @@ const PuppeteerTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatePuppeteerFile()));
+    dispatchToGlobal(updateFile(generatePuppeteerFile()));
   };
 
   /*----------------------------------------------------------------------------------------------*/
@@ -130,12 +141,25 @@ const PuppeteerTestCase = () => {
     dispatchToPuppeteerTestCase(updateStatementsOrder(reorderedStatements));
   };
 
+  if (!file && exportBool) dispatchToGlobal(updateFile(generatePuppeteerFile()));
+
   return (
     <div>
       <div id='head'>
         <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase} />
       </div>
-      <button onClick={fileHandle}>Save my tests!!!</button>
+      <div id={styles.testMockSection}>
+        <button onClick={fileHandle}>Preview</button>
+        <section id={styles.testCaseHeader}>
+          <label htmlFor='test-statement'>Test</label>
+          <input
+            ref={testDescription}
+            type='text'
+            id={styles.testStatement}
+            value={puppeteerStatements}
+          />
+        </section>
+      </div>
       {modalOpen ? <PuppeteerHelpModal /> : null}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
