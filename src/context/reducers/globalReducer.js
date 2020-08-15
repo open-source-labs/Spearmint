@@ -12,7 +12,6 @@ export const globalState = {
   isFileDirectoryOpen: true,
   isRightPanelOpen: true,
   rightPanelDisplay: 'browserView',
-  displayedFileCode: '',
   isFolderOpen: {},
   isFileHighlighted: '',
   projectFilePath: '',
@@ -20,6 +19,9 @@ export const globalState = {
   file: '',
   testCase: '',
   isTestModalOpen: true,
+  exportBool: false,
+  fileName: '',
+  filePath: '',
 };
 
 export const globalReducer = (state, action) => {
@@ -86,9 +88,11 @@ export const globalReducer = (state, action) => {
       };
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
+      const fileName = action.fileName;
       return {
         ...state,
         isFileHighlighted,
+        fileName,
       };
     case actionTypes.SET_PROJECT_FILE_PATH:
       const projectFilePath = action.projectFilePath;
@@ -102,12 +106,6 @@ export const globalReducer = (state, action) => {
         ...state,
         filePathMap,
       };
-    case actionTypes.CREATE_FILE_SHOW:
-      const file = action.testString;
-      return {
-        ...state,
-        file,
-      };
 
     //added
     case actionTypes.SET_TEST_CASE:
@@ -118,17 +116,16 @@ export const globalReducer = (state, action) => {
       };
 
     case actionTypes.TOGGLE_MODAL:
-      console.log(!state.isTestModalOpen);
       return {
         ...state,
         isTestModalOpen: !state.isTestModalOpen,
       };
     //
     case actionTypes.UPDATE_FILE_SHOW:
-      const fileUp = action.testString;
+      const updatedFile = action.testString;
       return {
         ...state,
-        file: fileUp,
+        file: updatedFile,
       };
     case actionTypes.OPEN_BROWSER_DOCS:
       const docsUrl = action.docsUrl;
@@ -137,6 +134,18 @@ export const globalReducer = (state, action) => {
         url: docsUrl,
         isRightPanelOpen: true,
         rightPanelDisplay: 'browserView',
+      };
+    case actionTypes.EXPORT:
+      let exportBool = !state.exportBool;
+      return {
+        ...state,
+        exportBool,
+      };
+    case actionTypes.SET_FILE_PATH:
+      const filePath = action.filePath;
+      return {
+        ...state,
+        filePath,
       };
     default:
       return state;

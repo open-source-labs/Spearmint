@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { updateFile } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
@@ -12,6 +12,7 @@ import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
 import HooksHelpModal from '../TestHelpModals/HooksHelpModal';
+
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
 const path = remote.require('path');
@@ -21,7 +22,17 @@ const HooksTestCase = () => {
     HooksTestCaseContext
   );
 
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+
+  interface Ref {
+    current: any;
+  }
+
+  const testDescription: Ref = useRef(null);
+
+  useEffect(() => {
+    testDescription.current.focus();
+  }, []);
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
@@ -183,21 +194,24 @@ const HooksTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatHookFile()));
+    dispatchToGlobal(updateFile(generatHookFile()));
   };
+
+  if (!file && exportBool) dispatchToGlobal(updateFile(generatHookFile()));
 
   return (
     <div>
       <div id='head'>
         <HooksTestMenu dispatchToHooksTestCase={dispatchToHooksTestCase} />
       </div>
-      <button onClick={fileHandle}>save me</button>
+      <button onClick={fileHandle}>Preview</button>
       {modalOpen ? <HooksHelpModal /> : null}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>
             Test
             <input
+              ref={testDescription}
               type='text'
               id={styles.testStatement}
               value={hooksTestStatement}

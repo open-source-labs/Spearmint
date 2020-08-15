@@ -3,7 +3,7 @@ import ReactModal from 'react-modal';
 import { createNewReduxTest } from '../../context/actions/reduxTestCaseActions';
 import styles from './ExportFileModal.module.scss';
 
-import { toggleModal } from '../../context/actions/globalActions';
+import { toggleModal, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 interface ReduxTestModalProps {
@@ -23,6 +23,7 @@ const ReduxTestModal = ({
     dispatchToReduxTestCase(createNewReduxTest());
     closeReduxModal();
     dispatchToGlobal(toggleModal());
+    dispatchToGlobal(updateFile(''));
   };
 
   const modalStyles = {
