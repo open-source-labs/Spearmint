@@ -1,9 +1,14 @@
 import React, { useContext } from 'react';
 import ReactTestStatements from '../TestCase/ReactTestStatements';
 import CustomInput from '../CustomInput/CustomInput';
-import { addRender, addAction, addAssertion, deleteItStatement  } from '../../context/actions/reactTestCaseActions';
+import {
+  addRender,
+  addAction,
+  addAssertion,
+  deleteItStatement,
+} from '../../context/actions/reactTestCaseActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
-import cn from 'classnames'
+import cn from 'classnames';
 import styles from './ItRenderer.module.scss';
 
 const ItRenderer = ({
@@ -27,8 +32,8 @@ const ItRenderer = ({
 
   const deleteItStatementHandleClick = (e) => {
     const itId = e.target.id;
-    dispatchToReactTestCase(deleteItStatement(describeId, itId))
-  }
+    dispatchToReactTestCase(deleteItStatement(describeId, itId));
+  };
   const addActionHandleClick = (e) => {
     const itId = e.target.id;
     dispatchToReactTestCase(addAction(describeId, itId));
@@ -37,8 +42,6 @@ const ItRenderer = ({
     const itId = e.target.id;
     dispatchToReactTestCase(addAssertion(describeId, itId));
   };
-
-
 
   return filteredIds.map((id, i) => (
     <div id={styles.ItRenderer} key={i}>
@@ -55,7 +58,7 @@ const ItRenderer = ({
         value={itStatements.byId[id].text}
         handleChange={handleChangeItStatementText}
       />
-      <hr/>
+      <hr />
       <ReactTestStatements
         key={`statement-${id}-${i}`}
         statements={statements}
