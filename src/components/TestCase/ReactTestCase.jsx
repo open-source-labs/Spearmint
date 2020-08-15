@@ -6,7 +6,7 @@ import {
   updateRenderComponent,
   updateItStatementText,
 } from '../../context/actions/reactTestCaseActions';
-import { createFile } from '../../context/actions/globalActions';
+import { createFile, toggleRightPanel } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -188,6 +188,7 @@ const ReactTestCase = () => {
 
   const fileHandle = () => {
     dispatchToGlobal(createFile(generateReactFile()));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
   return (
