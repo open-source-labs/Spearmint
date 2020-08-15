@@ -1,6 +1,6 @@
 /**
- * modal: pop ups windows on click 
- * browser view modal 
+ * modal: pop ups windows on click
+ * browser view modal
  */
 
 import React, { useContext } from 'react';
@@ -11,7 +11,7 @@ import { setProjectUrl } from '../../context/actions/globalActions';
 
 const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
-  const addHttps = url => {
+  const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
     } else if (url.startsWith('localhost')) {
@@ -23,11 +23,11 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
     }
   };
 
-  const handleChangeUrl = e => {
+  const handleChangeUrl = (e) => {
     const testSiteURL = addHttps(e.target.value);
     dispatchToGlobal(setProjectUrl(testSiteURL));
   };
-  
+
   const modalStyles = {
     overlay: {
       zIndex: 3,
