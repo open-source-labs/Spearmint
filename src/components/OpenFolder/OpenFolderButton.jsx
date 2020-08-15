@@ -18,7 +18,7 @@ const { remote } = window.require('electron');
 const electronFs = remote.require('fs');
 const { dialog } = remote;
 
-const OpenFolder = () => {
+const OpenFolder = ({ inNavBar }) => {
   const [{ isProjectLoaded }, dispatchToGlobal] = useContext(GlobalContext);
   const filePathMap = {};
 
@@ -76,7 +76,9 @@ const OpenFolder = () => {
 
   return (
     <span>
-      {!isProjectLoaded ? (
+      {inNavBar ? (
+        <button onClick={handleOpenFolder}>+</button>
+      ) : !isProjectLoaded ? (
         <button id={styles.openBtn} onClick={handleOpenFolder}>
           Open Folder
         </button>

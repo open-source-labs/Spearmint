@@ -8,6 +8,7 @@ import {
   toggleRightPanel,
   setFilePath,
 } from '../../context/actions/globalActions';
+import OpenFolder from '../OpenFolder/OpenFolderButton';
 
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
@@ -109,7 +110,10 @@ const FileDirectory = ({ fileTree }) => {
   return (
     <>
       <div id={styles.fileDirectory}>
-        <div id={styles.explorer}>{projectName}</div>
+        <div id={styles.explorer}>
+          {projectName}
+          <OpenFolder inNavBar={true} />
+        </div>
         {fileTree && convertToHTML(fileTree)}
       </div>
     </>
