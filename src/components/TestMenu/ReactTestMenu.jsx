@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { addDescribeBlock, openInfoModal } from '../../context/actions/reactTestCaseActions';
 import NewTestModal from '../Modals/NewTestModal';
+import { createNewTest } from '../../context/actions/reactTestCaseActions';
 
 const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,6 +32,7 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             closeModal={closeModal}
             dispatchToMockData={dispatchToMockData}
             dispatchToTestCase={dispatchToTestCase}
+            createNewTest={createNewTest}
           />
           <button id={styles.example} onClick={modalOpener}>
             Need Help?

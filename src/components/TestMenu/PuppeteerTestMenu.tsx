@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styles from './TestMenu.module.scss';
-import PuppeteerTestModal from '../Modals/PuppeteerTestModal';
+import NewTestModal from '../Modals/NewTestModal';
 import {
   addPuppeteerPaintTiming,
   openInfoModal,
+  createNewPuppeteerTest,
 } from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerTestMenuProps } from '../../utils/puppeteerTypes';
 
@@ -31,10 +32,12 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuPro
           <button type='button' data-testid='puppeteerNewTestButton' onClick={openPuppeteerModal}>
             New Test +
           </button>
-          <PuppeteerTestModal
-            isPuppeteerModalOpen={isPuppeteerModalOpen}
-            closePuppeteerModal={closePuppeteerModal}
-            dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
+          <NewTestModal
+            dispatchToMockData={null}
+            createNewTest={createNewPuppeteerTest}
+            isModalOpen={isPuppeteerModalOpen}
+            closeModal={closePuppeteerModal}
+            dispatchToTestCase={dispatchToPuppeteerTestCase}
           />
           <button id={styles.example} onClick={modalOpener}>
             example

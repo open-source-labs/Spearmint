@@ -5,9 +5,10 @@ import {
   addHookUpdates,
   addHookRender,
   openInfoModal,
+  createNewHooksTest,
 } from '../../context/actions/hooksTestCaseActions';
-import HooksTestModal from '../Modals/HooksTestModal';
 import { HooksTestMenuProps } from '../../utils/hooksTypes';
+import NewTestModal from '../Modals/NewTestModal';
 
 const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
   const [isHooksModalOpen, setIsHooksModalOpen] = useState(false);
@@ -43,10 +44,12 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
           <button type='button' onClick={openHooksModal}>
             New Test +
           </button>
-          <HooksTestModal
-            isHooksModalOpen={isHooksModalOpen}
-            closeHooksModal={closeHooksModal}
-            dispatchToHooksTestCase={dispatchToHooksTestCase}
+          <NewTestModal
+            dispatchToMockData={null}
+            createNewTest={createNewHooksTest}
+            isModalOpen={isHooksModalOpen}
+            closeModal={closeHooksModal}
+            dispatchToTestCase={dispatchToHooksTestCase}
           />
           <button id={styles.example} onClick={helpModalOpener}>
             Need Help?

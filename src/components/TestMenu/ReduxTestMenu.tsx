@@ -6,8 +6,9 @@ import {
   addActionCreator,
   addMiddleware,
   openInfoModal,
+  createNewReduxTest,
 } from '../../context/actions/reduxTestCaseActions';
-import ReduxTestModal from '../Modals/ReduxTestModal';
+import NewTestModal from '../Modals/NewTestModal';
 
 interface ReduxTestMenuProps {
   dispatchToReduxTestCase: (action: object) => void;
@@ -45,10 +46,12 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
       <div id={styles.testMenu}>
         <div id={styles.left}>
           <button onClick={openReduxModal}>New Test +</button>
-          <ReduxTestModal
-            isReduxModalOpen={isReduxModalOpen}
-            closeReduxModal={closeReduxModal}
-            dispatchToReduxTestCase={dispatchToReduxTestCase}
+          <NewTestModal
+            dispatchToMockData={null}
+            createNewTest={createNewReduxTest}
+            isModalOpen={isReduxModalOpen}
+            closeModal={closeReduxModal}
+            dispatchToTestCase={dispatchToReduxTestCase}
           />
           <button id={styles.example} onClick={modalOpener}>
             example

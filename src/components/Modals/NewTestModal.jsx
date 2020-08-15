@@ -5,18 +5,23 @@
 
 import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
-import { createNewTest } from '../../context/actions/reactTestCaseActions';
 import { clearMockData } from '../../context/actions/mockDataActions';
 import styles from './ExportFileModal.module.scss';
 import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 /* destructuring or declaring these?  */
-const NewTestModal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchToTestCase }) => {
+const NewTestModal = ({
+  isModalOpen,
+  closeModal,
+  dispatchToMockData,
+  dispatchToTestCase,
+  createNewTest,
+}) => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleNewTest = (e) => {
-    dispatchToMockData(clearMockData());
+    if (dispatchToMockData) dispatchToMockData(clearMockData());
     dispatchToTestCase(createNewTest());
     closeModal();
     dispatchToGlobal(setTestCase(''));
