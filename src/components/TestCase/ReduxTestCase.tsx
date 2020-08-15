@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { createFile, toggleRightPanel } from '../../context/actions/globalActions';
 import {
   updateReduxTestStatement,
   updateStatementsOrder,
@@ -259,6 +259,7 @@ const ReduxTestCase = () => {
 
   const fileHandle = () => {
     dispatchToGlobal(createFile(generateReduxFile()));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
   return (

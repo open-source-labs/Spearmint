@@ -6,7 +6,7 @@ import {
   updateRenderComponent,
   updateItStatementText,
 } from '../../context/actions/reactTestCaseActions';
-import { createFile, toggleRightPanel } from '../../context/actions/globalActions';
+// import { createFile, toggleRightPanel } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -15,6 +15,7 @@ import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../MockData/MockData';
 import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';
 import ReactHelpModal from '../TestHelpModals/ReactHelpModal';
+import { toggleDisplay } from '../../utils/globalFunctions';
 
 //changes to pull down context
 import {
@@ -186,11 +187,6 @@ const ReactTestCase = () => {
       (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
   };
 
-  const fileHandle = () => {
-    dispatchToGlobal(createFile(generateReactFile()));
-    dispatchToGlobal(toggleRightPanel('codeEditorView'));
-  };
-
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
       <div id={styles.ReactTestCase}>
@@ -201,7 +197,7 @@ const ReactTestCase = () => {
           />
         </div>
         {modalOpen ? <ReactHelpModal /> : null}
-        <button onClick={fileHandle}>save me</button>
+        <button onClick={toggleDisplay}>save me</button>
         <div className={styles.header}>
           <div className={styles.renderComponent}>
             <span className={styles.renderLabel}>Enter Component Name:</span>
