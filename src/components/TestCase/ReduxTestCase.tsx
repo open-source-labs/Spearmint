@@ -3,8 +3,8 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import { createFile, toggleRightPanel } from '../../context/actions/globalActions';
-import { updateFile } from '../../context/actions/globalActions';
+
+import { updateFile, toggleRightPanel, createFile } from '../../context/actions/globalActions';
 import {
   updateReduxTestStatement,
   updateStatementsOrder,
