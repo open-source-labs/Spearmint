@@ -1,5 +1,6 @@
 @import '../../assets/stylesheets/fonts.scss';
 @import '../../assets/stylesheets/colors.scss';
+@import '../../pages/LeftPanel/LeftPanel.module.scss';
 
 #describeBlock {
   position: relative;
@@ -24,7 +25,7 @@
     &:hover {
       color: red;
       cursor: pointer;
-      font-size: 1.50rem;
+      font-size: 1.5rem;
       font-weight: bold;
     }
   }
@@ -47,7 +48,6 @@
     font-size: 0.9rem;
     z-index: 3;
     font-family: $oxygen;
-
   }
 
   .describeInput {
@@ -55,9 +55,8 @@
     // border-bottom: 1px solid $mint;
     background-color: rgba(0, 0, 0, 0);
     margin-top: 0.3rem;
-    font-size: 0.90rem;
+    font-size: 0.9rem;
     z-index: 3;
-
   }
 
   .buttonContainer {
@@ -73,13 +72,11 @@
       padding: 0.5rem;
       border-radius: 5px;
       background-color: $mint;
-  
+
       &:hover {
         background-color: white;
         color: $mint;
       }
     }
   }
-
-
 }

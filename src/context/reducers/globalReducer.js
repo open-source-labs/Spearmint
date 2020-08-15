@@ -5,6 +5,7 @@ export const GlobalContext = createContext(null);
 
 export const globalState = {
   url: null,
+  projectUrl: null,
   isProjectLoaded: false,
   fileTree: null,
   componentName: '',
@@ -17,6 +18,8 @@ export const globalState = {
   projectFilePath: '',
   filePathMap: {},
   file: '',
+  testCase: '',
+  isTestModalOpen: true,
 };
 
 export const globalReducer = (state, action) => {
@@ -28,6 +31,7 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         url,
+        projectUrl: url,
       };
     case actionTypes.LOAD_PROJECT:
       return {
@@ -53,9 +57,11 @@ export const globalReducer = (state, action) => {
         isFileDirectoryOpen,
       };
     case actionTypes.CLOSE_RIGHT_PANEL:
+      const projUrl = state.projectUrl;
       return {
         ...state,
         isRightPanelOpen: false,
+        url: projUrl,
       };
     case actionTypes.TOGGLE_RIGHT_PANEL:
       const rightPanelDisplay = action.display;
@@ -69,6 +75,7 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         displayedFileCode,
+        file: '',
       };
     case actionTypes.TOGGLE_FOLDER_VIEW:
       const isFolderOpen = { ...state.isFolderOpen };
@@ -102,6 +109,35 @@ export const globalReducer = (state, action) => {
         file,
       };
 
+    //added
+    case actionTypes.SET_TEST_CASE:
+      const testCase = action.testCase;
+      return {
+        ...state,
+        testCase,
+      };
+
+    case actionTypes.TOGGLE_MODAL:
+      console.log(!state.isTestModalOpen);
+      return {
+        ...state,
+        isTestModalOpen: !state.isTestModalOpen,
+      };
+    //
+    case actionTypes.UPDATE_FILE_SHOW:
+      const fileUp = action.testString;
+      return {
+        ...state,
+        file: fileUp,
+      };
+    case actionTypes.OPEN_BROWSER_DOCS:
+      const docsUrl = action.docsUrl;
+      return {
+        ...state,
+        url: docsUrl,
+        isRightPanelOpen: true,
+        rightPanelDisplay: 'browserView',
+      };
     default:
       return state;
   }

@@ -2,7 +2,6 @@
 @import '../../assets/stylesheets/fonts.scss';
 @import '../../pages/LeftPanel/LeftPanel.module.scss';
 
-
 #modal {
   @include box-styling;
   font-family: $raleway;
@@ -25,10 +24,31 @@
     padding: 0;
   }
   h3 {
+    font-size: large;
     margin: 0;
     padding: 0;
   }
+  button {
+    font-size: 13px;
+    background-color: white;
+    margin-left: 10px;
+    width: 60px;
+    height: 25px;
+    padding: 0px;
+    border: none;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: $mint;
+  }
 }
+// #example {
+//   padding: 0px;
+//   margin-left: 10px;
+// }
+// #example:focus {
+//   background-color: $mint;
+// }
 
 #groupFlexbox {
   display: flex;

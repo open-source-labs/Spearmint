@@ -15,7 +15,7 @@ export const toggleMockData = () => ({
   type: actionTypes.TOGGLE_MOCK_DATA,
 });
 
-export const addMockData = () => ({
+export const createMockData = () => ({
   type: actionTypes.ADD_MOCK_DATA,
 });
 
