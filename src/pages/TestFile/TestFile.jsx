@@ -1,5 +1,5 @@
 import styles from '../../components/Modals/ExportFileModal.module.scss';
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
 
 //may be able to delete toggleReact, etc. from their respective action files
@@ -161,13 +161,21 @@ const TestFile = () => {
       )}
 
       {testCase === '' && (
-        <div id={styles.testMenu}>
+        <Fragment>
           <div id={styles.left}>
-            <button id={styles.newTestBtn} onClick={closeTestModal}>
-              New Test +
-            </button>
+            <br></br>
+            <br></br>
+            <h2>Click on New Test below to get started!</h2>
+            <br></br>
           </div>
-        </div>
+          <div id={styles.testMenu}>
+            <div id={styles.left}>
+              <button id={styles.newTestBtn} onClick={closeTestModal}>
+                New Test +
+              </button>
+            </div>
+          </div>
+        </Fragment>
       )}
     </div>
   );
