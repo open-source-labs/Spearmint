@@ -2,23 +2,23 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
-  displayFileCode,
-  loadProject,
+  setFilePathMap,
+  createFileTree,
   toggleFolderView,
   highlightFile,
+  toggleExportBool,
+  updateFile,
 } from '../../context/actions/globalActions';
 
 import styles from './ExportFileModal.module.scss';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
-// const path = remote.require('path');
-// const beautify = remote.require('js-beautify');
 
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
-  const [{ projectFilePath, file }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, fileBool }, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
@@ -32,6 +32,8 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     // reset fileName and invalidFileName
     setInvalidFileName(false);
     setFileName('');
+    dispatchToGlobal(toggleExportBool());
+    dispatchToGlobal(updateFile(''));
   };
 
   const handleClickSave = () => {
@@ -42,6 +44,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     }
     exportTestFile();
     closeExportModal();
+    dispatchToGlobal(updateFile(''));
   };
 
   /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
@@ -53,15 +56,47 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, file, (err) => {
       if (err) throw err;
     });
+    dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
     displayTestFile(projectFilePath + '/__tests__');
   };
 
   const displayTestFile = (testFolderFilePath) => {
     const fileContent = fs.readFileSync(testFolderFilePath + `/${fileName}.test.js`, 'utf8');
-    dispatchToGlobal(displayFileCode(fileContent));
-    dispatchToGlobal(loadProject('reload'));
+    dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
+  };
+  // co
+  const filePathMap = {};
+  const generateFileTreeObject = (projectFilePath) => {
+    const fileArray = fs.readdirSync(projectFilePath).map((fileName) => {
+      //replace backslashes for Windows OS
+      projectFilePath = projectFilePath.replace(/\\/g, '/');
+      let filePath = `${projectFilePath}/${fileName}`;
+      const file = {
+        filePath,
+        fileName,
+        files: [],
+      };
+      //generateFileTreeObj will be recursively called if it is a folder
+      const fileData = fs.statSync(file.filePath);
+      if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
+        if (fileData.isDirectory()) {
+          file.files = generateFileTreeObject(file.filePath);
+          file.files.forEach((file) => {
+            let javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
+            let fileType = file.fileName.split('.')[1];
+            if (javaScriptFileTypes.includes(fileType)) {
+              let componentName = file.fileName.split('.')[0];
+              filePathMap[componentName] = file.filePath;
+            }
+          });
+        }
+      }
+      return file;
+    });
+    dispatchToGlobal(setFilePathMap(filePathMap));
+    return fileArray;
   };
 
   const modalStyles = {
