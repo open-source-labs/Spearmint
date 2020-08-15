@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { updateFile } from '../../context/actions/globalActions';
 import {
   updateReduxTestStatement,
   updateStatementsOrder,
@@ -11,18 +11,17 @@ import {
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { ReduxStatements, ReduxTestCaseState } from '../../utils/reduxTypes';
-import ReduxHelpModal from '../TestHelpModals/ReduxHelpModal';
 
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
 const path = remote.require('path');
 
 const ReduxTestCase = () => {
-  const [{ reduxTestStatement, reduxStatements, modalOpen }, dispatchToReduxTestCase] = useContext(
+  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
     ReduxTestCaseContext
   );
 
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const handleUpdateReduxTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));
@@ -258,15 +257,16 @@ const ReduxTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generateReduxFile()));
+    dispatchToGlobal(updateFile(generateReduxFile()));
   };
+
+  if (!file && exportBool) dispatchToGlobal(updateFile(generateReduxFile()));
 
   return (
     <div>
       <div id='head'>
         <ReduxTestMenu dispatchToReduxTestCase={dispatchToReduxTestCase} />
       </div>
-      {modalOpen ? <ReduxHelpModal /> : null}
       <button onClick={fileHandle}>save me</button>
 
       <div id={styles.testMockSection}>

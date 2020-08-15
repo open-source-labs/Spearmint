@@ -12,7 +12,6 @@ export const actionTypes = {
   HIGHLIGHT_FILE: 'HIGHLIGHT_FILE',
   SET_PROJECT_FILE_PATH: 'SET_PROJECT_FILE_PATH',
   SET_FILE_PATH_MAP: 'SET_FILE_PATH_MAP',
-  CREATE_FILE_SHOW: 'CREATE_FILE_SHOW',
 
   //added
   SET_TEST_CASE: 'SET_TEST_CASE',
@@ -20,6 +19,7 @@ export const actionTypes = {
   UPDATE_FILE_SHOW: 'UPDATE_FILE_SHOW',
   OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
   CLOSE_BROWSER_DOCS: 'CLOSE_BROWSER_DOCS',
+  EXPORT_T: 'EXPORT',
 };
 
 export const setProjectUrl = (url) => ({
@@ -80,11 +80,6 @@ export const setFilePathMap = (filePathMap) => ({
   filePathMap,
 });
 
-export const createFile = (testString) => ({
-  type: actionTypes.CREATE_FILE_SHOW,
-  testString,
-});
-
 //added
 export const setTestCase = (testCase) => ({
   type: actionTypes.SET_TEST_CASE,
@@ -103,4 +98,8 @@ export const updateFile = (testString) => ({
 export const openBrowserDocs = (docsUrl) => ({
   type: actionTypes.OPEN_BROWSER_DOCS,
   docsUrl,
+});
+
+export const toggleExportBool = () => ({
+  type: actionTypes.EXPORT,
 });

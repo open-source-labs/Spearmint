@@ -20,6 +20,7 @@ export const globalState = {
   file: '',
   testCase: '',
   isTestModalOpen: true,
+  exportBool: false,
 };
 
 export const globalReducer = (state, action) => {
@@ -102,12 +103,6 @@ export const globalReducer = (state, action) => {
         ...state,
         filePathMap,
       };
-    case actionTypes.CREATE_FILE_SHOW:
-      const file = action.testString;
-      return {
-        ...state,
-        file,
-      };
 
     //added
     case actionTypes.SET_TEST_CASE:
@@ -118,7 +113,6 @@ export const globalReducer = (state, action) => {
       };
 
     case actionTypes.TOGGLE_MODAL:
-      console.log(!state.isTestModalOpen);
       return {
         ...state,
         isTestModalOpen: !state.isTestModalOpen,
@@ -137,6 +131,12 @@ export const globalReducer = (state, action) => {
         url: docsUrl,
         isRightPanelOpen: true,
         rightPanelDisplay: 'browserView',
+      };
+    case actionTypes.EXPORT:
+      let exportBool = !state.exportBool;
+      return {
+        ...state,
+        exportBool,
       };
     default:
       return state;

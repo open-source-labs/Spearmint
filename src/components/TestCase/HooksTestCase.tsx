@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { updateFile } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
@@ -21,7 +21,7 @@ const HooksTestCase = () => {
     HooksTestCaseContext
   );
 
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
@@ -183,8 +183,10 @@ const HooksTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatHookFile()));
+    dispatchToGlobal(updateFile(generatHookFile()));
   };
+
+  if (!file && exportBool) dispatchToGlobal(updateFile(generatHookFile()));
 
   return (
     <div>

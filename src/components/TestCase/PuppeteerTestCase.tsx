@@ -9,7 +9,7 @@ import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { updateFile } from '../../context/actions/globalActions';
 
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
@@ -29,7 +29,7 @@ const PuppeteerTestCase = () => {
   };
 
   /*----------added functionality from Export File Modal-----------------------------------------*/
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   let testFileCode = 'import React from "react";';
 
@@ -110,7 +110,7 @@ const PuppeteerTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatePuppeteerFile()));
+    dispatchToGlobal(updateFile(generatePuppeteerFile()));
   };
 
   /*----------------------------------------------------------------------------------------------*/
@@ -129,6 +129,8 @@ const PuppeteerTestCase = () => {
     );
     dispatchToPuppeteerTestCase(updateStatementsOrder(reorderedStatements));
   };
+
+  if (!file && exportBool) dispatchToGlobal(updateFile(generatePuppeteerFile()));
 
   return (
     <div>

@@ -10,12 +10,14 @@ interface ReduxTestStatementsProps {
   dispatchToReduxTestCase: (action: object) => void;
 }
 
-const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchToReduxTestCase }: ReduxTestStatementsProps) {
+const ReduxTestStatements = function TestStatements({
+  reduxStatements,
+  dispatchToReduxTestCase,
+}: ReduxTestStatementsProps) {
   /* destructing from the reducer */
   return (
     <>
-      {
-      reduxStatements.map((statement, i) => {
+      {reduxStatements.map((statement, i) => {
         switch (statement.type) {
           case 'middleware':
             return (
@@ -56,8 +58,7 @@ const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchT
           default:
             return <></>;
         }
-      })
-    }
+      })}
     </>
   );
 };

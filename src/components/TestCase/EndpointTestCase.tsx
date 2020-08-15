@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { updateFile } from '../../context/actions/globalActions';
 import {
   updateEndpointTestStatement,
   updateStatementsOrder,
@@ -22,7 +22,7 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase,
   ] = useContext(EndpointTestCaseContext);
 
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, exportBool, file }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const handleUpdateEndpointTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
@@ -104,8 +104,10 @@ const EndpointTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatEndFile()));
+    dispatchToGlobal(updateFile(generatEndFile()));
   };
+
+  if (!file && exportBool) dispatchToGlobal(updateFile(generatEndFile()));
 
   let endpointInfoModal = null;
   if (modalOpen) endpointInfoModal = <EndpointHelpModal />;

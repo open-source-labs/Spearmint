@@ -7,6 +7,8 @@ import {
   createFileTree,
   toggleFolderView,
   highlightFile,
+  toggleExportBool,
+  updateFile,
 } from '../../context/actions/globalActions';
 
 import styles from './ExportFileModal.module.scss';
@@ -17,7 +19,7 @@ const fs = remote.require('fs');
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
-  const [{ projectFilePath, file }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, fileBool }, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
@@ -31,6 +33,8 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     // reset fileName and invalidFileName
     setInvalidFileName(false);
     setFileName('');
+    dispatchToGlobal(toggleExportBool());
+    dispatchToGlobal(updateFile(''));
   };
 
   const handleClickSave = () => {
@@ -41,6 +45,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     }
     exportTestFile();
     closeExportModal();
+    dispatchToGlobal(updateFile(''));
   };
 
   /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
