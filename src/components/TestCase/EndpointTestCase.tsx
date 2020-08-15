@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { createFile, setFilePath } from '../../context/actions/globalActions';
 import {
   updateEndpointTestStatement,
   updateStatementsOrder,
@@ -12,9 +12,7 @@ import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
 import EndpointHelpModal from '../TestHelpModals/EndpointHelpModal';
-const remote = window.require('electron').remote;
-const beautify = remote.require('js-beautify');
-const path = remote.require('path');
+import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 const EndpointTestCase = () => {
   const [
@@ -61,61 +59,11 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  let testFileCode = 'import React from "react";';
-  const generatEndFile = () => {
-    return (
-      addEndpointImportStatements(),
-      addEndpointTestStatements(),
-      (testFileCode = beautify(testFileCode, {
-        indent_size: 2,
-        space_in_empty_paren: true,
-        e4x: true,
-      }))
-    );
-  };
-  const addEndpointImportStatements = () => {
-    endpointStatements.forEach((statement: any) => {
-      switch (statement.type) {
-        case 'endpoint':
-          return createPathToServer(statement);
-        default:
-          return statement;
-      }
-    });
-    testFileCode += '\n';
-  };
-
-  const addEndpointTestStatements = () => {
-    testFileCode += `\n test('${endpointTestStatement}', async (done) => {`;
-    endpointStatements.forEach((statement: any) => {
-      switch (statement.type) {
-        case 'endpoint':
-          return addEndpoint(statement);
-        default:
-          return statement;
-      }
-    });
-    testFileCode += 'done();';
-    testFileCode += '});';
-    testFileCode += '\n';
-  };
-  const createPathToServer = (statement: any) => {
-    let filePath = path.relative(projectFilePath, statement.serverFilePath);
-    filePath = filePath.replace(/\\/g, '/');
-    testFileCode = `const app = require('../${filePath}');
-  const supertest = require('supertest')
-  const request = supertest(app)\n`;
-
-    testFileCode += '\n';
-  };
-
-  const addEndpoint = (statement: any) => {
-    testFileCode += `const response = await request.${statement.method}('${statement.route}')
-    expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
-  };
+  const generateTest = useGenerateTest('react', projectFilePath);
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatEndFile()));
+    dispatchToGlobal(createFile(generateTest({ endpointTestStatement, endpointStatements })));
+    dispatchToGlobal(setFilePath(''));
   };
 
   let endpointInfoModal = null;
