@@ -5,13 +5,14 @@
   position: fixed;
   top: 35%;
   left: 30%;
-  width: 600px;
-  height: 350px;
+  width: 700px;
+  height: 800px;
   font-family: $openSans;
   background-color: white;
   border: 2px solid $mint;
   border-radius: 5px;
   box-shadow: 0 0 0 1px white inset;
+  overflow: scroll;
 }
 h2 {
   font-size: 1.5em;
@@ -28,9 +29,9 @@ a {
 }
 
 .describe {
-  margin: 5px;
-  width: 100%;
-  height: 100%;
+  margin: auto;
+  width: 95%;
+  height: 95%;
   object-fit: contain;
 }
 
@@ -48,6 +49,14 @@ a {
     font-size: 1.5rem;
     font-weight: bold;
   }
+}
+
+button {
+  margin-left: 8px;
+}
+button:hover {
+  background-color: $mint;
+  border-radius: 5px;
 }
 
 // .modal {

@@ -3,10 +3,10 @@
 
 .modal {
   position: fixed;
-  top: 35%;
+  top: 10%;
   left: 30%;
-  width: 600px;
-  height: 350px;
+  width: 50em;
+  height: 45em;
   font-family: $openSans;
   background-color: white;
   border: 2px solid $mint;
@@ -20,6 +20,12 @@ h2 {
 }
 p {
   padding: 5px;
+}
+
+#helpImg {
+  margin: auto;
+  height: 90%;
+  width: 90%;
 }
 
 a {

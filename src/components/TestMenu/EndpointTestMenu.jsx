@@ -34,7 +34,7 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
             dispatchToEndpointTestCase={dispatchToEndpointTestCase}
           />
           <button id={styles.example} onClick={modalOpener}>
-            example
+            Need Help?
           </button>
         </div>
         <div id={styles.right}>

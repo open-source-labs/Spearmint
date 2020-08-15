@@ -57,7 +57,7 @@ const ReactTestCase = () => {
 
   let testFileCode = 'import React from "react";';
 
-  const generatReactFile = () => {
+  const generateReactFile = () => {
     return (
       addComponentImportStatement(),
       addReactImportStatements(),
@@ -187,7 +187,7 @@ const ReactTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatReactFile()));
+    dispatchToGlobal(createFile(generateReactFile()));
   };
 
   return (

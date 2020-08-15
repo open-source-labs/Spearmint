@@ -37,7 +37,7 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuPro
             dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
           />
           <button id={styles.example} onClick={modalOpener}>
-            example
+            Need Help?
           </button>
         </div>
         <div id={styles.right}>
