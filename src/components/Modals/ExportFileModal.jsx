@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
-  displayFileCode,
   setFilePathMap,
   createFileTree,
   toggleFolderView,
@@ -63,7 +62,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   const displayTestFile = (testFolderFilePath) => {
     const fileContent = fs.readFileSync(testFolderFilePath + `/${fileName}.test.js`, 'utf8');
-    dispatchToGlobal(displayFileCode(fileContent));
+    dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
   };

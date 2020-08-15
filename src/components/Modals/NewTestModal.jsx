@@ -8,7 +8,7 @@ import ReactModal from 'react-modal';
 import { createNewTest } from '../../context/actions/reactTestCaseActions';
 import { clearMockData } from '../../context/actions/mockDataActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal, setTestCase } from '../../context/actions/globalActions';
+import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 /* destructuring or declaring these?  */
@@ -21,6 +21,7 @@ const NewTestModal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchToT
     closeModal();
     dispatchToGlobal(setTestCase(''));
     dispatchToGlobal(toggleModal());
+    dispatchToGlobal(updateFile(''));
   };
 
   const modalStyles = {

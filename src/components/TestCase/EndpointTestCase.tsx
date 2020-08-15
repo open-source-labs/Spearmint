@@ -117,7 +117,7 @@ const EndpointTestCase = () => {
       <div id='head'>
         <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
       </div>
-      <button onClick={fileHandle}>save me</button>
+      <button onClick={fileHandle}>Preview</button>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>

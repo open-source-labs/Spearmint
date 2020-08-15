@@ -12,6 +12,7 @@ import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
 import HooksHelpModal from '../TestHelpModals/HooksHelpModal';
+
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
 const path = remote.require('path');
@@ -193,7 +194,7 @@ const HooksTestCase = () => {
       <div id='head'>
         <HooksTestMenu dispatchToHooksTestCase={dispatchToHooksTestCase} />
       </div>
-      <button onClick={fileHandle}>save me</button>
+      <button onClick={fileHandle}>Preview</button>
       {modalOpen ? <HooksHelpModal /> : null}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>

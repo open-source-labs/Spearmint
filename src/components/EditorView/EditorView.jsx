@@ -5,8 +5,7 @@ import { editor } from 'monaco-editor';
 import { updateFile } from '../../context/actions/globalActions';
 
 const Editor = () => {
-  let [{ displayedFileCode, file }, dispatchToGlobal] = useContext(GlobalContext);
-  if (file) displayedFileCode = file;
+  let [{ file }, dispatchToGlobal] = useContext(GlobalContext);
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'wordWrapColumn',
@@ -40,7 +39,7 @@ const Editor = () => {
         height='95vh'
         language='javascript'
         theme='light-dark'
-        value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
+        value={file ? file : '// Open a file or click preview to view your code.'}
         options={options}
         editorDidMount={editorDidMount}
         onChange={updatafile}

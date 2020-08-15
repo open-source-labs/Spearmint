@@ -1,5 +1,5 @@
 import React from 'react';
-import Endpoint from '../Endpoint/Endpoint';
+import Endpoint from '../EndpointTestComponent/Endpoint';
 import { EndpointTestStatementsProps } from '../../utils/endpointTypes';
 
 const EndpointTestStatements = ({

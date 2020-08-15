@@ -1,8 +1,8 @@
 import React from 'react';
-import Middleware from '../Middleware/Middleware';
-import ActionCreator from '../ActionCreator/ActionCreator';
-import Async from '../Thunk/Thunk';
-import Reducer from '../Reducer/Reducer';
+import Middleware from '../ReduxTestComponent/Middleware/Middleware';
+import ActionCreator from '../ReduxTestComponent/ActionCreator/ActionCreator';
+import Async from '../ReduxTestComponent/Thunk/Thunk';
+import Reducer from '../ReduxTestComponent/Reducer/Reducer';
 import { ReduxStatements } from '../../utils/reduxTypes';
 
 interface ReduxTestStatementsProps {

@@ -267,7 +267,7 @@ const ReduxTestCase = () => {
       <div id='head'>
         <ReduxTestMenu dispatchToReduxTestCase={dispatchToReduxTestCase} />
       </div>
-      <button onClick={fileHandle}>save me</button>
+      <button onClick={fileHandle}>Preview</button>
 
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
