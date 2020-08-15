@@ -11,11 +11,12 @@ const Editor = () => {
   let editedText = '';
   const [ifFileExists, setIfFileExists] = useState(false);
 
-  let [
-    { projectFilePath, displayedFileCode, file, fileName, filePathMap, filePath },
-    dispatchToGlobal,
-  ] = useContext(GlobalContext);
-  if (file.length > 0) displayedFileCode = file;
+  // console.log('rendered');
+  let [{ displayedFileCode, file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
+  if (file.length > 0) {
+    displayedFileCode = file;
+    editedText = file;
+  }
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'wordWrapColumn',
@@ -38,12 +39,13 @@ const Editor = () => {
     // let filePath = filePathMap[fileName.split('.')[0]];
     // console.log(filePathMap, '-----', filePath);
     dispatchToGlobal(updateFile(editedText));
-    if (filePath) {
-      setIfFileExists(false);
-      if (file.length)
+    if (filePath.length) {
+      if (editedText.length) {
+        setIfFileExists(false);
         await fs.writeFile(filePath, editedText, (err) => {
           if (err) throw err;
         });
+      }
     } else setIfFileExists(true);
   };
 
