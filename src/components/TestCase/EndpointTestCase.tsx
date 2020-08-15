@@ -26,6 +26,7 @@ const EndpointTestCase = () => {
 
   const handleUpdateEndpointTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
+    fileHandle();
   };
 
   const reorder = (list: Array<EndpointStatements>, startIndex: number, endIndex: number) => {

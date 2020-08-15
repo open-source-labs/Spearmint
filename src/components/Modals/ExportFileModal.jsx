@@ -12,8 +12,8 @@ import styles from './ExportFileModal.module.scss';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
-const path = remote.require('path');
-const beautify = remote.require('js-beautify');
+// const path = remote.require('path');
+// const beautify = remote.require('js-beautify');
 
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');

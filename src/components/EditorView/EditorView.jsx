@@ -1,12 +1,20 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { editor } from 'monaco-editor';
 import { updateFile } from '../../context/actions/globalActions';
 
+const remote = window.require('electron').remote;
+const fs = remote.require('fs');
+
 const Editor = () => {
   let editedText = '';
-  let [{ displayedFileCode, file }, dispatchToGlobal] = useContext(GlobalContext);
+  const [ifFileExists, setIfFileExists] = useState(false);
+
+  let [
+    { projectFilePath, displayedFileCode, file, fileName, filePathMap, filePath },
+    dispatchToGlobal,
+  ] = useContext(GlobalContext);
   if (file.length > 0) displayedFileCode = file;
   const options = {
     selectOnLineNumbers: true,
@@ -26,13 +34,23 @@ const Editor = () => {
     editedText = newValue;
   };
 
-  const handleClick = () => {
+  const saveFile = async () => {
+    // let filePath = filePathMap[fileName.split('.')[0]];
+    // console.log(filePathMap, '-----', filePath);
     dispatchToGlobal(updateFile(editedText));
+    if (filePath) {
+      setIfFileExists(false);
+      if (file.length)
+        await fs.writeFile(filePath, editedText, (err) => {
+          if (err) throw err;
+        });
+    } else setIfFileExists(true);
   };
 
   return (
     <div>
-      <button onClick={handleClick}>Save Changes</button>
+      <button onClick={saveFile}>Save Changes</button>
+      {ifFileExists && <p>File does not exist! Use the Export Button to create your test file.</p>}
       <hr></hr>
       <MonacoEditor
         height='95vh'
