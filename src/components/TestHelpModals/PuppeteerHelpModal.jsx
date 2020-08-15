@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { closeInfoModal } from '../../context/actions/reactTestCaseActions';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import ReactModal from 'react-modal';
-import styles from '../../components/TestHelpModals/PuppeteerHelpModal.module.scss';
+import styles from '../../components/TestHelpModals/TestHelpModal.module.scss';
 const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describe.png');
 
