@@ -21,7 +21,7 @@ const { remote } = window.require('electron');
 const electronFs = remote.require('fs');
 const { dialog } = remote;
 
-const OpenFolder = ({ inNavBar }) => {
+const OpenFolder = () => {
   const [{ isProjectLoaded }, dispatchToGlobal] = useContext(GlobalContext);
   const filePathMap = {};
 
@@ -41,12 +41,7 @@ const OpenFolder = ({ inNavBar }) => {
       directoryPath = directoryPath.replace(/\\/g, '/');
       dispatchToGlobal(setProjectFilePath(directoryPath));
       dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
-      if (!inNavBar) dispatchToGlobal(loadProject('load'));
-      if (inNavBar) {
-        dispatchToGlobal(updateFile(''));
-        dispatchToGlobal(displayFileCode(''));
-        dispatchToGlobal(setFilePath(''));
-      }
+      dispatchToGlobal(loadProject('load'));
     }
   };
 
@@ -84,9 +79,7 @@ const OpenFolder = ({ inNavBar }) => {
 
   return (
     <span>
-      {inNavBar ? (
-        <button onClick={handleOpenFolder}>+</button>
-      ) : !isProjectLoaded ? (
+      {!isProjectLoaded ? (
         <button id={styles.openBtn} onClick={handleOpenFolder}>
           Open Folder
         </button>
