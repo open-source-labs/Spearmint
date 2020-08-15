@@ -8,7 +8,7 @@ require('dotenv').config();
 const ProjectLoader = () => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
 
-  const addHttps = url => {
+  const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
     } else if (url.startsWith('localhost')) {
@@ -20,12 +20,13 @@ const ProjectLoader = () => {
     }
   };
 
-  const handleChangeUrl = e => {
+  const handleChangeUrl = (e) => {
     const testSiteURL = addHttps(e.target.value);
     dispatchToGlobal(setProjectUrl(testSiteURL));
   };
-  
-  const placehold =  process.env.NODE_ENV === 'development' ? 'Dev mode do not fill out' : 'ex: localhost:3000' 
+
+  const placehold =
+    process.env.NODE_ENV === 'development' ? 'Dev mode do not fill out' : 'ex: localhost:3000';
 
   return (
     <div id={styles.projectLoader}>
@@ -48,17 +49,12 @@ const ProjectLoader = () => {
           <div className={styles.contentBox}>
             <span className={styles.number}>01</span>
             <span className={styles.text}> Enter test site's URL</span> <br />
-            <input
-              type='text'
-              id={styles.url}
-              placeholder= {placehold}
-              onChange={handleChangeUrl}
-            />
+            <input type='text' id={styles.url} placeholder={placehold} onChange={handleChangeUrl} />
           </div>
           <div className={styles.contentBox}>
             <span className={styles.number}>02</span>
             <span className={styles.text}>Select your application</span> <br />
-            <OpenFolder />
+            <OpenFolder inNavBar={false} />
           </div>
         </div>
       </section>

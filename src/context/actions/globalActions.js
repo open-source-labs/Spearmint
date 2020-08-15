@@ -20,6 +20,7 @@ export const actionTypes = {
   UPDATE_FILE_SHOW: 'UPDATE_FILE_SHOW',
   OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
   CLOSE_BROWSER_DOCS: 'CLOSE_BROWSER_DOCS',
+  SET_FILE_PATH: 'SET_FILE_PATH',
 };
 
 export const setProjectUrl = (url) => ({
@@ -103,4 +104,9 @@ export const updateFile = (testString) => ({
 export const openBrowserDocs = (docsUrl) => ({
   type: actionTypes.OPEN_BROWSER_DOCS,
   docsUrl,
+});
+
+export const setFilePath = (filePath) => ({
+  type: actionTypes.SET_FILE_PATH,
+  filePath,
 });

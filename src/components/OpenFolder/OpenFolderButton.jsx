@@ -9,6 +9,9 @@ import {
   createFileTree,
   setFilePathMap,
   setProjectFilePath,
+  updateFile,
+  displayFileCode,
+  setFilePath,
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
@@ -18,7 +21,7 @@ const { remote } = window.require('electron');
 const electronFs = remote.require('fs');
 const { dialog } = remote;
 
-const OpenFolder = () => {
+const OpenFolder = ({ inNavBar }) => {
   const [{ isProjectLoaded }, dispatchToGlobal] = useContext(GlobalContext);
   const filePathMap = {};
 
@@ -37,8 +40,13 @@ const OpenFolder = () => {
       //replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       dispatchToGlobal(setProjectFilePath(directoryPath));
-      dispatchToGlobal(loadProject('load'));
       dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
+      if (!inNavBar) dispatchToGlobal(loadProject('load'));
+      if (inNavBar) {
+        dispatchToGlobal(updateFile(''));
+        dispatchToGlobal(displayFileCode(''));
+        dispatchToGlobal(setFilePath(''));
+      }
     }
   };
 
@@ -76,7 +84,9 @@ const OpenFolder = () => {
 
   return (
     <span>
-      {!isProjectLoaded ? (
+      {inNavBar ? (
+        <button onClick={handleOpenFolder}>+</button>
+      ) : !isProjectLoaded ? (
         <button id={styles.openBtn} onClick={handleOpenFolder}>
           Open Folder
         </button>

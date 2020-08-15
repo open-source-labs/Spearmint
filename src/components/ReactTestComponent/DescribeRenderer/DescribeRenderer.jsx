@@ -1,7 +1,7 @@
-import React from 'react';
-import cn from 'classnames';
+import React, { useRef, useEffect } from 'react';
 import ItRenderer from '../ItRenderer/ItRenderer';
 // import { Draggable } from 'react-beautiful-dnd';
+import cn from 'classnames';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../../context/actions/reactTestCaseActions';
 
@@ -17,6 +17,12 @@ const DescribeRenderer = ({
   handleChangeItStatementText,
   type,
 }) => {
+  const testDescription = useRef(null);
+
+  useEffect(() => {
+    testDescription.current.focus();
+  }, []);
+
   const deleteDescribeBlockHandleClick = (e) => {
     e.stopPropagation();
     const describeId = e.target.id;
@@ -41,6 +47,7 @@ const DescribeRenderer = ({
           className={cn('far fa-window-close', styles.describeClose)}
         ></i>
         <input
+          ref={testDescription}
           id={id}
           className={styles.describeInput}
           name='describe-label'

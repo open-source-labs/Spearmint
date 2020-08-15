@@ -6,7 +6,7 @@ import {
   updateRenderComponent,
   updateItStatementText,
 } from '../../context/actions/reactTestCaseActions';
-import { createFile } from '../../context/actions/globalActions';
+import { createFile, setFilePath } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -190,6 +190,7 @@ const ReactTestCase = () => {
 
   const fileHandle = () => {
     dispatchToGlobal(createFile(generatReactFile()));
+    dispatchToGlobal(setFilePath(''));
   };
 
   return (
@@ -202,7 +203,7 @@ const ReactTestCase = () => {
           />
         </div>
         {modalOpen ? <ReactHelpModal /> : null}
-        <button onClick={fileHandle}>save me</button>
+        <button onClick={fileHandle}>Preview</button>
         <div className={styles.header}>
           <div className={styles.renderComponent}>
             <span className={styles.renderLabel}>Enter Component Name:</span>
