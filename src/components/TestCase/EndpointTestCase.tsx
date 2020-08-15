@@ -59,7 +59,7 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  const generateTest = useGenerateTest('react', projectFilePath);
+  const generateTest = useGenerateTest('endpoint', projectFilePath);
 
   const fileHandle = () => {
     dispatchToGlobal(createFile(generateTest({ endpointTestStatement, endpointStatements })));
