@@ -7,7 +7,7 @@ import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCase
 import styles from './EndpointHelpModal.module.scss';
 
 const closeIcon = require('../../assets/images/close.png');
-const describe = require('../../assets/images/describe.png');
+const describe = require('../../assets/images/describehelp.png');
 
 const EndpointHelpModal = () => {
   const [_, dispatchToGlobal] = useContext(GlobalContext);
@@ -37,13 +37,15 @@ const EndpointHelpModal = () => {
       }}
     >
       <img src={closeIcon} onClick={closeModal} />
-      <h2>Describe(name, fn)</h2>
-      <p>
-        Describe creates a block that groups together several related tests. The name argument is
-        simply the name of component you're testing. fn argument is the test callback function{' '}
-      </p>
-      <img src={describe} />
-      <a onClick={openDocs}>Need More Help?</a>
+      <div id='helpContainer'>
+        {/* <h2>Describe(name, fn)</h2>
+        <p>
+          Describe creates a block that groups together several related tests. The name argument is
+          simply the name of component you're testing. fn argument is the test callback function{' '}
+        </p> */}
+        <img src={describe} />
+        <a onClick={openDocs}>Need More Help?</a>
+      </div>
     </ReactModal>
   );
 };

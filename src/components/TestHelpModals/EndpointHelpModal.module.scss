@@ -5,14 +5,21 @@
   position: fixed;
   top: 35%;
   left: 30%;
-  width: 500px;
-  height: 250px;
+  width: 40em;
+  min-height: 20em;
   font-family: $openSans;
   background-color: white;
   border: 4px solid $mint;
   border-radius: 5px;
   box-shadow: 0 0 0 1px white inset;
 }
+
+// #helpContainer {
+//   height: 100%;
+//   margin: 5px 5px 5px 5px;
+//   padding: 10px;
+// }
+
 h2 {
   font-size: 1.5em;
   font-weight: bold;
