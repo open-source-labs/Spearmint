@@ -6,7 +6,7 @@ import {
   updateRenderComponent,
   updateItStatementText,
 } from '../../context/actions/reactTestCaseActions';
-import { createFile, setFilePath } from '../../context/actions/globalActions';
+import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -36,7 +36,9 @@ const ReactTestCase = () => {
   //
   const { describeBlocks, itStatements, statements, modalOpen } = reactTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [{ filePathMap, projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ filePathMap, projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(
+    GlobalContext
+  );
   const draggableStatements = describeBlocks.allIds;
 
   const handleAddMockData = () => {
@@ -189,9 +191,11 @@ const ReactTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatReactFile()));
+    dispatchToGlobal(updateFile(generatReactFile()));
     dispatchToGlobal(setFilePath(''));
   };
+
+  if (!file && exportBool) dispatchToGlobal(updateFile(generatReactFile()));
 
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>

@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { createFile } from '../../context/actions/globalActions';
+import { updateFile } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
@@ -21,7 +21,8 @@ const HooksTestCase = () => {
   const [{ hooksTestStatement, hooksStatements, modalOpen }, dispatchToHooksTestCase] = useContext(
     HooksTestCaseContext
   );
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   interface Ref {
     current: any;
@@ -193,15 +194,17 @@ const HooksTestCase = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generatHookFile()));
+    dispatchToGlobal(updateFile(generatHookFile()));
   };
+
+  if (!file && exportBool) dispatchToGlobal(updateFile(generatHookFile()));
 
   return (
     <div>
       <div id='head'>
         <HooksTestMenu dispatchToHooksTestCase={dispatchToHooksTestCase} />
       </div>
-      <button onClick={fileHandle}>save me</button>
+      <button onClick={fileHandle}>Preview</button>
       {modalOpen ? <HooksHelpModal /> : null}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>

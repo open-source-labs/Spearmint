@@ -10,7 +10,6 @@ import {
   setFilePathMap,
   setProjectFilePath,
   updateFile,
-  displayFileCode,
   setFilePath,
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -44,7 +43,6 @@ const OpenFolder = ({ inNavBar }) => {
       if (!inNavBar) dispatchToGlobal(loadProject('load'));
       if (inNavBar) {
         dispatchToGlobal(updateFile(''));
-        dispatchToGlobal(displayFileCode(''));
         dispatchToGlobal(setFilePath(''));
       }
     }

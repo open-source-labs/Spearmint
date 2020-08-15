@@ -4,7 +4,7 @@ import { createNewPuppeteerTest } from '../../context/actions/puppeteerTestCaseA
 import styles from './ExportFileModal.module.scss';
 import { PuppeteerTestModalProps } from '../../utils/puppeteerTypes';
 
-import { toggleModal } from '../../context/actions/globalActions';
+import { toggleModal, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const PuppeteerTestModal = ({
@@ -18,6 +18,7 @@ const PuppeteerTestModal = ({
     dispatchToPuppeteerTestCase(createNewPuppeteerTest());
     closePuppeteerModal();
     dispatchToGlobal(toggleModal());
+    dispatchToGlobal(updateFile(''));
   };
 
   const modalStyles = {
