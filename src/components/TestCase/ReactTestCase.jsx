@@ -12,8 +12,8 @@ import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import { createMockData } from '../../context/actions/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
-import MockData from '../MockData/MockData';
-import DecribeRenderer from '../DescribeRenderer/DescribeRenderer';
+import MockData from '../ReactTestComponent/MockData/MockData';
+import DecribeRenderer from '../ReactTestComponent/DescribeRenderer/DescribeRenderer';
 import ReactHelpModal from '../TestHelpModals/ReactHelpModal';
 
 //changes to pull down context
@@ -71,7 +71,6 @@ const ReactTestCase = () => {
       }))
     );
   };
-
   const addMockData = () => {
     mockData.forEach((mockDatum) => {
       let fieldKeys = createMockDatumFieldKeys(mockDatum);
@@ -81,6 +80,9 @@ const ReactTestCase = () => {
     });
     testFileCode += '\n';
   };
+  // const handleAddMockData = () => {
+  //   dispatchToMockData(addMockData());
+  // };
 
   const createMockDatumFieldKeys = (mockDatum) => {
     return mockDatum.fieldKeys.reduce((fieldKeysCode, mockDatum) => {

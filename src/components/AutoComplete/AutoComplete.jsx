@@ -1,9 +1,9 @@
 import React from 'react';
+import AutoSuggest from 'react-autosuggest';
 import styles from './AutoComplete.module.scss';
 import { updateAction, updateAssertion } from '../../context/actions/reactTestCaseActions';
-import { eventTypesList } from '../Action/eventTypesList';
-import { matcherTypesList } from '../Assertion/matcherTypesList';
-import AutoSuggest from 'react-autosuggest';
+import { eventTypesList } from '../ReactTestComponent/Action/eventTypesList';
+import { matcherTypesList } from '../ReactTestComponent/Assertion/matcherTypesList';
 
 const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
   let updatedAction = { ...statement };
@@ -34,20 +34,20 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
     onChange: handleChangeValue,
   };
 
-  const getSuggestions = value => {
+  const getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     if (statementType === 'action') {
       return inputLength === 0
         ? []
         : eventTypesList.filter(
-            eventType => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
+            (eventType) => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
           );
     } else {
       return inputLength === 0
         ? []
         : matcherTypesList.filter(
-            matcherType => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
+            (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
           );
     }
   };
@@ -74,14 +74,14 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
 
   let getSuggestionValue;
   updatedAssertion.isNot
-    ? (getSuggestionValue = suggestion => `not.${suggestion.name}`)
-    : (getSuggestionValue = suggestion => suggestion.name);
+    ? (getSuggestionValue = (suggestion) => `not.${suggestion.name}`)
+    : (getSuggestionValue = (suggestion) => suggestion.name);
 
   let renderSuggestion;
 
   updatedAssertion.isNot
-    ? (renderSuggestion = suggestion => <div>not.{suggestion.name}</div>)
-    : (renderSuggestion = suggestion => <div>{suggestion.name}</div>);
+    ? (renderSuggestion = (suggestion) => <div>not.{suggestion.name}</div>)
+    : (renderSuggestion = (suggestion) => <div>{suggestion.name}</div>);
 
   return (
     <AutoSuggest

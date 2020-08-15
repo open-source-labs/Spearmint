@@ -1,8 +1,8 @@
 import React from 'react';
-import Middleware from '../Middleware/Middleware';
-import ActionCreator from '../ActionCreator/ActionCreator';
-import Async from '../Thunk/Thunk';
-import Reducer from '../Reducer/Reducer';
+import Middleware from '../ReduxTestComponent/Middleware/Middleware';
+import ActionCreator from '../ReduxTestComponent/ActionCreator/ActionCreator';
+import Async from '../ReduxTestComponent/Thunk/Thunk';
+import Reducer from '../ReduxTestComponent/Reducer/Reducer';
 import { ReduxStatements } from '../../utils/reduxTypes';
 
 interface ReduxTestStatementsProps {
@@ -10,12 +10,14 @@ interface ReduxTestStatementsProps {
   dispatchToReduxTestCase: (action: object) => void;
 }
 
-const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchToReduxTestCase }: ReduxTestStatementsProps) {
+const ReduxTestStatements = function TestStatements({
+  reduxStatements,
+  dispatchToReduxTestCase,
+}: ReduxTestStatementsProps) {
   /* destructing from the reducer */
   return (
     <>
-      {
-      reduxStatements.map((statement, i) => {
+      {reduxStatements.map((statement, i) => {
         switch (statement.type) {
           case 'middleware':
             return (
@@ -56,8 +58,7 @@ const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchT
           default:
             return <></>;
         }
-      })
-    }
+      })}
     </>
   );
 };
