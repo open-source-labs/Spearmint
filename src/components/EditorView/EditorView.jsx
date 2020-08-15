@@ -36,8 +36,6 @@ const Editor = () => {
   };
 
   const saveFile = async () => {
-    // let filePath = filePathMap[fileName.split('.')[0]];
-    // console.log(filePathMap, '-----', filePath);
     dispatchToGlobal(updateFile(editedText));
     if (filePath.length) {
       if (editedText.length) {
