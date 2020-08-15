@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
