@@ -7,8 +7,9 @@ import {
   addAction,
   addAssertion,
   deleteItStatement,
-} from '../../../context/actions/reactTestCaseActions';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+} from '../../context/actions/reactTestCaseActions';
+import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
+import cn from 'classnames';
 import styles from './ItRenderer.module.scss';
 
 const ItRenderer = ({

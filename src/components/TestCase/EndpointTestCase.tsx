@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -24,8 +24,19 @@ const EndpointTestCase = () => {
 
   const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
+  interface Ref {
+    current: any;
+  }
+
+  const testDescription: Ref = useRef(null);
+
+  useEffect(() => {
+    testDescription.current.focus();
+  }, []);
+
   const handleUpdateEndpointTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
+    fileHandle();
   };
 
   const reorder = (list: Array<EndpointStatements>, startIndex: number, endIndex: number) => {
@@ -120,6 +131,7 @@ const EndpointTestCase = () => {
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
           <input
+            ref={testDescription}
             type='text'
             id={styles.testStatement}
             value={endpointTestStatement}
