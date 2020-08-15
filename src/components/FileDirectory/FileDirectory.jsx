@@ -6,7 +6,9 @@ import {
   highlightFile,
   toggleRightPanel,
   updateFile,
+  setFilePath,
 } from '../../context/actions/globalActions';
+import OpenFolder from '../OpenFolder/OpenFolderButton';
 
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
@@ -45,6 +47,7 @@ const FileDirectory = ({ fileTree }) => {
   const handleDisplayFileCode = (filePath) => {
     const fileContent = fs.readFileSync(filePath, 'utf8');
     dispatchToGlobal(updateFile(fileContent));
+    dispatchToGlobal(setFilePath(filePath));
   };
 
   const handleClickToggleFolderView = (filePath) => {
@@ -60,7 +63,7 @@ const FileDirectory = ({ fileTree }) => {
     return filetree.map((file) => {
       if (
         file.fileName !== 'node_modules' &&
-        file.fileName !== '.git' &&
+        // file.fileName !== '.git' &&
         file.fileName[0] !== '.'
       ) {
         if (file.files.length) {
@@ -75,9 +78,8 @@ const FileDirectory = ({ fileTree }) => {
                   {file.fileName}
                 </button>
               </li>
-              {file.files.length &&
-                isFolderOpen[file.filePath] &&
-                convertToHTML(file.files, fileImg)}
+              {/* {file.files.length && */}
+              {isFolderOpen[file.filePath] && convertToHTML(file.files, fileImg)}
             </ul>
           );
         } else {
@@ -108,7 +110,10 @@ const FileDirectory = ({ fileTree }) => {
   return (
     <>
       <div id={styles.fileDirectory}>
-        <div id={styles.explorer}>{projectName}</div>
+        <div id={styles.explorer}>
+          {projectName}
+          <OpenFolder inNavBar={true} />
+        </div>
         {fileTree && convertToHTML(fileTree)}
       </div>
     </>

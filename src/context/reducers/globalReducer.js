@@ -21,6 +21,8 @@ export const globalState = {
   testCase: '',
   isTestModalOpen: true,
   exportBool: false,
+  fileName: '',
+  filePath: '',
 };
 
 export const globalReducer = (state, action) => {
@@ -87,9 +89,11 @@ export const globalReducer = (state, action) => {
       };
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
+      const fileName = action.fileName;
       return {
         ...state,
         isFileHighlighted,
+        fileName,
       };
     case actionTypes.SET_PROJECT_FILE_PATH:
       const projectFilePath = action.projectFilePath;
@@ -119,10 +123,10 @@ export const globalReducer = (state, action) => {
       };
     //
     case actionTypes.UPDATE_FILE_SHOW:
-      const fileUp = action.testString;
+      const updatedFile = action.testString;
       return {
         ...state,
-        file: fileUp,
+        file: updatedFile,
       };
     case actionTypes.OPEN_BROWSER_DOCS:
       const docsUrl = action.docsUrl;
@@ -137,6 +141,12 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         exportBool,
+      };
+    case actionTypes.SET_FILE_PATH:
+      const filePath = action.filePath;
+      return {
+        ...state,
+        filePath,
       };
     default:
       return state;

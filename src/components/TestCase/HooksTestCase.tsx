@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
@@ -23,6 +23,16 @@ const HooksTestCase = () => {
   );
 
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+
+  interface Ref {
+    current: any;
+  }
+
+  const testDescription: Ref = useRef(null);
+
+  useEffect(() => {
+    testDescription.current.focus();
+  }, []);
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
@@ -201,6 +211,7 @@ const HooksTestCase = () => {
           <label htmlFor='test-statement'>
             Test
             <input
+              ref={testDescription}
               type='text'
               id={styles.testStatement}
               value={hooksTestStatement}

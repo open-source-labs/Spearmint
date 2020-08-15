@@ -6,7 +6,7 @@ import {
   updateRenderComponent,
   updateItStatementText,
 } from '../../context/actions/reactTestCaseActions';
-import { updateFile } from '../../context/actions/globalActions';
+import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -192,6 +192,7 @@ const ReactTestCase = () => {
 
   const fileHandle = () => {
     dispatchToGlobal(updateFile(generatReactFile()));
+    dispatchToGlobal(setFilePath(''));
   };
 
   if (!file && exportBool) dispatchToGlobal(updateFile(generatReactFile()));

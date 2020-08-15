@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -17,11 +17,20 @@ const beautify = remote.require('js-beautify');
 const path = remote.require('path');
 
 const ReduxTestCase = () => {
-  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
+  interface Ref {
+    current: any;
+  }
+
+  const [{ reduxTestStatement, reduxStatements, modalOpen }, dispatchToReduxTestCase] = useContext(
     ReduxTestCaseContext
   );
 
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const testDescription: Ref = useRef(null);
+
+  useEffect(() => {
+    testDescription.current.focus();
+  }, []);
 
   const handleUpdateReduxTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));
@@ -273,6 +282,7 @@ const ReduxTestCase = () => {
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
           <input
+            ref={testDescription}
             type='text'
             id={styles.testStatement}
             value={reduxTestStatement}

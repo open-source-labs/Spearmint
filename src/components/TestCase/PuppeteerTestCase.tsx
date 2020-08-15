@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
@@ -9,7 +9,12 @@ import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
+<<<<<<< HEAD
 import { updateFile } from '../../context/actions/globalActions';
+=======
+import { createFile } from '../../context/actions/globalActions';
+import styles from './TestCase.module.scss';
+>>>>>>> master
 
 const remote = window.require('electron').remote;
 const beautify = remote.require('js-beautify');
@@ -20,6 +25,16 @@ const PuppeteerTestCase = () => {
   const [{ puppeteerStatements, modalOpen }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
+
+  interface Ref {
+    current: any;
+  }
+
+  const testDescription: Ref = useRef(null);
+
+  useEffect(() => {
+    testDescription.current.focus();
+  }, []);
 
   const reorder = (list: Array<PuppeteerStatements>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
@@ -137,7 +152,22 @@ const PuppeteerTestCase = () => {
       <div id='head'>
         <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase} />
       </div>
+<<<<<<< HEAD
       <button onClick={fileHandle}>Preview</button>
+=======
+      <div id={styles.testMockSection}>
+        <button onClick={fileHandle}>Save my tests!!!</button>
+        <section id={styles.testCaseHeader}>
+          <label htmlFor='test-statement'>Test</label>
+          <input
+            ref={testDescription}
+            type='text'
+            id={styles.testStatement}
+            value={puppeteerStatements}
+          />
+        </section>
+      </div>
+>>>>>>> master
       {modalOpen ? <PuppeteerHelpModal /> : null}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>

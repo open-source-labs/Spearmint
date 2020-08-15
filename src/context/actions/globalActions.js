@@ -20,6 +20,7 @@ export const actionTypes = {
   OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
   CLOSE_BROWSER_DOCS: 'CLOSE_BROWSER_DOCS',
   EXPORT_T: 'EXPORT',
+  SET_FILE_PATH: 'SET_FILE_PATH',
 };
 
 export const setProjectUrl = (url) => ({
@@ -102,4 +103,9 @@ export const openBrowserDocs = (docsUrl) => ({
 
 export const toggleExportBool = () => ({
   type: actionTypes.EXPORT,
+});
+
+export const setFilePath = (filePath) => ({
+  type: actionTypes.SET_FILE_PATH,
+  filePath,
 });
