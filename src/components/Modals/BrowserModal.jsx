@@ -14,13 +14,13 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
-    } else if (url.startsWith('localhost')) {
+    }
+    if (url.startsWith('localhost')) {
       url = 'http://' + url;
       return url;
-    } else {
-      url = 'https://' + url;
-      return url;
     }
+    url = 'https://' + url;
+    return url;
   };
 
   const handleChangeUrl = (e) => {
