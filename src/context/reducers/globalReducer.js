@@ -12,7 +12,6 @@ export const globalState = {
   isFileDirectoryOpen: true,
   isRightPanelOpen: true,
   rightPanelDisplay: 'browserView',
-  displayedFileCode: '',
   isFolderOpen: {},
   isFileHighlighted: '',
   projectFilePath: '',
@@ -20,6 +19,7 @@ export const globalState = {
   file: '',
   testCase: '',
   isTestModalOpen: true,
+  exportBool: false,
   fileName: '',
   filePath: '',
 };
@@ -106,12 +106,6 @@ export const globalReducer = (state, action) => {
         ...state,
         filePathMap,
       };
-    case actionTypes.CREATE_FILE_SHOW:
-      const file = action.testString;
-      return {
-        ...state,
-        file,
-      };
 
     //added
     case actionTypes.SET_TEST_CASE:
@@ -140,6 +134,12 @@ export const globalReducer = (state, action) => {
         url: docsUrl,
         isRightPanelOpen: true,
         rightPanelDisplay: 'browserView',
+      };
+    case actionTypes.EXPORT:
+      let exportBool = !state.exportBool;
+      return {
+        ...state,
+        exportBool,
       };
     case actionTypes.SET_FILE_PATH:
       const filePath = action.filePath;

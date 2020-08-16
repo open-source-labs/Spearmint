@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
-  displayFileCode,
   toggleFolderView,
   highlightFile,
   toggleRightPanel,
+  updateFile,
   setFilePath,
 } from '../../context/actions/globalActions';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
@@ -46,7 +46,7 @@ const FileDirectory = ({ fileTree }) => {
 
   const handleDisplayFileCode = (filePath) => {
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    dispatchToGlobal(displayFileCode(fileContent));
+    dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(setFilePath(filePath));
   };
 

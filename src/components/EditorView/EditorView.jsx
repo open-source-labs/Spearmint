@@ -8,15 +8,10 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 
 const Editor = () => {
+  let [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
   let editedText = '';
   const [ifFileExists, setIfFileExists] = useState(false);
 
-  // console.log('rendered');
-  let [{ displayedFileCode, file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
-  if (file.length > 0) {
-    displayedFileCode = file;
-    editedText = file;
-  }
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'wordWrapColumn',
@@ -56,7 +51,7 @@ const Editor = () => {
         height='95vh'
         language='javascript'
         theme='light-dark'
-        value={displayedFileCode ? displayedFileCode : '// Open a file to view your code.'}
+        value={file ? file : '// Open a file or click preview to view your code.'}
         options={options}
         editorDidMount={editorDidMount}
         onChange={updatafile}

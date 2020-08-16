@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { createFile, setFilePath } from '../../context/actions/globalActions';
+import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import {
   updateEndpointTestStatement,
   updateStatementsOrder,
@@ -20,7 +20,7 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase,
   ] = useContext(EndpointTestCaseContext);
 
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, exportBool, file }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   interface Ref {
     current: any;
@@ -62,9 +62,12 @@ const EndpointTestCase = () => {
   const generateTest = useGenerateTest('endpoint', projectFilePath);
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generateTest({ endpointTestStatement, endpointStatements })));
+    dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
     dispatchToGlobal(setFilePath(''));
   };
+
+  if (!file && exportBool)
+    dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
 
   let endpointInfoModal = null;
   if (modalOpen) endpointInfoModal = <EndpointHelpModal />;
@@ -74,7 +77,7 @@ const EndpointTestCase = () => {
       <div id='head'>
         <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
       </div>
-      <button onClick={fileHandle}>save me</button>
+      <button onClick={fileHandle}>Preview</button>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>

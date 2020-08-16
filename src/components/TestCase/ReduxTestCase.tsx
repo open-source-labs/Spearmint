@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import { createFile, setFilePath } from '../../context/actions/globalActions';
+import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import {
   updateReduxTestStatement,
   updateStatementsOrder,
@@ -23,7 +23,7 @@ const ReduxTestCase = () => {
     ReduxTestCaseContext
   );
 
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const testDescription: Ref = useRef(null);
 
   useEffect(() => {
@@ -59,17 +59,19 @@ const ReduxTestCase = () => {
   const generateTest = useGenerateTest('redux', projectFilePath);
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generateTest({ reduxStatements, reduxTestStatement })));
+    dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
     dispatchToGlobal(setFilePath(''));
   };
+
+  if (!file && exportBool)
+    dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
 
   return (
     <div>
       <div id='head'>
         <ReduxTestMenu dispatchToReduxTestCase={dispatchToReduxTestCase} />
       </div>
-      {modalOpen ? <ReduxHelpModal /> : null}
-      <button onClick={fileHandle}>save me</button>
+      <button onClick={fileHandle}>Preview</button>
 
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>

@@ -6,7 +6,11 @@
 import React, { useState, useContext } from 'react';
 import styles from './NavBar.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { toggleFileDirectory, toggleRightPanel } from '../../context/actions/globalActions';
+import {
+  toggleFileDirectory,
+  toggleRightPanel,
+  toggleExportBool,
+} from '../../context/actions/globalActions';
 import FileDirectory from '../FileDirectory/FileDirectory';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
 import ExportFileModal from '../Modals/ExportFileModal';
@@ -18,7 +22,9 @@ const browserIcon = require('../../assets/images/google-chrome.png');
 const codeIcon = require('../../assets/images/visual-studio-code.png');
 
 const NavBar = () => {
-  const [{ fileTree, isFileDirectoryOpen, url }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ fileTree, isFileDirectoryOpen, url, exportBool }, dispatchToGlobal] = useContext(
+    GlobalContext
+  );
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [isBrowserModalOpen, setIsBrowserModalOpen] = useState(false);
 
@@ -39,6 +45,7 @@ const NavBar = () => {
 
   /* exports the file (when true) */
   const openExportModal = () => {
+    dispatchToGlobal(toggleExportBool());
     setIsExportModalOpen(true);
   };
 
@@ -47,9 +54,8 @@ const NavBar = () => {
     setIsBrowserModalOpen(false);
   };
 
-
   /**
-   * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory 
+   * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
   return (
     <div id={styles.navBar}>
@@ -61,7 +67,10 @@ const NavBar = () => {
         <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
         <span className={styles.tooltip}>Export</span>
       </button>
-      <ExportFileModal isExportModalOpen={isExportModalOpen} setIsExportModalOpen={setIsExportModalOpen}/>
+      <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+      />
       <OpenFolder />
       <button className={styles.navBtn} onClick={handleEditorToggle}>
         <img src={codeIcon} className={styles.icons} alt='codeview' title='Code View' />

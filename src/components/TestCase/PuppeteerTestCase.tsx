@@ -12,7 +12,7 @@ import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { createFile, setFilePath } from '../../context/actions/globalActions';
+import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 
@@ -20,7 +20,7 @@ const PuppeteerTestCase = () => {
   const [{ puppeteerStatements, modalOpen }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
-  const [{ projectFilePath }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   interface Ref {
     current: any;
@@ -62,9 +62,11 @@ const PuppeteerTestCase = () => {
   const generateTest = useGenerateTest('puppeteer', projectFilePath);
 
   const fileHandle = () => {
-    dispatchToGlobal(createFile(generateTest({ puppeteerStatements })));
+    dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
     dispatchToGlobal(setFilePath(''));
   };
+  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
+  );
 
   return (
     <div>
@@ -72,7 +74,7 @@ const PuppeteerTestCase = () => {
         <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase} />
       </div>
       <div id={styles.testMockSection}>
-        <button onClick={fileHandle}>Save my tests!!!</button>
+        <button onClick={fileHandle}>Preview</button>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
           <input

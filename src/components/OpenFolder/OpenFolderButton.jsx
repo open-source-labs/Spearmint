@@ -10,7 +10,6 @@ import {
   setFilePathMap,
   setProjectFilePath,
   updateFile,
-  displayFileCode,
   setFilePath,
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
