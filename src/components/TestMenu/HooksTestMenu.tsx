@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from './TestMenu.module.scss';
+import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
 import {
   addContexts,
   addHookUpdates,
@@ -8,10 +9,14 @@ import {
 } from '../../context/actions/hooksTestCaseActions';
 import HooksTestModal from '../Modals/HooksTestModal';
 import { HooksTestMenuProps } from '../../utils/hooksTypes';
+import useGenerateTest from '../../context/useGenerateTest';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 
 const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
   const [isHooksModalOpen, setIsHooksModalOpen] = useState(false);
-
+  const [{ hooksTestStatement, hooksStatements }] = useContext(HooksTestCaseContext);
+  const [projectFilePath, dispatchToGlobal] = useContext<any>(GlobalContext);
   const openHooksModal = () => {
     setIsHooksModalOpen(true);
   };
@@ -36,6 +41,14 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
     dispatchToHooksTestCase(openInfoModal());
   };
 
+  const generateTest = useGenerateTest('hooks', projectFilePath);
+
+  const fileHandle = () => {
+    dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
+    dispatchToGlobal(setFilePath(''));
+  };
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -43,14 +56,17 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
           <button type='button' onClick={openHooksModal}>
             New Test +
           </button>
+          <button id={styles.example} onClick={fileHandle}>
+            Preview
+          </button>
+          <button id={styles.example} onClick={helpModalOpener}>
+            Need Help?
+          </button>
           <HooksTestModal
             isHooksModalOpen={isHooksModalOpen}
             closeHooksModal={closeHooksModal}
             dispatchToHooksTestCase={dispatchToHooksTestCase}
           />
-          <button id={styles.example} onClick={helpModalOpener}>
-            Need Help?
-          </button>
         </div>
         <div
           id={styles.right}

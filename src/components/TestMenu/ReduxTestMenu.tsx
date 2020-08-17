@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from './TestMenu.module.scss';
-
+import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
 import {
   addAsync,
   addReducer,
@@ -9,6 +9,9 @@ import {
   openInfoModal,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestModal from '../Modals/ReduxTestModal';
+import useGenerateTest from '../../context/useGenerateTest.jsx';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
 interface ReduxTestMenuProps {
   dispatchToReduxTestCase: (action: object) => void;
@@ -17,6 +20,8 @@ interface ReduxTestMenuProps {
 const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
   /* making new state for this componenet, naming it isMOdalOpen, making method for it called setIsModalOpen, setting initial state to false */
   const [isReduxModalOpen, setIsReduxModalOpen] = useState(false);
+  const [{ reduxTestStatement, reduxStatements }] = useContext(ReduxTestCaseContext);
+  const [projectFilePath, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const openReduxModal = () => {
     setIsReduxModalOpen(true);
@@ -41,20 +46,31 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
   const modalOpener = () => {
     dispatchToReduxTestCase(openInfoModal());
   };
+
+  const generateTest = useGenerateTest('redux', projectFilePath);
+
+  const fileHandle = () => {
+    dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
+    dispatchToGlobal(setFilePath(''));
+  };
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
           <button onClick={openReduxModal}>New Test +</button>
+          <button id={styles.preview} onClick={fileHandle}>
+            Preview
+          </button>
+          <button className={styles.preview} onClick={modalOpener}>
+            Need Help?
+          </button>
           <ReduxTestModal
             isReduxModalOpen={isReduxModalOpen}
             closeReduxModal={closeReduxModal}
             dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
-          <button className={styles.preview} onClick={modalOpener}>
-            Need Help?
-          </button>
-          <button id={styles.preview}>Preview</button>
         </div>
         <div
           id={styles.right}

@@ -58,12 +58,6 @@ const ReduxTestCase = () => {
 
   const generateTest = useGenerateTest('redux', projectFilePath);
 
-  const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
-    dispatchToGlobal(toggleRightPanel('codeEditorView'));
-    dispatchToGlobal(setFilePath(''));
-  };
-
   if (!file && exportBool)
     dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
 
@@ -72,7 +66,7 @@ const ReduxTestCase = () => {
       <div id='head'>
         <ReduxTestMenu dispatchToReduxTestCase={dispatchToReduxTestCase} />
       </div>
-      <button onClick={fileHandle}>Preview</button>
+      {/* <button onClick={fileHandle}>Preview</button> */}
 
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>

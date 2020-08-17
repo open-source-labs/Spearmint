@@ -15,6 +15,7 @@ import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../ReactTestComponent/MockData/MockData';
 import DecribeRenderer from '../ReactTestComponent/DescribeRenderer/DescribeRenderer';
 import ReactHelpModal from '../TestHelpModals/ReactHelpModal';
+import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 //changes to pull down context
 import {
@@ -22,7 +23,6 @@ import {
   reactTestCaseState,
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
-import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 const ReactTestCase = () => {
   //changes to pull down context
@@ -56,14 +56,14 @@ const ReactTestCase = () => {
   };
 
   // react has to have 2 states passed in
-  const generateTest = useGenerateTest('react', projectFilePath);
+  // const generateTest = useGenerateTest('react', projectFilePath);
 
-  const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
-    dispatchToGlobal(setFilePath(''));
-  };
+  // const fileHandle = () => {
+  //   dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
+  //   dispatchToGlobal(setFilePath(''));
+  // };
 
-  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
+  // if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
 
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
@@ -75,7 +75,7 @@ const ReactTestCase = () => {
           />
         </div>
         {modalOpen ? <ReactHelpModal /> : null}
-        <button onClick={fileHandle}>Preview</button>
+
         <div className={styles.header}>
           <div className={styles.renderComponent}>
             <span className={styles.renderLabel}>Enter Component Name:</span>
