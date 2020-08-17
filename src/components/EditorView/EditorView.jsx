@@ -10,7 +10,6 @@ const fs = remote.require('fs');
 const Editor = () => {
   let [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
   let editedText = '';
-  const [ifFileExists, setIfFileExists] = useState(false);
 
   const options = {
     selectOnLineNumbers: true,
@@ -28,18 +27,18 @@ const Editor = () => {
 
   const updatafile = (newValue, e) => {
     editedText = newValue;
+    dispatchToGlobal(updateFile(editedText));
   };
 
   const saveFile = async () => {
     if (editedText.length) dispatchToGlobal(updateFile(editedText));
     if (filePath.length) {
       if (editedText.length) {
-        setIfFileExists(false);
         await fs.writeFile(filePath, editedText, (err) => {
           if (err) throw err;
         });
       }
-    } else setIfFileExists(true);
+    }
   };
   let fileType = filePath.split('.')[1];
   const extensionChecker = {
@@ -51,7 +50,6 @@ const Editor = () => {
   return (
     <div>
       <button onClick={saveFile}>Save Changes</button>
-      {ifFileExists && <p>File does not exist! Use the Export Button to create your test file.</p>}
       <hr></hr>
       <MonacoEditor
         height='95vh'
