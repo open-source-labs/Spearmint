@@ -23,9 +23,21 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
     return url;
   };
 
-  const handleChangeUrl = (e) => {
-    const testSiteURL = addHttps(e.target.value);
+  // dispatch on enter keypress
+  const handleChangeUrlKeyPress = (e) => {
+    if (e.keyCode === 13) {
+      const testSiteURL = addHttps(e.target.value);
+      dispatchToGlobal(setProjectUrl(testSiteURL));
+      closeBrowserModal();
+    }
+  };
+
+  // dispatch on click event
+  const handleChangeUrlClick = () => {
+    const inputUrl = document.getElementById('inputUrl').value;
+    const testSiteURL = addHttps(inputUrl);
     dispatchToGlobal(setProjectUrl(testSiteURL));
+    closeBrowserModal();
   };
 
   const modalStyles = {
@@ -53,11 +65,11 @@ const BrowserModal = ({ isBrowserModalOpen, closeBrowserModal }) => {
       </div>
       <div id={styles.body}>
         <p>Enter the URL</p>
-        <input type='text' id={styles.url} onChange={handleChangeUrl} />
+        <input type='text' id='inputUrl' onKeyDown={handleChangeUrlKeyPress} />
         <button id={styles.save} onClick={closeBrowserModal}>
           Cancel
         </button>
-        <button id={styles.save} onClick={closeBrowserModal}>
+        <button id={styles.save} onClick={handleChangeUrlClick}>
           Open
         </button>
       </div>
