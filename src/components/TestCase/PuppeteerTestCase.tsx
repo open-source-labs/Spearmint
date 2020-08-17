@@ -3,24 +3,24 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
-import { updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
+import {
+  updateStatementsOrder,
+  // updatePuppeteerTestStatement,
+} from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { updateFile } from '../../context/actions/globalActions';
+import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
-
-const remote = window.require('electron').remote;
-const beautify = remote.require('js-beautify');
-// const path = remote.require('path');
-//
+import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 const PuppeteerTestCase = () => {
   const [{ puppeteerStatements, modalOpen }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   interface Ref {
     current: any;
@@ -39,92 +39,10 @@ const PuppeteerTestCase = () => {
     return result;
   };
 
-  /*----------added functionality from Export File Modal-----------------------------------------*/
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
-
-  let testFileCode = 'import React from "react";';
-
-  function generatePuppeteerFile() {
-    return (
-      addPuppeteerImportStatements(),
-      addPuppeteerTestStatements(),
-      (testFileCode = beautify(testFileCode, {
-        indent_size: 2,
-        space_in_empty_paren: true,
-        e4x: true,
-      }))
-    );
-  }
-
-  const addPuppeteerImportStatements = () => {
-    puppeteerStatements.forEach((statement: any) => {
-      switch (statement.type) {
-        case 'paintTiming':
-          testFileCode = `import puppeteer from 'puppeteer';\n`;
-          addLCPfunction();
-          return;
-        default:
-          return statement;
-      }
-    });
-    testFileCode += '\n';
-  };
-
-  const addPuppeteerTestStatements = () => {
-    puppeteerStatements.forEach((statement: any) => {
-      switch (statement.type) {
-        case 'paintTiming':
-          return addPuppeteerPaintTiming(statement);
-        default:
-          return statement;
-      }
-    });
-  };
-
-  const addLCPfunction = () => {
-    testFileCode += `      
-      function getLargestContentfulPaint() {
-        window.largestContentfulPaint = 0;
-    
-        const observer = new PerformanceObserver((list) => {
-          const entries = list.getEntries();
-          const lastEntry = entries[entries.length - 1];
-          window.largestContentfulPaint = lastEntry.renderTime || lastEntry.loadTime;
-        });
-    
-        observer.observe({ type: 'largest-contentful-paint', buffered: true });
-    
-        document.addEventListener('visibilitychange', () => {
-          if (document.visibilityState === 'hidden') {
-              observer.takeRecords();
-              observer.disconnect();
-          }
-        });
-      }`;
-  };
-
-  // Puppeteer Form Jest Test Code
-  const addPuppeteerPaintTiming = (statement: { browserOptions: any[] }) => {
-    const browserOptions = {};
-
-    if (statement.browserOptions.length > 0) {
-      statement.browserOptions.map((option) => {
-        if (option.optionValue === 'true') option.optionValue = true;
-        else if (option.optionValue === 'false') option.optionValue = false;
-        //if optionValue is a stringified number, convert it back to number
-        else if (!isNaN(Number(option.optionValue)))
-          option.optionValue = Number(option.optionValue);
-        browserOptions: [option.optionKey] = option.optionValue;
-        return option;
-      });
-    }
-  };
-
-  const fileHandle = () => {
-    dispatchToGlobal(updateFile(generatePuppeteerFile()));
-  };
-
-  /*----------------------------------------------------------------------------------------------*/
+  // const handleUpdatePuppetteerTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   dispatchToPuppeteerTestCase(updatePuppeteerTestStatement(e.target.value));
+  //   fileHandle();
+  // };
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
@@ -141,7 +59,14 @@ const PuppeteerTestCase = () => {
     dispatchToPuppeteerTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  if (!file && exportBool) dispatchToGlobal(updateFile(generatePuppeteerFile()));
+  const generateTest = useGenerateTest('puppeteer', projectFilePath);
+
+  const fileHandle = () => {
+    dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
+    dispatchToGlobal(setFilePath(''));
+  };
+  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
+  );
 
   return (
     <div>
@@ -157,6 +82,7 @@ const PuppeteerTestCase = () => {
             type='text'
             id={styles.testStatement}
             value={puppeteerStatements}
+            // onChange={handleUpdatePuppetteerTestStatements}
           />
         </section>
       </div>
