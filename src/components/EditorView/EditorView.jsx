@@ -31,7 +31,7 @@ const Editor = () => {
   };
 
   const saveFile = async () => {
-    dispatchToGlobal(updateFile(editedText));
+    if (editedText.length) dispatchToGlobal(updateFile(editedText));
     if (filePath.length) {
       if (editedText.length) {
         setIfFileExists(false);
@@ -40,6 +40,12 @@ const Editor = () => {
         });
       }
     } else setIfFileExists(true);
+  };
+  let fileType = filePath.split('.')[1];
+  const extensionChecker = {
+    png: 1,
+    jpg: 1,
+    gif: 1,
   };
 
   return (
@@ -51,7 +57,13 @@ const Editor = () => {
         height='95vh'
         language='javascript'
         theme='light-dark'
-        value={file ? file : '// Open a file or click preview to view your code.'}
+        value={
+          file
+            ? extensionChecker[fileType]
+              ? '//Please select a valid file type'
+              : file
+            : '// Open a file or click preview to view your code.'
+        }
         options={options}
         editorDidMount={editorDidMount}
         onChange={updatafile}
