@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { openBrowserDocs } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import {
   addAsync,
   addReducer,
   addActionCreator,
   addMiddleware,
-  openInfoModal,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestModal from '../Modals/ReduxTestModal';
 
@@ -14,6 +15,10 @@ interface ReduxTestMenuProps {
 }
 
 const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
+  const [_, dispatchToGlobal] = useContext<any>(GlobalContext);
+  // Redux testing docs url
+  const reduxUrl = 'https://redux.js.org/recipes/writing-tests';
+
   /* making new state for this componenet, naming it isMOdalOpen, making method for it called setIsModalOpen, setting initial state to false */
   const [isReduxModalOpen, setIsReduxModalOpen] = useState(false);
 
@@ -28,18 +33,23 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
   const handleAddMiddleware = () => {
     dispatchToReduxTestCase(addMiddleware());
   };
+
   const handleAddActionCreator = () => {
     dispatchToReduxTestCase(addActionCreator());
   };
+
   const handleAddAsync = () => {
     dispatchToReduxTestCase(addAsync());
   };
+
   const handleAddReducer = () => {
     dispatchToReduxTestCase(addReducer());
   };
-  const modalOpener = () => {
-    dispatchToReduxTestCase(openInfoModal());
+
+  const openDocs = () => {
+    dispatchToGlobal(openBrowserDocs(reduxUrl));
   };
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -50,7 +60,8 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
             closeReduxModal={closeReduxModal}
             dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
-          <button id={styles.example} onClick={modalOpener}>
+          {/* Just send user to docs on button click */}
+          <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
         </div>
