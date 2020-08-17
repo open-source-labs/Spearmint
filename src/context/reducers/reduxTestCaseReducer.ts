@@ -8,7 +8,6 @@ export const ReduxTestCaseContext: any = createContext(null);
 export const reduxTestCaseState: ReduxTestCaseState = {
   reduxTestStatement: '' /* the test description */,
   reduxStatements: [] /* both of the cards on the page at open. Each card gets an id */,
-  hasRedux: 0,
   modalOpen: false,
 };
 
@@ -81,11 +80,6 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
   let reduxStatements = [...state.reduxStatements];
   let reduxTestStatement;
   switch (action.type) {
-    case actionTypes.TOGGLE_REDUX:
-      return {
-        ...state,
-        hasRedux: !state.hasRedux,
-      };
     case actionTypes.UPDATE_REDUX_TEST_STATEMENT:
       reduxTestStatement = action.payload;
       return {
@@ -270,7 +264,6 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       return {
         reduxTestStatement: '',
         reduxStatements: [],
-        hasRedux: 0,
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       reduxStatements = action.payload;

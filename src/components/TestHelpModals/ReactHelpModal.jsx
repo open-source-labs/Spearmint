@@ -10,7 +10,7 @@ const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describe.png');
 
 const ReactHelpModal = () => {
-  const [_, dispatchToGlobal] = useContext(GlobalContext);
+  const [, dispatchToGlobal] = useContext(GlobalContext);
   // Hooks testing docs url
   const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
 
@@ -37,13 +37,13 @@ const ReactHelpModal = () => {
       }}
       ariaHideApp={false}
     >
-      <img src={closeIcon} onClick={closeModal} />
+      <img src={closeIcon} onClick={closeModal} alt='x' />
       <h2>Describe(name, fn)</h2>
       <p>
         Describe creates a block that groups together several related tests. The name argument is
         simply the name of component you're testing. fn argument is the test callback function{' '}
       </p>
-      <img src={describe} />
+      <img src={describe} alt='describe' />
       <a onClick={openDocs}>Need More Help?</a>
     </ReactModal>
   );

@@ -12,8 +12,6 @@ const Editor = () => {
   let editedText = '';
   const [ifFileExists, setIfFileExists] = useState(false);
 
-  // console.log('rendered');
-
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'wordWrapColumn',
