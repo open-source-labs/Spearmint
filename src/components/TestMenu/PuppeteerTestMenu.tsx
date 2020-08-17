@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { openBrowserDocs } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import PuppeteerTestModal from '../Modals/PuppeteerTestModal';
-import {
-  addPuppeteerPaintTiming,
-  openInfoModal,
-} from '../../context/actions/puppeteerTestCaseActions';
+import { addPuppeteerPaintTiming } from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerTestMenuProps } from '../../utils/puppeteerTypes';
 
 const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuProps) => {
+  const [_, dispatchToGlobal] = useContext<any>(GlobalContext);
+  // puppeteer testing docs url
+  const puppeteerUrl = 'https://devdocs.io/puppeteer/';
+
   const [isPuppeteerModalOpen, setIsPuppeteerModalOpen] = useState(false);
 
   const openPuppeteerModal = () => {
@@ -21,9 +24,11 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuPro
   const handleAddPuppeteerPaintTiming = () => {
     dispatchToPuppeteerTestCase(addPuppeteerPaintTiming());
   };
-  const modalOpener = () => {
-    dispatchToPuppeteerTestCase(openInfoModal());
+
+  const openDocs = () => {
+    dispatchToGlobal(openBrowserDocs(puppeteerUrl));
   };
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -36,8 +41,8 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuPro
             closePuppeteerModal={closePuppeteerModal}
             dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
           />
-          <button id={styles.example} onClick={modalOpener}>
-            example
+          <button id={styles.example} onClick={openDocs}>
+            Need Help?
           </button>
         </div>
         <div id={styles.right}>
