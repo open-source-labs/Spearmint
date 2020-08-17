@@ -66,7 +66,6 @@ const PuppeteerTestCase = () => {
     dispatchToGlobal(setFilePath(''));
   };
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
-  );
 
   return (
     <div>
