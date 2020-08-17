@@ -7,7 +7,7 @@ import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReduce
 import styles from '../../components/TestHelpModals/ReactHelpModal.module.scss';
 
 const closeIcon = require('../../assets/images/close.png');
-const describe = require('../../assets/images/describe.png');
+const describe = require('../../assets/images/describehelp.png');
 
 const ReactHelpModal = () => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
@@ -37,13 +37,13 @@ const ReactHelpModal = () => {
       }}
       ariaHideApp={false}
     >
-      <img src={closeIcon} onClick={closeModal} alt='x' />
-      <h2>Describe(name, fn)</h2>
+      <img src={closeIcon} onClick={closeModal} />
+      {/* <h2>Describe(name, fn)</h2>
       <p>
         Describe creates a block that groups together several related tests. The name argument is
         simply the name of component you're testing. fn argument is the test callback function{' '}
-      </p>
-      <img src={describe} alt='describe' />
+      </p> */}
+      <img id='helpImg' src={describe} />
       <a onClick={openDocs}>Need More Help?</a>
     </ReactModal>
   );

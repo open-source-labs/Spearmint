@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { openBrowserDocs } from '../../context/actions/globalActions';
 import { addDescribeBlock, openInfoModal } from '../../context/actions/reactTestCaseActions';
 import NewTestModal from '../Modals/NewTestModal';
 import { createNewTest } from '../../context/actions/reactTestCaseActions';
 
 const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
+  const [_, dispatchToGlobal] = useContext(GlobalContext);
+  // React testing docs url
+  const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -18,8 +24,8 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
     dispatchToTestCase(addDescribeBlock());
   };
 
-  const modalOpener = () => {
-    dispatchToTestCase(openInfoModal());
+  const openDocs = () => {
+    dispatchToGlobal(openBrowserDocs(reactUrl));
   };
 
   return (
@@ -34,7 +40,8 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
             dispatchToTestCase={dispatchToTestCase}
             createNewTest={createNewTest}
           />
-          <button id={styles.example} onClick={modalOpener}>
+          {/* Just send user to docs on button click */}
+          <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
         </div>
