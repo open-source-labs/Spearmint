@@ -1,29 +1,25 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
-import { GlobalContext } from '../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
+
 import {
   updateReduxTestStatement,
   updateStatementsOrder,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
-import { ReduxStatements, ReduxTestCaseState } from '../../utils/reduxTypes';
-import ReduxHelpModal from '../TestHelpModals/ReduxHelpModal';
-import useGenerateTest from '../../context/useGenerateTest.jsx';
+import { ReduxStatements } from '../../utils/reduxTypes';
 
 const ReduxTestCase = () => {
   interface Ref {
     current: any;
   }
 
-  const [{ reduxTestStatement, reduxStatements, modalOpen }, dispatchToReduxTestCase] = useContext(
+  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
     ReduxTestCaseContext
   );
 
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const testDescription: Ref = useRef(null);
 
   useEffect(() => {
@@ -56,15 +52,10 @@ const ReduxTestCase = () => {
     dispatchToReduxTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  const generateTest = useGenerateTest('redux', projectFilePath);
-
-  if (!file && exportBool)
-    dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
-
   return (
     <div>
       <div id='head'>
-        <ReduxTestMenu dispatchToReduxTestCase={dispatchToReduxTestCase} />
+        <ReduxTestMenu />
       </div>
       {/* <button onClick={fileHandle}>Preview</button> */}
 

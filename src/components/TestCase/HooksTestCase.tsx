@@ -71,9 +71,9 @@ const HooksTestCase = () => {
   return (
     <div>
       <div id='head'>
-        <HooksTestMenu dispatchToHooksTestCase={dispatchToHooksTestCase} />
+        <HooksTestMenu />
       </div>
-      <button onClick={fileHandle}>Preview</button>
+
       {modalOpen ? <HooksHelpModal /> : null}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>

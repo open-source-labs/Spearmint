@@ -1,22 +1,27 @@
 import React, { useState, useContext } from 'react';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { openBrowserDocs } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
 import {
   addContexts,
   addHookUpdates,
   addHookRender,
-  openInfoModal,
 } from '../../context/actions/hooksTestCaseActions';
 import HooksTestModal from '../Modals/HooksTestModal';
 import { HooksTestMenuProps } from '../../utils/hooksTypes';
 import useGenerateTest from '../../context/useGenerateTest';
-import { GlobalContext } from '../../context/reducers/globalReducer';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 
-const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
+const HooksTestMenu = () => {
+  // Hooks testing docs url
+  const hooksUrl = 'https://react-hooks-testing-library.com/usage/basic-hooks';
+
   const [isHooksModalOpen, setIsHooksModalOpen] = useState(false);
-  const [{ hooksTestStatement, hooksStatements }] = useContext(HooksTestCaseContext);
-  const [projectFilePath, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
+    HooksTestCaseContext
+  );
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const openHooksModal = () => {
     setIsHooksModalOpen(true);
   };
@@ -37,8 +42,8 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
     dispatchToHooksTestCase(addHookRender());
   };
 
-  const helpModalOpener = () => {
-    dispatchToHooksTestCase(openInfoModal());
+  const openDocs = () => {
+    dispatchToGlobal(openBrowserDocs(hooksUrl));
   };
 
   const generateTest = useGenerateTest('hooks', projectFilePath);
@@ -48,6 +53,9 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
   };
+
+  if (!file && exportBool)
+    dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
 
   return (
     <div id='test'>
@@ -59,7 +67,7 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
           <button id={styles.example} onClick={fileHandle}>
             Preview
           </button>
-          <button id={styles.example} onClick={helpModalOpener}>
+          <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
           <HooksTestModal

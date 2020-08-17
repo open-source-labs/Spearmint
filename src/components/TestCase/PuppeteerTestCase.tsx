@@ -59,21 +59,12 @@ const PuppeteerTestCase = () => {
     dispatchToPuppeteerTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  const generateTest = useGenerateTest('puppeteer', projectFilePath);
-
-  const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
-    dispatchToGlobal(setFilePath(''));
-  };
-  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
-
   return (
     <div>
       <div id='head'>
-        <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase} />
+        <PuppeteerTestMenu />
       </div>
       <div id={styles.testMockSection}>
-        <button onClick={fileHandle}>Preview</button>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
           <input

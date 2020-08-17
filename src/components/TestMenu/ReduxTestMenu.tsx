@@ -6,22 +6,23 @@ import {
   addReducer,
   addActionCreator,
   addMiddleware,
-  openInfoModal,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestModal from '../Modals/ReduxTestModal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { openBrowserDocs } from '../../context/actions/globalActions';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
-interface ReduxTestMenuProps {
-  dispatchToReduxTestCase: (action: object) => void;
-}
+const ReduxTestMenu = () => {
+  // Redux testing docs url
+  const reduxUrl = 'https://redux.js.org/recipes/writing-tests';
 
-const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
   /* making new state for this componenet, naming it isMOdalOpen, making method for it called setIsModalOpen, setting initial state to false */
   const [isReduxModalOpen, setIsReduxModalOpen] = useState(false);
-  const [{ reduxTestStatement, reduxStatements }] = useContext(ReduxTestCaseContext);
-  const [projectFilePath, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
+    ReduxTestCaseContext
+  );
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const openReduxModal = () => {
     setIsReduxModalOpen(true);
@@ -34,17 +35,21 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
   const handleAddMiddleware = () => {
     dispatchToReduxTestCase(addMiddleware());
   };
+
   const handleAddActionCreator = () => {
     dispatchToReduxTestCase(addActionCreator());
   };
+
   const handleAddAsync = () => {
     dispatchToReduxTestCase(addAsync());
   };
+
   const handleAddReducer = () => {
     dispatchToReduxTestCase(addReducer());
   };
-  const modalOpener = () => {
-    dispatchToReduxTestCase(openInfoModal());
+
+  const openDocs = () => {
+    dispatchToGlobal(openBrowserDocs(reduxUrl));
   };
 
   const generateTest = useGenerateTest('redux', projectFilePath);
@@ -55,6 +60,9 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
     dispatchToGlobal(setFilePath(''));
   };
 
+  if (!file && exportBool)
+    dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -63,7 +71,7 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
           <button id={styles.preview} onClick={fileHandle}>
             Preview
           </button>
-          <button className={styles.preview} onClick={modalOpener}>
+          <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
           <ReduxTestModal
@@ -71,6 +79,7 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
             closeReduxModal={closeReduxModal}
             dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
+          {/* Just send user to docs on button click */}
         </div>
         <div
           id={styles.right}
