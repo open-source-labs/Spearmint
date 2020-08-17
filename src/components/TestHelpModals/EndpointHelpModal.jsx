@@ -1,22 +1,28 @@
 import React, { useContext } from 'react';
+import ReactModal from 'react-modal';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { openBrowserDocs } from '../../context/actions/globalActions';
 import { closeInfoModal } from '../../context/actions/endpointTestCaseActions';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import ReactModal from 'react-modal';
-import styles from '../../components/TestHelpModals/EndpointHelpModal.module.scss';
+import styles from './EndpointHelpModal.module.scss';
+
 const closeIcon = require('../../assets/images/close.png');
-const describe = require('../../assets/images/describe.png');
+const describe = require('../../assets/images/describehelp.png');
 
 const EndpointHelpModal = () => {
-  const [{ modalOpen }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [_, dispatchToGlobal] = useContext(GlobalContext);
+  // Hooks testing docs url
+  const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
-  const closeModal = () => {
-    dispatchToEndpointTestCase(closeInfoModal());
+  const [{ modalOpen }, dispatchToTestCase] = useContext(EndpointTestCaseContext);
+
+  const openDocs = () => {
+    dispatchToGlobal(openBrowserDocs(endpointUrl));
+    dispatchToTestCase(closeInfoModal());
   };
 
-  const modalStyles = {
-    overlay: {
-      zIndex: 3,
-    },
+  const closeModal = () => {
+    dispatchToTestCase(closeInfoModal());
   };
 
   return (
@@ -24,15 +30,22 @@ const EndpointHelpModal = () => {
       className={styles.modal}
       shouldCloseOnEsc={true}
       isOpen={modalOpen}
-      // style={modalStyles}
+      style={{
+        overlay: {
+          zIndex: 3,
+        },
+      }}
     >
       <img src={closeIcon} onClick={closeModal} />
-      <h2>Describe(name, fn)</h2>
-      <p>
-        Describe creates a block that groups together several related tests. The name argument is
-        simply the name of component you're testing. fn argument is the test callback function{' '}
-      </p>
-      <img src={describe} />
+      <div id='helpContainer'>
+        {/* <h2>Describe(name, fn)</h2>
+        <p>
+          Describe creates a block that groups together several related tests. The name argument is
+          simply the name of component you're testing. fn argument is the test callback function{' '}
+        </p> */}
+        <img src={describe} />
+        <a onClick={openDocs}>Need More Help?</a>
+      </div>
     </ReactModal>
   );
 };
