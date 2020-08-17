@@ -1,0 +1,12 @@
+@import '/../../assets/stylesheets/fonts.scss';
+@import '/../../assets/stylesheets/colors.scss';
+
+button {
+  color: $mint;
+  background-color: white;
+}
+
+button:hover {
+  background-color: $mint;
+  color: white;
+}

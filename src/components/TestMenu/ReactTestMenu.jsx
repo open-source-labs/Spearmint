@@ -26,6 +26,7 @@ const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
       <div id={styles.testMenu}>
         <div id={styles.left}>
           <button onClick={openModal}>New Test +</button>
+          <button>Preview</button>
           <NewTestModal
             isModalOpen={isModalOpen}
             closeModal={closeModal}

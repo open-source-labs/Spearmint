@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { updateFile } from '../../context/actions/globalActions';
+import { updateFile, toggleRightPanel } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
@@ -195,6 +195,7 @@ const HooksTestCase = () => {
 
   const fileHandle = () => {
     dispatchToGlobal(updateFile(generatHookFile()));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
   if (!file && exportBool) dispatchToGlobal(updateFile(generatHookFile()));

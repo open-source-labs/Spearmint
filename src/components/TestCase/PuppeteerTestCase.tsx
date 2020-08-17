@@ -9,7 +9,7 @@ import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { updateFile } from '../../context/actions/globalActions';
+import { updateFile, toggleRightPanel } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
 
 const remote = window.require('electron').remote;
@@ -122,6 +122,7 @@ const PuppeteerTestCase = () => {
 
   const fileHandle = () => {
     dispatchToGlobal(updateFile(generatePuppeteerFile()));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
   /*----------------------------------------------------------------------------------------------*/

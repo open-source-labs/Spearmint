@@ -1,9 +1,10 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { updateFile } from '../../context/actions/globalActions';
+import { updateFile, toggleRightPanel } from '../../context/actions/globalActions';
 import {
   updateEndpointTestStatement,
   updateStatementsOrder,
@@ -116,6 +117,7 @@ const EndpointTestCase = () => {
 
   const fileHandle = () => {
     dispatchToGlobal(updateFile(generatEndFile()));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
   if (!file && exportBool) dispatchToGlobal(updateFile(generatEndFile()));
@@ -128,7 +130,6 @@ const EndpointTestCase = () => {
       <div id='head'>
         <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
       </div>
-      <button onClick={fileHandle}>Preview</button>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>

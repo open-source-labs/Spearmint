@@ -195,7 +195,7 @@ const ReactTestCase = () => {
     dispatchToGlobal(setFilePath(''));
   };
 
-  if (!file && exportBool) dispatchToGlobal(updateFile(generatReactFile()));
+  if (!file && exportBool) dispatchToGlobal(updateFile(generateReactFile()));
 
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>

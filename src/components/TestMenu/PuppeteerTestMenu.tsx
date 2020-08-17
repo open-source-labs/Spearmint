@@ -31,6 +31,7 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuPro
           <button type='button' data-testid='puppeteerNewTestButton' onClick={openPuppeteerModal}>
             New Test +
           </button>
+          <button>Preview</button>
           <PuppeteerTestModal
             isPuppeteerModalOpen={isPuppeteerModalOpen}
             closePuppeteerModal={closePuppeteerModal}

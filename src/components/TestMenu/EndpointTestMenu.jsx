@@ -27,6 +27,7 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
       <div id={styles.testMenu}>
         <div id={styles.left}>
           <button onClick={openEndpointModal}>New Test +</button>
+          <button id={styles.preview}>Preview</button>
           <EndpointTestModal
             // passing methods down as props to be used when EndpointTestModal is opened
             isEndpointModalOpen={isEndpointModalOpen}

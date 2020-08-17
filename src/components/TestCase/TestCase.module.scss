@@ -5,6 +5,21 @@
   display: block;
 }
 
+#preview {
+  button {
+    margin: 5px;
+    height: 40px;
+    width: 110px;
+    color: $mint;
+    background-color: $light-gray3;
+    opacity: 0.8;
+    font-family: $oxygen;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 0.5px $light-gray solid;
+  }
+}
+
 div {
   font-size: 13px;
   vertical-align: middle;
@@ -59,7 +74,7 @@ div {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      
+
       .renderLabel {
         font-family: $oxygen;
         font-size: 0.9rem;
@@ -78,14 +93,14 @@ div {
     .mockBtn {
       height: auto;
       font-size: 0.85rem;
-      background-color: rgba(0,0,0,0);
+      background-color: rgba(0, 0, 0, 0);
       border: none;
       min-width: 150px;
       border-radius: 3px;
       font-family: $oxygen;
       text-align: center;
       transition: 150ms;
-  
+
       &:hover {
         font-size: 0.9rem;
       }

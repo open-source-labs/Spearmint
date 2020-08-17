@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './TestMenu.module.scss';
+
 import {
   addAsync,
   addReducer,
@@ -50,9 +51,10 @@ const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
             closeReduxModal={closeReduxModal}
             dispatchToReduxTestCase={dispatchToReduxTestCase}
           />
-          <button id={styles.example} onClick={modalOpener}>
+          <button className={styles.preview} onClick={modalOpener}>
             Need Help?
           </button>
+          <button id={styles.preview}>Preview</button>
         </div>
         <div
           id={styles.right}
