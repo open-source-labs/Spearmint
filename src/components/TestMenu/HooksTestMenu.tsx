@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { openBrowserDocs } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import {
   addContexts,
   addHookUpdates,
   addHookRender,
-  openInfoModal,
 } from '../../context/actions/hooksTestCaseActions';
 import HooksTestModal from '../Modals/HooksTestModal';
 import { HooksTestMenuProps } from '../../utils/hooksTypes';
 
 const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
+  const [_, dispatchToGlobal] = useContext<any>(GlobalContext);
+  // Hooks testing docs url
+  const hooksUrl = 'https://react-hooks-testing-library.com/usage/basic-hooks';
+
   const [isHooksModalOpen, setIsHooksModalOpen] = useState(false);
 
   const openHooksModal = () => {
@@ -32,8 +37,8 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
     dispatchToHooksTestCase(addHookRender());
   };
 
-  const helpModalOpener = () => {
-    dispatchToHooksTestCase(openInfoModal());
+  const openDocs = () => {
+    dispatchToGlobal(openBrowserDocs(hooksUrl));
   };
 
   return (
@@ -48,7 +53,7 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
             closeHooksModal={closeHooksModal}
             dispatchToHooksTestCase={dispatchToHooksTestCase}
           />
-          <button id={styles.example} onClick={helpModalOpener}>
+          <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
         </div>
