@@ -4,8 +4,23 @@ import { PuppeteerTestCaseState, PuppeteerAction } from '../../utils/puppeteerTy
 export const PuppeteerTestCaseContext = createContext<any>(null);
 
 export const puppeteerTestCaseState = {
-  puppeteerStatements: [],
-  hasPuppeteer: 0,
+  puppeteerStatements: [
+    {
+      id: 0,
+      type: 'paintTiming',
+      describe: '',
+      url: '',
+      browserOptions: [],
+      firstPaintIt: '',
+      firstPaintTime: null,
+      FCPIt: '',
+      FCPtTime: null,
+      LCPIt: '',
+      LCPTime: null,
+      hasBrowserOption: false,
+      browserOptionId: 0,
+    },
+  ],
   statementId: 0,
   modalOpen: false,
 };
@@ -40,12 +55,6 @@ export const puppeteerTestCaseReducer = (
   let puppeteerStatements = [...state.puppeteerStatements];
 
   switch (action.type) {
-    case 'TOGGLE_PUPPETEER':
-      return {
-        ...state,
-        hasPuppeteer: state.hasPuppeteer + 1,
-      };
-
     case 'DELETE_PUPPETEER_TEST':
       puppeteerStatements = puppeteerStatements.filter((statement) => statement.id !== action.id);
       return {
@@ -64,8 +73,23 @@ export const puppeteerTestCaseReducer = (
 
     case 'CREATE_NEW_PUPPETEER_TEST':
       return {
-        puppeteerStatements: [],
-        hasPuppeteer: 0,
+        puppeteerStatements: [
+          {
+            id: 0,
+            type: 'paintTiming',
+            describe: '',
+            url: '',
+            browserOptions: [],
+            firstPaintIt: '',
+            firstPaintTime: null,
+            FCPIt: '',
+            FCPtTime: null,
+            LCPIt: '',
+            LCPTime: null,
+            hasBrowserOption: false,
+            browserOptionId: 0,
+          },
+        ],
         statementId: 0,
       };
 

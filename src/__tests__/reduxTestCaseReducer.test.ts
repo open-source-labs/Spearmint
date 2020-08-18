@@ -8,7 +8,6 @@ describe('Redux Test Case Reducer', () => {
     state = {
       reduxTestStatement: '',
       reduxStatements: [],
-      hasRedux: 0,
     };
   });
 
@@ -23,17 +22,6 @@ describe('Redux Test Case Reducer', () => {
 
     it('should return the default case if action is not recogonized', () => {
       expect(subject(state, action)).toBe(state);
-    });
-  });
-
-  describe('Redux Menu', () => {
-    const action = {
-      type: 'TOGGLE_REDUX',
-    };
-
-    it('should toggle to true', () => {
-      const { hasRedux } = subject(state, action);
-      expect(hasRedux).toEqual(true);
     });
   });
 
@@ -82,7 +70,6 @@ describe('Redux Test Case Reducer', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
 
         state.reduxStatements.push({
@@ -127,7 +114,6 @@ describe('Redux Test Case Reducer', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
 
         state.reduxStatements.push({
@@ -185,7 +171,6 @@ describe('Redux Test Case Reducer', () => {
               queryFunction: '',
             },
           ],
-          hasRedux: 1,
         };
 
         const { reduxStatements } = subject(state, action);
@@ -225,7 +210,6 @@ describe('Redux Test Case Reducer', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
 
         state.reduxStatements.push({
@@ -271,7 +255,6 @@ describe('Redux Test Case Reducer', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
 
         state.reduxStatements.push({
@@ -333,7 +316,6 @@ describe('Redux Test Case Reducer', () => {
               payloadType: null,
             },
           ],
-          hasRedux: 1,
         };
 
         const { reduxStatements } = subject(state, action);
@@ -373,7 +355,6 @@ describe('Redux Test Case Reducer', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
 
         state.reduxStatements.push({
@@ -419,7 +400,6 @@ describe('Redux Test Case Reducer', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
 
         state.reduxStatements.push({
@@ -480,7 +460,6 @@ describe('Redux Test Case Reducer', () => {
               expectedState: '',
             },
           ],
-          hasRedux: 1,
         };
 
         const { reduxStatements } = subject(state, action);
@@ -519,7 +498,6 @@ describe('Redux Test Case Reducer', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
 
         state.reduxStatements.push({
@@ -570,7 +548,6 @@ describe('Redux Test Case Reducer', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
 
         state.reduxStatements.push({
@@ -677,7 +654,6 @@ describe('Redux Test Case Reducer', () => {
             expectedState: '',
           },
         ],
-        hasRedux: 1,
       };
 
       const { reduxStatements } = subject(state, action);
@@ -714,7 +690,6 @@ describe('Redux Test Case Reducer', () => {
             payloadType: null,
           },
         ],
-        hasRedux: 1,
       };
 
       const { reduxStatements } = subject(state, action);

@@ -61,6 +61,7 @@ const EndpointTestMenu = () => {
           </button>
           <Modal
             // passing methods down as props to be used when TestModal is opened
+            dispatchToMockData={null}
             isModalOpen={isEndpointModalOpen}
             closeModal={closeEndpointModal}
             dispatchTestCase={dispatchToEndpointTestCase}

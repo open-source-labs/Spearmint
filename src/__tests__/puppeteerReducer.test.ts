@@ -6,28 +6,30 @@ describe('puppeteerTestCaseReducer', () => {
 
   beforeEach(() => {
     state = {
-      puppeteerStatements: [{
-        describe: 'Home page performance',
-        firstPaintIt: 'should have its first paint in less than 100 ms',
-        firstPaintTime: '100',
-        hasBrowserOption: true,
-        id: 0,
-        type: 'paintTiming',
-        url: 'http://localhost:8080/',
-        browserOptions: [
-          {
-            id: 0,
-            optionKey: 'headless',
-            optionValue: 'false',
-          },
-        ],
-        FCPIt: 'should have its first contentful paint in less than 200 ms',
-        FCPtTime: '200',
-        LCPIt: 'should have its largest contentful paint paint in less than 300 ms',
-        LCPTime: '300',
-        browserOptionId: 1,
-      }],
-      hasPuppeteer: 1,
+      puppeteerStatements: [
+        {
+          describe: 'Home page performance',
+          firstPaintIt: 'should have its first paint in less than 100 ms',
+          firstPaintTime: '100',
+          hasBrowserOption: true,
+          id: 0,
+          type: 'paintTiming',
+          url: 'http://localhost:8080/',
+          browserOptions: [
+            {
+              id: 0,
+              optionKey: 'headless',
+              optionValue: 'false',
+            },
+          ],
+          FCPIt: 'should have its first contentful paint in less than 200 ms',
+          FCPtTime: '200',
+          LCPIt: 'should have its largest contentful paint paint in less than 300 ms',
+          LCPTime: '300',
+          browserOptionId: 1,
+        },
+      ],
+
       statementId: 1,
     };
   });
@@ -36,12 +38,10 @@ describe('puppeteerTestCaseReducer', () => {
     const action: PuppeteerAction = { type: 'TOGGLE_PUPPETEER' };
     state = {
       puppeteerStatements: [],
-      hasPuppeteer: 0,
       statementId: 0,
     };
     expect(puppeteerTestCaseReducer(state, action)).toEqual({
       puppeteerStatements: [],
-      hasPuppeteer: 1,
       statementId: 0,
     });
   });
@@ -50,7 +50,6 @@ describe('puppeteerTestCaseReducer', () => {
     const action: PuppeteerAction = { type: 'DELETE_PUPPETEER_TEST', id: 0 };
     expect(puppeteerTestCaseReducer(state, action)).toEqual({
       puppeteerStatements: [],
-      hasPuppeteer: 1,
       statementId: 1,
     });
   });

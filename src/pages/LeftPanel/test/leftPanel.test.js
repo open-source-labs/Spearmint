@@ -9,7 +9,15 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-let wrapper, globalM, dispatchToGlobal, testCase, dispatchToTestCase, mockData, dispatchToMockData, testFileModal, dispatchToTestFileModal;
+let wrapper,
+  globalM,
+  dispatchToGlobal,
+  testCase,
+  dispatchToTestCase,
+  mockData,
+  dispatchToMockData,
+  testFileModal,
+  dispatchToTestFileModal;
 
 beforeEach(() => {
   globalM = {
@@ -29,7 +37,6 @@ beforeEach(() => {
   dispatchToGlobal = jest.fn();
 
   testCase = {
-    hasReact: 0,
     describeId: 1,
     itId: 1,
     statementId: 1,
@@ -73,14 +80,14 @@ beforeEach(() => {
   };
 
   dispatchToTestCase = jest.fn();
-  
+
   mockData = {
     mockData: [],
     hasMockData: false,
   };
 
   dispatchToMockData = jest.fn();
-  testFileModal = {}
+  testFileModal = {};
   dispatchToTestFileModal = jest.fn();
 
   wrapper = mount(

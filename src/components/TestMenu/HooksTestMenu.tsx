@@ -72,6 +72,7 @@ const HooksTestMenu = () => {
           </button>
           <Modal
             // passing methods down as props to be used when Modal is opened
+            dispatchToMockData={null}
             isModalOpen={isHooksModalOpen}
             closeModal={closeHooksModal}
             dispatchTestCase={dispatchToHooksTestCase}

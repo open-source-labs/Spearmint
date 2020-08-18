@@ -22,9 +22,7 @@ const browserIcon = require('../../assets/images/google-chrome.png');
 const codeIcon = require('../../assets/images/visual-studio-code.png');
 
 const NavBar = () => {
-  const [{ fileTree, isFileDirectoryOpen, url, exportBool }, dispatchToGlobal] = useContext(
-    GlobalContext
-  );
+  const [{ fileTree, isFileDirectoryOpen, url }, dispatchToGlobal] = useContext(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [isBrowserModalOpen, setIsBrowserModalOpen] = useState(false);
 
