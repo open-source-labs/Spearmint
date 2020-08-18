@@ -12,15 +12,12 @@ import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
-import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 const PuppeteerTestCase = () => {
   const [{ puppeteerStatements, modalOpen }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   interface Ref {
     current: any;
@@ -59,21 +56,12 @@ const PuppeteerTestCase = () => {
     dispatchToPuppeteerTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  const generateTest = useGenerateTest('puppeteer', projectFilePath);
-
-  const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
-    dispatchToGlobal(setFilePath(''));
-  };
-  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
-
   return (
     <div>
       <div id='head'>
-        <PuppeteerTestMenu dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase} />
+        <PuppeteerTestMenu />
       </div>
       <div id={styles.testMockSection}>
-        <button onClick={fileHandle}>Preview</button>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
           <input
