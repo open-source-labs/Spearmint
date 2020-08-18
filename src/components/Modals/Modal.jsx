@@ -1,19 +1,18 @@
 import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
-import { createNewReduxTest } from '../../context/actions/reduxTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal, updateFile } from '../../context/actions/globalActions';
-import { ReduxTestModalProps } from '../../utils/reduxTypes';
+import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
+import { clearMockData } from '../../context/actions/mockDataActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
-const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal }: ReduxTestModalProps) => {
-  const [, dispatchToGlobal] = useContext<any>(GlobalContext);
-  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
+const Modal = ({ isModalOpen, closeModal, dispatchTestCase, createTest }, ...props) => {
+  const [, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleNewReduxTest = () => {
-    dispatchToReduxTestCase(createNewReduxTest());
-    closeReduxModal();
+  const handleTest = (e) => {
+    if (props.dispatchToMockData) props.dispatchToMockData(clearMockData);
+    dispatchTestCase(createTest());
+    closeModal();
+    dispatchToGlobal(setTestCase(''));
     dispatchToGlobal(toggleModal());
     dispatchToGlobal(updateFile(''));
   };
@@ -27,9 +26,9 @@ const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal }: ReduxTestModalPro
   return (
     <ReactModal
       className={styles.modal}
-      isOpen={isReduxModalOpen}
-      onRequestClose={closeReduxModal}
-      contentLabel='Save?' /* whats this? */
+      isOpen={isModalOpen}
+      onRequestClose={closeModal}
+      contentLabel='Save?'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
       ariaHideApp={false}
@@ -44,10 +43,10 @@ const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal }: ReduxTestModalPro
           will be lost.
         </p>
         <span id={styles.newTestButtons}>
-          <button id={styles.save} onClick={handleNewReduxTest}>
+          <button id={styles.save} onClick={handleTest}>
             Continue
           </button>
-          <button id={styles.save} onClick={closeReduxModal}>
+          <button id={styles.save} onClick={closeModal}>
             Cancel
           </button>
         </span>
@@ -56,4 +55,4 @@ const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal }: ReduxTestModalPro
   );
 };
 
-export default ReduxTestModal;
+export default Modal;

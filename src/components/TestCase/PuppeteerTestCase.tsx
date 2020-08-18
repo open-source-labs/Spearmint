@@ -11,7 +11,6 @@ import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
-import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './TestCase.module.scss';
 
 const PuppeteerTestCase = () => {
@@ -34,11 +33,6 @@ const PuppeteerTestCase = () => {
     return result;
   };
 
-  // const handleUpdatePuppetteerTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatchToPuppeteerTestCase(updatePuppeteerTestStatement(e.target.value));
-  //   fileHandle();
-  // };
-
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
       return;
@@ -59,18 +53,7 @@ const PuppeteerTestCase = () => {
       <div id='head'>
         <PuppeteerTestMenu />
       </div>
-      <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Test</label>
-          <input
-            ref={testDescription}
-            type='text'
-            id={styles.testStatement}
-            value={puppeteerStatements}
-            // onChange={handleUpdatePuppetteerTestStatements}
-          />
-        </section>
-      </div>
+      <div id={styles.testMockSection}></div>
       {modalOpen ? <PuppeteerHelpModal /> : null}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
