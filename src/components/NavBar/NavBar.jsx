@@ -14,7 +14,7 @@ import {
 import FileDirectory from '../FileDirectory/FileDirectory';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
 import ExportFileModal from '../Modals/ExportFileModal';
-import BrowserModal from '../Modals/BrowserModal';
+// import BrowserModal from '../Modals/BrowserModal';
 
 const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');
@@ -26,7 +26,7 @@ const NavBar = () => {
     GlobalContext
   );
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-  const [isBrowserModalOpen, setIsBrowserModalOpen] = useState(false);
+  // const [isBrowserModalOpen, setIsBrowserModalOpen] = useState(false);
 
   /* opens/closes the filedirectory */
   const handleToggleFileDirectory = () => {
@@ -40,7 +40,8 @@ const NavBar = () => {
 
   /* switches between code and browser view */
   const handleBrowserToggle = () => {
-    url ? dispatchToGlobal(toggleRightPanel('browserView')) : setIsBrowserModalOpen(true);
+    console.log('handling Toggle');
+    dispatchToGlobal(toggleRightPanel('browserView'));
   };
 
   /* exports the file (when true) */
@@ -50,9 +51,9 @@ const NavBar = () => {
   };
 
   /* closes the browser modal (box users type url in) */
-  const closeBrowserModal = () => {
-    setIsBrowserModalOpen(false);
-  };
+  // const closeBrowserModal = () => {
+  //   setIsBrowserModalOpen(false);
+  // };
 
   /**
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
@@ -80,7 +81,7 @@ const NavBar = () => {
         <img src={browserIcon} className={styles.icons} alt='browserview' title='Browser view' />
         <span className={styles.tooltip}>Browser View</span>
       </button>
-      <BrowserModal isBrowserModalOpen={isBrowserModalOpen} closeBrowserModal={closeBrowserModal} />
+      {/* <BrowserModal isBrowserModalOpen={isBrowserModalOpen} closeBrowserModal={closeBrowserModal} /> */}
 
       {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>

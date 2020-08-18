@@ -22,7 +22,7 @@ const BrowserView = () => {
     if (e.keyCode === 13) {
       const testSiteURL = addHttps(e.target.value);
       dispatchToGlobal(setProjectUrl(testSiteURL));
-      e.target.value = '';
+      e.target.value = testSiteURL;
     }
   };
 
