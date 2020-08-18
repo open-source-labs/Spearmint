@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Middleware.module.scss';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import {
   deleteMiddleware,
   updateMiddleware,
@@ -12,8 +13,9 @@ import SearchInput from '../../SearchInput/SearchInput';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const Middleware = ({ middleware, index, dispatchToReduxTestCase }) => {
+const Middleware = ({ middleware, index }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
+  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChangeMiddlewareFields = (e, field) => {
     let updatedMiddleware = { ...middleware };

@@ -1,60 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Middleware from '../ReduxTestComponent/Middleware/Middleware';
 import ActionCreator from '../ReduxTestComponent/ActionCreator/ActionCreator';
 import Async from '../ReduxTestComponent/Thunk/Thunk';
 import Reducer from '../ReduxTestComponent/Reducer/Reducer';
+import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { ReduxStatements } from '../../utils/reduxTypes';
 
-interface ReduxTestStatementsProps {
-  reduxStatements: ReduxStatements[];
-  dispatchToReduxTestCase: (action: object) => void;
-}
-
-const ReduxTestStatements = function TestStatements({
-  reduxStatements,
-  dispatchToReduxTestCase,
-}: ReduxTestStatementsProps) {
+const ReduxTestStatements = () => {
   /* destructing from the reducer */
+  const [{ reduxStatements }] = useContext(ReduxTestCaseContext);
+
   return (
     <>
-      {reduxStatements.map((statement, i) => {
+      {reduxStatements.map((statement: ReduxStatements, i: number) => {
         switch (statement.type) {
           case 'middleware':
-            return (
-              <Middleware
-                key={statement.id}
-                middleware={statement}
-                index={i}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
-            );
+            return <Middleware key={statement.id} middleware={statement} index={i} />;
           case 'action-creator':
-            return (
-              <ActionCreator
-                key={statement.id}
-                actionCreator={statement}
-                index={i}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
-            );
+            return <ActionCreator key={statement.id} actionCreator={statement} index={i} />;
           case 'async':
-            return (
-              <Async
-                key={statement.id}
-                async={statement}
-                index={i}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
-            );
+            return <Async key={statement.id} async={statement} index={i} />;
           case 'reducer':
-            return (
-              <Reducer
-                key={statement.id}
-                reducer={statement}
-                index={i}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
-            );
+            return <Reducer key={statement.id} reducer={statement} index={i} />;
           default:
             return <></>;
         }
