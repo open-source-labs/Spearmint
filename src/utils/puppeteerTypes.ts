@@ -14,7 +14,6 @@ export interface PuppeteerTestStatementsProps extends PuppeteerTestMenuProps {
 export interface PuppeteerTestCaseState {
   puppeteerStatements: Array<PuppeteerStatements>;
   statementId: number;
-  modalOpen: boolean;
 }
 
 export interface PuppeteerStatements {

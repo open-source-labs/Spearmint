@@ -38,7 +38,6 @@ describe('puppeteerTestCaseReducer', () => {
     const action: PuppeteerAction = { type: 'TOGGLE_PUPPETEER' };
     state = {
       puppeteerStatements: [],
-      uppeteer: 0,
       statementId: 0,
     };
     expect(puppeteerTestCaseReducer(state, action)).toEqual({
