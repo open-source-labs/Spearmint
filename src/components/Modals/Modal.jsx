@@ -1,20 +1,18 @@
 import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
-import { createNewEndpointTest } from '../../context/actions/endpointTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal, updateFile } from '../../context/actions/globalActions';
+import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
+import { clearMockData } from '../../context/actions/mockDataActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
-const EndpointTestModal = ({
-  isEndpointModalOpen,
-  closeEndpointModal,
-  dispatchToEndpointTestCase,
-}) => {
+const Modal = ({ isModalOpen, closeModal, dispatchTestCase, createTest }, ...props) => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleNewEndpointTest = (e) => {
-    dispatchToEndpointTestCase(createNewEndpointTest());
-    closeEndpointModal();
+  const handleTest = (e) => {
+    if (props.dispatchToMockData) props.dispatchToMockData(clearMockData);
+    dispatchTestCase(createTest());
+    closeModal();
+    dispatchToGlobal(setTestCase(''));
     dispatchToGlobal(toggleModal());
     dispatchToGlobal(updateFile(''));
   };
@@ -28,8 +26,8 @@ const EndpointTestModal = ({
   return (
     <ReactModal
       className={styles.modal}
-      isOpen={isEndpointModalOpen}
-      onRequestClose={closeEndpointModal}
+      isOpen={isModalOpen}
+      onRequestClose={closeModal}
       contentLabel='Save?'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
@@ -45,10 +43,10 @@ const EndpointTestModal = ({
           will be lost.
         </p>
         <span id={styles.newTestButtons}>
-          <button id={styles.save} onClick={handleNewEndpointTest}>
+          <button id={styles.save} onClick={handleTest}>
             Continue
           </button>
-          <button id={styles.save} onClick={closeEndpointModal}>
+          <button id={styles.save} onClick={closeModal}>
             Cancel
           </button>
         </span>
@@ -57,4 +55,4 @@ const EndpointTestModal = ({
   );
 };
 
-export default EndpointTestModal;
+export default Modal;

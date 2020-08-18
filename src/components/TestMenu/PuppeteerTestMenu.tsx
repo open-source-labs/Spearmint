@@ -7,9 +7,11 @@ import {
   updateFile,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
-import PuppeteerTestModal from '../Modals/PuppeteerTestModal';
-import { addPuppeteerPaintTiming } from '../../context/actions/puppeteerTestCaseActions';
-import { PuppeteerTestMenuProps } from '../../utils/puppeteerTypes';
+import Modal from '../Modals/Modal';
+import {
+  addPuppeteerPaintTiming,
+  createNewPuppeteerTest,
+} from '../../context/actions/puppeteerTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 
@@ -56,10 +58,12 @@ const PuppeteerTestMenu = () => {
             New Test +
           </button>
           <button onClick={fileHandle}>Preview</button>
-          <PuppeteerTestModal
-            isPuppeteerModalOpen={isPuppeteerModalOpen}
-            closePuppeteerModal={closePuppeteerModal}
-            dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
+          <Modal
+            // passing methods down as props to be used when Modal is opened
+            isModalOpen={isPuppeteerModalOpen}
+            closeModal={closePuppeteerModal}
+            dispatchTestCase={dispatchToPuppeteerTestCase}
+            createTest={createNewPuppeteerTest}
           />
           <button id={styles.example} onClick={openDocs}>
             Need Help?

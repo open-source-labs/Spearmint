@@ -17,16 +17,12 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase,
   ] = useContext(EndpointTestCaseContext);
 
-  //const [{ projectFilePath, exportBool, file }, dispatchToGlobal] = useContext<any>(GlobalContext);
-
-  interface Ref {
-    current: any;
-  }
-
-  const testDescription: Ref = useRef(null);
+  const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    testDescription.current.focus();
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
   }, []);
 
   const handleUpdateEndpointTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,10 +75,7 @@ const EndpointTestCase = () => {
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <EndpointTestStatements
-                endpointStatements={endpointStatements}
-                dispatchToEndpointTestCase={dispatchToEndpointTestCase}
-              />
+              <EndpointTestStatements />
               {provided.placeholder}
             </div>
           )}

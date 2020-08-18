@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Thunk.module.scss';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import {
   deleteAsync,
   updateAsync,
@@ -15,8 +16,9 @@ const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
-const Async = ({ async, index, dispatchToReduxTestCase }) => {
+const Async = ({ async, index }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
+  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChangeAsyncFields = (e, field) => {
     let updatedAsync = { ...async };

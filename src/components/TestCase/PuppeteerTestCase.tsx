@@ -11,7 +11,6 @@ import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
-import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './TestCase.module.scss';
 
 const PuppeteerTestCase = () => {
@@ -19,14 +18,12 @@ const PuppeteerTestCase = () => {
     PuppeteerTestCaseContext
   );
 
-  interface Ref {
-    current: any;
-  }
-
-  const testDescription: Ref = useRef(null);
+  const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    testDescription.current.focus();
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
   }, []);
 
   const reorder = (list: Array<PuppeteerStatements>, startIndex: number, endIndex: number) => {
@@ -35,11 +32,6 @@ const PuppeteerTestCase = () => {
     result.splice(endIndex, 0, removed);
     return result;
   };
-
-  // const handleUpdatePuppetteerTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatchToPuppeteerTestCase(updatePuppeteerTestStatement(e.target.value));
-  //   fileHandle();
-  // };
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) {
@@ -61,27 +53,13 @@ const PuppeteerTestCase = () => {
       <div id='head'>
         <PuppeteerTestMenu />
       </div>
-      <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Test</label>
-          <input
-            ref={testDescription}
-            type='text'
-            id={styles.testStatement}
-            value={puppeteerStatements}
-            // onChange={handleUpdatePuppetteerTestStatements}
-          />
-        </section>
-      </div>
+      <div id={styles.testMockSection}></div>
       {modalOpen ? <PuppeteerHelpModal /> : null}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <PuppeteerTestStatements
-                puppeteerStatements={puppeteerStatements}
-                dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
-              />
+              <PuppeteerTestStatements />
               {provided.placeholder}
             </div>
           )}
