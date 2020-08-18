@@ -13,9 +13,10 @@ import SearchInput from '../SearchInput/SearchInput';
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 
-const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
+const Endpoint = ({ endpoint, index }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
-  const [{ modalOpen }] = useContext(EndpointTestCaseContext);
+  const [{ modalOpen }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
     updatedEndpoint[field] = e.target.value;

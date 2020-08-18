@@ -21,14 +21,16 @@ const HooksTestCase = () => {
 
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
-  interface Ref {
-    current: any;
-  }
+  // interface Ref {
+  //   current: any;
+  // }
 
-  const testDescription: Ref = useRef(null);
+  const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    testDescription.current.focus();
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
   }, []);
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {

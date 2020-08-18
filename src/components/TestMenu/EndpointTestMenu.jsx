@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import styles from '../TestMenu/TestMenu.module.scss';
+import styles from './TestMenu.module.scss';
 import EndpointTestModal from '../Modals/EndpointTestModal';
 import { addEndpoint } from '../../context/actions/endpointTestCaseActions';
+import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
+
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
-const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
-  const [_, dispatchToGlobal] = useContext(GlobalContext);
+const EndpointTestMenu = () => {
+  const [, dispatchToGlobal] = useContext(GlobalContext);
+  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
@@ -37,7 +40,6 @@ const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
             // passing methods down as props to be used when EndpointTestModal is opened
             isEndpointModalOpen={isEndpointModalOpen}
             closeEndpointModal={closeEndpointModal}
-            dispatchToEndpointTestCase={dispatchToEndpointTestCase}
           />
           <button id={styles.example} onClick={openDocs}>
             Need Help?

@@ -4,13 +4,11 @@ import { createNewEndpointTest } from '../../context/actions/endpointTestCaseAct
 import styles from './ExportFileModal.module.scss';
 import { toggleModal, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 
-const EndpointTestModal = ({
-  isEndpointModalOpen,
-  closeEndpointModal,
-  dispatchToEndpointTestCase,
-}) => {
+const EndpointTestModal = ({ isEndpointModalOpen, closeEndpointModal }) => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
+  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
   const handleNewEndpointTest = (e) => {
     dispatchToEndpointTestCase(createNewEndpointTest());
