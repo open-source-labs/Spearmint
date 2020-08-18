@@ -1,15 +1,24 @@
 import React, { useState, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { openBrowserDocs } from '../../context/actions/globalActions';
-import styles from './TestMenu.module.scss';
+import {
+  openBrowserDocs,
+  toggleRightPanel,
+  updateFile,
+  setFilePath,
+} from '../../context/actions/globalActions';
+import styles from '../TestMenu/TestMenu.module.scss';
 import EndpointTestModal from '../Modals/EndpointTestModal';
 import { addEndpoint } from '../../context/actions/endpointTestCaseActions';
+import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
-  const [, dispatchToGlobal] = useContext(GlobalContext);
-  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [{ endpointStatements, endpointTestStatement }, dispatchToEndpointTestCase] = useContext(
+    EndpointTestCaseContext
+  );
+  console.log(endpointStatements, endpointTestStatement);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
@@ -31,11 +40,25 @@ const EndpointTestMenu = () => {
     dispatchToGlobal(openBrowserDocs(endpointUrl));
   };
 
+  const generateTest = useGenerateTest('endpoint', projectFilePath);
+
+  const fileHandle = () => {
+    dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
+    dispatchToGlobal(setFilePath(''));
+  };
+
+  if (!file && exportBool)
+    dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
           <button onClick={openEndpointModal}>New Test +</button>
+          <button id={styles.preview} onClick={fileHandle}>
+            Preview
+          </button>
           <EndpointTestModal
             // passing methods down as props to be used when EndpointTestModal is opened
             isEndpointModalOpen={isEndpointModalOpen}
