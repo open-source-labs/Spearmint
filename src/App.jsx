@@ -5,6 +5,7 @@ import ProjectLoader from './pages/ProjectLoader/ProjectLoader';
 import NavBar from './components/NavBar/NavBar';
 import LeftPanel from './pages//LeftPanel/LeftPanel';
 import RightPanel from './pages/RightPanel/RightPanel';
+import About from './pages/About/About';
 
 const App = () => {
   // useReducer takes a reducer and initial state as
@@ -19,6 +20,12 @@ const App = () => {
           <ProjectLoader />
         </GlobalContext.Provider>
       </div>
+    );
+  } else if (global.isProjectLoaded === 'about') {
+    return (
+      <>
+        <About dispatch={dispatchToGlobal} />
+      </>
     );
   } else {
     return (
