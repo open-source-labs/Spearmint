@@ -26,12 +26,13 @@ const OpenFolder = () => {
 
   const handleOpenFolder = () => {
     const directory = dialog.showOpenDialog({
-      properties: ['openDirectory'],
+      properties: ['openDirectory', 'createDirectory'],
       filters: [
         { name: 'Javascript Files', extensions: ['js', 'jsx'] },
         { name: 'Style', extensions: ['css'] },
         { name: 'Html', extensions: ['html'] },
       ],
+      message: 'Please select your project folder',
     });
 
     if (directory && directory[0]) {
