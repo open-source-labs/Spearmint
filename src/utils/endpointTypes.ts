@@ -7,7 +7,6 @@ export interface EndpointStatements {
 export interface EndpointTestCaseState {
   endpointTestStatement: string;
   endpointStatements: Array<EndpointStatements>;
-  hasEndpoint: number;
   statementId: number;
 }
 

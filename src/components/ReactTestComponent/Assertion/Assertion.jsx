@@ -3,6 +3,7 @@
  * same layout as action.jsx
  *  - but for only the last assertion card?
  */
+// make dragable
 
 import React, { useContext } from 'react';
 import styles from './Assertion.module.scss';

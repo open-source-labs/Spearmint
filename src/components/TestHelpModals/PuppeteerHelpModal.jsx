@@ -10,7 +10,7 @@ const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describe.png');
 
 const PuppeteerHelpModal = () => {
-  const [_, dispatchToGlobal] = useContext(GlobalContext);
+  const [dispatchToGlobal] = useContext(GlobalContext);
   // Hooks testing docs url
   const puppeteerUrl = 'https://devdocs.io/puppeteer/';
 
