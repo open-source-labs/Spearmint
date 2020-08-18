@@ -10,7 +10,6 @@ import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
 import EndpointHelpModal from '../TestHelpModals/EndpointHelpModal';
-import Endpoint from '../EndpointTestComponent/Endpoint';
 
 const EndpointTestCase = () => {
   const [

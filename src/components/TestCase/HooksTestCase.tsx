@@ -57,17 +57,6 @@ const HooksTestCase = () => {
     dispatchToHooksTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  const generateTest = useGenerateTest('hooks', projectFilePath);
-
-  const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
-    dispatchToGlobal(toggleRightPanel('codeEditorView'));
-    dispatchToGlobal(setFilePath(''));
-  };
-
-  if (!file && exportBool)
-    dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
-
   return (
     <div>
       <div id='head'>

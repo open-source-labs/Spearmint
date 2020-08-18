@@ -14,14 +14,16 @@ import { openBrowserDocs } from '../../context/actions/globalActions';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
 const ReduxTestMenu = () => {
+  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
+    ReduxTestCaseContext
+  );
+
   // Redux testing docs url
   const reduxUrl = 'https://redux.js.org/recipes/writing-tests';
 
   /* making new state for this componenet, naming it isMOdalOpen, making method for it called setIsModalOpen, setting initial state to false */
   const [isReduxModalOpen, setIsReduxModalOpen] = useState(false);
-  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
-    ReduxTestCaseContext
-  );
+
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const openReduxModal = () => {

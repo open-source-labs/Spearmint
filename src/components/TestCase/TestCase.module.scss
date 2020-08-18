@@ -5,21 +5,6 @@
   display: block;
 }
 
-#preview {
-  button {
-    margin: 5px;
-    height: 40px;
-    width: 110px;
-    color: $mint;
-    background-color: $light-gray3;
-    opacity: 0.8;
-    font-family: $oxygen;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 0.5px $light-gray solid;
-  }
-}
-
 div {
   font-size: 13px;
   vertical-align: middle;
