@@ -9,7 +9,6 @@ import {
 import styles from './TestMenu.module.scss';
 import PuppeteerTestModal from '../Modals/PuppeteerTestModal';
 import { addPuppeteerPaintTiming } from '../../context/actions/puppeteerTestCaseActions';
-import { PuppeteerTestMenuProps } from '../../utils/puppeteerTypes';
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 
