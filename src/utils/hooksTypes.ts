@@ -8,7 +8,6 @@ export interface HooksTestCaseState {
   modalOpen: boolean;
   hooksTestStatement: string;
   hooksStatements: Array<HooksStatements>;
-  hasHooks: number;
   statementId: number;
 }
 

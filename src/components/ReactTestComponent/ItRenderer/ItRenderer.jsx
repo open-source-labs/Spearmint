@@ -18,7 +18,7 @@ const ItRenderer = ({
   statements,
   handleChangeItStatementText,
 }) => {
-  const [{}, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
 
   // filter out ids not belonging to the correct describe block
   const filteredIds = itStatements.allIds.filter((id) => {

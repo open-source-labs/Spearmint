@@ -129,32 +129,55 @@ function useGenerateTest(test, projectFilePath) {
 
     // Async Import Statements
     function addAsyncImportStatement() {
-      testFileCode += `import '@testing-library/jest-dom/extend-expect';
-        import configureMockStore from 'redux-mock-store';
-        import thunk from 'redux-thunk';
-        import fetchMock from 'fetch-mock';`;
+      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+      }
+      if (
+        !testFileCode.includes(`import configureMockStore from 'redux-mock-store';
+      import thunk from 'redux-thunk';
+      import fetchMock from 'fetch-mock';`)
+      ) {
+        testFileCode += `import configureMockStore from 'redux-mock-store';
+      import thunk from 'redux-thunk';
+      import fetchMock from 'fetch-mock';`;
+      }
     }
 
     function addAsyncVariables() {
-      testFileCode += `\n const middlewares = [thunk];
-        const mockStore = configureMockStore(middlewares);`;
+      if (
+        !testFileCode.includes(`\n const middlewares = [thunk];
+      const mockStore = configureMockStore(middlewares);`)
+      ) {
+        testFileCode += `\n const middlewares = [thunk];
+      const mockStore = configureMockStore(middlewares);`;
+      }
     }
 
     // AC Import Statements
     function addActionCreatorImportStatement() {
-      testFileCode += `import { fake } from 'test-data-bot';
-        import '@testing-library/jest-dom/extend-expect'`;
+      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`)) {
+        testFileCode += `import { fake } from 'test-data-bot';`;
+      }
+      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+      }
     }
 
     // Reducer Import Statements
     function addReducerImportStatement() {
-      testFileCode += `import { render } from '@testing-library/react';
-        import '@testing-library/jest-dom/extend-expect';`;
+      if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+        testFileCode += `import { render } from '@testing-library/react';`;
+      }
+      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+      }
     }
 
     // Middleware Import Statements
     function addMiddlewareImportStatement() {
-      testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+      }
     }
 
     // Redux Test Statements
@@ -199,14 +222,24 @@ function useGenerateTest(test, projectFilePath) {
 
     // Context Import Statements
     const addContextImportStatements = () => {
-      testFileCode += `import { render } from '@testing-library/react'; 
-        import '@testing-library/jest-dom/extend-expect'`;
+      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
+        testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+      }
+      if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+        testFileCode += `import { render } from '@testing-library/react';`;
+      }
     };
 
     // Hooks Import Statements
     const addRenderHooksImportStatement = () => {
-      testFileCode += `import { renderHook, act } from '@testing-library/react-hooks'
-        import '@testing-library/jest-dom/extend-expect'`;
+      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
+        testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+      }
+      if (
+        !testFileCode.includes(`import { renderHook, act } from '@testing-library/react-hooks';`)
+      ) {
+        testFileCode += `import { renderHook, act } from '@testing-library/react-hooks';`;
+      }
     };
 
     // Hooks & Context Test Statements
@@ -646,6 +679,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+      default:
+        return 'not a test';
     }
   };
 }

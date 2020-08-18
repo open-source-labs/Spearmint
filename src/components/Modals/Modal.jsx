@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
+import { clearMockData } from '../../context/actions/mockDataActions';
 import styles from './ExportFileModal.module.scss';
 import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
-import { clearMockData } from '../../context/actions/mockDataActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
-const Modal = ({ isModalOpen, closeModal, dispatchTestCase, createTest }, ...props) => {
+/* destructuring or declaring these?  */
+const Modal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchTestCase, createTest }) => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleTest = (e) => {
-    if (props.dispatchToMockData) props.dispatchToMockData(clearMockData);
+  const handleNewTest = (e) => {
+    if (dispatchToMockData) dispatchToMockData(clearMockData());
     dispatchTestCase(createTest());
     closeModal();
     dispatchToGlobal(setTestCase(''));
@@ -43,7 +44,7 @@ const Modal = ({ isModalOpen, closeModal, dispatchTestCase, createTest }, ...pro
           will be lost.
         </p>
         <span id={styles.newTestButtons}>
-          <button id={styles.save} onClick={handleTest}>
+          <button id={styles.save} onClick={handleNewTest}>
             Continue
           </button>
           <button id={styles.save} onClick={closeModal}>

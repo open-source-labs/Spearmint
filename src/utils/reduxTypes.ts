@@ -144,8 +144,6 @@ interface CreateNewReduxTestAction {
 export interface ReduxTestCaseState {
   reduxTestStatement: string;
   reduxStatements: Array<ReduxStatements>;
-  hasRedux: number;
-  modalOpen: boolean;
 }
 export interface UpdateMiddleware {
   id: number;
