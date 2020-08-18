@@ -4,7 +4,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { closeInfoModal } from '../../context/actions/reactTestCaseActions';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
-import styles from './HooksHelpModal.module.scss';
+import styles from './TestHelpModal.module.scss';
 
 const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describe.png');
