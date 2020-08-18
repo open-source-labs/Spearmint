@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SearchInput.scss';
 
-export const Autocomplete = ({
+export const SearchInput = ({
   dispatch,
   action,
   filePathMap,
@@ -16,7 +16,7 @@ export const Autocomplete = ({
   const [showOptions, setShowOptions] = useState(false);
   const [userInput, setUserInput] = useState('');
 
-  const onChange = (e) => {
+  const handleChange = (e) => {
     const input = e.currentTarget.value;
 
     const filteredOptions = options.filter(
@@ -29,7 +29,7 @@ export const Autocomplete = ({
     setUserInput(e.currentTarget.value);
   };
 
-  const onClick = (e) => {
+  const handleClick = (e) => {
     setActiveOption(0);
     setFilteredOptions([]);
     setShowOptions(false);
@@ -41,7 +41,7 @@ export const Autocomplete = ({
     if (updateActionsFilePath && id) dispatch(updateActionsFilePath(selectedOption, filePath, id));
     if (action) dispatch(action(selectedOption, filePath));
   };
-  const onKeyDown = (e) => {
+  const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
       setActiveOption(0);
       setShowOptions(false);
@@ -62,21 +62,18 @@ export const Autocomplete = ({
     }
   };
   let optionList;
-  let optionStyles = 'options';
   if (showOptions && userInput) {
-    if (filteredOptions.length) {
-      if (reactTestCase) {
-        optionStyles = 'react-test-options';
-      }
+    if (filteredOptions) {
       optionList = (
-        <ul className={optionStyles}>
+        <ul className={reactTestCase ? 'react-test-options' : 'options'}>
           {filteredOptions.map((optionName, index) => {
-            let className;
-            if (index === activeOption) {
-              className = 'option-active';
-            }
             return (
-              <li className={className} key={optionName} id={optionName} onClick={onClick}>
+              <li
+                className={index === activeOption ? 'option-active' : ''}
+                key={optionName}
+                id={optionName}
+                onClick={handleClick}
+              >
                 {optionName}
               </li>
             );
@@ -97,8 +94,8 @@ export const Autocomplete = ({
         <input
           type='text'
           className='search-box'
-          onChange={onChange}
-          onKeyDown={onKeyDown}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
           value={userInput}
           placeholder='File Name'
         />
@@ -108,4 +105,4 @@ export const Autocomplete = ({
   );
 };
 
-export default Autocomplete;
+export default SearchInput;

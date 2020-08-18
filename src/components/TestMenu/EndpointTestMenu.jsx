@@ -7,8 +7,8 @@ import {
   setFilePath,
 } from '../../context/actions/globalActions';
 import styles from '../TestMenu/TestMenu.module.scss';
-import EndpointTestModal from '../Modals/EndpointTestModal';
-import { addEndpoint } from '../../context/actions/endpointTestCaseActions';
+import Modal from '../Modals/Modal';
+import { addEndpoint, createNewEndpointTest } from '../../context/actions/endpointTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 
@@ -59,11 +59,12 @@ const EndpointTestMenu = () => {
           <button id={styles.preview} onClick={fileHandle}>
             Preview
           </button>
-          <EndpointTestModal
-            // passing methods down as props to be used when EndpointTestModal is opened
-            isEndpointModalOpen={isEndpointModalOpen}
-            closeEndpointModal={closeEndpointModal}
-            dispatchToEndpointTestCase={dispatchToEndpointTestCase}
+          <Modal
+            // passing methods down as props to be used when TestModal is opened
+            isModalOpen={isEndpointModalOpen}
+            closeModal={closeEndpointModal}
+            dispatchTestCase={dispatchToEndpointTestCase}
+            createTest={createNewEndpointTest}
           />
           <button id={styles.example} onClick={openDocs}>
             Need Help?

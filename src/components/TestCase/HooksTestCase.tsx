@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
-import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
@@ -17,14 +16,12 @@ const HooksTestCase = () => {
     HooksTestCaseContext
   );
 
-  interface Ref {
-    current: any;
-  }
-
-  const testDescription: Ref = useRef(null);
+  const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    testDescription.current.focus();
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
   }, []);
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,10 +76,7 @@ const HooksTestCase = () => {
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <HooksTestStatements
-                hooksStatements={hooksStatements}
-                dispatchToHooksTestCase={dispatchToHooksTestCase}
-              />
+              <HooksTestStatements />
               {provided.placeholder}
             </div>
           )}

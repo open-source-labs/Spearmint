@@ -76,10 +76,7 @@ const ReduxTestCase = () => {
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <ReduxTestStatements
-                reduxStatements={reduxStatements}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
+              <ReduxTestStatements />
               {provided.placeholder}
             </div>
           )}

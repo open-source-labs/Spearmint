@@ -2,7 +2,7 @@ export interface PuppeteerTestMenuProps {
   dispatchToPuppeteerTestCase: (action: object) => void;
 }
 
-export interface PuppeteerTestModalProps extends PuppeteerTestMenuProps {
+export interface PuppeteerTestModalProps {
   isPuppeteerModalOpen: boolean;
   closePuppeteerModal: () => void;
 }

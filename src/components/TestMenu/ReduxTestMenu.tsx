@@ -6,8 +6,9 @@ import {
   addReducer,
   addActionCreator,
   addMiddleware,
+  createNewReduxTest,
 } from '../../context/actions/reduxTestCaseActions';
-import ReduxTestModal from '../Modals/ReduxTestModal';
+import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
@@ -76,10 +77,12 @@ const ReduxTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <ReduxTestModal
-            isReduxModalOpen={isReduxModalOpen}
-            closeReduxModal={closeReduxModal}
-            dispatchToReduxTestCase={dispatchToReduxTestCase}
+          <Modal
+            // passing methods down as props to be used when Modal is opened
+            isModalOpen={isReduxModalOpen}
+            closeModal={closeReduxModal}
+            dispatchTestCase={dispatchToReduxTestCase}
+            createTest={createNewReduxTest}
           />
           {/* Just send user to docs on button click */}
         </div>

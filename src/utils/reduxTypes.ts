@@ -217,6 +217,11 @@ export interface UpdateMiddlewaresFilePath {
   middlewaresFileName: string;
   middlewaresFilePath: string;
 }
+
+export interface ReduxTestModalProps {
+  isReduxModalOpen: boolean;
+  closeReduxModal: () => boolean | void;
+}
 interface Middleware {
   id?: number;
   type?: string;

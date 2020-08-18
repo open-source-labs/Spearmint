@@ -7,9 +7,9 @@ import {
   addContexts,
   addHookUpdates,
   addHookRender,
+  createNewHooksTest,
 } from '../../context/actions/hooksTestCaseActions';
-import HooksTestModal from '../Modals/HooksTestModal';
-import { HooksTestMenuProps } from '../../utils/hooksTypes';
+import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 
@@ -70,10 +70,12 @@ const HooksTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <HooksTestModal
-            isHooksModalOpen={isHooksModalOpen}
-            closeHooksModal={closeHooksModal}
-            dispatchToHooksTestCase={dispatchToHooksTestCase}
+          <Modal
+            // passing methods down as props to be used when Modal is opened
+            isModalOpen={isHooksModalOpen}
+            closeModal={closeHooksModal}
+            dispatchTestCase={dispatchToHooksTestCase}
+            createTest={createNewHooksTest}
           />
         </div>
         <div
