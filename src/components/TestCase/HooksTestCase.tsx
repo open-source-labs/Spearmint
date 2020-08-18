@@ -17,10 +17,6 @@ const HooksTestCase = () => {
     HooksTestCaseContext
   );
 
-  interface Ref {
-    current: any;
-  }
-
   const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -81,10 +77,7 @@ const HooksTestCase = () => {
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <HooksTestStatements
-                hooksStatements={hooksStatements}
-                dispatchToHooksTestCase={dispatchToHooksTestCase}
-              />
+              <HooksTestStatements />
               {provided.placeholder}
             </div>
           )}

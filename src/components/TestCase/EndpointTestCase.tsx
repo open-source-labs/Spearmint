@@ -17,8 +17,6 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase,
   ] = useContext(EndpointTestCaseContext);
 
-  //const [{ projectFilePath, exportBool, file }, dispatchToGlobal] = useContext<any>(GlobalContext);
-
   const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

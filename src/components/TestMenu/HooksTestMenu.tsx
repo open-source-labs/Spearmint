@@ -9,7 +9,6 @@ import {
   addHookRender,
 } from '../../context/actions/hooksTestCaseActions';
 import HooksTestModal from '../Modals/HooksTestModal';
-import { HooksTestMenuProps } from '../../utils/hooksTypes';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 
@@ -70,11 +69,7 @@ const HooksTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <HooksTestModal
-            isHooksModalOpen={isHooksModalOpen}
-            closeHooksModal={closeHooksModal}
-            dispatchToHooksTestCase={dispatchToHooksTestCase}
-          />
+          <HooksTestModal isHooksModalOpen={isHooksModalOpen} closeHooksModal={closeHooksModal} />
         </div>
         <div
           id={styles.right}

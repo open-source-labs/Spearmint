@@ -5,13 +5,12 @@ import styles from './ExportFileModal.module.scss';
 import { toggleModal, updateFile } from '../../context/actions/globalActions';
 import { HooksTestModalProps } from '../../utils/hooksTypes';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 
-const HooksTestModal = ({
-  isHooksModalOpen,
-  closeHooksModal,
-  dispatchToHooksTestCase,
-}: HooksTestModalProps) => {
+const HooksTestModal = ({ isHooksModalOpen, closeHooksModal }: HooksTestModalProps) => {
   const [, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+
   const handleNewHooksTest = () => {
     dispatchToHooksTestCase(createNewHooksTest());
     closeHooksModal();

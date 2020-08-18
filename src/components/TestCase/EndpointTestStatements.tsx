@@ -4,7 +4,7 @@ import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCase
 import { EndpointStatements } from '../../utils/endpointTypes';
 
 const EndpointTestStatements = () => {
-  const [{ endpointStatements }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [{ endpointStatements }] = useContext(EndpointTestCaseContext);
   return (
     <>
       {endpointStatements.map((statement: EndpointStatements, i: number) => {

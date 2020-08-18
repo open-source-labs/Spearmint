@@ -15,7 +15,7 @@ const dragIcon = require('../../assets/images/drag-vertical.png');
 
 const Endpoint = ({ endpoint, index }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
-  const [{ modalOpen }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };

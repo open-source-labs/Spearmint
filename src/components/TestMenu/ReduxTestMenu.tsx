@@ -76,11 +76,7 @@ const ReduxTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <ReduxTestModal
-            isReduxModalOpen={isReduxModalOpen}
-            closeReduxModal={closeReduxModal}
-            dispatchToReduxTestCase={dispatchToReduxTestCase}
-          />
+          <ReduxTestModal isReduxModalOpen={isReduxModalOpen} closeReduxModal={closeReduxModal} />
           {/* Just send user to docs on button click */}
         </div>
         <div

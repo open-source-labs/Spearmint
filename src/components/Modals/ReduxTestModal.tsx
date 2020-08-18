@@ -2,22 +2,14 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { createNewReduxTest } from '../../context/actions/reduxTestCaseActions';
 import styles from './ExportFileModal.module.scss';
-
 import { toggleModal, updateFile } from '../../context/actions/globalActions';
+import { ReduxTestModalProps } from '../../utils/reduxTypes';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
-interface ReduxTestModalProps {
-  isReduxModalOpen: boolean;
-  closeReduxModal: () => boolean | void;
-  dispatchToReduxTestCase: (action: object) => void;
-}
-
-const ReduxTestModal = ({
-  isReduxModalOpen,
-  closeReduxModal,
-  dispatchToReduxTestCase,
-}: ReduxTestModalProps) => {
+const ReduxTestModal = ({ isReduxModalOpen, closeReduxModal }: ReduxTestModalProps) => {
   const [, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleNewReduxTest = () => {
     dispatchToReduxTestCase(createNewReduxTest());

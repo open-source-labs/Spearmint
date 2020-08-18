@@ -59,7 +59,6 @@ const PuppeteerTestMenu = () => {
           <PuppeteerTestModal
             isPuppeteerModalOpen={isPuppeteerModalOpen}
             closePuppeteerModal={closePuppeteerModal}
-            dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
           />
           <button id={styles.example} onClick={openDocs}>
             Need Help?

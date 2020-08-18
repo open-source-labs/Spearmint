@@ -19,14 +19,12 @@ const PuppeteerTestCase = () => {
     PuppeteerTestCaseContext
   );
 
-  interface Ref {
-    current: any;
-  }
-
-  const testDescription: Ref = useRef(null);
+  const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    testDescription.current.focus();
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
   }, []);
 
   const reorder = (list: Array<PuppeteerStatements>, startIndex: number, endIndex: number) => {
@@ -78,10 +76,7 @@ const PuppeteerTestCase = () => {
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <PuppeteerTestStatements
-                puppeteerStatements={puppeteerStatements}
-                dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
-              />
+              <PuppeteerTestStatements />
               {provided.placeholder}
             </div>
           )}

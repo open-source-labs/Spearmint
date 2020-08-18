@@ -6,13 +6,14 @@ import { PuppeteerTestModalProps } from '../../utils/puppeteerTypes';
 
 import { toggleModal, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 
 const PuppeteerTestModal = ({
   isPuppeteerModalOpen,
   closePuppeteerModal,
-  dispatchToPuppeteerTestCase,
 }: PuppeteerTestModalProps) => {
   const [, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
 
   const handleNewPuppeteerTest = () => {
     dispatchToPuppeteerTestCase(createNewPuppeteerTest());
