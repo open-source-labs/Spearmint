@@ -6,7 +6,7 @@ import NewTestModal from '../Modals/NewTestModal';
 import { addEndpoint, createNewEndpointTest } from '../../context/actions/endpointTestCaseActions';
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = ({ dispatchToEndpointTestCase }) => {
-  const [_, dispatchToGlobal] = useContext(GlobalContext);
+  const [, dispatchToGlobal] = useContext(GlobalContext);
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 

@@ -10,7 +10,7 @@ import {
 import { PuppeteerTestMenuProps } from '../../utils/puppeteerTypes';
 
 const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuProps) => {
-  const [_, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [dispatchToGlobal] = useContext<any>(GlobalContext);
   // puppeteer testing docs url
   const puppeteerUrl = 'https://devdocs.io/puppeteer/';
 

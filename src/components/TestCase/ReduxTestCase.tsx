@@ -11,7 +11,6 @@ import {
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { ReduxStatements, ReduxTestCaseState } from '../../utils/reduxTypes';
-import ReduxHelpModal from '../TestHelpModals/ReduxHelpModal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 const ReduxTestCase = () => {
@@ -19,7 +18,7 @@ const ReduxTestCase = () => {
     current: any;
   }
 
-  const [{ reduxTestStatement, reduxStatements, modalOpen }, dispatchToReduxTestCase] = useContext(
+  const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
     ReduxTestCaseContext
   );
 

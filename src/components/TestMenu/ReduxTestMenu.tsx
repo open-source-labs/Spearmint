@@ -16,7 +16,7 @@ interface ReduxTestMenuProps {
 }
 
 const ReduxTestMenu = ({ dispatchToReduxTestCase }: ReduxTestMenuProps) => {
-  const [_, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [, dispatchToGlobal] = useContext<any>(GlobalContext);
   // Redux testing docs url
   const reduxUrl = 'https://redux.js.org/recipes/writing-tests';
 

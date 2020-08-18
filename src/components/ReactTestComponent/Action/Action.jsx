@@ -13,7 +13,7 @@ const closeIcon = require('../../../assets/images/close.png');
 // Action box in middle panel (testCase.jsx)
 const Action = ({ statement, statementId, describeId, itId }) => {
   const [{ mockData }] = useContext(MockDataContext);
-  const [{}, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
 
   const handleChangeActionFields = (e, field) => {
     let updatedAction = { ...statement };

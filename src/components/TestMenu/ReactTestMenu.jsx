@@ -2,12 +2,12 @@ import React, { useState, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import { addDescribeBlock, openInfoModal } from '../../context/actions/reactTestCaseActions';
+import { addDescribeBlock } from '../../context/actions/reactTestCaseActions';
 import NewTestModal from '../Modals/NewTestModal';
 import { createNewTest } from '../../context/actions/reactTestCaseActions';
 
 const ReactTestMenu = ({ dispatchToTestCase, dispatchToMockData }) => {
-  const [_, dispatchToGlobal] = useContext(GlobalContext);
+  const [, dispatchToGlobal] = useContext(GlobalContext);
   // React testing docs url
   const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
 

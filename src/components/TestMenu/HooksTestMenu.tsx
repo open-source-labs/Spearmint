@@ -12,7 +12,7 @@ import { HooksTestMenuProps } from '../../utils/hooksTypes';
 import NewTestModal from '../Modals/NewTestModal';
 
 const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
-  const [_, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [, dispatchToGlobal] = useContext<any>(GlobalContext);
   // Hooks testing docs url
   const hooksUrl = 'https://react-hooks-testing-library.com/usage/basic-hooks';
 
