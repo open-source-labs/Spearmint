@@ -4,7 +4,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { closeInfoModal } from '../../context/actions/reactTestCaseActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
-import styles from '../../components/TestHelpModals/ReactHelpModal.module.scss';
+import styles from './TestHelpModal.module.scss';
+import cn from 'classnames';
 
 const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describehelp.png');
@@ -37,14 +38,25 @@ const ReactHelpModal = () => {
       }}
       ariaHideApp={false}
     >
-      <img src={closeIcon} onClick={closeModal} />
-      {/* <h2>Describe(name, fn)</h2>
+      <img
+        src={closeIcon}
+        onClick={closeModal}
+        className={cn('far fa-window-close', styles.describeClose)}
+      />
+
+      {/* <h2>describe(name, fn)</h2>
       <p>
-        Describe creates a block that groups together several related tests. The name argument is
-        simply the name of component you're testing. fn argument is the test callback function{' '}
+        Describe creates a block that groups together several related tests. First argument is name
+        of component your testing. Second argument is the test/it callback function{' '}
+      </p>
+      <h2>it(name, fn)</h2>
+      <p>
+        First argument is name of the test. Second argument is callback function with test method.{' '}
       </p> */}
-      <img id='helpImg' src={describe} />
-      <a onClick={openDocs}>Need More Help?</a>
+      <img className={styles.describe} src={describe} />
+      <div>
+        <button onClick={openDocs}>Need More Help?</button>
+      </div>
     </ReactModal>
   );
 };

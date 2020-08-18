@@ -1,8 +1,3 @@
-/**
- * modal: pop ups windows on click
- * create new test modal
- */
-
 import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { clearMockData } from '../../context/actions/mockDataActions';
@@ -11,18 +6,12 @@ import { toggleModal, setTestCase, updateFile } from '../../context/actions/glob
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 /* destructuring or declaring these?  */
-const NewTestModal = ({
-  isModalOpen,
-  closeModal,
-  dispatchToMockData,
-  dispatchToTestCase,
-  createNewTest,
-}) => {
+const Modal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchTestCase, createTest }) => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleNewTest = (e) => {
     if (dispatchToMockData) dispatchToMockData(clearMockData());
-    dispatchToTestCase(createNewTest());
+    dispatchTestCase(createTest());
     closeModal();
     dispatchToGlobal(setTestCase(''));
     dispatchToGlobal(toggleModal());
@@ -67,4 +56,4 @@ const NewTestModal = ({
   );
 };
 
-export default NewTestModal;
+export default Modal;

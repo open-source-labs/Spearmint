@@ -4,7 +4,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { closeInfoModal } from '../../context/actions/reactTestCaseActions';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
-import styles from '../../components/TestHelpModals/PuppeteerHelpModal.module.scss';
+import styles from './TestHelpModal.module.scss';
+
 const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describe.png');
 

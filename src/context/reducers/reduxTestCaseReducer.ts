@@ -8,7 +8,6 @@ export const ReduxTestCaseContext: any = createContext(null);
 export const reduxTestCaseState: ReduxTestCaseState = {
   reduxTestStatement: '' /* the test description */,
   reduxStatements: [] /* both of the cards on the page at open. Each card gets an id */,
-  modalOpen: false,
 };
 
 let statementId = 0;

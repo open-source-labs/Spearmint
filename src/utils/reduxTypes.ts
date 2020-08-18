@@ -144,7 +144,6 @@ interface CreateNewReduxTestAction {
 export interface ReduxTestCaseState {
   reduxTestStatement: string;
   reduxStatements: Array<ReduxStatements>;
-  modalOpen: boolean;
 }
 export interface UpdateMiddleware {
   id: number;
@@ -215,6 +214,11 @@ export interface UpdateReducerFilePath {
 export interface UpdateMiddlewaresFilePath {
   middlewaresFileName: string;
   middlewaresFilePath: string;
+}
+
+export interface ReduxTestModalProps {
+  isReduxModalOpen: boolean;
+  closeReduxModal: () => boolean | void;
 }
 interface Middleware {
   id?: number;

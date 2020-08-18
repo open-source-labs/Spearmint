@@ -2,22 +2,26 @@ import React, { useState, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
+import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
 import {
   addContexts,
   addHookUpdates,
   addHookRender,
   createNewHooksTest,
 } from '../../context/actions/hooksTestCaseActions';
-import { HooksTestMenuProps } from '../../utils/hooksTypes';
-import NewTestModal from '../Modals/NewTestModal';
+import Modal from '../Modals/Modal';
+import useGenerateTest from '../../context/useGenerateTest';
+import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 
-const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
-  const [, dispatchToGlobal] = useContext<any>(GlobalContext);
+const HooksTestMenu = () => {
   // Hooks testing docs url
   const hooksUrl = 'https://react-hooks-testing-library.com/usage/basic-hooks';
 
   const [isHooksModalOpen, setIsHooksModalOpen] = useState(false);
-
+  const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
+    HooksTestCaseContext
+  );
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const openHooksModal = () => {
     setIsHooksModalOpen(true);
   };
@@ -42,6 +46,17 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
     dispatchToGlobal(openBrowserDocs(hooksUrl));
   };
 
+  const generateTest = useGenerateTest('hooks', projectFilePath);
+
+  const fileHandle = () => {
+    dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
+    dispatchToGlobal(setFilePath(''));
+  };
+
+  if (!file && exportBool)
+    dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -49,16 +64,20 @@ const HooksTestMenu = ({ dispatchToHooksTestCase }: HooksTestMenuProps) => {
           <button type='button' onClick={openHooksModal}>
             New Test +
           </button>
-          <NewTestModal
-            dispatchToMockData={null}
-            createNewTest={createNewHooksTest}
-            isModalOpen={isHooksModalOpen}
-            closeModal={closeHooksModal}
-            dispatchToTestCase={dispatchToHooksTestCase}
-          />
+          <button id={styles.example} onClick={fileHandle}>
+            Preview
+          </button>
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
+          <Modal
+            // passing methods down as props to be used when Modal is opened
+            dispatchToMockData={null}
+            isModalOpen={isHooksModalOpen}
+            closeModal={closeHooksModal}
+            dispatchTestCase={dispatchToHooksTestCase}
+            createTest={createNewHooksTest}
+          />
         </div>
         <div
           id={styles.right}

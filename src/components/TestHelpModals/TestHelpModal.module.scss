@@ -1,0 +1,60 @@
+@import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
+
+.modal {
+  position: fixed;
+  top: 35%;
+  left: 30%;
+  width: 700px;
+  height: 800px;
+  font-family: $openSans;
+  background-color: white;
+  border: 2px solid $mint;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px white inset;
+  overflow: scroll;
+}
+h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 5px;
+}
+p {
+  padding: 5px;
+}
+
+a {
+  font-family: $openSans;
+  color: blue;
+}
+
+.describe {
+  margin: auto;
+  width: 95%;
+  height: 95%;
+  object-fit: contain;
+}
+
+.describeClose {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1.25rem;
+  z-index: 3;
+  transition: 250ms;
+
+  &:hover {
+    color: red;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
+
+button {
+  margin-left: 8px;
+}
+button:hover {
+  background-color: $mint;
+  border-radius: 5px;
+}

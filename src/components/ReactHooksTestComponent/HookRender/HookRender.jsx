@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './HookRender.module.scss';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { HooksTestCaseContext } from '../../../context/reducers/hooksTestCaseReducer';
 import {
   deleteHookRender,
   updateHookRender,
@@ -12,8 +13,9 @@ import SearchInput from '../../SearchInput/SearchInput';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const HookRender = ({ hookRender, index, dispatchToHooksTestCase }) => {
+const HookRender = ({ hookRender, index }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
+  const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
 
   const handleChangeHookRenderFields = (e, field) => {
     let updatedHookRender = { ...hookRender };
