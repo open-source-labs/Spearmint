@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './PaintTiming.module.scss';
 import { Draggable } from 'react-beautiful-dnd';
 import {
   deletePuppeteerTest,
   updatePaintTiming,
 } from '../../../context/actions/puppeteerTestCaseActions';
+import { PuppeteerTestCaseContext } from '../../../context/reducers/puppeteerTestCaseReducer';
 import ToolTip from '../../ToolTip/ToolTip';
 import PuppeteerBrowserSetting from '../PuppeteerBrowerSetting/PuppeteerBrowserSetting';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
-const PaintTiming = ({ paintTiming, index, dispatchToPuppeteerTestCase }) => {
+const PaintTiming = ({ paintTiming, index }) => {
+  const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
+
   const handleChangePaintTimingFields = (e, field) => {
     dispatchToPuppeteerTestCase(updatePaintTiming(paintTiming.id, field, e.target.value));
   };
@@ -42,7 +45,6 @@ const PaintTiming = ({ paintTiming, index, dispatchToPuppeteerTestCase }) => {
 
           <PuppeteerBrowserSetting
             puppeteer={paintTiming}
-            dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
             updatePuppeteer={updatePaintTiming}
             handleChangePuppeteerFields={handleChangePaintTimingFields}
           />

@@ -1,9 +1,7 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
-import { GlobalContext } from '../../context/reducers/globalReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { updateFile, setFilePath } from '../../context/actions/globalActions';
 import {
   updateEndpointTestStatement,
   updateStatementsOrder,
@@ -12,7 +10,6 @@ import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
 import EndpointHelpModal from '../TestHelpModals/EndpointHelpModal';
-import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 const EndpointTestCase = () => {
   const [
@@ -20,21 +17,16 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase,
   ] = useContext(EndpointTestCaseContext);
 
-  const [{ projectFilePath, exportBool, file }, dispatchToGlobal] = useContext<any>(GlobalContext);
-
-  interface Ref {
-    current: any;
-  }
-
-  const testDescription: Ref = useRef(null);
+  const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    testDescription.current.focus();
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
   }, []);
 
   const handleUpdateEndpointTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
-    fileHandle();
   };
 
   const reorder = (list: Array<EndpointStatements>, startIndex: number, endIndex: number) => {
@@ -59,25 +51,13 @@ const EndpointTestCase = () => {
     dispatchToEndpointTestCase(updateStatementsOrder(reorderedStatements));
   };
 
-  const generateTest = useGenerateTest('endpoint', projectFilePath);
-
-  const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
-    dispatchToGlobal(setFilePath(''));
-  };
-
-  if (!file && exportBool)
-    dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
-
-  let endpointInfoModal = null;
-  if (modalOpen) endpointInfoModal = <EndpointHelpModal />;
-
   return (
     <div>
       <div id='head'>
-        <EndpointTestMenu dispatchToEndpointTestCase={dispatchToEndpointTestCase} />
+        <EndpointTestMenu />
       </div>
-      <button onClick={fileHandle}>Preview</button>
+      {modalOpen ? <EndpointHelpModal /> : null}
+
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
@@ -90,16 +70,12 @@ const EndpointTestCase = () => {
           />
         </section>
       </div>
-      {endpointInfoModal}
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <EndpointTestStatements
-                endpointStatements={endpointStatements}
-                dispatchToEndpointTestCase={dispatchToEndpointTestCase}
-              />
+              <EndpointTestStatements />
               {provided.placeholder}
             </div>
           )}

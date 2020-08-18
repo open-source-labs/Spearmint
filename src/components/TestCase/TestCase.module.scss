@@ -59,7 +59,7 @@ div {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      
+
       .renderLabel {
         font-family: $oxygen;
         font-size: 0.9rem;
@@ -78,14 +78,14 @@ div {
     .mockBtn {
       height: auto;
       font-size: 0.85rem;
-      background-color: rgba(0,0,0,0);
+      background-color: rgba(0, 0, 0, 0);
       border: none;
       min-width: 150px;
       border-radius: 3px;
       font-family: $oxygen;
       text-align: center;
       transition: 150ms;
-  
+
       &:hover {
         font-size: 0.9rem;
       }

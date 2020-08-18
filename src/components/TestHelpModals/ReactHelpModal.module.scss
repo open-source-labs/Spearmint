@@ -18,7 +18,6 @@ h2 {
   font-weight: bold;
   padding: 5px;
 }
-
 p {
   padding: 5px;
 }
@@ -34,100 +33,123 @@ a {
   color: blue;
 }
 
-#title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: $mint;
-  margin: 1px;
-  height: 20%;
-  background-color: #fff;
-  p {
-    color: $mint;
-    margin: 10px;
-    font-weight: bold;
-    align-content: center;
-  }
+.describe {
+  margin: 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-#close {
-  margin-right: 8px;
-  width: 24px;
-  height: 24px;
-  fill: $mint;
-}
+.describeClose {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1.25rem;
+  z-index: 3;
+  transition: 250ms;
 
-#body {
-  padding: 20px 25px;
-  p {
-    color: #fff;
-    font-size: 14px;
-  }
-  input {
-    margin: 10px 0;
-    width: 430px;
-  }
-  button {
-    margin: 10px 5px;
-    font-size: 12px;
-    text-align: center;
-    vertical-align: middle;
-    float: right;
-    width: 100px;
-    height: 1.5rem;
-    color: #fff;
-    background-color: transparent;
-    outline: none;
-    box-shadow: none;
+  &:hover {
+    color: red;
     cursor: pointer;
-    border: 0.5px solid white;
-    border-radius: 3px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+    font-size: 1.5rem;
+    font-weight: bold;
   }
 }
 
-#text {
-  margin: 12px;
-  text-align: center;
-}
+// #title {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   background-color: $mint;
+//   margin: 1px;
+//   height: 20%;
+//   background-color: #fff;
+//   p {
+//     color: $mint;
+//     margin: 10px;
+//     font-weight: bold;
+//     align-content: center;
+//   }
+// }
 
-#save:hover {
-  background-color: rgb(232, 232, 232);
-  color: $mint;
-  border-radius: 3px;
-}
+// #close {
+//   margin-right: 8px;
+//   width: 24px;
+//   height: 24px;
+//   fill: $mint;
+// }
 
-#newTestButtons {
-  display: flex;
-  justify-content: center;
-}
+// #body {
+//   padding: 20px 25px;
+//   p {
+//     color: #fff;
+//     font-size: 14px;
+//   }
+//   input {
+//     margin: 10px 0;
+//     width: 430px;
+//   }
+//   button {
+//     margin: 10px 5px;
+//     font-size: 12px;
+//     text-align: center;
+//     vertical-align: middle;
+//     float: right;
+//     width: 100px;
+//     height: 1.5rem;
+//     color: #fff;
+//     background-color: transparent;
+//     outline: none;
+//     box-shadow: none;
+//     cursor: pointer;
+//     border: 0.5px solid white;
+//     border-radius: 3px;
+//     -webkit-appearance: none;
+//     -moz-appearance: none;
+//   }
+// }
 
-#testMenu {
-  padding: 10px;
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
-  width: 98%;
-  margin-bottom: 10px;
-}
+// #text {
+//   margin: 12px;
+//   text-align: center;
+// }
 
-#left {
-  float: left;
-  #newTestBtn {
-    height: 40px;
-    width: 110px;
-    opacity: 0.8;
-    font-family: $oxygen;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 0.5px $light-gray solid;
-    color: $mint;
-    background-color: white;
-  }
+// #save:hover {
+//   background-color: rgb(232, 232, 232);
+//   color: $mint;
+//   border-radius: 3px;
+// }
 
-  #newTestBtn:hover {
-    background-color: $mint;
-    color: white;
-  }
-}
+// #newTestButtons {
+//   display: flex;
+//   justify-content: center;
+// }
+
+// #testMenu {
+//   padding: 10px;
+//   text-align: center;
+//   display: flex;
+//   justify-content: space-between;
+//   width: 98%;
+//   margin-bottom: 10px;
+// }
+
+// #left {
+//   float: left;
+//   #newTestBtn {
+//     height: 40px;
+//     width: 110px;
+//     opacity: 0.8;
+//     font-family: $oxygen;
+//     font-size: 14px;
+//     border-radius: 5px;
+//     border: 0.5px $light-gray solid;
+//     color: $mint;
+//     background-color: white;
+//   }
+
+//   #newTestBtn:hover {
+//     background-color: $mint;
+//     color: white;
+//   }
+// }
