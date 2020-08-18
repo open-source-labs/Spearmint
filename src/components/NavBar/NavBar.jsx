@@ -10,6 +10,7 @@ import {
   toggleFileDirectory,
   toggleRightPanel,
   toggleExportBool,
+  setProjectUrl,
 } from '../../context/actions/globalActions';
 import FileDirectory from '../FileDirectory/FileDirectory';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
@@ -40,7 +41,9 @@ const NavBar = () => {
 
   /* switches between code and browser view */
   const handleBrowserToggle = () => {
-    console.log('handling Toggle');
+    if (!url) {
+      dispatchToGlobal(setProjectUrl('google.com'));
+    }
     dispatchToGlobal(toggleRightPanel('browserView'));
   };
 
