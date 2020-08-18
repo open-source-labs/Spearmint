@@ -12,15 +12,12 @@ import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
-import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 const PuppeteerTestCase = () => {
   const [{ puppeteerStatements, modalOpen }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   interface Ref {
     current: any;

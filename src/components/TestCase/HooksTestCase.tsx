@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
@@ -12,14 +11,11 @@ import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
 import HooksHelpModal from '../TestHelpModals/HooksHelpModal';
-import useGenerateTest from '../../context/useGenerateTest.jsx';
 
 const HooksTestCase = () => {
   const [{ hooksTestStatement, hooksStatements, modalOpen }, dispatchToHooksTestCase] = useContext(
     HooksTestCaseContext
   );
-
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   interface Ref {
     current: any;
