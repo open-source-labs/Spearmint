@@ -56,6 +56,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, file, (err) => {
       if (err) throw err;
     });
+
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
     displayTestFile(projectFilePath + '/__tests__');
   };
@@ -66,7 +67,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
   };
-  // co
+
   const filePathMap = {};
   const generateFileTreeObject = (projectFilePath) => {
     const fileArray = fs.readdirSync(projectFilePath).map((fileName) => {
