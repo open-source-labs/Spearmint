@@ -48,35 +48,25 @@ describe('Global Reducer works properly', () => {
   // })
 
   it('should handle CREATE_FILE_TREE', () => {
+    const fileTree = [
+      {
+        filePath: '/Users/anon/Codesmith/spearmint/.env',
+        fileName: '.env',
+        files: Array(0),
+      },
+      {
+        filePath: '/Users/anon/Codesmith/spearmint/.eslintignore',
+        fileName: '.eslintignore',
+        files: Array(0),
+      },
+    ];
     const action = {
       type: 'CREATE_FILE_TREE',
-      fileTree: [
-        {
-          filePath: '/Users/seanhaverstock/Codesmith/spearmint/.env',
-          fileName: '.env',
-          files: Array(0),
-        },
-        {
-          filePath: '/Users/seanhaverstock/Codesmith/spearmint/.eslintignore',
-          fileName: '.eslintignore',
-          files: Array(0),
-        },
-      ],
+      fileTree,
     };
     expect(globalReducer(initialState, action)).toEqual({
       ...initialState,
-      fileTree: [
-        {
-          filePath: '/Users/seanhaverstock/Codesmith/spearmint/.env',
-          fileName: '.env',
-          files: Array(0),
-        },
-        {
-          filePath: '/Users/seanhaverstock/Codesmith/spearmint/.eslintignore',
-          fileName: '.eslintignore',
-          files: Array(0),
-        },
-      ],
+      fileTree,
     });
   });
 
@@ -99,6 +89,7 @@ describe('Global Reducer works properly', () => {
       isRightPanelOpen: false,
     });
   });
+
   it('should handle TOGGLE_RIGHT_PANEL', () => {
     const action = { type: 'TOGGLE_RIGHT_PANEL', display: 'codeEditorView' };
     expect(globalReducer(initialState, action)).toEqual({
@@ -131,6 +122,99 @@ describe('Global Reducer works properly', () => {
       ...initialState,
       isFileHighlighted: fileName,
       fileName,
+    });
+  });
+
+  it('should handle SET_PROJECT_FILE_PATH', () => {
+    const action = {
+      type: 'SET_PROJECT_FILE_PATH',
+      projectFilePath: '/Users/anon/Codesmith/spearmint',
+    };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      projectFilePath: '/Users/anon/Codesmith/spearmint',
+    });
+  });
+
+  it('should handle SET_FILE_PATH_MAP', () => {
+    const filePathObject = {
+      electron: '/Users/anon/Codesmith/spearmint/public/electron.js',
+      AutoComplete: '/Users/anon/Codesmith/spearmint/src/components/AutoComplete/AutoComplete.jsx',
+    };
+    const action = { type: 'SET_FILE_PATH_MAP', filePathMap: filePathObject };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      filePathMap: filePathObject,
+    });
+  });
+
+  it('should handle SET_TEST_CASE', () => {
+    const action = { type: 'SET_TEST_CASE', testCase: 'react' };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      testCase: 'react',
+    });
+    expect(globalReducer(initialState, action)).not.toEqual({
+      ...initialState,
+      testCase: 'puppeteeer',
+    });
+  });
+
+  it('should handle TOGGLE_MODAL', () => {
+    const action = { type: 'TOGGLE_MODAL' };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      isTestModalOpen: !initialState.isTestModalOpen,
+    });
+  });
+
+  it('should handle UPDATE_FILE_SHOW', () => {
+    let action = { type: 'UPDATE_FILE_SHOW', testString: '' };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      file: '',
+    });
+    action = {
+      type: 'UPDATE_FILE_SHOW',
+      testString: `import React from "react";
+      import { render, fireEvent } from '@testing-library/react';
+      import '@testing-library/jest-dom/extend-expect`,
+    };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      file: `import React from "react";
+      import { render, fireEvent } from '@testing-library/react';
+      import '@testing-library/jest-dom/extend-expect`,
+    });
+  });
+
+  it('should handle OPEN_BROWSER_DOCS', () => {
+    const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
+    const action = { type: 'OPEN_BROWSER_DOCS', docsUrl: reactUrl };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      url: reactUrl,
+      isRightPanelOpen: true,
+      rightPanelDisplay: 'browserView',
+    });
+  });
+
+  it('should handle EXPORT', () => {
+    const action = { type: 'EXPORT' };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      exportBool: true,
+    });
+  });
+
+  it('should handle SET_FILE_PATH', () => {
+    const action = {
+      type: 'SET_FILE_PATH',
+      filePath: '/Users/anon/Codesmith/spearmint/public/electron.js',
+    };
+    expect(globalReducer(initialState, action)).toEqual({
+      ...initialState,
+      filePath: '/Users/anon/Codesmith/spearmint/public/electron.js',
     });
   });
 });
