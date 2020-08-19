@@ -137,10 +137,11 @@ export const globalReducer = (state, action) => {
         rightPanelDisplay: 'browserView',
       };
     case actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS:
-      const urlReset = state.projUrl;
+      const urlReset = state.projectUrl;
       return {
         ...state,
         url: urlReset,
+        projectUrl: urlReset,
       };
     case actionTypes.EXPORT:
       let exportBool = !state.exportBool;

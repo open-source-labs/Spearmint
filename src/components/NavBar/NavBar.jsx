@@ -23,9 +23,10 @@ const browserIcon = require('../../assets/images/google-chrome.png');
 const codeIcon = require('../../assets/images/visual-studio-code.png');
 
 const NavBar = () => {
-  const [{ fileTree, isFileDirectoryOpen, url, rightPanelDisplay }, dispatchToGlobal] = useContext(
-    GlobalContext
-  );
+  const [
+    { fileTree, isFileDirectoryOpen, url, projectUrl, rightPanelDisplay },
+    dispatchToGlobal,
+  ] = useContext(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   /* opens/closes the filedirectory */
@@ -40,11 +41,10 @@ const NavBar = () => {
 
   /* switches between code and browser view */
   const handleBrowserToggle = () => {
-    if (rightPanelDisplay === 'browserView' && url) {
+    if (rightPanelDisplay === 'browserView' && projectUrl) {
       dispatchToGlobal(resetToProjectUrl());
-      return;
     }
-    if (!url) {
+    if (!projectUrl) {
       dispatchToGlobal(setProjectUrl('https://google.com'));
     }
     dispatchToGlobal(toggleRightPanel('browserView'));
