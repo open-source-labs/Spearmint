@@ -3,18 +3,14 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
-import {
-  updateStatementsOrder,
-  // updatePuppeteerTestStatement,
-} from '../../context/actions/puppeteerTestCaseActions';
+import { updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerStatements } from '../../utils/puppeteerTypes';
-import PuppeteerHelpModal from '../TestHelpModals/PuppeteerHelpModal';
 
 //additions fo previously ExportFileModal functionality
 import styles from './TestCase.module.scss';
 
 const PuppeteerTestCase = () => {
-  const [{ puppeteerStatements, modalOpen }, dispatchToPuppeteerTestCase] = useContext(
+  const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
 
@@ -54,7 +50,6 @@ const PuppeteerTestCase = () => {
         <PuppeteerTestMenu />
       </div>
       <div id={styles.testMockSection}></div>
-      {modalOpen ? <PuppeteerHelpModal /> : null}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (

@@ -111,3 +111,33 @@
     color: white;
   }
 }
+
+pre {
+  padding: 12px;
+  margin-top: -4px;
+  margin-bottom: 8px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  .code-wrapper {
+    background: #f4f4f4;
+    // padding: 1rem;
+    border: 1px solid #ddd;
+    color: #666;
+    width: 500px;
+    code {
+      display: inline;
+      max-width: auto;
+      padding: 0;
+      margin: 0;
+      overflow: visible;
+      line-height: inherit;
+      word-wrap: normal;
+      background-color: initial;
+      white-space: pre;
+      border: 0;
+    }
+  }
+}
