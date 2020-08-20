@@ -9,10 +9,9 @@ import {
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
-import HooksHelpModal from '../TestHelpModals/HooksHelpModal';
 
 const HooksTestCase = () => {
-  const [{ hooksTestStatement, hooksStatements, modalOpen }, dispatchToHooksTestCase] = useContext(
+  const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
     HooksTestCaseContext
   );
 
@@ -56,7 +55,6 @@ const HooksTestCase = () => {
         <HooksTestMenu />
       </div>
 
-      {modalOpen ? <HooksHelpModal /> : null}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>
