@@ -358,21 +358,25 @@ function useGenerateTest(test, projectFilePath) {
     function createPathToReducers(statement) {
       let filePath = path.relative(projectFilePath, statement.reducersFilePath);
       filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import ${statement.reducerName} from '../${filePath}';`;
+      testFileCode += `import  {${statement.reducerName}} from '../${filePath}';`;
     }
 
     // Types Filepath
     function createPathToTypes(statement) {
       let filePath = path.relative(projectFilePath, statement.typesFilePath);
       filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as types from '../${filePath}';`;
+      if (!testFileCode.includes(`import * as types from`)) {
+        testFileCode += `import * as types from '../${filePath}';`;
+      }
     }
 
     // Middleware Filepath
     function createPathToMiddlewares(statement) {
       let filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
       filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as middleware from '../${filePath}';`;
+      if (!testFileCode.includes(`import * as middleware from`)) {
+        testFileCode += `import * as middleware from '../${filePath}';`;
+      }
     }
 
     // Hooks Filepath

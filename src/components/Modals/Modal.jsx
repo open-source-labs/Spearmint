@@ -2,8 +2,21 @@ import React, { useContext } from 'react';
 import ReactModal from 'react-modal';
 import { clearMockData } from '../../context/actions/mockDataActions';
 import styles from './ExportFileModal.module.scss';
-import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
+import {
+  toggleModal,
+  setTestCase,
+  updateFile,
+  resetToProjectUrl,
+} from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+
+// interface drilledProps {
+//   isModalOpen?: boolean;
+//   closeModal?: any;
+//   dispatchToMockData?: any;
+//   dispatchTestCase?: any;
+//   createTest?: any;
+// }
 
 /* destructuring or declaring these?  */
 const Modal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchTestCase, createTest }) => {
@@ -16,6 +29,7 @@ const Modal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchTestCase, 
     dispatchToGlobal(setTestCase(''));
     dispatchToGlobal(toggleModal());
     dispatchToGlobal(updateFile(''));
+    dispatchToGlobal(resetToProjectUrl());
   };
 
   const modalStyles = {

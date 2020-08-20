@@ -35,6 +35,12 @@ export const globalReducer = (state, action) => {
         url,
         projectUrl: url,
       };
+    case actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS:
+      const urlReset = state.projUrl;
+      return {
+        ...state,
+        url: urlReset,
+      };
     case actionTypes.LOAD_PROJECT:
       return {
         ...state,

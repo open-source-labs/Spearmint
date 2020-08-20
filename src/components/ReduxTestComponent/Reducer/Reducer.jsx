@@ -43,8 +43,8 @@ const Reducer = ({ reducer, index }) => {
             <h3>Reducer</h3>
           </div>
 
-          <div id={styles.reducerNameFlexBox}>
-            <div id={styles.reducerName}>
+          {/* <div id={styles.reducerNameFlexBox}> */}
+          {/* <div id={styles.reducerName}>
               <label htmlFor='typesFile'>Import Reducer From</label>
               <SearchInput
                 options={Object.keys(filePathMap)}
@@ -52,8 +52,8 @@ const Reducer = ({ reducer, index }) => {
                 action={updateReducersFilePath}
                 filePathMap={filePathMap}
               />
-            </div>
-            <div id={styles.reducerName}>
+            </div> */}
+          {/* <div id={styles.reducerName}>
               <label htmlFor='typesFile'>Import Action Types From</label>
               <SearchInput
                 options={Object.keys(filePathMap)}
@@ -62,8 +62,8 @@ const Reducer = ({ reducer, index }) => {
                 updateTypesFilePath={updateTypesFilePath}
                 id={reducer.id}
               />
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='reducerName'>Reducer Name</label>
