@@ -9,8 +9,8 @@ import {
   createFileTree,
   setFilePathMap,
   setProjectFilePath,
-  updateFile,
-  setFilePath,
+  // updateFile,
+  // setFilePath,
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 

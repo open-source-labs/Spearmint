@@ -18,7 +18,7 @@ describe('Puppeteer Left Panel', () => {
   it('should render the puppeteer test menu with two buttons: [New Test +] and [Paint Timing]', () => {
     const puppeteerTestCase = {
       puppeteerStatements: [],
-      hasPuppeteer: 1,
+
       statementId: 0,
     };
     const { getByTestId } = render(
@@ -57,7 +57,7 @@ describe('Puppeteer Left Panel', () => {
           browserOptionId: 1,
         },
       ],
-      hasPuppeteer: 1,
+
       statementId: 1,
     };
     const { getByText } = render(

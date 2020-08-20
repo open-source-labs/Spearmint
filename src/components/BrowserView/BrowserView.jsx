@@ -19,17 +19,20 @@ const BrowserView = () => {
   };
 
   const handleChangeUrl = (e) => {
-    const testSiteURL = addHttps(e.target.value);
-    dispatchToGlobal(setProjectUrl(testSiteURL));
+    if (e.keyCode === 13) {
+      const testSiteURL = addHttps(e.target.value);
+      dispatchToGlobal(setProjectUrl(testSiteURL));
+      e.target.value = '';
+    }
   };
 
   return (
     <>
       <input
         id={styles.browserAddress}
-        placeholder='  Enter a new URL'
+        placeholder='Enter a new URL'
         type='text'
-        onChange={handleChangeUrl}
+        onKeyDown={handleChangeUrl}
       />
       <webview id={styles.browserView} src={url} />
     </>

@@ -18,7 +18,7 @@ const fs = remote.require('fs');
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
-  const [{ projectFilePath, file, fileBool }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file }, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
