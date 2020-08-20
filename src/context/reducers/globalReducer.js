@@ -18,6 +18,7 @@ export const globalState = {
   filePathMap: {},
   file: '',
   testCase: '',
+  docsOpen: false,
   isTestModalOpen: true,
   exportBool: false,
   fileName: '',
@@ -134,6 +135,13 @@ export const globalReducer = (state, action) => {
         url: docsUrl,
         isRightPanelOpen: true,
         rightPanelDisplay: 'browserView',
+      };
+    case actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS:
+      const urlReset = state.projectUrl;
+      return {
+        ...state,
+        url: urlReset,
+        projectUrl: urlReset,
       };
     case actionTypes.EXPORT:
       let exportBool = !state.exportBool;
