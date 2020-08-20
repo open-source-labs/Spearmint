@@ -57,7 +57,6 @@ const EndpointTestCase = () => {
         <EndpointTestMenu />
       </div>
       {modalOpen ? <EndpointHelpModal /> : null}
-
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
@@ -70,7 +69,6 @@ const EndpointTestCase = () => {
           />
         </section>
       </div>
-
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (

@@ -9,12 +9,11 @@ const closeIcon = require('../../assets/images/close.png');
 const describe = require('../../assets/images/describehelp.png');
 
 const EndpointHelpModal = () => {
-  const [dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
   // Hooks testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
   const [{ modalOpen }, dispatchToTestCase] = useContext(EndpointTestCaseContext);
-  const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
 
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(endpointUrl));
@@ -43,8 +42,10 @@ const EndpointHelpModal = () => {
           Describe creates a block that groups together several related tests. The name argument is
           simply the name of component you're testing. fn argument is the test callback function{' '}
         </p> */}
-        <img src={describe} />
-        <a onClick={openDocs}>Need More Help?</a>
+        {`cd ${projectFilePath}`}
+        {`npm install -d`}
+        {/* <img src={describe} />
+        <a onClick={openDocs}>Need More Help?</a> */}
       </div>
     </ReactModal>
   );
