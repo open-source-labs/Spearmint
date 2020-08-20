@@ -58,7 +58,6 @@ const ReduxTestCase = () => {
         <ReduxTestMenu />
       </div>
       {/* <button onClick={fileHandle}>Preview</button> */}
-
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>

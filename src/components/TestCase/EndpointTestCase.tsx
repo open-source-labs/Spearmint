@@ -9,13 +9,11 @@ import {
 import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
-import EndpointHelpModal from '../TestHelpModals/EndpointHelpModal';
 
 const EndpointTestCase = () => {
-  const [
-    { endpointTestStatement, endpointStatements, modalOpen },
-    dispatchToEndpointTestCase,
-  ] = useContext(EndpointTestCaseContext);
+  const [{ endpointTestStatement, endpointStatements }, dispatchToEndpointTestCase] = useContext(
+    EndpointTestCaseContext
+  );
 
   const testDescription = useRef<HTMLInputElement>(null);
 
@@ -56,7 +54,7 @@ const EndpointTestCase = () => {
       <div id='head'>
         <EndpointTestMenu />
       </div>
-      {modalOpen ? <EndpointHelpModal /> : null}
+      {/* {modalOpen ? <Modal /> : null} */}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Test</label>
