@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ReactModal from 'react-modal';
-import { clearMockData } from '../../context/actions/mockDataActions';
+// import { clearMockData } from '../../context/actions/mockDataActions';
 import styles from './ExportFileModal.module.scss';
-import {
-  toggleModal,
-  setTestCase,
-  updateFile,
-  resetToProjectUrl,
-} from '../../context/actions/globalActions';
-import { GlobalContext } from '../../context/reducers/globalReducer';
+// import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
+// import { GlobalContext } from '../../context/reducers/globalReducer';
+import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
 
 // interface drilledProps {
 //   isModalOpen?: boolean;
@@ -19,18 +15,23 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 // }
 
 /* destructuring or declaring these?  */
-const Modal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchTestCase, createTest }) => {
-  const [, dispatchToGlobal] = useContext(GlobalContext);
-
-  const handleNewTest = (e) => {
-    if (dispatchToMockData) dispatchToMockData(clearMockData());
-    dispatchTestCase(createTest());
-    closeModal();
-    dispatchToGlobal(setTestCase(''));
-    dispatchToGlobal(toggleModal());
-    dispatchToGlobal(updateFile(''));
-    dispatchToGlobal(resetToProjectUrl());
-  };
+const Modal = ({
+  title,
+  isModalOpen,
+  closeModal,
+  dispatchToMockData,
+  dispatchTestCase,
+  createTest,
+}) => {
+  // const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
+  const { copySuccess, codeRef, handleCopy } = useCopy();
+  const { handleNewTest } = useNewTest(
+    dispatchToMockData,
+    dispatchTestCase,
+    createTest,
+    closeModal
+  );
+  const script = useGenerateScript(title);
 
   const modalStyles = {
     overlay: {
@@ -50,17 +51,30 @@ const Modal = ({ isModalOpen, closeModal, dispatchToMockData, dispatchTestCase, 
       style={modalStyles}
     >
       <div id={styles.title}>
-        <p>New Test</p>
+        <p>{title === 'New Test' ? title : 'Copy to terminal'}</p>
       </div>
       <div id={styles.body}>
-        <p id={styles.text}>
-          Do you want to start a new test? All unsaved changes <br />
-          will be lost.
-        </p>
+        {title === 'New Test' ? (
+          <p id={styles.text}>
+            Do you want to start a new test? All unsaved changes <br /> will be lost.{' '}
+          </p>
+        ) : (
+          <pre>
+            <div className='code-wrapper'>
+              <code ref={codeRef}>{script}</code>
+            </div>
+          </pre>
+        )}
         <span id={styles.newTestButtons}>
-          <button id={styles.save} onClick={handleNewTest}>
-            Continue
-          </button>
+          {title === 'New Test' ? (
+            <button id={styles.save} onClick={handleNewTest}>
+              {title}
+            </button>
+          ) : (
+            <button id={styles.save} onClick={handleCopy}>
+              {copySuccess ? 'Copied!' : 'Copy'}
+            </button>
+          )}
           <button id={styles.save} onClick={closeModal}>
             Cancel
           </button>

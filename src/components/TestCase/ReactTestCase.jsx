@@ -13,8 +13,6 @@ import { createMockData } from '../../context/actions/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../ReactTestComponent/MockData/MockData';
 import DecribeRenderer from '../ReactTestComponent/DescribeRenderer/DescribeRenderer';
-import ReactHelpModal from '../TestHelpModals/ReactHelpModal';
-//changes to pull down context
 import {
   ReactTestCaseContext,
   reactTestCaseState,
@@ -29,7 +27,7 @@ const ReactTestCase = () => {
   );
   //
 
-  const { describeBlocks, itStatements, statements, modalOpen } = reactTestCase;
+  const { describeBlocks, itStatements, statements } = reactTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap }] = useContext(GlobalContext);
   const draggableStatements = describeBlocks.allIds;
@@ -56,7 +54,6 @@ const ReactTestCase = () => {
         <div id='head'>
           <ReactTestMenu />
         </div>
-        {modalOpen ? <ReactHelpModal /> : null}
 
         <div className={styles.header}>
           <div className={styles.renderComponent}>
