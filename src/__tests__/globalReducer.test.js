@@ -26,6 +26,17 @@ describe('Global Reducer works properly', () => {
     };
   });
 
+  test('demo2', () => {
+    expect(
+      globalReducer(initialState, {
+        type: 'CLOSE_RIGHT_PANEL',
+      })
+    ).toEqual({
+      ...initialState,
+      isRightPanelOpen: false,
+    });
+  });
+
   it('should return the initial state', () => {
     expect(globalReducer(initialState, {})).toEqual(initialState);
   });

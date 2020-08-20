@@ -8,7 +8,6 @@ export const globalState = {
   projectUrl: null,
   isProjectLoaded: false,
   fileTree: null,
-  // componentName: '',
   isFileDirectoryOpen: true,
   isRightPanelOpen: true,
   rightPanelDisplay: 'browserView',
