@@ -80,13 +80,13 @@ const Reducer = ({ reducer, index }) => {
               <input
                 type='text'
                 // id='initialState'
-                placeholder='eg. key'
+                placeholder='Key'
                 onChange={(e) => handleChangeReducerFields(e, 'initialKey')}
               />
               <input
                 type='text'
                 id='initialState'
-                placeholder='eg. value'
+                placeholder='Value'
                 onChange={(e) => handleChangeReducerFields(e, 'initialValue')}
               />
             </div>
@@ -107,13 +107,13 @@ const Reducer = ({ reducer, index }) => {
               <label htmlFor='expectedState'>Updated State</label>
               <input
                 type='text'
-                placeholder='eg. key'
+                placeholder='Key'
                 id='expectedKey'
                 onChange={(e) => handleChangeReducerFields(e, 'expectedKey')}
               />
               <input
                 type='text'
-                placeholder='eg. value'
+                placeholder='Value'
                 id='expectedValue'
                 onChange={(e) => handleChangeReducerFields(e, 'expectedValue')}
               />

@@ -356,14 +356,14 @@ function useGenerateTest(test, projectFilePath) {
 
     // Reducer Filepath
     function createPathToReducers(statement) {
-      let filePath = path.relative(projectFilePath, statement.reducersFilePath);
+      let filePath = path.relative(`${projectFilePath}/src`, statement.reducersFilePath);
       filePath = filePath.replace(/\\/g, '/');
       testFileCode += `import { ${statement.reducerName} } from '../${filePath}';`;
     }
 
     // Types Filepath
     function createPathToTypes(statement) {
-      let filePath = path.relative(projectFilePath, statement.typesFilePath);
+      let filePath = path.relative(`${projectFilePath}/src`, statement.typesFilePath);
       filePath = filePath.replace(/\\/g, '/');
       testFileCode += `import { actionTypes } from '../${filePath}';`;
     }
