@@ -79,9 +79,15 @@ const Reducer = ({ reducer, index }) => {
               <label htmlFor='initialState'>Initial State</label>
               <input
                 type='text'
+                // id='initialState'
+                placeholder='eg. key'
+                onChange={(e) => handleChangeReducerFields(e, 'initialKey')}
+              />
+              <input
+                type='text'
                 id='initialState'
-                placeholder='eg. { key: value }'
-                onChange={(e) => handleChangeReducerFields(e, 'initialState')}
+                placeholder='eg. value'
+                onChange={(e) => handleChangeReducerFields(e, 'initialValue')}
               />
             </div>
           </div>
@@ -92,7 +98,7 @@ const Reducer = ({ reducer, index }) => {
               <input
                 type='text'
                 id='reducerAction'
-                placeholder='eg. type: types.ADD_TASK'
+                placeholder='eg ADD_TASK'
                 onChange={(e) => handleChangeReducerFields(e, 'reducerAction')}
               />
             </div>
@@ -101,9 +107,15 @@ const Reducer = ({ reducer, index }) => {
               <label htmlFor='expectedState'>Updated State</label>
               <input
                 type='text'
-                placeholder='eg. { key: updated-value }'
-                id='expectedState'
-                onChange={(e) => handleChangeReducerFields(e, 'expectedState')}
+                placeholder='eg. key'
+                id='expectedKey'
+                onChange={(e) => handleChangeReducerFields(e, 'expectedKey')}
+              />
+              <input
+                type='text'
+                placeholder='eg. value'
+                id='expectedValue'
+                onChange={(e) => handleChangeReducerFields(e, 'expectedValue')}
               />
             </div>
           </div>

@@ -165,9 +165,9 @@ function useGenerateTest(test, projectFilePath) {
 
     // Reducer Import Statements
     function addReducerImportStatement() {
-      if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
-        testFileCode += `import { render } from '@testing-library/react';`;
-      }
+      // if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+      //   testFileCode += `import { render } from '@testing-library/react';`;
+      // }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
         testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
       }
@@ -358,14 +358,14 @@ function useGenerateTest(test, projectFilePath) {
     function createPathToReducers(statement) {
       let filePath = path.relative(projectFilePath, statement.reducersFilePath);
       filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import ${statement.reducerName} from '../${filePath}';`;
+      testFileCode += `import { ${statement.reducerName} } from '../${filePath}';`;
     }
 
     // Types Filepath
     function createPathToTypes(statement) {
       let filePath = path.relative(projectFilePath, statement.typesFilePath);
       filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as types from '../${filePath}';`;
+      testFileCode += `import { actionTypes } from '../${filePath}';`;
     }
 
     // Middleware Filepath
@@ -475,7 +475,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // Reducer Jest Test Code
     function addReducer(reducer) {
-      testFileCode += `expect(${reducer.reducerName}(${reducer.initialState},{${reducer.reducerAction}})).toEqual(${reducer.expectedState})`;
+      testFileCode += `expect(${reducer.reducerName}({ ${reducer.initialKey}: ${reducer.initialValue} },{ type: actionTypes.${reducer.reducerAction}})).toEqual({ ${reducer.expectedKey}: ${reducer.expectedValue} })`;
     }
 
     // Async AC Jest Test Code

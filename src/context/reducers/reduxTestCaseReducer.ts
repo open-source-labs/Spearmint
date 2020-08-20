@@ -70,9 +70,11 @@ const createReducer = () => {
     reducersFileName: '',
     reducersFilePath: '',
     reducerAction: '',
-    initialState: '',
+    initialKey: '',
+    initialValue: '',
     reducerName: '',
-    expectedState: '',
+    expectedKey: '',
+    expectedValue: '',
   };
 };
 export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) => {
@@ -201,9 +203,11 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
           statement.reducerAction = action.payload.reducerAction;
-          statement.initialState = action.payload.initialState;
+          statement.initialKey = action.payload.initialKey;
+          statement.initialValue = action.payload.initialValue;
           statement.reducerName = action.payload.reducerName;
-          statement.expectedState = action.payload.expectedState;
+          statement.expectedKey = action.payload.expectedKey;
+          statement.expectedValue = action.payload.expectedValue;
         }
         return statement;
       });

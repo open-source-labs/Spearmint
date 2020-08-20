@@ -187,13 +187,15 @@ export interface UpdateAsync {
 export interface UpdateReducer {
   id: number;
   reducerAction: string;
-  initialState: string;
+  initialKey: string;
+  initialValue: string;
   reducerName: string;
   typesFileName: string;
   typesFilePath: string;
   reducersFileName: string;
   reducersFilePath: string;
-  expectedState: string;
+  expectedKey: string;
+  expectedValue: string;
 }
 
 export interface UpdateActionsFilePath {
@@ -270,9 +272,11 @@ interface Reducer {
   reducersFileName?: string;
   reducersFilePath?: string;
   reducerAction?: string;
-  initialState?: string;
+  initialKey?: string;
+  initialValue?: string;
   reducerName?: string;
-  expectedState?: string;
+  expectedValue?: string;
+  expectedKey?: string;
 }
 
 // type interface shape for all redux test statments

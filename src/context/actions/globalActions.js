@@ -93,7 +93,7 @@ export const resetToProjectUrl = () => ({
 });
 
 export const toggleExportBool = () => ({
-  type: actionTypes.EXPORT_T,
+  type: actionTypes.EXPORT,
 });
 
 export const setFilePath = (filePath) => ({
