@@ -43,7 +43,7 @@ const Modal = ({
       style={modalStyles}
     >
       <div id={styles.title}>
-        <p>{title === 'New Test' ? title : 'Copy and paste script to terminal!'}</p>
+        <p>{title === 'New Test' ? title : 'Copy to terminal'}</p>
       </div>
       <div id={styles.body}>
         {title === 'New Test' ? (
