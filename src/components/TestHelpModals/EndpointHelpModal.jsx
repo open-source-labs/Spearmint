@@ -14,6 +14,7 @@ const EndpointHelpModal = () => {
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
   const [{ modalOpen }, dispatchToTestCase] = useContext(EndpointTestCaseContext);
+  const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
 
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(endpointUrl));
