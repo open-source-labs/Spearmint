@@ -2,20 +2,18 @@ import { reduxTestCaseReducer as subject } from '../context/reducers/reduxTestCa
 import { ReduxTestCaseState } from '../utils/reduxTypes';
 
 describe('Redux Test Case Reducer', () => {
-  let state: ReduxTestCaseState
+  let state: ReduxTestCaseState;
 
   beforeEach(() => {
     state = {
       reduxTestStatement: '',
       reduxStatements: [],
-      hasRedux: 0,
     };
   });
 
-
   describe('initial state', () => {
     it('should return the default case state if no actions are triggered', () => {
-      expect(subject(undefined, {type: undefined})).toEqual(state);
+      expect(subject(undefined, { type: undefined })).toEqual(state);
     });
   });
 
@@ -27,22 +25,10 @@ describe('Redux Test Case Reducer', () => {
     });
   });
 
-  describe('Redux Menu', () => {
-    const action = {
-      type: 'TOGGLE_REDUX',
-    };
-    
-    
-    it('should toggle to true', () => {
-      const { hasRedux } = subject(state, action);
-      expect(hasRedux).toEqual(true);
-    });
-  }); 
-
   describe('Update Redux Test Statment', () => {
     const action = {
       type: 'UPDATE_REDUX_TEST_STATEMENT',
-      payload: 'New Redux Test'
+      payload: 'New Redux Test',
     };
 
     it('should replace existing test statement with incoming action payload', () => {
@@ -54,40 +40,38 @@ describe('Redux Test Case Reducer', () => {
     it('should return copy of state object', () => {
       expect(subject(state, action)).not.toBe(state);
     });
-
   });
-  
+
   //------- Middleware Test Statment Tests---------->
   describe('Middlware', () => {
     describe('Add Middleware', () => {
       const action = {
         type: 'ADD_MIDDLEWARE',
       };
-  
+
       it('should add a middleware test case to reduxTestStatements', () => {
         const { reduxStatements } = subject(state, action);
-  
+
         expect(reduxStatements[0].type).toEqual('middleware');
       });
-  
+
       it('should return copy of state object', () => {
         expect(subject(state, action)).not.toBe(state);
       });
     });
-  
+
     describe('Delete Middleware', () => {
       const action = {
         type: 'DELETE_MIDDLEWARE',
         payload: 1,
       };
-    
+
       it('should remove middleware test based on id from action payload', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
-    
+
         state.reduxStatements.push({
           id: 1,
           type: 'middleware',
@@ -101,13 +85,13 @@ describe('Redux Test Case Reducer', () => {
           queryFunction: '',
         });
 
-        const { reduxStatements } = subject(state, action); 
-  
+        const { reduxStatements } = subject(state, action);
+
         expect(reduxStatements[0]).toBe(undefined);
       });
-      
+
       it('should return copy of state object', () => {
-        expect(subject(state, action)).not.toBe(state)
+        expect(subject(state, action)).not.toBe(state);
       });
     });
 
@@ -125,14 +109,13 @@ describe('Redux Test Case Reducer', () => {
           suggestions: 'suggestions',
         },
       };
-    
+
       it('updates the values of the middleware test based on action payload id and string values', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
-        
+
         state.reduxStatements.push({
           id: 3,
           type: 'middleware',
@@ -142,11 +125,11 @@ describe('Redux Test Case Reducer', () => {
           querySelector: '',
           queryValue: '',
           queryFunction: '',
-          suggestions: ''
+          suggestions: '',
         });
-  
-        const {reduxStatements} = subject(state, action);
-  
+
+        const { reduxStatements } = subject(state, action);
+
         expect(reduxStatements[0].id).toEqual(3);
         expect(reduxStatements[0].type).toEqual('middleware');
         expect(reduxStatements[0].queryType).toEqual('queryType');
@@ -167,10 +150,10 @@ describe('Redux Test Case Reducer', () => {
         type: 'UPDATE_MIDDLEWARES_FILEPATH',
         payload: {
           middlewaresFileName: 'Hello',
-          middlewaresFilePath: 'World',
-        }
+          middlewaresFilePath: 'World',
+        },
       };
-  
+
       it("should update the middleware's file path", () => {
         state = {
           reduxTestStatement: '',
@@ -186,19 +169,18 @@ describe('Redux Test Case Reducer', () => {
               querySelector: '',
               queryValue: '',
               queryFunction: '',
-            }
+            },
           ],
-          hasRedux: 1,
         };
-  
+
         const { reduxStatements } = subject(state, action);
-  
+
         expect(reduxStatements[0].middlewaresFileName).toEqual('Hello');
         expect(reduxStatements[0].middlewaresFilePath).toEqual('World');
         expect(reduxStatements[0].id).toEqual(3);
       });
     });
-  });  
+  });
 
   //------- Action Creator Test Statment Tests---------->
   describe('Action Creator', () => {
@@ -206,31 +188,30 @@ describe('Redux Test Case Reducer', () => {
       const action = {
         type: 'ADD_ACTIONCREATOR',
       };
-  
+
       it('should add a action creator test case to reduxTestStatements', () => {
         const { reduxStatements } = subject(state, action);
-  
+
         expect(reduxStatements[0].type).toEqual('action-creator');
       });
-  
+
       it('should return copy of state object', () => {
         expect(subject(state, action)).not.toBe(state);
       });
     });
-  
+
     describe('Delete Action Creator', () => {
       const action = {
         type: 'DELETE_ACTIONCREATOR',
         payload: 1,
       };
-    
+
       it('should remove action creator test based on id from action payload', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
-    
+
         state.reduxStatements.push({
           id: 1,
           actionsFileName: '',
@@ -244,16 +225,16 @@ describe('Redux Test Case Reducer', () => {
           payloadType: null,
         });
 
-        const { reduxStatements } = subject(state, action); 
-  
+        const { reduxStatements } = subject(state, action);
+
         expect(reduxStatements[0]).toBe(undefined);
       });
-      
+
       it('should return copy of state object', () => {
-        expect(subject(state, action)).not.toBe(state)
+        expect(subject(state, action)).not.toBe(state);
       });
     });
-    
+
     describe('Update Action Creator', () => {
       const action = {
         type: 'UPDATE_ACTIONCREATOR',
@@ -269,14 +250,13 @@ describe('Redux Test Case Reducer', () => {
           actionType: 'actionType',
         },
       };
-    
+
       it('updates the values of the action creator test based on action payload id and string values', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
-        
+
         state.reduxStatements.push({
           id: 3,
           actionsFileName: '',
@@ -289,7 +269,7 @@ describe('Redux Test Case Reducer', () => {
           payloadKey: null,
           payloadType: null,
         });
-  
+
         const { reduxStatements } = subject(state, action);
 
         expect(reduxStatements[0].id).toEqual(3);
@@ -305,7 +285,7 @@ describe('Redux Test Case Reducer', () => {
       });
 
       it('should return copy of state object', () => {
-        expect(subject(state, action)).not.toBe(state)
+        expect(subject(state, action)).not.toBe(state);
       });
     });
 
@@ -314,9 +294,9 @@ describe('Redux Test Case Reducer', () => {
         type: 'UPDATE_ACTIONS_FILEPATH',
         payload: {
           actionsFileName: 'Hello',
-          filePath: 'World',
+          filePath: 'World',
           id: 3,
-        }
+        },
       };
 
       it("should update the action's file path", () => {
@@ -334,9 +314,8 @@ describe('Redux Test Case Reducer', () => {
               actionType: '',
               payloadKey: null,
               payloadType: null,
-            }
+            },
           ],
-          hasRedux: 1,
         };
 
         const { reduxStatements } = subject(state, action);
@@ -354,31 +333,30 @@ describe('Redux Test Case Reducer', () => {
       const action = {
         type: 'ADD_REDUCER',
       };
-  
+
       it('should add a reducer test case to reduxTestStatements', () => {
         const { reduxStatements } = subject(state, action);
-  
+
         expect(reduxStatements[0].type).toEqual('reducer');
       });
-  
+
       it('should return copy of state object', () => {
         expect(subject(state, action)).not.toBe(state);
       });
     });
-  
+
     describe('Delete Reducer', () => {
       const action = {
         type: 'DELETE_REDUCER',
         payload: 1,
       };
-    
+
       it('should remove reducer test based on id from action payload', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
-    
+
         state.reduxStatements.push({
           id: 1,
           type: 'reducer',
@@ -392,23 +370,23 @@ describe('Redux Test Case Reducer', () => {
           expectedState: '',
         });
 
-        const { reduxStatements } = subject(state, action); 
-  
+        const { reduxStatements } = subject(state, action);
+
         expect(reduxStatements[0]).toBe(undefined);
       });
-      
+
       it('should return copy of state object', () => {
         expect(subject(state, action)).not.toBe(state);
       });
     });
-    
+
     describe('Update Reducer', () => {
       const action = {
         type: 'UPDATE_REDUCER',
         payload: {
           id: 3,
           reducersFileName: 'reducersFileName',
-          reducersFilePath:'reducersFilePath',
+          reducersFilePath: 'reducersFilePath',
           typesFilePath: 'typesFilePath',
           typesFileName: 'typesFileName',
           reducerAction: 'reducerAction',
@@ -417,14 +395,13 @@ describe('Redux Test Case Reducer', () => {
           expectedState: 'expectedState',
         },
       };
-    
+
       it('updates the values of the reducer test based on action payload id and string values', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
-        
+
         state.reduxStatements.push({
           id: 3,
           type: 'reducer',
@@ -437,7 +414,7 @@ describe('Redux Test Case Reducer', () => {
           reducerName: '',
           expectedState: '',
         });
-  
+
         const { reduxStatements } = subject(state, action);
 
         expect(reduxStatements[0].id).toEqual(3);
@@ -453,7 +430,7 @@ describe('Redux Test Case Reducer', () => {
       });
 
       it('should return copy of state object', () => {
-        expect(subject(state, action)).not.toBe(state)
+        expect(subject(state, action)).not.toBe(state);
       });
     });
 
@@ -462,8 +439,8 @@ describe('Redux Test Case Reducer', () => {
         type: 'UPDATE_REDUCERS_FILEPATH',
         payload: {
           reducersFileName: 'Hello',
-          reducersFilePath: 'World',
-        }
+          reducersFilePath: 'World',
+        },
       };
 
       it("should update the reducer's file path", () => {
@@ -481,9 +458,8 @@ describe('Redux Test Case Reducer', () => {
               initialState: '',
               reducerName: '',
               expectedState: '',
-            }
+            },
           ],
-          hasRedux: 1,
         };
 
         const { reduxStatements } = subject(state, action);
@@ -500,31 +476,30 @@ describe('Redux Test Case Reducer', () => {
       const action = {
         type: 'ADD_ASYNC',
       };
-  
+
       it('should add an async test case to reduxTestStatements', () => {
         const { reduxStatements } = subject(state, action);
-  
+
         expect(reduxStatements[0].type).toEqual('async');
       });
-  
+
       it('should return copy of state object', () => {
         expect(subject(state, action)).not.toBe(state);
       });
     });
-  
+
     describe('Delete Async', () => {
       const action = {
         type: 'DELETE_ASYNC',
         payload: 1,
       };
-    
+
       it('should remove async test based on id from action payload', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
-    
+
         state.reduxStatements.push({
           id: 1,
           type: 'async',
@@ -541,16 +516,16 @@ describe('Redux Test Case Reducer', () => {
           expectedResponse: '',
         });
 
-        const { reduxStatements } = subject(state, action); 
-  
+        const { reduxStatements } = subject(state, action);
+
         expect(reduxStatements[0]).toBe(undefined);
       });
-      
+
       it('should return copy of state object', () => {
         expect(subject(state, action)).not.toBe(state);
       });
     });
-    
+
     describe('Update Async', () => {
       const action = {
         type: 'UPDATE_ASYNC',
@@ -568,14 +543,13 @@ describe('Redux Test Case Reducer', () => {
           expectedResponse: 'expectedResponse',
         },
       };
-    
+
       it('updates the values of the async/thunk test based on action payload id and string values', () => {
         state = {
           reduxTestStatement: '',
           reduxStatements: [],
-          hasRedux: 1,
         };
-        
+
         state.reduxStatements.push({
           id: 3,
           type: 'async',
@@ -591,9 +565,9 @@ describe('Redux Test Case Reducer', () => {
           matcher: '',
           expectedResponse: '',
         });
-  
+
         const { reduxStatements } = subject(state, action);
-        
+
         expect(reduxStatements[0].id).toEqual(3);
         expect(reduxStatements[0].type).toEqual('async');
         expect(reduxStatements[0].typesFileName).toEqual('typesFileName');
@@ -612,8 +586,8 @@ describe('Redux Test Case Reducer', () => {
       });
     });
   });
-  
-//-----------Update Statments Order ------------>
+
+  //-----------Update Statments Order ------------>
   describe('Update Statments Order', () => {
     const action = {
       type: 'UPDATE_STATEMENTS_ORDER',
@@ -645,7 +619,7 @@ describe('Redux Test Case Reducer', () => {
           matcher: '',
           expectedResponse: '',
         },
-      ]
+      ],
     };
 
     it('should return the reorderd redux test statments', () => {
@@ -678,9 +652,8 @@ describe('Redux Test Case Reducer', () => {
             initialState: '',
             reducerName: '',
             expectedState: '',
-          }
+          },
         ],
-        hasRedux: 1,
       };
 
       const { reduxStatements } = subject(state, action);
@@ -689,15 +662,15 @@ describe('Redux Test Case Reducer', () => {
       expect(reduxStatements[1].id).toEqual(3);
     });
   });
-//----------- Update Types FilePath -------> 
+  //----------- Update Types FilePath ------->
   describe('Update Types File Path', () => {
     const action = {
       type: 'UPDATE_TYPES_FILEPATH',
       payload: {
         typesFileName: 'Hello',
-        typesFilePath: 'World',
+        typesFilePath: 'World',
         id: 3,
-      }
+      },
     };
 
     it("should update the types's file path", () => {
@@ -715,9 +688,8 @@ describe('Redux Test Case Reducer', () => {
             actionType: '',
             payloadKey: null,
             payloadType: null,
-          }
+          },
         ],
-        hasRedux: 1,
       };
 
       const { reduxStatements } = subject(state, action);

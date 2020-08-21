@@ -8,7 +8,6 @@ import {
   updateFile,
   setFilePath,
 } from '../../context/actions/globalActions';
-import OpenFolder from '../OpenFolder/OpenFolderButton';
 
 const { remote } = window.require('electron');
 const fs = remote.require('fs');

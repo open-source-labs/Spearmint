@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { actionTypes } from '../actions/hooksTestCaseActions';
+// import { actionTypes } from '../actions/hooksTestCaseActions';
 import { HooksTestCaseState } from '../../utils/hooksTypes';
 
 export const HooksTestCaseContext: any = createContext(null);
@@ -8,7 +8,6 @@ export const hooksTestCaseState = {
   modalOpen: false,
   hooksTestStatement: '',
   hooksStatements: [],
-  hasHooks: 0,
   statementId: 0,
 };
 
@@ -54,12 +53,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
   let hooksStatements = [...state.hooksStatements];
 
   switch (action.type) {
-    case 'TOGGLE_HOOKS': {
-      return {
-        ...state,
-        hasHooks: state.hasHooks + 1,
-      };
-    }
     case 'UPDATE_HOOKS_TEST_STATEMENT': {
       return {
         ...state,
@@ -202,9 +195,10 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
 
     case 'CREATE_NEW_HOOKS_TEST':
       return {
-        hasHooks: 0,
+        modalOpen: false,
         hooksTestStatement: '',
         hooksStatements: [],
+        statementId: 0,
       };
     case 'UPDATE_STATEMENTS_ORDER': {
       const newHooksStatements = [...action.draggableStatements];

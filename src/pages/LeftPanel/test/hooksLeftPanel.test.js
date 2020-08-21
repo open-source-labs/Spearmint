@@ -42,7 +42,6 @@ beforeEach(() => {
   hooksTestCase = {
     hooksTestStatement: '',
     hooksStatements: [],
-    hasHooks: 0,
   };
   dispatchToHooksTestCase = jest.fn();
 

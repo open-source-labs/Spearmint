@@ -1,25 +1,33 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { openBrowserDocs } from '../../context/actions/globalActions';
+import {
+  openBrowserDocs,
+  toggleRightPanel,
+  setFilePath,
+  updateFile,
+} from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
-import PuppeteerTestModal from '../Modals/PuppeteerTestModal';
-import { addPuppeteerPaintTiming } from '../../context/actions/puppeteerTestCaseActions';
-import { PuppeteerTestMenuProps } from '../../utils/puppeteerTypes';
+import Modal from '../Modals/Modal';
+import {
+  addPuppeteerPaintTiming,
+  createNewPuppeteerTest,
+} from '../../context/actions/puppeteerTestCaseActions';
+import useGenerateTest from '../../context/useGenerateTest';
+import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
+import useToggleModal from './testMenuHooks';
 
-const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuProps) => {
-  const [_, dispatchToGlobal] = useContext<any>(GlobalContext);
+const PuppeteerTestMenu = () => {
+  const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
+    PuppeteerTestCaseContext
+  );
+  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal(
+    'puppeteer'
+  );
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const generateTest = useGenerateTest('puppeteer', projectFilePath);
+
   // puppeteer testing docs url
   const puppeteerUrl = 'https://devdocs.io/puppeteer/';
-
-  const [isPuppeteerModalOpen, setIsPuppeteerModalOpen] = useState(false);
-
-  const openPuppeteerModal = () => {
-    setIsPuppeteerModalOpen(true);
-  };
-
-  const closePuppeteerModal = () => {
-    setIsPuppeteerModalOpen(false);
-  };
 
   const handleAddPuppeteerPaintTiming = () => {
     dispatchToPuppeteerTestCase(addPuppeteerPaintTiming());
@@ -29,21 +37,37 @@ const PuppeteerTestMenu = ({ dispatchToPuppeteerTestCase }: PuppeteerTestMenuPro
     dispatchToGlobal(openBrowserDocs(puppeteerUrl));
   };
 
+  const fileHandle = () => {
+    dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
+    dispatchToGlobal(toggleRightPanel('codeEditorView'));
+    dispatchToGlobal(setFilePath(''));
+  };
+  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button type='button' data-testid='puppeteerNewTestButton' onClick={openPuppeteerModal}>
+          <button type='button' data-testid='puppeteerNewTestButton' onClick={openModal}>
             New Test +
           </button>
-          <PuppeteerTestModal
-            isPuppeteerModalOpen={isPuppeteerModalOpen}
-            closePuppeteerModal={closePuppeteerModal}
-            dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
-          />
+          <button onClick={fileHandle}>Preview</button>
+
+          <button id={styles.example} onClick={openScriptModal}>
+            Run Test
+          </button>
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
+          <Modal
+            // passing methods down as props to be used when Modal is opened
+            title={title}
+            dispatchToMockData={null}
+            isModalOpen={isModalOpen}
+            closeModal={closeModal}
+            dispatchTestCase={dispatchToPuppeteerTestCase}
+            createTest={createNewPuppeteerTest}
+          />
         </div>
         <div id={styles.right}>
           <button

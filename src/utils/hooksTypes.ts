@@ -8,7 +8,6 @@ export interface HooksTestCaseState {
   modalOpen: boolean;
   hooksTestStatement: string;
   hooksStatements: Array<HooksStatements>;
-  hasHooks: number;
   statementId: number;
 }
 
@@ -64,7 +63,7 @@ export interface HooksTestMenuProps {
   dispatchToHooksTestCase: (action: object) => void;
 }
 
-export interface HooksTestModalProps extends HooksTestMenuProps {
+export interface HooksTestModalProps {
   isHooksModalOpen: boolean;
   closeHooksModal: () => void;
 }
