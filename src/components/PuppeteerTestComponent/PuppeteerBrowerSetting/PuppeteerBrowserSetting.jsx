@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from '../PaintTiming/PaintTiming.module.scss';
 import {
   addBrowserOption,
   deleteBrowserOption,
   updateBrowserOption,
 } from '../../../context/actions/puppeteerTestCaseActions';
+import { PuppeteerTestCaseContext } from '../../../context/reducers/puppeteerTestCaseReducer';
 
 const plusIcon = require('../../../assets/images/plus.png');
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
-const PuppeteerBrowserSetting = ({
-  puppeteer,
-  dispatchToPuppeteerTestCase,
-  handleChangePuppeteerFields,
-}) => {
+const PuppeteerBrowserSetting = ({ puppeteer, handleChangePuppeteerFields }) => {
+  const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
+
   const handleChangeBrowserOptionFields = (e, field, optionId) => {
     dispatchToPuppeteerTestCase(updateBrowserOption(puppeteer.id, field, e.target.value, optionId));
   };

@@ -35,7 +35,6 @@ beforeEach(() => {
   endpointTestCase = {
     endpointTestStatement: '',
     endpointStatements: [],
-    hasEndpoint: 1,
   };
 
   testFileModal = {};

@@ -7,8 +7,18 @@ export const EndpointTestCaseContext: any = createContext(null);
 export const endpointTestCaseState = {
   modalOpen: false,
   endpointTestStatement: '',
-  endpointStatements: [],
-  hasEndpoint: 0,
+  endpointStatements: [
+    {
+      id: 0,
+      type: 'endpoint',
+      serverFileName: '',
+      serverFilePath: '',
+      method: '',
+      route: '',
+      expectedResponse: '',
+      value: '',
+    },
+  ],
 };
 
 let statementId = 0;
@@ -35,13 +45,6 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: an
         ...state,
         endpointTestStatement,
       };
-
-    case actionTypes.TOGGLE_ENDPOINT:
-      return {
-        ...state,
-        hasEndpoint: state.hasEndpoint + 1,
-      };
-
     case actionTypes.ADD_ENDPOINT:
       endpointStatements.push(createEndpoint());
       return {
@@ -85,9 +88,19 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: an
       };
     case actionTypes.CREATE_NEW_ENDPOINT_TEST:
       return {
-        hasEndpoint: 0,
         endpointTestStatement: '',
-        endpointStatements: [],
+        endpointStatements: [
+          {
+            id: 0,
+            type: 'endpoint',
+            serverFileName: '',
+            serverFilePath: '',
+            method: '',
+            route: '',
+            expectedResponse: '',
+            value: '',
+          },
+        ],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       endpointStatements = [...action.draggableStatements];

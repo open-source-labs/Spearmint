@@ -5,7 +5,7 @@ export const ReactTestCaseContext = createContext([]);
 
 export const reactTestCaseState = {
   modalOpen: false,
-  hasReact: 0,
+
   describeId: 1,
   itId: 1,
   statementId: 1,
@@ -130,12 +130,6 @@ export const reactTestCaseReducer = (state, action) => {
   }
 
   switch (action.type) {
-    case actionTypes.TOGGLE_REACT: {
-      return {
-        ...state,
-        hasReact: state.hasReact + 1,
-      };
-    }
     case actionTypes.ADD_DESCRIBE_BLOCK: {
       let updatedDescribeId = state.describeId;
       const describeId = `describe${state.describeId}`;
@@ -532,7 +526,6 @@ export const reactTestCaseReducer = (state, action) => {
           byId: {},
           allIds: [],
         },
-        hasReact: 0,
       };
     }
     case actionTypes.OPEN_INFO_MODAL:

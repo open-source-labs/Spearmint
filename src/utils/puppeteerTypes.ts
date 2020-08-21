@@ -2,7 +2,7 @@ export interface PuppeteerTestMenuProps {
   dispatchToPuppeteerTestCase: (action: object) => void;
 }
 
-export interface PuppeteerTestModalProps extends PuppeteerTestMenuProps {
+export interface PuppeteerTestModalProps {
   isPuppeteerModalOpen: boolean;
   closePuppeteerModal: () => void;
 }
@@ -13,9 +13,7 @@ export interface PuppeteerTestStatementsProps extends PuppeteerTestMenuProps {
 
 export interface PuppeteerTestCaseState {
   puppeteerStatements: Array<PuppeteerStatements>;
-  hasPuppeteer: number;
   statementId: number;
-  modalOpen: boolean;
 }
 
 export interface PuppeteerStatements {
