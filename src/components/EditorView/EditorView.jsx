@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { editor } from 'monaco-editor';
@@ -8,9 +8,9 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 
 const Editor = () => {
-  let [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
+  const [wasSaved, setWasSaved] = useState('');
   let editedText = '';
-  const [ifFileExists, setIfFileExists] = useState(false);
 
   const options = {
     selectOnLineNumbers: true,
@@ -21,6 +21,10 @@ const Editor = () => {
     wrappingIndent: 'indent',
     automaticLayout: true,
   };
+  // useEffect(() => {
+  //   console.log('in use effect');
+  //   setTimeout(setWasSaved('ghi'), 200000);
+  // }, [wasSaved]);
 
   const editorDidMount = () => {
     editor.setTheme('light-dark');
@@ -28,34 +32,56 @@ const Editor = () => {
 
   const updatafile = (newValue, e) => {
     editedText = newValue;
+    if (wasSaved.length) setWasSaved('');
+  };
+  console.log('rendered', editedText);
+  const saveFile = async () => {
+    // console.log('EDITED TEXT', editedText);
+    if (editedText.length) {
+      dispatchToGlobal(updateFile(editedText));
+      if (!filePath.length) setWasSaved('preview saved, be sure to export file');
+    } else setWasSaved('no changes to save');
+    if (filePath.length && editedText.length) {
+      setWasSaved('changes saved');
+      await fs.writeFile(filePath, editedText, (err) => {
+        if (err) throw err;
+      });
+    }
+    // setTimeout(setWasSaved(''), 50000);
   };
 
-  const saveFile = async () => {
-    dispatchToGlobal(updateFile(editedText));
-    if (filePath.length) {
-      if (editedText.length) {
-        setIfFileExists(false);
-        await fs.writeFile(filePath, editedText, (err) => {
-          if (err) throw err;
-        });
-      }
-    } else setIfFileExists(true);
+  let fileType = filePath.split('.')[1];
+  const extensionChecker = {
+    png: 1,
+    jpg: 1,
+    gif: 1,
   };
 
   return (
     <div>
-      <button onClick={saveFile}>Save Changes</button>
-      {ifFileExists && <p>File does not exist! Use the Export Button to create your test file.</p>}
+      <button onClick={saveFile}>
+        {/* onMouseDown={() => setWasSaved('')}> */}
+        Save Changes
+      </button>{' '}
+      <span>{wasSaved}</span>
       <hr></hr>
-      <MonacoEditor
-        height='95vh'
-        language='javascript'
-        theme='light-dark'
-        value={file ? file : '// Open a file or click preview to view your code.'}
-        options={options}
-        editorDidMount={editorDidMount}
-        onChange={updatafile}
-      />
+      <div onClick={() => setWasSaved('')}>
+        <MonacoEditor
+          height='95vh'
+          language='javascript'
+          theme='light-dark'
+          value={
+            file
+              ? extensionChecker[fileType]
+                ? '//Please select a valid file type'
+                : file
+              : '// Open a file or click preview to view your code.'
+          }
+          options={options}
+          editorDidMount={editorDidMount}
+          onChange={updatafile}
+        />
+      </div>
     </div>
   );
 };

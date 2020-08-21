@@ -46,6 +46,7 @@
 #appBox {
   display: flex;
   justify-content: center;
+  height: 25vh;
 }
 
 .contentBox {
@@ -88,4 +89,32 @@
   font-weight: 300;
   font-family: $oxygen;
   letter-spacing: 1px;
+}
+
+#helpBtn {
+  height: 75px;
+  width: 75px;
+  border: 1px solid white;
+  background-color: $mint;
+  color: white;
+  border-radius: 50px;
+  font-size: 15px;
+}
+
+#helpBtn:hover {
+  border: 1px solid rgb(2, 116, 161);
+  box-shadow: 4px 4px 4px $light-gray;
+}
+
+#bottomDiv {
+  display: flex;
+  height: 25vh;
+  justify-content: center;
+}
+
+/*----------for About page----*/
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
