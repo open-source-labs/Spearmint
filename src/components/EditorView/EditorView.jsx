@@ -3,6 +3,7 @@ import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { editor } from 'monaco-editor';
 import { updateFile } from '../../context/actions/globalActions';
+import styles from './EditorView.module.scss';
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
@@ -39,10 +40,10 @@ const Editor = () => {
     // console.log('EDITED TEXT', editedText);
     if (editedText.length) {
       dispatchToGlobal(updateFile(editedText));
-      if (!filePath.length) setWasSaved('preview saved, be sure to export file');
-    } else setWasSaved('no changes to save');
+      if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');
+    } else setWasSaved('No Changes to Save');
     if (filePath.length && editedText.length) {
-      setWasSaved('changes saved');
+      setWasSaved('Changes Saved');
       await fs.writeFile(filePath, editedText, (err) => {
         if (err) throw err;
       });
@@ -59,12 +60,11 @@ const Editor = () => {
 
   return (
     <div>
-      <button onClick={saveFile}>
+      <button id={styles.save} onClick={saveFile}>
         {/* onMouseDown={() => setWasSaved('')}> */}
         Save Changes
       </button>{' '}
-      <span>{wasSaved}</span>
-      <hr></hr>
+      <span id={styles.span}>{wasSaved}</span>
       <div onClick={() => setWasSaved('')}>
         <MonacoEditor
           height='95vh'

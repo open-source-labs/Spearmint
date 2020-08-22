@@ -1,0 +1,31 @@
+@import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
+
+#save {
+  margin: 5px;
+  height: 40px;
+  width: 110px;
+  color: $mint;
+  background-color: white;
+  opacity: 0.8;
+  font-family: $oxygen;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 0.5px $light-gray solid;
+  position: relative;
+  top: -18px;
+}
+
+#save:hover {
+  background-color: rgb(180, 180, 180);
+  color: white;
+  border-radius: 5px;
+}
+
+#span {
+  font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji';
+  line-height: 1.5;
+  position: relative;
+  top: -18px;
+}
