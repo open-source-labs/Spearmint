@@ -12,7 +12,7 @@ const About = ({ dispatch: dispatchToGlobal }) => {
 
   return (
     <div id='about'>
-      <article class='markdown-body entry-content container-lg' itemprop='text'>
+      <article className='markdown-body entry-content container-lg' itemProp='text'>
         <p>
           <img
             src='https://camo.githubusercontent.com/041cc375aaaec3fac464f67eb7e154f738485d47/68747470733a2f2f6c68352e676f6f676c6575736572636f6e74656e742e636f6d2f35477232645a58484a646d49694153735077397075742d366d52323065346731674f6b2d6166346b725245614a374e716b5a6e71584c44355167696f74664e48596847526833383748537164686a52777864774f76517a67394368686649725a7a30466478567536676b744274472d7379314d583658713336476d727a755f36475f4b374c44515a'
