@@ -18,3 +18,4 @@ test('should handle CLOSE_RIGHT_PANEL', () => {
     isRightPanelOpen: false,
   });
 });
+asdfasd

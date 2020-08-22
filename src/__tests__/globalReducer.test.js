@@ -1,7 +1,8 @@
-import { globalReducer } from '../context/reducers/globalReducer';
+import { globalReducer, globalState } from '../context/reducers/globalReducer';
 
+console.log(globalState);
 describe('Global Reducer works properly', () => {
-  let initialState = {};
+  let initialState = globalState;
 
   beforeEach(() => {
     initialState = {

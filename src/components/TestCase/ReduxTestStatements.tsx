@@ -21,7 +21,16 @@ const ReduxTestStatements = () => {
           case 'async':
             return <Async key={statement.id} async={statement} index={i} />;
           case 'reducer':
-            return <Reducer key={statement.id} reducer={statement} index={i} />;
+            if (i < 1) {
+              return (
+                <>
+                  <label key={i}>Initial State</label>
+                  <input placeholder='import state' />
+                </>
+              );
+            } else {
+              return <Reducer key={statement.id} reducer={statement} index={i} />;
+            }
           default:
             return <></>;
         }

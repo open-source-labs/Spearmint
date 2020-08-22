@@ -35,6 +35,7 @@ const Editor = () => {
     if (filePath.length) {
       if (editedText.length) {
         setIfFileExists(false);
+        console.log('filePath', filePath);
         await fs.writeFile(filePath, editedText, (err) => {
           if (err) throw err;
         });
