@@ -18,13 +18,8 @@ export const actionTypes = {
   TOGGLE_MODAL: 'TOGGLE_MODAL',
   UPDATE_FILE_SHOW: 'UPDATE_FILE_SHOW',
   OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
-<<<<<<< HEAD
-  CLOSE_BROWSER_DOCS: 'CLOSE_BROWSER_DOCS',
-  EXPORT: 'EXPORT',
-=======
   NEW_TEST_CLOSE_BROWSER_DOCS: 'NEW_TEST_CLOSE_BROWSER_DOCS',
-  EXPORT_T: 'EXPORT',
->>>>>>> master
+  EXPORT: 'EXPORT',
   SET_FILE_PATH: 'SET_FILE_PATH',
   NEW_TEST_CLOSE_BROWSER_DOCS: 'NEW_TEST_CLOSE_BROWSER_DOCS',
 };
@@ -107,12 +102,8 @@ export const openBrowserDocs = (docsUrl) => ({
   docsUrl,
 });
 
-export const resetToProjectUrl = () => ({
-  type: actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS,
-});
-
 export const toggleExportBool = () => ({
-  type: actionTypes.EXPORT_T,
+  type: actionTypes.EXPORT,
 });
 
 export const setFilePath = (filePath) => ({

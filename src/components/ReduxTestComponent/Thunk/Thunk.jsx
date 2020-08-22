@@ -46,7 +46,7 @@ const Async = ({ async, index }) => {
             <h3>Asynchronous Action Creator</h3>
           </div>
 
-          <div id={styles.groupFlexbox}>
+          {/* <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
               <label htmlFor='actionsFile'>Import Actions From</label>
               <SearchInput
@@ -68,7 +68,7 @@ const Async = ({ async, index }) => {
                 filePathMap={filePathMap}
               />
             </div>
-          </div>
+          </div> */}
 
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>

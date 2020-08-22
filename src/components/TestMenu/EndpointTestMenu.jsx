@@ -39,8 +39,9 @@ const EndpointTestMenu = () => {
     dispatchToGlobal(setFilePath(''));
   };
 
-  if (!file && exportBool)
+  if (!file && exportBool) {
     dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
+  }
 
   return (
     <div id='test'>

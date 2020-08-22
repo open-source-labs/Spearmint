@@ -64,7 +64,7 @@ export const updateReducer = (updatedReducer: UpdateReducer): ReduxActionTypes =
 export const updateActionsFilePath = (
   actionsFileName: string,
   filePath: string,
-  id: number
+  id: any
 ): ReduxActionTypes => ({
   type: actionTypes.UPDATE_ACTIONS_FILEPATH,
   payload: {
@@ -76,7 +76,8 @@ export const updateActionsFilePath = (
 export const updateTypesFilePath = (
   typesFileName: string,
   typesFilePath: string,
-  id: number
+  id: any
+  // id: number
 ): ReduxActionTypes => ({
   type: actionTypes.UPDATE_TYPES_FILEPATH,
   payload: {

@@ -213,9 +213,11 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       };
     case actionTypes.UPDATE_ACTIONS_FILEPATH:
       reduxStatements = reduxStatements.map((statement) => {
-        if (statement.id === action.payload.id) {
+        // if (statement.id === action.payload.id) {
+        if (action.payload.id === statement.type) {
           statement.actionsFileName = action.payload.actionsFileName;
           statement.filePath = action.payload.filePath;
+          // }
         }
         return statement;
       });
@@ -225,10 +227,13 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       };
     case actionTypes.UPDATE_TYPES_FILEPATH:
       reduxStatements = reduxStatements.map((statement) => {
-        if (statement.id === action.payload.id) {
+        // if (statement.id === action.payload.id) {
+        if (action.payload.id === statement.type) {
+          console.log(statement.type, 'yo', action.payload.typesFileName);
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
         }
+        // }
         return statement;
       });
       return {

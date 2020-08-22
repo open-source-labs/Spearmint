@@ -37,8 +37,8 @@ export const SearchInput = ({
 
     const selectedOption = e.target.id;
     const filePath = filePathMap[selectedOption] || '';
-    if (updateTypesFilePath && id) dispatch(updateTypesFilePath(selectedOption, filePath, id));
-    if (updateActionsFilePath && id) dispatch(updateActionsFilePath(selectedOption, filePath, id));
+    if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, id)); //id));
+    if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, id));
     if (action) dispatch(action(selectedOption, filePath));
   };
   const handleKeyDown = (e) => {
@@ -48,7 +48,11 @@ export const SearchInput = ({
       setUserInput(filteredOptions[activeOption]);
       const selectedOption = filteredOptions[activeOption];
       const filePath = filePathMap[selectedOption] || '';
-      dispatch(action(selectedOption, filePath));
+      if (action) dispatch(action(selectedOption, filePath));
+      if (updateActionsFilePath) {
+        dispatch(updateActionsFilePath(selectedOption, filePath, id));
+      }
+      if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, id)); //id));
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {
         return;

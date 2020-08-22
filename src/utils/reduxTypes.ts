@@ -144,6 +144,7 @@ interface CreateNewReduxTestAction {
 export interface ReduxTestCaseState {
   reduxTestStatement: string;
   reduxStatements: Array<ReduxStatements>;
+  // checkArr: any;
 }
 export interface UpdateMiddleware {
   id: number;

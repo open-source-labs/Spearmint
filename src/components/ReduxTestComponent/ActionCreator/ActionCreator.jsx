@@ -48,7 +48,7 @@ const ActionCreator = ({ actionCreator, index }) => {
             <h3>Action Creator</h3>
           </div>
 
-          <div id={styles.filesFlexBox}>
+          {/* <div id={styles.filesFlexBox}>
             <div id={styles.files}>
               <label htmlFor='actionsFolder'>Import Actions From</label>
               <SearchInput
@@ -70,7 +70,7 @@ const ActionCreator = ({ actionCreator, index }) => {
                 filePathMap={filePathMap}
               />
             </div>
-          </div>
+          </div> */}
 
           <div id={styles.actionFlexBox}>
             <div id={styles.actions}>
