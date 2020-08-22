@@ -130,7 +130,7 @@ const About = ({ dispatch: dispatchToGlobal }) => {
       </article>
       <div id='container'>
         <button onClick={handleChangeBack}>
-          <span className='text'>Back</span>
+          <span className='text'>Home</span>
         </button>
       </div>
     </div>

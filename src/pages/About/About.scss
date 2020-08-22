@@ -37,8 +37,6 @@
     text-align: left;
   }
   p {
-    // font-family: $openSans;
-    // letter-spacing: 1px;
     font-family: -apple-system, system-ui, 'Segoe UI', Helvetica, Arial, sans-serif,
       'Apple Color Emoji', 'Segoe UI Emoji';
     font-size: 16px;
@@ -65,19 +63,23 @@
   }
 
   button {
-    height: 75px;
-    width: 75px;
-    border: 1px solid white;
-    background-color: $mint;
     color: white;
-    border-radius: 50px;
-    font-size: 15px;
-    margin-top: 15px;
+    background-color: $mint;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    margin: 5px;
+    height: 40px;
+    width: 110px;
+    opacity: 0.8;
+    font-family: $oxygen;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 0.5px $light-gray solid;
   }
 
   button:hover {
-    border: 1px solid rgb(2, 116, 161);
-    box-shadow: 4px 4px 4px $light-gray;
+    background-color: white;
+    color: $mint;
   }
 
   #container {
