@@ -89,20 +89,17 @@ const NavBar = () => {
         <img src={browserIcon} className={styles.icons} alt='browserview' title='Browser view' />
         <span className={styles.tooltip}>Browser View</span>
       </button>
-      {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
       <button className={styles.navBtn} onClick={handleBrowserToggle}>
         <img
           src={homeIcon}
           className={styles.icons}
-          style={{ marginTop: '30vh' }}
           alt='Return home'
           title='Home'
           onClick={handleClickHome}
         />
-        <span className={styles.tooltip} style={{ marginTop: '30vh' }}>
-          Home
-        </span>
+        <span className={styles.tooltip}>Home</span>
       </button>
+      {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>
   );
 };
