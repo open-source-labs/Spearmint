@@ -4,10 +4,12 @@
 #fileDirectory {
   grid-area: fileDirectory;
   padding: 0px;
-  width: 460%;
+  width: 200px;
   height: 100vh;
-  margin-top: -415px;
-  margin-left: 270px;
+  margin-left: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
   font-size: 12px;
   background-color: white;
   overflow: auto;
@@ -30,7 +32,7 @@
     letter-spacing: 1px;
     vertical-align: middle;
     font-weight: bold;
-    height: 50px;
+    height: 1px;
     background-color: #f0f8f8;
     border-bottom: 0.5px dotted $mint;
   }
