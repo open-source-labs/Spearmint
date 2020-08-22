@@ -1,5 +1,4 @@
 import React from 'react';
-// import styles from '../ProjectLoader/ProjectLoader.module.scss';
 import './About.scss';
 import { loadProject } from '../../context/actions/globalActions';
 
@@ -105,9 +104,13 @@ const About = ({ dispatch: dispatchToGlobal }) => {
           <img src={image2} alt='' />
         </p>
         <h2>Team</h2>
-        <hr></hr>
         <blockquote>
           <p>
+            Ben <a href='https://github.com/bkwak'>@bkwak</a>  ·  Evan{' '}
+            <a href='https://github.com/Berghoer'>@Berghoer</a>  ·  Nicolas{' '}
+            <a href='https://github.com/nicolaspita'>@nicolaspita</a>  ·  Louis{' '}
+            <a href='https://github.com/Luis-KM-Lo'>@Luis-KM-Lo</a>  ·  Sean{' '}
+            <a href='https://github.com/Sean-Haverstock'>@Sean-Haverstock</a> <br></br>
             Alex <a href='https://github.com/apark0720'>@apark0720</a>  ·  Charlie{' '}
             <a href='https://github.com/charlie-maloney'>@charlie-maloney</a>  ·  Chloe{' '}
             <a href='https://github.com/HeyItsChloe'>@HeyItsChloe</a>  ·  Cornelius{' '}
@@ -125,10 +128,11 @@ const About = ({ dispatch: dispatchToGlobal }) => {
           </p>
         </blockquote>
       </article>
-
-      <button onClick={handleChangeBack}>
-        <span className='text'>Back</span>
-      </button>
+      <div id='container'>
+        <button onClick={handleChangeBack}>
+          <span className='text'>Back</span>
+        </button>
+      </div>
     </div>
   );
 };
