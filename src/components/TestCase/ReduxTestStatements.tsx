@@ -53,7 +53,7 @@ const ReduxTestStatements = () => {
       <div id={styles.reducerName}>
         <label htmlFor='typesFile'>{label}</label>
         <SearchInput
-          id={type}
+          type={type}
           reactTestCase={null}
           updateTypesFilePath={typesPath}
           updateActionsFilePath={actionPath}

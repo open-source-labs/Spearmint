@@ -144,7 +144,6 @@ interface CreateNewReduxTestAction {
 export interface ReduxTestCaseState {
   reduxTestStatement: string;
   reduxStatements: Array<ReduxStatements>;
-  // checkArr: any;
 }
 export interface UpdateMiddleware {
   id: number;
@@ -205,6 +204,7 @@ export interface UpdateActionsFilePath {
 export interface UpdateTypesFilePath {
   typesFileName: string;
   typesFilePath: string;
+  type: string;
 }
 
 export interface UpdateReducerFilePath {

@@ -214,7 +214,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
     case actionTypes.UPDATE_ACTIONS_FILEPATH:
       reduxStatements = reduxStatements.map((statement) => {
         // if (statement.id === action.payload.id) {
-        if (action.payload.id === statement.type) {
+        if (action.payload.type === statement.type) {
           statement.actionsFileName = action.payload.actionsFileName;
           statement.filePath = action.payload.filePath;
           // }
@@ -228,8 +228,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
     case actionTypes.UPDATE_TYPES_FILEPATH:
       reduxStatements = reduxStatements.map((statement) => {
         // if (statement.id === action.payload.id) {
-        if (action.payload.id === statement.type) {
-          console.log(statement.type, 'yo', action.payload.typesFileName);
+        if (action.payload.type === statement.type) {
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
         }
