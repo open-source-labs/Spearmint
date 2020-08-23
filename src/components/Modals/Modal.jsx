@@ -6,6 +6,14 @@ import styles from './ExportFileModal.module.scss';
 // import { GlobalContext } from '../../context/reducers/globalReducer';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
 
+// interface drilledProps {
+//   isModalOpen?: boolean;
+//   closeModal?: any;
+//   dispatchToMockData?: any;
+//   dispatchTestCase?: any;
+//   createTest?: any;
+// }
+
 /* destructuring or declaring these?  */
 const Modal = ({
   title,
