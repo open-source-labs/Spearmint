@@ -349,30 +349,50 @@ function useGenerateTest(test, projectFilePath) {
 
     // Actions Filepath
     const createPathToActions = (statement) => {
-      let filePath = path.relative(projectFilePath, statement.filePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as actions from '../${filePath}';`;
+      let filePath = null;
+      if (statement.filePath) {
+        filePath = path.relative(projectFilePath, statement.filePath);
+        filePath = filePath.replace(/\\/g, '/');
+      }
+      if (!testFileCode.includes(`import * as actions from`) && filePath) {
+        testFileCode += `import * as actions from '../${filePath}';`;
+      }
     };
 
     // Reducer Filepath
     function createPathToReducers(statement) {
-      let filePath = path.relative(projectFilePath, statement.reducersFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import ${statement.reducerName} from '../${filePath}';`;
+      let filePath = null;
+      if (statement.reducersFilePath) {
+        filePath = path.relative(projectFilePath, statement.reducersFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+      }
+      if (!testFileCode.includes(`import  {${statement.reducerName}} from`) && filePath) {
+        testFileCode += `import  {${statement.reducerName}} from '../${filePath}';`;
+      }
     }
 
     // Types Filepath
     function createPathToTypes(statement) {
-      let filePath = path.relative(projectFilePath, statement.typesFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as types from '../${filePath}';`;
+      let filePath = null;
+      if (statement.typesFilePath) {
+        filePath = path.relative(projectFilePath, statement.typesFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+      }
+      if (!testFileCode.includes(`import * as types from `) && filePath) {
+        testFileCode += `import * as types from '../${filePath}';`;
+      }
     }
 
     // Middleware Filepath
     function createPathToMiddlewares(statement) {
-      let filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as middleware from '../${filePath}';`;
+      let filePath = null;
+      if (statement.middlewaresFilePath) {
+        filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+      }
+      if (!testFileCode.includes(`import * as middleware from`) && filePath) {
+        testFileCode += `import * as middleware from '../${filePath}';`;
+      }
     }
 
     // Hooks Filepath
