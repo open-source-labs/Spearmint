@@ -38,7 +38,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   const handleClickSave = () => {
     // file name uniqueness check
-    if (fs.existsSync(projectFilePath + `src/__tests__/${fileName}.test.js`)) {
+    if (fs.existsSync(projectFilePath + `/__tests__/${fileName}.test.js`)) {
       setInvalidFileName(true);
       return;
     }
@@ -50,15 +50,15 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
 
   const exportTestFile = async () => {
-    if (!fs.existsSync(projectFilePath + '/src/__tests__')) {
-      fs.mkdirSync(projectFilePath + '/src/__tests__');
+    if (!fs.existsSync(projectFilePath + '/__tests__')) {
+      fs.mkdirSync(projectFilePath + '/__tests__');
     }
-    await fs.writeFile(projectFilePath + `/src/__tests__/${fileName}.test.js`, file, (err) => {
+    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, file, (err) => {
       if (err) throw err;
     });
 
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
-    displayTestFile(projectFilePath + '/src/__tests__');
+    displayTestFile(projectFilePath + '/__tests__');
   };
 
   const displayTestFile = (testFolderFilePath) => {

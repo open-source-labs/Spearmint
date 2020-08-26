@@ -5,26 +5,26 @@ describe('Global Reducer works properly', () => {
   let initialState = globalState;
 
   beforeEach(() => {
-    initialState = {
-      url: null,
-      projectUrl: null,
-      isProjectLoaded: false,
-      fileTree: null,
-      componentName: '',
-      isFileDirectoryOpen: true,
-      isRightPanelOpen: true,
-      rightPanelDisplay: 'browserView',
-      isFolderOpen: {},
-      isFileHighlighted: '',
-      projectFilePath: '',
-      filePathMap: {},
-      file: '',
-      testCase: '',
-      isTestModalOpen: true,
-      exportBool: false,
-      fileName: '',
-      filePath: '',
-    };
+    initialState = globalState;
+    //   url: null,
+    //   projectUrl: null,
+    //   isProjectLoaded: false,
+    //   fileTree: null,
+    //   componentName: '',
+    //   isFileDirectoryOpen: true,
+    //   isRightPanelOpen: true,
+    //   rightPanelDisplay: 'browserView',
+    //   isFolderOpen: {},
+    //   isFileHighlighted: '',
+    //   projectFilePath: '',
+    //   filePathMap: {},
+    //   file: '',
+    //   testCase: '',
+    //   isTestModalOpen: true,
+    //   exportBool: false,
+    //   fileName: '',
+    //   filePath: '',
+    //};
   });
 
   test('demo2', () => {

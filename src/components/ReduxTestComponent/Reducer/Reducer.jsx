@@ -76,7 +76,7 @@ const Reducer = ({ reducer, index }) => {
             </div>
 
             <div id={styles.reducerName}>
-              <label htmlFor='initialState'>Initial State</label>
+              <label htmlFor='initialState'>State Before Reducer Function Runs</label>
               <input
                 type='text'
                 // id='initialState'
@@ -104,7 +104,7 @@ const Reducer = ({ reducer, index }) => {
             </div>
 
             <div id={styles.reducerName}>
-              <label htmlFor='expectedState'>Updated State</label>
+              <label htmlFor='expectedState'>State After Reducer Function Runs</label>
               <input
                 type='text'
                 placeholder='Key'

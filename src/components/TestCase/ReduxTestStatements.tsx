@@ -67,83 +67,91 @@ const ReduxTestStatements = () => {
   };
   // different search imports are conditionally generated
   if (actionCreatorCount) {
-    const act = generateSearchInput(
+    const actionImport = generateSearchInput(
       updateTypesFilePath,
       null,
       null,
       'action-creator',
-      'Import Action Types From'
+      'Import Action Types from'
     );
-    const asyncAct = generateSearchInput(
+    const asyncImport = generateSearchInput(
       null,
       updateActionsFilePath,
       null,
       'action-creator',
-      'Import Actions From'
+      'Import Actions from'
     );
     aCImports = (
       <div id={styles.reducerNameFlexBox}>
-        {act}
-        {asyncAct}
+        {actionImport}
+        {asyncImport}
       </div>
     );
   }
   if (asyncCount) {
     if (!actionCreatorCount) {
-      const act = generateSearchInput(
+      const actionImport = generateSearchInput(
         updateTypesFilePath,
         null,
         null,
         'async',
-        'Import Action Types From'
+        'Import Action Types from'
       );
-      const asyncAct = generateSearchInput(
+      const asyncImport = generateSearchInput(
         null,
         updateActionsFilePath,
         null,
         'async',
-        'Import Actions From'
+        'Import Actions from'
       );
       asyncImports = (
         <div id={styles.reducerNameFlexBox}>
-          {act}
-          {asyncAct}
+          {actionImport}
+          {asyncImport}
         </div>
       );
     }
   }
   if (middlewareCount) {
-    const mid = generateSearchInput(
+    const middlewareImport = generateSearchInput(
       null,
       null,
       updateMiddlewaresFilePath,
       null,
-      'Import Middleware From'
+      'Import Middleware from'
     );
     mImports = <div id={styles.reducerNameFlexBox}>{mid}</div>;
   }
   if (reducerCount) {
-    const red = generateSearchInput(
+    const initialStateImport = generateSearchInput(
       null,
       null,
       updateReducersFilePath,
       null,
-      'Import Reducer From'
+      'Import State from'
     );
-    let act = null;
+    const reducerImport = generateSearchInput(
+      null,
+      null,
+      updateReducersFilePath,
+      null,
+      'Import Reducer from'
+    );
+    let actionImport = null;
     if (!actionCreatorCount && !asyncCount) {
-      act = generateSearchInput(
+      actionImport = generateSearchInput(
         updateTypesFilePath,
         null,
         null,
         'reducer',
-        'Import Action Types From'
+        'Import Action Types from'
       );
     }
     reducerImports = (
       <div id={styles.reducerNameFlexBox}>
-        {red}
-        {act}
+        {reducerImport}
+        {actionImport}
+        {initialStateImport}
       </div>
     );
   }
@@ -164,16 +172,16 @@ const ReduxTestStatements = () => {
           case 'async':
             return <Async key={statement.id} async={statement} index={i} />;
           case 'reducer':
-            if (i < 1) {
-              return (
-                <>
-                  <label key={i}>Initial State</label>
-                  <input placeholder='import state' />
-                </>
-              );
-            } else {
-              return <Reducer key={statement.id} reducer={statement} index={i} />;
-            }
+            // if (i < 1) {
+            //   return (
+            //     // <>
+            //     //   <label key={i}>Initial State</label>
+            //     //   <input placeholder='import state' />
+            //     // </>
+            //   );
+            // } else {
+            return <Reducer key={statement.id} reducer={statement} index={i} />;
+
           default:
             return <></>;
         }
