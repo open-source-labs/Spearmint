@@ -3,6 +3,7 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
 import { setProjectUrl } from '../../context/actions/globalActions';
+import { loadProject } from '../../context/actions/globalActions';
 require('dotenv').config();
 
 const ProjectLoader = () => {
@@ -23,6 +24,10 @@ const ProjectLoader = () => {
   const handleChangeUrl = (e) => {
     const testSiteURL = addHttps(e.target.value);
     dispatchToGlobal(setProjectUrl(testSiteURL));
+  };
+
+  const handleChangeAbout = () => {
+    dispatchToGlobal(loadProject('about'));
   };
 
   const placehold =
@@ -56,6 +61,11 @@ const ProjectLoader = () => {
             <span className={styles.text}>Select your application</span> <br />
             <OpenFolder inNavBar={false} />
           </div>
+        </div>
+        <div id={styles.bottomDiv}>
+          <button id={styles.helpBtn} onClick={handleChangeAbout}>
+            <span className={styles.text}>Halp!</span>
+          </button>
         </div>
       </section>
     </div>

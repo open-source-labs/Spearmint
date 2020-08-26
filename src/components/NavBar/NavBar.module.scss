@@ -26,7 +26,6 @@
   height: 28px;
 }
 
-
 .tooltip {
   visibility: hidden;
   width: 120px;
@@ -42,4 +41,5 @@
 
 .navBtn:hover .tooltip {
   visibility: visible;
+  margin-left: 5px;
 }

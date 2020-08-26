@@ -18,6 +18,7 @@ export const actionTypes = {
   NEW_TEST_CLOSE_BROWSER_DOCS: 'NEW_TEST_CLOSE_BROWSER_DOCS',
   EXPORT: 'EXPORT',
   SET_FILE_PATH: 'SET_FILE_PATH',
+  NEW_TEST_CLOSE_BROWSER_DOCS: 'NEW_TEST_CLOSE_BROWSER_DOCS',
 };
 
 export const setProjectUrl = (url) => ({
@@ -88,10 +89,6 @@ export const openBrowserDocs = (docsUrl) => ({
   docsUrl,
 });
 
-export const resetToProjectUrl = () => ({
-  type: actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS,
-});
-
 export const toggleExportBool = () => ({
   type: actionTypes.EXPORT,
 });
@@ -99,4 +96,8 @@ export const toggleExportBool = () => ({
 export const setFilePath = (filePath) => ({
   type: actionTypes.SET_FILE_PATH,
   filePath,
+});
+
+export const resetToProjectUrl = () => ({
+  type: actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS,
 });

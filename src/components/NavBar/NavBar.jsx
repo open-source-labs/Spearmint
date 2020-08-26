@@ -12,6 +12,7 @@ import {
   toggleExportBool,
   setProjectUrl,
   resetToProjectUrl,
+  loadProject,
 } from '../../context/actions/globalActions';
 import FileDirectory from '../FileDirectory/FileDirectory';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
@@ -21,6 +22,7 @@ const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');
 const browserIcon = require('../../assets/images/google-chrome.png');
 const codeIcon = require('../../assets/images/visual-studio-code.png');
+const homeIcon = require('../../assets/images/home.png');
 
 const NavBar = () => {
   const [
@@ -56,6 +58,11 @@ const NavBar = () => {
     setIsExportModalOpen(true);
   };
 
+  /*returns to project loader screen */
+  const handleClickHome = () => {
+    dispatchToGlobal(loadProject(false));
+  };
+
   /*
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
@@ -81,6 +88,16 @@ const NavBar = () => {
       <button className={styles.navBtn} onClick={handleBrowserToggle}>
         <img src={browserIcon} className={styles.icons} alt='browserview' title='Browser view' />
         <span className={styles.tooltip}>Browser View</span>
+      </button>
+      <button className={styles.navBtn} onClick={handleBrowserToggle}>
+        <img
+          src={homeIcon}
+          className={styles.icons}
+          alt='Return home'
+          title='Home'
+          onClick={handleClickHome}
+        />
+        <span className={styles.tooltip}>Home</span>
       </button>
       {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>

@@ -206,6 +206,7 @@ export interface UpdateActionsFilePath {
 export interface UpdateTypesFilePath {
   typesFileName: string;
   typesFilePath: string;
+  type: string;
 }
 
 export interface UpdateReducerFilePath {
