@@ -70,6 +70,7 @@ const createReducer = () => {
     reducersFileName: '',
     reducersFilePath: '',
     reducerAction: '',
+    initialState: '',
     initialKey: '',
     initialValue: '',
     reducerName: '',
@@ -203,6 +204,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
           statement.reducerAction = action.payload.reducerAction;
+          statement.initialState = action.payload.initialState;
           statement.initialKey = action.payload.initialKey;
           statement.initialValue = action.payload.initialValue;
           statement.reducerName = action.payload.reducerName;
@@ -279,7 +281,6 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements,
       };
     case actionTypes.OPEN_INFO_MODAL:
-      console.log('in here');
       return {
         ...state,
         modalOpen: true,

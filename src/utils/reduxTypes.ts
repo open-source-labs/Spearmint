@@ -187,6 +187,7 @@ export interface UpdateAsync {
 export interface UpdateReducer {
   id: number;
   reducerAction: string;
+  initialState: string;
   initialKey: string;
   initialValue: string;
   reducerName: string;
@@ -273,6 +274,7 @@ interface Reducer {
   reducersFileName?: string;
   reducersFilePath?: string;
   reducerAction?: string;
+  initialState?: string;
   initialKey?: string;
   initialValue?: string;
   reducerName?: string;

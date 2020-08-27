@@ -72,7 +72,7 @@ const ReduxTestStatements = () => {
       null,
       null,
       'action-creator',
-      'Import Action Types from'
+      'Import Action Types fdrom'
     );
     const asyncImport = generateSearchInput(
       null,
@@ -120,16 +120,16 @@ const ReduxTestStatements = () => {
       null,
       'Import Middleware from'
     );
-    mImports = <div id={styles.reducerNameFlexBox}>{mid}</div>;
+    mImports = <div id={styles.reducerNameFlexBox}>{middlewareImport}</div>;
   }
   if (reducerCount) {
-    const initialStateImport = generateSearchInput(
-      null,
-      null,
-      updateReducersFilePath,
-      null,
-      'Import State from'
-    );
+    // const initialStateImport = generateSearchInput(
+    //   null,
+    //   null,
+    //   updateReducersFilePath,
+    //   null,
+    //   'Import State from'
+    // );
     const reducerImport = generateSearchInput(
       null,
       null,
@@ -151,7 +151,7 @@ const ReduxTestStatements = () => {
       <div id={styles.reducerNameFlexBox}>
         {reducerImport}
         {actionImport}
-        {initialStateImport}
+        {/* {initialStateImport} */}
       </div>
     );
   }

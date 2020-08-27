@@ -19,8 +19,12 @@ const Reducer = ({ reducer, index }) => {
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChangeReducerFields = (e, field) => {
+    console.log(e.target.value);
+    // reducer is a single test statment
     let updatedReducer = { ...reducer };
+    // adding key/value pair to test statement
     updatedReducer[field] = e.target.value;
+
     dispatchToReduxTestCase(updateReducer(updatedReducer));
   };
 
@@ -76,6 +80,17 @@ const Reducer = ({ reducer, index }) => {
             </div>
 
             <div id={styles.reducerName}>
+              <label htmlFor='reducerName'>Initial State</label>
+              <input
+                type='text'
+                id='reducerName'
+                placeholder='eg. todosState'
+                onChange={(e) => handleChangeReducerFields(e, 'initialState')}
+              />
+            </div>
+          </div>
+
+          {/* <div id={styles.reducerName}>
               <label htmlFor='initialState'>State Before Reducer Function Runs</label>
               <input
                 type='text'
@@ -88,9 +103,7 @@ const Reducer = ({ reducer, index }) => {
                 id='initialState'
                 placeholder='Value'
                 onChange={(e) => handleChangeReducerFields(e, 'initialValue')}
-              />
-            </div>
-          </div>
+              /> */}
 
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
@@ -98,7 +111,7 @@ const Reducer = ({ reducer, index }) => {
               <input
                 type='text'
                 id='reducerAction'
-                placeholder='eg ADD_TASK'
+                placeholder='eg ADD_TODO'
                 onChange={(e) => handleChangeReducerFields(e, 'reducerAction')}
               />
             </div>

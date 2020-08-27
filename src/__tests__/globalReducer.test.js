@@ -6,25 +6,26 @@ describe('Global Reducer works properly', () => {
 
   beforeEach(() => {
     initialState = globalState;
-    //   url: null,
-    //   projectUrl: null,
-    //   isProjectLoaded: false,
-    //   fileTree: null,
-    //   componentName: '',
-    //   isFileDirectoryOpen: true,
-    //   isRightPanelOpen: true,
-    //   rightPanelDisplay: 'browserView',
-    //   isFolderOpen: {},
-    //   isFileHighlighted: '',
-    //   projectFilePath: '',
-    //   filePathMap: {},
-    //   file: '',
-    //   testCase: '',
-    //   isTestModalOpen: true,
-    //   exportBool: false,
-    //   fileName: '',
-    //   filePath: '',
-    //};
+    //     url: null,
+    //     projectUrl: null,
+    //     isProjectLoaded: false,
+    //     fileTree: null,
+    //     componentName: '',
+    //     isFileDirectoryOpen: true,
+    //     isRightPanelOpen: true,
+    //     rightPanelDisplay: 'browserView',
+    //     isFolderOpen: {},
+    //     isFileHighlighted: '',
+    //     projectFilePath: '',
+    //     filePathMap: {},
+    //     file: '',
+    //     testCase: '',
+    //     isTestModalOpen: true,
+    //     exportBool: false,
+    //     fileName: '',
+    //     filePath: '',
+    //   };
+    // });
   });
 
   test('demo2', () => {
@@ -229,4 +230,5 @@ describe('Global Reducer works properly', () => {
       filePath: '/Users/anon/Codesmith/spearmint/public/electron.js',
     });
   });
+  console.log(initialState);
 });
