@@ -78,7 +78,6 @@ const Reducer = ({ reducer, index }) => {
                 onChange={(e) => handleChangeReducerFields(e, 'reducerName')}
               />
             </div>
-
             <div id={styles.reducerName}>
               <label htmlFor='reducerName'>Initial State</label>
               <input
@@ -89,9 +88,21 @@ const Reducer = ({ reducer, index }) => {
               />
             </div>
           </div>
-
-          {/* <div id={styles.reducerName}>
-              <label htmlFor='initialState'>State Before Reducer Function Runs</label>
+          <div id={styles.reducerNameFlexBox}>
+            <div id={styles.reducerName}>
+              <label htmlFor='reducerAction'>Action</label>
+              <input
+                type='text'
+                id='reducerAction'
+                placeholder='eg ADD_TODO'
+                onChange={(e) => handleChangeReducerFields(e, 'reducerAction')}
+              />
+            </div>
+            <div id={styles.reducerName}></div>
+          </div>
+          <div id={styles.reducerNameFlexBox}>
+            <div id={styles.reducerName}>
+              <label htmlFor='initialState'>Payload</label>
               <input
                 type='text'
                 // id='initialState'
@@ -103,19 +114,8 @@ const Reducer = ({ reducer, index }) => {
                 id='initialState'
                 placeholder='Value'
                 onChange={(e) => handleChangeReducerFields(e, 'initialValue')}
-              /> */}
-
-          <div id={styles.reducerNameFlexBox}>
-            <div id={styles.reducerName}>
-              <label htmlFor='reducerAction'>Action</label>
-              <input
-                type='text'
-                id='reducerAction'
-                placeholder='eg ADD_TODO'
-                onChange={(e) => handleChangeReducerFields(e, 'reducerAction')}
               />
             </div>
-
             <div id={styles.reducerName}>
               <label htmlFor='expectedState'>State After Reducer Function Runs</label>
               <input
