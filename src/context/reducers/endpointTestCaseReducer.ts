@@ -72,6 +72,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements,
       };
     case actionTypes.UPDATE_SERVER_FILEPATH:
+      console.log(action);
       const { serverFilePath, serverFileName } = action;
       return {
         ...state,
@@ -81,18 +82,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
     case actionTypes.CREATE_NEW_ENDPOINT_TEST:
       return {
         endpointTestStatement: '',
-        endpointStatements: [
-          {
-            id: 0,
-            type: 'endpoint',
-            serverFileName: '',
-            serverFilePath: '',
-            method: '',
-            route: '',
-            expectedResponse: '',
-            value: '',
-          },
-        ],
+        endpointStatements: [{ ...newEndpoint }],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       endpointStatements = [...action.draggableStatements!];

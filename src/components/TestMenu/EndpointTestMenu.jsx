@@ -15,9 +15,8 @@ import useToggleModal from './testMenuHooks';
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
-  const [{ endpointStatements, endpointTestStatement }, dispatchToEndpointTestCase] = useContext(
-    EndpointTestCaseContext
-  );
+  const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
@@ -34,13 +33,13 @@ const EndpointTestMenu = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
+    dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
   };
 
   if (!file && exportBool) {
-    dispatchToGlobal(updateFile(generateTest({ endpointTestStatement, endpointStatements })));
+    dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
 
   return (

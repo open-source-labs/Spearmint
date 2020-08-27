@@ -265,20 +265,25 @@ function useGenerateTest(test, projectFilePath) {
 
     // Endpoint Import Statements
     const addEndpointImportStatements = () => {
-      endpointTestCase.endpointStatements.forEach((statement) => {
-        switch (statement.type) {
-          case 'endpoint':
-            return createPathToServer(statement);
-          default:
-            return statement;
-        }
-      });
+      let { serverFilePath } = endpointTestCase;
+      createPathToServer(serverFilePath);
       testFileCode += '\n';
+
+      // endpointTestCase.endpointStatements.forEach((statement) => {
+      //   switch (statement.type) {
+      //     case 'endpoint':
+      //       return createPathToServer(statement);
+      //     default:
+      //       return statement;
+      //   }
+      // });
+      // testFileCode += '\n';
     };
 
     const addEndpointTestStatements = () => {
-      testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async (done) => {`;
-      endpointTestCase.endpointStatements.forEach((statement) => {
+      const { endpointStatements } = endpointTestCase;
+      testFileCode += `\n test('${endpointStatements[0].testName}', async (done) => {`;
+      endpointStatements.forEach((statement) => {
         switch (statement.type) {
           case 'endpoint':
             return addEndpoint(statement);
@@ -410,14 +415,15 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // Endpoint Filepath
-    const createPathToServer = (statement) => {
-      let filePath = path.relative(projectFilePath, statement.serverFilePath);
+    const createPathToServer = (serverFilePath) => {
+      console.log(serverFilePath);
+      let filePath = path.relative(projectFilePath, serverFilePath);
       filePath = filePath.replace(/\\/g, '/');
       testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest')
       const request = supertest(app)\n`;
-
       testFileCode += '\n';
+      console.log('-----------------------------------', testFileCode);
     };
 
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */

@@ -30,6 +30,7 @@ export const SearchInput = ({
   };
 
   const handleClick = (e) => {
+    console.log('CLICKED BITCH----------------', action);
     setActiveOption(0);
     setFilteredOptions([]);
     setShowOptions(false);
@@ -39,7 +40,10 @@ export const SearchInput = ({
     const filePath = filePathMap[selectedOption] || '';
     if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
     if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
-    if (action) dispatch(action(selectedOption, filePath));
+    if (action) {
+      console.log('clicked');
+      dispatch(action(selectedOption, filePath));
+    }
   };
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
