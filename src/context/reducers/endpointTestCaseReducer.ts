@@ -16,9 +16,7 @@ interface Action {
 const newEndpoint = {
   id: 0,
   type: 'endpoint',
-  // serverFileName: '',
   testName: '',
-  // serverFilePath: '',
   method: '',
   route: '',
   expectedResponse: '',
@@ -41,12 +39,6 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
   let endpointStatements = [...state.endpointStatements];
 
   switch (action.type) {
-    // case actionTypes.UPDATE_SERVER_FILE_PATH:
-    //   const { serverFilePath } = action;
-    //   return {
-    //     ...state,
-    //     serverFilePath,
-    //   };
     case actionTypes.ADD_ENDPOINT:
       endpointStatements.push({
         ...newEndpoint,
@@ -64,7 +56,10 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements,
       };
     case actionTypes.UPDATE_ENDPOINT:
-      endpointStatements[action.id!] = Object.assign({}, endpointStatements[action.id!], action, {
+      let newStatement = endpointStatements.find((statement) => {
+        return statement.id === action.id!;
+      });
+      Object.assign(newStatement, action, {
         type: 'endpoint',
       });
       return {

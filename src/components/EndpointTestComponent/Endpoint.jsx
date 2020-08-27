@@ -22,6 +22,7 @@ const Endpoint = ({ endpoint, index }) => {
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
     updatedEndpoint[field] = e.target.value;
+    console.log(updatedEndpoint);
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
   };
 
@@ -30,9 +31,9 @@ const Endpoint = ({ endpoint, index }) => {
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
 
-  const handleUpdateEndpointTestStatements = (e) => {
-    dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
-  };
+  // const handleUpdateEndpointTestStatements = (e) => {
+  //   dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
+  // };
 
   return (
     <div>
