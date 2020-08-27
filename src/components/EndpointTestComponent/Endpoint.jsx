@@ -64,8 +64,8 @@ const Endpoint = ({ endpoint, index }) => {
                   <input
                     type='text'
                     id={styles.testStatement}
-                    value={endpointTestStatement}
-                    onChange={handleUpdateEndpointTestStatements}
+                    value={endpoint.testName}
+                    onChange={(e) => handleChangeEndpointFields(e, 'testName')}
                   />
                 </div>
               </div>

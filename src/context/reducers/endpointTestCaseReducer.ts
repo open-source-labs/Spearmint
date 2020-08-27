@@ -1,14 +1,24 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/endpointTestCaseActions';
 import { EndpointTestCaseState } from '../../utils/endpointTypes';
+import { EndpointStatements } from '../../utils/endpointTypes';
 
 export const EndpointTestCaseContext: any = createContext(null);
+
+interface Action {
+  type: string;
+  id?: number;
+  serverFileName?: string;
+  serverFilePath?: string;
+  draggableStatements?: Array<EndpointStatements>;
+}
 
 const newEndpoint = {
   id: 0,
   type: 'endpoint',
-  serverFileName: '',
-  serverFilePath: '',
+  // serverFileName: '',
+  testName: '',
+  // serverFilePath: '',
   method: '',
   route: '',
   expectedResponse: '',
@@ -17,7 +27,8 @@ const newEndpoint = {
 
 export const endpointTestCaseState = {
   modalOpen: false,
-  endpointTestStatement: '',
+  serverFilePath: '',
+  serverFileName: '',
   endpointStatements: [
     {
       ...newEndpoint,
@@ -25,17 +36,17 @@ export const endpointTestCaseState = {
   ],
 };
 
-export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: any) => {
+export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Action) => {
   Object.freeze(state);
   let endpointStatements = [...state.endpointStatements];
 
   switch (action.type) {
-    case actionTypes.UPDATE_ENDPOINT_TEST_STATEMENT:
-      const { endpointTestStatement } = action;
-      return {
-        ...state,
-        endpointTestStatement,
-      };
+    // case actionTypes.UPDATE_SERVER_FILE_PATH:
+    //   const { serverFilePath } = action;
+    //   return {
+    //     ...state,
+    //     serverFilePath,
+    //   };
     case actionTypes.ADD_ENDPOINT:
       endpointStatements.push({
         ...newEndpoint,
@@ -53,7 +64,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: an
         endpointStatements,
       };
     case actionTypes.UPDATE_ENDPOINT:
-      endpointStatements[action.id] = Object.assign({}, endpointStatements[action.id], action, {
+      endpointStatements[action.id!] = Object.assign({}, endpointStatements[action.id!], action, {
         type: 'endpoint',
       });
       return {
@@ -61,16 +72,11 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: an
         endpointStatements,
       };
     case actionTypes.UPDATE_SERVER_FILEPATH:
-      endpointStatements = endpointStatements.map((statement) => {
-        if (statement.type === 'endpoint') {
-          statement.serverFileName = action.serverFileName;
-          statement.serverFilePath = action.serverFilePath;
-        }
-        return statement;
-      });
+      const { serverFilePath, serverFileName } = action;
       return {
         ...state,
-        endpointStatements,
+        serverFilePath,
+        serverFileName,
       };
     case actionTypes.CREATE_NEW_ENDPOINT_TEST:
       return {
@@ -89,7 +95,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: an
         ],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
-      endpointStatements = [...action.draggableStatements];
+      endpointStatements = [...action.draggableStatements!];
       return {
         ...state,
         endpointStatements,
