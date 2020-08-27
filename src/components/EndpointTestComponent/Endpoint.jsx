@@ -6,7 +6,7 @@ import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCase
 import {
   deleteEndpoint,
   updateEndpoint,
-  updateServerFilePath,
+  updateEndpointTestStatement,
 } from '../../context/actions/endpointTestCaseActions';
 import SearchInput from '../SearchInput/SearchInput';
 
@@ -15,7 +15,9 @@ const dragIcon = require('../../assets/images/drag-vertical.png');
 
 const Endpoint = ({ endpoint, index }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
-  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [{ endpointTestStatement }, dispatchToEndpointTestCase] = useContext(
+    EndpointTestCaseContext
+  );
 
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
@@ -26,6 +28,10 @@ const Endpoint = ({ endpoint, index }) => {
   const handleClickDeleteEndpoint = (e) => {
     // delete endpoint returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
+  };
+
+  const handleUpdateEndpointTestStatements = (e) => {
+    dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
   };
 
   return (
@@ -50,19 +56,21 @@ const Endpoint = ({ endpoint, index }) => {
               <h3>Endpoint</h3>
             </div>
 
+            {/* // */}
             <div id={styles.groupFlexbox}>
               <div id={styles.serverInput}>
-                <label htmlFor='endpointFile'>Import Server From</label>
+                <label htmlFor='test-statement'>Test</label>
                 <div id={styles.labelInput}>
-                  <SearchInput
-                    options={Object.keys(filePathMap)}
-                    dispatch={dispatchToEndpointTestCase}
-                    action={updateServerFilePath}
-                    filePathMap={filePathMap}
+                  <input
+                    type='text'
+                    id={styles.testStatement}
+                    value={endpointTestStatement}
+                    onChange={handleUpdateEndpointTestStatements}
                   />
                 </div>
               </div>
             </div>
+            {/* //sdfsdf */}
 
             <div id={styles.groupFlexbox}>
               <div id={styles.dropdownWrapper}>

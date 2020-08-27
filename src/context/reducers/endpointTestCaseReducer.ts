@@ -4,27 +4,8 @@ import { EndpointTestCaseState } from '../../utils/endpointTypes';
 
 export const EndpointTestCaseContext: any = createContext(null);
 
-export const endpointTestCaseState = {
-  modalOpen: false,
-  endpointTestStatement: '',
-  endpointStatements: [
-    {
-      id: 0,
-      type: 'endpoint',
-      serverFileName: '',
-      serverFilePath: '',
-      method: '',
-      route: '',
-      expectedResponse: '',
-      value: '',
-    },
-  ],
-};
-
-let statementId = 0;
-
-const createEndpoint = () => ({
-  id: statementId++,
+const newEndpoint = {
+  id: 0,
   type: 'endpoint',
   serverFileName: '',
   serverFilePath: '',
@@ -32,7 +13,17 @@ const createEndpoint = () => ({
   route: '',
   expectedResponse: '',
   value: '',
-});
+};
+
+export const endpointTestCaseState = {
+  modalOpen: false,
+  endpointTestStatement: '',
+  endpointStatements: [
+    {
+      ...newEndpoint,
+    },
+  ],
+};
 
 export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: any) => {
   Object.freeze(state);
@@ -46,7 +37,10 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: an
         endpointTestStatement,
       };
     case actionTypes.ADD_ENDPOINT:
-      endpointStatements.push(createEndpoint());
+      endpointStatements.push({
+        ...newEndpoint,
+        id: endpointStatements[endpointStatements.length - 1].id + 1,
+      });
       return {
         ...state,
         endpointStatements,
@@ -59,16 +53,8 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: an
         endpointStatements,
       };
     case actionTypes.UPDATE_ENDPOINT:
-      endpointStatements = endpointStatements.map((statement) => {
-        if (statement.id === action.id) {
-          statement.serverFileName = action.serverFileName;
-          statement.serverFilePath = action.serverFilePath;
-          statement.method = action.method;
-          statement.route = action.route;
-          statement.expectedResponse = action.expectedResponse;
-          statement.value = action.value;
-        }
-        return statement;
+      endpointStatements[action.id] = Object.assign({}, endpointStatements[action.id], action, {
+        type: 'endpoint',
       });
       return {
         ...state,
