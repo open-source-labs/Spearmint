@@ -72,7 +72,7 @@ const ReduxTestStatements = () => {
       null,
       null,
       'action-creator',
-      'Import Action Types fdrom'
+      'Import Action Types from'
     );
     const asyncImport = generateSearchInput(
       null,
