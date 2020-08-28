@@ -1,23 +1,13 @@
 import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Reducer.module.scss';
-import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
-import {
-  deleteReducer,
-  updateReducer,
-  updateReduxTestStatement,
-  updateTypesFilePath,
-  updateReducersFilePath,
-} from '../../../context/actions/reduxTestCaseActions';
-import SearchInput from '../../SearchInput/SearchInput';
-import { updateHooksTestStatement } from '../../../context/actions/hooksTestCaseActions';
+import { deleteReducer, updateReducer } from '../../../context/actions/reduxTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Reducer = ({ reducer, index }) => {
-  const [{ filePathMap }] = useContext(GlobalContext);
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChangeReducerFields = (e, field) => {
@@ -70,10 +60,10 @@ const Reducer = ({ reducer, index }) => {
           </div>
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='reducerName'>Initial State</label>
+              <label htmlFor='initialStae'>Initial State</label>
               <input
                 type='text'
-                id='reducerName'
+                id='initialState'
                 placeholder='eg. todosState'
                 onChange={(e) => handleChangeReducerFields(e, 'initialState')}
               />
@@ -93,13 +83,13 @@ const Reducer = ({ reducer, index }) => {
               <label htmlFor='initialState'>Payload (optional. if action requires)</label>
               <input
                 type='text'
-                // id='initialState'
+                id='payloadKey'
                 placeholder='Key'
                 onChange={(e) => handleChangeReducerFields(e, 'payloadKey')}
               />
               <input
                 type='text'
-                id='initialState'
+                id='payloadValue'
                 placeholder='Value'
                 onChange={(e) => handleChangeReducerFields(e, 'payloadValue')}
               />
