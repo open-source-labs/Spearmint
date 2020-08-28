@@ -48,27 +48,6 @@ const Reducer = ({ reducer, index }) => {
             <h3>Reducer</h3>
           </div>
 
-          {/* <div id={styles.reducerNameFlexBox}> */}
-          {/* <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Import Reducer From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                action={updateReducersFilePath}
-                filePathMap={filePathMap}
-              />
-            </div> */}
-          {/* <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Import Action Types From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                filePathMap={filePathMap}
-                updateTypesFilePath={updateTypesFilePath}
-                id={reducer.id}
-              />
-            </div> */}
-          {/* </div> */}
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='testStatement'>It Statement</label>
@@ -148,3 +127,33 @@ const Reducer = ({ reducer, index }) => {
 };
 
 export default Reducer;
+
+{
+  /* <div id={styles.reducerNameFlexBox}> */
+}
+{
+  /* <div id={styles.reducerName}>
+              <label htmlFor='typesFile'>Import Reducer From</label>
+              <SearchInput
+                options={Object.keys(filePathMap)}
+                dispatch={dispatchToReduxTestCase}
+                action={updateReducersFilePath}
+                filePathMap={filePathMap}
+              />
+            </div> */
+}
+{
+  /* <div id={styles.reducerName}>
+              <label htmlFor='typesFile'>Import Action Types From</label>
+              <SearchInput
+                options={Object.keys(filePathMap)}
+                dispatch={dispatchToReduxTestCase}
+                filePathMap={filePathMap}
+                updateTypesFilePath={updateTypesFilePath}
+                id={reducer.id}
+              />
+            </div> */
+}
+{
+  /* </div> */
+}
