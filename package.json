@@ -28,7 +28,6 @@
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.1.0",
     "fibers": "^5.0.0",
-    "jest-config": "^26.4.2",
     "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
     "node-sass": "^4.12.0",
@@ -67,11 +66,9 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/dom": "^7.22.3",
     "@testing-library/jest-dom": "^5.8.0",
     "@testing-library/react": "^8.0.9",
     "@testing-library/react-hooks": "^3.2.1",
-    "@testing-library/user-event": "^12.1.1",
     "@types/jest": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
