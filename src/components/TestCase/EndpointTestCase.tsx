@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
@@ -13,22 +13,8 @@ import SearchInput from '../SearchInput/SearchInput';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const EndpointTestCase = () => {
-  const [{ endpointTestStatement, endpointStatements }, dispatchToEndpointTestCase] = useContext(
-    EndpointTestCaseContext
-  );
+  const [{ endpointStatements }, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   const [{ filePathMap }] = useContext<any>(GlobalContext);
-
-  // const testDescription = useRef<HTMLInputElement>(null);
-
-  // useEffect(() => {
-  //   if (testDescription && testDescription.current) {
-  //     testDescription.current.focus();
-  //   }
-  // }, []);
-
-  // const handleUpdateEndpointTestStatements = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
-  // };
 
   const reorder = (list: Array<EndpointStatements>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);

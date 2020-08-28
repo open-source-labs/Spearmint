@@ -1,23 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
-import { GlobalContext } from '../../context/reducers/globalReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import {
-  deleteEndpoint,
-  updateEndpoint,
-  updateEndpointTestStatement,
-} from '../../context/actions/endpointTestCaseActions';
-import SearchInput from '../SearchInput/SearchInput';
+import { deleteEndpoint, updateEndpoint } from '../../context/actions/endpointTestCaseActions';
 
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 
 const Endpoint = ({ endpoint, index }) => {
-  const [{ filePathMap }] = useContext(GlobalContext);
-  const [{ endpointTestStatement }, dispatchToEndpointTestCase] = useContext(
-    EndpointTestCaseContext
-  );
+  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
@@ -31,9 +22,13 @@ const Endpoint = ({ endpoint, index }) => {
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
 
-  // const handleUpdateEndpointTestStatements = (e) => {
-  //   dispatchToEndpointTestCase(updateEndpointTestStatement(e.target.value));
-  // };
+  const testDescription = useRef(null);
+
+  useEffect(() => {
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
+  }, []);
 
   return (
     <div>
@@ -57,12 +52,12 @@ const Endpoint = ({ endpoint, index }) => {
               <h3>Endpoint</h3>
             </div>
 
-            {/* // */}
             <div id={styles.groupFlexbox}>
               <div id={styles.serverInput}>
                 <label htmlFor='test-statement'>Test</label>
                 <div id={styles.labelInput}>
                   <input
+                    ref={testDescription}
                     type='text'
                     id={styles.testStatement}
                     value={endpoint.testName}
@@ -71,7 +66,6 @@ const Endpoint = ({ endpoint, index }) => {
                 </div>
               </div>
             </div>
-            {/* //sdfsdf */}
 
             <div id={styles.groupFlexbox}>
               <div id={styles.dropdownWrapper}>

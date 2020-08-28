@@ -30,7 +30,6 @@ export const SearchInput = ({
   };
 
   const handleClick = (e) => {
-    console.log('CLICKED BITCH----------------', action);
     setActiveOption(0);
     setFilteredOptions([]);
     setShowOptions(false);
@@ -41,7 +40,6 @@ export const SearchInput = ({
     if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
     if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
     if (action) {
-      console.log('clicked');
       dispatch(action(selectedOption, filePath));
     }
   };

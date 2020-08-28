@@ -5,7 +5,7 @@ import { EndpointStatements } from '../../utils/endpointTypes';
 
 const EndpointTestStatements = () => {
   const [{ endpointStatements }] = useContext(EndpointTestCaseContext);
-  console.log(endpointStatements);
+
   return (
     <>
       {endpointStatements.map((statement: EndpointStatements, i: number) => {

@@ -413,13 +413,14 @@ function useGenerateTest(test, projectFilePath) {
     // Endpoint Filepath
     const createPathToServer = (serverFilePath) => {
       console.log(serverFilePath);
-      let filePath = path.relative(projectFilePath, serverFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode = `const app = require('../${filePath}');
+      if (serverFilePath) {
+        let filePath = path.relative(projectFilePath, serverFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+        testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest')
       const request = supertest(app)\n`;
-      testFileCode += '\n';
-      console.log('-----------------------------------', testFileCode);
+        testFileCode += '\n';
+      } else testFileCode = 'Please Choose A Server To Test First!';
     };
 
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
