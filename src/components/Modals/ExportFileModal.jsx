@@ -56,17 +56,19 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, file, (err) => {
       if (err) throw err;
     });
+
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
     displayTestFile(projectFilePath + '/__tests__');
   };
 
   const displayTestFile = (testFolderFilePath) => {
     const fileContent = fs.readFileSync(testFolderFilePath + `/${fileName}.test.js`, 'utf8');
+    console.log('fileContent: ', fileContent);
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
   };
-  // co
+
   const filePathMap = {};
   const generateFileTreeObject = (projectFilePath) => {
     const fileArray = fs.readdirSync(projectFilePath).map((fileName) => {
@@ -95,6 +97,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
       }
       return file;
     });
+
     dispatchToGlobal(setFilePathMap(filePathMap));
     return fileArray;
   };
