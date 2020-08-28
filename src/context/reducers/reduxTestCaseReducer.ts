@@ -65,14 +65,15 @@ const createReducer = () => {
   return {
     id: statementId,
     type: 'reducer',
+    itStatement: '',
     typesFileName: '',
     typesFilePath: '',
     reducersFileName: '',
     reducersFilePath: '',
     reducerAction: '',
     initialState: '',
-    initialKey: '',
-    initialValue: '',
+    payloadKey: '',
+    payloadValue: '',
     reducerName: '',
     expectedKey: '',
     expectedValue: '',
@@ -199,14 +200,15 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
     case actionTypes.UPDATE_REDUCER:
       reduxStatements = reduxStatements.map((statement) => {
         if (statement.id === action.payload.id) {
+          statement.itStatement = action.payload.itStatement;
           statement.reducersFileName = action.payload.reducersFileName;
           statement.reducersFilePath = action.payload.reducersFilePath;
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
           statement.reducerAction = action.payload.reducerAction;
           statement.initialState = action.payload.initialState;
-          statement.initialKey = action.payload.initialKey;
-          statement.initialValue = action.payload.initialValue;
+          statement.payloadKey = action.payload.payloadKey;
+          statement.payloadValue = action.payload.payloadValue;
           statement.reducerName = action.payload.reducerName;
           statement.expectedKey = action.payload.expectedKey;
           statement.expectedValue = action.payload.expectedValue;

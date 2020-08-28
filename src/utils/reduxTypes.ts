@@ -187,9 +187,10 @@ export interface UpdateAsync {
 export interface UpdateReducer {
   id: number;
   reducerAction: string;
+  itStatement: string;
   initialState: string;
-  initialKey: string;
-  initialValue: string;
+  payloadKey: string;
+  payloadValue: any;
   reducerName: string;
   typesFileName: string;
   typesFilePath: string;
@@ -269,14 +270,15 @@ interface Async {
 interface Reducer {
   id?: number;
   type?: string;
+  itStatement?: string;
   typesFileName?: string;
   typesFilePath?: string;
   reducersFileName?: string;
   reducersFilePath?: string;
   reducerAction?: string;
   initialState?: string;
-  initialKey?: string;
-  initialValue?: string;
+  payloadKey?: string;
+  payloadValue?: any;
   reducerName?: string;
   expectedValue?: string;
   expectedKey?: string;

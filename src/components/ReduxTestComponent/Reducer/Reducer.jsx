@@ -6,10 +6,12 @@ import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseRed
 import {
   deleteReducer,
   updateReducer,
+  updateReduxTestStatement,
   updateTypesFilePath,
   updateReducersFilePath,
 } from '../../../context/actions/reduxTestCaseActions';
 import SearchInput from '../../SearchInput/SearchInput';
+import { updateHooksTestStatement } from '../../../context/actions/hooksTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -19,7 +21,6 @@ const Reducer = ({ reducer, index }) => {
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChangeReducerFields = (e, field) => {
-    console.log(e.target.value);
     // reducer is a single test statment
     let updatedReducer = { ...reducer };
     // adding key/value pair to test statement
@@ -70,6 +71,15 @@ const Reducer = ({ reducer, index }) => {
           {/* </div> */}
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
+              <label htmlFor='testStatement'>It Statement</label>
+              <input
+                type='text'
+                id='testStatment'
+                placeholder='eg. handles ADD_TODO action properly'
+                onChange={(e) => handleChangeReducerFields(e, 'itStatement')}
+              />
+            </div>
+            <div id={styles.reducerName}>
               <label htmlFor='reducerName'>Reducer Name</label>
               <input
                 type='text'
@@ -78,6 +88,8 @@ const Reducer = ({ reducer, index }) => {
                 onChange={(e) => handleChangeReducerFields(e, 'reducerName')}
               />
             </div>
+          </div>
+          <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='reducerName'>Initial State</label>
               <input
@@ -87,8 +99,6 @@ const Reducer = ({ reducer, index }) => {
                 onChange={(e) => handleChangeReducerFields(e, 'initialState')}
               />
             </div>
-          </div>
-          <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='reducerAction'>Action</label>
               <input
@@ -98,26 +108,25 @@ const Reducer = ({ reducer, index }) => {
                 onChange={(e) => handleChangeReducerFields(e, 'reducerAction')}
               />
             </div>
-            <div id={styles.reducerName}></div>
           </div>
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='initialState'>Payload</label>
+              <label htmlFor='initialState'>Payload (optional. if action requires)</label>
               <input
                 type='text'
                 // id='initialState'
                 placeholder='Key'
-                onChange={(e) => handleChangeReducerFields(e, 'initialKey')}
+                onChange={(e) => handleChangeReducerFields(e, 'payloadKey')}
               />
               <input
                 type='text'
                 id='initialState'
                 placeholder='Value'
-                onChange={(e) => handleChangeReducerFields(e, 'initialValue')}
+                onChange={(e) => handleChangeReducerFields(e, 'payloadValue')}
               />
             </div>
             <div id={styles.reducerName}>
-              <label htmlFor='expectedState'>State After Reducer Function Runs</label>
+              <label htmlFor='expectedState'>Expected State</label>
               <input
                 type='text'
                 placeholder='Key'
