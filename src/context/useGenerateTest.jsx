@@ -282,7 +282,6 @@ function useGenerateTest(test, projectFilePath) {
 
     const addEndpointTestStatements = () => {
       const { endpointStatements } = endpointTestCase;
-      testFileCode += `\n test('${endpointStatements[0].testName}', async (done) => {`;
       endpointStatements.forEach((statement) => {
         switch (statement.type) {
           case 'endpoint':
@@ -291,9 +290,6 @@ function useGenerateTest(test, projectFilePath) {
             return statement;
         }
       });
-      testFileCode += 'done();';
-      testFileCode += '});';
-      testFileCode += '\n';
     };
 
     /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
@@ -584,10 +580,12 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-    // Endpoint Jest Test Code
+    // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      testFileCode += `const response = await request.${statement.method}('${statement.route}')
-        expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')
+      expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+      testFileCode += '});';
+      testFileCode += '\n';
     };
 
     // Puppeteer Form Jest Test Code
