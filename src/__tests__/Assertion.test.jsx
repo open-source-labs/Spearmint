@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { ReactTestCaseContext } from '../context/reducers/reactTestCaseReducer';
 import { MockDataContext } from '../context/reducers/mockDataReducer';
 import Assertion from '../components/ReactTestComponent/Assertion/Assertion';
+import userEvent from '@testing-library/user-event';
 
 const dispatchToReactTextCase = jest.fn();
 const dispatchToMockData = jest.fn();
@@ -35,13 +35,21 @@ const mockDataState = {
 
 describe('Assertion ', () => {
   it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(
+    // const div = document.createElement('div');
+
+    const { getByText, getAllByRole, debug } = render(
       <ReactTestCaseContext.Provider value={[reactTestCaseState, dispatchToReactTextCase]}>
         <MockDataContext.Provider value={[mockDataState, dispatchToMockData]}>
           <Assertion {...reactTestCaseState} />
         </MockDataContext.Provider>
       </ReactTestCaseContext.Provider>
     );
+    expect(getByText('Assertion')).toBeInTheDocument;
+
+    expect(getAllByRole('textbox')).toBeInTheDocument;
+    // expect()
+    // expect(screen.getAllByRole('Query', { name: 'Query' })).toHaveValue('Hello,\nWorld!');
+
+    debug();
   });
 });

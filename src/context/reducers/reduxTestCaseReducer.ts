@@ -65,14 +65,18 @@ const createReducer = () => {
   return {
     id: statementId,
     type: 'reducer',
+    itStatement: '',
     typesFileName: '',
     typesFilePath: '',
     reducersFileName: '',
     reducersFilePath: '',
     reducerAction: '',
     initialState: '',
+    payloadKey: '',
+    payloadValue: '',
     reducerName: '',
-    expectedState: '',
+    expectedKey: '',
+    expectedValue: '',
   };
 };
 export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) => {
@@ -196,14 +200,18 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
     case actionTypes.UPDATE_REDUCER:
       reduxStatements = reduxStatements.map((statement) => {
         if (statement.id === action.payload.id) {
+          statement.itStatement = action.payload.itStatement;
           statement.reducersFileName = action.payload.reducersFileName;
           statement.reducersFilePath = action.payload.reducersFilePath;
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
           statement.reducerAction = action.payload.reducerAction;
           statement.initialState = action.payload.initialState;
+          statement.payloadKey = action.payload.payloadKey;
+          statement.payloadValue = action.payload.payloadValue;
           statement.reducerName = action.payload.reducerName;
-          statement.expectedState = action.payload.expectedState;
+          statement.expectedKey = action.payload.expectedKey;
+          statement.expectedValue = action.payload.expectedValue;
         }
         return statement;
       });
@@ -275,7 +283,6 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         reduxStatements,
       };
     case actionTypes.OPEN_INFO_MODAL:
-      console.log('in here');
       return {
         ...state,
         modalOpen: true,
