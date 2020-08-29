@@ -131,16 +131,16 @@ function useGenerateTest(test, projectFilePath) {
     // Async Import Statements
     function addAsyncImportStatement() {
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+        testFileCode = `import '@testing-library/jest-dom/extend-expect';`.concat(testFileCode);
       }
       if (
         !testFileCode.includes(`import configureMockStore from 'redux-mock-store';
       import thunk from 'redux-thunk';
       import fetchMock from 'fetch-mock';`)
       ) {
-        testFileCode += `import configureMockStore from 'redux-mock-store';
+        testFileCode = `import configureMockStore from 'redux-mock-store';
       import thunk from 'redux-thunk';
-      import fetchMock from 'fetch-mock';`;
+      import fetchMock from 'fetch-mock';`.concat(testFileCode);
       }
     }
 
@@ -149,29 +149,39 @@ function useGenerateTest(test, projectFilePath) {
         !testFileCode.includes(`\n const middlewares = [thunk];
       const mockStore = configureMockStore(middlewares);`)
       ) {
-        testFileCode += `\n const middlewares = [thunk];
-      const mockStore = configureMockStore(middlewares);`;
+        testFileCode = `\n const middlewares = [thunk];
+      const mockStore = configureMockStore(middlewares);`.concat(testFileCode);
       }
     }
 
     // AC Import Statements
     function addActionCreatorImportStatement() {
       if (!testFileCode.includes(`import { fake } from 'test-data-bot';`)) {
-        testFileCode += `import { fake } from 'test-data-bot';`;
+        testFileCode = `import { fake } from 'test-data-bot';`.concat(testFileCode);
       }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+        testFileCode = `import '@testing-library/jest-dom/extend-expect';`.concat(testFileCode);
       }
     }
 
     // Reducer Import Statements
     function addReducerImportStatement() {
-      if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
-        testFileCode += `import { render } from '@testing-library/react';`;
-      }
+      // if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+      //   testFileCode += `import { render } from '@testing-library/react';`;
+      // }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+        testFileCode += `import '@testing-library/jest-dom/extend-expect';\n`;
       }
+    }
+
+    function addReducerDescribeBlock(reducer) {
+      // if (!testFileCode.includes('describe')) {
+      // testFileCode += `\n describe('${reducer.reducerName} works properly', () => {
+      testFileCode += `let state = ${reducer.initialState};
+
+        beforeEach(() => {
+          state = ${reducer.initialState}
+        });\n`;
     }
 
     // Middleware Import Statements
@@ -183,7 +193,16 @@ function useGenerateTest(test, projectFilePath) {
 
     // Redux Test Statements
     function addReduxTestStatements() {
+      // if (statement.type === 'aysnc') {
       testFileCode += `\n describe('${reduxTestCase.reduxTestStatement}', () => {`;
+
+      for (let i = 0; i < reduxTestCase.reduxStatements.length; i++) {
+        let statement = reduxTestCase.reduxStatements[i];
+        if (statement.type === 'reducer') {
+          addReducerDescribeBlock(statement);
+          break;
+        }
+      }
       reduxTestCase.reduxStatements.forEach((statement) => {
         switch (statement.type) {
           case 'async':
@@ -198,8 +217,11 @@ function useGenerateTest(test, projectFilePath) {
             return statement;
         }
       });
-      testFileCode += '});';
-      testFileCode += '\n';
+      // testFileCode += '});';
+      // testFileCode += '\n';
+      if (testFileCode.includes('beforeEach')) {
+        testFileCode += '});\n';
+      }
     }
 
     /* ------------------------------------------ HOOKS & CONTEXT IMPORT + TEST STATEMENTS ------------------------------------------ */
@@ -355,8 +377,8 @@ function useGenerateTest(test, projectFilePath) {
         filePath = path.relative(projectFilePath, statement.filePath);
         filePath = filePath.replace(/\\/g, '/');
       }
-      if (!testFileCode.includes(`import * as actions from`) && filePath) {
-        testFileCode += `import * as actions from '../${filePath}';`;
+      if (!testFileCode.includes(`import { actionTypes } from from`) && filePath) {
+        testFileCode += `import { actionTypes } from '../${filePath}';`;
       }
     };
 
@@ -367,8 +389,12 @@ function useGenerateTest(test, projectFilePath) {
         filePath = path.relative(projectFilePath, statement.reducersFilePath);
         filePath = filePath.replace(/\\/g, '/');
       }
-      if (!testFileCode.includes(`import  {${statement.reducerName}} from`) && filePath) {
-        testFileCode += `import  {${statement.reducerName}} from '../${filePath}';`;
+      if (
+        !testFileCode.includes(
+          `import {${statement.reducerName}, ${statement.initialState}} from` && filePath
+        )
+      ) {
+        testFileCode += `import  {${statement.reducerName}, ${statement.initialState}} from '../${filePath}';`;
       }
     }
 
@@ -475,7 +501,8 @@ function useGenerateTest(test, projectFilePath) {
 
     // Middleware Jest Test Code
     const addMiddleware = (middleware) => {
-      testFileCode += `const ${middleware.queryValue} = () => {
+      testFileCode += `\n it('', () => {
+      const ${middleware.queryValue} = () => {
           const store = {
             getState: jest.fn(() => ({})),
             dispatch: jest.fn()
@@ -483,7 +510,8 @@ function useGenerateTest(test, projectFilePath) {
           const next = jest.fn()
           const invoke = action => ${middleware.queryType}(store)(next)(action)
           return { store, next, invoke } 
-        }
+          }
+        });
         \n`;
 
       if (middleware.queryValue === 'passes_non_functional_arguments') {
@@ -509,7 +537,19 @@ function useGenerateTest(test, projectFilePath) {
 
     // Reducer Jest Test Code
     function addReducer(reducer) {
-      testFileCode += `expect(${reducer.reducerName}(${reducer.initialState},{${reducer.reducerAction}})).toEqual(${reducer.expectedState})`;
+      // pass in reducer to expect. pass in initial state as 1st arg, key
+      // if payload exists, add key/value pair to testfile code
+      if (reducer.payloadKey) {
+        testFileCode += `it('${reducer.itStatement}', () => {
+        expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}, ${reducer.payloadKey}: ${reducer.payloadValue} })).toEqual({
+        ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+        `;
+      } else {
+        testFileCode += `it('${reducer.itStatement}', () => {
+          expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}})).toEqual({
+          ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+          `;
+      }
     }
 
     // Async AC Jest Test Code

@@ -8,7 +8,6 @@ export const globalState = {
   projectUrl: null,
   isProjectLoaded: false,
   fileTree: null,
-  componentName: '',
   isFileDirectoryOpen: true,
   isRightPanelOpen: true,
   rightPanelDisplay: 'browserView',
@@ -47,12 +46,7 @@ export const globalReducer = (state, action) => {
         ...state,
         fileTree,
       };
-    case actionTypes.SET_COMPONENT_NAME:
-      const componentName = action.componentName;
-      return {
-        ...state,
-        componentName,
-      };
+
     case actionTypes.TOGGLE_FILE_DIRECTORY:
       const isFileDirectoryOpen = !state.isFileDirectoryOpen;
       return {
@@ -73,13 +67,7 @@ export const globalReducer = (state, action) => {
         rightPanelDisplay,
         isRightPanelOpen: true,
       };
-    case actionTypes.DISPLAY_FILE_CODE:
-      const displayedFileCode = action.displayedFileCode;
-      return {
-        ...state,
-        displayedFileCode,
-        file: '',
-      };
+
     case actionTypes.TOGGLE_FOLDER_VIEW:
       const isFolderOpen = { ...state.isFolderOpen };
       isFolderOpen[action.filePath] = !isFolderOpen[action.filePath];
