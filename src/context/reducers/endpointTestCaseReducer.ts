@@ -1,52 +1,51 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/endpointTestCaseActions';
 import { EndpointTestCaseState } from '../../utils/endpointTypes';
+import { EndpointStatements } from '../../utils/endpointTypes';
 
 export const EndpointTestCaseContext: any = createContext(null);
 
-export const endpointTestCaseState = {
-  modalOpen: false,
-  endpointTestStatement: '',
-  endpointStatements: [
-    {
-      id: 0,
-      type: 'endpoint',
-      serverFileName: '',
-      serverFilePath: '',
-      method: '',
-      route: '',
-      expectedResponse: '',
-      value: '',
-    },
-  ],
-};
+interface Action {
+  type: string;
+  id?: number;
+  serverFileName?: string;
+  serverFilePath?: string;
+  draggableStatements?: Array<EndpointStatements>;
+}
 
-let statementId = 0;
-
-const createEndpoint = () => ({
-  id: statementId++,
+const newEndpoint = {
+  id: 0,
   type: 'endpoint',
-  serverFileName: '',
-  serverFilePath: '',
+  testName: '',
   method: '',
   route: '',
   expectedResponse: '',
   value: '',
-});
+  headers: {},
+  headerValues: {},
+};
 
-export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: any) => {
+export const endpointTestCaseState = {
+  modalOpen: false,
+  serverFilePath: '',
+  serverFileName: '',
+  endpointStatements: [
+    {
+      ...newEndpoint,
+    },
+  ],
+};
+
+export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Action) => {
   Object.freeze(state);
   let endpointStatements = [...state.endpointStatements];
 
   switch (action.type) {
-    case actionTypes.UPDATE_ENDPOINT_TEST_STATEMENT:
-      const { endpointTestStatement } = action;
-      return {
-        ...state,
-        endpointTestStatement,
-      };
     case actionTypes.ADD_ENDPOINT:
-      endpointStatements.push(createEndpoint());
+      endpointStatements.push({
+        ...newEndpoint,
+        id: endpointStatements[endpointStatements.length - 1].id + 1,
+      });
       return {
         ...state,
         endpointStatements,
@@ -59,51 +58,30 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: an
         endpointStatements,
       };
     case actionTypes.UPDATE_ENDPOINT:
-      endpointStatements = endpointStatements.map((statement) => {
-        if (statement.id === action.id) {
-          statement.serverFileName = action.serverFileName;
-          statement.serverFilePath = action.serverFilePath;
-          statement.method = action.method;
-          statement.route = action.route;
-          statement.expectedResponse = action.expectedResponse;
-          statement.value = action.value;
-        }
-        return statement;
+      let newStatement = endpointStatements.find((statement) => {
+        return statement.id === action.id!;
+      });
+      Object.assign(newStatement, action, {
+        type: 'endpoint',
       });
       return {
         ...state,
         endpointStatements,
       };
     case actionTypes.UPDATE_SERVER_FILEPATH:
-      endpointStatements = endpointStatements.map((statement) => {
-        if (statement.type === 'endpoint') {
-          statement.serverFileName = action.serverFileName;
-          statement.serverFilePath = action.serverFilePath;
-        }
-        return statement;
-      });
+      const { serverFilePath, serverFileName } = action;
       return {
         ...state,
-        endpointStatements,
+        serverFilePath,
+        serverFileName,
       };
     case actionTypes.CREATE_NEW_ENDPOINT_TEST:
       return {
         endpointTestStatement: '',
-        endpointStatements: [
-          {
-            id: 0,
-            type: 'endpoint',
-            serverFileName: '',
-            serverFilePath: '',
-            method: '',
-            route: '',
-            expectedResponse: '',
-            value: '',
-          },
-        ],
+        endpointStatements: [{ ...newEndpoint }],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
-      endpointStatements = [...action.draggableStatements];
+      endpointStatements = [...action.draggableStatements!];
       return {
         ...state,
         endpointStatements,

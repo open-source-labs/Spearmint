@@ -265,20 +265,24 @@ function useGenerateTest(test, projectFilePath) {
 
     // Endpoint Import Statements
     const addEndpointImportStatements = () => {
-      endpointTestCase.endpointStatements.forEach((statement) => {
-        switch (statement.type) {
-          case 'endpoint':
-            return createPathToServer(statement);
-          default:
-            return statement;
-        }
-      });
+      let { serverFilePath } = endpointTestCase;
+      createPathToServer(serverFilePath);
       testFileCode += '\n';
+
+      // endpointTestCase.endpointStatements.forEach((statement) => {
+      //   switch (statement.type) {
+      //     case 'endpoint':
+      //       return createPathToServer(statement);
+      //     default:
+      //       return statement;
+      //   }
+      // });
+      // testFileCode += '\n';
     };
 
     const addEndpointTestStatements = () => {
-      testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async (done) => {`;
-      endpointTestCase.endpointStatements.forEach((statement) => {
+      const { endpointStatements } = endpointTestCase;
+      endpointStatements.forEach((statement) => {
         switch (statement.type) {
           case 'endpoint':
             return addEndpoint(statement);
@@ -286,9 +290,6 @@ function useGenerateTest(test, projectFilePath) {
             return statement;
         }
       });
-      testFileCode += 'done();';
-      testFileCode += '});';
-      testFileCode += '\n';
     };
 
     /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
@@ -349,30 +350,50 @@ function useGenerateTest(test, projectFilePath) {
 
     // Actions Filepath
     const createPathToActions = (statement) => {
-      let filePath = path.relative(projectFilePath, statement.filePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as actions from '../${filePath}';`;
+      let filePath = null;
+      if (statement.filePath) {
+        filePath = path.relative(projectFilePath, statement.filePath);
+        filePath = filePath.replace(/\\/g, '/');
+      }
+      if (!testFileCode.includes(`import * as actions from`) && filePath) {
+        testFileCode += `import * as actions from '../${filePath}';`;
+      }
     };
 
     // Reducer Filepath
     function createPathToReducers(statement) {
-      let filePath = path.relative(projectFilePath, statement.reducersFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import ${statement.reducerName} from '../${filePath}';`;
+      let filePath = null;
+      if (statement.reducersFilePath) {
+        filePath = path.relative(projectFilePath, statement.reducersFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+      }
+      if (!testFileCode.includes(`import  {${statement.reducerName}} from`) && filePath) {
+        testFileCode += `import  {${statement.reducerName}} from '../${filePath}';`;
+      }
     }
 
     // Types Filepath
     function createPathToTypes(statement) {
-      let filePath = path.relative(projectFilePath, statement.typesFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as types from '../${filePath}';`;
+      let filePath = null;
+      if (statement.typesFilePath) {
+        filePath = path.relative(projectFilePath, statement.typesFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+      }
+      if (!testFileCode.includes(`import * as types from `) && filePath) {
+        testFileCode += `import * as types from '../${filePath}';`;
+      }
     }
 
     // Middleware Filepath
     function createPathToMiddlewares(statement) {
-      let filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import * as middleware from '../${filePath}';`;
+      let filePath = null;
+      if (statement.middlewaresFilePath) {
+        filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+      }
+      if (!testFileCode.includes(`import * as middleware from`) && filePath) {
+        testFileCode += `import * as middleware from '../${filePath}';`;
+      }
     }
 
     // Hooks Filepath
@@ -390,14 +411,16 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // Endpoint Filepath
-    const createPathToServer = (statement) => {
-      let filePath = path.relative(projectFilePath, statement.serverFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode = `const app = require('../${filePath}');
+    const createPathToServer = (serverFilePath) => {
+      console.log(serverFilePath);
+      if (serverFilePath) {
+        let filePath = path.relative(projectFilePath, serverFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+        testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest')
       const request = supertest(app)\n`;
-
-      testFileCode += '\n';
+        testFileCode += '\n';
+      } else testFileCode = 'Please Choose A Server To Test First!';
     };
 
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
@@ -558,10 +581,12 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-    // Endpoint Jest Test Code
+    // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      testFileCode += `const response = await request.${statement.method}('${statement.route}')
-        expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')
+      expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+      testFileCode += '});';
+      testFileCode += '\n';
     };
 
     // Puppeteer Form Jest Test Code

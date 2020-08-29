@@ -48,7 +48,7 @@ const Middleware = ({ middleware, index }) => {
             <h3>Middleware</h3>
           </div>
 
-          <div id={styles.eventTypeFlexBox}>
+          {/* <div id={styles.eventTypeFlexBox}>
             <div id={styles.middlewareBox}>
               <label htmlFor='typesFile'>Import Middleware From</label>
               <SearchInput
@@ -58,7 +58,7 @@ const Middleware = ({ middleware, index }) => {
                 filePathMap={filePathMap}
               />
             </div>
-          </div>
+          </div> */}
 
           <div>
             <div id={styles.dropdownFlex}>

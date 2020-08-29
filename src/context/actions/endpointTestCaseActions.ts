@@ -2,7 +2,7 @@ import { EndpointStatements } from '../../utils/endpointTypes';
 
 export const actionTypes = {
   UPDATE_ENDPOINT_STATEMENTS_ORDER: 'UPDATE_ENDPOINT_STATEMENTS_ORDER',
-  UPDATE_ENDPOINT_TEST_STATEMENT: 'UPDATE_ENDPOINT_TEST_STATEMENT',
+  // UPDATE_SERVER_FILE_PATH: 'UPDATE_SERVER_FILE_PATH',
   TOGGLE_ENDPOINT: 'TOGGLE_ENDPOINT',
   CREATE_NEW_ENDPOINT_TEST: 'CREATE_NEW_ENDPOINT_TEST',
   UPDATE_SERVER_FILEPATH: 'UPDATE_SERVER_FILEPATH',
@@ -18,11 +18,6 @@ export const actionTypes = {
 export const updateEndpointStatementsOrder = (draggableStatements: string) => ({
   type: actionTypes.UPDATE_ENDPOINT_STATEMENTS_ORDER,
   draggableStatements,
-});
-
-export const updateEndpointTestStatement = (endpointTestStatement: string) => ({
-  type: actionTypes.UPDATE_ENDPOINT_TEST_STATEMENT,
-  endpointTestStatement,
 });
 
 export const toggleEndpoint = () => ({

@@ -1,25 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
-import { GlobalContext } from '../../context/reducers/globalReducer';
+import style from '../ReactTestComponent/Render/Render.module.scss';
+import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import {
-  deleteEndpoint,
-  updateEndpoint,
-  updateServerFilePath,
-} from '../../context/actions/endpointTestCaseActions';
-import SearchInput from '../SearchInput/SearchInput';
+import { deleteEndpoint, updateEndpoint } from '../../context/actions/endpointTestCaseActions';
 
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
+const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const Endpoint = ({ endpoint, index }) => {
-  const [{ filePathMap }] = useContext(GlobalContext);
-  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [state, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
-    updatedEndpoint[field] = e.target.value;
+    if (field === 'headers' || field === 'headerValues') {
+      updatedEndpoint[field][e.target.id] = e.target.value;
+    } else updatedEndpoint[field] = e.target.value;
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
   };
 
@@ -27,6 +25,41 @@ const Endpoint = ({ endpoint, index }) => {
     // delete endpoint returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
+
+  const testDescription = useRef(null);
+
+  useEffect(() => {
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
+  }, []);
+
+  const statement = {
+    byId: {
+      statement0: {
+        id: 'statement0',
+        itId: 'it0',
+        describeId: 'describe0',
+        type: 'render',
+        props: [
+          {
+            id: 1,
+            statementId: 1,
+            propKey: '',
+            propValue: '',
+          },
+          {
+            id: 2,
+            statementId: 1,
+            propKey: '',
+            propValue: '',
+          },
+        ],
+      },
+    },
+  };
+
+  //
 
   return (
     <div>
@@ -52,13 +85,14 @@ const Endpoint = ({ endpoint, index }) => {
 
             <div id={styles.groupFlexbox}>
               <div id={styles.serverInput}>
-                <label htmlFor='endpointFile'>Import Server From</label>
+                <label htmlFor='test-statement'>Test</label>
                 <div id={styles.labelInput}>
-                  <SearchInput
-                    options={Object.keys(filePathMap)}
-                    dispatch={dispatchToEndpointTestCase}
-                    action={updateServerFilePath}
-                    filePathMap={filePathMap}
+                  <input
+                    ref={testDescription}
+                    type='text'
+                    id={styles.testStatement}
+                    value={endpoint.testName}
+                    onChange={(e) => handleChangeEndpointFields(e, 'testName')}
                   />
                 </div>
               </div>
@@ -120,6 +154,45 @@ const Endpoint = ({ endpoint, index }) => {
                 </div>
               </div>
             </div>
+
+            {/* //// */}
+
+            <div id={style.RenderContainer}>
+              <div className={'props'}>
+                {statement.byId.statement0.props.length > 0 && (
+                  <div>
+                    <div id={style.renderProp}>
+                      <label htmlFor='Header' id={style.propKeyLabel}>
+                        Header
+                      </label>
+                      <label htmlFor='Value' id={style.propValLabel}>
+                        Value
+                      </label>
+                    </div>
+                    <hr />
+                    {statement.byId.statement0.props.map((prop, i) => {
+                      return (
+                        <div id={styled.renderPropsFlexBox}>
+                          <input
+                            type='text'
+                            id={i}
+                            onChange={(e) => handleChangeEndpointFields(e, 'headers')}
+                          />
+                          <input
+                            type='text'
+                            id={i}
+                            onChange={(e) => handleChangeEndpointFields(e, 'headerValues')}
+                          />
+                          <img src={minusIcon} alt='delete' />
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ////         */}
           </div>
         )}
       </Draggable>
