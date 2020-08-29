@@ -9,7 +9,7 @@ export const SearchInput = ({
   reactTestCase,
   updateTypesFilePath,
   updateActionsFilePath,
-  id,
+  type,
 }) => {
   const [activeOption, setActiveOption] = useState(0);
   const [filteredOptions, setFilteredOptions] = useState([]);
@@ -35,11 +35,13 @@ export const SearchInput = ({
     setShowOptions(false);
     setUserInput(e.currentTarget.innerText);
 
-    const selectedOption = e.target.id;
+    const selectedOption = e.target.type;
     const filePath = filePathMap[selectedOption] || '';
-    if (updateTypesFilePath && id) dispatch(updateTypesFilePath(selectedOption, filePath, id));
-    if (updateActionsFilePath && id) dispatch(updateActionsFilePath(selectedOption, filePath, id));
-    if (action) dispatch(action(selectedOption, filePath));
+    if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
+    if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
+    if (action) {
+      dispatch(action(selectedOption, filePath));
+    }
   };
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) {
@@ -48,7 +50,11 @@ export const SearchInput = ({
       setUserInput(filteredOptions[activeOption]);
       const selectedOption = filteredOptions[activeOption];
       const filePath = filePathMap[selectedOption] || '';
-      dispatch(action(selectedOption, filePath));
+      if (action) dispatch(action(selectedOption, filePath));
+      if (updateActionsFilePath) {
+        dispatch(updateActionsFilePath(selectedOption, filePath, type));
+      }
+      if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {
         return;
@@ -71,7 +77,7 @@ export const SearchInput = ({
               <li
                 className={index === activeOption ? 'option-active' : ''}
                 key={optionName}
-                id={optionName}
+                type={optionName}
                 onClick={handleClick}
               >
                 {optionName}
