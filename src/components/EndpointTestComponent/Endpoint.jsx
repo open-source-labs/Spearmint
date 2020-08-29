@@ -1,11 +1,14 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
+import style from '../ReactTestComponent/Render/Render.module.scss';
+import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { deleteEndpoint, updateEndpoint } from '../../context/actions/endpointTestCaseActions';
 
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
+const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const Endpoint = ({ endpoint, index }) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
@@ -13,7 +16,6 @@ const Endpoint = ({ endpoint, index }) => {
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
     updatedEndpoint[field] = e.target.value;
-    console.log(updatedEndpoint);
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
   };
 
@@ -29,6 +31,35 @@ const Endpoint = ({ endpoint, index }) => {
       testDescription.current.focus();
     }
   }, []);
+
+  //
+
+  const statement = {
+    byId: {
+      statement0: {
+        id: 'statement0',
+        itId: 'it0',
+        describeId: 'describe0',
+        type: 'render',
+        props: [
+          {
+            id: 1,
+            statementId: 1,
+            propKey: '',
+            propValue: '',
+          },
+          {
+            id: 2,
+            statementId: 1,
+            propKey: '',
+            propValue: '',
+          },
+        ],
+      },
+    },
+  };
+
+  //
 
   return (
     <div>
@@ -123,6 +154,37 @@ const Endpoint = ({ endpoint, index }) => {
                 </div>
               </div>
             </div>
+
+            {/* //// */}
+
+            <div id={style.RenderContainer}>
+              <div className={'props'}>
+                {statement.byId.statement0.props.length > 0 && (
+                  <div>
+                    <div id={style.renderProp}>
+                      <label htmlFor='Header' id={style.propKeyLabel}>
+                        Header
+                      </label>
+                      <label htmlFor='Value' id={style.propValLabel}>
+                        Value
+                      </label>
+                    </div>
+                    <hr />
+                    {statement.byId.statement0.props.map((prop, i) => {
+                      return (
+                        <div id={styled.renderPropsFlexBox}>
+                          <input type='text' id='propKey' value={null} />
+                          <input type='text' id='propKey2' value={''} />
+                          <img src={minusIcon} alt='delete' />
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ////         */}
           </div>
         )}
       </Draggable>
