@@ -1,11 +1,12 @@
 const remote = window.require('electron').remote;
+const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
 
 function useGenerateTest(test, projectFilePath) {
   return (testState, mockDataState) => {
-    let testFileCode = 'import React from "react";';
-
+    let testFileCode = '';
+    // import React from "react";
     /* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // React Import Statements
@@ -182,7 +183,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // Redux Test Statements
     function addReduxTestStatements() {
-      testFileCode += `\n test('${reduxTestCase.reduxTestStatement}', () => {`;
+      testFileCode += `\n describe('${reduxTestCase.reduxTestStatement}', () => {`;
       reduxTestCase.reduxStatements.forEach((statement) => {
         switch (statement.type) {
           case 'async':
@@ -244,7 +245,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks & Context Test Statements
     const addHooksTestStatements = () => {
-      testFileCode += `\n test('${hooksTestCase.hooksTestStatement}', () => {`;
+      testFileCode += `\n describe('${hooksTestCase.hooksTestStatement}', () => {`;
       hooksTestCase.hooksStatements.forEach((statement) => {
         switch (statement.type) {
           case 'hook-updates':
@@ -374,14 +375,27 @@ function useGenerateTest(test, projectFilePath) {
     // Types Filepath
     function createPathToTypes(statement) {
       let filePath = null;
+      let bool = false;
       if (statement.typesFilePath) {
         filePath = path.relative(projectFilePath, statement.typesFilePath);
         filePath = filePath.replace(/\\/g, '/');
+        bool = areActionTypesDeclaredInSameFileAsActionCreators(statement.typesFilePath);
       }
-      if (!testFileCode.includes(`import * as types from `) && filePath) {
-        testFileCode += `import * as types from '../${filePath}';`;
+      if (bool) {
+        if (!testFileCode.includes(`import { actionTypes } from `) && filePath) {
+          testFileCode += `import { actionTypes } from '../${filePath}';`;
+        }
+      } else {
+        if (!testFileCode.includes(`import * as actionTypes from `) && filePath) {
+          testFileCode += `import * as actionTypes from '../${filePath}';`;
+        }
       }
     }
+    const areActionTypesDeclaredInSameFileAsActionCreators = (file) => {
+      const page = fs.readFileSync(file);
+      if (page.includes(`export const actionTypes`)) return true;
+      else return false;
+    };
 
     // Middleware Filepath
     function createPathToMiddlewares(statement) {
@@ -500,28 +514,47 @@ function useGenerateTest(test, projectFilePath) {
 
     // Async AC Jest Test Code
     const addAsync = (async) => {
-      testFileCode += `fetchMock.${async.method}('${async.route}', ${async.requestBody});
-        const expectedActions = ${async.expectedResponse};
-        const store = mockStore(${async.store});
-        return store.dispatch(actions.${async.asyncFunction}()).then(() => {
-          expect(store.getActions()).toEqual(expectedActions)
-        })`;
+      let route = '*';
+      if (async.route) route = async.route;
+      let method = 'any';
+      if (async.method) method = async.method;
+      let expectedAction = `const expectedAction = { 
+        type: actionTypes.${async.actionType}, 
+        response};`;
+      if (async.payloadKey) {
+        expectedAction = `const expectedAction = { 
+          type: actionTypes.${async.actionType}, 
+          response,
+          ${async.payloadKey}
+        };`;
+      }
+      testFileCode += `it('${async.it}', () => {fetchMock.${method}('${route}', 
+      {${async.responseKey}: ${async.responseValue}});
+        const response = fetchMock.lastResponse(undefined)
+        const fetchFunc = (res) => {return actions.${async.asyncFunction}(res)}
+        ${expectedAction}
+        const store = mockStore({});
+        return store.dispatch(fetchFunc(response)).then(() => {
+          expect(store.getActions()[0]).toEqual(expectedAction)
+        })
+        store.clearActions()})
+        `;
     };
 
     // Action Creator Jest Test Code
     const addActionCreator = (actionCreator) => {
       if (actionCreator.payloadKey && actionCreator.payloadType) {
-        testFileCode += `const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
+        testFileCode += `it('should return expected action', () => {const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
           const expectedAction = { 
-            type: types.${actionCreator.actionType}, 
-            ${actionCreator.payloadKey} 
+            type: actionTypes.${actionCreator.actionType}, 
+            ${actionCreator.payloadKey}, 
           };
-          expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction);`;
+          expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction)});`;
       } else {
-        testFileCode += `const expectedAction = { 
-            type: types.${actionCreator.actionType} 
+        testFileCode += `it('should return expected action', () => {const expectedAction = { 
+            type: actionTypes.${actionCreator.actionType}, 
           }; 
-          expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction);`;
+          expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction)});`;
       }
     };
 

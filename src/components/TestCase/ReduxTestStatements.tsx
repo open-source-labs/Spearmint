@@ -79,7 +79,7 @@ const ReduxTestStatements = () => {
       updateActionsFilePath,
       null,
       'action-creator',
-      'Import Actions From'
+      'Import Action Creators From'
     );
     aCImports = (
       <div id={styles.reducerNameFlexBox}>
@@ -102,7 +102,7 @@ const ReduxTestStatements = () => {
         updateActionsFilePath,
         null,
         'async',
-        'Import Actions From'
+        'Import Action Creators From'
       );
       asyncImports = (
         <div id={styles.reducerNameFlexBox}>

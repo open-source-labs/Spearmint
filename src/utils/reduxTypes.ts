@@ -182,6 +182,9 @@ export interface UpdateAsync {
   store: string;
   matcher: string;
   expectedResponse: string;
+  responseKey: string;
+  responseValue: string;
+  it: string;
 }
 
 export interface UpdateReducer {
@@ -261,6 +264,9 @@ interface Async {
   matcher?: string;
   expectedResponse?: string;
   actionsFile?: string;
+  responseKey?: string;
+  responseValue?: string;
+  it?: string;
 }
 
 interface Reducer {

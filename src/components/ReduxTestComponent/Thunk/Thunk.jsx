@@ -46,33 +46,19 @@ const Async = ({ async, index }) => {
             <h3>Asynchronous Action Creator</h3>
           </div>
 
-          {/* <div id={styles.groupFlexbox}>
-            <div id={styles.labelInput}>
-              <label htmlFor='actionsFile'>Import Actions From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                updateActionsFilePath={updateActionsFilePath}
-                id={async.id}
-                filePathMap={filePathMap}
-              />
-            </div>
-
-            <div id={styles.labelInput}>
-              <label htmlFor='typesFile'>Import Actions Types From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                updateTypesFilePath={updateTypesFilePath}
-                id={async.id}
-                filePathMap={filePathMap}
-              />
-            </div>
-          </div> */}
-
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
-              <label htmlFor='asyncFunction'>Async Function</label>
+              <label htmlFor='it'>it should...</label>
+              <input
+                type='text'
+                name='it'
+                placeholder='eg/ on successful request return expected action'
+                onChange={(e) => handleChangeAsyncFields(e, 'it')}
+              />
+            </div>
+
+            <div id={styles.labelInput}>
+              <label htmlFor='asyncFunction'>Action Creator</label>
               <input
                 type='text'
                 name='asyncFunction'
@@ -81,7 +67,7 @@ const Async = ({ async, index }) => {
             </div>
 
             <div id={styles.dropdownWrapper}>
-              <label htmlFor='method'>Method</label>
+              <label htmlFor='method'>Method (optional)</label>
               <div id={styles.dropdownFlex}>
                 <select
                   id='method'
@@ -97,7 +83,7 @@ const Async = ({ async, index }) => {
               </div>
             </div>
             <div id={styles.labelInput}>
-              <label htmlFor='route'>Route</label>
+              <label htmlFor='route'>Route (optional)</label>
               <div id={styles.inputFlexBox}>
                 <input
                   type='text'
@@ -111,6 +97,27 @@ const Async = ({ async, index }) => {
 
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
+              <label htmlFor='responseKey'>Response Key</label>
+              <div id={styles.inputFlexBox}>
+                <input
+                  type='text'
+                  name='responseKey'
+                  onChange={(e) => handleChangeAsyncFields(e, 'responseKey')}
+                />
+              </div>
+            </div>
+            <div id={styles.labelInput}>
+              <label htmlFor='responseValue'> Response Value</label>
+              <div id={styles.inputFlexBox}>
+                <input
+                  type='text'
+                  name='responseValue'
+                  onChange={(e) => handleChangeAsyncFields(e, 'responseValue')}
+                />
+              </div>
+            </div>
+
+            {/* <div id={styles.labelInput}>
               <label htmlFor='requestBody'>Request Body</label>
               <div id={styles.inputFlexBox}>
                 <input
@@ -125,9 +132,9 @@ const Async = ({ async, index }) => {
                   </span>
                 </span>
               </div>
-            </div>
+            </div> */}
 
-            <div id={styles.labelInput}>
+            {/* <div id={styles.labelInput}>
               <label htmlFor='store'>Store</label>
               <div id={styles.inputFlexBox}>
                 <input
@@ -142,11 +149,11 @@ const Async = ({ async, index }) => {
                   </span>
                 </span>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div id={styles.groupFlexbox}>
-            <div id={styles.dropdownWrapper}>
+            {/* <div id={styles.dropdownWrapper}>
               <label htmlFor='matcher'>Matcher</label>
               <div id={styles.dropdownFlex}>
                 <select
@@ -159,9 +166,20 @@ const Async = ({ async, index }) => {
                   <option value='toContainEqual'>toContainEqual</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
-            <div id={styles.labelInput}>
+            <div id={styles.payloadFlexBox}>
+              <div id={styles.labelInput}>
+                <label htmlFor='payloadKey'>Payload Key (optional)</label>
+                <input
+                  type='text'
+                  id='payloadKey'
+                  onChange={(e) => handleChangeAsyncFields(e, 'payloadKey')}
+                  placeholder='e.g. todo'
+                />
+              </div>
+            </div>
+            {/* <div id={styles.labelInput}>
               <label htmlFor='expectedResponse'>Expected Response</label>
               <div id={styles.inputFlexBox}>
                 <input
@@ -176,6 +194,16 @@ const Async = ({ async, index }) => {
                   </span>
                 </span>
               </div>
+            </div> */}
+
+            <div id={styles.labelInput}>
+              <label htmlFor='actionType'>Action Type</label>
+              <input
+                type='text'
+                id='actionType'
+                onChange={(e) => handleChangeAsyncFields(e, 'actionType')}
+                placeholder='e.g. ADD_TODO'
+              />
             </div>
           </div>
         </div>

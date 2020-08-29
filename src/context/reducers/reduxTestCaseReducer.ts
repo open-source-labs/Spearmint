@@ -54,10 +54,15 @@ const createAsync = () => {
     asyncFunction: '',
     method: '',
     route: '',
-    requestBody: '',
+    // requestBody: '',
     store: '',
     matcher: '',
-    expectedResponse: '',
+    // expectedResponse: '',
+    actionType: '',
+    payloadKey: '',
+    responseKey: '',
+    responseValue: '',
+    it: '',
   };
 };
 const createReducer = () => {
@@ -170,10 +175,15 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           statement.typesFilePath = action.payload.typesFilePath;
           statement.method = action.payload.method;
           statement.route = action.payload.route;
-          statement.requestBody = action.payload.requestBody;
+          // statement.requestBody = action.payload.requestBody;
           statement.store = action.payload.store;
           statement.matcher = action.payload.matcher;
-          statement.expectedResponse = action.payload.expectedResponse;
+          // statement.expectedResponse = action.payload.expectedResponse;
+          statement.actionType = action.payload.actionType;
+          statement.payloadKey = action.payload.payloadKey;
+          statement.responseKey = action.payload.responseKey;
+          statement.responseValue = action.payload.responseValue;
+          statement.it = action.payload.it;
         }
         return statement;
       });
