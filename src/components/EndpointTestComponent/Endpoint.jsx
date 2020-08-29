@@ -11,11 +11,13 @@ const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const Endpoint = ({ endpoint, index }) => {
-  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [state, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
-    updatedEndpoint[field] = e.target.value;
+    if (field === 'headers' || field === 'headerValues') {
+      updatedEndpoint[field][e.target.id] = e.target.value;
+    } else updatedEndpoint[field] = e.target.value;
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
   };
 
@@ -31,8 +33,6 @@ const Endpoint = ({ endpoint, index }) => {
       testDescription.current.focus();
     }
   }, []);
-
-  //
 
   const statement = {
     byId: {
@@ -173,8 +173,16 @@ const Endpoint = ({ endpoint, index }) => {
                     {statement.byId.statement0.props.map((prop, i) => {
                       return (
                         <div id={styled.renderPropsFlexBox}>
-                          <input type='text' id='propKey' value={null} />
-                          <input type='text' id='propKey2' value={''} />
+                          <input
+                            type='text'
+                            id={i}
+                            onChange={(e) => handleChangeEndpointFields(e, 'headers')}
+                          />
+                          <input
+                            type='text'
+                            id={i}
+                            onChange={(e) => handleChangeEndpointFields(e, 'headerValues')}
+                          />
                           <img src={minusIcon} alt='delete' />
                         </div>
                       );

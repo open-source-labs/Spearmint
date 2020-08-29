@@ -21,6 +21,8 @@ const newEndpoint = {
   route: '',
   expectedResponse: '',
   value: '',
+  headers: {},
+  headerValues: {},
 };
 
 export const endpointTestCaseState = {
@@ -67,7 +69,6 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements,
       };
     case actionTypes.UPDATE_SERVER_FILEPATH:
-      console.log(action);
       const { serverFilePath, serverFileName } = action;
       return {
         ...state,
