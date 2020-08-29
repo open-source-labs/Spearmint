@@ -277,7 +277,7 @@ interface Reducer {
   reducersFilePath?: string;
   reducerAction?: string;
   initialState?: string;
-  payloadKey?: string;
+  payloadKey?: null | string;
   payloadValue?: any;
   reducerName?: string;
   expectedValue?: string;
