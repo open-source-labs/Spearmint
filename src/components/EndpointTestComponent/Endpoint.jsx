@@ -11,7 +11,7 @@ const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const Endpoint = ({ endpoint, index }) => {
-  const [state, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
@@ -84,16 +84,23 @@ const Endpoint = ({ endpoint, index }) => {
             </div>
 
             <div id={styles.groupFlexbox}>
-              <div id={styles.serverInput}>
+              <div id={styles.serverInput} style={{ width: '100%' }}>
                 <label htmlFor='test-statement'>Test</label>
-                <div id={styles.labelInput}>
-                  <input
-                    ref={testDescription}
-                    type='text'
-                    id={styles.testStatement}
-                    value={endpoint.testName}
-                    onChange={(e) => handleChangeEndpointFields(e, 'testName')}
-                  />
+                <div style={{ display: 'flex', justifyContent: 'center', marginRight: 0 }}>
+                  <div id={styles.labelInputTest}>
+                    <input
+                      ref={testDescription}
+                      type='text'
+                      id={styles.testStatement}
+                      value={endpoint.testName}
+                      onChange={(e) => handleChangeEndpointFields(e, 'testName')}
+                    />
+
+                    {/* ------------------- edits------------ */}
+                  </div>{' '}
+                  <button className={styles.addProps}>
+                    <i className='fas fa-plus'></i> Configure Headers
+                  </button>
                 </div>
               </div>
             </div>

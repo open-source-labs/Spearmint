@@ -85,6 +85,11 @@
   position: relative;
 }
 
+#labelInputTest {
+  @extend #labelInput;
+  display: inline-block;
+}
+
 #dropdownWrapper {
   margin-right: 9%;
   select {
@@ -128,4 +133,16 @@
 #matcher {
   margin-top: 1em;
   margin-right: 3em;
+}
+
+.addProps {
+  height: auto;
+  font-size: 0.85rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  min-width: 150px;
+  border-radius: 3px;
+  font-family: $oxygen;
+  text-align: center;
+  transition: 150ms;
 }
