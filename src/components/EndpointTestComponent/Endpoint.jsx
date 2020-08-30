@@ -168,8 +168,8 @@ const Endpoint = ({ endpoint, index }) => {
               <div className={'props'}>
                 {statement.byId.statement0.props.length > 0 && (
                   <div>
-                    <div id={style.renderProp}>
-                      <label htmlFor='Header' id={style.propKeyLabel}>
+                    <div id={style.renderProp} style={{ width: '56.5%', paddingBottom: '3px' }}>
+                      <label htmlFor='Header' id={style.propKeyLabel} style={{ padding: '0' }}>
                         Header
                       </label>
                       <label htmlFor='Value' id={style.propValLabel}>
