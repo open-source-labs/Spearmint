@@ -8,6 +8,7 @@ import {
   deleteEndpoint,
   updateEndpoint,
   addHeader,
+  deleteHeader,
 } from '../../context/actions/endpointTestCaseActions';
 
 const closeIcon = require('../../assets/images/close.png');
@@ -25,7 +26,7 @@ const Endpoint = ({ endpoint, index }) => {
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
   };
 
-  const handleClickDeleteEndpoint = (e) => {
+  const handleClickDeleteEndpoint = () => {
     // delete endpoint returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
@@ -34,7 +35,9 @@ const Endpoint = ({ endpoint, index }) => {
     dispatchToEndpointTestCase(addHeader(index));
   };
 
-  const handleClickDeleteHeader = () => {};
+  const handleClickDeleteHeader = (i) => {
+    dispatchToEndpointTestCase(deleteHeader(index, i));
+  };
 
   const testDescription = useRef(null);
 
@@ -91,7 +94,7 @@ const Endpoint = ({ endpoint, index }) => {
                     style={{ marginTop: '9px' }}
                     onClick={handleClickAddHeader}
                   >
-                    <i className='fas fa-plus'></i> Configure Headers
+                    <i className='fas fa-plus'></i> Add Header
                   </button>
                 </div>
               </div>
@@ -184,7 +187,11 @@ const Endpoint = ({ endpoint, index }) => {
                             onChange={(e) => handleChangeEndpointFields(e, 'headerValue')}
                             value={header.headerValue}
                           />
-                          <img src={minusIcon} alt='delete' onClick={handleClickDeleteHeader} />
+                          <img
+                            src={minusIcon}
+                            alt='delete'
+                            onClick={(e) => handleClickDeleteHeader(i)}
+                          />
                         </div>
                       );
                     })}

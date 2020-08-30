@@ -583,12 +583,10 @@ function useGenerateTest(test, projectFilePath) {
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      let i = 0;
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
-      while (statement.headers[i] && statement.headerValues[i]) {
-        testFileCode += `\n .set('${statement.headers[i]}', '${statement.headerValues[i]}')`;
-        i += 1;
-      }
+      statement.headers.forEach(({ headerName, headerValue }) => {
+        testFileCode += `\n .set('${headerName}', '${headerValue}')`;
+      });
       testFileCode += `;`;
       testFileCode += `expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
       testFileCode += '});';

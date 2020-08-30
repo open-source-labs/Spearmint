@@ -13,6 +13,7 @@ export const actionTypes = {
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
   ADD_HEADER: 'ADD_HEADER',
+  DELETE_HEADER: 'DELETE_HEADER',
 };
 
 // Never used
@@ -68,5 +69,13 @@ export const addHeader = (index: number) => {
   return {
     type: actionTypes.ADD_HEADER,
     index,
+  };
+};
+
+export const deleteHeader = (index: number, id: number) => {
+  return {
+    type: actionTypes.DELETE_HEADER,
+    index,
+    id,
   };
 };

@@ -97,12 +97,21 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         modalOpen: false,
       };
     case actionTypes.ADD_HEADER:
-      const headerStore = endpointStatements[action.index as number].headers;
+      let headerStore = endpointStatements[action.index as number].headers;
+      const id = headerStore.length ? headerStore[headerStore.length - 1].id + 1 : 0;
       headerStore.push({
-        id: headerStore.length,
+        id,
         headerName: '',
         headerValue: '',
       });
+      return {
+        ...state,
+        endpointStatements,
+      };
+    case actionTypes.DELETE_HEADER:
+      let headers = endpointStatements[action.index as number].headers;
+
+      headers.splice(action.id, 1);
       return {
         ...state,
         endpointStatements,
