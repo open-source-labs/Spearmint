@@ -48,13 +48,11 @@ const HooksTestCase = () => {
     );
     dispatchToHooksTestCase(updateStatementsOrder(reorderedStatements));
   };
-
   return (
-    <div>
+    <>
       <div id='head'>
         <HooksTestMenu />
       </div>
-
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>
@@ -69,7 +67,6 @@ const HooksTestCase = () => {
           </label>
         </section>
       </div>
-
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
@@ -80,7 +77,7 @@ const HooksTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
-    </div>
+    </>
   );
 };
 

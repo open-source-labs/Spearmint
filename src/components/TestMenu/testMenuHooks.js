@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function useToggleModal(test) {
+export default function useToggleModal(test) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState(test);
 
@@ -21,5 +21,3 @@ function useToggleModal(test) {
 
   return { title, isModalOpen, openModal, openScriptModal, closeModal };
 }
-
-export default useToggleModal;

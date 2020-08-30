@@ -20,6 +20,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
   const handleChangeHookUpdatesFields = (e, field) => {
     let updatedHookUpdates = { ...hookUpdates };
     updatedHookUpdates[field] = e.target.value;
+    console.log(updateHookUpdates(updatedHookUpdates));
     dispatchToHooksTestCase(updateHookUpdates(updatedHookUpdates));
   };
 

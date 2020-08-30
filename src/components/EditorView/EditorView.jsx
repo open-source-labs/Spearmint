@@ -16,7 +16,7 @@ const Editor = () => {
   const options = {
     selectOnLineNumbers: true,
     wordWrap: 'wordWrapColumn',
-    wordWrapColumn: 70,
+    wordWrapColumn: 90,
     autoIndent: true,
     colorDecorators: true,
     wrappingIndent: 'indent',
@@ -27,8 +27,9 @@ const Editor = () => {
   //   setTimeout(setWasSaved('ghi'), 200000);
   // }, [wasSaved]);
 
-  const editorDidMount = () => {
-    editor.setTheme('light-dark');
+  const editorDidMount = (editor) => {
+    // editor.setTheme('light-dark');
+    editor.focus();
   };
 
   const updatafile = (newValue, e) => {
@@ -63,11 +64,11 @@ const Editor = () => {
       <button id={styles.save} onClick={saveFile}>
         {/* onMouseDown={() => setWasSaved('')}> */}
         Save Changes
-      </button>{' '}
+      </button>
       <span id={styles.span}>{wasSaved}</span>
       <div onClick={() => setWasSaved('')}>
         <MonacoEditor
-          height='95vh'
+          height='100vh'
           language='javascript'
           theme='light-dark'
           value={

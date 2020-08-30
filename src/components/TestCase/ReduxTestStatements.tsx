@@ -13,137 +13,125 @@ import {
   updateTypesFilePath,
   updateActionsFilePath,
 } from '../../context/actions/reduxTestCaseActions';
-import styles from '../ReduxTestComponent/Reducer/Reducer.module.scss';
+import '../SearchInput/SearchInput.scss';
+import importOptionsSwitch from './importOptions';
 
 const ReduxTestStatements = () => {
   /* destructing from the reducer */
   const [{ reduxStatements }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
   const [{ filePathMap }] = useContext<any>(GlobalContext);
-  let reducerCount = 0;
-  let middlewareCount = 0;
-  let actionCreatorCount = 0;
-  let asyncCount = 0;
+
+  const { isReducerOn, isMiddleWareOn, isActionCreatorOn, isAsyncOn } = importOptionsSwitch(
+    reduxStatements
+  );
   let reducerImports = null;
   let mImports = null;
   let aCImports = null;
   let asyncImports = null;
-  reduxStatements.forEach((statement: ReduxStatements, i: number) => {
-    if (statement.type === 'reducer') {
-      reducerCount++;
-    }
-    if (statement.type === 'middleware') {
-      middlewareCount++;
-    }
-    if (statement.type === 'action-creator') {
-      actionCreatorCount++;
-    }
-    if (statement.type === 'async') {
-      asyncCount++;
-    }
-  });
-  // this generates the import drop down inputs
-  const generateSearchInput = (
-    typesPath: any,
-    actionPath: any,
-    action: any,
-    type: string | null,
-    label: string
-  ) => {
-    return (
-      <div id={styles.reducerName}>
-        <label htmlFor='typesFile'>{label}</label>
+
+  // different search imports are conditionally generated
+  if (isActionCreatorOn) {
+    aCImports = (
+      <div className='flex-container'>
         <SearchInput
-          type={type}
+          label={'Import Action Types From'}
+          type={'action-creator'}
           reactTestCase={null}
-          updateTypesFilePath={typesPath}
-          updateActionsFilePath={actionPath}
+          updateTypesFilePath={updateTypesFilePath}
+          updateActionsFilePath={null}
           options={Object.keys(filePathMap)}
           dispatch={dispatchToReduxTestCase}
-          action={action}
+          action={null}
+          filePathMap={filePathMap}
+        />
+        <SearchInput
+          label={'Import Actions From'}
+          type={'action-creator'}
+          reactTestCase={null}
+          updateTypesFilePath={null}
+          updateActionsFilePath={updateActionsFilePath}
+          options={Object.keys(filePathMap)}
+          dispatch={dispatchToReduxTestCase}
+          action={null}
           filePathMap={filePathMap}
         />
       </div>
     );
-  };
-  // different search imports are conditionally generated
-  if (actionCreatorCount) {
-    const act = generateSearchInput(
-      updateTypesFilePath,
-      null,
-      null,
-      'action-creator',
-      'Import Action Types From'
-    );
-    const asyncAct = generateSearchInput(
-      null,
-      updateActionsFilePath,
-      null,
-      'action-creator',
-      'Import Actions From'
-    );
-    aCImports = (
-      <div id={styles.reducerNameFlexBox}>
-        {act}
-        {asyncAct}
-      </div>
-    );
   }
-  if (asyncCount) {
-    if (!actionCreatorCount) {
-      const act = generateSearchInput(
-        updateTypesFilePath,
-        null,
-        null,
-        'async',
-        'Import Action Types From'
-      );
-      const asyncAct = generateSearchInput(
-        null,
-        updateActionsFilePath,
-        null,
-        'async',
-        'Import Actions From'
-      );
+  if (isAsyncOn) {
+    if (!isActionCreatorOn) {
       asyncImports = (
-        <div id={styles.reducerNameFlexBox}>
-          {act}
-          {asyncAct}
+        <div className='flex-container'>
+          <SearchInput
+            label={'Import Action Types From'}
+            type={'async'}
+            reactTestCase={null}
+            updateTypesFilePath={updateTypesFilePath}
+            updateActionsFilePath={null}
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToReduxTestCase}
+            action={null}
+            filePathMap={filePathMap}
+          />
+          <SearchInput
+            label={'Import Action Types From'}
+            type={'async'}
+            reactTestCase={null}
+            updateTypesFilePath={null}
+            updateActionsFilePath={updateActionsFilePath}
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToReduxTestCase}
+            action={null}
+            filePathMap={filePathMap}
+          />
         </div>
       );
     }
   }
-  if (middlewareCount) {
-    const mid = generateSearchInput(
-      null,
-      null,
-      updateMiddlewaresFilePath,
-      null,
-      'Import Middleware From'
+  if (isMiddleWareOn) {
+    mImports = (
+      <div className='flex-container'>
+        <SearchInput
+          label={'Import Middleware From'}
+          type={null}
+          reactTestCase={null}
+          updateTypesFilePath={null}
+          updateActionsFilePath={updateMiddlewaresFilePath}
+          options={Object.keys(filePathMap)}
+          dispatch={dispatchToReduxTestCase}
+          action={null}
+          filePathMap={filePathMap}
+        />
+      </div>
     );
-    mImports = <div id={styles.reducerNameFlexBox}>{mid}</div>;
   }
-  if (reducerCount) {
-    const red = generateSearchInput(
-      null,
-      null,
-      updateReducersFilePath,
-      null,
-      'Import Reducer From'
-    );
-    let act = null;
-    if (!actionCreatorCount && !asyncCount) {
-      act = generateSearchInput(
-        updateTypesFilePath,
-        null,
-        null,
-        'reducer',
-        'Import Action Types From'
-      );
-    }
+  if (isReducerOn) {
     reducerImports = (
-      <div id={styles.reducerNameFlexBox}>
-        {red}
-        {act}
+      <div className='flex-container'>
+        <SearchInput
+          label={'Import Reducer From'}
+          type={null}
+          reactTestCase={null}
+          updateTypesFilePath={null}
+          updateActionsFilePath={updateReducersFilePath}
+          options={Object.keys(filePathMap)}
+          dispatch={dispatchToReduxTestCase}
+          action={null}
+          filePathMap={filePathMap}
+        />
+        {!isActionCreatorOn && !isAsyncOn ? (
+          <SearchInput
+            label={'Import Action Types From'}
+            type={'reducer'}
+            reactTestCase={null}
+            updateTypesFilePath={null}
+            updateActionsFilePath={updateReducersFilePath}
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToReduxTestCase}
+            action={null}
+            filePathMap={filePathMap}
+          />
+        ) : null}
       </div>
     );
   }

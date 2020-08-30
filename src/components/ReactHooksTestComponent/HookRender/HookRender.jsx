@@ -20,13 +20,15 @@ const HookRender = ({ hookRender, index }) => {
   const handleChangeHookRenderFields = (e, field) => {
     let updatedHookRender = { ...hookRender };
     updatedHookRender[field] = e.target.value;
+    // console.log(updateHookRender(updatedHookRender));
     dispatchToHooksTestCase(updateHookRender(updatedHookRender));
+    console.log(updatedHookRender[field]);
   };
 
   const handleClickDeleteHookRender = (e) => {
     dispatchToHooksTestCase(deleteHookRender(hookRender.id));
   };
-
+  console.log('rerender or not?');
   return (
     <Draggable draggableId={hookRender.id.toString()} index={index}>
       {(provided) => (
@@ -65,24 +67,24 @@ const HookRender = ({ hookRender, index }) => {
               <input
                 type='text'
                 id='hook'
-                placeholder='eg. useCounter'
+                placeholder='eg. useStringCounter'
                 onChange={(e) => handleChangeHookRenderFields(e, 'hook')}
               />
             </div>
 
             <div id={styles.hookRenderType}>
-              <label htmlFor='parameterOne'>Hook Parameter (optional)</label>
+              <label htmlFor='parameterOne'>Hook Parameters (optional)</label>
               <input
                 type='text'
                 id='parameterOne'
-                placeholder='eg. 9000'
+                placeholder='eg. 9000, "string"'
                 onChange={(e) => handleChangeHookRenderFields(e, 'parameterOne')}
               />
             </div>
           </div>
           <div id={styles.hookRenderFlexBox}>
             <div id={styles.hookRenderType}>
-              <label htmlFor='returnValue'>Managed State</label>
+              <label htmlFor='returnValue'>Expected State</label>
               <input
                 type='text'
                 id='returnValue'
@@ -99,6 +101,7 @@ const HookRender = ({ hookRender, index }) => {
                 onChange={(e) => handleChangeHookRenderFields(e, 'expectedReturnValue')}
               />
             </div>
+            <button>+</button>
           </div>
         </div>
       )}
