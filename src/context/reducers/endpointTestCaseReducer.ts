@@ -11,6 +11,7 @@ interface Action {
   serverFileName?: string;
   serverFilePath?: string;
   draggableStatements?: Array<EndpointStatements>;
+  index?: number;
 }
 
 const newEndpoint = {
@@ -21,8 +22,7 @@ const newEndpoint = {
   route: '',
   expectedResponse: '',
   value: '',
-  headers: {},
-  headerValues: {},
+  headers: [],
 };
 
 export const endpointTestCaseState = {
@@ -95,6 +95,17 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
       return {
         ...state,
         modalOpen: false,
+      };
+    case actionTypes.ADD_HEADER:
+      const headerStore = endpointStatements[action.index as number].headers;
+      headerStore.push({
+        id: headerStore.length,
+        headerName: '',
+        headerValue: '',
+      });
+      return {
+        ...state,
+        endpointStatements,
       };
 
     default:

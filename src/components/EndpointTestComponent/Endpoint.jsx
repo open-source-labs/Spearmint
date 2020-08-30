@@ -4,7 +4,11 @@ import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { deleteEndpoint, updateEndpoint } from '../../context/actions/endpointTestCaseActions';
+import {
+  deleteEndpoint,
+  updateEndpoint,
+  addHeader,
+} from '../../context/actions/endpointTestCaseActions';
 
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
@@ -12,12 +16,12 @@ const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const Endpoint = ({ endpoint, index }) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
-
+  console.log(endpoint);
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
-    if (field === 'headers' || field === 'headerValues') {
-      updatedEndpoint[field][e.target.id] = e.target.value;
-    } else updatedEndpoint[field] = e.target.value;
+    if (field === 'headerName' || field === 'headerValue')
+      updatedEndpoint.headers[e.target.id][field] = e.target.value;
+    else updatedEndpoint[field] = e.target.value;
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
   };
 
@@ -26,6 +30,12 @@ const Endpoint = ({ endpoint, index }) => {
     dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
   };
 
+  const handleClickAddHeader = () => {
+    dispatchToEndpointTestCase(addHeader(index));
+  };
+
+  const handleClickDeleteHeader = () => {};
+
   const testDescription = useRef(null);
 
   useEffect(() => {
@@ -33,33 +43,6 @@ const Endpoint = ({ endpoint, index }) => {
       testDescription.current.focus();
     }
   }, []);
-
-  const statement = {
-    byId: {
-      statement0: {
-        id: 'statement0',
-        itId: 'it0',
-        describeId: 'describe0',
-        type: 'render',
-        props: [
-          {
-            id: 1,
-            statementId: 1,
-            propKey: '',
-            propValue: '',
-          },
-          {
-            id: 2,
-            statementId: 1,
-            propKey: '',
-            propValue: '',
-          },
-        ],
-      },
-    },
-  };
-
-  //
 
   return (
     <div>
@@ -86,7 +69,12 @@ const Endpoint = ({ endpoint, index }) => {
             <div id={styles.groupFlexbox}>
               <div id={styles.serverInput} style={{ width: '100%' }}>
                 <label htmlFor='test-statement'>Test</label>
-                <div style={{ display: 'flex', justifyContent: 'center', marginRight: 0 }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'spaceBetween',
+                  }}
+                >
                   <div id={styles.labelInputTest}>
                     <input
                       ref={testDescription}
@@ -98,7 +86,11 @@ const Endpoint = ({ endpoint, index }) => {
 
                     {/* ------------------- edits------------ */}
                   </div>{' '}
-                  <button className={styles.addProps}>
+                  <button
+                    className={styles.addProps}
+                    style={{ marginTop: '9px' }}
+                    onClick={handleClickAddHeader}
+                  >
                     <i className='fas fa-plus'></i> Configure Headers
                   </button>
                 </div>
@@ -108,7 +100,7 @@ const Endpoint = ({ endpoint, index }) => {
             <div id={styles.groupFlexbox}>
               <div id={styles.dropdownWrapper}>
                 <label htmlFor='method'>Method</label>
-                <div id={styles.dropdownFlex}>
+                <div id={styles.dropdownFlex} style={{ width: '350%' }}>
                   <select
                     id='method'
                     value={endpoint.method}
@@ -164,12 +156,12 @@ const Endpoint = ({ endpoint, index }) => {
 
             {/* //// */}
 
-            <div id={style.RenderContainer}>
+            <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
               <div className={'props'}>
-                {statement.byId.statement0.props.length > 0 && (
+                {endpoint.headers.length > 0 && (
                   <div>
                     <div id={style.renderProp} style={{ width: '56.5%', paddingBottom: '3px' }}>
-                      <label htmlFor='Header' id={style.propKeyLabel} style={{ padding: '0' }}>
+                      <label htmlFor='Header' id={style.propKeyLabel}>
                         Header
                       </label>
                       <label htmlFor='Value' id={style.propValLabel}>
@@ -177,20 +169,22 @@ const Endpoint = ({ endpoint, index }) => {
                       </label>
                     </div>
                     <hr />
-                    {statement.byId.statement0.props.map((prop, i) => {
+                    {endpoint.headers.map((header, i) => {
                       return (
                         <div id={styled.renderPropsFlexBox}>
                           <input
                             type='text'
                             id={i}
-                            onChange={(e) => handleChangeEndpointFields(e, 'headers')}
+                            onChange={(e) => handleChangeEndpointFields(e, 'headerName')}
+                            value={header.headerName}
                           />
                           <input
                             type='text'
                             id={i}
-                            onChange={(e) => handleChangeEndpointFields(e, 'headerValues')}
+                            onChange={(e) => handleChangeEndpointFields(e, 'headerValue')}
+                            value={header.headerValue}
                           />
-                          <img src={minusIcon} alt='delete' />
+                          <img src={minusIcon} alt='delete' onClick={handleClickDeleteHeader} />
                         </div>
                       );
                     })}

@@ -12,6 +12,7 @@ export const actionTypes = {
   UPDATE_ENDPOINT: 'UPDATE_ENDPOINT',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
+  ADD_HEADER: 'ADD_HEADER',
 };
 
 // Never used
@@ -61,4 +62,11 @@ export const openInfoModal = () => {
 
 export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
+};
+
+export const addHeader = (index: number) => {
+  return {
+    type: actionTypes.ADD_HEADER,
+    index,
+  };
 };
