@@ -583,6 +583,10 @@ function useGenerateTest(test, projectFilePath) {
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
+      if (statement.postData) {
+        testFileCode += `.send(${statement.postData})
+       \n .set('Content-Type', 'application/json')`;
+      }
       statement.headers.forEach(({ headerName, headerValue }) => {
         testFileCode += testFileCode.includes(`.set('${headerName}', '${headerValue}')`)
           ? ''

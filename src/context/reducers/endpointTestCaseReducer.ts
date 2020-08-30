@@ -2,7 +2,6 @@ import { createContext } from 'react';
 import { actionTypes } from '../actions/endpointTestCaseActions';
 import { EndpointTestCaseState } from '../../utils/endpointTypes';
 import { EndpointStatements } from '../../utils/endpointTypes';
-import EndpointTestStatements from '../../components/TestCase/EndpointTestStatements';
 
 export const EndpointTestCaseContext: any = createContext(null);
 
@@ -50,7 +49,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
       return {
         ...state,
         endpointStatements,
-        modalOpen: false,
+        // modalOpen: false,
       };
     case actionTypes.DELETE_ENDPOINT:
       endpointStatements = endpointStatements.filter((statement) => statement.id !== action.id);

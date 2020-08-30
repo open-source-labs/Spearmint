@@ -24,7 +24,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     else updatedEndpoint[field] = e.target.value;
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
     if (e.target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
-    else if (endpoint.post) dispatchToEndpointTestCase(togglePost(index));
+    else if (e.target.type === 'select' && endpoint.post)
+      dispatchToEndpointTestCase(togglePost(index));
   };
 
   const handleClickDeleteEndpoint = () => {
@@ -157,6 +158,29 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 </div>
               </div>
             </div>{' '}
+            {endpoint.post && (
+              <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
+                <label htmlFor='Header' id={styles.labelInputPost}>
+                  Data To Send
+                </label>
+                <textarea
+                  value={endpoint.postData}
+                  onChange={(e) => updatePostData(e)}
+                  style={{
+                    display: 'block',
+                    width: '90%',
+                    overflow: 'scroll',
+                    border: '1px solid rgb(205, 205, 205)',
+                    margin: '10px auto',
+                    height: '100px',
+                    resize: 'none',
+                    overflowX: 'hidden',
+                    padding: '10px',
+                  }}
+                  placeholder={'Insert JSON data here... {  }'}
+                />
+              </div>
+            )}
             {endpoint.headers.length > 0 && (
               <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
                 <div className={'props'}>
@@ -197,30 +221,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 </div>
               </div>
             )}{' '}
-            {endpoint.post && (
-              <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
-                {/* <div id={style.renderProp} style={{ width: '56.5%', paddingBottom: '3px' }}> */}
-                <label htmlFor='Header' id={styles.labelInputPost}>
-                  Data To Send
-                </label>
-                <textarea
-                  value={endpoint.postData}
-                  onChange={(e) => updatePostData(e)}
-                  style={{
-                    display: 'block',
-                    width: '90%',
-                    overflow: 'scroll',
-                    border: '1px solid rgb(205, 205, 205)',
-                    margin: '10px auto',
-                    height: '100px',
-                    resize: 'none',
-                    overflowX: 'hidden',
-                    padding: '10px',
-                  }}
-                />
-                {/* </div> */}
-              </div>
-            )}
           </div>
         )}
       </Draggable>
