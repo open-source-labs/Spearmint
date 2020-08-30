@@ -24,6 +24,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     else updatedEndpoint[field] = e.target.value;
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
     if (e.target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
+    else if (endpoint.post) dispatchToEndpointTestCase(togglePost(index));
   };
 
   const handleClickDeleteEndpoint = () => {
@@ -197,7 +198,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
               </div>
             )}{' '}
             {endpoint.post && (
-              <div id={style.RenderContainer} style={{ margin: '10px 0 0 0', paddingLeft: '0px' }}>
+              <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
                 {/* <div id={style.renderProp} style={{ width: '56.5%', paddingBottom: '3px' }}> */}
                 <label htmlFor='Header' id={styles.labelInputPost}>
                   Data To Send

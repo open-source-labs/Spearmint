@@ -33,11 +33,7 @@ export const endpointTestCaseState = {
   modalOpen: false,
   serverFilePath: '',
   serverFileName: '',
-  endpointStatements: [
-    {
-      ...newEndpoint,
-    },
-  ],
+  endpointStatements: [{ ...newEndpoint }],
 };
 
 export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Action) => {
@@ -49,6 +45,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
       endpointStatements.push({
         ...newEndpoint,
         id: endpointStatements[endpointStatements.length - 1].id + 1,
+        headers: [],
       });
       return {
         ...state,
@@ -81,7 +78,10 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
       };
     case actionTypes.CREATE_NEW_ENDPOINT_TEST:
       return {
-        ...endpointTestCaseState,
+        modalOpen: false,
+        serverFilePath: '',
+        serverFileName: '',
+        endpointStatements: [{ ...newEndpoint, headers: [] }],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       endpointStatements = [...action.draggableStatements!];
@@ -100,6 +100,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         modalOpen: false,
       };
     case actionTypes.ADD_HEADER:
+      console.log(endpointStatements, action.index);
       let headerStore = endpointStatements[action.index as number].headers;
       const id = headerStore.length ? headerStore[headerStore.length - 1].id + 1 : 0;
       headerStore.push({

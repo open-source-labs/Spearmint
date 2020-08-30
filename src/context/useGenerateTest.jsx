@@ -412,7 +412,6 @@ function useGenerateTest(test, projectFilePath) {
 
     // Endpoint Filepath
     const createPathToServer = (serverFilePath) => {
-      console.log(serverFilePath);
       if (serverFilePath) {
         let filePath = path.relative(projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
