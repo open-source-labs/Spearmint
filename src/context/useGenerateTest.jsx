@@ -585,7 +585,9 @@ function useGenerateTest(test, projectFilePath) {
     const addEndpoint = (statement) => {
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
       statement.headers.forEach(({ headerName, headerValue }) => {
-        testFileCode += `\n .set('${headerName}', '${headerValue}')`;
+        testFileCode += testFileCode.includes(`.set('${headerName}', '${headerValue}')`)
+          ? ''
+          : `\n .set('${headerName}', '${headerValue}')`;
       });
       testFileCode += `;`;
       testFileCode += `expect(response.${statement.expectedResponse}).toBe(${statement.value});`;

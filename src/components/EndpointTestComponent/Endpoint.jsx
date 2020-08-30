@@ -17,7 +17,6 @@ const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const Endpoint = ({ endpoint, index }) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
-  console.log(endpoint);
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
     if (field === 'headerName' || field === 'headerValue')
@@ -63,12 +62,10 @@ const Endpoint = ({ endpoint, index }) => {
               alt='close'
               onClick={handleClickDeleteEndpoint}
             />
-
             <div id={styles.header}>
               <img src={dragIcon} alt='drag' />
               <h3>Endpoint</h3>
             </div>
-
             <div id={styles.groupFlexbox}>
               <div id={styles.serverInput} style={{ width: '100%' }}>
                 <label htmlFor='test-statement'>Test</label>
@@ -86,8 +83,6 @@ const Endpoint = ({ endpoint, index }) => {
                       value={endpoint.testName}
                       onChange={(e) => handleChangeEndpointFields(e, 'testName')}
                     />
-
-                    {/* ------------------- edits------------ */}
                   </div>{' '}
                   <button
                     className={styles.addProps}
@@ -99,7 +94,6 @@ const Endpoint = ({ endpoint, index }) => {
                 </div>
               </div>
             </div>
-
             <div id={styles.groupFlexbox}>
               <div id={styles.dropdownWrapper}>
                 <label htmlFor='method'>Method</label>
@@ -130,7 +124,6 @@ const Endpoint = ({ endpoint, index }) => {
                 </div>
               </div>
             </div>
-
             <div id={styles.groupFlexbox}>
               <div id={styles.labelInput}>
                 <label htmlFor='requestBody'>Expected Response</label>
@@ -155,13 +148,10 @@ const Endpoint = ({ endpoint, index }) => {
                   />
                 </div>
               </div>
-            </div>
-
-            {/* //// */}
-
-            <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
-              <div className={'props'}>
-                {endpoint.headers.length > 0 && (
+            </div>{' '}
+            {endpoint.headers.length > 0 && (
+              <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
+                <div className={'props'}>
                   <div>
                     <div id={style.renderProp} style={{ width: '56.5%', paddingBottom: '3px' }}>
                       <label htmlFor='Header' id={style.propKeyLabel}>
@@ -196,11 +186,9 @@ const Endpoint = ({ endpoint, index }) => {
                       );
                     })}
                   </div>
-                )}
+                </div>
               </div>
-            </div>
-
-            {/* ////         */}
+            )}
           </div>
         )}
       </Draggable>
