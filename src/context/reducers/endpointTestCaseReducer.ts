@@ -2,6 +2,7 @@ import { createContext } from 'react';
 import { actionTypes } from '../actions/endpointTestCaseActions';
 import { EndpointTestCaseState } from '../../utils/endpointTypes';
 import { EndpointStatements } from '../../utils/endpointTypes';
+import EndpointTestStatements from '../../components/TestCase/EndpointTestStatements';
 
 export const EndpointTestCaseContext: any = createContext(null);
 
@@ -12,6 +13,7 @@ interface Action {
   serverFilePath?: string;
   draggableStatements?: Array<EndpointStatements>;
   index?: number;
+  text?: string;
 }
 
 const newEndpoint = {
@@ -23,6 +25,8 @@ const newEndpoint = {
   expectedResponse: '',
   value: '',
   headers: [],
+  post: false,
+  postData: '',
 };
 
 export const endpointTestCaseState = {
@@ -77,8 +81,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
       };
     case actionTypes.CREATE_NEW_ENDPOINT_TEST:
       return {
-        endpointTestStatement: '',
-        endpointStatements: [{ ...newEndpoint }],
+        ...endpointTestCaseState,
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       endpointStatements = [...action.draggableStatements!];
@@ -116,7 +119,19 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         ...state,
         endpointStatements,
       };
-
+    case actionTypes.TOGGLE_POST:
+      endpointStatements[action.index as number].post = !endpointStatements[action.index as number]
+        .post;
+      return {
+        ...state,
+        endpointStatements,
+      };
+    case actionTypes.UPDATE_POST:
+      endpointStatements[action.index as number].postData = action.text;
+      return {
+        ...state,
+        endpointStatements,
+      };
     default:
       return state;
   }

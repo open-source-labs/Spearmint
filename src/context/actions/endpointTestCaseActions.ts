@@ -14,6 +14,8 @@ export const actionTypes = {
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
   ADD_HEADER: 'ADD_HEADER',
   DELETE_HEADER: 'DELETE_HEADER',
+  TOGGLE_POST: 'TOGGLE_POST',
+  UPDATE_POST: 'UPDATE_POST',
 };
 
 // Never used
@@ -77,5 +79,20 @@ export const deleteHeader = (index: number, id: number) => {
     type: actionTypes.DELETE_HEADER,
     index,
     id,
+  };
+};
+
+export const togglePost = (index: number) => {
+  return {
+    type: actionTypes.TOGGLE_POST,
+    index,
+  };
+};
+
+export const updatePost = (text: string, index: number) => {
+  return {
+    type: actionTypes.UPDATE_POST,
+    text,
+    index,
   };
 };

@@ -1,28 +1,29 @@
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
-import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import {
   deleteEndpoint,
   updateEndpoint,
   addHeader,
   deleteHeader,
+  togglePost,
+  updatePost,
 } from '../../context/actions/endpointTestCaseActions';
 
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
-const Endpoint = ({ endpoint, index }) => {
-  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
     if (field === 'headerName' || field === 'headerValue')
       updatedEndpoint.headers[e.target.id][field] = e.target.value;
     else updatedEndpoint[field] = e.target.value;
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
+    if (e.target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
   };
 
   const handleClickDeleteEndpoint = () => {
@@ -36,6 +37,12 @@ const Endpoint = ({ endpoint, index }) => {
 
   const handleClickDeleteHeader = (i) => {
     dispatchToEndpointTestCase(deleteHeader(index, i));
+  };
+
+  const updatePostData = (e) => {
+    dispatchToEndpointTestCase(updatePost(e.target.value, index));
+    e.target.style.height = 'inherit';
+    e.target.style.height = `${Math.max(Math.min(e.target.scrollHeight, 200), 102)}px`;
   };
 
   const testDescription = useRef(null);
@@ -180,13 +187,37 @@ const Endpoint = ({ endpoint, index }) => {
                           <img
                             src={minusIcon}
                             alt='delete'
-                            onClick={(e) => handleClickDeleteHeader(i)}
+                            onClick={() => handleClickDeleteHeader(i)}
                           />
                         </div>
                       );
                     })}
                   </div>
                 </div>
+              </div>
+            )}{' '}
+            {endpoint.post && (
+              <div id={style.RenderContainer} style={{ margin: '10px 0 0 0', paddingLeft: '0px' }}>
+                {/* <div id={style.renderProp} style={{ width: '56.5%', paddingBottom: '3px' }}> */}
+                <label htmlFor='Header' id={styles.labelInputPost}>
+                  Data To Send
+                </label>
+                <textarea
+                  value={endpoint.postData}
+                  onChange={(e) => updatePostData(e)}
+                  style={{
+                    display: 'block',
+                    width: '90%',
+                    overflow: 'scroll',
+                    border: '1px solid rgb(205, 205, 205)',
+                    margin: '10px auto',
+                    height: '100px',
+                    resize: 'none',
+                    overflowX: 'hidden',
+                    padding: '10px',
+                  }}
+                />
+                {/* </div> */}
               </div>
             )}
           </div>
