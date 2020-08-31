@@ -17,6 +17,41 @@ const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
+  const jestMatchers = [
+    'to Be',
+    'to Equal (object)',
+    'to Have Been Called',
+    'to Have Been Called __ Times (number)',
+    'to Have Been Called With (arg1,...)',
+    'to Have Been Last Called With (arg1,...)',
+    'to Have Been Nth Called With (nth call, ar1,...)',
+    'to Have Length (number)',
+    'to Have Property (keyPath, value[optional])',
+    'to Be Close To (number, number of digits[optional])',
+    'to Be Defined',
+    'to Be Undefined',
+    'to Be Falsy',
+    'to Be Truthy',
+    'to Be NaN',
+    'to Be Greater Than (number)',
+    'to Be Greater Than Or Equal (number)',
+    'to Be Less Than (number)',
+    'to Be Less Than Or Equal (number)',
+    'to Be Instance Of (Class)',
+    'to Contain (item in an array)',
+    'to Contain Equal (an object in an array)',
+    'to Match (regexp or string)',
+    'to Match Object (object)',
+    'to Srict Equal (object)',
+    'to Throw (error[optional])',
+  ];
+
+  //for mock fuctions only:
+  //   'to Have Returned',
+  //   'to Have Returned __ Times (number)',
+  //   'to Have Last Returned With',
+  // ];
+
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
     if (field === 'headerName' || field === 'headerValue')
@@ -24,7 +59,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     else updatedEndpoint[field] = e.target.value;
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
     if (e.target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
-    else if (e.target.type === 'select' && endpoint.post)
+    else if (e.target.type === 'select-one' && endpoint.post)
       dispatchToEndpointTestCase(togglePost(index));
   };
 
@@ -133,19 +168,41 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 </div>
               </div>
             </div>
-            <div id={styles.groupFlexbox}>
+            {/* ------------------------------------------------------------------------      */}
+            <div id={styles.groupFlexboxAssertion}>
               <div id={styles.labelInput}>
-                <label htmlFor='requestBody'>Expected Response</label>
+                <label htmlFor='requestBody'>Expect Response</label>
                 <div id={styles.inputFlexBox}>
-                  <input
+                  {/* <input
                     type='text'
                     name='expectedResponse'
                     placeholder='eg. status'
                     onChange={(e) => handleChangeEndpointFields(e, 'expectedResponse')}
-                  />
+                  /> */}
+                  <input type='text' list='responseProperties' />
+                  <datalist id='responseProperties'>
+                    <option value='Headers'></option>
+                    <option value='Status'></option>
+                    <option value='Body'></option>
+                    <option value='Message'></option>
+                    <option value='Length'></option>
+                  </datalist>
                 </div>
               </div>
-
+              <div id={styles.dropdownWrapper}>
+                <label htmlFor='value'>Assertion</label>
+                <div id={styles.dropdownFlex}>
+                  <select
+                    id='method'
+                    // value={endpoint.method}
+                    // onChange={(e) => handleChangeEndpointFields(e, 'method')}
+                  >
+                    {jestMatchers.map((assertion) => (
+                      <option value={assertion}>{assertion}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
               <div id={styles.labelInput}>
                 <label htmlFor='value'>Expected Value</label>
                 <div id={styles.inputFlexBox}>
@@ -158,6 +215,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 </div>
               </div>
             </div>{' '}
+            {/* -------------------------------------------------------------------------------------------------- */}
             {endpoint.post && (
               <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
                 <label htmlFor='Header' id={styles.labelInputPost}>

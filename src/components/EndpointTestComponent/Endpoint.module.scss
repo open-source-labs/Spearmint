@@ -42,19 +42,27 @@
     background-color: $mint;
   }
 }
-// #example {
-//   padding: 0px;
-//   margin-left: 10px;
-// }
-// #example:focus {
-//   background-color: $mint;
-// }
 
 #groupFlexbox {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
   justify-content: space-between;
+}
+
+#groupFlexboxAssertion {
+  @extend #groupFlexbox;
+  #labelInput,
+  #dropdownWrapper {
+    margin-right: 10px;
+  }
+  #dropdownWrapper {
+    width: 100%;
+
+    #dropdownFlex {
+      width: 100%;
+    }
+  }
 }
 
 #alignRight {
