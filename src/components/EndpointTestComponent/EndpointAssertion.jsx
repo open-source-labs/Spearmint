@@ -50,8 +50,10 @@ const EndpointAssertion = ({ assertion, index, id }) => {
   };
 
   const handleChangeUpdateAssertion = (e, field) => {
-    console.log(field, e.target.value);
-    const updatedAssertion = { ...assertion, [field]: e.target.value };
+    const updatedAssertion =
+      field === 'not'
+        ? { ...assertion, [field]: !assertion[field] }
+        : { ...assertion, [field]: e.target.value };
     dispatchToEndpointTestCase(updateAssertion(index, id, updatedAssertion));
   };
 
@@ -76,17 +78,16 @@ const EndpointAssertion = ({ assertion, index, id }) => {
         </div>
       </div>
       <div id={styles.dropdownWrapper}>
-        {/* <label htmlFor='value'>Assertion</label> */}
-        <div id={stylez.matcherLabelFlexBox}>
+        <div id={styles.endMatcherLabel}>
           <div>
             <label htmlFor='matcher'>Matcher</label>
           </div>
-          <div>
+          <div id={styles.notDiv}>
             Not?
             <input
               type='checkbox'
-              // checked={statement.isNot}
-              // onChange={(e) => handleChangeAssertionFields(e, 'isNot')}
+              //   checked={assertion.not}
+              onChange={(e) => handleChangeUpdateAssertion(e, 'not')}
             />
           </div>
         </div>

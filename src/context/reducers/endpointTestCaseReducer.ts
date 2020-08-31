@@ -15,6 +15,7 @@ const newAssertion: Assertion = {
   expectedResponse: '',
   value: '',
   matcher: '',
+  not: false,
 };
 
 const newEndpoint: Endpoint = {
@@ -162,6 +163,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         expectedResponse: '',
         value: '',
         matcher: '',
+        not: false,
       });
       return {
         ...state,

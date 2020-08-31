@@ -188,3 +188,17 @@ hr {
     margin-right: 0.5rem;
   }
 }
+
+#endMatcherLabel {
+  display: flex;
+  div {
+    font-size: 12px;
+  }
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 8px;
+  #notDiv {
+    margin-right: 15%;
+  }
+}

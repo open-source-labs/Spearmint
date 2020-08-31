@@ -39,6 +39,7 @@ export interface Assertion {
   expectedResponse: string;
   value: string;
   matcher: string;
+  not: boolean;
 }
 
 export interface Header {

@@ -594,9 +594,10 @@ function useGenerateTest(test, projectFilePath) {
           .replace(/\(([^)]+)\)/, '')
           .split(' ')
           .join('');
-        testFileCode += `expect(response.${assertion.expectedResponse.toLowerCase()}).${matcher}(${
-          assertion.value
-        });`;
+        testFileCode += `expect(response.${assertion.expectedResponse.toLowerCase()})`;
+        testFileCode += assertion.not
+          ? `.not.${matcher}(${assertion.value});`
+          : `.${matcher}(${assertion.value});`;
       });
       testFileCode += '});';
       testFileCode += '\n';
