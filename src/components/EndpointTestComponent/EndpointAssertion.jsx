@@ -92,7 +92,11 @@ const EndpointAssertion = ({ assertion, index, id }) => {
           </div>
           <div id={styles.notDiv}>
             Not?
-            <input type='checkbox' onChange={(e) => handleChangeUpdateAssertion(e, 'not')} />
+            <input
+              type='checkbox'
+              onChange={(e) => handleChangeUpdateAssertion(e, 'not')}
+              style={{ marginLeft: '5px' }}
+            />
           </div>
         </div>
         <div id={styles.dropdownFlex}>

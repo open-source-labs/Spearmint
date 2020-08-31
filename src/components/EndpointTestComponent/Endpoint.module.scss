@@ -52,6 +52,7 @@
 
 #groupFlexboxAssertion {
   @extend #groupFlexbox;
+  margin-top: 25px;
   #labelInput,
   #dropdownWrapper {
     margin-right: 10px;
