@@ -3,12 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import styles from './Thunk.module.scss';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
-import {
-  deleteAsync,
-  updateAsync,
-  updateActionsFilePath,
-  updateTypesFilePath,
-} from '../../../context/actions/reduxTestCaseActions';
+import { deleteAsync, updateAsync } from '../../../context/actions/reduxTestCaseActions';
 import ToolTipAsync from '../../ToolTip/ToolTipAsync';
 import SearchInput from '../../SearchInput/SearchInput';
 
@@ -45,10 +40,9 @@ const Async = ({ async, index }) => {
             <img src={dragIcon} alt='drag' />
             <h3>Asynchronous Action Creator</h3>
           </div>
-
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
-              <label htmlFor='it'>it should...</label>
+              <label htmlFor='it'>It should...</label>
               <input
                 type='text'
                 name='it'
@@ -56,7 +50,9 @@ const Async = ({ async, index }) => {
                 onChange={(e) => handleChangeAsyncFields(e, 'it')}
               />
             </div>
+          </div>
 
+          <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
               <label htmlFor='asyncFunction'>Action Creator</label>
               <input
@@ -64,6 +60,62 @@ const Async = ({ async, index }) => {
                 name='asyncFunction'
                 onChange={(e) => handleChangeAsyncFields(e, 'asyncFunction')}
               />
+            </div>
+
+            <div id={styles.labelInput}>
+              <label htmlFor='actionType'>Action Type</label>
+              <input
+                type='text'
+                id='actionType'
+                onChange={(e) => handleChangeAsyncFields(e, 'actionType')}
+                placeholder='e.g. ADD_TODO'
+              />
+            </div>
+          </div>
+
+          <div id={styles.groupFlexbox}>
+            <div id={styles.labelInput}>
+              <label htmlFor='payloadKey'>Payload Key (optional)</label>
+              <input
+                type='text'
+                id='payloadKey'
+                onChange={(e) => handleChangeAsyncFields(e, 'payloadKey')}
+                placeholder='e.g. todo'
+              />
+            </div>
+            <div id={styles.dropdownWrapper}>
+              <label htmlFor='payloadType'>Payload Type (optional)</label>
+              <select id='payloadType' onChange={(e) => handleChangeAsyncFields(e, 'payloadType')}>
+                <option value='' />
+                <option value='word'>word</option>
+                <option value='words'>words</option>
+                <option value='number'>number</option>
+                <option value='arrayElement'>arrayElement</option>
+                <option value='objectElement'>objectElement</option>
+              </select>
+            </div>
+          </div>
+
+          <div id={styles.groupFlexbox}>
+            <div id={styles.labelInput}>
+              <label htmlFor='responseKey'>Expected Response Key</label>
+              <div id={styles.inputFlexBox}>
+                <input
+                  type='text'
+                  name='responseKey'
+                  onChange={(e) => handleChangeAsyncFields(e, 'responseKey')}
+                />
+              </div>
+            </div>
+            <div id={styles.labelInput}>
+              <label htmlFor='responseValue'> Expected Response Value</label>
+              <div id={styles.inputFlexBox}>
+                <input
+                  type='text'
+                  name='responseValue'
+                  onChange={(e) => handleChangeAsyncFields(e, 'responseValue')}
+                />
+              </div>
             </div>
 
             <div id={styles.dropdownWrapper}>
@@ -90,29 +142,6 @@ const Async = ({ async, index }) => {
                   name='route'
                   placeholder='eg. /route'
                   onChange={(e) => handleChangeAsyncFields(e, 'route')}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div id={styles.groupFlexbox}>
-            <div id={styles.labelInput}>
-              <label htmlFor='responseKey'>Response Key</label>
-              <div id={styles.inputFlexBox}>
-                <input
-                  type='text'
-                  name='responseKey'
-                  onChange={(e) => handleChangeAsyncFields(e, 'responseKey')}
-                />
-              </div>
-            </div>
-            <div id={styles.labelInput}>
-              <label htmlFor='responseValue'> Response Value</label>
-              <div id={styles.inputFlexBox}>
-                <input
-                  type='text'
-                  name='responseValue'
-                  onChange={(e) => handleChangeAsyncFields(e, 'responseValue')}
                 />
               </div>
             </div>
@@ -168,17 +197,6 @@ const Async = ({ async, index }) => {
               </div>
             </div> */}
 
-            <div id={styles.payloadFlexBox}>
-              <div id={styles.labelInput}>
-                <label htmlFor='payloadKey'>Payload Key (optional)</label>
-                <input
-                  type='text'
-                  id='payloadKey'
-                  onChange={(e) => handleChangeAsyncFields(e, 'payloadKey')}
-                  placeholder='e.g. todo'
-                />
-              </div>
-            </div>
             {/* <div id={styles.labelInput}>
               <label htmlFor='expectedResponse'>Expected Response</label>
               <div id={styles.inputFlexBox}>
@@ -195,16 +213,6 @@ const Async = ({ async, index }) => {
                 </span>
               </div>
             </div> */}
-
-            <div id={styles.labelInput}>
-              <label htmlFor='actionType'>Action Type</label>
-              <input
-                type='text'
-                id='actionType'
-                onChange={(e) => handleChangeAsyncFields(e, 'actionType')}
-                placeholder='e.g. ADD_TODO'
-              />
-            </div>
           </div>
         </div>
       )}

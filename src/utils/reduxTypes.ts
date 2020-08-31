@@ -167,6 +167,7 @@ export interface UpdateActionCreator {
   actionType: string;
   payloadKey: string;
   payloadType: string;
+  it: string;
 }
 
 export interface UpdateAsync {
@@ -185,6 +186,7 @@ export interface UpdateAsync {
   responseKey: string;
   responseValue: string;
   it: string;
+  payloadType: string;
 }
 
 export interface UpdateReducer {
@@ -252,6 +254,7 @@ interface ActionCreator {
   actionType?: string;
   payloadKey?: null | string;
   payloadType?: null | string;
+  it?: string;
 }
 interface Async {
   id?: number;
@@ -271,6 +274,7 @@ interface Async {
   responseKey?: string;
   responseValue?: string;
   it?: string;
+  payloadType?: null | string;
 }
 
 interface Reducer {

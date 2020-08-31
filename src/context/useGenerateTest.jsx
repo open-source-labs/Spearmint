@@ -102,14 +102,14 @@ function useGenerateTest(test, projectFilePath) {
         switch (statement.type) {
           case 'async':
             return (
-              addAsyncImportStatement(),
+              addAsyncImportStatement(statement),
               createPathToActions(statement),
               createPathToTypes(statement),
               addAsyncVariables()
             );
           case 'action-creator':
             return (
-              addActionCreatorImportStatement(),
+              addActionCreatorImportStatement(statement),
               createPathToActions(statement),
               createPathToTypes(statement)
             );
@@ -129,7 +129,10 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Async Import Statements
-    function addAsyncImportStatement() {
+    function addAsyncImportStatement(async) {
+      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`) && async.payloadKey) {
+        testFileCode = `import { fake } from 'test-data-bot';`.concat(testFileCode);
+      }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
         testFileCode = `import '@testing-library/jest-dom/extend-expect';`.concat(testFileCode);
       }
@@ -155,8 +158,8 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // AC Import Statements
-    function addActionCreatorImportStatement() {
-      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`)) {
+    function addActionCreatorImportStatement(action) {
+      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`) && action.payloadKey) {
         testFileCode = `import { fake } from 'test-data-bot';`.concat(testFileCode);
       }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
@@ -561,37 +564,40 @@ function useGenerateTest(test, projectFilePath) {
       let expectedAction = `const expectedAction = { 
         type: actionTypes.${async.actionType}, 
         response};`;
+      let args = `response`;
       if (async.payloadKey) {
-        expectedAction = `const expectedAction = { 
+        expectedAction = `const ${async.payloadKey} = fake(f => f.random.${async.payloadType}())
+        const expectedAction = { 
           type: actionTypes.${async.actionType}, 
           response,
           ${async.payloadKey}
         };`;
+        args = `response, ${async.payloadKey}`;
       }
+
       testFileCode += `it('${async.it}', () => {fetchMock.${method}('${route}', 
       {${async.responseKey}: ${async.responseValue}});
         const response = fetchMock.lastResponse(undefined)
-        const fetchFunc = (res) => {return actions.${async.asyncFunction}(res)}
         ${expectedAction}
         const store = mockStore({});
-        return store.dispatch(fetchFunc(response)).then(() => {
+        return store.dispatch(actions.${async.asyncFunction}(${args})).then(() => {
           expect(store.getActions()[0]).toEqual(expectedAction)
         })
-        store.clearActions()})
+        store.clearActions()});
         `;
     };
 
     // Action Creator Jest Test Code
     const addActionCreator = (actionCreator) => {
       if (actionCreator.payloadKey && actionCreator.payloadType) {
-        testFileCode += `it('should return expected action', () => {const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
+        testFileCode += `it('${actionCreator.it}', () => {const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
           const expectedAction = { 
             type: actionTypes.${actionCreator.actionType}, 
             ${actionCreator.payloadKey}, 
           };
           expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction)});`;
       } else {
-        testFileCode += `it('should return expected action', () => {const expectedAction = { 
+        testFileCode += `it('${actionCreator.it}', () => {const expectedAction = { 
             type: actionTypes.${actionCreator.actionType}, 
           }; 
           expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction)});`;

@@ -40,6 +40,7 @@ const createActionCreator = () => {
     actionType: '',
     payloadKey: null,
     payloadType: null,
+    it: '',
   };
 };
 const createAsync = () => {
@@ -60,6 +61,7 @@ const createAsync = () => {
     // expectedResponse: '',
     actionType: '',
     payloadKey: '',
+    payloadType: '',
     responseKey: '',
     responseValue: '',
     it: '',
@@ -151,6 +153,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           statement.payloadKey = action.payload.payloadKey;
           statement.payloadType = action.payload.payloadType;
           statement.actionType = action.payload.actionType;
+          statement.it = action.payload.it;
         }
         return statement;
       });
@@ -185,6 +188,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           // statement.expectedResponse = action.payload.expectedResponse;
           statement.actionType = action.payload.actionType;
           statement.payloadKey = action.payload.payloadKey;
+          statement.payloadType = action.payload.payloadType;
           statement.responseKey = action.payload.responseKey;
           statement.responseValue = action.payload.responseValue;
           statement.it = action.payload.it;
