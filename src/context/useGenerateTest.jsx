@@ -579,14 +579,12 @@ function useGenerateTest(test, projectFilePath) {
         : statement.headers.length
         ? `.set({`
         : '';
+
       statement.headers.forEach(({ headerName, headerValue }, index) => {
         testFileCode +=
-          // index === statement.headers.length - 1;
-          // ? headerName.length > 0 && headerValue > 0
-          //   ? `'${headerName}': '${headerValue}'})`
-          //   : ''
-          // :
-          headerName.length > 0 && headerValue > 0 ? `'${headerName}': '${headerValue}',` : '';
+          headerName.length > 0 && headerValue.length > 0
+            ? `'${headerName}': '${headerValue}',`
+            : '';
       });
       testFileCode += '}); \n';
       statement.assertions.forEach((assertion) => {
