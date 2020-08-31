@@ -265,8 +265,8 @@ function useGenerateTest(test, projectFilePath) {
 
     // Endpoint Import Statements
     const addEndpointImportStatements = () => {
-      let { serverFilePath } = endpointTestCase;
-      createPathToServer(serverFilePath);
+      let { serverFilePath, dbFilePath, addDB } = endpointTestCase;
+      createPathToEndFiles(serverFilePath, dbFilePath, addDB);
       testFileCode += '\n';
     };
 
@@ -401,15 +401,32 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // Endpoint Filepath
-    const createPathToServer = (serverFilePath) => {
+    const createPathToEndFiles = (serverFilePath, dbFilePath, addDB) => {
       if (serverFilePath) {
         let filePath = path.relative(projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest')
       const request = supertest(app)\n`;
-        testFileCode += '\n';
-      } else testFileCode = 'Please Choose A Server To Test First!';
+      } else testFileCode = 'Please Select A Server!';
+      if (dbFilePath) {
+        let filePath = path.relative(projectFilePath, dbFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+        testFileCode += `const db = require('../${filePath}');
+        \n afterAll(() => {`;
+        switch (addDB) {
+          case 'PostgreSQL':
+            testFileCode += 'db.end(); \n});';
+            break;
+          case 'MongoDB':
+            testFileCode += 'db.end(); \n});';
+            break;
+          case 'Mongoose':
+            testFileCode += 'db.end(); \n});';
+          default:
+            return;
+        }
+      }
     };
 
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */

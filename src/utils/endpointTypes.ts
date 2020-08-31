@@ -9,8 +9,8 @@ export interface EndpointTestCaseState {
   serverFilePath: string;
   serverFileName: string;
   endpointStatements: Endpoint[];
-  databaseFilePath: string;
-  addDB: boolean;
+  dbFilePath: string;
+  addDB: boolean | string;
 }
 
 export interface Action {
@@ -22,6 +22,8 @@ export interface Action {
   index?: number;
   text?: string;
   assertion?: Assertion;
+  db?: string | boolean;
+  dbFilePath?: string;
 }
 
 export interface Endpoint {

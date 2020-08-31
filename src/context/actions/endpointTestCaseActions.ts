@@ -20,6 +20,7 @@ export const actionTypes = {
   DELETE_ASSERTION: 'DELETE_ASSERTION',
   UPDATE_ASSERTION: 'UPDATE_ASSERTION',
   TOGGLE_DB: 'TOGGLE_DB',
+  UPDATE_DB_FILEPATH: 'UPDATE_DB_FILEPATH',
 };
 
 // Never used
@@ -125,8 +126,16 @@ export const updateAssertion = (index: number, id: number, newAssertion: Asserti
   };
 };
 
-export const toggleDB = () => {
+export const toggleDB = (dbProperty: string | boolean) => {
   return {
     type: actionTypes.TOGGLE_DB,
+    db: dbProperty,
+  };
+};
+
+export const updateDBFilePath = (option: string, dbFilePath: string) => {
+  return {
+    type: actionTypes.UPDATE_DB_FILEPATH,
+    dbFilePath,
   };
 };

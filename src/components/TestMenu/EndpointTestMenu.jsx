@@ -43,7 +43,8 @@ const EndpointTestMenu = () => {
   };
 
   const handleClickAddDatabase = () => {
-    dispatchToEndpointTestCase(toggleDB());
+    const dbProperty = endpointTestCase.addDB ? false : 'PostgreSQL';
+    dispatchToEndpointTestCase(toggleDB(dbProperty));
   };
 
   if (!file && exportBool) {

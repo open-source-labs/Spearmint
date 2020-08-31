@@ -38,7 +38,7 @@ export const endpointTestCaseState: EndpointTestCaseState = {
   modalOpen: false,
   serverFilePath: '',
   serverFileName: '',
-  databaseFilePath: '',
+  dbFilePath: '',
   addDB: false,
   endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
 };
@@ -188,7 +188,12 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
     case actionTypes.TOGGLE_DB:
       return {
         ...state,
-        addDB: !state.addDB,
+        addDB: action.db,
+      };
+    case actionTypes.UPDATE_DB_FILEPATH:
+      return {
+        ...state,
+        dbFilePath: action.dbFilePath,
       };
     default:
       return state;
