@@ -108,7 +108,7 @@ const About = ({ dispatch: dispatchToGlobal }) => {
           <p>
             Ben <a href='https://github.com/bkwak'>@bkwak</a>  ·  Evan{' '}
             <a href='https://github.com/Berghoer'>@Berghoer</a>  ·  Nicolas{' '}
-            <a href='https://github.com/nicolaspita'>@nicolaspita</a>  ·  Louis{' '}
+            <a href='https://github.com/nicolaspita'>@nicolaspita</a>  ·  Luis{' '}
             <a href='https://github.com/Luis-KM-Lo'>@Luis-KM-Lo</a>  ·  Sean{' '}
             <a href='https://github.com/Sean-Haverstock'>@Sean-Haverstock</a> <br></br>
             Alex <a href='https://github.com/apark0720'>@apark0720</a>  ·  Charlie{' '}

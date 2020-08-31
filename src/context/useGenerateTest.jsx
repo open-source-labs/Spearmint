@@ -287,20 +287,14 @@ function useGenerateTest(test, projectFilePath) {
 
     // Endpoint Import Statements
     const addEndpointImportStatements = () => {
-      endpointTestCase.endpointStatements.forEach((statement) => {
-        switch (statement.type) {
-          case 'endpoint':
-            return createPathToServer(statement);
-          default:
-            return statement;
-        }
-      });
+      let { serverFilePath } = endpointTestCase;
+      createPathToServer(serverFilePath);
       testFileCode += '\n';
     };
 
     const addEndpointTestStatements = () => {
-      testFileCode += `\n test('${endpointTestCase.endpointTestStatement}', async (done) => {`;
-      endpointTestCase.endpointStatements.forEach((statement) => {
+      const { endpointStatements } = endpointTestCase;
+      endpointStatements.forEach((statement) => {
         switch (statement.type) {
           case 'endpoint':
             return addEndpoint(statement);
@@ -308,9 +302,6 @@ function useGenerateTest(test, projectFilePath) {
             return statement;
         }
       });
-      testFileCode += 'done();';
-      testFileCode += '});';
-      testFileCode += '\n';
     };
 
     /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
@@ -436,14 +427,15 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // Endpoint Filepath
-    const createPathToServer = (statement) => {
-      let filePath = path.relative(projectFilePath, statement.serverFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode = `const app = require('../${filePath}');
+    const createPathToServer = (serverFilePath) => {
+      if (serverFilePath) {
+        let filePath = path.relative(projectFilePath, serverFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+        testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest')
       const request = supertest(app)\n`;
-
-      testFileCode += '\n';
+        testFileCode += '\n';
+      } else testFileCode = 'Please Choose A Server To Test First!';
     };
 
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
@@ -635,10 +627,35 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-    // Endpoint Jest Test Code
+    // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      testFileCode += `const response = await request.${statement.method}('${statement.route}')
-        expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+      const headersObj = {};
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
+      testFileCode += statement.postData
+        ? `.send(\ ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
+        : statement.headers.length
+        ? `.set({`
+        : '';
+
+      statement.headers.forEach(({ headerName, headerValue }, index) => {
+        testFileCode +=
+          headerName.length > 0 && headerValue.length > 0
+            ? `'${headerName}': '${headerValue}',`
+            : '';
+      });
+      testFileCode += '}); \n';
+      statement.assertions.forEach((assertion) => {
+        let matcher = assertion.matcher
+          .replace(/\(([^)]+)\)/, '')
+          .split(' ')
+          .join('');
+        testFileCode += `expect(response.${assertion.expectedResponse.toLowerCase()})`;
+        testFileCode += assertion.not
+          ? `.not.${matcher}(${assertion.value});`
+          : `.${matcher}(${assertion.value});`;
+      });
+      testFileCode += '});';
+      testFileCode += '\n';
     };
 
     // Puppeteer Form Jest Test Code
