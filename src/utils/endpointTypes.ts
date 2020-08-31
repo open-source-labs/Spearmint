@@ -10,6 +10,45 @@ export interface EndpointTestCaseState {
   statementId: number;
 }
 
+export interface Action {
+  type: string;
+  id?: number;
+  serverFileName?: string;
+  serverFilePath?: string;
+  draggableStatements?: Array<EndpointStatements>;
+  index?: number;
+  text?: string;
+  field?: string;
+  value?: string | number;
+}
+
+export interface Endpoint {
+  id: number;
+  type: string;
+  testName: string;
+  method: string;
+  route: string;
+  assertions: Assertion[];
+  headers: Header[];
+  post: boolean;
+  postData: string;
+}
+
+export interface Assertion {
+  id: 0;
+  expectedResponse: string;
+  value: string;
+  matcher: string;
+  type: string;
+}
+
+export interface Header {
+  id: number;
+  headerName: string;
+  headerValue: string;
+  type: string;
+}
+
 // export type HooksAction =
 // | { type: 'TOGGLE_HOOKS' | 'ADD_CONTEXT' | 'ADD_HOOKRENDER' | 'ADD_HOOK_UPDATES' | 'ADD_HOOKRENDER' | 'CREATE_NEW_HOOKS_TEST' }
 // | { type: 'UPDATE_HOOKS_TEST_STATEMENT'; hooksTestStatement: string }

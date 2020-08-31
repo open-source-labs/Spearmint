@@ -1,21 +1,11 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/endpointTestCaseActions';
 import { EndpointTestCaseState } from '../../utils/endpointTypes';
-import { EndpointStatements } from '../../utils/endpointTypes';
+import { EndpointStatements, Action, Endpoint, Assertion, Header } from '../../utils/endpointTypes';
 
 export const EndpointTestCaseContext: any = createContext(null);
 
-interface Action {
-  type: string;
-  id?: number;
-  serverFileName?: string;
-  serverFilePath?: string;
-  draggableStatements?: Array<EndpointStatements>;
-  index?: number;
-  text?: string;
-}
-
-const newEndpoint = {
+const newEndpoint: Endpoint = {
   id: 0,
   type: 'endpoint',
   testName: '',
@@ -27,6 +17,7 @@ const newEndpoint = {
       expectedResponse: '',
       value: '',
       matcher: '',
+      type: 'assertion',
     },
   ],
   headers: [],
@@ -39,6 +30,27 @@ export const endpointTestCaseState = {
   serverFilePath: '',
   serverFileName: '',
   endpointStatements: [{ ...newEndpoint }],
+};
+
+const deepCopy = (endpointStatements: Endpoint[]) => {
+  const fullCopy: Endpoint[] = endpointStatements.map((el) => {
+    return { ...el, assertions: copyAssertions(el.assertions), headers: copyHeaders(el.headers) };
+  });
+
+  function copyHeaders(array: Header[]) {
+    const copy: Header[] = array.map((el) => {
+      return { ...el };
+    });
+    return copy;
+  }
+
+  function copyAssertions(array: Assertion[]) {
+    const copy: Assertion[] = array.map((el) => {
+      return { ...el };
+    });
+    return copy;
+  }
+  return fullCopy;
 };
 
 export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Action) => {
@@ -106,14 +118,14 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         modalOpen: false,
       };
     case actionTypes.ADD_HEADER:
-      let headerStore = endpointStatements[action.index as number].headers;
+      let headerStore = [...endpointStatements[action.index as number].headers];
       const id = headerStore.length ? headerStore[headerStore.length - 1].id + 1 : 0;
       headerStore.push({
         id,
         headerName: '',
         headerValue: '',
+        type: 'header',
       });
-      console.log(id);
       return {
         ...state,
         endpointStatements,
@@ -149,13 +161,17 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements,
       };
     case actionTypes.DELETE_ASSERTION:
-      console.log(action.index);
       endpointStatements[action.index as number].assertions.splice(action.id, 1);
       return {
         ...state,
         endpointStatements,
       };
-
+    case actionTypes.UPDATE_ASSERTION:
+      endpointStatements[action.index!].assertions[action.id!][action.field!] = [action.value];
+      return {
+        ...state,
+        endpointStatements,
+      };
     default:
       return state;
   }
