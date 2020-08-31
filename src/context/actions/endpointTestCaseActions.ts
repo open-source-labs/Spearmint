@@ -1,4 +1,4 @@
-import { EndpointStatements } from '../../utils/endpointTypes';
+import { EndpointStatements, Assertion } from '../../utils/endpointTypes';
 
 export const actionTypes = {
   UPDATE_ENDPOINT_STATEMENTS_ORDER: 'UPDATE_ENDPOINT_STATEMENTS_ORDER',
@@ -18,6 +18,7 @@ export const actionTypes = {
   UPDATE_POST: 'UPDATE_POST',
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
+  UPDATE_ASSERTION: 'UPDATE_ASSERTION',
 };
 
 // Never used
@@ -111,5 +112,14 @@ export const deleteAssertion = (index: number, id: number) => {
     type: actionTypes.DELETE_ASSERTION,
     index,
     id,
+  };
+};
+
+export const updateAssertion = (index: number, id: number, newAssertion: Assertion) => {
+  return {
+    type: actionTypes.UPDATE_ASSERTION,
+    index,
+    id,
+    assertion: newAssertion,
   };
 };

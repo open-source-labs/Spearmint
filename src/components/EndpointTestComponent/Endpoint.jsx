@@ -143,14 +143,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
               </div>
             </div>{' '}
             {endpoint.assertions.map((assertion, i) => {
-              return (
-                <EndpointAssertion
-                  assertion={assertion}
-                  index={index}
-                  id={i}
-                  handleChangeEndpointFields={handleChangeEndpointFields}
-                />
-              );
+              return <EndpointAssertion assertion={assertion} index={index} id={i} />;
             })}{' '}
             {endpoint.post && (
               <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>

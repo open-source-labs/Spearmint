@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import styles from './Endpoint.module.scss';
 import stylez from '../ReactTestComponent/Assertion/Assertion.module.scss';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { deleteAssertion } from '../../context/actions/endpointTestCaseActions';
+import { deleteAssertion, updateAssertion } from '../../context/actions/endpointTestCaseActions';
 
-const EndpointAssertion = ({ assertion, index, handleChangeEndpointFields, id }) => {
+const EndpointAssertion = ({ assertion, index, id }) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   const jestMatchers = [
     'to Be',
@@ -48,6 +48,11 @@ const EndpointAssertion = ({ assertion, index, handleChangeEndpointFields, id })
     dispatchToEndpointTestCase(deleteAssertion(index, id));
   };
 
+  const handleChangeUpdateAssertion = (e, field) => {
+    const updatedAssertion = { ...assertion, [field]: e.target.value };
+    dispatchToEndpointTestCase(updateAssertion(index, id, updatedAssertion));
+  };
+
   return (
     <div id={styles.groupFlexboxAssertion}>
       <div id={styles.labelInput}>
@@ -57,7 +62,7 @@ const EndpointAssertion = ({ assertion, index, handleChangeEndpointFields, id })
             type='text'
             list='responseProperties'
             value={assertion.expectedResponse}
-            onChange={(e) => handleChangeEndpointFields(e, 'expectedResponse')}
+            onChange={(e) => handleChangeUpdateAssertion(e, 'expectedResponse')}
           />
           <datalist id='responseProperties'>
             <option value='Headers'></option>
@@ -83,16 +88,14 @@ const EndpointAssertion = ({ assertion, index, handleChangeEndpointFields, id })
             />
           </div>
         </div>
-        {/* -------------------------------------------------------------------------------------------------- */}
-
         <div id={styles.dropdownFlex}>
           <select
             id='method'
             value={assertion.matcher}
-            onChange={(e) => handleChangeEndpointFields(e, 'assertion')}
+            onChange={(e) => handleChangeUpdateAssertion(e, 'matcher')}
           >
-            {jestMatchers.map((assertion) => (
-              <option value={assertion}>{assertion}</option>
+            {jestMatchers.map((matcher) => (
+              <option value={matcher}>{matcher}</option>
             ))}
           </select>{' '}
           <span id={stylez.hastooltip} role='tooltip'>
@@ -114,7 +117,8 @@ const EndpointAssertion = ({ assertion, index, handleChangeEndpointFields, id })
             type='text'
             name='value'
             placeholder='eg. 200'
-            onChange={(e) => handleChangeEndpointFields(e, 'value')}
+            value={assertion.value}
+            onChange={(e) => handleChangeUpdateAssertion(e, 'value')}
           />
         </div>
       </div>

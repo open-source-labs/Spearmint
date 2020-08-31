@@ -1,9 +1,21 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/endpointTestCaseActions';
-import { EndpointTestCaseState } from '../../utils/endpointTypes';
-import { EndpointStatements, Action, Endpoint, Assertion, Header } from '../../utils/endpointTypes';
+import {
+  EndpointTestCaseState,
+  Action,
+  Endpoint,
+  Assertion,
+  Header,
+} from '../../utils/endpointTypes';
 
 export const EndpointTestCaseContext: any = createContext(null);
+
+const newAssertion: Assertion = {
+  id: 0,
+  expectedResponse: '',
+  value: '',
+  matcher: '',
+};
 
 const newEndpoint: Endpoint = {
   id: 0,
@@ -13,11 +25,7 @@ const newEndpoint: Endpoint = {
   route: '',
   assertions: [
     {
-      id: 0,
-      expectedResponse: '',
-      value: '',
-      matcher: '',
-      type: 'assertion',
+      ...newAssertion,
     },
   ],
   headers: [],
@@ -25,24 +33,24 @@ const newEndpoint: Endpoint = {
   postData: '',
 };
 
-export const endpointTestCaseState = {
+export const endpointTestCaseState: EndpointTestCaseState = {
   modalOpen: false,
   serverFilePath: '',
   serverFileName: '',
-  endpointStatements: [{ ...newEndpoint }],
+  endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
+};
+
+const copyHeaders = (array: Header[]) => {
+  const copy: Header[] = array.map((el) => {
+    return { ...el };
+  });
+  return copy;
 };
 
 const deepCopy = (endpointStatements: Endpoint[]) => {
   const fullCopy: Endpoint[] = endpointStatements.map((el) => {
     return { ...el, assertions: copyAssertions(el.assertions), headers: copyHeaders(el.headers) };
   });
-
-  function copyHeaders(array: Header[]) {
-    const copy: Header[] = array.map((el) => {
-      return { ...el };
-    });
-    return copy;
-  }
 
   function copyAssertions(array: Assertion[]) {
     const copy: Assertion[] = array.map((el) => {
@@ -102,7 +110,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements: [{ ...newEndpoint, headers: [], assertions: [] }],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
-      endpointStatements = [...action.draggableStatements!];
+      endpointStatements = [...(action.draggableStatements as Endpoint[])];
       return {
         ...state,
         endpointStatements,
@@ -118,23 +126,22 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         modalOpen: false,
       };
     case actionTypes.ADD_HEADER:
-      let headerStore = [...endpointStatements[action.index as number].headers];
+      let headerStore = endpointStatements[action.index as number].headers;
       const id = headerStore.length ? headerStore[headerStore.length - 1].id + 1 : 0;
       headerStore.push({
         id,
         headerName: '',
         headerValue: '',
-        type: 'header',
       });
       return {
         ...state,
-        endpointStatements,
+        endpointStatements: deepCopy(endpointStatements),
       };
     case actionTypes.DELETE_HEADER:
-      endpointStatements[action.index as number].headers.splice(action.id, 1);
+      endpointStatements[action.index as number].headers.splice(action.id!, 1);
       return {
         ...state,
-        endpointStatements,
+        endpointStatements: deepCopy(endpointStatements),
       };
     case actionTypes.TOGGLE_POST:
       endpointStatements[action.index as number].post = !endpointStatements[action.index as number]
@@ -144,7 +151,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements,
       };
     case actionTypes.UPDATE_POST:
-      endpointStatements[action.index as number].postData = action.text;
+      endpointStatements[action.index as number].postData = action.text!;
       return {
         ...state,
         endpointStatements,
@@ -154,23 +161,25 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         id: endpointStatements[endpointStatements.length - 1].id + 1,
         expectedResponse: '',
         value: '',
-        assertion: '',
+        matcher: '',
       });
       return {
         ...state,
-        endpointStatements,
+        endpointStatements: deepCopy(endpointStatements),
       };
     case actionTypes.DELETE_ASSERTION:
-      endpointStatements[action.index as number].assertions.splice(action.id, 1);
+      endpointStatements[action.index as number].assertions.splice(action.id!, 1);
       return {
         ...state,
-        endpointStatements,
+        endpointStatements: deepCopy(endpointStatements),
       };
     case actionTypes.UPDATE_ASSERTION:
-      endpointStatements[action.index!].assertions[action.id!][action.field!] = [action.value];
+      endpointStatements[action.index as number].assertions[
+        action.id as number
+      ] = action.assertion!;
       return {
         ...state,
-        endpointStatements,
+        endpointStatements: deepCopy(endpointStatements),
       };
     default:
       return state;

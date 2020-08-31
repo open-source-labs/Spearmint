@@ -5,9 +5,10 @@ export interface EndpointStatements {
 }
 
 export interface EndpointTestCaseState {
-  endpointTestStatement: string;
-  endpointStatements: Array<EndpointStatements>;
-  statementId: number;
+  modalOpen: boolean;
+  serverFilePath: string;
+  serverFileName: string;
+  endpointStatements: Endpoint[];
 }
 
 export interface Action {
@@ -18,8 +19,7 @@ export interface Action {
   draggableStatements?: Array<EndpointStatements>;
   index?: number;
   text?: string;
-  field?: string;
-  value?: string | number;
+  assertion?: Assertion;
 }
 
 export interface Endpoint {
@@ -35,18 +35,16 @@ export interface Endpoint {
 }
 
 export interface Assertion {
-  id: 0;
+  id: number;
   expectedResponse: string;
   value: string;
   matcher: string;
-  type: string;
 }
 
 export interface Header {
   id: number;
   headerName: string;
   headerValue: string;
-  type: string;
 }
 
 // export type HooksAction =
