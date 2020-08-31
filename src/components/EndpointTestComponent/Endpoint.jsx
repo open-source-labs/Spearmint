@@ -21,7 +21,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     'to Be',
     'to Equal (object)',
     'to Have Been Called',
-    'to Have Been Called __ Times (number)',
+    'to Have Been Called Times (number)',
     'to Have Been Called With (arg1,...)',
     'to Have Been Last Called With (arg1,...)',
     'to Have Been Nth Called With (nth call, arg1,...)',
@@ -54,10 +54,12 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
 
   const handleChangeEndpointFields = (e, field) => {
     let updatedEndpoint = { ...endpoint };
-    if (field === 'headerName' || field === 'headerValue')
-      updatedEndpoint.headers[e.target.id][field] = e.target.value;
-    else updatedEndpoint[field] = e.target.value;
+
+    field === 'headerName' || field === 'headerValue'
+      ? (updatedEndpoint.headers[e.target.id][field] = e.target.value)
+      : (updatedEndpoint[field] = e.target.value);
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
+
     if (e.target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
     else if (e.target.type === 'select-one' && endpoint.post)
       dispatchToEndpointTestCase(togglePost(index));

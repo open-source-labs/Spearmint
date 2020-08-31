@@ -581,13 +581,11 @@ function useGenerateTest(test, projectFilePath) {
         ({ headerName, headerValue }) =>
           (testFileCode += `\n .set('${headerName}', '${headerValue}')`)
       );
-      testFileCode += `;`;
       let assertion = statement.assertion
+        .replace(/\(([^)]+)\)/, '')
         .split(' ')
-        .filter((el) => {
-          return el[0] !== '(' && el[0] !== '_';
-        })
         .join('');
+      testFileCode += `;`;
       testFileCode += `expect(response.${statement.expectedResponse.toLowerCase()}).${assertion}(${
         statement.value
       });`;
