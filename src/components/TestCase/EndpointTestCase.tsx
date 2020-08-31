@@ -46,7 +46,7 @@ const EndpointTestCase = () => {
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='endpointFile'>Import Server From</label>
-          <div id={styles.labelInput}>
+          <div id={styles.labelInput} style={{ width: '80%' }}>
             <SearchInput
               options={Object.keys(filePathMap)}
               dispatch={dispatchToEndpointTestCase}

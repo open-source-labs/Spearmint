@@ -23,6 +23,7 @@ const newEndpoint = {
   route: '',
   expectedResponse: '',
   value: '',
+  assertion: '',
   headers: [],
   post: false,
   postData: '',

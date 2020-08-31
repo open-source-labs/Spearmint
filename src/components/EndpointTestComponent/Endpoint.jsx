@@ -24,7 +24,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     'to Have Been Called __ Times (number)',
     'to Have Been Called With (arg1,...)',
     'to Have Been Last Called With (arg1,...)',
-    'to Have Been Nth Called With (nth call, ar1,...)',
+    'to Have Been Nth Called With (nth call, arg1,...)',
     'to Have Length (number)',
     'to Have Property (keyPath, value[optional])',
     'to Be Close To (number, number of digits[optional])',
@@ -173,13 +173,12 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
               <div id={styles.labelInput}>
                 <label htmlFor='requestBody'>Expect Response</label>
                 <div id={styles.inputFlexBox}>
-                  {/* <input
+                  <input
                     type='text'
-                    name='expectedResponse'
-                    placeholder='eg. status'
+                    list='responseProperties'
+                    value={endpoint.expectedResponse}
                     onChange={(e) => handleChangeEndpointFields(e, 'expectedResponse')}
-                  /> */}
-                  <input type='text' list='responseProperties' />
+                  />
                   <datalist id='responseProperties'>
                     <option value='Headers'></option>
                     <option value='Status'></option>
@@ -194,8 +193,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 <div id={styles.dropdownFlex}>
                   <select
                     id='method'
-                    // value={endpoint.method}
-                    // onChange={(e) => handleChangeEndpointFields(e, 'method')}
+                    value={endpoint.assertion}
+                    onChange={(e) => handleChangeEndpointFields(e, 'assertion')}
                   >
                     {jestMatchers.map((assertion) => (
                       <option value={assertion}>{assertion}</option>

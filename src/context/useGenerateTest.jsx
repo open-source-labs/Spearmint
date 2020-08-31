@@ -268,16 +268,6 @@ function useGenerateTest(test, projectFilePath) {
       let { serverFilePath } = endpointTestCase;
       createPathToServer(serverFilePath);
       testFileCode += '\n';
-
-      // endpointTestCase.endpointStatements.forEach((statement) => {
-      //   switch (statement.type) {
-      //     case 'endpoint':
-      //       return createPathToServer(statement);
-      //     default:
-      //       return statement;
-      //   }
-      // });
-      // testFileCode += '\n';
     };
 
     const addEndpointTestStatements = () => {
@@ -587,13 +577,20 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `.send(${statement.postData})
        \n .set('Content-Type', 'application/json')`;
       }
-      statement.headers.forEach(({ headerName, headerValue }) => {
-        testFileCode += testFileCode.includes(`.set('${headerName}', '${headerValue}')`)
-          ? ''
-          : `\n .set('${headerName}', '${headerValue}')`;
-      });
+      statement.headers.forEach(
+        ({ headerName, headerValue }) =>
+          (testFileCode += `\n .set('${headerName}', '${headerValue}')`)
+      );
       testFileCode += `;`;
-      testFileCode += `expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+      let assertion = statement.assertion
+        .split(' ')
+        .filter((el) => {
+          return el[0] !== '(' && el[0] !== '_';
+        })
+        .join('');
+      testFileCode += `expect(response.${statement.expectedResponse.toLowerCase()}).${assertion}(${
+        statement.value
+      });`;
       testFileCode += '});';
       testFileCode += '\n';
     };
