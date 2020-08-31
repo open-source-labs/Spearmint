@@ -21,9 +21,13 @@ const newEndpoint = {
   testName: '',
   method: '',
   route: '',
-  expectedResponse: '',
-  value: '',
-  assertion: '',
+  assertions: [
+    {
+      expectedResponse: '',
+      value: '',
+      assertion: '',
+    },
+  ],
   headers: [],
   post: false,
   postData: '',
