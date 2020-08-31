@@ -3,6 +3,8 @@ import { Draggable } from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
+import stylez from '../ReactTestComponent/Assertion/Assertion.module.scss';
+
 import {
   deleteEndpoint,
   updateEndpoint,
@@ -15,6 +17,7 @@ import {
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
+const questionIcon = require('../../assets/images/help-circle.png');
 
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   const jestMatchers = [
@@ -191,7 +194,22 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 </div>
               </div>
               <div id={styles.dropdownWrapper}>
-                <label htmlFor='value'>Assertion</label>
+                {/* <label htmlFor='value'>Assertion</label> */}
+                <div id={stylez.matcherLabelFlexBox}>
+                  <div>
+                    <label htmlFor='matcher'>Matcher</label>
+                  </div>
+                  <div>
+                    Not?
+                    <input
+                      type='checkbox'
+                      // checked={statement.isNot}
+                      // onChange={(e) => handleChangeAssertionFields(e, 'isNot')}
+                    />
+                  </div>
+                </div>
+                {/* -------------------------------------------------------------------------------------------------- */}
+
                 <div id={styles.dropdownFlex}>
                   <select
                     id='method'
@@ -201,8 +219,18 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                     {jestMatchers.map((assertion) => (
                       <option value={assertion}>{assertion}</option>
                     ))}
-                  </select>
+                  </select>{' '}
+                  <span id={stylez.hastooltip} role='tooltip'>
+                    <img src={questionIcon} alt='help' />
+                    <span id={stylez.tooltip}>
+                      {/* <ToolTipMatcher toolTipType={statement.matcherType} /> */}
+                    </span>
+                  </span>
                 </div>
+                {/* <div id={stylez.autoTool}>
+                  <input type='text' /> */}
+
+                {/* </div> */}
               </div>
               <div id={styles.labelInput}>
                 <label htmlFor='value'>Expected Value</label>
@@ -280,6 +308,16 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 </div>
               </div>
             )}{' '}
+            <div className={styles.buttonsContainer}>
+              <button
+                // id={id}
+                // onClick={addAssertionHandleClick}
+                className={styles.assertionButton}
+              >
+                <i className='fas fa-plus'></i>
+                Assertion
+              </button>
+            </div>
           </div>
         )}
       </Draggable>
