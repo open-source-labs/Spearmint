@@ -3,17 +3,20 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 let mainWindow;
 
-if (isDev) console.log('electron version', process.versions.electron)
+if (isDev) console.log('electron version', process.versions.electron);
 
 if (isDev) {
-  const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+  const {
+    default: installExtension,
+    REACT_DEVELOPER_TOOLS,
+  } = require('electron-devtools-installer');
   function addDevTools() {
     app.whenReady().then(() => {
-    installExtension(REACT_DEVELOPER_TOOLS)
+      installExtension(REACT_DEVELOPER_TOOLS)
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err));
-  });
-  };
+    });
+  }
 }
 function createWindow() {
   mainWindow = new BrowserWindow({

@@ -153,6 +153,7 @@ const ReduxTestStatements = () => {
             return <Async key={statement.id} async={statement} index={i} />;
           case 'reducer':
             return <Reducer key={statement.id} reducer={statement} index={i} />;
+
           default:
             return <></>;
         }
