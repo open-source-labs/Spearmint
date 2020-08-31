@@ -9,6 +9,17 @@ export const hooksTestCaseState = {
   hooksTestStatement: '',
   hooksStatements: [],
   statementId: 0,
+  statements: {
+    byId: {
+      statement0: {
+        id: 'statement0',
+        itId: 'it0',
+        describeId: 'describe0',
+        type: 'render',
+        props: [],
+      },
+    },
+  },
 };
 
 const createContexts = (statementId: number) => ({
@@ -33,8 +44,8 @@ const createHookRender = (statementId: number) => ({
   hookFilePath: '',
   hook: '',
   parameterOne: '',
-  parameterTwo: '',
-  returnValue: '',
+  returnValue: [],
+  expectedReturnValue: [],
 });
 
 const createHookUpdates = (statementId: number) => ({
@@ -44,8 +55,8 @@ const createHookUpdates = (statementId: number) => ({
   type: 'hook-updates',
   hook: '',
   callbackFunc: '',
-  managedState: '',
-  updatedState: '',
+  managedState: [],
+  updatedState: [],
 });
 
 export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => {
@@ -111,9 +122,16 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
 
     case 'UPDATE_HOOK_UPDATES':
       hooksStatements = hooksStatements.map((statement) => {
+        // console.log(statement);
         if (statement.id === action.id) {
           return {
             ...statement,
+            statement: {
+              ...statement,
+              byId: {
+                [statement.id]: createHookUpdates(statement.id),
+              },
+            },
             hook: action.hook,
             hookFileName: action.hookFileName,
             hookFilePath: action.hookFilePath,

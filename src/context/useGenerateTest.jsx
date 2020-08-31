@@ -530,14 +530,22 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());
         act(() => {
           result.current.${hookUpdates.callbackFunc}();
-        });
-        expect(result.current.${hookUpdates.managedState}).toBe(${hookUpdates.updatedState})`;
+        });`;
+      for (let i = 0; i < hookUpdates.managedState.length; i += 1) {
+        testFileCode += `expect(result.current.${hookUpdates.managedState[i]}).toBe(${
+          hookUpdates.updatedState[i] || ''
+        })\n`;
+      }
     };
 
     // Hook: Renders Jest Test Code
     const addHookRender = (hookRender) => {
-      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameterOne}))
-        expect(result.current.${hookRender.returnValue}).toBe(${hookRender.expectedReturnValue})`;
+      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameterOne}));`;
+      for (let i = 0; i < hookRender.returnValue.length; i += 1) {
+        testFileCode += `expect(result.current.${hookRender.returnValue[i]}).toBe(${
+          hookRender.expectedReturnValue[i] || ''
+        })\n`;
+      }
     };
 
     // Context Jest Test Code
