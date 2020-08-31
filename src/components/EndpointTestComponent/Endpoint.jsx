@@ -64,7 +64,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
   }, []);
 
   return (
-    <div>
+    <div style={{ maxWidth: '650px' }}>
       <Draggable draggableId={endpoint.id.toString()} index={index}>
         {(provided) => (
           <div
@@ -114,7 +114,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             <div id={styles.groupFlexbox}>
               <div id={styles.dropdownWrapper}>
                 <label htmlFor='method'>Method</label>
-                <div id={styles.dropdownFlex} style={{ width: '350%' }}>
+                <div id={styles.dropdownFlex}>
                   <select
                     id='method'
                     value={endpoint.method}

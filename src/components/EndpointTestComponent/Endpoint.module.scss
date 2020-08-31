@@ -67,7 +67,7 @@
 
 #alignRight {
   width: 43%;
-  margin-right: 7%;
+  margin-right: 30px;
   input {
     margin-top: 6px;
     width: 100%;
@@ -100,7 +100,8 @@
 }
 
 #dropdownWrapper {
-  margin-right: 9%;
+  // margin-right: 9%;
+  width: 43%;
   select {
     font-family: $raleway;
     width: 100%;
@@ -117,7 +118,6 @@
 #dropdownFlex {
   display: flex;
   align-items: center;
-  width: 340%;
   margin-top: 6px;
 }
 
