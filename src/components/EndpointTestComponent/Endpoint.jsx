@@ -145,7 +145,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             {endpoint.assertions.map((assertion, i) => {
               return (
                 <EndpointAssertion
-                  endpoint={endpoint}
+                  assertion={assertion}
                   index={index}
                   id={i}
                   handleChangeEndpointFields={handleChangeEndpointFields}

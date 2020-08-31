@@ -26,7 +26,7 @@ const newEndpoint = {
       id: 0,
       expectedResponse: '',
       value: '',
-      assertion: '',
+      matcher: '',
     },
   ],
   headers: [],
@@ -113,14 +113,13 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         headerName: '',
         headerValue: '',
       });
+      console.log(id);
       return {
         ...state,
         endpointStatements,
       };
     case actionTypes.DELETE_HEADER:
-      let headers = endpointStatements[action.index as number].headers;
-
-      headers.splice(action.id, 1);
+      endpointStatements[action.index as number].headers.splice(action.id, 1);
       return {
         ...state,
         endpointStatements,
@@ -139,13 +138,19 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements,
       };
     case actionTypes.ADD_ASSERTION:
-      console.log('here');
       endpointStatements[action.index as number].assertions.push({
         id: endpointStatements[endpointStatements.length - 1].id + 1,
         expectedResponse: '',
         value: '',
         assertion: '',
       });
+      return {
+        ...state,
+        endpointStatements,
+      };
+    case actionTypes.DELETE_ASSERTION:
+      console.log(action.index);
+      endpointStatements[action.index as number].assertions.splice(action.id, 1);
       return {
         ...state,
         endpointStatements,

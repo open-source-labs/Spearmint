@@ -1,21 +1,11 @@
 import React, { useContext } from 'react';
 import styles from './Endpoint.module.scss';
-import style from '../ReactTestComponent/Render/Render.module.scss';
-import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import stylez from '../ReactTestComponent/Assertion/Assertion.module.scss';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import {
-  deleteEndpoint,
-  updateEndpoint,
-  addHeader,
-  deleteHeader,
-  togglePost,
-  updatePost,
-} from '../../context/actions/endpointTestCaseActions';
+import { deleteAssertion } from '../../context/actions/endpointTestCaseActions';
 
-const EndpointAssertion = ({ endpoint, index, handleChangeEndpointFields }) => {
+const EndpointAssertion = ({ assertion, index, handleChangeEndpointFields, id }) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
-
   const jestMatchers = [
     'to Be',
     'to Equal (object)',
@@ -52,6 +42,11 @@ const EndpointAssertion = ({ endpoint, index, handleChangeEndpointFields }) => {
   // ];
 
   const questionIcon = require('../../assets/images/help-circle.png');
+  const closeIcon = require('../../assets/images/close.png');
+
+  const handleClickDeleteAssertion = () => {
+    dispatchToEndpointTestCase(deleteAssertion(index, id));
+  };
 
   return (
     <div id={styles.groupFlexboxAssertion}>
@@ -61,7 +56,7 @@ const EndpointAssertion = ({ endpoint, index, handleChangeEndpointFields }) => {
           <input
             type='text'
             list='responseProperties'
-            value={endpoint.expectedResponse}
+            value={assertion.expectedResponse}
             onChange={(e) => handleChangeEndpointFields(e, 'expectedResponse')}
           />
           <datalist id='responseProperties'>
@@ -93,7 +88,7 @@ const EndpointAssertion = ({ endpoint, index, handleChangeEndpointFields }) => {
         <div id={styles.dropdownFlex}>
           <select
             id='method'
-            value={endpoint.assertion}
+            value={assertion.matcher}
             onChange={(e) => handleChangeEndpointFields(e, 'assertion')}
           >
             {jestMatchers.map((assertion) => (
@@ -123,6 +118,12 @@ const EndpointAssertion = ({ endpoint, index, handleChangeEndpointFields }) => {
           />
         </div>
       </div>
+      <img
+        src={closeIcon}
+        style={{ position: 'relative', top: '-15px' }}
+        alt='close'
+        onClick={handleClickDeleteAssertion}
+      />
     </div>
   );
 };

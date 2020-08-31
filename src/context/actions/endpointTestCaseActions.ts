@@ -105,3 +105,11 @@ export const addAssertion = (index: number) => {
     index,
   };
 };
+
+export const deleteAssertion = (index: number, id: number) => {
+  return {
+    type: actionTypes.DELETE_ASSERTION,
+    index,
+    id,
+  };
+};
