@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import stylez from '../ReactTestComponent/Assertion/Assertion.module.scss';
-
+import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import {
   deleteEndpoint,
   updateEndpoint,
@@ -14,6 +14,8 @@ import {
 } from '../../context/actions/endpointTestCaseActions';
 
 const EndpointAssertion = ({ endpoint, index, handleChangeEndpointFields }) => {
+  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+
   const jestMatchers = [
     'to Be',
     'to Equal (object)',

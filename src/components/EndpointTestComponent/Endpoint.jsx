@@ -12,6 +12,7 @@ import {
   deleteHeader,
   togglePost,
   updatePost,
+  addAssertion,
 } from '../../context/actions/endpointTestCaseActions';
 
 const closeIcon = require('../../assets/images/close.png');
@@ -49,6 +50,10 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     dispatchToEndpointTestCase(updatePost(e.target.value, index));
     e.target.style.height = 'inherit';
     e.target.style.height = `${Math.max(Math.min(e.target.scrollHeight, 200), 102)}px`;
+  };
+
+  const addAssertionHandleClick = () => {
+    dispatchToEndpointTestCase(addAssertion(index));
   };
 
   const testDescription = useRef(null);
@@ -213,7 +218,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
             <div className={styles.buttonsContainer}>
               <button
                 // id={id}
-                // onClick={addAssertionHandleClick}
+                onClick={addAssertionHandleClick}
                 className={styles.assertionButton}
               >
                 <i className='fas fa-plus'></i>

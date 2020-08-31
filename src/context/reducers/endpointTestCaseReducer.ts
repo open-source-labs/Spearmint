@@ -23,6 +23,7 @@ const newEndpoint = {
   route: '',
   assertions: [
     {
+      id: 0,
       expectedResponse: '',
       value: '',
       assertion: '',
@@ -50,6 +51,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         ...newEndpoint,
         id: endpointStatements[endpointStatements.length - 1].id + 1,
         headers: [],
+        assertions: [],
       });
       return {
         ...state,
@@ -85,7 +87,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         modalOpen: false,
         serverFilePath: '',
         serverFileName: '',
-        endpointStatements: [{ ...newEndpoint, headers: [] }],
+        endpointStatements: [{ ...newEndpoint, headers: [], assertions: [] }],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       endpointStatements = [...action.draggableStatements!];
@@ -104,7 +106,6 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         modalOpen: false,
       };
     case actionTypes.ADD_HEADER:
-      console.log(endpointStatements, action.index);
       let headerStore = endpointStatements[action.index as number].headers;
       const id = headerStore.length ? headerStore[headerStore.length - 1].id + 1 : 0;
       headerStore.push({
@@ -137,6 +138,19 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         ...state,
         endpointStatements,
       };
+    case actionTypes.ADD_ASSERTION:
+      console.log('here');
+      endpointStatements[action.index as number].assertions.push({
+        id: endpointStatements[endpointStatements.length - 1].id + 1,
+        expectedResponse: '',
+        value: '',
+        assertion: '',
+      });
+      return {
+        ...state,
+        endpointStatements,
+      };
+
     default:
       return state;
   }

@@ -16,6 +16,8 @@ export const actionTypes = {
   DELETE_HEADER: 'DELETE_HEADER',
   TOGGLE_POST: 'TOGGLE_POST',
   UPDATE_POST: 'UPDATE_POST',
+  ADD_ASSERTION: 'ADD_ASSERTION',
+  DELETE_ASSERTION: 'DELETE_ASSERTION',
 };
 
 // Never used
@@ -93,6 +95,13 @@ export const updatePost = (text: string, index: number) => {
   return {
     type: actionTypes.UPDATE_POST,
     text,
+    index,
+  };
+};
+
+export const addAssertion = (index: number) => {
+  return {
+    type: actionTypes.ADD_ASSERTION,
     index,
   };
 };
