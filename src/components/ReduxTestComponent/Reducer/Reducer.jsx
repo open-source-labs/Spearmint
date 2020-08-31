@@ -1,26 +1,21 @@
 import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Reducer.module.scss';
-import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
-import {
-  deleteReducer,
-  updateReducer,
-  updateTypesFilePath,
-  updateReducersFilePath,
-} from '../../../context/actions/reduxTestCaseActions';
-import SearchInput from '../../SearchInput/SearchInput';
+import { deleteReducer, updateReducer } from '../../../context/actions/reduxTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Reducer = ({ reducer, index }) => {
-  const [{ filePathMap }] = useContext(GlobalContext);
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChangeReducerFields = (e, field) => {
+    // reducer is a single test statment
     let updatedReducer = { ...reducer };
+    // adding key/value pair to test statement
     updatedReducer[field] = e.target.value;
+
     dispatchToReduxTestCase(updateReducer(updatedReducer));
   };
 
@@ -43,28 +38,16 @@ const Reducer = ({ reducer, index }) => {
             <h3>Reducer</h3>
           </div>
 
-          {/* <div id={styles.reducerNameFlexBox}> */}
-          {/* <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Import Reducer From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                action={updateReducersFilePath}
-                filePathMap={filePathMap}
-              />
-            </div> */}
-          {/* <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Import Action Types From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                filePathMap={filePathMap}
-                updateTypesFilePath={updateTypesFilePath}
-                id={reducer.id}
-              />
-            </div> */}
-          {/* </div> */}
           <div id={styles.reducerNameFlexBox}>
+            <div id={styles.reducerName}>
+              <label htmlFor='testStatement'>It Statement</label>
+              <input
+                type='text'
+                id='testStatment'
+                placeholder='eg. handles ADD_TODO action properly'
+                onChange={(e) => handleChangeReducerFields(e, 'itStatement')}
+              />
+            </div>
             <div id={styles.reducerName}>
               <label htmlFor='reducerName'>Reducer Name</label>
               <input
@@ -74,36 +57,56 @@ const Reducer = ({ reducer, index }) => {
                 onChange={(e) => handleChangeReducerFields(e, 'reducerName')}
               />
             </div>
-
+          </div>
+          <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='initialState'>Initial State</label>
+              <label htmlFor='initialStae'>Initial State</label>
               <input
                 type='text'
                 id='initialState'
-                placeholder='eg. { key: value }'
+                placeholder='eg. todosState'
                 onChange={(e) => handleChangeReducerFields(e, 'initialState')}
               />
             </div>
-          </div>
-
-          <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
               <label htmlFor='reducerAction'>Action</label>
               <input
                 type='text'
                 id='reducerAction'
-                placeholder='eg. type: types.ADD_TASK'
+                placeholder='eg ADD_TODO'
                 onChange={(e) => handleChangeReducerFields(e, 'reducerAction')}
               />
             </div>
-
+          </div>
+          <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='expectedState'>Updated State</label>
+              <label htmlFor='initialState'>Payload (optional. if action requires)</label>
               <input
                 type='text'
-                placeholder='eg. { key: updated-value }'
-                id='expectedState'
-                onChange={(e) => handleChangeReducerFields(e, 'expectedState')}
+                id='payloadKey'
+                placeholder='Key'
+                onChange={(e) => handleChangeReducerFields(e, 'payloadKey')}
+              />
+              <input
+                type='text'
+                id='payloadValue'
+                placeholder='Value'
+                onChange={(e) => handleChangeReducerFields(e, 'payloadValue')}
+              />
+            </div>
+            <div id={styles.reducerName}>
+              <label htmlFor='expectedState'>Expected State</label>
+              <input
+                type='text'
+                placeholder='Key'
+                id='expectedKey'
+                onChange={(e) => handleChangeReducerFields(e, 'expectedKey')}
+              />
+              <input
+                type='text'
+                placeholder='Value'
+                id='expectedValue'
+                onChange={(e) => handleChangeReducerFields(e, 'expectedValue')}
               />
             </div>
           </div>
@@ -114,3 +117,33 @@ const Reducer = ({ reducer, index }) => {
 };
 
 export default Reducer;
+
+{
+  /* <div id={styles.reducerNameFlexBox}> */
+}
+{
+  /* <div id={styles.reducerName}>
+              <label htmlFor='typesFile'>Import Reducer From</label>
+              <SearchInput
+                options={Object.keys(filePathMap)}
+                dispatch={dispatchToReduxTestCase}
+                action={updateReducersFilePath}
+                filePathMap={filePathMap}
+              />
+            </div> */
+}
+{
+  /* <div id={styles.reducerName}>
+              <label htmlFor='typesFile'>Import Action Types From</label>
+              <SearchInput
+                options={Object.keys(filePathMap)}
+                dispatch={dispatchToReduxTestCase}
+                filePathMap={filePathMap}
+                updateTypesFilePath={updateTypesFilePath}
+                id={reducer.id}
+              />
+            </div> */
+}
+{
+  /* </div> */
+}

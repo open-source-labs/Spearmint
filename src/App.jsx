@@ -11,11 +11,13 @@ const App = () => {
   // useReducer takes a reducer and initial state as
   // args and return the current state paired with a dispatch method
   // distpatchTo method invokes associated reducer function
+
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   if (!global.isProjectLoaded) {
     return (
       <div>
+        {/* pass global state and dispatch function as prop to context provider for child components */}
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <ProjectLoader />
         </GlobalContext.Provider>

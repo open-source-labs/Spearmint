@@ -1,4 +1,4 @@
-import { reactTestCaseReducer } from '../context/reducers/reactTestCaseReducer';
+import { reactTestCaseReducer, reactTestCaseState } from '../context/reducers/reactTestCaseReducer';
 
 describe('React Reducer', () => {
   let initialState = {};
