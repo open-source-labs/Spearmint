@@ -8,7 +8,11 @@ import {
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
-import { addEndpoint, createNewEndpointTest } from '../../context/actions/endpointTestCaseActions';
+import {
+  addEndpoint,
+  createNewEndpointTest,
+  toggleDB,
+} from '../../context/actions/endpointTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import useToggleModal from './testMenuHooks';
@@ -36,6 +40,10 @@ const EndpointTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+  };
+
+  const handleClickAddDatabase = () => {
+    dispatchToEndpointTestCase(toggleDB());
   };
 
   if (!file && exportBool) {
@@ -69,6 +77,9 @@ const EndpointTestMenu = () => {
         <div id={styles.right}>
           <button data-testid='endPointButton' onClick={handleAddEndpoint}>
             Endpoint
+          </button>
+          <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
+            Configure Database
           </button>
         </div>
       </div>

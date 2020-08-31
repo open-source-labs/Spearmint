@@ -9,6 +9,8 @@ export interface EndpointTestCaseState {
   serverFilePath: string;
   serverFileName: string;
   endpointStatements: Endpoint[];
+  databaseFilePath: string;
+  addDB: boolean;
 }
 
 export interface Action {

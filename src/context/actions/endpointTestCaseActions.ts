@@ -19,6 +19,7 @@ export const actionTypes = {
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
   UPDATE_ASSERTION: 'UPDATE_ASSERTION',
+  TOGGLE_DB: 'TOGGLE_DB',
 };
 
 // Never used
@@ -121,5 +122,11 @@ export const updateAssertion = (index: number, id: number, newAssertion: Asserti
     index,
     id,
     assertion: newAssertion,
+  };
+};
+
+export const toggleDB = () => {
+  return {
+    type: actionTypes.TOGGLE_DB,
   };
 };
