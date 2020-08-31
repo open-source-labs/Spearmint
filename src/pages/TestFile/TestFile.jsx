@@ -44,6 +44,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
 
 const TestFile = () => {
+  console.log();
   let [{ testCase, isTestModalOpen }, dispatchToGlobal] = useContext(GlobalContext);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 

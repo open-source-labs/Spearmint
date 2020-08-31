@@ -4,14 +4,22 @@ import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCase
 import { EndpointStatements } from '../../utils/endpointTypes';
 
 const EndpointTestStatements = () => {
-  const [{ endpointStatements }] = useContext(EndpointTestCaseContext);
+  const [{ endpointStatements }, dispatch] = useContext(EndpointTestCaseContext);
+
   return (
     <>
       {endpointStatements.map((statement: EndpointStatements, i: number) => {
         switch (statement.type) {
           /* add statements here. Ex: */
           case 'endpoint':
-            return <Endpoint key={statement.id} endpoint={statement} index={i} />;
+            return (
+              <Endpoint
+                key={statement.id}
+                endpoint={statement}
+                index={i}
+                dispatchToEndpointTestCase={dispatch}
+              />
+            );
           default:
             return <></>;
         }
