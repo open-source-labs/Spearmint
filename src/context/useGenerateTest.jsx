@@ -581,11 +581,14 @@ function useGenerateTest(test, projectFilePath) {
         : '';
       statement.headers.forEach(({ headerName, headerValue }, index) => {
         testFileCode +=
-          index === statement.headers.length - 1
-            ? `'${headerName}': '${headerValue}'})`
-            : `'${headerName}': '${headerValue}',`;
+          // index === statement.headers.length - 1;
+          // ? headerName.length > 0 && headerValue > 0
+          //   ? `'${headerName}': '${headerValue}'})`
+          //   : ''
+          // :
+          headerName.length > 0 && headerValue > 0 ? `'${headerName}': '${headerValue}',` : '';
       });
-      testFileCode += '; \n';
+      testFileCode += '}); \n';
       statement.assertions.forEach((assertion) => {
         let matcher = assertion.matcher
           .replace(/\(([^)]+)\)/, '')
