@@ -380,8 +380,8 @@ function useGenerateTest(test, projectFilePath) {
         filePath = path.relative(projectFilePath, statement.filePath);
         filePath = filePath.replace(/\\/g, '/');
       }
-      if (!testFileCode.includes(`import { actionTypes } from from`) && filePath) {
-        testFileCode += `import { actionTypes } from '../${filePath}';`;
+      if (!testFileCode.includes(`import * as actions from from`) && filePath) {
+        testFileCode += `import * as actions from '../${filePath}';`;
       }
     };
 
@@ -598,8 +598,7 @@ function useGenerateTest(test, projectFilePath) {
           expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction)});`;
       } else {
         testFileCode += `it('${actionCreator.it}', () => {const expectedAction = { 
-            type: actionTypes.${actionCreator.actionType}, 
-          }; 
+            type: actionTypes.${actionCreator.actionType}}; 
           expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction)});`;
       }
     };
@@ -739,6 +738,7 @@ function useGenerateTest(test, projectFilePath) {
         return (
           addReduxImportStatements(),
           addReduxTestStatements(),
+          (testFileCode += `});`),
           (testFileCode = beautify(testFileCode, {
             indent_size: 2,
             space_in_empty_paren: true,
