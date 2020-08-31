@@ -42,13 +42,6 @@
     background-color: $mint;
   }
 }
-// #example {
-//   padding: 0px;
-//   margin-left: 10px;
-// }
-// #example:focus {
-//   background-color: $mint;
-// }
 
 #groupFlexbox {
   display: flex;
@@ -57,9 +50,24 @@
   justify-content: space-between;
 }
 
+#groupFlexboxAssertion {
+  @extend #groupFlexbox;
+  #labelInput,
+  #dropdownWrapper {
+    margin-right: 10px;
+  }
+  #dropdownWrapper {
+    width: 100%;
+
+    #dropdownFlex {
+      width: 100%;
+    }
+  }
+}
+
 #alignRight {
   width: 43%;
-  margin-right: 7%;
+  margin-right: 30px;
   input {
     margin-top: 6px;
     width: 100%;
@@ -82,11 +90,18 @@
     margin-top: 6px;
     width: 100%;
   }
+
   position: relative;
 }
 
+#labelInputTest {
+  @extend #labelInput;
+  display: inline-block;
+}
+
 #dropdownWrapper {
-  margin-right: 9%;
+  // margin-right: 9%;
+  width: 43%;
   select {
     font-family: $raleway;
     width: 100%;
@@ -103,7 +118,6 @@
 #dropdownFlex {
   display: flex;
   align-items: center;
-  width: 340%;
   margin-top: 6px;
 }
 
@@ -128,4 +142,63 @@
 #matcher {
   margin-top: 1em;
   margin-right: 3em;
+}
+
+.addProps {
+  height: auto;
+  font-size: 0.85rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  min-width: 150px;
+  border-radius: 3px;
+  font-family: $oxygen;
+  text-align: center;
+  transition: 150ms;
+}
+
+//need to change this
+hr {
+  margin-top: 0;
+}
+
+.buttonsContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.assertionButton {
+  height: auto;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  min-width: 150px;
+  border-radius: 3px;
+  font-family: $oxygen;
+  text-align: center;
+  transition: 150ms;
+  color: $mint;
+
+  &:hover {
+    font-size: 1.1rem;
+  }
+
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+#endMatcherLabel {
+  display: flex;
+  div {
+    font-size: 12px;
+  }
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 8px;
+  #notDiv {
+    margin-right: 15%;
+  }
 }
