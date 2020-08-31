@@ -7,6 +7,7 @@ import { deleteAssertion, updateAssertion } from '../../context/actions/endpoint
 const EndpointAssertion = ({ assertion, index, id }) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   const jestMatchers = [
+    '',
     'to Be',
     'to Equal (object)',
     'to Have Been Called',
@@ -49,6 +50,7 @@ const EndpointAssertion = ({ assertion, index, id }) => {
   };
 
   const handleChangeUpdateAssertion = (e, field) => {
+    console.log(field, e.target.value);
     const updatedAssertion = { ...assertion, [field]: e.target.value };
     dispatchToEndpointTestCase(updateAssertion(index, id, updatedAssertion));
   };

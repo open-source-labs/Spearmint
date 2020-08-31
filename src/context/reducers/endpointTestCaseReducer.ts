@@ -107,7 +107,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         modalOpen: false,
         serverFilePath: '',
         serverFileName: '',
-        endpointStatements: [{ ...newEndpoint, headers: [], assertions: [] }],
+        endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
       endpointStatements = [...(action.draggableStatements as Endpoint[])];

@@ -572,23 +572,29 @@ function useGenerateTest(test, projectFilePath) {
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
+      const headersObj = {};
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
-      if (statement.postData) {
-        testFileCode += `.send(${statement.postData})
-       \n .set('Content-Type', 'application/json')`;
-      }
-      statement.headers.forEach(
-        ({ headerName, headerValue }) =>
-          (testFileCode += `\n .set('${headerName}', '${headerValue}')`)
-      );
-      let assertion = statement.assertion
-        .replace(/\(([^)]+)\)/, '')
-        .split(' ')
-        .join('');
-      testFileCode += `;`;
-      testFileCode += `expect(response.${statement.expectedResponse.toLowerCase()}).${assertion}(${
-        statement.value
-      });`;
+      testFileCode += statement.postData
+        ? `.send(\ ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
+        : statement.headers.length
+        ? `.set({`
+        : '';
+      statement.headers.forEach(({ headerName, headerValue }, index) => {
+        testFileCode +=
+          index === statement.headers.length - 1
+            ? `'${headerName}': '${headerValue}'})`
+            : `'${headerName}': '${headerValue}',`;
+      });
+      testFileCode += '; \n';
+      statement.assertions.forEach((assertion) => {
+        let matcher = assertion.matcher
+          .replace(/\(([^)]+)\)/, '')
+          .split(' ')
+          .join('');
+        testFileCode += `expect(response.${assertion.expectedResponse.toLowerCase()}).${matcher}(${
+          assertion.value
+        });`;
+      });
       testFileCode += '});';
       testFileCode += '\n';
     };

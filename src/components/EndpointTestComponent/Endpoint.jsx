@@ -14,7 +14,6 @@ import {
   updatePost,
   addAssertion,
 } from '../../context/actions/endpointTestCaseActions';
-
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
