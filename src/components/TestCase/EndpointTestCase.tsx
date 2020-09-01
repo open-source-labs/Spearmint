@@ -2,6 +2,7 @@ import React, { useContext, ChangeEvent } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import style from '../EndpointTestComponent/Endpoint.module.scss';
+
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import {
   updateServerFilePath,
@@ -20,6 +21,8 @@ const EndpointTestCase = () => {
     EndpointTestCaseContext
   );
   const [{ filePathMap }] = useContext<any>(GlobalContext);
+
+  const questionIcon = require('../../assets/images/help-circle.png');
 
   const reorder = (list: Array<EndpointStatements>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
@@ -74,7 +77,14 @@ const EndpointTestCase = () => {
           {addDB && (
             <>
               <div>
-                <label htmlFor='endpointDB'>Import Database From</label>
+                <label htmlFor='endpointDB'>Import Database From</label>{' '}
+                <span id={styles.hastooltip} role='tooltip'>
+                  <img src={questionIcon} alt='help' />
+                  <span id={styles.tooltip}>
+                    If you're testing a route that involves querying a database, you must import it
+                    here. See "Run Test" above for more information.
+                  </span>
+                </span>
                 <div id={styles.labelInput} style={{ width: '80%' }}>
                   <SearchInput
                     options={Object.keys(filePathMap)}

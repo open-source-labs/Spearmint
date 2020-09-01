@@ -1,5 +1,6 @@
 @import '/../../assets/stylesheets/fonts.scss';
 @import '/../../assets/stylesheets/colors.scss';
+@import '../../pages/LeftPanel/LeftPanel.module.scss';
 
 .displays {
   display: block;
@@ -105,4 +106,20 @@ div {
     width: 100%;
   }
   position: relative;
+}
+
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+  img {
+    height: 15px;
+    width: 15px;
+    margin: 2px;
+  }
+}
+
+#tooltip {
+  min-width: 15em;
+  padding: 0.5em 0.75em;
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
 }

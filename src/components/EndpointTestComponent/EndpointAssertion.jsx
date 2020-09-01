@@ -111,16 +111,9 @@ const EndpointAssertion = ({ assertion, index, id }) => {
           </select>{' '}
           <span id={stylez.hastooltip} role='tooltip'>
             <img src={questionIcon} alt='help' onClick={handleClickTooltip} />
-            <span id={stylez.tooltip}>
-              {/* <ToolTipMatcher toolTipType={statement.matcherType} /> */}
-              Click me to find out more about Jest test matchers
-            </span>
+            <span id={stylez.tooltip}>Click me to find out more about Jest test matchers</span>
           </span>
         </div>
-        {/* <div id={stylez.autoTool}>
-      <input type='text' /> */}
-
-        {/* </div> */}
       </div>
       <div id={styles.labelInput}>
         <label htmlFor='value'>Expected Value</label>
