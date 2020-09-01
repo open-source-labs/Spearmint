@@ -12,6 +12,7 @@ import {
   addEndpoint,
   createNewEndpointTest,
   toggleDB,
+  updateDBFilePath,
 } from '../../context/actions/endpointTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
@@ -43,8 +44,10 @@ const EndpointTestMenu = () => {
   };
 
   const handleClickAddDatabase = () => {
-    const dbProperty = endpointTestCase.addDB ? false : 'PostgreSQL';
-    dispatchToEndpointTestCase(toggleDB(dbProperty));
+    if (endpointTestCase.addDB) {
+      dispatchToEndpointTestCase(toggleDB(false));
+      dispatchToEndpointTestCase(updateDBFilePath(''));
+    } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
   };
 
   if (!file && exportBool) {

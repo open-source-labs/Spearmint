@@ -412,8 +412,7 @@ function useGenerateTest(test, projectFilePath) {
       if (dbFilePath) {
         let filePath = path.relative(projectFilePath, dbFilePath);
         filePath = filePath.replace(/\\/g, '/');
-        // testFileCode += `const db = require('../${filePath}');
-        // \n afterAll(() => {`;
+
         switch (addDB) {
           case 'PostgreSQL':
             testFileCode += `const pgPoolClient = require('../${filePath}');
