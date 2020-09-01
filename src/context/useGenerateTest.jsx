@@ -412,17 +412,20 @@ function useGenerateTest(test, projectFilePath) {
       if (dbFilePath) {
         let filePath = path.relative(projectFilePath, dbFilePath);
         filePath = filePath.replace(/\\/g, '/');
-        testFileCode += `const db = require('../${filePath}');
-        \n afterAll(() => {`;
+        // testFileCode += `const db = require('../${filePath}');
+        // \n afterAll(() => {`;
         switch (addDB) {
           case 'PostgreSQL':
-            testFileCode += 'db.end(); \n});';
+            testFileCode += `const pgPoolClient = require('../${filePath}');
+            \n afterAll( async () => { await pgPoolClient.end(); \n});`;
             break;
           case 'MongoDB':
-            testFileCode += 'db.end(); \n});';
+            testFileCode += `const client = require('../${filePath}');
+            \n afterAll( async () => { await client.close(); \n});`;
             break;
           case 'Mongoose':
-            testFileCode += 'db.end(); \n});';
+            testFileCode += `const Connection = require('../${filePath}');
+            \n afterAll( async () => { await Connection.close(); \n});`;
           default:
             return;
         }
