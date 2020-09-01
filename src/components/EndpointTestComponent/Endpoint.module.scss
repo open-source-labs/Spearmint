@@ -56,10 +56,7 @@
   #labelInput,
   #dropdownWrapper {
     margin-right: 10px;
-  }
-  #dropdownWrapper {
     width: 100%;
-
     #dropdownFlex {
       width: 100%;
     }
@@ -145,7 +142,7 @@
   margin-right: 3em;
 }
 
-.addProps {
+#addProps {
   height: auto;
   font-size: 0.85rem;
   background-color: rgba(0, 0, 0, 0);
@@ -155,6 +152,9 @@
   font-family: $oxygen;
   text-align: center;
   transition: 150ms;
+  &:hover {
+    font-size: 1rem;
+  }
 }
 
 //need to change this
@@ -169,8 +169,8 @@ hr {
   align-items: center;
 }
 
-.assertionButton {
-  height: auto;
+#assertionButton {
+  // height: auto;
   font-size: 1rem;
   background-color: rgba(0, 0, 0, 0);
   border: none;
@@ -182,9 +182,8 @@ hr {
   color: $mint;
 
   &:hover {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
-
   i {
     margin-right: 0.5rem;
   }

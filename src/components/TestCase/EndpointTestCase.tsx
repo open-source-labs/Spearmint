@@ -1,7 +1,7 @@
 import React, { useContext, ChangeEvent } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
-import style from '../EndpointTestComponent/Endpoint.module.scss';
+// import style from '../EndpointTestComponent/Endpoint.module.scss';
 
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import {
@@ -99,9 +99,9 @@ const EndpointTestCase = () => {
                   />
                 </div>
               </div>
-              <div id={style.dropdownWrapper} style={{ marginTop: '15px' }}>
+              <div id={styles.dropdownWrapper} style={{ marginTop: '15px' }}>
                 <label htmlFor='endpointDBType'>Type of Database</label>
-                <div id={style.dropdownFlex}>
+                <div id={styles.dropdownFlex}>
                   <select id='method' value={addDB} onChange={(e) => handleSelectUpdateDatabase(e)}>
                     <option value='PostgreSQL'>PostgreSQL</option>
                     <option value='MongoDB'>MongoDB</option>
