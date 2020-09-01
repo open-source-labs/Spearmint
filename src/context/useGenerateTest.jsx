@@ -423,8 +423,8 @@ function useGenerateTest(test, projectFilePath) {
             \n afterAll( async () => { await client.close(); \n});`;
             break;
           case 'Mongoose':
-            testFileCode += `const Connection = require('../${filePath}');
-            \n afterAll( async () => { await Connection.close(); \n});`;
+            testFileCode += `const mongoose = require('../${filePath}');
+            \n afterAll( async () => { await mongoose.connection.close(); \n});`;
           default:
             return;
         }
@@ -605,7 +605,7 @@ function useGenerateTest(test, projectFilePath) {
             ? `'${headerName}': '${headerValue}',`
             : '';
       });
-      testFileCode += '}); \n';
+      testFileCode += statement.headers.length ? '}); \n' : '';
       statement.assertions.forEach((assertion) => {
         let matcher = assertion.matcher
           .replace(/\(([^)]+)\)/, '')
