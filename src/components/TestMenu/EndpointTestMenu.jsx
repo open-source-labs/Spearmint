@@ -5,6 +5,7 @@ import {
   toggleRightPanel,
   updateFile,
   setFilePath,
+  setValidCode,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
@@ -51,6 +52,7 @@ const EndpointTestMenu = () => {
   };
 
   if (!file && exportBool) {
+    dispatchToGlobal(setValidCode(true));
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
 
