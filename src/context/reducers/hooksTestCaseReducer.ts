@@ -1,25 +1,37 @@
 import { createContext } from 'react';
 // import { actionTypes } from '../actions/hooksTestCaseActions';
-import { HooksTestCaseState } from '../../utils/hooksTypes';
+import { HooksTestCaseState, Assertion, Action, Hooks } from '../../utils/hooksTypes';
+import { actionTypes } from '../actions/globalActions';
 
 export const HooksTestCaseContext: any = createContext(null);
+
+const newAssertion: Assertion = {
+  id: 0,
+  expectedState: '',
+  expectedValue: '',
+  matcher: '',
+  not: false,
+};
+
+const newHooks: Hooks = {
+  id: 0,
+  type: 'hooks',
+  testName: '',
+  hook: '',
+  hookParams: '',
+  assertions: [
+    {
+      ...newAssertion,
+    },
+  ],
+  typeof: false,
+};
 
 export const hooksTestCaseState = {
   modalOpen: false,
   hooksTestStatement: '',
-  hooksStatements: [],
+  hooksStatements: [{ ...newHooks, assertions: [{ ...newAssertion }] }],
   statementId: 0,
-  statements: {
-    byId: {
-      statement0: {
-        id: 'statement0',
-        itId: 'it0',
-        describeId: 'describe0',
-        type: 'render',
-        props: [],
-      },
-    },
-  },
 };
 
 const createContexts = (statementId: number) => ({
@@ -43,9 +55,9 @@ const createHookRender = (statementId: number) => ({
   hookFileName: '',
   hookFilePath: '',
   hook: '',
-  parameterOne: '',
-  returnValue: [],
-  expectedReturnValue: [],
+  parameters: '',
+  expectedState: '',
+  expectedValue: '',
 });
 
 const createHookUpdates = (statementId: number) => ({
@@ -55,21 +67,38 @@ const createHookUpdates = (statementId: number) => ({
   type: 'hook-updates',
   hook: '',
   callbackFunc: '',
-  managedState: [],
-  updatedState: [],
+  expectedState: '',
+  expectedValue: '',
 });
 
-export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => {
+const deepCopy = (hooksStatements: Hooks[]) => {
+  function copyAssertions(array: Assertion[]) {
+    const copy: Assertion[] = array.map((el) => {
+      return { ...el };
+    });
+    return copy;
+  }
+
+  const fullCopy: Hooks[] = hooksStatements.map((el) => {
+    return { ...el, assertions: copyAssertions(el.assertions) };
+  });
+
+  return fullCopy;
+};
+
+export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) => {
   Object.freeze(state);
   let hooksStatements = [...state.hooksStatements];
 
   switch (action.type) {
-    case 'UPDATE_HOOKS_TEST_STATEMENT': {
-      return {
-        ...state,
-        hooksTestStatement: action.hooksTestStatement,
-      };
-    }
+    // case 'UPDATE_HOOKS_TEST_STATEMENT': {
+    //   console.log('hooksteststatement', action.hooksTestStatement);
+    //   return {
+    //     ...state,
+    //     hooksTestStatement: action.hooksTestStatement,
+    //   };
+    // }
+
     case 'ADD_CONTEXT':
       hooksStatements.push(createContexts(state.statementId));
       return {
@@ -87,6 +116,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
     case 'UPDATE_CONTEXT':
       hooksStatements = hooksStatements.map((statement) => {
         if (statement.id === action.id) {
+          console.log('update context action', action);
           return {
             ...statement,
             queryVariant: action.queryVariant,
@@ -105,11 +135,12 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
         ...state,
         hooksStatements,
       };
+
     case 'ADD_HOOK_UPDATES':
       hooksStatements.push(createHookUpdates(state.statementId));
       return {
         ...state,
-        hooksStatements,
+        hooksStatements: deepCopy(hooksStatements),
         statementId: state.statementId + 1,
       };
 
@@ -126,18 +157,12 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
         if (statement.id === action.id) {
           return {
             ...statement,
-            statement: {
-              ...statement,
-              byId: {
-                [statement.id]: createHookUpdates(statement.id),
-              },
-            },
             hook: action.hook,
             hookFileName: action.hookFileName,
             hookFilePath: action.hookFilePath,
             callbackFunc: action.callbackFunc,
-            managedState: action.managedState,
-            updatedState: action.updatedState,
+            expectedState: action.expectedState,
+            expectedValue: action.expectedValue,
           };
         }
         return statement;
@@ -168,9 +193,9 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
           return {
             ...statement,
             hook: action.hook,
-            parameterOne: action.parameterOne,
-            expectedReturnValue: action.expectedReturnValue,
-            returnValue: action.returnValue,
+            parameters: action.parameters,
+            expectedValue: action.expectedValue,
+            expectedState: action.expectedState,
           };
         }
         return statement;
@@ -234,6 +259,36 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
       return {
         ...state,
         modalOpen: false,
+      };
+    case 'ADD_ASSERTION':
+      hooksStatements[action.index as number].assertions.push({
+        id: hooksStatements[hooksStatements.length - 1].id + 1,
+        expectedState: '',
+        matcher: '',
+        expectedValue: '',
+        not: false,
+      });
+      return {
+        ...state,
+        hookStatement: deepCopy(hooksStatements),
+      };
+    case 'DELETE_ASSERTION':
+      hooksStatements[action.index as number].assertions.splice(action.id!, 1);
+      return {
+        ...state,
+        hookStatement: deepCopy(hooksStatements),
+      };
+    case 'UPDATE_ASSERTION':
+      hooksStatements[action.index as number].assertions[action.id as number] = action.assertion!;
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+    case 'TOGGLE_TYPEOF':
+      hooksStatements[action.index as number].post = !hooksStatements[action.index as number].post;
+      return {
+        ...state,
+        hooksStatements,
       };
     default:
       return state;

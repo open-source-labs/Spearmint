@@ -6,48 +6,39 @@ import { deleteAssertion, updateAssertion } from '../../context/actions/endpoint
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 
-const EndpointAssertion = ({ assertion, index, id }) => {
+const HooksAssertion = ({ assertion, index, id }) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   const [, dispatchToGlobal] = useContext(GlobalContext);
-  const jestMatchers = [
+  const jestDOMMatcher = [
     '',
     'to Be',
-    'to Equal (object)',
-    'to Have Been Called',
-    'to Have Been Called Times (number)',
-    'to Have Been Called With (arg1,...)',
-    'to Have Been Last Called With (arg1,...)',
-    'to Have Been Nth Called With (nth call, arg1,...)',
-    'to Have Length (number)',
-    'to Have Property (keyPath, value[optional])',
-    'to Be Close To (number, number of digits[optional])',
-    'to Be Defined',
-    'to Be Undefined',
-    'to Be Falsy',
-    'to Be Truthy',
-    'to Be NaN',
-    'to Be Greater Than (number)',
-    'to Be Greater Than Or Equal (number)',
-    'to Be Less Than (number)',
-    'to Be Less Than Or Equal (number)',
-    'to Be Instance Of (Class)',
-    'to Contain (item in an array)',
-    'to Contain Equal (an object in an array)',
-    'to Match (regexp or string)',
-    'to Match Object (object)',
-    'to Strict Equal (object)',
-    'to Throw (error[optional])',
+    'toBeDisabled',
+    'toBeEnabled',
+    'toBeEmpty',
+    'toBeEmptyDOMElement',
+    'toBeInTheDocument',
+    'toBeInvalid',
+    'toBeRequired',
+    'toBeValid',
+    'toBeVisible',
+    'toContainElement',
+    'toContainHTML',
+    'toHaveAttribute',
+    'toHaveClass',
+    'toHaveFocus',
+    'toHaveFormValues',
+    'toHaveStyle',
+    'toHaveTextContent',
+    'toHaveValue',
+    'toHaveDisplayValue',
+    'toBeChecked',
+    'toBePartiallyChecked',
+    'toHaveDescription',
   ];
-
-  //for mock fuctions only:
-  //   'to Have Returned',
-  //   'to Have Returned __ Times (number)',
-  //   'to Have Last Returned With',
-  // ];
 
   const questionIcon = require('../../assets/images/help-circle.png');
   const closeIcon = require('../../assets/images/close.png');
-  const jestURL = 'https://jestjs.io/docs/en/expect';
+  const jestDOMURL = 'https://github.com/testing-library/jest-dom';
 
   const handleClickDeleteAssertion = () => {
     dispatchToEndpointTestCase(deleteAssertion(index, id));
@@ -62,19 +53,19 @@ const EndpointAssertion = ({ assertion, index, id }) => {
   };
 
   const handleClickTooltip = () => {
-    dispatchToGlobal(openBrowserDocs(jestURL));
+    dispatchToGlobal(openBrowserDocs(jestDOMURL));
   };
 
   return (
     <div id={styles.groupFlexboxAssertion}>
       <div id={styles.labelInput}>
-        <label htmlFor='requestBody'>Expect Response</label>
+        <label htmlFor='requestBody'>Expect State</label>
         <div id={styles.inputFlexBox}>
           <input
             type='text'
             list='responseProperties'
-            value={assertion.expectedResponse}
-            onChange={(e) => handleChangeUpdateAssertion(e, 'expectedResponse')}
+            value={assertion.expectedState}
+            onChange={(e) => handleChangeUpdateAssertion(e, 'expectedState')}
           />
           <datalist id='responseProperties'>
             <option value='Headers'></option>
@@ -101,7 +92,7 @@ const EndpointAssertion = ({ assertion, index, id }) => {
             value={assertion.matcher}
             onChange={(e) => handleChangeUpdateAssertion(e, 'matcher')}
           >
-            {jestMatchers.map((matcher) => (
+            {jestDOMMatcher.map((matcher) => (
               <option value={matcher}>{matcher}</option>
             ))}
           </select>{' '}
@@ -109,7 +100,7 @@ const EndpointAssertion = ({ assertion, index, id }) => {
             <img src={questionIcon} alt='help' onClick={handleClickTooltip} />
             <span id={stylez.tooltip}>
               {/* <ToolTipMatcher toolTipType={statement.matcherType} /> */}
-              Click me to find out more about Jest test matchers
+              Click me to find out more about Jest DOM matchers
             </span>
           </span>
         </div>
@@ -119,14 +110,14 @@ const EndpointAssertion = ({ assertion, index, id }) => {
         {/* </div> */}
       </div>
       <div id={styles.labelInput}>
-        <label htmlFor='value'>Expected Value</label>
+        <label htmlFor='expectedValue'>Expected Value</label>
         <div id={styles.inputFlexBox}>
           <input
             type='text'
-            name='value'
+            name='expectedValue'
             placeholder='eg. 200'
-            value={assertion.value}
-            onChange={(e) => handleChangeUpdateAssertion(e, 'value')}
+            value={assertion.expectedValue}
+            onChange={(e) => handleChangeUpdateAssertion(e, 'expectedValue')}
           />
         </div>
       </div>

@@ -18,6 +18,10 @@ export const actionTypes = {
   CREATE_NEW_HOOKS_TEST: 'CREATE_NEW_HOOKS_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
+  ADD_ASSERTION: 'ADD_ASSERTION',
+  UPDATE_ASSERTION: 'UPDATE_ASSERTION',
+  DELETE_ASSERTION: 'DELETE_ASSERTION',
+  TOGGLE_TYPEOF: 'TOGGLE_TYPEOF',
 };
 
 export const toggleHooks = () => ({
@@ -99,3 +103,34 @@ export const openInfoModal = () => ({
 export const closeInfoModal = () => ({
   type: actionTypes.CLOSE_INFO_MODAL,
 });
+
+export const addAssertion = (index: number) => {
+  return {
+    type: actionTypes.ADD_ASSERTION,
+    index,
+  };
+};
+
+export const deleteAssertion = (index: number, id: number) => {
+  return {
+    type: actionTypes.DELETE_ASSERTION,
+    index,
+    id,
+  };
+};
+
+export const updateAssertion = (index: number, id: number, newAssertion: Assertion) => {
+  return {
+    type: actionTypes.UPDATE_ASSERTION,
+    index,
+    id,
+    assertion: newAssertion,
+  };
+};
+
+export const toggleTypeof = (index: number) => {
+  return {
+    type: actionTypes.TOGGLE_TYPEOF,
+    index,
+  };
+};

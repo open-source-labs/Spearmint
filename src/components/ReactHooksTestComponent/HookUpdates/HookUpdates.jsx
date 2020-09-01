@@ -84,20 +84,20 @@ const HookUpdates = ({ hookUpdates, index }) => {
 
           <div id={styles.stateFlexBox}>
             <div id={styles.state}>
-              <label htmlFor='managedState'>Managed State</label>
+              <label htmlFor='expectedState'>Managed State</label>
               <input
                 type='text'
-                id='managedState'
-                onChange={(e) => handleChangeHookUpdatesFields(e, 'managedState')}
+                id='expectedState'
+                onChange={(e) => handleChangeHookUpdatesFields(e, 'expectedState')}
                 placeholder='e.g. count'
               />
             </div>
             <div id={styles.state}>
-              <label htmlFor='updatedState'>Updated Value</label>
+              <label htmlFor='expectedValue'>Updated Value</label>
               <input
                 type='text'
-                id='updatedState'
-                onChange={(e) => handleChangeHookUpdatesFields(e, 'updatedState')}
+                id='expectedValue'
+                onChange={(e) => handleChangeHookUpdatesFields(e, 'expectedValue')}
                 placeholder='e.g. 1'
               />
             </div>

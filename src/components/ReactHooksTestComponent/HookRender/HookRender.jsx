@@ -41,21 +41,21 @@ const HookRender = ({ hookRender, index }) => {
     return (
       <div id={`${styles.hookRenderFlexBox}`}>
         <div id={styles.hookRenderType}>
-          <label htmlFor='returnValue'>Expected State</label>
+          <label htmlFor='expectedState'>Expected State</label>
           <input
             type='text'
-            id='returnValue'
+            id='expectedState'
             placeholder='eg. count'
-            onChange={(e) => handleChangeHookRenderFields(e, 'returnValue')}
+            onChange={(e) => handleChangeHookRenderFields(e, 'expectedState')}
           />
         </div>
         <div id={styles.hookRenderType}>
-          <label htmlFor='expectedReturnValue'>Current Value</label>
+          <label htmlFor='expectedValue'>Current Value</label>
           <input
             type='text'
-            id='expectedReturnValue'
+            id='expectedValue'
             placeholder='eg. 0'
-            onChange={(e) => handleChangeHookRenderFields(e, 'expectedReturnValue')}
+            onChange={(e) => handleChangeHookRenderFields(e, 'expectedValue')}
           />
           <div id={styles.hookRenderType}>
             <button onClick={handleAddInput}>+</button>
@@ -108,12 +108,12 @@ const HookRender = ({ hookRender, index }) => {
             </div>
 
             <div id={styles.hookRenderType}>
-              <label htmlFor='parameterOne'>Hook Parameters (optional)</label>
+              <label htmlFor='parameters'>Hook Parameters (optional)</label>
               <input
                 type='text'
-                id='parameterOne'
+                id='parameters'
                 placeholder='eg. 9000, "string"'
-                onChange={(e) => handleChangeHookRenderFields(e, 'parameterOne')}
+                onChange={(e) => handleChangeHookRenderFields(e, 'parameters')}
               />
             </div>
           </div>

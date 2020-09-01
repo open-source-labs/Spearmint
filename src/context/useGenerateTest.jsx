@@ -572,19 +572,19 @@ function useGenerateTest(test, projectFilePath) {
         act(() => {
           result.current.${hookUpdates.callbackFunc}();
         });`;
-      for (let i = 0; i < hookUpdates.managedState.length; i += 1) {
-        testFileCode += `expect(result.current.${hookUpdates.managedState[i]}).toBe(${
-          hookUpdates.updatedState[i] || ''
+      for (let i = 0; i < hookUpdates.expectedState.length; i += 1) {
+        testFileCode += `expect(result.current.${hookUpdates.expectedState[i]}).toBe(${
+          hookUpdates.expectedValue[i] || ''
         })\n`;
       }
     };
 
     // Hook: Renders Jest Test Code
     const addHookRender = (hookRender) => {
-      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameterOne}));`;
-      for (let i = 0; i < hookRender.returnValue.length; i += 1) {
-        testFileCode += `expect(result.current.${hookRender.returnValue[i]}).toBe(${
-          hookRender.expectedReturnValue[i] || ''
+      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameters}));`;
+      for (let i = 0; i < hookRender.expectedState.length; i += 1) {
+        testFileCode += `expect(result.current.${hookRender.expectedState[i]}).toBe(${
+          hookRender.expectedValue[i] || ''
         })\n`;
       }
     };

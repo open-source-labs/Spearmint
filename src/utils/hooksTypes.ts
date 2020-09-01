@@ -7,10 +7,53 @@ export interface HooksStatements {
 export interface HooksTestCaseState {
   modalOpen: boolean;
   hooksTestStatement: string;
-  hooksStatements: Array<HooksStatements>;
+  hooksStatements: Hooks[];
   statementId: number;
 }
 
+export interface Assertion {
+  id: number;
+  expectedState: string;
+  matcher: string;
+  expectedValue: string;
+  not: boolean;
+}
+
+export interface Action {
+  type: string;
+  id?: number;
+  context?: string;
+  hook?: string;
+  parameters?: any;
+  callbackFunc?: string;
+  expectedState?: any;
+  expectedValue?: any;
+  textNodes?: string;
+  queryVariant?: string;
+  querySelector?: string;
+  queryValue?: string;
+  values?: string;
+  providerComponent?: string;
+  consumerComponent?: string;
+  draggableStatements?: Array<HooksStatements>;
+  index?: number;
+  text?: string;
+  hookFileName?: string;
+  hookFilePath?: string;
+  contextFileName?: string;
+  contextFilePath?: string;
+  assertion?: Assertion;
+}
+
+export interface Hooks {
+  id: number;
+  type: string;
+  testName: string;
+  hook: string;
+  hookParams: string;
+  assertions: Assertion[];
+  typeof: boolean;
+}
 /* ---------------------------- Actions In Reducer coming from hooksTestCaseActions ---------------------- */
 
 // export type HooksAction =
