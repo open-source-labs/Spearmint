@@ -17,7 +17,7 @@ import {
 } from '../../context/actions/endpointTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import useToggleModal from './testMenuHooks';
+import { useToggleModal, validateInputs } from './testMenuHooks';
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
@@ -52,7 +52,9 @@ const EndpointTestMenu = () => {
   };
 
   if (!file && exportBool) {
-    dispatchToGlobal(setValidCode(true));
+    validateInputs('endpoint', endpointTestCase)
+      ? dispatchToGlobal(setValidCode(true))
+      : dispatchToGlobal(setValidCode(false));
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
 
