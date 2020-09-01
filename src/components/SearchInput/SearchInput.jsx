@@ -42,6 +42,7 @@ export const SearchInput = ({
     if (action) dispatch(action(selectedOption, filePath));
   };
   const handleKeyDown = (e) => {
+    if (action) dispatch(action('', ''));
     if (e.keyCode === 13) {
       setActiveOption(0);
       setShowOptions(false);

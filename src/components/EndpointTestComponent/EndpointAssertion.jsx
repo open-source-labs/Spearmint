@@ -5,45 +5,11 @@ import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCase
 import { deleteAssertion, updateAssertion } from '../../context/actions/endpointTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
+import jestMatchers from './JestMatchers.js';
 
 const EndpointAssertion = ({ assertion, index, id }) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
   const [, dispatchToGlobal] = useContext(GlobalContext);
-  const jestMatchers = [
-    '',
-    'to Be',
-    'to Equal (object)',
-    'to Have Been Called',
-    'to Have Been Called Times (number)',
-    'to Have Been Called With (arg1,...)',
-    'to Have Been Last Called With (arg1,...)',
-    'to Have Been Nth Called With (nth call, arg1,...)',
-    'to Have Length (number)',
-    'to Have Property (keyPath, value[optional])',
-    'to Be Close To (number, number of digits[optional])',
-    'to Be Defined',
-    'to Be Undefined',
-    'to Be Falsy',
-    'to Be Truthy',
-    'to Be NaN',
-    'to Be Greater Than (number)',
-    'to Be Greater Than Or Equal (number)',
-    'to Be Less Than (number)',
-    'to Be Less Than Or Equal (number)',
-    'to Be Instance Of (Class)',
-    'to Contain (item in an array)',
-    'to Contain Equal (an object in an array)',
-    'to Match (regexp or string)',
-    'to Match Object (object)',
-    'to Srict Equal (object)',
-    'to Throw (error[optional])',
-  ];
-
-  //for mock fuctions only:
-  //   'to Have Returned',
-  //   'to Have Returned __ Times (number)',
-  //   'to Have Last Returned With',
-  // ];
 
   const questionIcon = require('../../assets/images/help-circle.png');
   const closeIcon = require('../../assets/images/close.png');
@@ -80,8 +46,8 @@ const EndpointAssertion = ({ assertion, index, id }) => {
             <option value='Headers'></option>
             <option value='Status'></option>
             <option value='Body'></option>
-            <option value='Message'></option>
-            <option value='Length'></option>
+            <option value='Text'></option>
+            <option value='Type'></option>
           </datalist>
         </div>
       </div>

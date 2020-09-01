@@ -606,15 +606,13 @@ function useGenerateTest(test, projectFilePath) {
             : '';
       });
       testFileCode += statement.headers.length ? '}); \n' : '';
-      statement.assertions.forEach((assertion) => {
-        let matcher = assertion.matcher
+      statement.assertions.forEach(({ matcher, expectedResponse, not, value }) => {
+        matcher = matcher
           .replace(/\(([^)]+)\)/, '')
           .split(' ')
           .join('');
-        testFileCode += `expect(response.${assertion.expectedResponse.toLowerCase()})`;
-        testFileCode += assertion.not
-          ? `.not.${matcher}(${assertion.value});`
-          : `.${matcher}(${assertion.value});`;
+        testFileCode += `expect(response.${expectedResponse.toLowerCase()})`;
+        testFileCode += not ? `.not.${matcher}(${value});` : `.${matcher}(${value});`;
       });
       testFileCode += '});';
       testFileCode += '\n';
