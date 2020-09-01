@@ -559,31 +559,35 @@ function useGenerateTest(test, projectFilePath) {
     const addAsync = (async) => {
       let route = '*';
       if (async.route) route = async.route;
-      let method = 'any';
-      if (async.method) method = async.method;
+      let expectedArg = 'status';
+      if (async.expectedArg) expectedArg = async.expectedArg;
       let expectedAction = `const expectedAction = { 
         type: actionTypes.${async.actionType}, 
-        response};`;
-      let args = `response`;
+        ${expectedArg},};`;
+      let args = `${expectedArg}`;
       if (async.payloadKey) {
         expectedAction = `const ${async.payloadKey} = fake(f => f.random.${async.payloadType}())
         const expectedAction = { 
           type: actionTypes.${async.actionType}, 
-          response,
-          ${async.payloadKey}
+          ${expectedArg},
+          ${async.payloadKey},
         };`;
-        args = `response, ${async.payloadKey}`;
+        args = `${expectedArg}, ${async.payloadKey}`;
       }
-
-      testFileCode += `it('${async.it}', () => {fetchMock.${method}('${route}', 
-      {${async.responseKey}: ${async.responseValue}});
-        const response = fetchMock.lastResponse(undefined)
+      let res = '';
+      if (async.responseType === 'status') {
+        res = async.status;
+      }
+      if (async.responseType === 'object') {
+        res = `{${async.responseKey}: '${async.responseValue}'}`;
+      }
+      testFileCode += `it('${async.it}', () => {fetchMock.${async.method}('${route}', ${res}); 
+        const ${expectedArg} = ${res}
         ${expectedAction}
         const store = mockStore({});
-        return store.dispatch(actions.${async.asyncFunction}(${args})).then(() => {
-          expect(store.getActions()[0]).toEqual(expectedAction)
-        })
-        store.clearActions()});
+        store.dispatch(actions.${async.asyncFunction}(${args}));
+        expect(store.getActions()[0]).toEqual(expectedAction)
+        });
         `;
     };
 

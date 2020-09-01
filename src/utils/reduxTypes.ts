@@ -269,12 +269,14 @@ interface Async {
   requestBody?: string;
   store?: string;
   matcher?: string;
-  expectedResponse?: string;
+  status?: string;
   actionsFile?: string;
   responseKey?: string;
   responseValue?: string;
+  responseType?: string;
   it?: string;
   payloadType?: null | string;
+  expectedArg?: string;
 }
 
 interface Reducer {

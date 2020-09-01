@@ -58,7 +58,7 @@ const createAsync = () => {
     // requestBody: '',
     store: '',
     matcher: '',
-    // expectedResponse: '',
+    status: '',
     actionType: '',
     payloadKey: '',
     payloadType: '',
@@ -185,13 +185,15 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           // statement.requestBody = action.payload.requestBody;
           statement.store = action.payload.store;
           statement.matcher = action.payload.matcher;
-          // statement.expectedResponse = action.payload.expectedResponse;
+          statement.status = action.payload.status;
           statement.actionType = action.payload.actionType;
           statement.payloadKey = action.payload.payloadKey;
           statement.payloadType = action.payload.payloadType;
           statement.responseKey = action.payload.responseKey;
           statement.responseValue = action.payload.responseValue;
+          statement.responseType = action.payload.responseType;
           statement.it = action.payload.it;
+          statement.expectedArg = action.payload.expectedArg;
         }
         return statement;
       });
