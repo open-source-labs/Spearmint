@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 // import { actionTypes } from '../actions/hooksTestCaseActions';
-import { HooksTestCaseState, Assertion, Action, Hooks } from '../../utils/hooksTypes';
+import { HooksTestCaseState, Assertion, Action, Hooks, Callback } from '../../utils/hooksTypes';
 
 export const HooksTestCaseContext: any = createContext(null);
 
@@ -11,6 +11,10 @@ const newAssertion: Assertion = {
   matcher: '',
   not: false,
 };
+const newCallback: Callback = {
+  id: 0,
+  callbackFunc: '',
+};
 
 const newHooks: Hooks = {
   id: 0,
@@ -18,7 +22,13 @@ const newHooks: Hooks = {
   testName: '',
   hook: '',
   hookParams: '',
-  callbackFunc: '',
+  hookFileName: '',
+  hookFilePath: '',
+  callbackFunc: [
+    {
+      ...newCallback,
+    },
+  ],
   assertions: [
     {
       ...newAssertion,
@@ -40,6 +50,7 @@ const newContext: any = {
   context: '',
   contextFileName: '',
   contextFilePath: '',
+  testName: '',
   assertions: [
     {
       ...newAssertion,
@@ -81,6 +92,9 @@ const createHookRender = (statementId: number) => ({
 
 const createHookUpdates = (statementId: number) => ({
   ...newHooks,
+  type: 'hook-updates',
+  hookFileName: '',
+  hookFilePath: '',
   id: statementId,
 });
 
@@ -92,11 +106,21 @@ const deepCopy = (hooksStatements: Hooks[]) => {
     });
     return copy;
   }
+  function copyCallbackFunc(array: Callback[]) {
+    const copy: Callback[] = array.map((el) => {
+      return { ...el };
+    });
+    return copy;
+  }
 
   const fullCopy: Hooks[] = hooksStatements.map((el) => {
-    if (el.hasOwnProperty('assertions')) {
-      return { ...el, assertions: copyAssertions(el.assertions) };
-    }
+    // if (el.hasOwnProperty('assertions')) {
+    return {
+      ...el,
+      assertions: copyAssertions(el.assertions),
+      callbackFunc: copyCallbackFunc(el.callbackFunc),
+    };
+    // }
   });
 
   return fullCopy;
@@ -153,6 +177,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
             queryValue: action.queryValue,
             values: action.values,
             textNode: action.textNodes,
+            testName: action.testName,
             providerComponent: action.providerComponent,
             consumerComponent: action.consumerComponent,
             context: action.context,
@@ -188,7 +213,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
 
     case 'DELETE_HOOK_UPDATES':
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
-      console.log(hooksStatements);
       return {
         ...state,
         hooksStatements,
@@ -248,14 +272,15 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
 
     case 'UPDATE_HOOKS_FILEPATH':
       hooksStatements = hooksStatements.map((statement) => {
-        if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
-          return {
-            ...statement,
-            hookFileName: action.hookFileName,
-            hookFilePath: action.hookFilePath,
-          };
-        }
-        return statement;
+        // if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
+        //   console.log('statement within UPDATE_HOOKS_FILEPATH', action);
+        return {
+          ...statement,
+          hookFileName: action.hookFileName,
+          hookFilePath: action.hookFilePath,
+        };
+        // }
+        // return statement;
       });
       return {
         ...state,
@@ -300,6 +325,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
         ...state,
         modalOpen: false,
       };
+
     case 'ADD_ASSERTION':
       hooksStatements[action.index as number].assertions.push({
         id: hooksStatements[hooksStatements.length - 1].id + 1,
@@ -320,6 +346,30 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
       };
     case 'UPDATE_ASSERTION':
       hooksStatements[action.index as number].assertions[action.id as number] = action.assertion!;
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+
+    case 'ADD_CALLBACKFUNC':
+      hooksStatements[action.index as number].callbackFunc.push({
+        id: hooksStatements[hooksStatements.length - 1].id + 1,
+        callbackFunc: '',
+      });
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+    case 'DELETE_CALLBACKFUNC':
+      hooksStatements[action.index as number].callbackFunc.splice(action.id!, 1);
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+    case 'UPDATE_CALLBACKFUNC':
+      hooksStatements[action.index as number].callbackFunc[
+        action.id as number
+      ] = action.callbackFunc!;
       return {
         ...state,
         hooksStatements: deepCopy(hooksStatements),

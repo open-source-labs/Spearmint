@@ -22,6 +22,9 @@ export const actionTypes = {
   UPDATE_ASSERTION: 'UPDATE_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
   TOGGLE_TYPEOF: 'TOGGLE_TYPEOF',
+  ADD_CALLBACKFUNC: 'ADD_CALLBACKFUNC',
+  DELETE_CALLBACKFUNC: 'DELETE_CALLBACKFUNC',
+  UPDATE_CALLBACKFUNC: 'UPDATE_CALLBACKFUNC',
 };
 
 export const toggleHooks = () => ({
@@ -97,9 +100,24 @@ export const addAssertion = (index: number) => {
   };
 };
 
+export const addCallbackFunc = (index: number) => {
+  return {
+    type: actionTypes.ADD_CALLBACKFUNC,
+    index,
+  };
+};
+
 export const deleteAssertion = (index: number, id: number) => {
   return {
     type: actionTypes.DELETE_ASSERTION,
+    index,
+    id,
+  };
+};
+
+export const deleteCallbackFunc = (index: number, id: number) => {
+  return {
+    type: actionTypes.DELETE_CALLBACKFUNC,
     index,
     id,
   };
@@ -111,6 +129,15 @@ export const updateAssertion = (index: number, id: number, newAssertion: Asserti
     index,
     id,
     assertion: newAssertion,
+  };
+};
+
+export const updateCallbackFunc = (index: number, id: number, newCallback: Callback) => {
+  return {
+    type: actionTypes.UPDATE_CALLBACKFUNC,
+    index,
+    id,
+    callbackFunc: newCallback,
   };
 };
 

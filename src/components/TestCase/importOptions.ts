@@ -6,6 +6,7 @@ export default function importOptionsSwitch(statements: statements[]) {
   let isMiddleWareOn = false;
   let isActionCreatorOn = false;
   let isAsyncOn = false;
+  let isHooksOn = false;
 
   statements.forEach(({ type }) => {
     switch (type) {
@@ -21,6 +22,9 @@ export default function importOptionsSwitch(statements: statements[]) {
       case 'async':
         isAsyncOn = true;
         break;
+      case 'hook-updates':
+        isHooksOn = true;
+        break;
       default:
         break;
     }
@@ -30,5 +34,6 @@ export default function importOptionsSwitch(statements: statements[]) {
     isMiddleWareOn,
     isActionCreatorOn,
     isAsyncOn,
+    isHooksOn,
   };
 }

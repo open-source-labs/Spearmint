@@ -8,9 +8,11 @@ import {
   updateHookUpdates,
   updateHooksFilePath,
   addAssertion,
+  addCallbackFunc,
 } from '../../../context/actions/hooksTestCaseActions';
 import SearchInput from '../../SearchInput/SearchInput';
 import HooksAssertion from '../HooksAssertion';
+import HooksCallback from '../HooksCallback';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -32,6 +34,9 @@ const HookUpdates = ({ hookUpdates, index }) => {
 
   const addAssertionHandleClick = () => {
     dispatchToHooksTestCase(addAssertion(index));
+  };
+  const addCallbackHandleClick = () => {
+    dispatchToHooksTestCase(addCallbackFunc(index));
   };
 
   const testDescription = useRef(null);
@@ -58,10 +63,10 @@ const HookUpdates = ({ hookUpdates, index }) => {
           />
           <div id={styles.hookUpdatesHeader}>
             <img src={dragIcon} alt='drag' />
-            <h3>Hook: Updates</h3>
+            <h3>Hooks</h3>
           </div>
           <div id={styles.hooksFlexBox}>
-            <div id={styles.hooks}>
+            {/* <div id={styles.hooks}>
               <label htmlFor='hookFile'>Import Hook From</label>
               <SearchInput
                 options={Object.keys(filePathMap)}
@@ -69,9 +74,9 @@ const HookUpdates = ({ hookUpdates, index }) => {
                 action={updateHooksFilePath}
                 filePathMap={filePathMap}
               />
-            </div>
+            </div> */}
             <div id={styles.serverInput}>
-              <label htmlFor='test-statement'>Test</label>
+              <label htmlFor='test-statement'>Test description</label>
               <div
                 style={{
                   display: 'flex',
@@ -79,6 +84,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
                 }}
               >
                 <div id={styles.labelInputTest}>
+                  <br />
                   <input
                     ref={testDescription}
                     type='text'
@@ -110,8 +116,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
               />
             </div>
           </div>
-          <div id={styles.cbFlexBox}>
-            <div id={styles.cb}>
+          {/* <div id={styles.cb}>
               <label htmlFor='callbackFunc'>Callback Function</label>
               <input
                 type='text'
@@ -119,30 +124,28 @@ const HookUpdates = ({ hookUpdates, index }) => {
                 onChange={(e) => handleChangeHookUpdatesFields(e, 'callbackFunc')}
                 placeholder='e.g. incrementCount'
               />
-            </div>
+            </div> */}
+          {hookUpdates.callbackFunc.map((callbackFunc, i) => {
+            return (
+              <div id={styles.cbFlexBox}>
+                <HooksCallback callbackFunc={callbackFunc} index={index} id={i} />{' '}
+              </div>
+            );
+          })}{' '}
+          <div className={styles.buttonsContainer}>
+            <button
+              // id={id}
+              onClick={addCallbackHandleClick}
+              className={styles.assertionButton}
+            >
+              <i className='fas fa-plus'></i>
+              Callback
+            </button>
           </div>
           {hookUpdates.assertions.map((assertion, i) => {
             return <HooksAssertion assertion={assertion} index={index} id={i} />;
           })}{' '}
-          <div id={styles.stateFlexBox}>
-            {/* <div id={styles.state}>
-              <label htmlFor='expectedState'>Managed State</label>
-              <input
-                type='text'
-                id='expectedState'
-                onChange={(e) => handleChangeHookUpdatesFields(e, 'expectedState')}
-                placeholder='e.g. count'
-              />
-            </div>
-            <div id={styles.state}>
-              <label htmlFor='expectedValue'>Updated Value</label>
-              <input
-                type='text'
-                id='expectedValue'
-                onChange={(e) => handleChangeHookUpdatesFields(e, 'expectedValue')}
-                placeholder='e.g. 1'
-              />
-            </div> */}
+          <div className={styles.buttonsContainer} id={styles.stateFlexBox}>
             <button
               // id={id}
               onClick={addAssertionHandleClick}

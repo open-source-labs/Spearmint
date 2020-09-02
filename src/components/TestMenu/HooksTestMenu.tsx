@@ -80,7 +80,7 @@ const HooksTestMenu = () => {
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
         >
           <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
-            Hook: Updates
+            Hooks
           </button>
           <button className='contextButton' type='button' onClick={handleAddContexts}>
             Context

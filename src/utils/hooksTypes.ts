@@ -20,6 +20,11 @@ export interface Assertion {
   not: boolean;
 }
 
+export interface Callback {
+  id: number;
+  callbackFunc: string;
+}
+
 export interface Action {
   type: string;
   id?: number;
@@ -36,11 +41,13 @@ export interface Action {
   providerComponent?: string;
   consumerComponent?: string;
   draggableStatements?: Array<HooksStatements>;
+  testName?: string;
   index?: number;
   text?: string;
   contextFileName?: string;
   contextFilePath?: string;
   assertions?: Assertion;
+  callbackfunc?: Callback;
 }
 
 export interface Hooks {
@@ -50,8 +57,10 @@ export interface Hooks {
   hook: string;
   hookParams: string;
   assertions: Assertion[];
+  callbackFunc: Callback[];
   typeof: boolean;
-  callbackFunc: string;
+  hookFileName: string;
+  hookFilePath: string;
 }
 /* ---------------------------- Actions In Reducer coming from hooksTestCaseActions ---------------------- */
 

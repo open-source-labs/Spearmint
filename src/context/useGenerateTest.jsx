@@ -234,7 +234,6 @@ function useGenerateTest(test, projectFilePath) {
       hooksTestCase.hooksStatements.forEach((statement) => {
         switch (statement.type) {
           case 'hook-updates':
-            console.log('generate test', statement);
             return addRenderHooksImportStatement(), createPathToHooks(statement);
           case 'hookRender':
             return addRenderHooksImportStatement(), createPathToHooks(statement);
@@ -433,12 +432,10 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-      if (statement.hookFilePath) {
+      if (!testFileCode.includes(`import ${statement.hook} from `) && statement.hookFilePath) {
         let filePath = path.relative(projectFilePath, statement.hookFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode += `import ${statement.hook} from '../${filePath}';`;
-      } else {
-        testFileCode += `\n// Please import your hooks file`;
       }
     }
 
@@ -622,19 +619,25 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hook: Updates Jest Test Code
     const addHookUpdates = (hookUpdates) => {
-      testFileCode += `test('${hookUpdates.testName}') => {`;
+      testFileCode += `test('${hookUpdates.testName}', () => {`;
       testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());\n\n`;
-      testFileCode += hookUpdates.callbackFunc
-        ? `act(() => {
-          result.current.${hookUpdates.callbackFunc}();
-        });\n\n`
-        : '';
+      let callbackCodeBlocks = hookUpdates.callbackFunc.reduce((result, callback) => {
+        return (result += `result.current.${callback.callbackFunc}();\n`);
+      }, '');
+      testFileCode +=
+        hookUpdates.callbackFunc.length === 0 ||
+        (hookUpdates.callbackFunc.length === 1 &&
+          hookUpdates.callbackFunc[0].callbackFunc.length === 0)
+          ? ''
+          : `act(() => {
+          ${callbackCodeBlocks}
+        });\n`;
       hookUpdates.assertions.forEach((assertion) => {
-        testFileCode += `expect(result.current.${assertion.expectedState}).toBe(${
-          assertion.expectedValue || ''
-        })\n`;
+        testFileCode += `expect(result.current.${assertion.expectedState})${
+          assertion.not ? '.not' : ''
+        }.${assertion.matcher}.(${assertion.expectedValue || ''})\n`;
       });
-      testFileCode += '}';
+      testFileCode += '})\n\n';
     };
 
     // Hook: Renders Jest Test Code
@@ -649,6 +652,8 @@ function useGenerateTest(test, projectFilePath) {
 
     // Context Jest Test Code
     const addContext = (context) => {
+      console.log('context', context);
+      testFileCode += `test('${context.testName}', () => {`;
       if (context.queryValue === 'shows_default_value') {
         testFileCode += `const mockValue = {Data: '${context.values}'}
           const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
@@ -683,6 +688,7 @@ function useGenerateTest(test, projectFilePath) {
           )
           expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
       }
+      testFileCode += '})\n\n';
     };
 
     // // Endpoint Jest Test Code

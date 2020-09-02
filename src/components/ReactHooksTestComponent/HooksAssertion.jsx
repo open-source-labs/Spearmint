@@ -11,7 +11,7 @@ const HooksAssertion = ({ assertion, index, id }) => {
   const [, dispatchToGlobal] = useContext(GlobalContext);
   const jestDOMMatcher = [
     '',
-    'to Be',
+    'toBe',
     'toBeDisabled',
     'toBeEnabled',
     'toBeEmpty',
