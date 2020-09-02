@@ -46,7 +46,7 @@ const Async = ({ async, index }) => {
               <input
                 type='text'
                 name='it'
-                placeholder='eg/ on successful request return expected action'
+                placeholder='eg/ should return expected action'
                 onChange={(e) => handleChangeAsyncFields(e, 'it')}
               />
             </div>
@@ -54,7 +54,7 @@ const Async = ({ async, index }) => {
 
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
-              <label htmlFor='asyncFunction'>Action Creator</label>
+              <label htmlFor='asyncFunction'>Thunk Action Creator</label>
               <input
                 type='text'
                 name='asyncFunction'
@@ -63,7 +63,7 @@ const Async = ({ async, index }) => {
             </div>
 
             <div id={styles.labelInput}>
-              <label htmlFor='actionType'>Action Type</label>
+              <label htmlFor='actionType'>Action Type Of Expected Action</label>
               <input
                 type='text'
                 id='actionType'
@@ -75,7 +75,35 @@ const Async = ({ async, index }) => {
 
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
-              <label htmlFor='payloadKey'>Payload Key (optional)</label>
+              <label htmlFor='expectedArg'>argument 1</label>
+              <div id={styles.inputFlexBox}>
+                <input
+                  type='text'
+                  name='expectedArg'
+                  placeholder='e.g. response'
+                  onChange={(e) => handleChangeAsyncFields(e, 'expectedArg')}
+                />
+              </div>
+            </div>
+            <div id={styles.dropdownWrapper}>
+              <label htmlFor='responseType'>Type</label>
+              <div id={styles.dropdownFlex}>
+                <select
+                  id='responseType'
+                  value={async.responseType}
+                  onChange={(e) => handleChangeAsyncFields(e, 'responseType')}
+                >
+                  <option value='' />
+                  <option value='word'>word</option>
+                  <option value='words'>words</option>
+                  <option value='number'>number</option>
+                  <option value='arrayElement'>arrayElement</option>
+                  <option value='objectElement'>objectElement</option>
+                </select>
+              </div>
+            </div>
+            <div id={styles.labelInput}>
+              <label htmlFor='payloadKey'>argument 2</label>
               <input
                 type='text'
                 id='payloadKey'
@@ -84,7 +112,7 @@ const Async = ({ async, index }) => {
               />
             </div>
             <div id={styles.dropdownWrapper}>
-              <label htmlFor='payloadType'>Payload Type (optional)</label>
+              <label htmlFor='payloadType'>Type</label>
               <div id={styles.dropdownFlex}>
                 <select
                   id='payloadType'
@@ -129,34 +157,11 @@ const Async = ({ async, index }) => {
                 />
               </div>
             </div>
-            <div id={styles.dropdownWrapper}>
-              <label htmlFor='responseType'>Response</label>
-              <div id={styles.dropdownFlex}>
-                <select
-                  id='responseType'
-                  value={async.responseType}
-                  onChange={(e) => handleChangeAsyncFields(e, 'responseType')}
-                >
-                  <option value='' />
-                  <option value='status'>status</option>
-                  <option value='object'>object</option>
-                </select>
-              </div>
-            </div>
-            {async.responseType === 'object' ? (
-              <div id={styles.labelInput}>
-                <label htmlFor='expectedArg'>Object name</label>
-                <div id={styles.inputFlexBox}>
-                  <input
-                    type='text'
-                    name='expectedArg'
-                    placeholder='e.g. response'
-                    onChange={(e) => handleChangeAsyncFields(e, 'expectedArg')}
-                  />
-                </div>
-              </div>
-            ) : null}
-            {async.responseType === 'status' ? (
+
+            {/* {async.responseType === 'object' ? (
+              
+            ) : null} */}
+            {/* {async.responseType === 'status' ? (
               <div id={styles.labelInput}>
                 <label htmlFor='status'>status</label>
                 <div id={styles.inputFlexBox}>
@@ -168,7 +173,7 @@ const Async = ({ async, index }) => {
                   />
                 </div>
               </div>
-            ) : null}
+            ) : null} */}
 
             {/* <div id={styles.labelInput}>
               <label htmlFor='requestBody'>Request Body</label>

@@ -130,7 +130,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // Async Import Statements
     function addAsyncImportStatement(async) {
-      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`) && async.payloadKey) {
+      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`)) {
         testFileCode = `import { fake } from 'test-data-bot';`.concat(testFileCode);
       }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
@@ -559,34 +559,26 @@ function useGenerateTest(test, projectFilePath) {
     const addAsync = (async) => {
       let route = '*';
       if (async.route) route = async.route;
-      let expectedArg = 'status';
-      if (async.expectedArg) expectedArg = async.expectedArg;
       let expectedAction = `const expectedAction = { 
         type: actionTypes.${async.actionType}, 
-        ${expectedArg},};`;
-      let args = `${expectedArg}`;
+        payload: ${async.expectedArg} } ;`;
+      let args = `${async.expectedArg}`;
       if (async.payloadKey) {
         expectedAction = `const ${async.payloadKey} = fake(f => f.random.${async.payloadType}())
         const expectedAction = { 
           type: actionTypes.${async.actionType}, 
-          ${expectedArg},
-          ${async.payloadKey},
+          payload: { ${async.expectedArg}, ${async.payloadKey} }
         };`;
-        args = `${expectedArg}, ${async.payloadKey}`;
+        args = `${async.expectedArg}, ${async.payloadKey}`;
       }
-      let res = '';
-      if (async.responseType === 'status') {
-        res = async.status;
-      }
-      if (async.responseType === 'object') {
-        res = `{${async.responseKey}: '${async.responseValue}'}`;
-      }
-      testFileCode += `it('${async.it}', () => {fetchMock.${async.method}('${route}', ${res}); 
-        const ${expectedArg} = ${res}
+      testFileCode += `it('${async.it}', () => {
+        let ${async.expectedArg} = fake(f => f.random.${async.responseType}())
+        fetchMock.${async.method}('${route}', { payload: { ${args} } }); 
         ${expectedAction}
         const store = mockStore({});
-        store.dispatch(actions.${async.asyncFunction}(${args}));
+        return store.dispatch(actions.${async.asyncFunction}(${args})).then(() => {
         expect(store.getActions()[0]).toEqual(expectedAction)
+        });
         });
         `;
     };
