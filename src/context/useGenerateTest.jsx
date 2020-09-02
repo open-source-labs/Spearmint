@@ -270,7 +270,7 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // Hooks & Context Test Statements
-    const addHooksTestStatements = () => {
+    const addHooksDescribeBlock = () => {
       testFileCode += `\n describe('${hooksTestCase.hooksTestStatement}', () => {`;
       hooksTestCase.hooksStatements.forEach((statement) => {
         console.log('statement in addHooksDescribe', statement);

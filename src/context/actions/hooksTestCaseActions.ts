@@ -61,20 +61,6 @@ export const updateHookUpdates = (hooksUpdates: object) => ({
   type: actionTypes.UPDATE_HOOK_UPDATES,
 });
 
-export const addHookRender = () => ({
-  type: actionTypes.ADD_HOOKRENDER,
-});
-
-export const deleteHookRender = (id: number) => ({
-  type: actionTypes.DELETE_HOOKRENDER,
-  id,
-});
-
-export const updateHookRender = (hookRenders: object) => ({
-  ...hookRenders,
-  type: actionTypes.UPDATE_HOOKRENDER,
-});
-
 export const updateHooksFilePath = (hookFileName: string, hookFilePath: string) => ({
   type: actionTypes.UPDATE_HOOKS_FILEPATH,
   hookFileName,

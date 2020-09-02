@@ -27,9 +27,29 @@ const newHooks: Hooks = {
   typeof: false,
 };
 
+const newContext: any = {
+  id: 0,
+  type: 'context',
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
+  values: '',
+  textNode: '',
+  providerComponent: '',
+  consumerComponent: '',
+  context: '',
+  contextFileName: '',
+  contextFilePath: '',
+  assertions: [
+    {
+      ...newAssertion,
+    },
+  ],
+};
+
 export const hooksTestCaseState: HooksTestCaseState = {
   hooksTestStatement: '',
-  hooksStatements: [{ ...newHooks, assertions: [{ ...newAssertion }] }],
+  hooksStatements: [],
   statementId: 0,
 };
 
@@ -74,7 +94,9 @@ const deepCopy = (hooksStatements: Hooks[]) => {
   }
 
   const fullCopy: Hooks[] = hooksStatements.map((el) => {
-    return { ...el, assertions: copyAssertions(el.assertions) };
+    if (el.hasOwnProperty('assertions')) {
+      return { ...el, assertions: copyAssertions(el.assertions) };
+    }
   });
 
   return fullCopy;
@@ -96,11 +118,23 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
     }
 
     case 'ADD_CONTEXT':
-      hooksStatements.push(createContexts(state.statementId));
+      // hooksStatements.push(createContexts(state.statementId));
+      if (hooksStatements.length === 0) {
+        return {
+          ...state,
+          hooksTestStatement: '',
+          id: 0,
+          hooksStatements: [{ ...newContext }],
+        };
+      }
+      hooksStatements.push({
+        ...newContext,
+        id: hooksStatements[hooksStatements.length - 1].id + 1,
+      });
       return {
         ...state,
+        // statementId: state.statementId + 1,
         hooksStatements,
-        statementId: state.statementId + 1,
       };
     case 'DELETE_CONTEXT':
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
@@ -112,7 +146,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
     case 'UPDATE_CONTEXT':
       hooksStatements = hooksStatements.map((statement) => {
         if (statement.id === action.id) {
-          console.log('update context action', action);
           return {
             ...statement,
             queryVariant: action.queryVariant,
@@ -135,7 +168,14 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
     case 'ADD_HOOK_UPDATES':
       // hooksStatements.push(createHookUpdates(state.statementId));
       // hooksStatements.push(createContexts(state.statementId));
-
+      if (hooksStatements.length === 0) {
+        return {
+          ...state,
+          hooksTestStatement: '',
+          id: 0,
+          hooksStatements: [{ ...newHooks, assertions: [{ ...newAssertion }] }],
+        };
+      }
       hooksStatements.push({
         ...newHooks,
         id: hooksStatements[hooksStatements.length - 1].id + 1,
@@ -148,6 +188,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
 
     case 'DELETE_HOOK_UPDATES':
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
+      console.log(hooksStatements);
       return {
         ...state,
         hooksStatements,

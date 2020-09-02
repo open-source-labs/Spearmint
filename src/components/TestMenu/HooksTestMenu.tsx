@@ -10,7 +10,6 @@ import styles from './TestMenu.module.scss';
 import {
   addContexts,
   addHookUpdates,
-  addHookRender,
   createNewHooksTest,
 } from '../../context/actions/hooksTestCaseActions';
 import Modal from '../Modals/Modal';
@@ -35,10 +34,6 @@ const HooksTestMenu = () => {
 
   const handleAddHookUpdates = () => {
     dispatchToHooksTestCase(addHookUpdates());
-  };
-
-  const handleAddHookRender = () => {
-    dispatchToHooksTestCase(addHookRender());
   };
 
   const openDocs = () => {
@@ -84,9 +79,6 @@ const HooksTestMenu = () => {
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
         >
-          <button className='hookRenderButton' type='button' onClick={handleAddHookRender}>
-            Hook: Rendering
-          </button>
           <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
             Hook: Updates
           </button>
