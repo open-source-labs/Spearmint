@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
@@ -6,7 +6,12 @@ import { addDescribeBlock, createNewTest } from '../../context/actions/reactTest
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
-import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
+import {
+  updateFile,
+  setFilePath,
+  toggleRightPanel,
+  setValidCode,
+} from '../../context/actions/globalActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
 
@@ -20,6 +25,10 @@ const ReactTestMenu = () => {
   const [reactTestCase, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
   const generateTest = useGenerateTest('react', projectFilePath);
+
+  useEffect(() => {
+    dispatchToGlobal(setValidCode(true));
+  }, []);
 
   const handleAddDescribeBlock = (e) => {
     dispatchToReactTestCase(addDescribeBlock());

@@ -1,8 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
-import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
+import {
+  updateFile,
+  setFilePath,
+  toggleRightPanel,
+  setValidCode,
+} from '../../context/actions/globalActions';
 import {
   addContexts,
   addHookUpdates,
@@ -24,6 +29,10 @@ const HooksTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('hooks');
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('hooks', projectFilePath);
+
+  useEffect(() => {
+    dispatchToGlobal(setValidCode(true));
+  }, []);
 
   const handleAddContexts = () => {
     dispatchToHooksTestCase(addContexts());

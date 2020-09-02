@@ -26,7 +26,7 @@ const App = () => {
   } else {
     return (
       /**
-       * Wrap the components that we want to share the unique states with (ex: share testCase state with navbar & left panel (the two containers that hold the components that need testCaseRducer)) in the unique providers (ex: TestCaseContext.Provider).
+       * Wrap the components that we want to share the unique states with.
        * You can only provide one value to a Provider.
        *  - In order to avoid creating separate Contexts, wrap multiples in an array (ex: testCase and dispatchToTestCase).
        *

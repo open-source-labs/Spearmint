@@ -61,7 +61,7 @@ const ProjectLoader = () => {
           <div className={styles.contentBox}>
             <span className={styles.number}>02</span>
             <span className={styles.text}>Select your application</span> <br />
-            <OpenFolder inNavBar={false} />
+            <OpenFolder />
           </div>
         </div>
         <div id={styles.bottomDiv}>
