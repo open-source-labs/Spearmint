@@ -23,12 +23,6 @@ const App = () => {
         </GlobalContext.Provider>
       </div>
     );
-  } else if (global.isProjectLoaded === 'about') {
-    return (
-      <>
-        <About dispatch={dispatchToGlobal} />
-      </>
-    );
   } else {
     return (
       /**
@@ -55,8 +49,17 @@ const App = () => {
         }
       >
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          <NavBar />
-          <LeftPanel />
+          {global.isProjectLoaded === 'about' ? (
+            <>
+              <NavBar inAboutPage={true} />
+              <About dispatch={dispatchToGlobal} />{' '}
+            </>
+          ) : (
+            <>
+              <NavBar inAboutPage={false} />
+              <LeftPanel />
+            </>
+          )}
           {global.isRightPanelOpen ? <RightPanel /> : ''}
         </GlobalContext.Provider>
       </div>

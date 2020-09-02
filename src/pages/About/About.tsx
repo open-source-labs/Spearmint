@@ -1,5 +1,5 @@
 import React from 'react';
-import './About.scss';
+import styles from './About.module.scss';
 import { loadProject } from '../../context/actions/globalActions';
 import { Action } from '../../utils/endpointTypes';
 
@@ -12,7 +12,7 @@ const About = ({ dispatch: dispatchToGlobal }: { dispatch: (action: Action) => v
   };
 
   return (
-    <div id='about'>
+    <div id={styles.about}>
       <article className='markdown-body entry-content container-lg' itemProp='text'>
         <p>
           <img

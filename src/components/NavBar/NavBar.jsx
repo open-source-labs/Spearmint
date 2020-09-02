@@ -24,9 +24,9 @@ const browserIcon = require('../../assets/images/google-chrome.png');
 const codeIcon = require('../../assets/images/visual-studio-code.png');
 const homeIcon = require('../../assets/images/home.png');
 
-const NavBar = () => {
+const NavBar = ({ inAboutPage }) => {
   const [
-    { fileTree, isFileDirectoryOpen, url, projectUrl, rightPanelDisplay },
+    { fileTree, isFileDirectoryOpen, projectUrl, rightPanelDisplay },
     dispatchToGlobal,
   ] = useContext(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -76,10 +76,12 @@ const NavBar = () => {
         <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
         <span className={styles.tooltip}>Export</span>
       </button>
-      <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      />
+      {!inAboutPage && (
+        <ExportFileModal
+          isExportModalOpen={isExportModalOpen}
+          setIsExportModalOpen={setIsExportModalOpen}
+        />
+      )}
       <OpenFolder />
       <button className={styles.navBtn} onClick={handleEditorToggle}>
         <img src={codeIcon} className={styles.icons} alt='codeview' title='Code View' />

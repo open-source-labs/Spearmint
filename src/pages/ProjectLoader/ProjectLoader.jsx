@@ -3,11 +3,11 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
 import { setProjectUrl } from '../../context/actions/globalActions';
-import { loadProject } from '../../context/actions/globalActions';
+import { loadProject, toggleFileDirectory } from '../../context/actions/globalActions';
 require('dotenv').config();
 
 const ProjectLoader = () => {
-  const [, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
@@ -28,6 +28,7 @@ const ProjectLoader = () => {
 
   const handleChangeAbout = () => {
     dispatchToGlobal(loadProject('about'));
+    if (isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
   };
 
   const placehold =
