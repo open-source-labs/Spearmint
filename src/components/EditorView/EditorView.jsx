@@ -35,9 +35,7 @@ const Editor = () => {
     editedText = newValue;
     if (wasSaved.length) setWasSaved('');
   };
-  console.log('rendered', editedText);
   const saveFile = async () => {
-    // console.log('EDITED TEXT', editedText);
     if (editedText.length) {
       dispatchToGlobal(updateFile(editedText));
       if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');

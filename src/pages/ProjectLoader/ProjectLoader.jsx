@@ -64,7 +64,7 @@ const ProjectLoader = () => {
         </div>
         <div id={styles.bottomDiv}>
           <button id={styles.helpBtn} onClick={handleChangeAbout}>
-            <span className={styles.text}>Halp!</span>
+            <span className={styles.text}>Get Started</span>
           </button>
         </div>
       </section>
