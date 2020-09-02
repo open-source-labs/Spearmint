@@ -1,11 +1,12 @@
 const remote = window.require('electron').remote;
+const fs = remote.require('fs');
 const path = remote.require('path');
 const beautify = remote.require('js-beautify');
 
 function useGenerateTest(test, projectFilePath) {
   return (testState, mockDataState) => {
-    let testFileCode = 'import React from "react";';
-
+    let testFileCode = '';
+    // import React from "react";
     /* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // React Import Statements
@@ -101,14 +102,14 @@ function useGenerateTest(test, projectFilePath) {
         switch (statement.type) {
           case 'async':
             return (
-              addAsyncImportStatement(),
+              addAsyncImportStatement(statement),
               createPathToActions(statement),
               createPathToTypes(statement),
               addAsyncVariables()
             );
           case 'action-creator':
             return (
-              addActionCreatorImportStatement(),
+              addActionCreatorImportStatement(statement),
               createPathToActions(statement),
               createPathToTypes(statement)
             );
@@ -128,18 +129,21 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Async Import Statements
-    function addAsyncImportStatement() {
+    function addAsyncImportStatement(async) {
+      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`)) {
+        testFileCode = `import { fake } from 'test-data-bot';`.concat(testFileCode);
+      }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+        testFileCode = `import '@testing-library/jest-dom/extend-expect';`.concat(testFileCode);
       }
       if (
         !testFileCode.includes(`import configureMockStore from 'redux-mock-store';
       import thunk from 'redux-thunk';
       import fetchMock from 'fetch-mock';`)
       ) {
-        testFileCode += `import configureMockStore from 'redux-mock-store';
+        testFileCode = `import configureMockStore from 'redux-mock-store';
       import thunk from 'redux-thunk';
-      import fetchMock from 'fetch-mock';`;
+      import fetchMock from 'fetch-mock';`.concat(testFileCode);
       }
     }
 
@@ -148,29 +152,39 @@ function useGenerateTest(test, projectFilePath) {
         !testFileCode.includes(`\n const middlewares = [thunk];
       const mockStore = configureMockStore(middlewares);`)
       ) {
-        testFileCode += `\n const middlewares = [thunk];
-      const mockStore = configureMockStore(middlewares);`;
+        testFileCode = `\n const middlewares = [thunk];
+      const mockStore = configureMockStore(middlewares);`.concat(testFileCode);
       }
     }
 
     // AC Import Statements
-    function addActionCreatorImportStatement() {
-      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`)) {
-        testFileCode += `import { fake } from 'test-data-bot';`;
+    function addActionCreatorImportStatement(action) {
+      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`) && action.payloadKey) {
+        testFileCode = `import { fake } from 'test-data-bot';`.concat(testFileCode);
       }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+        testFileCode = `import '@testing-library/jest-dom/extend-expect';`.concat(testFileCode);
       }
     }
 
     // Reducer Import Statements
     function addReducerImportStatement() {
-      if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
-        testFileCode += `import { render } from '@testing-library/react';`;
-      }
+      // if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+      //   testFileCode += `import { render } from '@testing-library/react';`;
+      // }
       if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
+        testFileCode += `import '@testing-library/jest-dom/extend-expect';\n`;
       }
+    }
+
+    function addReducerDescribeBlock(reducer) {
+      // if (!testFileCode.includes('describe')) {
+      // testFileCode += `\n describe('${reducer.reducerName} works properly', () => {
+      testFileCode += `let state = ${reducer.initialState};
+
+        beforeEach(() => {
+          state = ${reducer.initialState}
+        });\n`;
     }
 
     // Middleware Import Statements
@@ -182,7 +196,16 @@ function useGenerateTest(test, projectFilePath) {
 
     // Redux Test Statements
     function addReduxTestStatements() {
-      testFileCode += `\n test('${reduxTestCase.reduxTestStatement}', () => {`;
+      // if (statement.type === 'aysnc') {
+      testFileCode += `\n describe('${reduxTestCase.reduxTestStatement}', () => {`;
+
+      for (let i = 0; i < reduxTestCase.reduxStatements.length; i++) {
+        let statement = reduxTestCase.reduxStatements[i];
+        if (statement.type === 'reducer') {
+          addReducerDescribeBlock(statement);
+          break;
+        }
+      }
       reduxTestCase.reduxStatements.forEach((statement) => {
         switch (statement.type) {
           case 'async':
@@ -197,8 +220,11 @@ function useGenerateTest(test, projectFilePath) {
             return statement;
         }
       });
-      testFileCode += '});';
-      testFileCode += '\n';
+      // testFileCode += '});';
+      // testFileCode += '\n';
+      if (testFileCode.includes('beforeEach')) {
+        testFileCode += '});\n';
+      }
     }
 
     /* ------------------------------------------ HOOKS & CONTEXT IMPORT + TEST STATEMENTS ------------------------------------------ */
@@ -244,7 +270,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks & Context Test Statements
     const addHooksTestStatements = () => {
-      testFileCode += `\n test('${hooksTestCase.hooksTestStatement}', () => {`;
+      testFileCode += `\n describe('${hooksTestCase.hooksTestStatement}', () => {`;
       hooksTestCase.hooksStatements.forEach((statement) => {
         switch (statement.type) {
           case 'hook-updates':
@@ -345,7 +371,7 @@ function useGenerateTest(test, projectFilePath) {
         filePath = path.relative(projectFilePath, statement.filePath);
         filePath = filePath.replace(/\\/g, '/');
       }
-      if (!testFileCode.includes(`import * as actions from`) && filePath) {
+      if (!testFileCode.includes(`import * as actions from from`) && filePath) {
         testFileCode += `import * as actions from '../${filePath}';`;
       }
     };
@@ -357,22 +383,39 @@ function useGenerateTest(test, projectFilePath) {
         filePath = path.relative(projectFilePath, statement.reducersFilePath);
         filePath = filePath.replace(/\\/g, '/');
       }
-      if (!testFileCode.includes(`import  {${statement.reducerName}} from`) && filePath) {
-        testFileCode += `import  {${statement.reducerName}} from '../${filePath}';`;
+      if (
+        !testFileCode.includes(
+          `import {${statement.reducerName}, ${statement.initialState}} from` && filePath
+        )
+      ) {
+        testFileCode += `import  {${statement.reducerName}, ${statement.initialState}} from '../${filePath}';`;
       }
     }
 
     // Types Filepath
     function createPathToTypes(statement) {
       let filePath = null;
+      let bool = false;
       if (statement.typesFilePath) {
         filePath = path.relative(projectFilePath, statement.typesFilePath);
         filePath = filePath.replace(/\\/g, '/');
+        bool = areActionTypesDeclaredInSameFileAsActionCreators(statement.typesFilePath);
       }
-      if (!testFileCode.includes(`import * as types from `) && filePath) {
-        testFileCode += `import * as types from '../${filePath}';`;
+      if (bool) {
+        if (!testFileCode.includes(`import { actionTypes } from `) && filePath) {
+          testFileCode += `import { actionTypes } from '../${filePath}';`;
+        }
+      } else {
+        if (!testFileCode.includes(`import * as actionTypes from `) && filePath) {
+          testFileCode += `import * as actionTypes from '../${filePath}';`;
+        }
       }
     }
+    const areActionTypesDeclaredInSameFileAsActionCreators = (file) => {
+      const page = fs.readFileSync(file);
+      if (page.includes(`export const actionTypes`)) return true;
+      else return false;
+    };
 
     // Middleware Filepath
     function createPathToMiddlewares(statement) {
@@ -472,7 +515,8 @@ function useGenerateTest(test, projectFilePath) {
 
     // Middleware Jest Test Code
     const addMiddleware = (middleware) => {
-      testFileCode += `const ${middleware.queryValue} = () => {
+      testFileCode += `\n it('', () => {
+      const ${middleware.queryValue} = () => {
           const store = {
             getState: jest.fn(() => ({})),
             dispatch: jest.fn()
@@ -480,7 +524,8 @@ function useGenerateTest(test, projectFilePath) {
           const next = jest.fn()
           const invoke = action => ${middleware.queryType}(store)(next)(action)
           return { store, next, invoke } 
-        }
+          }
+        });
         \n`;
 
       if (middleware.queryValue === 'passes_non_functional_arguments') {
@@ -506,33 +551,62 @@ function useGenerateTest(test, projectFilePath) {
 
     // Reducer Jest Test Code
     function addReducer(reducer) {
-      testFileCode += `expect(${reducer.reducerName}(${reducer.initialState},{${reducer.reducerAction}})).toEqual(${reducer.expectedState})`;
+      // pass in reducer to expect. pass in initial state as 1st arg, key
+      // if payload exists, add key/value pair to testfile code
+      if (reducer.payloadKey) {
+        testFileCode += `it('${reducer.itStatement}', () => {
+        expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}, ${reducer.payloadKey}: ${reducer.payloadValue} })).toEqual({
+        ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+        `;
+      } else {
+        testFileCode += `it('${reducer.itStatement}', () => {
+          expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}})).toEqual({
+          ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+          `;
+      }
     }
 
     // Async AC Jest Test Code
     const addAsync = (async) => {
-      testFileCode += `fetchMock.${async.method}('${async.route}', ${async.requestBody});
-        const expectedActions = ${async.expectedResponse};
-        const store = mockStore(${async.store});
-        return store.dispatch(actions.${async.asyncFunction}()).then(() => {
-          expect(store.getActions()).toEqual(expectedActions)
-        })`;
+      let route = '*';
+      if (async.route) route = async.route;
+      let expectedAction = `const expectedAction = { 
+        type: actionTypes.${async.actionType}, 
+        payload: ${async.expectedArg} } ;`;
+      let args = `${async.expectedArg}`;
+      if (async.payloadKey) {
+        expectedAction = `const ${async.payloadKey} = fake(f => f.random.${async.payloadType}())
+        const expectedAction = { 
+          type: actionTypes.${async.actionType}, 
+          payload: { ${async.expectedArg}, ${async.payloadKey} }
+        };`;
+        args = `${async.expectedArg}, ${async.payloadKey}`;
+      }
+      testFileCode += `it('${async.it}', () => {
+        let ${async.expectedArg} = fake(f => f.random.${async.responseType}())
+        fetchMock.${async.method}('${route}', { payload: { ${args} } }); 
+        ${expectedAction}
+        const store = mockStore({});
+        return store.dispatch(actions.${async.asyncFunction}(${args})).then(() => {
+        expect(store.getActions()[0]).toEqual(expectedAction)
+        });
+        });
+        `;
     };
 
     // Action Creator Jest Test Code
     const addActionCreator = (actionCreator) => {
       if (actionCreator.payloadKey && actionCreator.payloadType) {
-        testFileCode += `const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
+        testFileCode += `it('${actionCreator.it}', () => {const ${actionCreator.payloadKey} = fake(f => f.random.${actionCreator.payloadType}())
           const expectedAction = { 
-            type: types.${actionCreator.actionType}, 
-            ${actionCreator.payloadKey} 
+            type: actionTypes.${actionCreator.actionType}, 
+            ${actionCreator.payloadKey}, 
           };
-          expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction);`;
+          expect(actions.${actionCreator.actionCreatorFunc}(${actionCreator.payloadKey})).toEqual(expectedAction)});`;
       } else {
-        testFileCode += `const expectedAction = { 
-            type: types.${actionCreator.actionType} 
-          }; 
-          expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction);`;
+        testFileCode += `it('${actionCreator.it}', () => {const expectedAction = { 
+            type: actionTypes.${actionCreator.actionType}}; 
+          expect(actions.${actionCreator.actionCreatorFunc}()).toEqual(expectedAction)});`;
       }
     };
 
@@ -694,6 +768,7 @@ function useGenerateTest(test, projectFilePath) {
         return (
           addReduxImportStatements(),
           addReduxTestStatements(),
+          (testFileCode += `});`),
           (testFileCode = beautify(testFileCode, {
             indent_size: 2,
             space_in_empty_paren: true,

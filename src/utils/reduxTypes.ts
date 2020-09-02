@@ -167,6 +167,7 @@ export interface UpdateActionCreator {
   actionType: string;
   payloadKey: string;
   payloadType: string;
+  it: string;
 }
 
 export interface UpdateAsync {
@@ -182,18 +183,26 @@ export interface UpdateAsync {
   store: string;
   matcher: string;
   expectedResponse: string;
+  responseKey: string;
+  responseValue: string;
+  it: string;
+  payloadType: string;
 }
 
 export interface UpdateReducer {
   id: number;
   reducerAction: string;
+  itStatement: string;
   initialState: string;
+  payloadKey: string;
+  payloadValue: any;
   reducerName: string;
   typesFileName: string;
   typesFilePath: string;
   reducersFileName: string;
   reducersFilePath: string;
-  expectedState: string;
+  expectedKey: string;
+  expectedValue: string;
 }
 
 export interface UpdateActionsFilePath {
@@ -245,6 +254,7 @@ interface ActionCreator {
   actionType?: string;
   payloadKey?: null | string;
   payloadType?: null | string;
+  it?: string;
 }
 interface Async {
   id?: number;
@@ -259,21 +269,31 @@ interface Async {
   requestBody?: string;
   store?: string;
   matcher?: string;
-  expectedResponse?: string;
+  status?: string;
   actionsFile?: string;
+  responseKey?: string;
+  responseValue?: string;
+  responseType?: string;
+  it?: string;
+  payloadType?: null | string;
+  expectedArg?: string;
 }
 
 interface Reducer {
   id?: number;
   type?: string;
+  itStatement?: string;
   typesFileName?: string;
   typesFilePath?: string;
   reducersFileName?: string;
   reducersFilePath?: string;
   reducerAction?: string;
   initialState?: string;
+  payloadKey?: null | string;
+  payloadValue?: any;
   reducerName?: string;
-  expectedState?: string;
+  expectedValue?: string;
+  expectedKey?: string;
 }
 
 // type interface shape for all redux test statments
