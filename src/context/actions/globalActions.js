@@ -19,6 +19,7 @@ export const actionTypes = {
   EXPORT: 'EXPORT',
   SET_FILE_PATH: 'SET_FILE_PATH',
   NEW_TEST_CLOSE_BROWSER_DOCS: 'NEW_TEST_CLOSE_BROWSER_DOCS',
+  SET_VALID_CODE: 'SET_VALID_CODE',
 };
 
 export const setProjectUrl = (url) => ({
@@ -100,4 +101,9 @@ export const setFilePath = (filePath) => ({
 
 export const resetToProjectUrl = () => ({
   type: actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS,
+});
+
+export const setValidCode = (verdict) => ({
+  type: actionTypes.SET_VALID_CODE,
+  validCode: verdict,
 });

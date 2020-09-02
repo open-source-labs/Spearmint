@@ -39,11 +39,10 @@ export const SearchInput = ({
     const filePath = filePathMap[selectedOption] || '';
     if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
     if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
-    if (action) {
-      dispatch(action(selectedOption, filePath));
-    }
+    if (action) dispatch(action(selectedOption, filePath));
   };
   const handleKeyDown = (e) => {
+    if (action) dispatch(action('', ''));
     if (e.keyCode === 13) {
       setActiveOption(0);
       setShowOptions(false);
