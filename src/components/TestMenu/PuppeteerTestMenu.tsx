@@ -14,7 +14,7 @@ import {
 } from '../../context/actions/puppeteerTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
-import useToggleModal from './testMenuHooks';
+import { useToggleModal } from './testMenuHooks';
 
 const PuppeteerTestMenu = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(

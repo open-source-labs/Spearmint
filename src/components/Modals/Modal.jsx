@@ -1,20 +1,8 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-// import { clearMockData } from '../../context/actions/mockDataActions';
 import styles from './ExportFileModal.module.scss';
-// import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
-// import { GlobalContext } from '../../context/reducers/globalReducer';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
 
-// interface drilledProps {
-//   isModalOpen?: boolean;
-//   closeModal?: any;
-//   dispatchToMockData?: any;
-//   dispatchTestCase?: any;
-//   createTest?: any;
-// }
-
-/* destructuring or declaring these?  */
 const Modal = ({
   title,
   isModalOpen,
@@ -23,7 +11,6 @@ const Modal = ({
   dispatchTestCase,
   createTest,
 }) => {
-  // const [{ projectFilePath }, dispatchToGlobal] = useContext(GlobalContext);
   const { copySuccess, codeRef, handleCopy } = useCopy();
   const { handleNewTest } = useNewTest(
     dispatchToMockData,
@@ -31,6 +18,7 @@ const Modal = ({
     createTest,
     closeModal
   );
+
   const script = useGenerateScript(title);
 
   const modalStyles = {
@@ -51,7 +39,7 @@ const Modal = ({
       style={modalStyles}
     >
       <div id={styles.title}>
-        <p>{title === 'New Test' ? title : 'Copy to terminal'}</p>
+        <p>{title === 'New Test' ? title : 'Copy to Terminal'}</p>
       </div>
       <div id={styles.body}>
         {title === 'New Test' ? (

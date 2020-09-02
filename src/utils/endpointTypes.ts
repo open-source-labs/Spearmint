@@ -5,9 +5,51 @@ export interface EndpointStatements {
 }
 
 export interface EndpointTestCaseState {
-  endpointTestStatement: string;
-  endpointStatements: Array<EndpointStatements>;
-  statementId: number;
+  modalOpen: boolean;
+  serverFilePath: string;
+  serverFileName: string;
+  endpointStatements: Endpoint[];
+  dbFilePath: string;
+  addDB: boolean | string;
+}
+
+export interface Action {
+  type: string;
+  id?: number;
+  serverFileName?: string;
+  serverFilePath?: string;
+  draggableStatements?: Array<EndpointStatements>;
+  index?: number;
+  text?: string;
+  assertion?: Assertion;
+  db?: string | boolean;
+  dbFilePath?: string;
+}
+
+export interface Endpoint {
+  id: number;
+  type: string;
+  testName: string;
+  method: string;
+  route: string;
+  assertions: Assertion[];
+  headers: Header[];
+  post: boolean;
+  postData: string;
+}
+
+export interface Assertion {
+  id: number;
+  expectedResponse: string;
+  value: string;
+  matcher: string;
+  not: boolean;
+}
+
+export interface Header {
+  id: number;
+  headerName: string;
+  headerValue: string;
 }
 
 // export type HooksAction =
