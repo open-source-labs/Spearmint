@@ -3,15 +3,16 @@
 
 .modal {
   position: fixed;
-  top: 35%;
-  left: 30%;
   width: 500px;
-  height: 200px;
   font-family: $openSans;
   background-color: $mint;
   border: 8px solid $mint;
   border-radius: 5px;
   box-shadow: 0 0 0 1px white inset;
+  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #title {
@@ -38,17 +39,40 @@
 }
 
 #body {
-  padding: 20px 25px;
+  padding: 20px 25px 10px 25px;
+
+  #endpoint {
+    color: black;
+    span {
+      margin-left: 50px;
+    }
+
+    span:hover {
+      color: $mint;
+    }
+
+    li {
+      margin-left: 50px;
+    }
+    li:last-child {
+      margin-bottom: 5px;
+    }
+    li:first-child {
+      margin-top: 4px;
+    }
+  }
+
   p {
     color: #fff;
     font-size: 14px;
+    line-height: 1.5;
   }
   input {
     margin: 10px 0;
     width: 430px;
   }
   button {
-    margin: 10px 5px;
+    margin: 10px 5px 5px 5px;
     font-size: 12px;
     text-align: center;
     vertical-align: middle;
@@ -113,20 +137,21 @@
 }
 
 pre {
-  padding: 12px;
+  padding: 12px 15px;
   margin-top: -4px;
   margin-bottom: 8px;
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
   background-color: #f6f8fa;
-  border-radius: 6px;
+  // border-radius: 6px;
   .code-wrapper {
     background: #f4f4f4;
     // padding: 1rem;
     border: 1px solid #ddd;
     color: #666;
     width: 500px;
+
     code {
       display: inline;
       max-width: auto;

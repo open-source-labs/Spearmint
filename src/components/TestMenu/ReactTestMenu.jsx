@@ -8,7 +8,7 @@ import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
-import useToggleModal from './testMenuHooks';
+import { useToggleModal } from './testMenuHooks';
 
 const ReactTestMenu = () => {
   // React testing docs url

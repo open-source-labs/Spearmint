@@ -22,10 +22,6 @@ const Editor = () => {
     wrappingIndent: 'indent',
     automaticLayout: true,
   };
-  // useEffect(() => {
-  //   console.log('in use effect');
-  //   setTimeout(setWasSaved('ghi'), 200000);
-  // }, [wasSaved]);
 
   const editorDidMount = (editor) => {
     // editor.setTheme('light-dark');
@@ -47,7 +43,6 @@ const Editor = () => {
         if (err) throw err;
       });
     }
-    // setTimeout(setWasSaved(''), 50000);
   };
 
   let fileType = filePath.split('.')[1];
@@ -60,7 +55,6 @@ const Editor = () => {
   return (
     <div>
       <button id={styles.save} onClick={saveFile}>
-        {/* onMouseDown={() => setWasSaved('')}> */}
         Save Changes
       </button>
       <span id={styles.span}>{wasSaved}</span>
