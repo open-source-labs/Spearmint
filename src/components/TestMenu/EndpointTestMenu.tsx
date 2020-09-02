@@ -31,9 +31,9 @@ const EndpointTestMenu = () => {
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
   useEffect(() => {
-    validateInputs('endpoint', endpointTestCase)
-      ? dispatchToGlobal(setValidCode(true))
-      : dispatchToGlobal(setValidCode(false));
+    // validateInputs('endpoint', endpointTestCase)
+    //   ? dispatchToGlobal(setValidCode(true))
+    dispatchToGlobal(setValidCode(false));
   }, []);
 
   const handleAddEndpoint = () => {
