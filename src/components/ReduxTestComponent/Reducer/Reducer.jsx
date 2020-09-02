@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Reducer.module.scss';
-
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteReducer, updateReducer } from '../../../context/actions/reduxTestCaseActions';
-import ToolTip from '../../ToolTip/ToolTip';
 import { updateHooksTestStatement } from '../../../context/actions/hooksTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
