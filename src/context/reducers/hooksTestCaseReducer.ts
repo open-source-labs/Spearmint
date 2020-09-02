@@ -1,11 +1,64 @@
 import { createContext } from 'react';
 // import { actionTypes } from '../actions/hooksTestCaseActions';
-import { HooksTestCaseState } from '../../utils/hooksTypes';
+import { HooksTestCaseState, Assertion, Action, Hooks, Callback } from '../../utils/hooksTypes';
 
 export const HooksTestCaseContext: any = createContext(null);
 
-export const hooksTestCaseState = {
-  modalOpen: false,
+const newAssertion: Assertion = {
+  id: 0,
+  expectedState: '',
+  expectedValue: '',
+  matcher: '',
+  not: false,
+};
+const newCallback: Callback = {
+  id: 0,
+  callbackFunc: '',
+};
+
+const newHooks: Hooks = {
+  id: 0,
+  type: 'hook-updates',
+  testName: '',
+  hook: '',
+  hookParams: '',
+  hookFileName: '',
+  hookFilePath: '',
+  callbackFunc: [
+    {
+      ...newCallback,
+    },
+  ],
+  assertions: [
+    {
+      ...newAssertion,
+    },
+  ],
+  typeof: false,
+};
+
+const newContext: any = {
+  id: 0,
+  type: 'context',
+  queryVariant: '',
+  querySelector: '',
+  queryValue: '',
+  values: '',
+  textNode: '',
+  providerComponent: '',
+  consumerComponent: '',
+  context: '',
+  contextFileName: '',
+  contextFilePath: '',
+  testName: '',
+  assertions: [
+    {
+      ...newAssertion,
+    },
+  ],
+};
+
+export const hooksTestCaseState: HooksTestCaseState = {
   hooksTestStatement: '',
   hooksStatements: [],
   statementId: 0,
@@ -32,23 +85,47 @@ const createHookRender = (statementId: number) => ({
   hookFileName: '',
   hookFilePath: '',
   hook: '',
-  parameterOne: '',
-  parameterTwo: '',
-  returnValue: '',
+  parameters: '',
+  expectedState: '',
+  expectedValue: '',
 });
 
 const createHookUpdates = (statementId: number) => ({
-  id: statementId,
+  ...newHooks,
+  type: 'hook-updates',
   hookFileName: '',
   hookFilePath: '',
-  type: 'hook-updates',
-  hook: '',
-  callbackFunc: '',
-  managedState: '',
-  updatedState: '',
+  id: statementId,
 });
 
-export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => {
+const deepCopy = (hooksStatements: Hooks[]) => {
+  function copyAssertions(array: Assertion[]) {
+    const copy: Assertion[] = array.map((el) => {
+      return { ...el };
+    });
+    return copy;
+  }
+  function copyCallbackFunc(array: Callback[]) {
+    const copy: Callback[] = array.map((el) => {
+      return { ...el };
+    });
+    return copy;
+  }
+
+  const fullCopy: Hooks[] = hooksStatements.map((el) => {
+    // if (el.hasOwnProperty('assertions')) {
+    return {
+      ...el,
+      assertions: copyAssertions(el.assertions),
+      callbackFunc: copyCallbackFunc(el.callbackFunc),
+    };
+    // }
+  });
+
+  return fullCopy;
+};
+
+export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) => {
   Object.freeze(state);
   let hooksStatements = [...state.hooksStatements];
 
@@ -59,12 +136,24 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
         hooksTestStatement: action.hooksTestStatement,
       };
     }
+
     case 'ADD_CONTEXT':
-      hooksStatements.push(createContexts(state.statementId));
+      if (hooksStatements.length === 0) {
+        return {
+          ...state,
+          hooksTestStatement: '',
+          id: 0,
+          hooksStatements: [{ ...newContext }],
+        };
+      }
+      hooksStatements.push({
+        ...newContext,
+        id: hooksStatements[hooksStatements.length - 1].id + 1,
+      });
       return {
         ...state,
+        // statementId: state.statementId + 1,
         hooksStatements,
-        statementId: state.statementId + 1,
       };
     case 'DELETE_CONTEXT':
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
@@ -83,6 +172,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
             queryValue: action.queryValue,
             values: action.values,
             textNode: action.textNodes,
+            testName: action.testName,
             providerComponent: action.providerComponent,
             consumerComponent: action.consumerComponent,
             context: action.context,
@@ -94,12 +184,26 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
         ...state,
         hooksStatements,
       };
+
     case 'ADD_HOOK_UPDATES':
-      hooksStatements.push(createHookUpdates(state.statementId));
+      // hooksStatements.push(createHookUpdates(state.statementId));
+      // hooksStatements.push(createContexts(state.statementId));
+      if (hooksStatements.length === 0) {
+        return {
+          ...state,
+          hooksTestStatement: '',
+          id: 0,
+          hooksStatements: [{ ...newHooks, assertions: [{ ...newAssertion }] }],
+        };
+      }
+      hooksStatements.push({
+        ...newHooks,
+        id: hooksStatements[hooksStatements.length - 1].id + 1,
+        assertions: [],
+      });
       return {
         ...state,
         hooksStatements,
-        statementId: state.statementId + 1,
       };
 
     case 'DELETE_HOOK_UPDATES':
@@ -110,20 +214,16 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
       };
 
     case 'UPDATE_HOOK_UPDATES':
-      hooksStatements = hooksStatements.map((statement) => {
-        if (statement.id === action.id) {
-          return {
-            ...statement,
-            hook: action.hook,
-            hookFileName: action.hookFileName,
-            hookFilePath: action.hookFilePath,
-            callbackFunc: action.callbackFunc,
-            managedState: action.managedState,
-            updatedState: action.updatedState,
-          };
-        }
-        return statement;
+      let newStatement = hooksStatements.find((statement) => {
+        return statement.id === action.id;
       });
+      Object.assign(newStatement, action, {
+        type: 'hook-updates',
+      });
+      return {
+        ...state,
+        hooksStatements,
+      };
       return {
         ...state,
         hooksStatements,
@@ -150,9 +250,9 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
           return {
             ...statement,
             hook: action.hook,
-            parameterOne: action.parameterOne,
-            expectedReturnValue: action.expectedReturnValue,
-            returnValue: action.returnValue,
+            parameters: action.parameters,
+            expectedValue: action.expectedValue,
+            expectedState: action.expectedState,
           };
         }
         return statement;
@@ -164,14 +264,15 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
 
     case 'UPDATE_HOOKS_FILEPATH':
       hooksStatements = hooksStatements.map((statement) => {
-        if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
-          return {
-            ...statement,
-            hookFileName: action.hookFileName,
-            hookFilePath: action.hookFilePath,
-          };
-        }
-        return statement;
+        // if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
+        //   console.log('statement within UPDATE_HOOKS_FILEPATH', action);
+        return {
+          ...statement,
+          hookFileName: action.hookFileName,
+          hookFilePath: action.hookFilePath,
+        };
+        // }
+        // return statement;
       });
       return {
         ...state,
@@ -197,8 +298,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
       return {
         modalOpen: false,
         hooksTestStatement: '',
-        hooksStatements: [],
-        statementId: 0,
+        hooksStatements: [{ ...newHooks, assertions: [{ ...newAssertion }] }],
       };
     case 'UPDATE_STATEMENTS_ORDER': {
       const newHooksStatements = [...action.draggableStatements];
@@ -216,6 +316,61 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: any) => 
       return {
         ...state,
         modalOpen: false,
+      };
+
+    case 'ADD_ASSERTION':
+      hooksStatements[action.index as number].assertions.push({
+        id: hooksStatements[hooksStatements.length - 1].id + 1,
+        expectedState: '',
+        matcher: '',
+        expectedValue: '',
+        not: false,
+      });
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+    case 'DELETE_ASSERTION':
+      hooksStatements[action.index as number].assertions.splice(action.id!, 1);
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+    case 'UPDATE_ASSERTION':
+      hooksStatements[action.index as number].assertions[action.id as number] = action.assertion!;
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+
+    case 'ADD_CALLBACKFUNC':
+      hooksStatements[action.index as number].callbackFunc.push({
+        id: hooksStatements[hooksStatements.length - 1].id + 1,
+        callbackFunc: '',
+      });
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+    case 'DELETE_CALLBACKFUNC':
+      hooksStatements[action.index as number].callbackFunc.splice(action.id!, 1);
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+    case 'UPDATE_CALLBACKFUNC':
+      hooksStatements[action.index as number].callbackFunc[
+        action.id as number
+      ] = action.callbackFunc!;
+      return {
+        ...state,
+        hooksStatements: deepCopy(hooksStatements),
+      };
+    case 'TOGGLE_TYPEOF':
+      hooksStatements[action.index as number].post = !hooksStatements[action.index as number].post;
+      return {
+        ...state,
+        hooksStatements,
       };
     default:
       return state;
