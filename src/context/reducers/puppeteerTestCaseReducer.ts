@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { PuppeteerTestCaseState, PuppeteerAction } from '../../utils/puppeteerTypes';
-//import { actionTypes } from '../actions/puppeteerTestCaseActions';
+
 export const PuppeteerTestCaseContext = createContext<any>(null);
 
 export const puppeteerTestCaseState = {
@@ -21,7 +21,7 @@ export const puppeteerTestCaseState = {
       browserOptionId: 0,
     },
   ],
-  statementId: 0,
+  statementId: 1,
   modalOpen: false,
 };
 
@@ -56,10 +56,14 @@ export const puppeteerTestCaseReducer = (
 
   switch (action.type) {
     case 'DELETE_PUPPETEER_TEST':
-      puppeteerStatements = puppeteerStatements.filter((statement) => statement.id !== action.id);
+      puppeteerStatements.splice(action.id, 1);
+      puppeteerStatements.forEach((statement) => {
+        if (statement.id > action.id) statement.id -= 1;
+      });
       return {
         ...state,
         puppeteerStatements,
+        statementId: state.statementId - 1,
       };
 
     case 'ADD_PUPPETEER_PAINT_TIMING': {
@@ -90,7 +94,7 @@ export const puppeteerTestCaseReducer = (
             browserOptionId: 0,
           },
         ],
-        statementId: 0,
+        statementId: 1,
       };
 
     case 'DELETE_BROWSER_OPTION':
