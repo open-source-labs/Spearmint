@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   openBrowserDocs,
@@ -29,6 +29,12 @@ const EndpointTestMenu = () => {
 
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
+
+  useEffect(() => {
+    validateInputs('endpoint', endpointTestCase)
+      ? dispatchToGlobal(setValidCode(true))
+      : dispatchToGlobal(setValidCode(false));
+  }, []);
 
   const handleAddEndpoint = () => {
     dispatchToEndpointTestCase(addEndpoint());
