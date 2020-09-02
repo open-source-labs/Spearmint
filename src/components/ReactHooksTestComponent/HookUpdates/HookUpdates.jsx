@@ -83,7 +83,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
                     ref={testDescription}
                     type='text'
                     id={styles.testStatement}
-                    value={hookUpdates.testName}
+                    // value={hookUpdates.testName}
                     onChange={(e) => handleChangeHookUpdatesFields(e, 'testName')}
                   />
                 </div>

@@ -61,7 +61,7 @@ const HooksTestCase = () => {
               ref={testDescription}
               type='text'
               id={styles.testStatement}
-              value={hooksTestStatement}
+              // value={hooksTestStatement}
               onChange={handleUpdateHooksTestStatement}
             />
           </label>

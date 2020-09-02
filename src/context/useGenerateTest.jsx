@@ -417,12 +417,12 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-      if (!statement.filePath) {
-        testFileCode += `\n// Please import your hooks file`;
-      } else {
+      if (statement.hookFilePath) {
         let filePath = path.relative(projectFilePath, statement.hookFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode += `import ${statement.hook} from '../${filePath}';`;
+      } else {
+        testFileCode += `\n// Please import your hooks file`;
       }
     }
 
@@ -580,10 +580,12 @@ function useGenerateTest(test, projectFilePath) {
     // Hook: Updates Jest Test Code
     const addHookUpdates = (hookUpdates) => {
       testFileCode += `test('${hookUpdates.testName}') => {`;
-      testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());\n
-        act(() => {
+      testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());\n\n`;
+      testFileCode += hookUpdates.callbackFunc
+        ? `act(() => {
           result.current.${hookUpdates.callbackFunc}();
-        });\n`;
+        });\n\n`
+        : '';
       hookUpdates.assertions.forEach((assertion) => {
         testFileCode += `expect(result.current.${assertion.expectedState}).toBe(${
           assertion.expectedValue || ''

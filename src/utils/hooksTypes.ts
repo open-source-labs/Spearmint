@@ -5,7 +5,6 @@ export interface HooksStatements {
 }
 
 export interface HooksTestCaseState {
-  modalOpen: boolean;
   hookFileName: string;
   hookFilePath: string;
   hooksTestStatement: string;
@@ -27,7 +26,6 @@ export interface Action {
   context?: string;
   hook?: string;
   parameters?: any;
-  callbackFunc?: string;
   expectedState?: any;
   expectedValue?: any;
   textNodes?: string;
@@ -53,6 +51,7 @@ export interface Hooks {
   hookParams: string;
   assertions: Assertion[];
   typeof: boolean;
+  callbackFunc: string;
 }
 /* ---------------------------- Actions In Reducer coming from hooksTestCaseActions ---------------------- */
 
