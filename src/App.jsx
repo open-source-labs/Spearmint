@@ -39,7 +39,9 @@ const App = () => {
        */
       <div
         id={
-          global.isFileDirectoryOpen
+          global.isProjectLoaded === 'about'
+            ? ''
+            : global.isFileDirectoryOpen
             ? global.isRightPanelOpen
               ? styles.fileDirectoryOpenRightPanelOpen
               : styles.fileDirectoryOpenRightPanelClosed

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { setProjectUrl } from '../../context/actions/globalActions';
+import { setProjectUrl, closeRightPanel } from '../../context/actions/globalActions';
 import { loadProject, toggleFileDirectory } from '../../context/actions/globalActions';
 require('dotenv').config();
 
@@ -28,6 +28,7 @@ const ProjectLoader = () => {
 
   const handleChangeAbout = () => {
     dispatchToGlobal(loadProject('about'));
+    dispatchToGlobal(closeRightPanel());
     if (isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
   };
 

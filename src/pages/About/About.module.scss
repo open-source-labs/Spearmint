@@ -2,10 +2,11 @@
 @import '../../assets/stylesheets/colors.scss';
 
 #about {
-  padding: 16px 5%;
+  padding: 16px 50px;
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
-  max-width: 1000px;
+  width: 1000px;
+  margin-left: 70px;
   img {
     max-width: 90%;
     margin: 16px 5% 0 5%;

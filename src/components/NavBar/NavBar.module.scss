@@ -9,6 +9,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
 }
 
 .navBtn {
@@ -42,4 +45,12 @@
 .navBtn:hover .tooltip {
   visibility: visible;
   margin-left: 5px;
+}
+
+#inAboutPage {
+  @extend #navBar;
+  float: left;
+  position: fixed;
+  top: 0;
+  left: 0;
 }

@@ -38,11 +38,12 @@ const NavBar = ({ inAboutPage }) => {
 
   /* switches between code and browser view */
   const handleEditorToggle = () => {
-    dispatchToGlobal(toggleRightPanel('codeEditorView'));
+    if (!inAboutPage) dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
   /* switches between code and browser view */
   const handleBrowserToggle = () => {
+    if (inAboutPage) return;
     if (rightPanelDisplay === 'browserView' && projectUrl) {
       dispatchToGlobal(resetToProjectUrl());
     }
@@ -67,7 +68,12 @@ const NavBar = ({ inAboutPage }) => {
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
   return (
-    <div id={styles.navBar}>
+    <div
+      id={
+        // styles.navBar
+        styles.inAboutPage
+      }
+    >
       <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
         <img src={menuIcon} className={styles.icons} alt='fileExplorer' />
         <span className={styles.tooltip}>Expand File Explorer</span>
