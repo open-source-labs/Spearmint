@@ -8,6 +8,7 @@
   justify-content: space-between;
   width: 98%;
   margin-bottom: 10px;
+  max-width: 800px;
   button {
     margin: 5px;
     height: 40px;
@@ -42,6 +43,9 @@
 }
 
 #right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   button {
     color: white;
     background-color: $mint;
