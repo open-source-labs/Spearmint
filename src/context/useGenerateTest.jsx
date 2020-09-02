@@ -230,6 +230,7 @@ function useGenerateTest(test, projectFilePath) {
       hooksTestCase.hooksStatements.forEach((statement) => {
         switch (statement.type) {
           case 'hook-updates':
+            console.log('generate test', statement);
             return addRenderHooksImportStatement(), createPathToHooks(statement);
           case 'hookRender':
             return addRenderHooksImportStatement(), createPathToHooks(statement);
@@ -265,9 +266,11 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // Hooks & Context Test Statements
-    const addHooksTestStatements = () => {
-      testFileCode += `\n test('${hooksTestCase.hooksTestStatement}', () => {`;
+    const addHooksDescribeBlock = () => {
+      console.log('addHooksDescribeBlock');
+      testFileCode += `\n describe('${hooksTestCase.hooksTestStatement}', () => {`;
       hooksTestCase.hooksStatements.forEach((statement) => {
+        console.log('statement in addHooksDescribe', statement);
         switch (statement.type) {
           case 'hook-updates':
             return addHookUpdates(statement);
@@ -414,16 +417,24 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-      let filePath = path.relative(projectFilePath, statement.hookFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import ${statement.hook} from '../${filePath}';`;
+      if (!statement.filePath) {
+        testFileCode += `\n// Please import your hooks file`;
+      } else {
+        let filePath = path.relative(projectFilePath, statement.hookFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+        testFileCode += `import ${statement.hook} from '../${filePath}';`;
+      }
     }
 
     // Context Filepath
     const createPathToContext = (statement) => {
       let filePath = path.relative(projectFilePath, statement.contextFilePath);
       filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
+      if (filePath) {
+        testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
+      } else {
+        testFileCode += '//Please import you context here';
+      }
     };
 
     // Endpoint Filepath
@@ -568,20 +579,22 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hook: Updates Jest Test Code
     const addHookUpdates = (hookUpdates) => {
-      testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());
+      testFileCode += `test('${hookUpdates.testName}') => {`;
+      testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());\n
         act(() => {
           result.current.${hookUpdates.callbackFunc}();
-        });`;
-      for (let i = 0; i < hookUpdates.expectedState.length; i += 1) {
-        testFileCode += `expect(result.current.${hookUpdates.expectedState[i]}).toBe(${
-          hookUpdates.expectedValue[i] || ''
+        });\n`;
+      hookUpdates.assertions.forEach((assertion) => {
+        testFileCode += `expect(result.current.${assertion.expectedState}).toBe(${
+          assertion.expectedValue || ''
         })\n`;
-      }
+      });
+      testFileCode += '}';
     };
 
     // Hook: Renders Jest Test Code
     const addHookRender = (hookRender) => {
-      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameters}));`;
+      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameters}));\n`;
       for (let i = 0; i < hookRender.expectedState.length; i += 1) {
         testFileCode += `expect(result.current.${hookRender.expectedState[i]}).toBe(${
           hookRender.expectedValue[i] || ''
@@ -744,7 +757,7 @@ function useGenerateTest(test, projectFilePath) {
         var hooksTestCase = testState;
         return (
           addHooksImportStatements(),
-          addHooksTestStatements(),
+          addHooksDescribeBlock(),
           (testFileCode = beautify(testFileCode, {
             indent_size: 2,
             space_in_empty_paren: true,

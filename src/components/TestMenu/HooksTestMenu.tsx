@@ -1,8 +1,12 @@
 import React, { useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { openBrowserDocs } from '../../context/actions/globalActions';
+import {
+  openBrowserDocs,
+  updateFile,
+  setFilePath,
+  toggleRightPanel,
+} from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
-import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
 import {
   addContexts,
   addHookUpdates,
@@ -72,8 +76,8 @@ const HooksTestMenu = () => {
             dispatchToMockData={null}
             isModalOpen={isModalOpen}
             closeModal={closeModal}
-            dispatchTestCase={dispatchToHooksTestCase}
-            createTest={createNewHooksTest}
+            dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
+            createTest={title === 'New Test' ? createNewHooksTest : null}
           />
         </div>
         <div

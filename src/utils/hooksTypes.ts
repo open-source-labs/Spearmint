@@ -6,6 +6,8 @@ export interface HooksStatements {
 
 export interface HooksTestCaseState {
   modalOpen: boolean;
+  hookFileName: string;
+  hookFilePath: string;
   hooksTestStatement: string;
   hooksStatements: Hooks[];
   statementId: number;
@@ -38,11 +40,9 @@ export interface Action {
   draggableStatements?: Array<HooksStatements>;
   index?: number;
   text?: string;
-  hookFileName?: string;
-  hookFilePath?: string;
   contextFileName?: string;
   contextFilePath?: string;
-  assertion?: Assertion;
+  assertions?: Assertion;
 }
 
 export interface Hooks {

@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import styles from './Endpoint.module.scss';
+import styles from '../EndpointTestComponent/Endpoint.module.scss';
 import stylez from '../ReactTestComponent/Assertion/Assertion.module.scss';
-import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { deleteAssertion, updateAssertion } from '../../context/actions/endpointTestCaseActions';
+import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
+import { deleteAssertion, updateAssertion } from '../../context/actions/hooksTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 
 const HooksAssertion = ({ assertion, index, id }) => {
-  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
   const [, dispatchToGlobal] = useContext(GlobalContext);
   const jestDOMMatcher = [
     '',
@@ -41,7 +41,7 @@ const HooksAssertion = ({ assertion, index, id }) => {
   const jestDOMURL = 'https://github.com/testing-library/jest-dom';
 
   const handleClickDeleteAssertion = () => {
-    dispatchToEndpointTestCase(deleteAssertion(index, id));
+    dispatchToHooksTestCase(deleteAssertion(index, id));
   };
 
   const handleChangeUpdateAssertion = (e, field) => {
@@ -49,7 +49,7 @@ const HooksAssertion = ({ assertion, index, id }) => {
       field === 'not'
         ? { ...assertion, [field]: !assertion[field] }
         : { ...assertion, [field]: e.target.value };
-    dispatchToEndpointTestCase(updateAssertion(index, id, updatedAssertion));
+    dispatchToHooksTestCase(updateAssertion(index, id, updatedAssertion));
   };
 
   const handleClickTooltip = () => {
@@ -59,7 +59,7 @@ const HooksAssertion = ({ assertion, index, id }) => {
   return (
     <div id={styles.groupFlexboxAssertion}>
       <div id={styles.labelInput}>
-        <label htmlFor='requestBody'>Expect State</label>
+        <label htmlFor='expectedState'>Expect State</label>
         <div id={styles.inputFlexBox}>
           <input
             type='text'
@@ -67,13 +67,6 @@ const HooksAssertion = ({ assertion, index, id }) => {
             value={assertion.expectedState}
             onChange={(e) => handleChangeUpdateAssertion(e, 'expectedState')}
           />
-          <datalist id='responseProperties'>
-            <option value='Headers'></option>
-            <option value='Status'></option>
-            <option value='Body'></option>
-            <option value='Message'></option>
-            <option value='Length'></option>
-          </datalist>
         </div>
       </div>
       <div id={styles.dropdownWrapper}>
@@ -131,4 +124,4 @@ const HooksAssertion = ({ assertion, index, id }) => {
   );
 };
 
-export default EndpointAssertion;
+export default HooksAssertion;

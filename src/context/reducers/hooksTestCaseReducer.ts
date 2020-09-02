@@ -1,7 +1,6 @@
 import { createContext } from 'react';
 // import { actionTypes } from '../actions/hooksTestCaseActions';
 import { HooksTestCaseState, Assertion, Action, Hooks } from '../../utils/hooksTypes';
-import { actionTypes } from '../actions/globalActions';
 
 export const HooksTestCaseContext: any = createContext(null);
 
@@ -15,7 +14,7 @@ const newAssertion: Assertion = {
 
 const newHooks: Hooks = {
   id: 0,
-  type: 'hooks',
+  type: 'hook-updates',
   testName: '',
   hook: '',
   hookParams: '',
@@ -26,10 +25,19 @@ const newHooks: Hooks = {
   ],
   typeof: false,
 };
+const incrementId = (id: number) => {
+  let modalId = id;
+  return () => {
+    modalId++;
+  };
+};
+let setID = incrementId(0);
 
-export const hooksTestCaseState = {
+export const hooksTestCaseState: HooksTestCaseState = {
   modalOpen: false,
   hooksTestStatement: '',
+  hookFilePath: '',
+  hookFileName: '',
   hooksStatements: [{ ...newHooks, assertions: [{ ...newAssertion }] }],
   statementId: 0,
 };
@@ -73,6 +81,7 @@ const createHookUpdates = (statementId: number) => ({
 
 const deepCopy = (hooksStatements: Hooks[]) => {
   function copyAssertions(array: Assertion[]) {
+    console.log('array', array);
     const copy: Assertion[] = array.map((el) => {
       return { ...el };
     });
@@ -88,6 +97,8 @@ const deepCopy = (hooksStatements: Hooks[]) => {
 
 export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) => {
   Object.freeze(state);
+  console.log('state', state);
+  console.log('action', action);
   let hooksStatements = [...state.hooksStatements];
 
   switch (action.type) {
@@ -137,11 +148,16 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
       };
 
     case 'ADD_HOOK_UPDATES':
-      hooksStatements.push(createHookUpdates(state.statementId));
+      // hooksStatements.push(createHookUpdates(state.statementId));
+      hooksStatements.push({
+        ...newHooks,
+        id: hooksStatements[hooksStatements.length - 1].id + 1,
+        assertions: [],
+      });
       return {
         ...state,
-        hooksStatements: deepCopy(hooksStatements),
-        statementId: state.statementId + 1,
+        hooksStatements,
+        // statementId: state.statementId + 1,
       };
 
     case 'DELETE_HOOK_UPDATES':
@@ -152,21 +168,19 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
       };
 
     case 'UPDATE_HOOK_UPDATES':
-      hooksStatements = hooksStatements.map((statement) => {
-        // console.log(statement);
-        if (statement.id === action.id) {
-          return {
-            ...statement,
-            hook: action.hook,
-            hookFileName: action.hookFileName,
-            hookFilePath: action.hookFilePath,
-            callbackFunc: action.callbackFunc,
-            expectedState: action.expectedState,
-            expectedValue: action.expectedValue,
-          };
-        }
-        return statement;
+      // hooksStatements = hooksStatements.map((statement) => {
+      // console.log(statement);
+      let newStatement = hooksStatements.find((statement) => {
+        return statement.id === action.id;
       });
+      Object.assign(newStatement, action, {
+        type: 'hook-updates',
+      });
+      return {
+        ...state,
+        hooksStatements,
+      };
+      // });
       return {
         ...state,
         hooksStatements,
@@ -240,8 +254,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
       return {
         modalOpen: false,
         hooksTestStatement: '',
-        hooksStatements: [],
-        statementId: 0,
+        hooksStatements: [{ ...newHooks, assertions: [{ ...newAssertion }] }],
       };
     case 'UPDATE_STATEMENTS_ORDER': {
       const newHooksStatements = [...action.draggableStatements];
@@ -270,13 +283,13 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
       });
       return {
         ...state,
-        hookStatement: deepCopy(hooksStatements),
+        hooksStatement: deepCopy(hooksStatements),
       };
     case 'DELETE_ASSERTION':
       hooksStatements[action.index as number].assertions.splice(action.id!, 1);
       return {
         ...state,
-        hookStatement: deepCopy(hooksStatements),
+        hooksStatement: deepCopy(hooksStatements),
       };
     case 'UPDATE_ASSERTION':
       hooksStatements[action.index as number].assertions[action.id as number] = action.assertion!;
