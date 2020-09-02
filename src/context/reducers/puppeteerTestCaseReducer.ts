@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { PuppeteerTestCaseState, PuppeteerAction } from '../../utils/puppeteerTypes';
-//import { actionTypes } from '../actions/puppeteerTestCaseActions';
+
 export const PuppeteerTestCaseContext = createContext<any>(null);
 
 export const puppeteerTestCaseState = {
@@ -53,7 +53,6 @@ export const puppeteerTestCaseReducer = (
 ) => {
   Object.freeze(state);
   let puppeteerStatements = [...state.puppeteerStatements];
-  console.log(puppeteerStatements);
 
   switch (action.type) {
     case 'DELETE_PUPPETEER_TEST':
@@ -176,7 +175,6 @@ export const puppeteerTestCaseReducer = (
         puppeteerStatements: [...action.draggableStatements],
       };
     case 'OPEN_INFO_MODAL':
-      console.log('reducer');
       return {
         ...state,
         modalOpen: true,
