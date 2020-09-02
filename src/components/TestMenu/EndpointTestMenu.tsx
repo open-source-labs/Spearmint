@@ -1,30 +1,42 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   openBrowserDocs,
   toggleRightPanel,
   updateFile,
   setFilePath,
+  setValidCode,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
-import { addEndpoint, createNewEndpointTest } from '../../context/actions/endpointTestCaseActions';
+import {
+  addEndpoint,
+  createNewEndpointTest,
+  toggleDB,
+  updateDBFilePath,
+} from '../../context/actions/endpointTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import useToggleModal from './testMenuHooks';
+import { useToggleModal, validateInputs } from './testMenuHooks';
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
   const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
 
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
-  const handleAddEndpoint = (e) => {
+  useEffect(() => {
+    validateInputs('endpoint', endpointTestCase)
+      ? dispatchToGlobal(setValidCode(true))
+      : dispatchToGlobal(setValidCode(false));
+  }, []);
+
+  const handleAddEndpoint = () => {
     dispatchToEndpointTestCase(addEndpoint());
   };
 
@@ -38,7 +50,17 @@ const EndpointTestMenu = () => {
     dispatchToGlobal(setFilePath(''));
   };
 
+  const handleClickAddDatabase = () => {
+    if (endpointTestCase.addDB) {
+      dispatchToEndpointTestCase(toggleDB(false));
+      dispatchToEndpointTestCase(updateDBFilePath(''));
+    } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
+  };
+
   if (!file && exportBool) {
+    validateInputs('endpoint', endpointTestCase)
+      ? dispatchToGlobal(setValidCode(true))
+      : dispatchToGlobal(setValidCode(false));
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
 
@@ -69,6 +91,9 @@ const EndpointTestMenu = () => {
         <div id={styles.right}>
           <button data-testid='endPointButton' onClick={handleAddEndpoint}>
             Endpoint
+          </button>
+          <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
+            Configure Database
           </button>
         </div>
       </div>

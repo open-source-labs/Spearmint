@@ -265,19 +265,9 @@ function useGenerateTest(test, projectFilePath) {
 
     // Endpoint Import Statements
     const addEndpointImportStatements = () => {
-      let { serverFilePath } = endpointTestCase;
-      createPathToServer(serverFilePath);
+      let { serverFilePath, dbFilePath, addDB } = endpointTestCase;
+      createPathToEndFiles(serverFilePath, dbFilePath, addDB);
       testFileCode += '\n';
-
-      // endpointTestCase.endpointStatements.forEach((statement) => {
-      //   switch (statement.type) {
-      //     case 'endpoint':
-      //       return createPathToServer(statement);
-      //     default:
-      //       return statement;
-      //   }
-      // });
-      // testFileCode += '\n';
     };
 
     const addEndpointTestStatements = () => {
@@ -411,15 +401,34 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // Endpoint Filepath
-    const createPathToServer = (serverFilePath) => {
+    const createPathToEndFiles = (serverFilePath, dbFilePath, addDB) => {
       if (serverFilePath) {
         let filePath = path.relative(projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest')
       const request = supertest(app)\n`;
-        testFileCode += '\n';
-      } else testFileCode = 'Please Choose A Server To Test First!';
+      } else testFileCode = 'Please Select A Server!';
+      if (dbFilePath) {
+        let filePath = path.relative(projectFilePath, dbFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+
+        switch (addDB) {
+          case 'PostgreSQL':
+            testFileCode += `const pgPoolClient = require('../${filePath}');
+            \n afterAll( async () => { await pgPoolClient.end(); \n});`;
+            break;
+          case 'MongoDB':
+            testFileCode += `const client = require('../${filePath}');
+            \n afterAll( async () => { await client.close(); \n});`;
+            break;
+          case 'Mongoose':
+            testFileCode += `const mongoose = require('../${filePath}');
+            \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+          default:
+            return;
+        }
+      }
     };
 
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
@@ -582,8 +591,29 @@ function useGenerateTest(test, projectFilePath) {
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')
-      expect(response.${statement.expectedResponse}).toBe(${statement.value});`;
+      const headersObj = {};
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
+      testFileCode += statement.postData
+        ? `.send(\ ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
+        : statement.headers.length
+        ? `.set({`
+        : '';
+
+      statement.headers.forEach(({ headerName, headerValue }, index) => {
+        testFileCode +=
+          headerName.length > 0 && headerValue.length > 0
+            ? `'${headerName}': '${headerValue}',`
+            : '';
+      });
+      testFileCode += statement.headers.length ? '}); \n' : '';
+      statement.assertions.forEach(({ matcher, expectedResponse, not, value }) => {
+        matcher = matcher
+          .replace(/\(([^)]+)\)/, '')
+          .split(' ')
+          .join('');
+        testFileCode += `expect(response.${expectedResponse.toLowerCase()})`;
+        testFileCode += not ? `.not.${matcher}(${value});` : `.${matcher}(${value});`;
+      });
       testFileCode += '});';
       testFileCode += '\n';
     };
