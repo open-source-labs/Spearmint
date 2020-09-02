@@ -18,7 +18,7 @@ const fs = remote.require('fs');
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
-  const [{ projectFilePath, file }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, validCode }, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
@@ -126,17 +126,23 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
             <path d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' />
           </svg>
         </div>
-        <div id={styles.body}>
-          <p>File Name</p>
-          <input type='text' value={fileName} onChange={handleChangeFileName} />
-          {invalidFileName && <p>A file with the name '{fileName}' already exists.</p>}
-          <button id={styles.save} onClick={closeExportModal}>
-            Cancel
-          </button>
-          <button id={styles.save} onClick={handleClickSave}>
-            Save
-          </button>
-        </div>
+        {validCode ? (
+          <div id={styles.body}>
+            <p>File Name</p>
+            <input type='text' value={fileName} onChange={handleChangeFileName} />
+            {invalidFileName && <p>A file with the name '{fileName}' already exists.</p>}
+            <button id={styles.save} onClick={closeExportModal}>
+              Cancel
+            </button>
+            <button id={styles.save} onClick={handleClickSave}>
+              Save
+            </button>
+          </div>
+        ) : (
+          <div id={styles.body}>
+            <p>Please fill out all required fields before exporting your test file</p>
+          </div>
+        )}
       </ReactModal>
     </div>
   );

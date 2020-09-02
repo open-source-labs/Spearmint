@@ -40,6 +40,7 @@ const createActionCreator = () => {
     actionType: '',
     payloadKey: null,
     payloadType: null,
+    it: '',
   };
 };
 const createAsync = () => {
@@ -54,10 +55,16 @@ const createAsync = () => {
     asyncFunction: '',
     method: '',
     route: '',
-    requestBody: '',
+    // requestBody: '',
     store: '',
     matcher: '',
-    expectedResponse: '',
+    status: '',
+    actionType: '',
+    payloadKey: '',
+    payloadType: '',
+    responseKey: '',
+    responseValue: '',
+    it: '',
   };
 };
 const createReducer = () => {
@@ -146,6 +153,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           statement.payloadKey = action.payload.payloadKey;
           statement.payloadType = action.payload.payloadType;
           statement.actionType = action.payload.actionType;
+          statement.it = action.payload.it;
         }
         return statement;
       });
@@ -174,10 +182,18 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
           statement.typesFilePath = action.payload.typesFilePath;
           statement.method = action.payload.method;
           statement.route = action.payload.route;
-          statement.requestBody = action.payload.requestBody;
+          // statement.requestBody = action.payload.requestBody;
           statement.store = action.payload.store;
           statement.matcher = action.payload.matcher;
-          statement.expectedResponse = action.payload.expectedResponse;
+          statement.status = action.payload.status;
+          statement.actionType = action.payload.actionType;
+          statement.payloadKey = action.payload.payloadKey;
+          statement.payloadType = action.payload.payloadType;
+          statement.responseKey = action.payload.responseKey;
+          statement.responseValue = action.payload.responseValue;
+          statement.responseType = action.payload.responseType;
+          statement.it = action.payload.it;
+          statement.expectedArg = action.payload.expectedArg;
         }
         return statement;
       });

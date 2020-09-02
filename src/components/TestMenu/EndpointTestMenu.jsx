@@ -5,13 +5,19 @@ import {
   toggleRightPanel,
   updateFile,
   setFilePath,
+  setValidCode,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
-import { addEndpoint, createNewEndpointTest } from '../../context/actions/endpointTestCaseActions';
+import {
+  addEndpoint,
+  createNewEndpointTest,
+  toggleDB,
+  updateDBFilePath,
+} from '../../context/actions/endpointTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import useToggleModal from './testMenuHooks';
+import { useToggleModal, validateInputs } from './testMenuHooks';
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
@@ -38,7 +44,17 @@ const EndpointTestMenu = () => {
     dispatchToGlobal(setFilePath(''));
   };
 
+  const handleClickAddDatabase = () => {
+    if (endpointTestCase.addDB) {
+      dispatchToEndpointTestCase(toggleDB(false));
+      dispatchToEndpointTestCase(updateDBFilePath(''));
+    } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
+  };
+
   if (!file && exportBool) {
+    validateInputs('endpoint', endpointTestCase)
+      ? dispatchToGlobal(setValidCode(true))
+      : dispatchToGlobal(setValidCode(false));
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
 
@@ -69,6 +85,9 @@ const EndpointTestMenu = () => {
         <div id={styles.right}>
           <button data-testid='endPointButton' onClick={handleAddEndpoint}>
             Endpoint
+          </button>
+          <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
+            Configure Database
           </button>
         </div>
       </div>
