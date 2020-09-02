@@ -184,7 +184,8 @@ function useGenerateTest(test, projectFilePath) {
 
         beforeEach(() => {
           state = ${reducer.initialState}
-        });\n`;
+        });
+        \n`;
     }
 
     // Middleware Import Statements
@@ -420,12 +421,14 @@ function useGenerateTest(test, projectFilePath) {
     // Middleware Filepath
     function createPathToMiddlewares(statement) {
       let filePath = null;
+      console.log(filePath);
       if (statement.middlewaresFilePath) {
         filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
         filePath = filePath.replace(/\\/g, '/');
       }
-      if (!testFileCode.includes(`import * as middleware from`) && filePath) {
-        testFileCode += `import * as middleware from '../${filePath}';`;
+
+      if (!testFileCode.includes(`import ${statement.queryType} from `)) {
+        testFileCode += `import ${statement.queryType} from '../${filePath}';`;
       }
     }
 
@@ -515,8 +518,9 @@ function useGenerateTest(test, projectFilePath) {
 
     // Middleware Jest Test Code
     const addMiddleware = (middleware) => {
-      testFileCode += `\n it('', () => {
-      const ${middleware.queryValue} = () => {
+      // testFileCode += `\n it('', () => {
+      if (!testFileCode.includes(`const store`)) {
+        testFileCode += `\n const createStore = () => {
           const store = {
             getState: jest.fn(() => ({})),
             dispatch: jest.fn()
@@ -524,28 +528,35 @@ function useGenerateTest(test, projectFilePath) {
           const next = jest.fn()
           const invoke = action => ${middleware.queryType}(store)(next)(action)
           return { store, next, invoke } 
-          }
-        });
+        }
         \n`;
+      }
 
       if (middleware.queryValue === 'passes_non_functional_arguments') {
-        testFileCode += `const { next, invoke } = ${middleware.queryValue}()
+        testFileCode += `\n
+        it('${middleware.queryValue}', () => {
+          const { next, invoke } = createStore()
           const action = {type : 'TEST'}
           invoke(action)
-          expect(${middleware.querySelector}).${middleware.queryVariant}(action)`;
+          expect(${middleware.querySelector}).${middleware.queryVariant}(action)
+        })`;
       } else if (middleware.queryValue === 'calls_the_function') {
-        testFileCode += `const { invoke } = ${middleware.queryValue}()
+        testFileCode += `\n it('${middleware.queryValue}', () => {
+          const { invoke } = createStore()
           const fn = jest.fn()
           invoke(fn)
-          expect(${middleware.querySelector}).${middleware.queryVariant}()`;
+          expect(${middleware.querySelector}).${middleware.queryVariant}()
+        })`;
       } else if (middleware.queryValue === 'passes_functional_arguments') {
-        testFileCode += `const { store, invoke } = ${middleware.queryValue}()
+        testFileCode += `\n it('${middleware.queryValue}', () => {
+          const { store, invoke } = createStore()
           invoke((dispatch, getState) => {
             dispatch('Test Dispatch')
             getState()
           })
           expect(${middleware.querySelector}).${middleware.queryVariant}('Test Dispatch')
-          expect(${middleware.querySelector}).${middleware.queryVariant}()`;
+          expect(${middleware.querySelector}).${middleware.queryVariant}()
+        })`;
       }
     };
 
@@ -554,14 +565,14 @@ function useGenerateTest(test, projectFilePath) {
       // pass in reducer to expect. pass in initial state as 1st arg, key
       // if payload exists, add key/value pair to testfile code
       if (reducer.payloadKey) {
-        testFileCode += `it('${reducer.itStatement}', () => {
+        testFileCode += `\n it('${reducer.itStatement}', () => {
         expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}, ${reducer.payloadKey}: ${reducer.payloadValue} })).toEqual({
-        ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+        ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })
         `;
       } else {
-        testFileCode += `it('${reducer.itStatement}', () => {
+        testFileCode += `\n it('${reducer.itStatement}', () => {
           expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}})).toEqual({
-          ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+          ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })
           `;
       }
     }
@@ -747,6 +758,7 @@ function useGenerateTest(test, projectFilePath) {
           });
         `;
     };
+
     switch (test) {
       case 'react':
         var reactTestCase = testState;
@@ -808,6 +820,7 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
       default:
         return 'not a test';
     }
