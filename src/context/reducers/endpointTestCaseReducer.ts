@@ -49,6 +49,7 @@ const deepCopy = (endpointStatements: EndpointObj[]) => {
   });
 
   function copyAssertions(array: Assertion[]) {
+    console.log('array', array);
     const copy: Assertion[] = array.map((el) => {
       return { ...el };
     });
@@ -70,6 +71,13 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
 
   switch (action.type) {
     case actionTypes.ADD_ENDPOINT:
+      if (endpointStatements.length === 0) {
+        return {
+          ...state,
+          id: 0,
+          endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
+        };
+      }
       endpointStatements.push({
         ...newEndpoint,
         id: endpointStatements[endpointStatements.length - 1].id + 1,

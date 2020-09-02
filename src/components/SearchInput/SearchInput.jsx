@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SearchInput.scss';
 
-export const SearchInput = ({
+const SearchInput = ({
   dispatch,
   action,
   filePathMap,
@@ -10,6 +10,7 @@ export const SearchInput = ({
   updateTypesFilePath,
   updateActionsFilePath,
   type,
+  label,
 }) => {
   const [activeOption, setActiveOption] = useState(0);
   const [filteredOptions, setFilteredOptions] = useState([]);
@@ -50,9 +51,6 @@ export const SearchInput = ({
       const selectedOption = filteredOptions[activeOption];
       const filePath = filePathMap[selectedOption] || '';
       if (action) dispatch(action(selectedOption, filePath));
-      if (updateActionsFilePath) {
-        dispatch(updateActionsFilePath(selectedOption, filePath, type));
-      }
       if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {
@@ -94,18 +92,21 @@ export const SearchInput = ({
     }
   }
   return (
-    <div className='search-container'>
-      <div className='search'>
-        <input
-          type='text'
-          className='search-box'
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-          value={userInput}
-          placeholder='File Name'
-        />
+    <div className='flex-item'>
+      <label htmlFor='typesFile'>{label}</label>
+      <div className='search-container'>
+        <div className='search'>
+          <input
+            type='text'
+            className='search-box'
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            value={userInput}
+            placeholder='File Name'
+          />
+        </div>
+        {optionList}
       </div>
-      {optionList}
     </div>
   );
 };

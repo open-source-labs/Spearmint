@@ -1,17 +1,16 @@
 import React, { useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { openBrowserDocs } from '../../context/actions/globalActions';
-import styles from './TestMenu.module.scss';
 import {
+  openBrowserDocs,
   updateFile,
   setFilePath,
   toggleRightPanel,
   setValidCode,
 } from '../../context/actions/globalActions';
+import styles from './TestMenu.module.scss';
 import {
   addContexts,
   addHookUpdates,
-  addHookRender,
   createNewHooksTest,
 } from '../../context/actions/hooksTestCaseActions';
 import Modal from '../Modals/Modal';
@@ -40,10 +39,6 @@ const HooksTestMenu = () => {
 
   const handleAddHookUpdates = () => {
     dispatchToHooksTestCase(addHookUpdates());
-  };
-
-  const handleAddHookRender = () => {
-    dispatchToHooksTestCase(addHookRender());
   };
 
   const openDocs = () => {
@@ -81,19 +76,16 @@ const HooksTestMenu = () => {
             dispatchToMockData={null}
             isModalOpen={isModalOpen}
             closeModal={closeModal}
-            dispatchTestCase={dispatchToHooksTestCase}
-            createTest={createNewHooksTest}
+            dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
+            createTest={title === 'New Test' ? createNewHooksTest : null}
           />
         </div>
         <div
           id={styles.right}
           style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
         >
-          <button className='hookRenderButton' type='button' onClick={handleAddHookRender}>
-            Hook: Rendering
-          </button>
           <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
-            Hook: Updates
+            Hooks
           </button>
           <button className='contextButton' type='button' onClick={handleAddContexts}>
             Context

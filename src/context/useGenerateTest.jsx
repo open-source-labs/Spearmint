@@ -1,3 +1,5 @@
+import { useImperativeHandle } from 'react';
+
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
@@ -184,7 +186,8 @@ function useGenerateTest(test, projectFilePath) {
 
         beforeEach(() => {
           state = ${reducer.initialState}
-        });\n`;
+        });
+        \n`;
     }
 
     // Middleware Import Statements
@@ -262,15 +265,17 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
       }
       if (
-        !testFileCode.includes(`import { renderHook, act } from '@testing-library/react-hooks';`)
+        !testFileCode.includes(
+          `import { renderHook, act, cleanup } from '@testing-library/react-hooks';`
+        )
       ) {
-        testFileCode += `import { renderHook, act } from '@testing-library/react-hooks';`;
+        testFileCode += `import { renderHook, act, cleanup } from '@testing-library/react-hooks';`;
       }
     };
 
     // Hooks & Context Test Statements
-    const addHooksTestStatements = () => {
-      testFileCode += `\n describe('${hooksTestCase.hooksTestStatement}', () => {`;
+    const addHooksDescribeBlock = () => {
+      testFileCode += `\nafterEach(cleanup);\ndescribe('${hooksTestCase.hooksTestStatement}', () => {`;
       hooksTestCase.hooksStatements.forEach((statement) => {
         switch (statement.type) {
           case 'hook-updates':
@@ -420,27 +425,44 @@ function useGenerateTest(test, projectFilePath) {
     // Middleware Filepath
     function createPathToMiddlewares(statement) {
       let filePath = null;
+      console.log(filePath);
       if (statement.middlewaresFilePath) {
         filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
         filePath = filePath.replace(/\\/g, '/');
       }
-      if (!testFileCode.includes(`import * as middleware from`) && filePath) {
-        testFileCode += `import * as middleware from '../${filePath}';`;
+
+      if (!testFileCode.includes(`import ${statement.queryType} from `)) {
+        testFileCode += `import ${statement.queryType} from '../${filePath}';`;
       }
     }
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-      let filePath = path.relative(projectFilePath, statement.hookFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import ${statement.hook} from '../${filePath}';`;
+      let hooksArr = [];
+      hooksTestCase.hooksStatements.forEach(({ hook }) => {
+        hooksArr.push(hook);
+      });
+      let hookImports = hooksArr.reduce((str, curr) => {
+        str += `${curr}, `;
+        return str;
+      }, '');
+      if (!testFileCode.includes(`import { ${hooksArr[0]}`) && statement.hookFilePath) {
+        let filePath = path.relative(projectFilePath, statement.hookFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+
+        testFileCode += `import { ${hookImports} } from '../${filePath}';`;
+      }
     }
 
     // Context Filepath
     const createPathToContext = (statement) => {
       let filePath = path.relative(projectFilePath, statement.contextFilePath);
       filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
+      if (filePath) {
+        testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
+      } else {
+        testFileCode += '//Please import you context here';
+      }
     };
 
     // Endpoint Filepath
@@ -515,8 +537,9 @@ function useGenerateTest(test, projectFilePath) {
 
     // Middleware Jest Test Code
     const addMiddleware = (middleware) => {
-      testFileCode += `\n it('', () => {
-      const ${middleware.queryValue} = () => {
+      // testFileCode += `\n it('', () => {
+      if (!testFileCode.includes(`const store`)) {
+        testFileCode += `\n const createStore = () => {
           const store = {
             getState: jest.fn(() => ({})),
             dispatch: jest.fn()
@@ -524,28 +547,35 @@ function useGenerateTest(test, projectFilePath) {
           const next = jest.fn()
           const invoke = action => ${middleware.queryType}(store)(next)(action)
           return { store, next, invoke } 
-          }
-        });
+        }
         \n`;
+      }
 
       if (middleware.queryValue === 'passes_non_functional_arguments') {
-        testFileCode += `const { next, invoke } = ${middleware.queryValue}()
+        testFileCode += `\n
+        it('${middleware.queryValue}', () => {
+          const { next, invoke } = createStore()
           const action = {type : 'TEST'}
           invoke(action)
-          expect(${middleware.querySelector}).${middleware.queryVariant}(action)`;
+          expect(${middleware.querySelector}).${middleware.queryVariant}(action)
+        })`;
       } else if (middleware.queryValue === 'calls_the_function') {
-        testFileCode += `const { invoke } = ${middleware.queryValue}()
+        testFileCode += `\n it('${middleware.queryValue}', () => {
+          const { invoke } = createStore()
           const fn = jest.fn()
           invoke(fn)
-          expect(${middleware.querySelector}).${middleware.queryVariant}()`;
+          expect(${middleware.querySelector}).${middleware.queryVariant}()
+        })`;
       } else if (middleware.queryValue === 'passes_functional_arguments') {
-        testFileCode += `const { store, invoke } = ${middleware.queryValue}()
+        testFileCode += `\n it('${middleware.queryValue}', () => {
+          const { store, invoke } = createStore()
           invoke((dispatch, getState) => {
             dispatch('Test Dispatch')
             getState()
           })
           expect(${middleware.querySelector}).${middleware.queryVariant}('Test Dispatch')
-          expect(${middleware.querySelector}).${middleware.queryVariant}()`;
+          expect(${middleware.querySelector}).${middleware.queryVariant}()
+        })`;
       }
     };
 
@@ -554,14 +584,14 @@ function useGenerateTest(test, projectFilePath) {
       // pass in reducer to expect. pass in initial state as 1st arg, key
       // if payload exists, add key/value pair to testfile code
       if (reducer.payloadKey) {
-        testFileCode += `it('${reducer.itStatement}', () => {
+        testFileCode += `\n it('${reducer.itStatement}', () => {
         expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}, ${reducer.payloadKey}: ${reducer.payloadValue} })).toEqual({
-        ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+        ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })
         `;
       } else {
-        testFileCode += `it('${reducer.itStatement}', () => {
+        testFileCode += `\n it('${reducer.itStatement}', () => {
           expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}})).toEqual({
-          ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+          ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })
           `;
       }
     }
@@ -612,21 +642,40 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hook: Updates Jest Test Code
     const addHookUpdates = (hookUpdates) => {
-      testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());
-        act(() => {
-          result.current.${hookUpdates.callbackFunc}();
-        });
-        expect(result.current.${hookUpdates.managedState}).toBe(${hookUpdates.updatedState})`;
+      testFileCode += `test('${hookUpdates.testName}', () => {`;
+      testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());\n\n`;
+      let callbackCodeBlocks = hookUpdates.callbackFunc.reduce((result, callback) => {
+        return (result += `result.current.${callback.callbackFunc}();\n`);
+      }, '');
+      testFileCode +=
+        hookUpdates.callbackFunc.length === 0 ||
+        (hookUpdates.callbackFunc.length === 1 &&
+          hookUpdates.callbackFunc[0].callbackFunc.length === 0)
+          ? ''
+          : `act(() => {
+          ${callbackCodeBlocks}
+        });\n`;
+      hookUpdates.assertions.forEach((assertion) => {
+        testFileCode += `expect(result.current.${assertion.expectedState})${
+          assertion.not ? '.not' : ''
+        }.${assertion.matcher}.(${assertion.expectedValue || ''})\n`;
+      });
+      testFileCode += '})\n\n';
     };
 
     // Hook: Renders Jest Test Code
     const addHookRender = (hookRender) => {
-      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameterOne}))
-        expect(result.current.${hookRender.returnValue}).toBe(${hookRender.expectedReturnValue})`;
+      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameters}));\n`;
+      for (let i = 0; i < hookRender.expectedState.length; i += 1) {
+        testFileCode += `expect(result.current.${hookRender.expectedState[i]}).toBe(${
+          hookRender.expectedValue[i] || ''
+        })\n`;
+      }
     };
 
     // Context Jest Test Code
     const addContext = (context) => {
+      testFileCode += `test('${context.testName}', () => {`;
       if (context.queryValue === 'shows_default_value') {
         testFileCode += `const mockValue = {Data: '${context.values}'}
           const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
@@ -661,6 +710,7 @@ function useGenerateTest(test, projectFilePath) {
           )
           expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
       }
+      testFileCode += '})\n\n';
     };
 
     // // Endpoint Jest Test Code
@@ -747,6 +797,7 @@ function useGenerateTest(test, projectFilePath) {
           });
         `;
     };
+
     switch (test) {
       case 'react':
         var reactTestCase = testState;
@@ -779,7 +830,7 @@ function useGenerateTest(test, projectFilePath) {
         var hooksTestCase = testState;
         return (
           addHooksImportStatements(),
-          addHooksTestStatements(),
+          addHooksDescribeBlock(),
           (testFileCode = beautify(testFileCode, {
             indent_size: 2,
             space_in_empty_paren: true,
@@ -808,6 +859,7 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
       default:
         return 'not a test';
     }
