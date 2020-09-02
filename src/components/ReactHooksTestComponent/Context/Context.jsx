@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Context.module.scss';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
@@ -28,6 +28,14 @@ const Context = ({ context, index }) => {
     dispatchToHooksTestCase(deleteContexts(context.id));
   };
 
+  const testDescription = useRef(null);
+
+  useEffect(() => {
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
+  }, []);
+
   return (
     <Draggable draggableId={context.id.toString()} index={index}>
       {(provided) => (
@@ -46,18 +54,38 @@ const Context = ({ context, index }) => {
 
           <div>
             <div id={styles.querySelector}>
-              <div id={styles.contextBox}>
-                <label htmlFor='contextFile' className={styles.queryLabel}>
-                  Import Context From
-                </label>
-                <SearchInput
-                  options={Object.keys(filePathMap)}
-                  dispatch={dispatchToHooksTestCase}
-                  action={updateContextFilePath}
-                  filePathMap={filePathMap}
-                />
+              <div id={styles.contextFlexBox}>
+                <div id={styles.contextBox}>
+                  <label htmlFor='contextFile' className={styles.queryLabel}>
+                    Import Context From
+                  </label>
+                  <SearchInput
+                    options={Object.keys(filePathMap)}
+                    dispatch={dispatchToHooksTestCase}
+                    action={updateContextFilePath}
+                    filePathMap={filePathMap}
+                  />
+                </div>
+                <div id={styles.serverInput}>
+                  <label htmlFor='test-statement'>Test description</label>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'spaceBetween',
+                    }}
+                  >
+                    <div id={styles.labelInputTest}>
+                      <br />
+                      <input
+                        ref={testDescription}
+                        type='text'
+                        id={styles.testStatement}
+                        onChange={(e) => handleChangeContextFields(e, 'testName')}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-
               <div id={styles.dropdownFlex}>
                 {/* drop downs */}
                 <div id={styles.contextDrop}>
