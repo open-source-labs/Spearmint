@@ -100,7 +100,6 @@ const createHookUpdates = (statementId: number) => ({
 
 const deepCopy = (hooksStatements: Hooks[]) => {
   function copyAssertions(array: Assertion[]) {
-    console.log('array', array);
     const copy: Assertion[] = array.map((el) => {
       return { ...el };
     });
@@ -128,13 +127,10 @@ const deepCopy = (hooksStatements: Hooks[]) => {
 
 export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) => {
   Object.freeze(state);
-  console.log('state', state);
-  console.log('action', action);
   let hooksStatements = [...state.hooksStatements];
 
   switch (action.type) {
     case 'UPDATE_HOOKS_TEST_STATEMENT': {
-      // console.log('hooksteststatement', action.hooksTestStatement);
       return {
         ...state,
         hooksTestStatement: action.hooksTestStatement,
@@ -142,7 +138,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
     }
 
     case 'ADD_CONTEXT':
-      // hooksStatements.push(createContexts(state.statementId));
       if (hooksStatements.length === 0) {
         return {
           ...state,
@@ -219,8 +214,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
       };
 
     case 'UPDATE_HOOK_UPDATES':
-      // hooksStatements = hooksStatements.map((statement) => {
-      // console.log(statement);
       let newStatement = hooksStatements.find((statement) => {
         return statement.id === action.id;
       });
@@ -231,7 +224,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
         ...state,
         hooksStatements,
       };
-      // });
       return {
         ...state,
         hooksStatements,

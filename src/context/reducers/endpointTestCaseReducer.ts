@@ -7,7 +7,6 @@ import {
   Assertion,
   Header,
 } from '../../utils/endpointTypes';
-import HooksTestStatements from '../../components/TestCase/HooksTestStatements';
 
 export const EndpointTestCaseContext: any = createContext(null);
 

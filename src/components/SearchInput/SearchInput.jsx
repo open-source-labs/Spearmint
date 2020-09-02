@@ -59,10 +59,6 @@ const SearchInput = ({
       const selectedOption = filteredOptions[activeOption];
       const filePath = filePathMap[selectedOption] || '';
       if (action) dispatch(action(selectedOption, filePath));
-      if (updateActionsFilePath) {
-        console.log('SearchInput ', updateActionsFilePath(selectedOption, filePath, type));
-        console.log(dispatch(updateActionsFilePath(selectedOption, filePath, type)));
-      }
       if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {

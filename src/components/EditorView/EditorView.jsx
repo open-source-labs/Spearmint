@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { GlobalContext } from '../../context/reducers/globalReducer';
 import { editor } from 'monaco-editor';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
 import styles from './EditorView.module.scss';
 
@@ -23,9 +23,9 @@ const Editor = () => {
     automaticLayout: true,
   };
 
-  const editorDidMount = (editor) => {
-    // editor.setTheme('light-dark');
-    editor.focus();
+  const editorDidMount = () => {
+    editor.setTheme('light-dark');
+    // editor.focus();
   };
 
   const updatafile = (newValue, e) => {

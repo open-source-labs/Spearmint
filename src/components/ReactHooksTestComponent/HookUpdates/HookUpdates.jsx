@@ -1,16 +1,13 @@
 import React, { useContext, useRef, useEffect } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './HookUpdates.module.scss';
-import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { HooksTestCaseContext } from '../../../context/reducers/hooksTestCaseReducer';
 import {
   deleteHookUpdates,
   updateHookUpdates,
-  updateHooksFilePath,
   addAssertion,
   addCallbackFunc,
 } from '../../../context/actions/hooksTestCaseActions';
-import SearchInput from '../../SearchInput/SearchInput';
 import HooksAssertion from '../HooksAssertion';
 import HooksCallback from '../HooksCallback';
 
@@ -18,13 +15,11 @@ const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const HookUpdates = ({ hookUpdates, index }) => {
-  const [{ filePathMap }] = useContext(GlobalContext);
   const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
 
   const handleChangeHookUpdatesFields = (e, field) => {
     let updatedHookUpdates = { ...hookUpdates };
     updatedHookUpdates[field] = e.target.value;
-    // console.log(updateHookUpdates(updatedHookUpdates));
     dispatchToHooksTestCase(updateHookUpdates(updatedHookUpdates));
   };
 

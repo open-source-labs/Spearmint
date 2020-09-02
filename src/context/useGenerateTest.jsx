@@ -652,7 +652,6 @@ function useGenerateTest(test, projectFilePath) {
 
     // Context Jest Test Code
     const addContext = (context) => {
-      console.log('context', context);
       testFileCode += `test('${context.testName}', () => {`;
       if (context.queryValue === 'shows_default_value') {
         testFileCode += `const mockValue = {Data: '${context.values}'}

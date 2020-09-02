@@ -23,7 +23,6 @@ const HookRender = ({ hookRender, index }) => {
     let updatedHookRender = { ...hookRender };
 
     updatedHookRender[field] = e.target.value;
-    // console.log(updateHookRender(updatedHookRender));
     dispatchToHooksTestCase(updateHookRender(updatedHookRender));
     console.log(updatedHookRender);
   };
