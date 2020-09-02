@@ -26,7 +26,13 @@ export interface Action {
   dbFilePath?: string;
 }
 
-export interface Endpoint {
+type EndpointKeyValues = number | string | boolean | Assertion[] | Header[];
+
+interface forEndpoint {
+  [index: string]: EndpointKeyValues;
+}
+
+export interface EndpointObj extends forEndpoint {
   id: number;
   type: string;
   testName: string;
