@@ -7,6 +7,7 @@ import {
   Assertion,
   Header,
 } from '../../utils/endpointTypes';
+import HooksTestStatements from '../../components/TestCase/HooksTestStatements';
 
 export const EndpointTestCaseContext: any = createContext(null);
 
@@ -71,6 +72,13 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
 
   switch (action.type) {
     case actionTypes.ADD_ENDPOINT:
+      if (endpointStatements.length === 0) {
+        return {
+          ...state,
+          id: 0,
+          endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
+        };
+      }
       endpointStatements.push({
         ...newEndpoint,
         id: endpointStatements[endpointStatements.length - 1].id + 1,
