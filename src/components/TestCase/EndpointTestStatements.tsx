@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import Endpoint from '../EndpointTestComponent/Endpoint';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
-import { EndpointStatements } from '../../utils/endpointTypes';
+import { EndpointObj } from '../../utils/endpointTypes';
 
 const EndpointTestStatements = () => {
   const [{ endpointStatements }, dispatch] = useContext(EndpointTestCaseContext);
 
   return (
     <>
-      {endpointStatements.map((statement: EndpointStatements, i: number) => {
+      {endpointStatements.map((statement: EndpointObj, i: number) => {
         switch (statement.type) {
           /* add statements here. Ex: */
           case 'endpoint':

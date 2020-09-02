@@ -4,7 +4,7 @@ import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import EndpointAssertion from './EndpointAssertion';
-import { Assertion, EndpointObj, Header, Action } from '../../utils/endpointTypes';
+import { Assertion, EndpointObj, Header, Action, EventTarget } from '../../utils/endpointTypes';
 
 import {
   deleteEndpoint,
@@ -25,10 +25,6 @@ interface EndpointProps {
   dispatchToEndpointTestCase: (action: Action) => void;
 }
 
-type eventTarget = {
-  target: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-};
-
 // declare global {
 //   namespace JSX {
 //     interface IntrinsicElements {
@@ -38,7 +34,7 @@ type eventTarget = {
 // }
 
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps) => {
-  const handleChangeEndpointFields = ({ target }: eventTarget, field: string) => {
+  const handleChangeEndpointFields = ({ target }: EventTarget, field: string) => {
     let updatedEndpoint = { ...endpoint };
 
     field === 'headerName' || field === 'headerValue'
@@ -64,7 +60,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
     dispatchToEndpointTestCase(deleteHeader(index, i));
   };
 
-  const updatePostData = ({ target }: eventTarget) => {
+  const updatePostData = ({ target }: EventTarget) => {
     dispatchToEndpointTestCase(updatePost(target.value, index));
     target.style.height = 'inherit';
     target.style.height = `${Math.max(Math.min(target.scrollHeight, 200), 102)}px`;
