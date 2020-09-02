@@ -12,7 +12,7 @@ import {
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
-import useToggleModal from './testMenuHooks';
+import { useToggleModal } from './testMenuHooks';
 
 const HooksTestMenu = () => {
   // Hooks testing docs url
