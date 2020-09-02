@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
 import './SearchInput.scss';
-import { updateHooksFilePath } from '../../context/actions/hooksTestCaseActions';
-import { SelectionDirection } from 'monaco-editor';
-
-// interface Props {
-//   dispatch: string;
-//   text: string;
-//   onTextChange: (text: string) => void;
-// }
 
 const SearchInput = ({
   dispatch,

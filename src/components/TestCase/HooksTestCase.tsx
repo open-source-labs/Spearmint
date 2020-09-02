@@ -56,7 +56,7 @@ const HooksTestCase = () => {
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>
-            Test
+            Describe Block
             <input
               ref={testDescription}
               type='text'
