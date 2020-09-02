@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { editor } from 'monaco-editor';

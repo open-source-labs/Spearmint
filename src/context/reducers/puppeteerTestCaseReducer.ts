@@ -171,7 +171,6 @@ export const puppeteerTestCaseReducer = (
         puppeteerStatements: [...action.draggableStatements],
       };
     case 'OPEN_INFO_MODAL':
-      console.log('reducer');
       return {
         ...state,
         modalOpen: true,

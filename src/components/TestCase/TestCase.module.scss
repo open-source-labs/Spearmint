@@ -18,11 +18,16 @@ div {
 
 #testCaseHeader {
   margin: 15px 25px 15px 15px;
+  // background-color: red;
+}
+
+#testMockSection {
+  margin-bottom: 50px;
 }
 
 #testStatement {
-  margin-left: 15px;
-  width: 92%;
+  margin-top: 3px;
+  width: 93%;
 }
 
 #mockHeader {
@@ -32,10 +37,6 @@ div {
 
 #checkboxLabel {
   margin: 10px;
-}
-
-#testMockSection {
-  margin-bottom: 50px;
 }
 
 #mockDataHeader {

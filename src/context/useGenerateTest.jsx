@@ -365,6 +365,7 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
     // Actions Filepath
+    // creates import statement for action creators
     const createPathToActions = (statement) => {
       let filePath = null;
       if (statement.filePath) {
@@ -393,6 +394,7 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Types Filepath
+    // Creates the import statment for actionTypes
     function createPathToTypes(statement) {
       let filePath = null;
       let bool = false;
@@ -411,6 +413,7 @@ function useGenerateTest(test, projectFilePath) {
         }
       }
     }
+    // This function returns true when actiontypes are declared in the same file as the action creators like with this app
     const areActionTypesDeclaredInSameFileAsActionCreators = (file) => {
       const page = fs.readFileSync(file);
       if (page.includes(`export const actionTypes`)) return true;
@@ -468,6 +471,7 @@ function useGenerateTest(test, projectFilePath) {
           case 'Mongoose':
             testFileCode += `const mongoose = require('../${filePath}');
             \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+            break;
           default:
             return;
         }
@@ -556,17 +560,18 @@ function useGenerateTest(test, projectFilePath) {
       if (reducer.payloadKey) {
         testFileCode += `it('${reducer.itStatement}', () => {
         expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}, ${reducer.payloadKey}: ${reducer.payloadValue} })).toEqual({
-        ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+        ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })
         `;
       } else {
         testFileCode += `it('${reducer.itStatement}', () => {
           expect(${reducer.reducerName}(state, { type: actionTypes.${reducer.reducerAction}})).toEqual({
-          ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })})
+          ...state, ${reducer.expectedKey}: ${reducer.expectedValue} })
           `;
       }
     }
 
     // Async AC Jest Test Code
+    // This function adds a test (or it block) for each async test block
     const addAsync = (async) => {
       let route = '*';
       if (async.route) route = async.route;
@@ -665,10 +670,9 @@ function useGenerateTest(test, projectFilePath) {
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      const headersObj = {};
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
       testFileCode += statement.postData
-        ? `.send(\ ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
+        ? `.send( ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
         : statement.headers.length
         ? `.set({`
         : '';

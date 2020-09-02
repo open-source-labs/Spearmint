@@ -117,33 +117,3 @@ const Reducer = ({ reducer, index }) => {
 };
 
 export default Reducer;
-
-{
-  /* <div id={styles.reducerNameFlexBox}> */
-}
-{
-  /* <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Import Reducer From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                action={updateReducersFilePath}
-                filePathMap={filePathMap}
-              />
-            </div> */
-}
-{
-  /* <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Import Action Types From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                filePathMap={filePathMap}
-                updateTypesFilePath={updateTypesFilePath}
-                id={reducer.id}
-              />
-            </div> */
-}
-{
-  /* </div> */
-}
