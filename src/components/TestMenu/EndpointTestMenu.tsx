@@ -23,14 +23,14 @@ import { useToggleModal, validateInputs } from './testMenuHooks';
 const EndpointTestMenu = () => {
   const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
 
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
-  const handleAddEndpoint = (e) => {
+  const handleAddEndpoint = () => {
     dispatchToEndpointTestCase(addEndpoint());
   };
 
