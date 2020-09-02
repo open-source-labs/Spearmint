@@ -1,6 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import styles from './TestMenu.module.scss';
-import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
+import {
+  updateFile,
+  setFilePath,
+  toggleRightPanel,
+  setValidCode,
+} from '../../context/actions/globalActions';
 import {
   addAsync,
   addReducer,
@@ -24,6 +29,10 @@ const ReduxTestMenu = () => {
   const generateTest = useGenerateTest('redux', projectFilePath);
   // Redux testing docs url
   const reduxUrl = 'https://redux.js.org/recipes/writing-tests';
+
+  useEffect(() => {
+    dispatchToGlobal(setValidCode(true));
+  }, []);
 
   const handleAddMiddleware = () => {
     dispatchToReduxTestCase(addMiddleware());

@@ -47,7 +47,7 @@ export function useGenerateScript(test) {
     case 'redux':
       return (
         `cd ${projectFilePath}\n` +
-        'npm i -D jest @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock\n' +
+        'npm i -D jest @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch\n' +
         'npm run test'
       );
     case 'hooks':
