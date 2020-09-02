@@ -57,11 +57,11 @@ const HooksTestCase = () => {
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>
             Describe Block
+            <br />
             <input
               ref={testDescription}
               type='text'
               id={styles.testStatement}
-              // value={hooksTestStatement}
               onChange={handleUpdateHooksTestStatement}
             />
           </label>

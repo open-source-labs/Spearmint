@@ -1,3 +1,5 @@
+import { useImperativeHandle } from 'react';
+
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
@@ -262,17 +264,18 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
       }
       if (
-        !testFileCode.includes(`import { renderHook, act } from '@testing-library/react-hooks';`)
+        !testFileCode.includes(
+          `import { renderHook, act, cleanup } from '@testing-library/react-hooks';`
+        )
       ) {
-        testFileCode += `import { renderHook, act } from '@testing-library/react-hooks';`;
+        testFileCode += `import { renderHook, act, cleanup } from '@testing-library/react-hooks';`;
       }
     };
 
     // Hooks & Context Test Statements
     const addHooksDescribeBlock = () => {
-      testFileCode += `\n describe('${hooksTestCase.hooksTestStatement}', () => {`;
+      testFileCode += `\nafterEach(cleanup);\ndescribe('${hooksTestCase.hooksTestStatement}', () => {`;
       hooksTestCase.hooksStatements.forEach((statement) => {
-        console.log('statement in addHooksDescribe', statement);
         switch (statement.type) {
           case 'hook-updates':
             return addHookUpdates(statement);
@@ -432,10 +435,19 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-      if (!testFileCode.includes(`import ${statement.hook} from `) && statement.hookFilePath) {
+      let hooksArr = [];
+      hooksTestCase.hooksStatements.forEach(({ hook }) => {
+        hooksArr.push(hook);
+      });
+      let hookImports = hooksArr.reduce((str, curr) => {
+        str += `${curr}, `;
+        return str;
+      }, '');
+      if (!testFileCode.includes(`import { ${hooksArr[0]}`) && statement.hookFilePath) {
         let filePath = path.relative(projectFilePath, statement.hookFilePath);
         filePath = filePath.replace(/\\/g, '/');
-        testFileCode += `import ${statement.hook} from '../${filePath}';`;
+
+        testFileCode += `import { ${hookImports} } from '../${filePath}';`;
       }
     }
 
