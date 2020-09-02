@@ -98,7 +98,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
                 type='text'
                 id='hook'
                 onChange={(e) => handleChangeHookUpdatesFields(e, 'hook')}
-                placeholder='e.g. useCounter'
+                placeholder='e.g. useToggleCount'
               />
             </div>
             <div id={styles.cb}>
@@ -106,7 +106,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
               <input
                 type='text'
                 id='hookParams'
-                placeholder='eg. 9000, "string"'
+                placeholder='eg. false, 0'
                 onChange={(e) => handleChangeHookUpdatesFields(e, 'hookParams')}
               />
             </div>

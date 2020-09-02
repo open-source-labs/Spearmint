@@ -108,7 +108,6 @@ const HooksAssertion = ({ assertion, index, id }) => {
           <input
             type='text'
             name='expectedValue'
-            placeholder='eg. 200'
             value={assertion.expectedValue}
             onChange={(e) => handleChangeUpdateAssertion(e, 'expectedValue')}
           />
