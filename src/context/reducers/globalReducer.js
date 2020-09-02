@@ -22,6 +22,7 @@ export const globalState = {
   exportBool: false,
   fileName: '',
   filePath: '',
+  validCode: true,
 };
 
 export const globalReducer = (state, action) => {
@@ -142,6 +143,12 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         filePath,
+      };
+    case actionTypes.SET_VALID_CODE:
+      console.log(action.validCode);
+      return {
+        ...state,
+        validCode: action.validCode,
       };
     default:
       return state;

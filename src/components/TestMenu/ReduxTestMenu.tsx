@@ -13,7 +13,7 @@ import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import useToggleModal from './testMenuHooks';
+import { useToggleModal } from './testMenuHooks';
 
 const ReduxTestMenu = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(

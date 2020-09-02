@@ -38,14 +38,9 @@ export const endpointTestCaseState: EndpointTestCaseState = {
   modalOpen: false,
   serverFilePath: '',
   serverFileName: '',
+  dbFilePath: '',
+  addDB: false,
   endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
-};
-
-const copyHeaders = (array: Header[]) => {
-  const copy: Header[] = array.map((el) => {
-    return { ...el };
-  });
-  return copy;
 };
 
 const deepCopy = (endpointStatements: Endpoint[]) => {
@@ -55,6 +50,13 @@ const deepCopy = (endpointStatements: Endpoint[]) => {
 
   function copyAssertions(array: Assertion[]) {
     const copy: Assertion[] = array.map((el) => {
+      return { ...el };
+    });
+    return copy;
+  }
+
+  function copyHeaders(array: Header[]) {
+    const copy: Header[] = array.map((el) => {
       return { ...el };
     });
     return copy;
@@ -182,6 +184,16 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
       return {
         ...state,
         endpointStatements: deepCopy(endpointStatements),
+      };
+    case actionTypes.TOGGLE_DB:
+      return {
+        ...state,
+        addDB: action.db,
+      };
+    case actionTypes.UPDATE_DB_FILEPATH:
+      return {
+        ...state,
+        dbFilePath: action.dbFilePath,
       };
     default:
       return state;

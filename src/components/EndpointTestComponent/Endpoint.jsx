@@ -102,7 +102,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                     />
                   </div>{' '}
                   <button
-                    className={styles.addProps}
+                    id={styles.addProps}
                     style={{ marginTop: '9px' }}
                     onClick={handleClickAddHeader}
                   >
@@ -211,7 +211,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
               <button
                 // id={id}
                 onClick={addAssertionHandleClick}
-                className={styles.assertionButton}
+                id={styles.assertionButton}
               >
                 <i className='fas fa-plus'></i>
                 Assertion
