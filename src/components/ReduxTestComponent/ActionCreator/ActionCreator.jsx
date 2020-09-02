@@ -48,29 +48,17 @@ const ActionCreator = ({ actionCreator, index }) => {
             <h3>Action Creator</h3>
           </div>
 
-          {/* <div id={styles.filesFlexBox}>
+          <div id={styles.filesFlexBox}>
             <div id={styles.files}>
-              <label htmlFor='actionsFolder'>Import Actions From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                updateActionsFilePath={updateActionsFilePath}
-                id={actionCreator.id}
-                filePathMap={filePathMap}
+              <label htmlFor='it'>It should...</label>
+              <input
+                type='text'
+                id='it'
+                onChange={(e) => handleChangeActionCreatorFields(e, 'it')}
+                placeholder='e.g.should return expected action'
               />
             </div>
-
-            <div id={styles.files}>
-              <label htmlFor='typesFolder'>Import Action Types From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                updateTypesFilePath={updateTypesFilePath}
-                id={actionCreator.id}
-                filePathMap={filePathMap}
-              />
-            </div>
-          </div> */}
+          </div>
 
           <div id={styles.actionFlexBox}>
             <div id={styles.actions}>

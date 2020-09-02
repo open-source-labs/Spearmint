@@ -167,6 +167,7 @@ export interface UpdateActionCreator {
   actionType: string;
   payloadKey: string;
   payloadType: string;
+  it: string;
 }
 
 export interface UpdateAsync {
@@ -182,6 +183,10 @@ export interface UpdateAsync {
   store: string;
   matcher: string;
   expectedResponse: string;
+  responseKey: string;
+  responseValue: string;
+  it: string;
+  payloadType: string;
 }
 
 export interface UpdateReducer {
@@ -249,6 +254,7 @@ interface ActionCreator {
   actionType?: string;
   payloadKey?: null | string;
   payloadType?: null | string;
+  it?: string;
 }
 interface Async {
   id?: number;
@@ -263,8 +269,14 @@ interface Async {
   requestBody?: string;
   store?: string;
   matcher?: string;
-  expectedResponse?: string;
+  status?: string;
   actionsFile?: string;
+  responseKey?: string;
+  responseValue?: string;
+  responseType?: string;
+  it?: string;
+  payloadType?: null | string;
+  expectedArg?: string;
 }
 
 interface Reducer {
@@ -277,7 +289,7 @@ interface Reducer {
   reducersFilePath?: string;
   reducerAction?: string;
   initialState?: string;
-  payloadKey?: string;
+  payloadKey?: null | string;
   payloadValue?: any;
   reducerName?: string;
   expectedValue?: string;
