@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './HookRender.module.scss';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
@@ -16,17 +16,53 @@ const dragIcon = require('../../../assets/images/drag-vertical.png');
 const HookRender = ({ hookRender, index }) => {
   const [{ filePathMap }] = useContext(GlobalContext);
   const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+  const [count, setCount] = useState(1);
+  const [expectedCounts, setExpectedCount] = useState([{ id: `test${count}` }]);
 
   const handleChangeHookRenderFields = (e, field) => {
     let updatedHookRender = { ...hookRender };
+
     updatedHookRender[field] = e.target.value;
     dispatchToHooksTestCase(updateHookRender(updatedHookRender));
+    console.log(updatedHookRender);
   };
 
   const handleClickDeleteHookRender = (e) => {
     dispatchToHooksTestCase(deleteHookRender(hookRender.id));
   };
 
+  const handleAddInput = (e) => {
+    setCount(count);
+    setExpectedCount([...expectedCounts, { id: `test${count}` }]);
+  };
+
+  let input = expectedCounts.map((obj) => {
+    return (
+      <div id={`${styles.hookRenderFlexBox}`}>
+        <div id={styles.hookRenderType}>
+          <label htmlFor='expectedState'>Expected State</label>
+          <input
+            type='text'
+            id='expectedState'
+            placeholder='eg. count'
+            onChange={(e) => handleChangeHookRenderFields(e, 'expectedState')}
+          />
+        </div>
+        <div id={styles.hookRenderType}>
+          <label htmlFor='expectedValue'>Current Value</label>
+          <input
+            type='text'
+            id='expectedValue'
+            placeholder='eg. 0'
+            onChange={(e) => handleChangeHookRenderFields(e, 'expectedValue')}
+          />
+          <div id={styles.hookRenderType}>
+            <button onClick={handleAddInput}>+</button>
+          </div>
+        </div>
+      </div>
+    );
+  });
   return (
     <Draggable draggableId={hookRender.id.toString()} index={index}>
       {(provided) => (
@@ -65,41 +101,22 @@ const HookRender = ({ hookRender, index }) => {
               <input
                 type='text'
                 id='hook'
-                placeholder='eg. useCounter'
+                placeholder='eg. useStringCounter'
                 onChange={(e) => handleChangeHookRenderFields(e, 'hook')}
               />
             </div>
 
             <div id={styles.hookRenderType}>
-              <label htmlFor='parameterOne'>Hook Parameter (optional)</label>
+              <label htmlFor='parameters'>Hook Parameters (optional)</label>
               <input
                 type='text'
-                id='parameterOne'
-                placeholder='eg. 9000'
-                onChange={(e) => handleChangeHookRenderFields(e, 'parameterOne')}
+                id='parameters'
+                placeholder='eg. 9000, "string"'
+                onChange={(e) => handleChangeHookRenderFields(e, 'parameters')}
               />
             </div>
           </div>
-          <div id={styles.hookRenderFlexBox}>
-            <div id={styles.hookRenderType}>
-              <label htmlFor='returnValue'>Managed State</label>
-              <input
-                type='text'
-                id='returnValue'
-                placeholder='eg. count'
-                onChange={(e) => handleChangeHookRenderFields(e, 'returnValue')}
-              />
-            </div>
-            <div id={styles.hookRenderType}>
-              <label htmlFor='expectedReturnValue'>Current Value</label>
-              <input
-                type='text'
-                id='expectedReturnValue'
-                placeholder='eg. 0'
-                onChange={(e) => handleChangeHookRenderFields(e, 'expectedReturnValue')}
-              />
-            </div>
-          </div>
+          {input}
         </div>
       )}
     </Draggable>
