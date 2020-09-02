@@ -61,11 +61,6 @@ const Reducer = ({ reducer, index }) => {
           </div>
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <span id={styles.hastooltip} role='tooltip'>
-                <span id={styles.tooltip}>
-                  <ToolTip />
-                </span>
-              </span>
               <label htmlFor='initialStae'>Initial State</label>
               <input
                 type='text'
