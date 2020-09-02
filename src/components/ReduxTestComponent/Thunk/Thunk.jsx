@@ -4,8 +4,6 @@ import styles from './Thunk.module.scss';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteAsync, updateAsync } from '../../../context/actions/reduxTestCaseActions';
-import ToolTipAsync from '../../ToolTip/ToolTipAsync';
-import SearchInput from '../../SearchInput/SearchInput';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -157,40 +155,6 @@ const Async = ({ async, index }) => {
                 />
               </div>
             </div>
-
-            {/* {async.responseType === 'object' ? (
-              
-            ) : null} */}
-            {/* {async.responseType === 'status' ? (
-              <div id={styles.labelInput}>
-                <label htmlFor='status'>status</label>
-                <div id={styles.inputFlexBox}>
-                  <input
-                    type='text'
-                    name='status'
-                    placeholder='e.g. 200'
-                    onChange={(e) => handleChangeAsyncFields(e, 'status')}
-                  />
-                </div>
-              </div>
-            ) : null} */}
-
-            {/* <div id={styles.labelInput}>
-              <label htmlFor='requestBody'>Request Body</label>
-              <div id={styles.inputFlexBox}>
-                <input
-                  type='text'
-                  name='requestBody'
-                  onChange={(e) => handleChangeAsyncFields(e, 'requestBody')}
-                />
-                <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
-                  <span id={styles.tooltip}>
-                    <ToolTipAsync toolTipType={`object`} />
-                  </span>
-                </span>
-              </div>
-            </div> */}
           </div>
 
           {async.responseType === 'object' ? (
@@ -224,39 +188,3 @@ const Async = ({ async, index }) => {
 };
 
 export default Async;
-
-{
-  /* <div id={styles.dropdownWrapper}>
-              <label htmlFor='matcher'>Matcher</label>
-              <div id={styles.dropdownFlex}>
-                <select
-                  id='matcher'
-                  value={async.matcher}
-                  onChange={(e) => handleChangeAsyncFields(e, 'matcher')}
-                >
-                  <option value='' />
-                  <option value='toEqual'>toEqual</option>
-                  <option value='toContainEqual'>toContainEqual</option>
-                </select>
-              </div>
-            </div> */
-}
-
-{
-  /* <div id={styles.labelInput}>
-              <label htmlFor='expectedResponse'>Expected Response</label>
-              <div id={styles.inputFlexBox}>
-                <input
-                  type='text'
-                  name='expectedResponse'
-                  onChange={(e) => handleChangeAsyncFields(e, 'expectedResponse')}
-                />
-                <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
-                  <span id={styles.tooltip}>
-                    <ToolTipAsync toolTipType={`expectedResponse`} />
-                  </span>
-                </span>
-              </div>
-            </div> */
-}
