@@ -108,7 +108,7 @@ const Middleware = ({ middleware, index }) => {
             </div>
 
             <div id={styles.middlewareBox}>
-              <label htmlFor='typesFile'>Query Type</label>
+              <label htmlFor='typesFile'>Middleware Function</label>
               <input
                 id='queryType'
                 placeholder='eg. thunk'
