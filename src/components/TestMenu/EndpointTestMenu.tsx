@@ -6,6 +6,7 @@ import {
   updateFile,
   setFilePath,
   setValidCode,
+  toggleExportBool,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
@@ -26,7 +27,7 @@ const EndpointTestMenu = () => {
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
-
+  let valid;
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
@@ -57,11 +58,11 @@ const EndpointTestMenu = () => {
     } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
   };
 
-  if (!file && exportBool) {
-    validateInputs('endpoint', endpointTestCase)
-      ? dispatchToGlobal(setValidCode(true))
-      : dispatchToGlobal(setValidCode(false));
-    dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
+  if (exportBool) {
+    valid = validateInputs('endpoint', endpointTestCase);
+    valid ? dispatchToGlobal(setValidCode(true)) : dispatchToGlobal(setValidCode(false));
+    dispatchToGlobal(toggleExportBool());
+    if (valid && !file) dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
 
   return (

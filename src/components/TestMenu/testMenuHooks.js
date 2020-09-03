@@ -35,6 +35,25 @@ export const validateInputs = (testSuite, testCaseState) => {
         }
       }
       return true;
+    case 'hooks':
+      let hookTest, callback;
+      for (hookTest of testCaseState) {
+        console.log(hookTest);
+        if (!hookTest.hookFilePath || !hookTest.hook) return false;
+        for (callback of hookTest.callbackFunc) {
+          if (!callback.callbackFunc) {
+            console.log('hi');
+            return false;
+          }
+        }
+        for (assertion of hookTest.assertions) {
+          if (!assertion.expectedState || !assertion.expectedValue || !assertion.matcher)
+            return false;
+        }
+      }
+      return true;
+    // case 'react':
+
     default:
   }
 };

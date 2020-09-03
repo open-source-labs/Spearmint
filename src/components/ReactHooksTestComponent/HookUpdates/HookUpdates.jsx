@@ -61,15 +61,6 @@ const HookUpdates = ({ hookUpdates, index }) => {
             <h3>Hooks</h3>
           </div>
           <div id={styles.hooksFlexBox}>
-            {/* <div id={styles.hooks}>
-              <label htmlFor='hookFile'>Import Hook From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToHooksTestCase}
-                action={updateHooksFilePath}
-                filePathMap={filePathMap}
-              />
-            </div> */}
             <div id={styles.serverInput}>
               <label htmlFor='test-statement'>Test description</label>
               <div
@@ -111,15 +102,6 @@ const HookUpdates = ({ hookUpdates, index }) => {
               />
             </div>
           </div>
-          {/* <div id={styles.cb}>
-              <label htmlFor='callbackFunc'>Callback Function</label>
-              <input
-                type='text'
-                id='callbackFunc'
-                onChange={(e) => handleChangeHookUpdatesFields(e, 'callbackFunc')}
-                placeholder='e.g. incrementCount'
-              />
-            </div> */}
           {hookUpdates.callbackFunc.map((callbackFunc, i) => {
             return (
               <div id={styles.cbFlexBox}>
@@ -127,27 +109,18 @@ const HookUpdates = ({ hookUpdates, index }) => {
               </div>
             );
           })}{' '}
-          <div className={styles.buttonsContainer}>
-            <button
-              // id={id}
-              onClick={addCallbackHandleClick}
-              className={styles.assertionButton}
-            >
-              <i className='fas fa-plus'></i>
-              Callback
-            </button>
-          </div>
+          <div className={styles.buttonsContainer}></div>
           {hookUpdates.assertions.map((assertion, i) => {
             return <HooksAssertion assertion={assertion} index={index} id={i} />;
           })}{' '}
           <div className={styles.buttonsContainer} id={styles.stateFlexBox}>
-            <button
-              // id={id}
-              onClick={addAssertionHandleClick}
-              className={styles.assertionButton}
-            >
+            <button onClick={addAssertionHandleClick} className={styles.assertionButton}>
               <i className='fas fa-plus'></i>
               Assertion
+            </button>
+            <button onClick={addCallbackHandleClick} className={styles.assertionButton}>
+              <i className='fas fa-plus'></i>
+              Callback
             </button>
           </div>
         </div>
