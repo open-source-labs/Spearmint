@@ -1,75 +1,85 @@
 import React, { useState } from 'react';
 import './SearchInput.scss';
 
-export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestCase, updateTypesFilePath, updateActionsFilePath,id}) => {
-  
-  const [activeOption, setActiveOption] = useState(0)
-  const [filteredOptions, setFilteredOptions] = useState([])
-  const [showOptions, setShowOptions] = useState(false)
-  const [userInput, setUserInput] = useState('')
-
-  const onChange = (e) => {
-    const input = e.currentTarget.value; 
+const SearchInput = ({
+  dispatch,
+  action,
+  filePathMap,
+  options,
+  reactTestCase,
+  updateTypesFilePath,
+  updateActionsFilePath,
+  type,
+  label,
+}) => {
+  const [activeOption, setActiveOption] = useState(0);
+  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [showOptions, setShowOptions] = useState(false);
+  const [userInput, setUserInput] = useState('');
+  const handleChange = (e) => {
+    const input = e.currentTarget.value;
 
     const filteredOptions = options.filter(
-      (optionName) => optionName.toLowerCase().indexOf(input.toLowerCase()) > -1,
+      (optionName) => optionName.toLowerCase().indexOf(input.toLowerCase()) > -1
     );
 
-    setActiveOption(0)
-    setFilteredOptions(filteredOptions)
-    setShowOptions(true)
-    setUserInput(e.currentTarget.value)
+    setActiveOption(0);
+    setFilteredOptions(filteredOptions);
+    setShowOptions(true);
+    setUserInput(e.currentTarget.value);
   };
 
- const onClick = (e) => {    
+  const handleClick = (e) => {
     setActiveOption(0);
     setFilteredOptions([]);
     setShowOptions(false);
     setUserInput(e.currentTarget.innerText);
 
-    const selectedOption = e.target.id;
+    const selectedOption = e.target.type;
     const filePath = filePathMap[selectedOption] || '';
-    if(updateTypesFilePath && id) dispatch(updateTypesFilePath(selectedOption, filePath, id))
-    if(updateActionsFilePath && id) dispatch(updateActionsFilePath(selectedOption, filePath, id))
-    if(action) dispatch(action(selectedOption, filePath))
+    if (updateTypesFilePath) {
+      dispatch(updateTypesFilePath(selectedOption, filePath, type));
+    }
+    if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
+    if (action) dispatch(action(selectedOption, filePath));
   };
- const onKeyDown = (e) => {
+  const handleKeyDown = (e) => {
+    if (action) dispatch(action('', ''));
     if (e.keyCode === 13) {
       setActiveOption(0);
       setShowOptions(false);
       setUserInput(filteredOptions[activeOption]);
       const selectedOption = filteredOptions[activeOption];
       const filePath = filePathMap[selectedOption] || '';
-      dispatch(action(selectedOption, filePath))
+      if (action) dispatch(action(selectedOption, filePath));
+      if (updateTypesFilePath) {
+        dispatch(updateTypesFilePath(selectedOption, filePath, type));
+      }
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {
         return;
       }
-      setActiveOption(activeOption - 1)
-      
+      setActiveOption(activeOption - 1);
     } else if (e.keyCode === 40) {
       if (activeOption === filteredOptions.length - 1) {
         return;
       }
-      setActiveOption(activeOption + 1)
+      setActiveOption(activeOption + 1);
     }
   };
   let optionList;
-  let optionStyles = 'options'
   if (showOptions && userInput) {
-    if (filteredOptions.length) {
-      if(reactTestCase) {
-        optionStyles = 'react-test-options'
-      }
+    if (filteredOptions) {
       optionList = (
-        <ul className={optionStyles}>
+        <ul className={reactTestCase ? 'react-test-options' : 'options'}>
           {filteredOptions.map((optionName, index) => {
-            let className;
-            if (index === activeOption) {
-              className = 'option-active';
-            }
             return (
-              <li className={className} key={optionName} id={optionName} onClick={onClick}>
+              <li
+                className={index === activeOption ? 'option-active' : ''}
+                key={optionName}
+                type={optionName}
+                onClick={handleClick}
+              >
                 {optionName}
               </li>
             );
@@ -78,27 +88,30 @@ export const Autocomplete = ({dispatch, action, filePathMap, options, reactTestC
       );
     } else {
       optionList = (
-        <div className="no-options">
+        <div className='no-options'>
           <em>No Option!</em>
         </div>
       );
     }
   }
   return (
-    <div className='search-container'>
-      <div className="search">
-        <input
-          type="text"
-          className="search-box"
-          onChange={onChange}
-          onKeyDown={onKeyDown}
-          value={userInput}
-          placeholder="File Name"
-        />
+    <div className='flex-item'>
+      <label htmlFor='typesFile'>{label}</label>
+      <div className='search-container'>
+        <div className='search'>
+          <input
+            type='text'
+            className='search-box'
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            value={userInput}
+            placeholder='File Name'
+          />
+        </div>
+        {optionList}
       </div>
-      {optionList}
     </div>
   );
-}
+};
 
-export default Autocomplete;
+export default SearchInput;

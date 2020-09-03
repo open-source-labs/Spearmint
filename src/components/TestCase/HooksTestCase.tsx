@@ -1,14 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
-import { updateHooksTestStatement, updateStatementsOrder } from '../../context/actions/hooksTestCaseActions';
+import {
+  updateHooksTestStatement,
+  updateStatementsOrder,
+} from '../../context/actions/hooksTestCaseActions';
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
 
 const HooksTestCase = () => {
-  const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+  const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+
+  const testDescription = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (testDescription && testDescription.current) {
+      testDescription.current.focus();
+    }
+  }, []);
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
@@ -31,45 +42,39 @@ const HooksTestCase = () => {
     const reorderedStatements: Array<HooksStatements> = reorder(
       hooksStatements,
       result.source.index,
-      result.destination.index,
+      result.destination.index
     );
     dispatchToHooksTestCase(updateStatementsOrder(reorderedStatements));
   };
-
   return (
-    <div>
-      <div id="head">
-        <HooksTestMenu dispatchToHooksTestCase={dispatchToHooksTestCase} />
+    <>
+      <div id='head'>
+        <HooksTestMenu />
       </div>
-
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
-          <label htmlFor="test-statement">
-            Test
-            <input
-              type="text"
-              id={styles.testStatement}
-              value={hooksTestStatement}
-              onChange={handleUpdateHooksTestStatement}
-            />
-          </label>
+          Describe Block
+          <br />
+          <br />
+          <input
+            ref={testDescription}
+            type='text'
+            id={styles.testStatement}
+            onChange={handleUpdateHooksTestStatement}
+          />
         </section>
       </div>
-
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="droppable">
+        <Droppable droppableId='droppable'>
           {(provided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
-              <HooksTestStatements
-                hooksStatements={hooksStatements}
-                dispatchToHooksTestCase={dispatchToHooksTestCase}
-              />
+              <HooksTestStatements />
               {provided.placeholder}
             </div>
           )}
         </Droppable>
       </DragDropContext>
-    </div>
+    </>
   );
 };
 

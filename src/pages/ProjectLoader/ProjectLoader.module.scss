@@ -46,6 +46,7 @@
 #appBox {
   display: flex;
   justify-content: center;
+  height: 25vh;
 }
 
 .contentBox {
@@ -88,4 +89,30 @@
   font-weight: 300;
   font-family: $oxygen;
   letter-spacing: 1px;
+}
+
+#helpBtn {
+  color: white;
+  background-color: $mint;
+  // margin-right: 4px;
+  // margin-bottom: 4px;
+  margin: 15px 4px 4px 4px;
+  height: 40px;
+  width: 110px;
+  opacity: 0.8;
+  font-family: $oxygen;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 0.5px $light-gray solid;
+}
+
+#helpBtn:hover {
+  background-color: white;
+  color: $mint;
+}
+
+#bottomDiv {
+  display: flex;
+  height: 25vh;
+  justify-content: center;
 }

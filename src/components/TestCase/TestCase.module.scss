@@ -1,12 +1,14 @@
 @import '/../../assets/stylesheets/fonts.scss';
 @import '/../../assets/stylesheets/colors.scss';
+@import '../../pages/LeftPanel/LeftPanel.module.scss';
+@import '../EndpointTestComponent/Endpoint.module.scss';
 
 .displays {
   display: block;
 }
 
 div {
-  font-size: 13px;
+  font-size: 12px;
   vertical-align: middle;
 }
 #head {
@@ -16,11 +18,16 @@ div {
 
 #testCaseHeader {
   margin: 15px 25px 15px 15px;
+  // background-color: red;
+}
+
+#testMockSection {
+  margin-bottom: 50px;
 }
 
 #testStatement {
-  margin-left: 15px;
-  width: 92%;
+  margin-top: 3px;
+  width: 93%;
 }
 
 #mockHeader {
@@ -30,10 +37,6 @@ div {
 
 #checkboxLabel {
   margin: 10px;
-}
-
-#testMockSection {
-  margin-bottom: 50px;
 }
 
 #mockDataHeader {
@@ -59,7 +62,7 @@ div {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      
+
       .renderLabel {
         font-family: $oxygen;
         font-size: 0.9rem;
@@ -78,14 +81,14 @@ div {
     .mockBtn {
       height: auto;
       font-size: 0.85rem;
-      background-color: rgba(0,0,0,0);
+      background-color: rgba(0, 0, 0, 0);
       border: none;
       min-width: 150px;
       border-radius: 3px;
       font-family: $oxygen;
       text-align: center;
       transition: 150ms;
-  
+
       &:hover {
         font-size: 0.9rem;
       }
@@ -95,4 +98,55 @@ div {
       margin-right: 0.25rem;
     }
   }
+}
+
+#labelInput {
+  width: 100%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+    max-width: 500px;
+  }
+  position: relative;
+}
+
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+  img {
+    height: 15px;
+    width: 15px;
+    margin-left: 2px;
+    margin-top: -1px;
+  }
+}
+
+#tooltip {
+  min-width: 15em;
+  padding: 0.5em 0.75em;
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
+}
+
+#dropdownWrapper {
+  // margin-right: 9%;
+  width: 43%;
+  max-width: 225px;
+  select {
+    font-family: $raleway;
+    width: 100%;
+    height: 25px;
+    margin: 0 3px 0 0;
+    background-color: white;
+    border: 1px solid $light-gray;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: $dark-gray;
+  }
+}
+
+#dropdownFlex {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
 }

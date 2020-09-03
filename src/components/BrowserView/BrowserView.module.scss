@@ -11,20 +11,10 @@
   justify-content: center;
   flex-wrap: nowrap;
   align-items: center;
-  button {
-    width: 45px;
-    height: 28px;
-    margin-left: 5px;
-    color: $mint;
-    background-color: $light-gray3;
-    outline: none;
-    border-radius: 4px;
-  }
-
-  button:hover {
-    background-color: $mint;
-    color: white;
-  }
+  border-radius: 10px;
+  margin: 5px;
+  width: 97%;
+  text-indent: 10px;
 }
 
 #address {
@@ -32,6 +22,21 @@
   height: 28px;
   border: none;
   border: 1px solid $light-gray;
-  border-radius: 4px;
+  border-radius: 8px;
   padding-left: 10px;
 }
+
+// button {
+//   width: 45px;
+//   height: 28px;
+//   margin-left: 5px;
+//   color: $mint;
+//   background-color: $light-gray3;
+//   outline: none;
+//   border-radius: 4px;
+// }
+
+// button:hover {
+//   background-color: $mint;
+//   color: white;
+// }

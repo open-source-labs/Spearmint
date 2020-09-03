@@ -1,65 +1,165 @@
-import React from 'react';
-import Middleware from '../Middleware/Middleware';
-import ActionCreator from '../ActionCreator/ActionCreator';
-import Async from '../Thunk/Thunk';
-import Reducer from '../Reducer/Reducer';
+import React, { useContext } from 'react';
+import Middleware from '../ReduxTestComponent/Middleware/Middleware';
+import ActionCreator from '../ReduxTestComponent/ActionCreator/ActionCreator';
+import Async from '../ReduxTestComponent/Thunk/Thunk';
+import Reducer from '../ReduxTestComponent/Reducer/Reducer';
+import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { ReduxStatements } from '../../utils/reduxTypes';
+import SearchInput from '../SearchInput/SearchInput';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import {
+  updateReducersFilePath,
+  updateMiddlewaresFilePath,
+  updateTypesFilePath,
+  updateActionsFilePath,
+} from '../../context/actions/reduxTestCaseActions';
+import '../SearchInput/SearchInput.scss';
+import importOptionsSwitch from './importOptions';
 
-interface ReduxTestStatementsProps {
-  reduxStatements: ReduxStatements[];
-  dispatchToReduxTestCase: (action: object) => void;
-}
-
-const ReduxTestStatements = function TestStatements({ reduxStatements, dispatchToReduxTestCase }: ReduxTestStatementsProps) {
+const ReduxTestStatements = () => {
   /* destructing from the reducer */
+  const [{ reduxStatements }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
+  const [{ filePathMap }] = useContext<any>(GlobalContext);
+
+  const { isReducerOn, isMiddleWareOn, isActionCreatorOn, isAsyncOn } = importOptionsSwitch(
+    reduxStatements
+  );
+  let reducerImports = null;
+  let mImports = null;
+  let aCImports = null;
+  let asyncImports = null;
+
+  // different search imports are conditionally generated
+  if (isActionCreatorOn) {
+    aCImports = (
+      <div className='flex-container'>
+        <SearchInput
+          label={'Import Action Types From'}
+          type={'action-creator'}
+          reactTestCase={null}
+          updateTypesFilePath={updateTypesFilePath}
+          updateActionsFilePath={null}
+          options={Object.keys(filePathMap)}
+          dispatch={dispatchToReduxTestCase}
+          action={null}
+          filePathMap={filePathMap}
+        />
+        <SearchInput
+          label={'Import Actions From'}
+          type={'action-creator'}
+          reactTestCase={null}
+          updateTypesFilePath={null}
+          updateActionsFilePath={updateActionsFilePath}
+          options={Object.keys(filePathMap)}
+          dispatch={dispatchToReduxTestCase}
+          action={null}
+          filePathMap={filePathMap}
+        />
+      </div>
+    );
+  }
+  if (isAsyncOn) {
+    if (!isActionCreatorOn) {
+      asyncImports = (
+        <div className='flex-container'>
+          <SearchInput
+            label={'Import Action Types From'}
+            type={'async'}
+            reactTestCase={null}
+            updateTypesFilePath={updateTypesFilePath}
+            updateActionsFilePath={null}
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToReduxTestCase}
+            action={null}
+            filePathMap={filePathMap}
+          />
+          <SearchInput
+            label={'Import Action Types From'}
+            type={'async'}
+            reactTestCase={null}
+            updateTypesFilePath={null}
+            updateActionsFilePath={updateActionsFilePath}
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToReduxTestCase}
+            action={null}
+            filePathMap={filePathMap}
+          />
+        </div>
+      );
+    }
+  }
+  if (isMiddleWareOn) {
+    mImports = (
+      <div className='flex-container'>
+        <SearchInput
+          label={'Import Middleware From'}
+          type={null}
+          reactTestCase={null}
+          updateTypesFilePath={null}
+          updateActionsFilePath={updateMiddlewaresFilePath}
+          options={Object.keys(filePathMap)}
+          dispatch={dispatchToReduxTestCase}
+          action={null}
+          filePathMap={filePathMap}
+        />
+      </div>
+    );
+  }
+  if (isReducerOn) {
+    reducerImports = (
+      <div className='flex-container'>
+        <SearchInput
+          label={'Import Reducer From'}
+          type={null}
+          reactTestCase={null}
+          updateTypesFilePath={null}
+          updateActionsFilePath={null}
+          options={Object.keys(filePathMap)}
+          dispatch={dispatchToReduxTestCase}
+          action={updateReducersFilePath}
+          filePathMap={filePathMap}
+        />
+        {!isActionCreatorOn && !isAsyncOn ? (
+          <SearchInput
+            label={'Import Action Types From'}
+            type={'reducer'}
+            reactTestCase={null}
+            updateTypesFilePath={updateTypesFilePath}
+            updateActionsFilePath={null}
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToReduxTestCase}
+            action={null}
+            filePathMap={filePathMap}
+          />
+        ) : null}
+      </div>
+    );
+  }
+  // the conditionally generated imports are rendered along with
+  // the conditionally rendered test blocks
   return (
     <>
-    {
-      reduxStatements.map((statement, i) => {
+      {asyncImports}
+      {aCImports}
+      {reducerImports}
+      {mImports}
+      {reduxStatements.map((statement: ReduxStatements, i: number) => {
         switch (statement.type) {
           case 'middleware':
-            return (
-              <Middleware
-                key={statement.id}
-                middleware={statement}
-                index={i}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
-            );
+            return <Middleware key={statement.id} middleware={statement} index={i} />;
           case 'action-creator':
-            return (
-              <ActionCreator
-                key={statement.id}
-                actionCreator={statement}
-                index={i}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
-            );
+            return <ActionCreator key={statement.id} actionCreator={statement} index={i} />;
           case 'async':
-            return (
-              <Async
-                key={statement.id}
-                async={statement}
-                index={i}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
-            );
+            return <Async key={statement.id} async={statement} index={i} />;
           case 'reducer':
-            return (
-              <Reducer
-                key={statement.id}
-                reducer={statement}
-                index={i}
-                dispatchToReduxTestCase={dispatchToReduxTestCase}
-              />
-            );
+            return <Reducer key={statement.id} reducer={statement} index={i} />;
+
           default:
             return <></>;
         }
-      })
-    }
+      })}
     </>
-  )
+  );
 };
 
 export default ReduxTestStatements;

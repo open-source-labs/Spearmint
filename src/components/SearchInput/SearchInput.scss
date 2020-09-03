@@ -1,5 +1,4 @@
-
-.search-container{
+.search-container {
   position: relative;
 }
 
@@ -20,7 +19,7 @@ ul.options li.option-active {
   overflow: auto;
   position: absolute;
   z-index: 1;
-  width: -webkit-fill-available ;
+  width: -webkit-fill-available;
 }
 
 .react-test-options {
@@ -40,4 +39,20 @@ ul.react-test-options li:hover {
 ul.react-test-options li.option-active {
   background: whitesmoke;
   color: #00b4cc;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.flex-item {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+  position: relative;
 }

@@ -5,17 +5,24 @@ export const GlobalContext = createContext(null);
 
 export const globalState = {
   url: null,
+  projectUrl: null,
   isProjectLoaded: false,
   fileTree: null,
-  componentName: '',
   isFileDirectoryOpen: true,
   isRightPanelOpen: true,
   rightPanelDisplay: 'browserView',
-  displayedFileCode: '',
   isFolderOpen: {},
   isFileHighlighted: '',
   projectFilePath: '',
   filePathMap: {},
+  file: '',
+  testCase: '',
+  docsOpen: false,
+  isTestModalOpen: true,
+  exportBool: false,
+  fileName: '',
+  filePath: '',
+  validCode: true,
 };
 
 export const globalReducer = (state, action) => {
@@ -27,6 +34,7 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         url,
+        projectUrl: url,
       };
     case actionTypes.LOAD_PROJECT:
       return {
@@ -39,12 +47,7 @@ export const globalReducer = (state, action) => {
         ...state,
         fileTree,
       };
-    case actionTypes.SET_COMPONENT_NAME:
-      const componentName = action.componentName;
-      return {
-        ...state,
-        componentName,
-      };
+
     case actionTypes.TOGGLE_FILE_DIRECTORY:
       const isFileDirectoryOpen = !state.isFileDirectoryOpen;
       return {
@@ -52,9 +55,11 @@ export const globalReducer = (state, action) => {
         isFileDirectoryOpen,
       };
     case actionTypes.CLOSE_RIGHT_PANEL:
+      const projUrl = state.projectUrl;
       return {
         ...state,
         isRightPanelOpen: false,
+        url: projUrl,
       };
     case actionTypes.TOGGLE_RIGHT_PANEL:
       const rightPanelDisplay = action.display;
@@ -63,12 +68,7 @@ export const globalReducer = (state, action) => {
         rightPanelDisplay,
         isRightPanelOpen: true,
       };
-    case actionTypes.DISPLAY_FILE_CODE:
-      const displayedFileCode = action.displayedFileCode;
-      return {
-        ...state,
-        displayedFileCode,
-      };
+
     case actionTypes.TOGGLE_FOLDER_VIEW:
       const isFolderOpen = { ...state.isFolderOpen };
       isFolderOpen[action.filePath] = !isFolderOpen[action.filePath];
@@ -78,9 +78,11 @@ export const globalReducer = (state, action) => {
       };
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
+      const fileName = action.fileName;
       return {
         ...state,
         isFileHighlighted,
+        fileName,
       };
     case actionTypes.SET_PROJECT_FILE_PATH:
       const projectFilePath = action.projectFilePath;
@@ -95,6 +97,58 @@ export const globalReducer = (state, action) => {
         filePathMap,
       };
 
+    //added
+    case actionTypes.SET_TEST_CASE:
+      const testCase = action.testCase;
+      return {
+        ...state,
+        testCase,
+      };
+
+    case actionTypes.TOGGLE_MODAL:
+      return {
+        ...state,
+        isTestModalOpen: !state.isTestModalOpen,
+      };
+    //
+    case actionTypes.UPDATE_FILE_SHOW:
+      const updatedFile = action.testString;
+      return {
+        ...state,
+        file: updatedFile,
+      };
+    case actionTypes.OPEN_BROWSER_DOCS:
+      const docsUrl = action.docsUrl;
+      return {
+        ...state,
+        url: docsUrl,
+        isRightPanelOpen: true,
+        rightPanelDisplay: 'browserView',
+      };
+    case actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS:
+      const urlReset = state.projectUrl;
+      return {
+        ...state,
+        url: urlReset,
+        projectUrl: urlReset,
+      };
+    case actionTypes.EXPORT:
+      let exportBool = !state.exportBool;
+      return {
+        ...state,
+        exportBool,
+      };
+    case actionTypes.SET_FILE_PATH:
+      const filePath = action.filePath;
+      return {
+        ...state,
+        filePath,
+      };
+    case actionTypes.SET_VALID_CODE:
+      return {
+        ...state,
+        validCode: action.validCode,
+      };
     default:
       return state;
   }

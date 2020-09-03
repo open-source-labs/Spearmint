@@ -9,6 +9,9 @@ import {
   createFileTree,
   setFilePathMap,
   setProjectFilePath,
+  toggleFileDirectory,
+  setTestCase,
+  toggleModal,
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
@@ -19,17 +22,20 @@ const electronFs = remote.require('fs');
 const { dialog } = remote;
 
 const OpenFolder = () => {
-  const [{ isProjectLoaded }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
+    GlobalContext
+  );
   const filePathMap = {};
 
   const handleOpenFolder = () => {
     const directory = dialog.showOpenDialog({
-      properties: ['openDirectory'],
+      properties: ['openDirectory', 'createDirectory'],
       filters: [
         { name: 'Javascript Files', extensions: ['js', 'jsx'] },
         { name: 'Style', extensions: ['css'] },
         { name: 'Html', extensions: ['html'] },
       ],
+      message: 'Please select your project folder',
     });
 
     if (directory && directory[0]) {
@@ -37,14 +43,17 @@ const OpenFolder = () => {
       //replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       dispatchToGlobal(setProjectFilePath(directoryPath));
-      dispatchToGlobal(loadProject('load'));
       dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
+      dispatchToGlobal(loadProject('load'));
+      dispatchToGlobal(setTestCase(''));
+      if (!isTestModalOpen) dispatchToGlobal(toggleModal());
+      if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
     }
   };
 
   //reads contents within the selected directory and checks if it is a file/folder
-  const generateFileTreeObject = directoryPath => {
-    const fileArray = electronFs.readdirSync(directoryPath).map(fileName => {
+  const generateFileTreeObject = (directoryPath) => {
+    const fileArray = electronFs.readdirSync(directoryPath).map((fileName) => {
       //replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       let filePath = `${directoryPath}/${fileName}`;
@@ -58,7 +67,7 @@ const OpenFolder = () => {
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (fileData.isDirectory()) {
           file.files = generateFileTreeObject(file.filePath);
-          file.files.forEach(file => {
+          file.files.forEach((file) => {
             let javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
             let fileType = file.fileName.split('.')[1];
             if (javaScriptFileTypes.includes(fileType)) {

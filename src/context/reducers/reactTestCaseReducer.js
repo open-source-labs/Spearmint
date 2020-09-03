@@ -4,7 +4,8 @@ import { actionTypes } from '../actions/reactTestCaseActions';
 export const ReactTestCaseContext = createContext([]);
 
 export const reactTestCaseState = {
-  hasReact: 0,
+  modalOpen: false,
+
   describeId: 1,
   itId: 1,
   statementId: 1,
@@ -129,12 +130,6 @@ export const reactTestCaseReducer = (state, action) => {
   }
 
   switch (action.type) {
-    case actionTypes.TOGGLE_REACT: {
-      return {
-        ...state,
-        hasReact: state.hasReact + 1,
-      };
-    }
     case actionTypes.ADD_DESCRIBE_BLOCK: {
       let updatedDescribeId = state.describeId;
       const describeId = `describe${state.describeId}`;
@@ -148,7 +143,7 @@ export const reactTestCaseReducer = (state, action) => {
             ...describeBlocks.byId,
             [describeId]: createDescribeBlock(describeId),
           },
-          allIds: [...describeBlocks.allIds || [], describeId],
+          allIds: [...(describeBlocks.allIds || []), describeId],
         },
       };
     }
@@ -219,7 +214,7 @@ export const reactTestCaseReducer = (state, action) => {
             ...itStatements.byId,
             [itId]: createItStatement(describeId, itId),
           },
-          allIds: [...itStatements.allIds || [], itId],
+          allIds: [...(itStatements.allIds || []), itId],
         },
       };
     }
@@ -263,7 +258,6 @@ export const reactTestCaseReducer = (state, action) => {
             ...statements.byId,
           },
           allIds: [...statementAllIds],
-
         },
       };
     }
@@ -476,9 +470,7 @@ export const reactTestCaseReducer = (state, action) => {
       };
     }
     case actionTypes.UPDATE_PROP: {
-      const {
-        id, statementId, propKey, propValue,
-      } = action;
+      const { id, statementId, propKey, propValue } = action;
       const updatedProps = [...statements.byId[statementId].props];
 
       updatedProps.forEach((prop) => {
@@ -534,9 +526,18 @@ export const reactTestCaseReducer = (state, action) => {
           byId: {},
           allIds: [],
         },
-        hasReact: 0,
       };
     }
+    case actionTypes.OPEN_INFO_MODAL:
+      return {
+        ...state,
+        modalOpen: true,
+      };
+    case actionTypes.CLOSE_INFO_MODAL:
+      return {
+        ...state,
+        modalOpen: false,
+      };
     default:
       return state;
   }

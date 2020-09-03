@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { ReactTestCaseContext } from '../context/reducers/reactTestCaseReducer';
 import { MockDataContext } from '../context/reducers/mockDataReducer';
-import Action from '../components/Action/Action';
+import Action from '../components/ReactTestComponent/Action/Action';
 
 const dispatchToReactTextCase = jest.fn();
 const dispatchToMockData = jest.fn();
@@ -35,12 +34,12 @@ const mockDataState = {
 describe('Assertion ', () => {
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(
+    render(
       <ReactTestCaseContext.Provider value={[reactTestCaseState, dispatchToReactTextCase]}>
         <MockDataContext.Provider value={[mockDataState, dispatchToMockData]}>
           <Action {...reactTestCaseState} />
         </MockDataContext.Provider>
-      </ReactTestCaseContext.Provider>, div,
+      </ReactTestCaseContext.Provider>
     );
   });
 });

@@ -1,11 +1,10 @@
-import { reactTestCaseReducer } from '../context/reducers/reactTestCaseReducer';
+import { reactTestCaseReducer, reactTestCaseState } from '../context/reducers/reactTestCaseReducer';
 
 describe('React Reducer', () => {
   let initialState = {};
 
   beforeEach(() => {
     initialState = {
-      hasReact: 0,
       describeId: 1,
       itId: 1,
       statementId: 3,
@@ -85,7 +84,6 @@ describe('React Reducer', () => {
   it('should handle TOGGLE_REACT', () => {
     expect(reactTestCaseReducer(initialState, { type: 'TOGGLE_REACT' })).toEqual({
       ...initialState,
-      hasReact: 1,
     });
   });
 
@@ -627,7 +625,6 @@ describe('React Reducer', () => {
         byId: {},
         allIds: [],
       },
-      hasReact: 0,
     });
   });
 });

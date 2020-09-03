@@ -1,7 +1,7 @@
 import React from 'react';
-import Action from '../Action/Action';
-import Assertion from '../Assertion/Assertion';
-import Render from '../Render/Render';
+import Action from '../ReactTestComponent/Action/Action';
+import Assertion from '../ReactTestComponent/Assertion/Assertion';
+import Render from '../ReactTestComponent/Render/Render';
 
 const ReactTestStatements = ({ statements, itId, describeId }) => {
   // filter out ids not belonging to the correct describe block and itStatement

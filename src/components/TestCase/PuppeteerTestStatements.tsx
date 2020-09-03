@@ -1,29 +1,23 @@
-import React from 'react';
-import PaintTiming from '../PaintTiming/PaintTiming'
-import { PuppeteerTestStatementsProps } from '../../utils/puppeteerTypes'
+import React, { useContext } from 'react';
+import PaintTiming from '../PuppeteerTestComponent/PaintTiming/PaintTiming';
+import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
+import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 
-const PuppeteerTestStatements = ({ puppeteerStatements, dispatchToPuppeteerTestCase }: PuppeteerTestStatementsProps) => { 
-    return (
-      <>
-        {
-          puppeteerStatements.map((statement, i) => {
-            switch (statement.type) {
-              case 'paintTiming':
-                return (
-                  <PaintTiming
-                    key={statement.id}
-                    paintTiming={statement}
-                    index={i}
-                    dispatchToPuppeteerTestCase={dispatchToPuppeteerTestCase}
-                  />
-                );
-            default:
-                return <></>;
-            }
-          })
+const PuppeteerTestStatements = () => {
+  const [{ puppeteerStatements }] = useContext(PuppeteerTestCaseContext);
+
+  return (
+    <>
+      {puppeteerStatements.map((statement: PuppeteerStatements, i: number) => {
+        switch (statement.type) {
+          case 'paintTiming':
+            return <PaintTiming key={statement.id} paintTiming={statement} index={i} />;
+          default:
+            return <></>;
         }
-      </>
-    )
+      })}
+    </>
+  );
 };
 
 export default PuppeteerTestStatements;

@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import styles from './FileDirectory.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
-  displayFileCode,
   toggleFolderView,
   highlightFile,
   toggleRightPanel,
+  updateFile,
+  setFilePath,
 } from '../../context/actions/globalActions';
 
 const { remote } = window.require('electron');
@@ -29,7 +30,7 @@ const FileDirectory = ({ fileTree }) => {
     folder: 'https://img.icons8.com/small/16/000000/folder-invoices.png',
   };
 
-  const differImg = file => {
+  const differImg = (file) => {
     const imageTypes = ['.psd', '.ai', '.png', '.gif', '.svg', '.jpg', '.ps', '.eps', '.tif'];
     let idx = file.lastIndexOf('.');
     let fileType = file.substring(idx);
@@ -42,25 +43,26 @@ const FileDirectory = ({ fileTree }) => {
     }
   };
 
-  const handleDisplayFileCode = filePath => {
+  const handleDisplayFileCode = (filePath) => {
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    dispatchToGlobal(displayFileCode(fileContent));
+    dispatchToGlobal(updateFile(fileContent));
+    dispatchToGlobal(setFilePath(filePath));
   };
 
-  const handleClickToggleFolderView = filePath => {
+  const handleClickToggleFolderView = (filePath) => {
     dispatchToGlobal(toggleFolderView(filePath));
   };
 
-  const handleClickHighlightFile = fileName => {
+  const handleClickHighlightFile = (fileName) => {
     dispatchToGlobal(highlightFile(fileName));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
-  const convertToHTML = filetree => {
-    return filetree.map(file => {
+  const convertToHTML = (filetree) => {
+    return filetree.map((file) => {
       if (
         file.fileName !== 'node_modules' &&
-        file.fileName !== '.git' &&
+        // file.fileName !== '.git' &&
         file.fileName[0] !== '.'
       ) {
         if (file.files.length) {
@@ -75,9 +77,8 @@ const FileDirectory = ({ fileTree }) => {
                   {file.fileName}
                 </button>
               </li>
-              {file.files.length &&
-                isFolderOpen[file.filePath] &&
-                convertToHTML(file.files, fileImg)}
+              {/* {file.files.length && */}
+              {isFolderOpen[file.filePath] && convertToHTML(file.files, fileImg)}
             </ul>
           );
         } else {

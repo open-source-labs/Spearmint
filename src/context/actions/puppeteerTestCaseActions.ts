@@ -11,6 +11,8 @@ export const actionTypes = {
   DELETE_BROWSER_OPTION: 'DELETE_BROWSER_OPTION',
   UPDATE_BROWSER_OPTION: 'UPDATE_BROWSER_OPTION',
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
+  OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
+  CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
 };
 
 export const togglePuppeteer = () => ({
@@ -48,7 +50,12 @@ export const updatePaintTiming = (id: number, field: string, value: string) => (
   value,
 });
 
-export const updateBrowserOption = (id: number, field: string, value: string, optionId: number) => ({
+export const updateBrowserOption = (
+  id: number,
+  field: string,
+  value: string,
+  optionId: number
+) => ({
   type: actionTypes.UPDATE_BROWSER_OPTION,
   id,
   field,
@@ -60,3 +67,11 @@ export const updateStatementsOrder = (draggableStatements: Array<PuppeteerStatem
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
   draggableStatements,
 });
+
+export const openInfoModal = () => {
+  return { type: actionTypes.OPEN_INFO_MODAL };
+};
+
+export const closeInfoModal = () => {
+  return { type: actionTypes.CLOSE_INFO_MODAL };
+};

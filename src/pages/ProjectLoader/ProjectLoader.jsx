@@ -2,13 +2,15 @@ import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { setProjectUrl } from '../../context/actions/globalActions';
+import { setProjectUrl, closeRightPanel } from '../../context/actions/globalActions';
+import { loadProject, toggleFileDirectory } from '../../context/actions/globalActions';
+require('dotenv').config();
 
 const ProjectLoader = () => {
-  const [, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
-  const addHttps = url => {
-    if (url.indexOf('http://') == 0 || url.indexOf('https://') == 0) {
+  const addHttps = (url) => {
+    if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
     } else if (url.startsWith('localhost')) {
       url = 'http://' + url;
@@ -19,10 +21,19 @@ const ProjectLoader = () => {
     }
   };
 
-  const handleChangeUrl = e => {
+  const handleChangeUrl = (e) => {
     const testSiteURL = addHttps(e.target.value);
     dispatchToGlobal(setProjectUrl(testSiteURL));
   };
+
+  const handleChangeAbout = () => {
+    dispatchToGlobal(loadProject('about'));
+    dispatchToGlobal(closeRightPanel());
+    if (isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
+  };
+
+  const placehold =
+    process.env.NODE_ENV === 'development' ? 'Dev mode do not fill out' : 'ex: localhost:3000';
 
   return (
     <div id={styles.projectLoader}>
@@ -45,18 +56,18 @@ const ProjectLoader = () => {
           <div className={styles.contentBox}>
             <span className={styles.number}>01</span>
             <span className={styles.text}> Enter test site's URL</span> <br />
-            <input
-              type='text'
-              id={styles.url}
-              placeholder='ex: localhost:3000'
-              onChange={handleChangeUrl}
-            />
+            <input type='text' id={styles.url} placeholder={placehold} onChange={handleChangeUrl} />
           </div>
           <div className={styles.contentBox}>
             <span className={styles.number}>02</span>
             <span className={styles.text}>Select your application</span> <br />
             <OpenFolder />
           </div>
+        </div>
+        <div id={styles.bottomDiv}>
+          <button id={styles.helpBtn} onClick={handleChangeAbout}>
+            <span className={styles.text}>Get Started</span>
+          </button>
         </div>
       </section>
     </div>
