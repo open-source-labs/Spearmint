@@ -49,7 +49,6 @@ const deepCopy = (endpointStatements: EndpointObj[]) => {
   });
 
   function copyAssertions(array: Assertion[]) {
-    console.log('array', array);
     const copy: Assertion[] = array.map((el) => {
       return { ...el };
     });

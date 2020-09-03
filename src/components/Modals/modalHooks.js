@@ -41,19 +41,19 @@ export function useGenerateScript(test) {
     case 'react':
       return (
         `cd ${projectFilePath}\n` +
-        'npm i -D jest @testing-library/jest-dom @testing-library/react test-data-bot\n' +
+        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest\n' +
         'npm run test'
       );
     case 'redux':
       return (
         `cd ${projectFilePath}\n` +
-        'npm i -D jest @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch\n' +
+        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch jest\n' +
         'npm run test'
       );
     case 'hooks':
       return (
         `cd ${projectFilePath}\n` +
-        'npm i -D jest @testing-library/jest-dom @testing-library/react test-data-bot @testing-library/react-hooks\n' +
+        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot @testing-library/react-hooks jest\n' +
         'npm run test'
       );
     case 'endpoint':

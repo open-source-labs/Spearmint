@@ -69,7 +69,6 @@ export const updateStatementsOrder = (draggableStatements: Array<PuppeteerStatem
 });
 
 export const openInfoModal = () => {
-  console.log('testCaseAction');
   return { type: actionTypes.OPEN_INFO_MODAL };
 };
 

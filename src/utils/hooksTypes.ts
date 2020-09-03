@@ -69,13 +69,11 @@ export interface Hooks {
 //       type:
 //         | 'TOGGLE_HOOKS'
 //         | 'ADD_CONTEXT'
-//         | 'ADD_HOOKRENDER'
 //         | 'ADD_HOOK_UPDATES'
-//         | 'ADD_HOOKRENDER'
 //         | 'CREATE_NEW_HOOKS_TEST';
 //     }
 //   | { type: 'UPDATE_HOOKS_TEST_STATEMENT'; hooksTestStatement: string }
-//   | { type: 'DELETE_CONTEXT' | 'DELETE_HOOKRENDER' | 'DELETE_HOOK_UPDATES'; id: number }
+//   | { type: 'DELETE_CONTEXT' | 'DELETE_HOOK_UPDATES'; id: number }
 //   | {
 //       type: 'UPDATE_CONTEXT';
 //       id: number;
@@ -87,14 +85,6 @@ export interface Hooks {
 //       providerComponent: string;
 //       consumerComponent: string;
 //       context: string;
-//     }
-//   | {
-//       type: 'UPDATE_HOOKRENDER';
-//       id: number;
-//       hook: string;
-//       parameterOne: string;
-//       expectedReturnValue: string;
-//       returnValue: string;
 //     }
 //   | {
 //       type: 'UPDATE_HOOK_UPDATES';

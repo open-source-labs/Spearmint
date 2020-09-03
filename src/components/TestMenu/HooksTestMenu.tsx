@@ -9,11 +9,7 @@ import {
   toggleExportBool,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
-import {
-  addContexts,
-  addHookUpdates,
-  createNewHooksTest,
-} from '../../context/actions/hooksTestCaseActions';
+import { addHookUpdates, createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
@@ -33,10 +29,6 @@ const HooksTestMenu = () => {
   useEffect(() => {
     dispatchToGlobal(setValidCode(false));
   }, []);
-
-  const handleAddContexts = () => {
-    dispatchToHooksTestCase(addContexts());
-  };
 
   const handleAddHookUpdates = () => {
     dispatchToHooksTestCase(addHookUpdates());
@@ -97,9 +89,6 @@ const HooksTestMenu = () => {
         >
           <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
             Hooks
-          </button>
-          <button className='contextButton' type='button' onClick={handleAddContexts}>
-            Context
           </button>
         </div>
       </div>

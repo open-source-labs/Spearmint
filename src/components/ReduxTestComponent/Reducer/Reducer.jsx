@@ -3,7 +3,6 @@ import { Draggable } from 'react-beautiful-dnd';
 import styles from './Reducer.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteReducer, updateReducer } from '../../../context/actions/reduxTestCaseActions';
-import { updateHooksTestStatement } from '../../../context/actions/hooksTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -118,33 +117,3 @@ const Reducer = ({ reducer, index }) => {
 };
 
 export default Reducer;
-
-{
-  /* <div id={styles.reducerNameFlexBox}> */
-}
-{
-  /* <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Import Reducer From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                action={updateReducersFilePath}
-                filePathMap={filePathMap}
-              />
-            </div> */
-}
-{
-  /* <div id={styles.reducerName}>
-              <label htmlFor='typesFile'>Import Action Types From</label>
-              <SearchInput
-                options={Object.keys(filePathMap)}
-                dispatch={dispatchToReduxTestCase}
-                filePathMap={filePathMap}
-                updateTypesFilePath={updateTypesFilePath}
-                id={reducer.id}
-              />
-            </div> */
-}
-{
-  /* </div> */
-}

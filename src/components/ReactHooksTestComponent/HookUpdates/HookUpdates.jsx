@@ -75,7 +75,6 @@ const HookUpdates = ({ hookUpdates, index }) => {
                     ref={testDescription}
                     type='text'
                     id={styles.testStatement}
-                    // value={hookUpdates.testName}
                     onChange={(e) => handleChangeHookUpdatesFields(e, 'testName')}
                   />
                 </div>
@@ -105,14 +104,14 @@ const HookUpdates = ({ hookUpdates, index }) => {
           {hookUpdates.callbackFunc.map((callbackFunc, i) => {
             return (
               <div id={styles.cbFlexBox}>
-                <HooksCallback callbackFunc={callbackFunc} index={index} id={i} />{' '}
+                <HooksCallback callbackFunc={callbackFunc} index={index} id={i} />
               </div>
             );
           })}{' '}
           <div className={styles.buttonsContainer}></div>
           {hookUpdates.assertions.map((assertion, i) => {
             return <HooksAssertion assertion={assertion} index={index} id={i} />;
-          })}{' '}
+          })}
           <div className={styles.buttonsContainer} id={styles.stateFlexBox}>
             <button onClick={addAssertionHandleClick} className={styles.assertionButton}>
               <i className='fas fa-plus'></i>

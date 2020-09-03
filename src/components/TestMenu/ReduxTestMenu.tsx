@@ -17,7 +17,11 @@ import {
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { openBrowserDocs } from '../../context/actions/globalActions';
+import {
+  openBrowserDocs,
+  setValidCode,
+  toggleExportBool,
+} from '../../context/actions/globalActions';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 
