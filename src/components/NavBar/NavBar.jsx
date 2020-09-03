@@ -68,12 +68,7 @@ const NavBar = ({ inAboutPage }) => {
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
   return (
-    <div
-      id={
-        // styles.navBar
-        styles.inAboutPage
-      }
-    >
+    <div id={inAboutPage ? styles.inAboutPage : styles.navBar}>
       <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
         <img src={menuIcon} className={styles.icons} alt='fileExplorer' />
         <span className={styles.tooltip}>Expand File Explorer</span>
