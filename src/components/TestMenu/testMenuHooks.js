@@ -35,6 +35,29 @@ export const validateInputs = (testSuite, testCaseState) => {
         }
       }
       return true;
+    case 'redux':
+      const { reduxStatements } = testCaseState;
+      for (let i = 0; i < reduxStatements; i++) {
+        let statement = reduxStatements[i];
+        if (statement.type === 'reducer') {
+          console.log(statement);
+          if (!statement.typesFilePath || !statement.reducersFilePath) return false;
+          return true;
+        }
+        if (statement.type === 'async') {
+          if (!statement.typesFilePath || !statement.filePath) return false;
+          return true;
+        }
+        if (statement.type === 'action-creator') {
+          if (!statement.typesFilePath || !statement.filePath) return false;
+          return true;
+        }
+        if (statement.type === 'middleware') {
+          if (!statement.middlewaresFilePath) return false;
+          return true;
+        }
+      }
+      return true;
     default:
   }
 };

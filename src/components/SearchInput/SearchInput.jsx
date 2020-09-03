@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './SearchInput.scss';
+import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
 export const SearchInput = ({
   dispatch,
@@ -15,6 +16,7 @@ export const SearchInput = ({
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [userInput, setUserInput] = useState('');
+  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChange = (e) => {
     const input = e.currentTarget.value;
@@ -37,7 +39,14 @@ export const SearchInput = ({
 
     const selectedOption = e.target.type;
     const filePath = filePathMap[selectedOption] || '';
-    if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
+    if (updateTypesFilePath) {
+      if (dispatchToReduxTestCase === dispatch) {
+        dispatch(updateTypesFilePath(selectedOption, filePath, 'reducer'));
+        dispatch(updateTypesFilePath(selectedOption, filePath, 'async'));
+        dispatch(updateTypesFilePath(selectedOption, filePath, 'action-creator'));
+      }
+      dispatch(updateTypesFilePath(selectedOption, filePath, type));
+    } //type));
     if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
     if (action) dispatch(action(selectedOption, filePath));
   };
