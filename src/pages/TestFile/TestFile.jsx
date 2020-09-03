@@ -106,7 +106,7 @@ const TestFile = () => {
               Redux
             </button>
             <button id={styles.save} onClick={() => handleToggle('hooks')}>
-              Hooks/Context
+              Hooks
             </button>
             <button id={styles.save} onClick={() => handleToggle('endpoint')}>
               Endpoint

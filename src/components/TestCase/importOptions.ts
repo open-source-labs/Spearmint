@@ -22,7 +22,7 @@ export default function importOptionsSwitch(statements: statements[]) {
       case 'async':
         isAsyncOn = true;
         break;
-      case 'hook-updates':
+      case 'hooks':
         isHooksOn = true;
         break;
       default:

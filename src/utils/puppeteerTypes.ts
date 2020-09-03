@@ -40,9 +40,6 @@ export type PuppeteerAction =
         | 'TOGGLE_PUPPETEER'
         | 'CREATE_NEW_PUPPETEER_TEST'
         | 'ADD_PUPPETEER_PAINT_TIMING'
-        | 'ADD_HOOK_UPDATES'
-        | 'ADD_HOOKRENDER'
-        | 'CREATE_NEW_HOOKS_TEST'
         | 'OPEN_INFO_MODAL'
         | 'CLOSE_INFO_MODAL';
     }
