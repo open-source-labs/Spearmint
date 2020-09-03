@@ -262,7 +262,7 @@ function useGenerateTest(test, projectFilePath) {
       }
       if (
         !testFileCode.includes(
-          `import { renderHook, act, cleanup, from '@testing-library/react-hooks';`
+          `import { renderHook, act, cleanup, } from '@testing-library/react-hooks';`
         )
       ) {
         testFileCode += `import { renderHook, act, cleanup, } from '@testing-library/react-hooks';`;
