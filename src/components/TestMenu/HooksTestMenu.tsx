@@ -7,11 +7,7 @@ import {
   toggleRightPanel,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
-import {
-  addContexts,
-  addHookUpdates,
-  createNewHooksTest,
-} from '../../context/actions/hooksTestCaseActions';
+import { addHookUpdates, createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
@@ -27,10 +23,6 @@ const HooksTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('hooks');
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('hooks', projectFilePath);
-
-  const handleAddContexts = () => {
-    dispatchToHooksTestCase(addContexts());
-  };
 
   const handleAddHookUpdates = () => {
     dispatchToHooksTestCase(addHookUpdates());
@@ -81,9 +73,6 @@ const HooksTestMenu = () => {
         >
           <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
             Hooks
-          </button>
-          <button className='contextButton' type='button' onClick={handleAddContexts}>
-            Context
           </button>
         </div>
       </div>
