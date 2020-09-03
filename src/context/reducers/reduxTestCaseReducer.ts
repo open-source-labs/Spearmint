@@ -55,9 +55,15 @@ const createAsync = () => {
     asyncFunction: '',
     method: '',
     route: '',
+    // requestBody: '',
+    store: '',
+    matcher: '',
+    status: '',
     actionType: '',
     payloadKey: '',
     payloadType: '',
+    responseKey: '',
+    responseValue: '',
     it: '',
   };
 };

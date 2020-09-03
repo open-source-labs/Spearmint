@@ -18,6 +18,13 @@ export const actionTypes = {
   CREATE_NEW_HOOKS_TEST: 'CREATE_NEW_HOOKS_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
+  ADD_ASSERTION: 'ADD_ASSERTION',
+  UPDATE_ASSERTION: 'UPDATE_ASSERTION',
+  DELETE_ASSERTION: 'DELETE_ASSERTION',
+  TOGGLE_TYPEOF: 'TOGGLE_TYPEOF',
+  ADD_CALLBACKFUNC: 'ADD_CALLBACKFUNC',
+  DELETE_CALLBACKFUNC: 'DELETE_CALLBACKFUNC',
+  UPDATE_CALLBACKFUNC: 'UPDATE_CALLBACKFUNC',
 };
 
 export const toggleHooks = () => ({
@@ -57,20 +64,6 @@ export const updateHookUpdates = (hooksUpdates: object) => ({
   type: actionTypes.UPDATE_HOOK_UPDATES,
 });
 
-export const addHookRender = () => ({
-  type: actionTypes.ADD_HOOKRENDER,
-});
-
-export const deleteHookRender = (id: number) => ({
-  type: actionTypes.DELETE_HOOKRENDER,
-  id,
-});
-
-export const updateHookRender = (hookRenders: object) => ({
-  ...hookRenders,
-  type: actionTypes.UPDATE_HOOKRENDER,
-});
-
 export const updateHooksFilePath = (hookFileName: string, hookFilePath: string) => ({
   type: actionTypes.UPDATE_HOOKS_FILEPATH,
   hookFileName,
@@ -99,3 +92,58 @@ export const openInfoModal = () => ({
 export const closeInfoModal = () => ({
   type: actionTypes.CLOSE_INFO_MODAL,
 });
+
+export const addAssertion = (index: number) => {
+  return {
+    type: actionTypes.ADD_ASSERTION,
+    index,
+  };
+};
+
+export const addCallbackFunc = (index: number) => {
+  return {
+    type: actionTypes.ADD_CALLBACKFUNC,
+    index,
+  };
+};
+
+export const deleteAssertion = (index: number, id: number) => {
+  return {
+    type: actionTypes.DELETE_ASSERTION,
+    index,
+    id,
+  };
+};
+
+export const deleteCallbackFunc = (index: number, id: number) => {
+  return {
+    type: actionTypes.DELETE_CALLBACKFUNC,
+    index,
+    id,
+  };
+};
+
+export const updateAssertion = (index: number, id: number, newAssertion: Assertion) => {
+  return {
+    type: actionTypes.UPDATE_ASSERTION,
+    index,
+    id,
+    assertion: newAssertion,
+  };
+};
+
+export const updateCallbackFunc = (index: number, id: number, newCallback: Callback) => {
+  return {
+    type: actionTypes.UPDATE_CALLBACKFUNC,
+    index,
+    id,
+    callbackFunc: newCallback,
+  };
+};
+
+export const toggleTypeof = (index: number) => {
+  return {
+    type: actionTypes.TOGGLE_TYPEOF,
+    index,
+  };
+};
