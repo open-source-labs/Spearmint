@@ -18,7 +18,7 @@ const newCallback: Callback = {
 
 const newHooks: Hooks = {
   id: 0,
-  type: 'hook-updates',
+  type: 'hooks',
   testName: '',
   hook: '',
   hookParams: '',
@@ -81,7 +81,7 @@ const createContexts = (statementId: number) => ({
 
 const createHookUpdates = (statementId: number) => ({
   ...newHooks,
-  type: 'hook-updates',
+  type: 'hooks',
   hookFileName: '',
   hookFilePath: '',
   id: statementId,
@@ -207,7 +207,7 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
         return statement.id === action.id;
       });
       Object.assign(newStatement, action, {
-        type: 'hook-updates',
+        type: 'hooks',
       });
       return {
         ...state,

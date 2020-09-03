@@ -11,9 +11,7 @@ import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
 
 const HooksTestCase = () => {
-  const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
-    HooksTestCaseContext
-  );
+  const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
 
   const testDescription = useRef<HTMLInputElement>(null);
 
