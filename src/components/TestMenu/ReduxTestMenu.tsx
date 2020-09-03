@@ -11,9 +11,13 @@ import {
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { openBrowserDocs } from '../../context/actions/globalActions';
+import {
+  openBrowserDocs,
+  setValidCode,
+  toggleExportBool,
+} from '../../context/actions/globalActions';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import { useToggleModal } from './testMenuHooks';
+import { useToggleModal, validateInputs } from './testMenuHooks';
 
 const ReduxTestMenu = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
@@ -51,8 +55,13 @@ const ReduxTestMenu = () => {
     dispatchToGlobal(setFilePath(''));
   };
 
-  if (!file && exportBool)
-    dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
+  if (exportBool) {
+    let valid = validateInputs('redux', { reduxStatements, reduxTestStatement });
+    valid ? dispatchToGlobal(setValidCode(true)) : dispatchToGlobal(setValidCode(false));
+    dispatchToGlobal(toggleExportBool());
+    if (valid && !file)
+      dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
+  }
 
   return (
     <div id='test'>

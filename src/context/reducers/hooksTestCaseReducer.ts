@@ -64,28 +64,20 @@ export const hooksTestCaseState: HooksTestCaseState = {
   statementId: 0,
 };
 
-const createContexts = (statementId: number) => ({
-  id: statementId,
-  type: 'context',
-  queryVariant: '',
-  querySelector: '',
-  queryValue: '',
-  values: '',
-  textNode: '',
-  providerComponent: '',
-  consumerComponent: '',
-  context: '',
-  contextFileName: '',
-  contextFilePath: '',
-});
-
-const createHookUpdates = (statementId: number) => ({
-  ...newHooks,
-  type: 'hooks',
-  hookFileName: '',
-  hookFilePath: '',
-  id: statementId,
-});
+// const createContexts = (statementId: number) => ({
+//   id: statementId,
+//   type: 'context',
+//   queryVariant: '',
+//   querySelector: '',
+//   queryValue: '',
+//   values: '',
+//   textNode: '',
+//   providerComponent: '',
+//   consumerComponent: '',
+//   context: '',
+//   contextFileName: '',
+//   contextFilePath: '',
+// });
 
 const deepCopy = (hooksStatements: Hooks[]) => {
   function copyAssertions(array: Assertion[]) {
@@ -213,11 +205,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
         ...state,
         hooksStatements,
       };
-      return {
-        ...state,
-        hooksStatements,
-      };
-
     case 'UPDATE_HOOKS_FILEPATH':
       hooksStatements = hooksStatements.map((statement) => {
         // if (statement.type === 'hook-updates' || statement.type === 'hookRender') {

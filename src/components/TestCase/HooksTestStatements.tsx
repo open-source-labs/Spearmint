@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import Context from '../ReactHooksTestComponent/Context/Context';
 import HookUpdates from '../ReactHooksTestComponent/HookUpdates/HookUpdates';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import { HooksStatements } from '../../utils/hooksTypes';

@@ -1,4 +1,4 @@
-import { useImperativeHandle } from 'react';
+
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
@@ -363,6 +363,7 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
     // Actions Filepath
+    // creates import statement for action creators
     const createPathToActions = (statement) => {
       let filePath = null;
       if (statement.filePath) {
@@ -391,6 +392,7 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Types Filepath
+    // Creates the import statment for actionTypes
     function createPathToTypes(statement) {
       let filePath = null;
       let bool = false;
@@ -409,6 +411,7 @@ function useGenerateTest(test, projectFilePath) {
         }
       }
     }
+    // This function returns true when actiontypes are declared in the same file as the action creators like with this app
     const areActionTypesDeclaredInSameFileAsActionCreators = (file) => {
       const page = fs.readFileSync(file);
       if (page.includes(`export const actionTypes`)) return true;
@@ -453,15 +456,15 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Context Filepath
-    const createPathToContext = (statement) => {
-      let filePath = path.relative(projectFilePath, statement.contextFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      if (filePath) {
-        testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
-      } else {
-        testFileCode += '//Please import you context here';
-      }
-    };
+    // const createPathToContext = (statement) => {
+    //   let filePath = path.relative(projectFilePath, statement.contextFilePath);
+    //   filePath = filePath.replace(/\\/g, '/');
+    //   if (filePath) {
+    //     testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
+    //   } else {
+    //     testFileCode += '//Please import you context here';
+    //   }
+    // };
 
     // Endpoint Filepath
     const createPathToEndFiles = (serverFilePath, dbFilePath, addDB) => {
@@ -488,6 +491,7 @@ function useGenerateTest(test, projectFilePath) {
           case 'Mongoose':
             testFileCode += `const mongoose = require('../${filePath}');
             \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+            break;
           default:
             return;
         }
@@ -595,6 +599,7 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Async AC Jest Test Code
+    // This function adds a test (or it block) for each async test block
     const addAsync = (async) => {
       let route = '*';
       if (async.route) route = async.route;
@@ -702,10 +707,9 @@ function useGenerateTest(test, projectFilePath) {
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      const headersObj = {};
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
       testFileCode += statement.postData
-        ? `.send(\ ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
+        ? `.send( ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
         : statement.headers.length
         ? `.set({`
         : '';
