@@ -5,6 +5,7 @@ import {
   setFilePath,
   toggleRightPanel,
   setValidCode,
+  openBrowserDocs,
 } from '../../context/actions/globalActions';
 import {
   addAsync,
