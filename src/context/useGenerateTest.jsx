@@ -245,15 +245,16 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '\n';
     };
 
+    /*-------------------------------------To deprecate feature, for reference only-------------------------------------------------*/
     // Context Import Statements
-    const addContextImportStatements = () => {
-      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
-      }
-      if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
-        testFileCode += `import { render } from '@testing-library/react';`;
-      }
-    };
+    // const addContextImportStatements = () => {
+    //   if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
+    //     testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+    //   }
+    //   if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+    //     testFileCode += `import { render } from '@testing-library/react';`;
+    //   }
+    // };
 
     // Hooks Import Statements
     const addRenderHooksImportStatement = () => {
