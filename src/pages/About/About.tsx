@@ -1,17 +1,18 @@
 import React from 'react';
-import './About.scss';
+import styles from './About.module.scss';
 import { loadProject } from '../../context/actions/globalActions';
+import { Action } from '../../utils/endpointTypes';
 
 const image1 = require('../../assets/images/newReact.png');
 const image2 = require('../../assets/images/testfile.png');
 
-const About = ({ dispatch: dispatchToGlobal }) => {
+const About = ({ dispatch: dispatchToGlobal }: { dispatch: (action: Action) => void }) => {
   const handleChangeBack = () => {
     dispatchToGlobal(loadProject(''));
   };
 
   return (
-    <div id='about'>
+    <div id={styles.about}>
       <article className='markdown-body entry-content container-lg' itemProp='text'>
         <p>
           <img
@@ -73,7 +74,7 @@ const About = ({ dispatch: dispatchToGlobal }) => {
             alt=''
           />
         </p>
-        <ol start='2'>
+        <ol start={2}>
           <li>
             Utilize our auto-complete, drop-down options, and tooltips features to easily create
             arrangement, action, and assertion test statements for React; reducer, action creator,
@@ -84,7 +85,7 @@ const About = ({ dispatch: dispatchToGlobal }) => {
         <p>
           <img src={image1} alt='' />
         </p>
-        <ol start='3'>
+        <ol start={3}>
           <li>
             <p>
               Refer to the browser view of your app that is displayed on the right to quickly

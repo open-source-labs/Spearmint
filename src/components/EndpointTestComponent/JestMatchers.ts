@@ -1,4 +1,4 @@
-const jestMatchers = [
+const jestMatchers: string[] = [
   '',
   'to Be',
   'to Equal (object)',

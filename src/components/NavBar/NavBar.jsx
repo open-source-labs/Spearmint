@@ -24,7 +24,7 @@ const browserIcon = require('../../assets/images/google-chrome.png');
 const codeIcon = require('../../assets/images/visual-studio-code.png');
 const homeIcon = require('../../assets/images/home.png');
 
-const NavBar = () => {
+const NavBar = ({ inAboutPage }) => {
   const [
     { fileTree, isFileDirectoryOpen, projectUrl, rightPanelDisplay },
     dispatchToGlobal,
@@ -38,11 +38,12 @@ const NavBar = () => {
 
   /* switches between code and browser view */
   const handleEditorToggle = () => {
-    dispatchToGlobal(toggleRightPanel('codeEditorView'));
+    if (!inAboutPage) dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
 
   /* switches between code and browser view */
   const handleBrowserToggle = () => {
+    if (inAboutPage) return;
     if (rightPanelDisplay === 'browserView' && projectUrl) {
       dispatchToGlobal(resetToProjectUrl());
     }
@@ -67,7 +68,7 @@ const NavBar = () => {
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
   return (
-    <div id={styles.navBar}>
+    <div id={inAboutPage ? styles.inAboutPage : styles.navBar}>
       <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
         <img src={menuIcon} className={styles.icons} alt='fileExplorer' />
         <span className={styles.tooltip}>Expand File Explorer</span>
@@ -76,10 +77,12 @@ const NavBar = () => {
         <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
         <span className={styles.tooltip}>Export</span>
       </button>
-      <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      />
+      {!inAboutPage && (
+        <ExportFileModal
+          isExportModalOpen={isExportModalOpen}
+          setIsExportModalOpen={setIsExportModalOpen}
+        />
+      )}
       <OpenFolder />
       <button className={styles.navBtn} onClick={handleEditorToggle}>
         <img src={codeIcon} className={styles.icons} alt='codeview' title='Code View' />

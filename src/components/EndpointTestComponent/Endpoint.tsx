@@ -4,6 +4,7 @@ import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import EndpointAssertion from './EndpointAssertion';
+import { Assertion, EndpointObj, Header, Action, EventTarget } from '../../utils/endpointTypes';
 
 import {
   deleteEndpoint,
@@ -18,17 +19,31 @@ const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
-const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
-  const handleChangeEndpointFields = (e, field) => {
+interface EndpointProps {
+  endpoint: EndpointObj;
+  index: number;
+  dispatchToEndpointTestCase: (action: Action) => void;
+}
+
+// declare global {
+//   namespace JSX {
+//     interface IntrinsicElements {
+//       input: { id: number | string };
+//     }
+//   }
+// }
+
+const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps) => {
+  const handleChangeEndpointFields = ({ target }: EventTarget, field: string) => {
     let updatedEndpoint = { ...endpoint };
 
     field === 'headerName' || field === 'headerValue'
-      ? (updatedEndpoint.headers[e.target.id][field] = e.target.value)
-      : (updatedEndpoint[field] = e.target.value);
+      ? (updatedEndpoint.headers[Number(target.id)][field] = target.value)
+      : (updatedEndpoint[field] = target.value);
     dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
 
-    if (e.target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
-    else if (e.target.type === 'select-one' && endpoint.post)
+    if (target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
+    else if (target.type === 'select-one' && endpoint.post)
       dispatchToEndpointTestCase(togglePost(index));
   };
 
@@ -41,21 +56,21 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
     dispatchToEndpointTestCase(addHeader(index));
   };
 
-  const handleClickDeleteHeader = (i) => {
+  const handleClickDeleteHeader = (i: number) => {
     dispatchToEndpointTestCase(deleteHeader(index, i));
   };
 
-  const updatePostData = (e) => {
-    dispatchToEndpointTestCase(updatePost(e.target.value, index));
-    e.target.style.height = 'inherit';
-    e.target.style.height = `${Math.max(Math.min(e.target.scrollHeight, 200), 102)}px`;
+  const updatePostData = ({ target }: EventTarget) => {
+    dispatchToEndpointTestCase(updatePost(target.value, index));
+    target.style.height = 'inherit';
+    target.style.height = `${Math.max(Math.min(target.scrollHeight, 200), 102)}px`;
   };
 
   const addAssertionHandleClick = () => {
     dispatchToEndpointTestCase(addAssertion(index));
   };
 
-  const testDescription = useRef(null);
+  const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (testDescription && testDescription.current) {
@@ -141,7 +156,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                 </div>
               </div>
             </div>{' '}
-            {endpoint.assertions.map((assertion, i) => {
+            {endpoint.assertions.map((assertion: Assertion, i: number) => {
               return <EndpointAssertion assertion={assertion} index={index} id={i} />;
             })}{' '}
             {endpoint.post && (
@@ -180,7 +195,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }) => {
                       </label>
                     </div>
                     <hr />
-                    {endpoint.headers.map((header, i) => {
+                    {endpoint.headers.map((header: Header, i) => {
                       return (
                         <div id={styled.renderPropsFlexBox}>
                           <input

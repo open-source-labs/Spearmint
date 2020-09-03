@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { setProjectUrl } from '../../context/actions/globalActions';
-import { loadProject } from '../../context/actions/globalActions';
+import { setProjectUrl, closeRightPanel } from '../../context/actions/globalActions';
+import { loadProject, toggleFileDirectory } from '../../context/actions/globalActions';
 require('dotenv').config();
 
 const ProjectLoader = () => {
-  const [, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
@@ -28,6 +28,8 @@ const ProjectLoader = () => {
 
   const handleChangeAbout = () => {
     dispatchToGlobal(loadProject('about'));
+    dispatchToGlobal(closeRightPanel());
+    if (isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
   };
 
   const placehold =
@@ -59,7 +61,7 @@ const ProjectLoader = () => {
           <div className={styles.contentBox}>
             <span className={styles.number}>02</span>
             <span className={styles.text}>Select your application</span> <br />
-            <OpenFolder inNavBar={false} />
+            <OpenFolder />
           </div>
         </div>
         <div id={styles.bottomDiv}>

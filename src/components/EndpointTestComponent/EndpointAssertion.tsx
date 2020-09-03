@@ -5,25 +5,32 @@ import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCase
 import { deleteAssertion, updateAssertion } from '../../context/actions/endpointTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import jestMatchers from './JestMatchers.js';
+import jestMatchers from './JestMatchers';
+import { Assertion, EventTarget } from '../../utils/endpointTypes';
 
-const EndpointAssertion = ({ assertion, index, id }) => {
+interface EndpointProps {
+  assertion: Assertion;
+  index: number;
+  id: number;
+}
+
+const EndpointAssertion = ({ assertion, index, id }: EndpointProps) => {
   const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
-  const [, dispatchToGlobal] = useContext(GlobalContext);
+  const [, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   const questionIcon = require('../../assets/images/help-circle.png');
   const closeIcon = require('../../assets/images/close.png');
-  const jestURL = 'https://jestjs.io/docs/en/expect';
+  const jestURL: string = 'https://jestjs.io/docs/en/expect';
 
   const handleClickDeleteAssertion = () => {
     dispatchToEndpointTestCase(deleteAssertion(index, id));
   };
 
-  const handleChangeUpdateAssertion = (e, field) => {
+  const handleChangeUpdateAssertion = ({ target }: EventTarget, field: string) => {
     const updatedAssertion =
       field === 'not'
         ? { ...assertion, [field]: !assertion[field] }
-        : { ...assertion, [field]: e.target.value };
+        : { ...assertion, [field]: target.value };
     dispatchToEndpointTestCase(updateAssertion(index, id, updatedAssertion));
   };
 

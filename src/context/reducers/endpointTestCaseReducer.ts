@@ -3,7 +3,7 @@ import { actionTypes } from '../actions/endpointTestCaseActions';
 import {
   EndpointTestCaseState,
   Action,
-  Endpoint,
+  EndpointObj,
   Assertion,
   Header,
 } from '../../utils/endpointTypes';
@@ -18,7 +18,7 @@ const newAssertion: Assertion = {
   not: false,
 };
 
-const newEndpoint: Endpoint = {
+const newEndpoint: EndpointObj = {
   id: 0,
   type: 'endpoint',
   testName: '',
@@ -43,8 +43,8 @@ export const endpointTestCaseState: EndpointTestCaseState = {
   endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
 };
 
-const deepCopy = (endpointStatements: Endpoint[]) => {
-  const fullCopy: Endpoint[] = endpointStatements.map((el) => {
+const deepCopy = (endpointStatements: EndpointObj[]) => {
+  const fullCopy: EndpointObj[] = endpointStatements.map((el) => {
     return { ...el, assertions: copyAssertions(el.assertions), headers: copyHeaders(el.headers) };
   });
 
@@ -120,7 +120,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
       };
     case actionTypes.UPDATE_STATEMENTS_ORDER:
-      endpointStatements = [...(action.draggableStatements as Endpoint[])];
+      endpointStatements = [...(action.draggableStatements as EndpointObj[])];
       return {
         ...state,
         endpointStatements,

@@ -8,7 +8,7 @@ export interface EndpointTestCaseState {
   modalOpen: boolean;
   serverFilePath: string;
   serverFileName: string;
-  endpointStatements: Endpoint[];
+  endpointStatements: EndpointObj[];
   dbFilePath: string;
   addDB: boolean | string;
 }
@@ -26,7 +26,13 @@ export interface Action {
   dbFilePath?: string;
 }
 
-export interface Endpoint {
+type EndpointKeyValues = number | string | boolean | Assertion[] | Header[];
+
+interface forEndpoint {
+  [index: string]: EndpointKeyValues;
+}
+
+export interface EndpointObj extends forEndpoint {
   id: number;
   type: string;
   testName: string;
@@ -51,6 +57,33 @@ export interface Header {
   headerName: string;
   headerValue: string;
 }
+
+export type EventTarget = {
+  target: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+};
+
+// export interface GlobalState {
+//   url: string;
+//   projectUrl: string;
+//   isProjectLoaded: boolean;
+//   fileTree: string;
+//   componentName: string;
+//   isFileDirectoryOpen: boolean;
+//   isRightPanelOpen: boolean;
+//   rightPanelDisplay: string;
+//   isFolderOpen: object;
+//   isFileHighlighted: string;
+//   projectFilePath: string;
+//   filePathMap: object;
+//   file: string;
+//   testCase: string;
+//   docsOpen: boolean;
+//   isTestModalOpen: boolean;
+//   exportBool: boolean;
+//   fileName: string;
+//   filePath: string;
+//   validCode: boolean;
+// }
 
 // export type HooksAction =
 // | { type: 'TOGGLE_HOOKS' | 'ADD_CONTEXT' | 'ADD_HOOKRENDER' | 'ADD_HOOK_UPDATES' | 'ADD_HOOKRENDER' | 'CREATE_NEW_HOOKS_TEST' }

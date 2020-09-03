@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   openBrowserDocs,
@@ -6,6 +6,7 @@ import {
   updateFile,
   setFilePath,
   setValidCode,
+  toggleExportBool,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
@@ -23,14 +24,20 @@ import { useToggleModal, validateInputs } from './testMenuHooks';
 const EndpointTestMenu = () => {
   const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
-
+  let valid;
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
-  const handleAddEndpoint = (e) => {
+  useEffect(() => {
+    // validateInputs('endpoint', endpointTestCase)
+    //   ? dispatchToGlobal(setValidCode(true))
+    dispatchToGlobal(setValidCode(false));
+  }, []);
+
+  const handleAddEndpoint = () => {
     dispatchToEndpointTestCase(addEndpoint());
   };
 
@@ -51,11 +58,11 @@ const EndpointTestMenu = () => {
     } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
   };
 
-  if (!file && exportBool) {
-    validateInputs('endpoint', endpointTestCase)
-      ? dispatchToGlobal(setValidCode(true))
-      : dispatchToGlobal(setValidCode(false));
-    dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
+  if (exportBool) {
+    valid = validateInputs('endpoint', endpointTestCase);
+    valid ? dispatchToGlobal(setValidCode(true)) : dispatchToGlobal(setValidCode(false));
+    dispatchToGlobal(toggleExportBool());
+    if (valid && !file) dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
 
   return (

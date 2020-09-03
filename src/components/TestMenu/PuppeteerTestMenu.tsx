@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   openBrowserDocs,
   toggleRightPanel,
   setFilePath,
   updateFile,
+  setValidCode,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
@@ -25,6 +26,10 @@ const PuppeteerTestMenu = () => {
   );
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('puppeteer', projectFilePath);
+
+  useEffect(() => {
+    dispatchToGlobal(setValidCode(true));
+  }, []);
 
   // puppeteer testing docs url
   const puppeteerUrl = 'https://devdocs.io/puppeteer/';

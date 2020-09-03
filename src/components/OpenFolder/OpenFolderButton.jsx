@@ -9,8 +9,9 @@ import {
   createFileTree,
   setFilePathMap,
   setProjectFilePath,
-  // updateFile,
-  // setFilePath,
+  toggleFileDirectory,
+  setTestCase,
+  toggleModal,
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
@@ -21,7 +22,9 @@ const electronFs = remote.require('fs');
 const { dialog } = remote;
 
 const OpenFolder = () => {
-  const [{ isProjectLoaded }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
+    GlobalContext
+  );
   const filePathMap = {};
 
   const handleOpenFolder = () => {
@@ -42,6 +45,9 @@ const OpenFolder = () => {
       dispatchToGlobal(setProjectFilePath(directoryPath));
       dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
       dispatchToGlobal(loadProject('load'));
+      dispatchToGlobal(setTestCase(''));
+      if (!isTestModalOpen) dispatchToGlobal(toggleModal());
+      if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
     }
   };
 

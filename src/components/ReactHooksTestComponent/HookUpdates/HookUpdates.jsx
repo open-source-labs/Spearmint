@@ -107,24 +107,19 @@ const HookUpdates = ({ hookUpdates, index }) => {
                 <HooksCallback callbackFunc={callbackFunc} index={index} id={i} />
               </div>
             );
-          })}
-          <div className={styles.buttonsContainer}>
-            <button onClick={addCallbackHandleClick} className={styles.assertionButton}>
-              <i className='fas fa-plus'></i>
-              Callback
-            </button>
-          </div>
+          })}{' '}
+          <div className={styles.buttonsContainer}></div>
           {hookUpdates.assertions.map((assertion, i) => {
             return <HooksAssertion assertion={assertion} index={index} id={i} />;
           })}
           <div className={styles.buttonsContainer} id={styles.stateFlexBox}>
-            <button
-              // id={id}
-              onClick={addAssertionHandleClick}
-              className={styles.assertionButton}
-            >
+            <button onClick={addAssertionHandleClick} className={styles.assertionButton}>
               <i className='fas fa-plus'></i>
               Assertion
+            </button>
+            <button onClick={addCallbackHandleClick} className={styles.assertionButton}>
+              <i className='fas fa-plus'></i>
+              Callback
             </button>
           </div>
         </div>

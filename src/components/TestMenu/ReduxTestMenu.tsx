@@ -1,6 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import styles from './TestMenu.module.scss';
-import { updateFile, setFilePath, toggleRightPanel } from '../../context/actions/globalActions';
+import {
+  updateFile,
+  setFilePath,
+  toggleRightPanel,
+  setValidCode,
+} from '../../context/actions/globalActions';
 import {
   addAsync,
   addReducer,
@@ -11,13 +16,8 @@ import {
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import {
-  openBrowserDocs,
-  setValidCode,
-  toggleExportBool,
-} from '../../context/actions/globalActions';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
-import { useToggleModal, validateInputs } from './testMenuHooks';
+import { useToggleModal } from './testMenuHooks';
 
 const ReduxTestMenu = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
@@ -28,6 +28,10 @@ const ReduxTestMenu = () => {
   const generateTest = useGenerateTest('redux', projectFilePath);
   // Redux testing docs url
   const reduxUrl = 'https://redux.js.org/recipes/writing-tests';
+
+  useEffect(() => {
+    dispatchToGlobal(setValidCode(true));
+  }, []);
 
   const handleAddMiddleware = () => {
     dispatchToReduxTestCase(addMiddleware());
@@ -55,13 +59,8 @@ const ReduxTestMenu = () => {
     dispatchToGlobal(setFilePath(''));
   };
 
-  if (exportBool) {
-    let valid = validateInputs('redux', { reduxStatements, reduxTestStatement });
-    valid ? dispatchToGlobal(setValidCode(true)) : dispatchToGlobal(setValidCode(false));
-    dispatchToGlobal(toggleExportBool());
-    if (valid && !file)
-      dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
-  }
+  if (!file && exportBool)
+    dispatchToGlobal(updateFile(generateTest({ reduxTestStatement, reduxStatements })));
 
   return (
     <div id='test'>
