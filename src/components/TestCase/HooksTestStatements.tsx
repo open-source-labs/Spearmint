@@ -36,14 +36,14 @@ const HooksTestStatements = () => {
     <>
       {hImports}
       {hooksStatements.map((statement: HooksStatements, i: number) => {
-        switch (statement.type) {
-          case 'context':
-            return <Context key={statement.id} context={statement} index={i} />;
-          case 'hook-updates':
-            return <HookUpdates key={statement.id} hookUpdates={statement} index={i} />;
-          default:
-            return <></>;
-        }
+        // switch (statement.type) {
+        // case 'context':
+        //   return <Context key={statement.id} context={statement} index={i} />;
+        // case 'hook-updates':
+        return <HookUpdates key={statement.id} hookUpdates={statement} index={i} />;
+        // default:
+        //   return <></>;
+        // }
       })}
     </>
   );

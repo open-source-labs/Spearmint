@@ -235,29 +235,20 @@ function useGenerateTest(test, projectFilePath) {
     // Hooks & Context Import Statements
     const addHooksImportStatements = () => {
       hooksTestCase.hooksStatements.forEach((statement) => {
-        switch (statement.type) {
-          case 'hook-updates':
-            return addRenderHooksImportStatement(), createPathToHooks(statement);
-          case 'hookRender':
-            return addRenderHooksImportStatement(), createPathToHooks(statement);
-          case 'context':
-            return addContextImportStatements(), createPathToContext(statement);
-          default:
-            return statement;
-        }
+        return addRenderHooksImportStatement(), createPathToHooks(statement);
       });
       testFileCode += '\n';
     };
 
     // Context Import Statements
-    const addContextImportStatements = () => {
-      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
-      }
-      if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
-        testFileCode += `import { render } from '@testing-library/react';`;
-      }
-    };
+    // const addContextImportStatements = () => {
+    //   if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
+    //     testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+    //   }
+    //   if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+    //     testFileCode += `import { render } from '@testing-library/react';`;
+    //   }
+    // };
 
     // Hooks Import Statements
     const addRenderHooksImportStatement = () => {
@@ -280,10 +271,6 @@ function useGenerateTest(test, projectFilePath) {
         switch (statement.type) {
           case 'hook-updates':
             return addHookUpdates(statement);
-          case 'hookRender':
-            return addHookRender(statement);
-          case 'context':
-            return addContext(statement);
           default:
             return statement;
         }
@@ -662,56 +649,49 @@ function useGenerateTest(test, projectFilePath) {
       });
       testFileCode += '})\n\n';
     };
-
-    // Hook: Renders Jest Test Code
-    const addHookRender = (hookRender) => {
-      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameters}));\n`;
-      for (let i = 0; i < hookRender.expectedState.length; i += 1) {
-        testFileCode += `expect(result.current.${hookRender.expectedState[i]}).toBe(${
-          hookRender.expectedValue[i] || ''
-        })\n`;
-      }
-    };
-
-    // Context Jest Test Code
-    const addContext = (context) => {
-      testFileCode += `test('${context.testName}', () => {`;
-      if (context.queryValue === 'shows_default_value') {
-        testFileCode += `const mockValue = {Data: '${context.values}'}
-          const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
-          expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
-      }
-      if (context.queryValue === 'shows_value_from_provider') {
-        testFileCode += `const mockValue = {Data: '${context.values}'}
-          const { ${context.querySelector} } = render (
-            <${context.context}.Provider value={mockValue}>
-              <${context.consumerComponent}/>
-            </${context.context}.Provider>
-          )
-          expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
-      }
-      if (context.queryValue === 'component_provides_context_value') {
-        testFileCode += `const mockValue = {Data: '${context.values}'}
-          const { ${context.querySelector} } = render (
-            <${context.providerComponent} value={mockValue}>
-              <${context.context}.Consumer>
-              {value => <span>Recieved: {value} </span>}
-              <${context.context}.Consumer/>
-            </${context.providerComponent}>
-          )
-          expect(${context.querySelector}(/^Recieved:/).textContent).${context.queryVariant}('${context.values}')`;
-      }
-      if (context.queryValue === 'renders_providers_+_consumers_normally') {
-        testFileCode += `const mockValue = {Data: '${context.values}'}
-          const { ${context.querySelector} } = render (
-            <${context.providerComponent} value={mockValue}>
-              <${context.consumerComponent}/>
-            </${context.providerComponent}>
-          )
-          expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
-      }
-      testFileCode += '})\n\n';
-    };
+    /* ------------------Context needs to be integrated with Hooks as business logic------------------- */
+    /* -------------------------------This code is for reference only---------------------------------- */
+    // // Context Jest Test Code
+    // const addContext = (context) => {
+    //   testFileCode += `test('${context.testName}', () => {`;
+    //   if (context.queryValue === 'shows_default_value') {
+    //     testFileCode += `const mockValue = {Data: '${context.values}'}
+    //       const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
+    //       expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
+    //   }
+    //   if (context.queryValue === 'shows_value_from_provider') {
+    //     testFileCode += `const mockValue = {Data: '${context.values}'}
+    //       const { ${context.querySelector} } = render (
+    //         <${context.context}.Provider value={mockValue}>
+    //           <${context.consumerComponent}/>
+    //         </${context.context}.Provider>
+    //       )
+    //       expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
+    //   }
+    //   if (context.queryValue === 'component_provides_context_value') {
+    //     testFileCode += `const mockValue = {Data: '${context.values}'}
+    //       const { ${context.querySelector} } = render (
+    //         <${context.providerComponent} value={mockValue}>
+    //           <${context.context}.Consumer>
+    //           {value => <span>Recieved: {value} </span>}
+    //           <${context.context}.Consumer/>
+    //         </${context.providerComponent}>
+    //       )
+    //       expect(${context.querySelector}(/^Recieved:/).textContent).${context.queryVariant}('${context.values}')`;
+    //   }
+    //   if (context.queryValue === 'renders_providers_+_consumers_normally') {
+    //     testFileCode += `const mockValue = {Data: '${context.values}'}
+    //       const { ${context.querySelector} } = render (
+    //         <${context.providerComponent} value={mockValue}>
+    //           <${context.consumerComponent}/>
+    //         </${context.providerComponent}>
+    //       )
+    //       expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
+    //   }
+    //   testFileCode += '})\n\n';
+    // };
+    /* -------------------------------This code is for reference only---------------------------------- */
+    /* ------------------Context needs to be integrated with Hooks as business logic------------------- */
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {

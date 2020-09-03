@@ -79,17 +79,6 @@ const createContexts = (statementId: number) => ({
   contextFilePath: '',
 });
 
-const createHookRender = (statementId: number) => ({
-  id: statementId,
-  type: 'hookRender',
-  hookFileName: '',
-  hookFilePath: '',
-  hook: '',
-  parameters: '',
-  expectedState: '',
-  expectedValue: '',
-});
-
 const createHookUpdates = (statementId: number) => ({
   ...newHooks,
   type: 'hook-updates',
@@ -224,39 +213,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) 
         ...state,
         hooksStatements,
       };
-      return {
-        ...state,
-        hooksStatements,
-      };
-
-    case 'ADD_HOOKRENDER':
-      hooksStatements.push(createHookRender(state.statementId));
-      return {
-        ...state,
-        hooksStatements,
-        statementId: state.statementId + 1,
-      };
-
-    case 'DELETE_HOOKRENDER':
-      hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
-      return {
-        ...state,
-        hooksStatements,
-      };
-
-    case 'UPDATE_HOOKRENDER':
-      hooksStatements = hooksStatements.map((statement) => {
-        if (statement.id === action.id) {
-          return {
-            ...statement,
-            hook: action.hook,
-            parameters: action.parameters,
-            expectedValue: action.expectedValue,
-            expectedState: action.expectedState,
-          };
-        }
-        return statement;
-      });
       return {
         ...state,
         hooksStatements,
