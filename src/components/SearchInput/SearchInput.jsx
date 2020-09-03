@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './SearchInput.scss';
+import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
 const SearchInput = ({
   dispatch,
@@ -16,6 +17,7 @@ const SearchInput = ({
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [userInput, setUserInput] = useState('');
+  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChange = (e) => {
     const input = e.currentTarget.value;
@@ -38,7 +40,13 @@ const SearchInput = ({
 
     const selectedOption = e.target.type;
     const filePath = filePathMap[selectedOption] || '';
-    if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
+    if (updateTypesFilePath) {
+      if (dispatchToReduxTestCase === dispatch) {
+        dispatch(updateTypesFilePath(selectedOption, filePath, 'reducer'));
+        dispatch(updateTypesFilePath(selectedOption, filePath, 'async'));
+        dispatch(updateTypesFilePath(selectedOption, filePath, 'action-creator'));
+      } else dispatch(updateTypesFilePath(selectedOption, filePath, type));
+    } //type));
     if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
     if (action) dispatch(action(selectedOption, filePath));
   };
@@ -51,7 +59,13 @@ const SearchInput = ({
       const selectedOption = filteredOptions[activeOption];
       const filePath = filePathMap[selectedOption] || '';
       if (action) dispatch(action(selectedOption, filePath));
-      if (updateTypesFilePath) dispatch(updateTypesFilePath(selectedOption, filePath, type)); //type));
+      if (updateTypesFilePath) {
+        if (dispatchToReduxTestCase === dispatch) {
+          dispatch(updateTypesFilePath(selectedOption, filePath, 'reducer'));
+          dispatch(updateTypesFilePath(selectedOption, filePath, 'async'));
+          dispatch(updateTypesFilePath(selectedOption, filePath, 'action-creator'));
+        } else dispatch(updateTypesFilePath(selectedOption, filePath, type));
+      } //type));
     } else if (e.keyCode === 38) {
       if (activeOption === 0) {
         return;

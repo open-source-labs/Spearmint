@@ -1,16 +1,13 @@
 import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Thunk.module.scss';
-import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteAsync, updateAsync } from '../../../context/actions/reduxTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
-const questionIcon = require('../../../assets/images/help-circle.png');
 
 const Async = ({ async, index }) => {
-  const [{ filePathMap }] = useContext(GlobalContext);
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   const handleChangeAsyncFields = (e, field) => {
@@ -44,7 +41,7 @@ const Async = ({ async, index }) => {
               <input
                 type='text'
                 name='it'
-                placeholder='eg/ should return expected action'
+                placeholder='e.g. store should hold expected action'
                 onChange={(e) => handleChangeAsyncFields(e, 'it')}
               />
             </div>
@@ -73,7 +70,7 @@ const Async = ({ async, index }) => {
 
           <div id={styles.groupFlexbox}>
             <div id={styles.labelInput}>
-              <label htmlFor='expectedArg'>argument 1</label>
+              <label htmlFor='expectedArg'>Argument 1</label>
               <div id={styles.inputFlexBox}>
                 <input
                   type='text'
@@ -101,12 +98,12 @@ const Async = ({ async, index }) => {
               </div>
             </div>
             <div id={styles.labelInput}>
-              <label htmlFor='payloadKey'>argument 2</label>
+              <label htmlFor='payloadKey'>Argument 2</label>
               <input
                 type='text'
                 id='payloadKey'
                 onChange={(e) => handleChangeAsyncFields(e, 'payloadKey')}
-                placeholder='e.g. todo'
+                placeholder='e.g. id'
               />
             </div>
             <div id={styles.dropdownWrapper}>
@@ -156,31 +153,6 @@ const Async = ({ async, index }) => {
               </div>
             </div>
           </div>
-
-          {async.responseType === 'object' ? (
-            <div id={styles.groupFlexbox}>
-              <div id={styles.labelInput}>
-                <label htmlFor='responseKey'>Response Key</label>
-                <div id={styles.inputFlexBox}>
-                  <input
-                    type='text'
-                    name='responseKey'
-                    onChange={(e) => handleChangeAsyncFields(e, 'responseKey')}
-                  />
-                </div>
-              </div>
-              <div id={styles.labelInput}>
-                <label htmlFor='responseValue'>Response Value</label>
-                <div id={styles.inputFlexBox}>
-                  <input
-                    type='text'
-                    name='responseValue'
-                    onChange={(e) => handleChangeAsyncFields(e, 'responseValue')}
-                  />
-                </div>
-              </div>
-            </div>
-          ) : null}
         </div>
       )}
     </Draggable>

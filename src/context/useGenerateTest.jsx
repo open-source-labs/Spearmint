@@ -1,4 +1,4 @@
-import { useImperativeHandle } from 'react';
+
 
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
@@ -236,12 +236,8 @@ function useGenerateTest(test, projectFilePath) {
     const addHooksImportStatements = () => {
       hooksTestCase.hooksStatements.forEach((statement) => {
         switch (statement.type) {
-          case 'hook-updates':
+          case 'hooks':
             return addRenderHooksImportStatement(), createPathToHooks(statement);
-          case 'hookRender':
-            return addRenderHooksImportStatement(), createPathToHooks(statement);
-          case 'context':
-            return addContextImportStatements(), createPathToContext(statement);
           default:
             return statement;
         }
@@ -249,15 +245,16 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '\n';
     };
 
+    /*-------------------------------------To deprecate feature, for reference only-------------------------------------------------*/
     // Context Import Statements
-    const addContextImportStatements = () => {
-      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
-        testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
-      }
-      if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
-        testFileCode += `import { render } from '@testing-library/react';`;
-      }
-    };
+    // const addContextImportStatements = () => {
+    //   if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
+    //     testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
+    //   }
+    //   if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
+    //     testFileCode += `import { render } from '@testing-library/react';`;
+    //   }
+    // };
 
     // Hooks Import Statements
     const addRenderHooksImportStatement = () => {
@@ -266,10 +263,10 @@ function useGenerateTest(test, projectFilePath) {
       }
       if (
         !testFileCode.includes(
-          `import { renderHook, act, cleanup } from '@testing-library/react-hooks';`
+          `import { renderHook, act, cleanup, } from '@testing-library/react-hooks';`
         )
       ) {
-        testFileCode += `import { renderHook, act, cleanup } from '@testing-library/react-hooks';`;
+        testFileCode += `import { renderHook, act, cleanup, } from '@testing-library/react-hooks';`;
       }
     };
 
@@ -278,12 +275,8 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += `\nafterEach(cleanup);\ndescribe('${hooksTestCase.hooksTestStatement}', () => {`;
       hooksTestCase.hooksStatements.forEach((statement) => {
         switch (statement.type) {
-          case 'hook-updates':
+          case 'hooks':
             return addHookUpdates(statement);
-          case 'hookRender':
-            return addHookRender(statement);
-          case 'context':
-            return addContext(statement);
           default:
             return statement;
         }
@@ -370,6 +363,7 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
     // Actions Filepath
+    // creates import statement for action creators
     const createPathToActions = (statement) => {
       let filePath = null;
       if (statement.filePath) {
@@ -398,6 +392,7 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Types Filepath
+    // Creates the import statment for actionTypes
     function createPathToTypes(statement) {
       let filePath = null;
       let bool = false;
@@ -416,6 +411,7 @@ function useGenerateTest(test, projectFilePath) {
         }
       }
     }
+    // This function returns true when actiontypes are declared in the same file as the action creators like with this app
     const areActionTypesDeclaredInSameFileAsActionCreators = (file) => {
       const page = fs.readFileSync(file);
       if (page.includes(`export const actionTypes`)) return true;
@@ -438,15 +434,20 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-      let hooksArr = [];
-      hooksTestCase.hooksStatements.forEach(({ hook }) => {
-        hooksArr.push(hook);
-      });
-      let hookImports = hooksArr.reduce((str, curr) => {
-        str += `${curr}, `;
+      // let hooksArr = [];
+      // hooksTestCase.hooksStatements.forEach(({ hook }) => {
+      //   hooksArr.push(hook);
+      // });
+      // let hookImports = hooksArr.reduce((str, curr) => {
+      //   str += `${curr}, `;
+      //   return str;
+      // }, '');
+      const { hooksStatements } = hooksTestCase;
+      const hookImports = hooksStatements.reduce((str, { hook }) => {
+        str += `${hook}, `;
         return str;
       }, '');
-      if (!testFileCode.includes(`import { ${hooksArr[0]}`) && statement.hookFilePath) {
+      if (!testFileCode.includes(`import { ${hooksStatements[0].hook}`) && statement.hookFilePath) {
         let filePath = path.relative(projectFilePath, statement.hookFilePath);
         filePath = filePath.replace(/\\/g, '/');
 
@@ -455,15 +456,15 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Context Filepath
-    const createPathToContext = (statement) => {
-      let filePath = path.relative(projectFilePath, statement.contextFilePath);
-      filePath = filePath.replace(/\\/g, '/');
-      if (filePath) {
-        testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
-      } else {
-        testFileCode += '//Please import you context here';
-      }
-    };
+    // const createPathToContext = (statement) => {
+    //   let filePath = path.relative(projectFilePath, statement.contextFilePath);
+    //   filePath = filePath.replace(/\\/g, '/');
+    //   if (filePath) {
+    //     testFileCode += `import { ${statement.providerComponent}, ${statement.consumerComponent}, ${statement.context} } from '../${filePath}';`;
+    //   } else {
+    //     testFileCode += '//Please import you context here';
+    //   }
+    // };
 
     // Endpoint Filepath
     const createPathToEndFiles = (serverFilePath, dbFilePath, addDB) => {
@@ -490,6 +491,7 @@ function useGenerateTest(test, projectFilePath) {
           case 'Mongoose':
             testFileCode += `const mongoose = require('../${filePath}');
             \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+            break;
           default:
             return;
         }
@@ -597,6 +599,7 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     // Async AC Jest Test Code
+    // This function adds a test (or it block) for each async test block
     const addAsync = (async) => {
       let route = '*';
       if (async.route) route = async.route;
@@ -645,16 +648,15 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += `test('${hookUpdates.testName}', () => {`;
       testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());\n\n`;
       let callbackCodeBlocks = hookUpdates.callbackFunc.reduce((result, callback) => {
-        return (result += `result.current.${callback.callbackFunc}();\n`);
+        return (result += `\nresult.current.${callback.callbackFunc}();`);
       }, '');
       testFileCode +=
         hookUpdates.callbackFunc.length === 0 ||
         (hookUpdates.callbackFunc.length === 1 &&
           hookUpdates.callbackFunc[0].callbackFunc.length === 0)
           ? ''
-          : `act(() => {
-          ${callbackCodeBlocks}
-        });\n`;
+          : `act(() => {${callbackCodeBlocks}
+        });\n\n`;
       hookUpdates.assertions.forEach((assertion) => {
         testFileCode += `expect(result.current.${assertion.expectedState})${
           assertion.not ? '.not' : ''
@@ -662,63 +664,52 @@ function useGenerateTest(test, projectFilePath) {
       });
       testFileCode += '})\n\n';
     };
-
-    // Hook: Renders Jest Test Code
-    const addHookRender = (hookRender) => {
-      testFileCode += `const {result} = renderHook(() => ${hookRender.hook}(${hookRender.parameters}));\n`;
-      for (let i = 0; i < hookRender.expectedState.length; i += 1) {
-        testFileCode += `expect(result.current.${hookRender.expectedState[i]}).toBe(${
-          hookRender.expectedValue[i] || ''
-        })\n`;
-      }
-    };
-
-    // Context Jest Test Code
-    const addContext = (context) => {
-      testFileCode += `test('${context.testName}', () => {`;
-      if (context.queryValue === 'shows_default_value') {
-        testFileCode += `const mockValue = {Data: '${context.values}'}
-          const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
-          expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
-      }
-      if (context.queryValue === 'shows_value_from_provider') {
-        testFileCode += `const mockValue = {Data: '${context.values}'}
-          const { ${context.querySelector} } = render (
-            <${context.context}.Provider value={mockValue}>
-              <${context.consumerComponent}/>
-            </${context.context}.Provider>
-          )
-          expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
-      }
-      if (context.queryValue === 'component_provides_context_value') {
-        testFileCode += `const mockValue = {Data: '${context.values}'}
-          const { ${context.querySelector} } = render (
-            <${context.providerComponent} value={mockValue}>
-              <${context.context}.Consumer>
-              {value => <span>Recieved: {value} </span>}
-              <${context.context}.Consumer/>
-            </${context.providerComponent}>
-          )
-          expect(${context.querySelector}(/^Recieved:/).textContent).${context.queryVariant}('${context.values}')`;
-      }
-      if (context.queryValue === 'renders_providers_+_consumers_normally') {
-        testFileCode += `const mockValue = {Data: '${context.values}'}
-          const { ${context.querySelector} } = render (
-            <${context.providerComponent} value={mockValue}>
-              <${context.consumerComponent}/>
-            </${context.providerComponent}>
-          )
-          expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
-      }
-      testFileCode += '})\n\n';
-    };
+    /* ------------------Context needs to be integrated with Hooks as business logic------------------- */
+    // // Context Jest Test Code
+    // const addContext = (context) => {
+    //   testFileCode += `test('${context.testName}', () => {`;
+    //   if (context.queryValue === 'shows_default_value') {
+    //     testFileCode += `const mockValue = {Data: '${context.values}'}
+    //       const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
+    //       expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
+    //   }
+    //   if (context.queryValue === 'shows_value_from_provider') {
+    //     testFileCode += `const mockValue = {Data: '${context.values}'}
+    //       const { ${context.querySelector} } = render (
+    //         <${context.context}.Provider value={mockValue}>
+    //           <${context.consumerComponent}/>
+    //         </${context.context}.Provider>
+    //       )
+    //       expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
+    //   }
+    //   if (context.queryValue === 'component_provides_context_value') {
+    //     testFileCode += `const mockValue = {Data: '${context.values}'}
+    //       const { ${context.querySelector} } = render (
+    //         <${context.providerComponent} value={mockValue}>
+    //           <${context.context}.Consumer>
+    //           {value => <span>Recieved: {value} </span>}
+    //           <${context.context}.Consumer/>
+    //         </${context.providerComponent}>
+    //       )
+    //       expect(${context.querySelector}(/^Recieved:/).textContent).${context.queryVariant}('${context.values}')`;
+    //   }
+    //   if (context.queryValue === 'renders_providers_+_consumers_normally') {
+    //     testFileCode += `const mockValue = {Data: '${context.values}'}
+    //       const { ${context.querySelector} } = render (
+    //         <${context.providerComponent} value={mockValue}>
+    //           <${context.consumerComponent}/>
+    //         </${context.providerComponent}>
+    //       )
+    //       expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
+    //   }
+    //   testFileCode += '})\n\n';
+    // };
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      const headersObj = {};
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
       testFileCode += statement.postData
-        ? `.send(\ ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
+        ? `.send( ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
         : statement.headers.length
         ? `.set({`
         : '';

@@ -11,9 +11,7 @@ import HooksTestStatements from './HooksTestStatements';
 import { HooksStatements } from '../../utils/hooksTypes';
 
 const HooksTestCase = () => {
-  const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
-    HooksTestCaseContext
-  );
+  const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
 
   const testDescription = useRef<HTMLInputElement>(null);
 
@@ -55,16 +53,15 @@ const HooksTestCase = () => {
       </div>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>
-            Describe Block
-            <br />
-            <input
-              ref={testDescription}
-              type='text'
-              id={styles.testStatement}
-              onChange={handleUpdateHooksTestStatement}
-            />
-          </label>
+          Describe Block
+          <br />
+          <br />
+          <input
+            ref={testDescription}
+            type='text'
+            id={styles.testStatement}
+            onChange={handleUpdateHooksTestStatement}
+          />
         </section>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>

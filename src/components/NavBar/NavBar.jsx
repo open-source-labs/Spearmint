@@ -26,7 +26,7 @@ const homeIcon = require('../../assets/images/home.png');
 
 const NavBar = () => {
   const [
-    { fileTree, isFileDirectoryOpen, url, projectUrl, rightPanelDisplay },
+    { fileTree, isFileDirectoryOpen, projectUrl, rightPanelDisplay },
     dispatchToGlobal,
   ] = useContext(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);

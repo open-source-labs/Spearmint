@@ -6,9 +6,6 @@ export const actionTypes = {
   ADD_CONTEXT: 'ADD_CONTEXT',
   DELETE_CONTEXT: 'DELETE_CONTEXT',
   UPDATE_CONTEXT: 'UPDATE_CONTEXT',
-  ADD_HOOKRENDER: 'ADD_HOOKRENDER',
-  DELETE_HOOKRENDER: 'DELETE_HOOKRENDER',
-  UPDATE_HOOKRENDER: 'UPDATE_HOOKRENDER',
   ADD_HOOK_UPDATES: 'ADD_HOOK_UPDATES',
   DELETE_HOOK_UPDATES: 'DELETE_HOOK_UPDATES',
   UPDATE_HOOK_UPDATES: 'UPDATE_HOOK_UPDATES',
@@ -36,20 +33,6 @@ export const updateHooksTestStatement = (hooksTestStatement: string) => ({
   hooksTestStatement,
 });
 
-export const addContexts = () => ({
-  type: actionTypes.ADD_CONTEXT,
-});
-
-export const deleteContexts = (id: number) => ({
-  type: actionTypes.DELETE_CONTEXT,
-  id,
-});
-
-export const updateContexts = (contexts: object) => ({
-  ...contexts,
-  type: actionTypes.UPDATE_CONTEXT,
-});
-
 export const addHookUpdates = () => ({
   type: actionTypes.ADD_HOOK_UPDATES,
 });
@@ -68,12 +51,6 @@ export const updateHooksFilePath = (hookFileName: string, hookFilePath: string) 
   type: actionTypes.UPDATE_HOOKS_FILEPATH,
   hookFileName,
   hookFilePath,
-});
-
-export const updateContextFilePath = (contextFileName: string, contextFilePath: string) => ({
-  type: actionTypes.UPDATE_CONTEXT_FILEPATH,
-  contextFileName,
-  contextFilePath,
 });
 
 export const createNewHooksTest = () => ({
@@ -100,10 +77,12 @@ export const addAssertion = (index: number) => {
   };
 };
 
-export const addCallbackFunc = (index: number) => {
+export const updateAssertion = (index: number, id: number, newAssertion: Assertion) => {
   return {
-    type: actionTypes.ADD_CALLBACKFUNC,
+    type: actionTypes.UPDATE_ASSERTION,
     index,
+    id,
+    assertion: newAssertion,
   };
 };
 
@@ -115,20 +94,10 @@ export const deleteAssertion = (index: number, id: number) => {
   };
 };
 
-export const deleteCallbackFunc = (index: number, id: number) => {
+export const addCallbackFunc = (index: number) => {
   return {
-    type: actionTypes.DELETE_CALLBACKFUNC,
+    type: actionTypes.ADD_CALLBACKFUNC,
     index,
-    id,
-  };
-};
-
-export const updateAssertion = (index: number, id: number, newAssertion: Assertion) => {
-  return {
-    type: actionTypes.UPDATE_ASSERTION,
-    index,
-    id,
-    assertion: newAssertion,
   };
 };
 
@@ -138,6 +107,14 @@ export const updateCallbackFunc = (index: number, id: number, newCallback: Callb
     index,
     id,
     callbackFunc: newCallback,
+  };
+};
+
+export const deleteCallbackFunc = (index: number, id: number) => {
+  return {
+    type: actionTypes.DELETE_CALLBACKFUNC,
+    index,
+    id,
   };
 };
 
