@@ -63,7 +63,6 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   const displayTestFile = (testFolderFilePath) => {
     const fileContent = fs.readFileSync(testFolderFilePath + `/${fileName}.test.js`, 'utf8');
-    console.log('fileContent: ', fileContent);
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));

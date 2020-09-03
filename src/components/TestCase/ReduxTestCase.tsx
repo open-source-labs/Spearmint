@@ -57,12 +57,12 @@ const ReduxTestCase = () => {
       <div id='head'>
         <ReduxTestMenu />
       </div>
-      {/* <button onClick={fileHandle}>Preview</button> */}
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Test</label>
+          <label htmlFor='test-statement'>Describe Block</label>
           <input
             ref={testDescription}
+            // name='test-statement'
             type='text'
             id={styles.testStatement}
             value={reduxTestStatement}

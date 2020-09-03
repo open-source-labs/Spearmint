@@ -145,7 +145,6 @@ export const globalReducer = (state, action) => {
         filePath,
       };
     case actionTypes.SET_VALID_CODE:
-      console.log(action.validCode);
       return {
         ...state,
         validCode: action.validCode,

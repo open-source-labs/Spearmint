@@ -179,14 +179,12 @@ export interface UpdateAsync {
   asyncFunction: string;
   method: string;
   route: string;
-  requestBody: string;
-  store: string;
-  matcher: string;
-  expectedResponse: string;
-  responseKey: string;
-  responseValue: string;
-  it: string;
-  payloadType: string;
+  actionsFile?: string;
+  responseType?: string;
+  it?: string;
+  payloadKey?: null | string;
+  payloadType?: null | string;
+  expectedArg?: string;
 }
 
 export interface UpdateReducer {
@@ -266,15 +264,10 @@ interface Async {
   asyncFunction?: string;
   method?: string;
   route?: string;
-  requestBody?: string;
-  store?: string;
-  matcher?: string;
-  status?: string;
   actionsFile?: string;
-  responseKey?: string;
-  responseValue?: string;
   responseType?: string;
   it?: string;
+  payloadKey?: null | string;
   payloadType?: null | string;
   expectedArg?: string;
 }

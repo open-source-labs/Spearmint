@@ -113,10 +113,10 @@ const ReduxTestStatements = () => {
           type={null}
           reactTestCase={null}
           updateTypesFilePath={null}
-          updateActionsFilePath={updateReducersFilePath}
+          updateActionsFilePath={null}
           options={Object.keys(filePathMap)}
           dispatch={dispatchToReduxTestCase}
-          action={null}
+          action={updateReducersFilePath}
           filePathMap={filePathMap}
         />
         {!isActionCreatorOn && !isAsyncOn ? (
@@ -124,8 +124,8 @@ const ReduxTestStatements = () => {
             label={'Import Action Types From'}
             type={'reducer'}
             reactTestCase={null}
-            updateTypesFilePath={null}
-            updateActionsFilePath={updateReducersFilePath}
+            updateTypesFilePath={updateTypesFilePath}
+            updateActionsFilePath={null}
             options={Object.keys(filePathMap)}
             dispatch={dispatchToReduxTestCase}
             action={null}

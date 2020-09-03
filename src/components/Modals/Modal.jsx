@@ -50,6 +50,7 @@ const Modal = ({
           <pre>
             <div className='code-wrapper'>
               <code ref={codeRef}>{script}</code>
+              <p id={styles.endpoint}>Note if you are using Create React App do not install jest</p>
             </div>
           </pre>
         )}
