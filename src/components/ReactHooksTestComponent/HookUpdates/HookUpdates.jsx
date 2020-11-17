@@ -96,7 +96,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
               <input
                 type='text'
                 id='hookParams'
-                placeholder='eg. false, 0'
+                placeholder='e.g. false, 0'
                 onChange={(e) => handleChangeHookUpdatesFields(e, 'hookParams')}
               />
             </div>
@@ -104,13 +104,13 @@ const HookUpdates = ({ hookUpdates, index }) => {
           {hookUpdates.callbackFunc.map((callbackFunc, i) => {
             return (
               <div id={styles.cbFlexBox}>
-                <HooksCallback callbackFunc={callbackFunc} index={index} id={i} />
+                <HooksCallback callbackFunc={callbackFunc} index={index} id={i} key={'k' + i} />
               </div>
             );
           })}{' '}
           <div className={styles.buttonsContainer}></div>
           {hookUpdates.assertions.map((assertion, i) => {
-            return <HooksAssertion assertion={assertion} index={index} id={i} />;
+            return <HooksAssertion assertion={assertion} index={index} id={i} key={'k' + i} />;
           })}
           <div className={styles.buttonsContainer} id={styles.stateFlexBox}>
             <button onClick={addAssertionHandleClick} className={styles.assertionButton}>

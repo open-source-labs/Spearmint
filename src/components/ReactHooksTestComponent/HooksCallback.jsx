@@ -25,7 +25,7 @@ const HooksCallback = ({ callbackFunc, index, id }) => {
           <input
             type='text'
             list='responseProperties'
-            value={callbackFunc.callbackFunc}
+            placeholder='e.g. openModal'
             onChange={(e) => handleChangeUpdateCallbackFunc(e, 'callbackFunc')}
           />
         </div>
