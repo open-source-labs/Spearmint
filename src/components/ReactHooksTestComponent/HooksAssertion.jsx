@@ -59,7 +59,7 @@ const HooksAssertion = ({ assertion, index, id }) => {
   return (
     <div id={styles.groupFlexboxAssertion}>
       <div id={styles.labelInput}>
-        <label htmlFor='expectedState'>Expect State</label>
+        <label htmlFor='expectedState'>Expected State</label>
         <div id={styles.inputFlexBox}>
           <input
             type='text'

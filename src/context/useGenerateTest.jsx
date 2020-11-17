@@ -1,5 +1,3 @@
-
-
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
@@ -660,7 +658,7 @@ function useGenerateTest(test, projectFilePath) {
       hookUpdates.assertions.forEach((assertion) => {
         testFileCode += `expect(result.current.${assertion.expectedState})${
           assertion.not ? '.not' : ''
-        }.${assertion.matcher}.(${assertion.expectedValue || ''})\n`;
+        }.${assertion.matcher}(${assertion.expectedValue || ''})\n`;
       });
       testFileCode += '})\n\n';
     };
