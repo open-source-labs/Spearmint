@@ -102,7 +102,7 @@ export const resetToProjectUrl = () => ({
   type: actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS,
 });
 
-export const setValidCode = (verdict) => ({
+export const setValidCode = (validCode) => ({
   type: actionTypes.SET_VALID_CODE,
-  validCode: verdict,
+  validCode,
 });
