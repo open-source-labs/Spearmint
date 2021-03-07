@@ -112,10 +112,10 @@ export const globalReducer = (state, action) => {
       };
     //
     case actionTypes.UPDATE_FILE:
-      const updatedFile = action.testString;
+      const file = action.testString;
       return {
         ...state,
-        file: updatedFile,
+        file,
       };
     case actionTypes.OPEN_BROWSER_DOCS:
       const docsUrl = action.docsUrl;
