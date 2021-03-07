@@ -50,10 +50,9 @@ export const globalReducer = (state, action) => {
       };
 
     case actionTypes.TOGGLE_FILE_DIRECTORY:
-      const isFileDirectoryOpen = !state.isFileDirectoryOpen;
       return {
         ...state,
-        isFileDirectoryOpen,
+        isFileDirectoryOpen: !state.isFileDirectoryOpen,
       };
     case actionTypes.CLOSE_RIGHT_PANEL:
       const projUrl = state.projectUrl;
@@ -135,10 +134,9 @@ export const globalReducer = (state, action) => {
         projectUrl: urlReset,
       };
     case actionTypes.TOGGLE_EXPORT_BOOL:
-      let exportBool = !state.exportBool;
       return {
         ...state,
-        exportBool,
+        exportBool: !state.exportBool,
       };
     case actionTypes.SET_FILE_PATH:
       const filePath = action.filePath;
@@ -147,9 +145,10 @@ export const globalReducer = (state, action) => {
         filePath,
       };
     case actionTypes.SET_VALID_CODE:
+      const validCode = action.validCode;
       return {
         ...state,
-        validCode: action.validCode,
+        validCode,
       };
     default:
       return state;
