@@ -132,7 +132,7 @@ export const globalReducer = (state, action) => {
         url: urlReset,
         projectUrl: urlReset,
       };
-    case actionTypes.EXPORT:
+    case actionTypes.TOGGLE_EXPORT_BOOL:
       let exportBool = !state.exportBool;
       return {
         ...state,

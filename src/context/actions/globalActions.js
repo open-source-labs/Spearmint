@@ -16,7 +16,7 @@ export const actionTypes = {
   UPDATE_FILE_SHOW: 'UPDATE_FILE_SHOW',
   OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
   NEW_TEST_CLOSE_BROWSER_DOCS: 'NEW_TEST_CLOSE_BROWSER_DOCS',
-  EXPORT: 'EXPORT',
+  TOGGLE_EXPORT_BOOL: 'TOGGLE_EXPORT_BOOL',
   SET_FILE_PATH: 'SET_FILE_PATH',
   SET_VALID_CODE: 'SET_VALID_CODE',
 };
@@ -90,7 +90,7 @@ export const openBrowserDocs = (docsUrl) => ({
 });
 
 export const toggleExportBool = () => ({
-  type: actionTypes.EXPORT,
+  type: actionTypes.TOGGLE_EXPORT_BOOL,
 });
 
 export const setFilePath = (filePath) => ({
