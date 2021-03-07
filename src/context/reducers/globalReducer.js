@@ -125,7 +125,8 @@ export const globalReducer = (state, action) => {
         isRightPanelOpen: true,
         rightPanelDisplay: 'browserView',
       };
-    case actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS:
+    case actionTypes.RESET_TO_PROJECT_URL:
+      // formerly NEW_TEST_CLOSE_BROWSER_DOCS
       const urlReset = state.projectUrl;
       return {
         ...state,

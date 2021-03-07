@@ -15,7 +15,7 @@ export const actionTypes = {
   TOGGLE_MODAL: 'TOGGLE_MODAL',
   UPDATE_FILE: 'UPDATE_FILE',
   OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
-  NEW_TEST_CLOSE_BROWSER_DOCS: 'NEW_TEST_CLOSE_BROWSER_DOCS',
+  RESET_TO_PROJECT_URL: 'RESET_TO_PROJECT_URL', // formerly NEW_TEST_CLOSE_BROWSER_DOCS
   TOGGLE_EXPORT_BOOL: 'TOGGLE_EXPORT_BOOL',
   SET_FILE_PATH: 'SET_FILE_PATH',
   SET_VALID_CODE: 'SET_VALID_CODE',
@@ -89,6 +89,10 @@ export const openBrowserDocs = (docsUrl) => ({
   docsUrl,
 });
 
+export const resetToProjectUrl = () => ({
+  type: actionTypes.RESET_TO_PROJECT_URL,
+});
+
 export const toggleExportBool = () => ({
   type: actionTypes.TOGGLE_EXPORT_BOOL,
 });
@@ -96,10 +100,6 @@ export const toggleExportBool = () => ({
 export const setFilePath = (filePath) => ({
   type: actionTypes.SET_FILE_PATH,
   filePath,
-});
-
-export const resetToProjectUrl = () => ({
-  type: actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS,
 });
 
 export const setValidCode = (validCode) => ({
