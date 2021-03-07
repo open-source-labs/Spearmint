@@ -111,7 +111,7 @@ export const globalReducer = (state, action) => {
         isTestModalOpen: !state.isTestModalOpen,
       };
     //
-    case actionTypes.UPDATE_FILE_SHOW:
+    case actionTypes.UPDATE_FILE:
       const updatedFile = action.testString;
       return {
         ...state,

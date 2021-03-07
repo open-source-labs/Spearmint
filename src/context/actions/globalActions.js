@@ -13,7 +13,7 @@ export const actionTypes = {
   //added
   SET_TEST_CASE: 'SET_TEST_CASE',
   TOGGLE_MODAL: 'TOGGLE_MODAL',
-  UPDATE_FILE_SHOW: 'UPDATE_FILE_SHOW',
+  UPDATE_FILE: 'UPDATE_FILE',
   OPEN_BROWSER_DOCS: 'OPEN_BROWSER_DOCS',
   NEW_TEST_CLOSE_BROWSER_DOCS: 'NEW_TEST_CLOSE_BROWSER_DOCS',
   TOGGLE_EXPORT_BOOL: 'TOGGLE_EXPORT_BOOL',
@@ -80,7 +80,7 @@ export const toggleModal = () => ({
 });
 
 export const updateFile = (testString) => ({
-  type: actionTypes.UPDATE_FILE_SHOW,
+  type: actionTypes.UPDATE_FILE,
   testString,
 });
 
