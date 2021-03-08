@@ -1,0 +1,204 @@
+@import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
+@import '../../pages/LeftPanel/LeftPanel.module.scss';
+
+#modal {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+}
+
+#close {
+  float: right;
+}
+
+#header {
+  @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    font-size: large;
+    margin: 0;
+    padding: 0;
+  }
+  button {
+    font-size: 13px;
+    background-color: white;
+    margin-left: 10px;
+    width: 60px;
+    height: 25px;
+    padding: 0px;
+    border: none;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: $mint;
+  }
+}
+
+#groupFlexbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  justify-content: space-between;
+}
+
+#groupFlexboxAssertion {
+  @extend #groupFlexbox;
+  margin-top: 25px;
+  #labelInput,
+  #dropdownWrapper {
+    margin-right: 10px;
+    width: 100%;
+    #dropdownFlex {
+      width: 100%;
+    }
+  }
+}
+
+#alignRight {
+  width: 43%;
+  margin-right: 30px;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+}
+
+#serverInput {
+  width: 43%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+}
+
+#labelInput {
+  width: 100%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+
+  position: relative;
+}
+
+#labelInputTest {
+  @extend #labelInput;
+  display: inline-block;
+}
+
+#dropdownWrapper {
+  // margin-right: 9%;
+  width: 43%;
+  select {
+    font-family: $raleway;
+    width: 100%;
+    height: 25px;
+    margin: 0 3px 0 0;
+    background-color: white;
+    border: 1px solid $light-gray;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: $dark-gray;
+  }
+}
+
+#dropdownFlex {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+}
+
+#inputFlexBox {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+#hastooltip {
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+}
+
+#tooltip {
+  min-width: 10em;
+  padding: 0.5em 0.75em;
+
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
+}
+
+#matcher {
+  margin-top: 1em;
+  margin-right: 3em;
+}
+
+#addProps {
+  height: auto;
+  font-size: 0.85rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  min-width: 150px;
+  border-radius: 3px;
+  font-family: $oxygen;
+  text-align: center;
+  transition: 150ms;
+  &:hover {
+    font-size: 1rem;
+  }
+}
+
+//need to change this
+hr {
+  margin-top: 0;
+}
+
+.buttonsContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#assertionButton {
+  // height: auto;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  min-width: 150px;
+  border-radius: 3px;
+  font-family: $oxygen;
+  text-align: center;
+  transition: 150ms;
+  color: $mint;
+
+  &:hover {
+    font-size: 1.05rem;
+  }
+  i {
+    margin-right: 0.5rem;
+  }
+}
+
+#endMatcherLabel {
+  display: flex;
+  div {
+    font-size: 12px;
+  }
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 8px;
+  #notDiv {
+    margin-right: 15%;
+  }
+}

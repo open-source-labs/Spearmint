@@ -1,0 +1,119 @@
+@import '../../../assets/stylesheets/colors.scss';
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../pages/LeftPanel/LeftPanel.module.scss';
+
+#modal {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+}
+
+#close {
+  float: right;
+}
+
+#header {
+  @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+#testingFieldsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+#groupFlexbox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  justify-content: space-between;
+}
+
+#inputFlexBox {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  input {
+    margin-right: 0.5rem;
+    width: inherit;
+  }
+}
+
+#time {
+  width: 30%;
+  input {
+    width: 100%;
+  }
+}
+
+#renderCheckbox {
+  display: flex;
+  input {
+    align-self: center;
+  }
+}
+
+#browserOptionsFlexBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  input {
+    width: 240px;
+    margin: 0 4px 4px 0px;
+  }
+  img {
+    margin-bottom: 5px;
+  }
+}
+
+#browserOptions {
+  font-size: 13px;
+  margin-bottom: 0;
+  padding: 6px 0;
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+}
+
+#options {
+  margin: 5px 0 15px;
+  button {
+    font-size: 12px;
+    padding-top: 5px;
+    border: none;
+    font-family: $raleway;
+    font-weight: bold;
+    text-align: left;
+  }
+}
+
+#optionBox {
+  hr {
+    border: 1px solid $light-gray;
+    margin-top: 0;
+  }
+}
+
+#hastooltip {
+  margin-left: 0.2rem;
+  @include hastooltip($tooltip-transition-in-duration: 0.3s);
+}
+
+#tooltip {
+  min-width: 10em;
+  padding: 0.5em 0.75em;
+
+  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  @include tooltip;
+}

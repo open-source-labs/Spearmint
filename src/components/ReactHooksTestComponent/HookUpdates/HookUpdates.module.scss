@@ -1,0 +1,101 @@
+@import '../../../assets/stylesheets/colors.scss';
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../pages/LeftPanel/LeftPanel.module.scss';
+
+#hookUpdates {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+}
+
+#close {
+  float: right;
+}
+
+#hookUpdatesHeader {
+  @include box-header-alignment;
+  justify-content: flex-start;
+  display: flex;
+  align-items: center;
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+#hooksFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#hooks {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+  position: relative;
+}
+#cbFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#cb {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+}
+#stateFlexBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+#state {
+  width: 50%;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+}
+
+.buttonsContainer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.assertionButton {
+  // height: auto;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  min-width: 150px;
+  border-radius: 3px;
+  font-family: $oxygen;
+  text-align: center;
+  transition: 150ms;
+  color: $mint;
+
+  &:hover {
+    font-size: 1.05rem;
+  }
+  i {
+    margin-right: 0.5rem;
+  }
+}

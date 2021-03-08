@@ -1,0 +1,168 @@
+@import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
+
+.modal {
+  position: fixed;
+  width: 500px;
+  font-family: $openSans;
+  background-color: $mint;
+  border: 8px solid $mint;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px white inset;
+  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $mint;
+  margin: 1px;
+  height: 20%;
+  background-color: #fff;
+  p {
+    color: $mint;
+    margin: 10px;
+    font-weight: bold;
+    align-content: center;
+  }
+}
+
+#close {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+  fill: $mint;
+}
+
+#body {
+  padding: 20px 25px 10px 25px;
+
+  #endpoint {
+    color: black;
+    span {
+      margin-left: 50px;
+    }
+
+    span:hover {
+      color: $mint;
+    }
+
+    li {
+      margin-left: 50px;
+    }
+    li:last-child {
+      margin-bottom: 5px;
+    }
+    li:first-child {
+      margin-top: 4px;
+    }
+  }
+
+  p {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  input {
+    margin: 10px 0;
+    width: 430px;
+  }
+  button {
+    margin: 10px 5px 5px 5px;
+    font-size: 12px;
+    text-align: center;
+    vertical-align: middle;
+    float: right;
+    width: 100px;
+    height: 1.5rem;
+    color: #fff;
+    background-color: transparent;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
+    border: 0.5px solid white;
+    border-radius: 3px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+}
+
+#text {
+  margin: 12px;
+  text-align: center;
+}
+
+#save:hover {
+  background-color: rgb(232, 232, 232);
+  color: $mint;
+  border-radius: 3px;
+}
+
+#newTestButtons {
+  display: flex;
+  justify-content: center;
+}
+
+#testMenu {
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  width: 98%;
+  margin-bottom: 10px;
+}
+
+#left {
+  float: left;
+  #newTestBtn {
+    height: 40px;
+    width: 110px;
+    opacity: 0.8;
+    font-family: $oxygen;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 0.5px $light-gray solid;
+    color: $mint;
+    background-color: white;
+  }
+
+  #newTestBtn:hover {
+    background-color: $mint;
+    color: white;
+  }
+}
+
+pre {
+  padding: 12px 15px;
+  margin-top: -4px;
+  margin-bottom: 8px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  // border-radius: 6px;
+  .code-wrapper {
+    background: #f4f4f4;
+    // padding: 1rem;
+    border: 1px solid #ddd;
+    color: #666;
+    width: 500px;
+
+    code {
+      display: inline;
+      max-width: auto;
+      padding: 0;
+      margin: 0;
+      overflow: visible;
+      line-height: inherit;
+      word-wrap: normal;
+      background-color: initial;
+      white-space: pre;
+      border: 0;
+    }
+  }
+}
