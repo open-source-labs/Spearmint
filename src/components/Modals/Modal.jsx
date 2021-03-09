@@ -1,3 +1,8 @@
+/*
+ * Handles modals that pop up from pressing buttons "New Test +" or "Run Test",
+ * which render on the top Test Menu component.
+ */
+
 import React from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
@@ -16,7 +21,7 @@ const Modal = ({
     dispatchToMockData,
     dispatchTestCase,
     createTest,
-    closeModal
+    closeModal,
   );
 
   const script = useGenerateScript(title);
@@ -32,7 +37,7 @@ const Modal = ({
       className={styles.modal}
       isOpen={isModalOpen}
       onRequestClose={closeModal}
-      contentLabel='Save?'
+      contentLabel="Save?"
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
       ariaHideApp={false}
@@ -42,28 +47,38 @@ const Modal = ({
         <p>{title === 'New Test' ? title : 'Copy to Terminal'}</p>
       </div>
       <div id={styles.body}>
-        {title === 'New Test' ? (
-          <p id={styles.text}>
-            Do you want to start a new test? All unsaved changes <br /> will be lost.{' '}
-          </p>
-        ) : (
-          <pre>
-            <div className='code-wrapper'>
-              <code ref={codeRef}>{script}</code>
-              <p id={styles.endpoint}>Note if you are using Create React App do not install jest</p>
-            </div>
-          </pre>
-        )}
-        <span id={styles.newTestButtons}>
-          {title === 'New Test' ? (
-            <button id={styles.save} onClick={handleNewTest}>
-              {title}
-            </button>
-          ) : (
-            <button id={styles.save} onClick={handleCopy}>
-              {copySuccess ? 'Copied!' : 'Copy'}
-            </button>
+        {title === 'New Test'
+          ? (
+            <p id={styles.text}>
+              Do you want to start a new test? All unsaved changes
+              <br />
+              will be lost.
+            </p>
+          )
+          : (
+            <pre>
+              <div className="code-wrapper">
+                <code ref={codeRef}>
+                  {script}
+                </code>
+                <p id={styles.endpoint}>
+                  Note if you are using Create React App do not install jest
+                </p>
+              </div>
+            </pre>
           )}
+        <span id={styles.newTestButtons}>
+          {title === 'New Test'
+            ? (
+              <button id={styles.save} onClick={handleNewTest}>
+                {title}
+              </button>
+            )
+            : (
+              <button id={styles.save} onClick={handleCopy}>
+                {copySuccess ? 'Copied!' : 'Copy'}
+              </button>
+            )}
           <button id={styles.save} onClick={closeModal}>
             Cancel
           </button>

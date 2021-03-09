@@ -179,14 +179,14 @@ describe('Global Reducer works properly', () => {
     });
   });
 
-  it('should handle UPDATE_FILE_SHOW', () => {
-    let action = { type: 'UPDATE_FILE_SHOW', testString: '' };
+  it('should handle UPDATE_FILE', () => {
+    let action = { type: 'UPDATE_FILE', testString: '' };
     expect(globalReducer(initialState, action)).toEqual({
       ...initialState,
       file: '',
     });
     action = {
-      type: 'UPDATE_FILE_SHOW',
+      type: 'UPDATE_FILE',
       testString: `import React from "react";
       import { render, fireEvent } from '@testing-library/react';
       import '@testing-library/jest-dom/extend-expect`,
