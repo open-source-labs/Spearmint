@@ -1,16 +1,20 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
-// ---> is this for mock data and not needed?
-import { AccessibilityTestCaseContext } from '../../../context/reducers/accessibilityTestCaseReducer';
 
-import AccessibilityTestStatements from '../../TestCase/AccessibilityTestStatements';
+import { accessibilityTestCaseContext } from '../../../context/reducers/accessibilityTestCaseReducer';
+
+// test case statements are for action, assertion, and render options
+// import AccessibilityTestStatements from '../../TestCase/AccessibilityTestStatements';
 
 import {
   deleteItStatement,
 } from '../../../context/actions/accessibilityTestCaseActions';
 
 import CustomInput from '../CustomInput/CustomInput';
+
+// ### i added this file... may not be necessary
 // import customStyles from './CustomInput.module.scss';
+
 import styles from './ItRenderer.module.scss';
 
 const ItRenderer = ({
@@ -20,20 +24,24 @@ const ItRenderer = ({
   statements,
   handleChangeItStatementText,
 }) => {
-  const [, dispatchToAccessibilityTestCase] = useContext(AccessibilityTestCaseContext);
+
+  const [, dispatchToAccessibilityTestCase] = useContext(accessibilityTestCaseContext);
 
   // filter out ids not belonging to the correct describe block
+  // ### do we need this?
   const filteredIds = itStatements.allIds.filter((id) => {
     return itStatements.byId[id].describeId === describeId;
   });
 
+
   const deleteItStatementHandleClick = (e) => {
     const itId = e.target.id;
-    dispatchToReactTestCase(deleteItStatement(describeId, itId));
+    dispatchToAccessibilityTestCase(deleteItStatement(describeId, itId));
   };
 
   return filteredIds.map((id, i) => (
     <div id={styles.ItRenderer} key={i}>
+
       <i
         onClick={deleteItStatementHandleClick}
         id={id}
@@ -43,21 +51,25 @@ const ItRenderer = ({
       <CustomInput
         key={`input-${id}-${i}`}
         id={id}
-        label={'The component should...'}
-        placeholder={'Button component renders correctly...'}
+        label={'The element should...'}
+        placeholder={'The tested element should...'}
         value={itStatements.byId[id].text}
         handleChange={handleChangeItStatementText}
       />
+
       <hr />
-      <ReactTestStatements
-        key={`statement-${id}-${i}`}
-        statements={statements}
-        itId={id}
-        describeId={describeId}
-      />
-  
+ 
     </div>
   ));
 };
 
 export default ItRenderer;
+
+
+// ## stretch use?
+// <ReactTestStatements
+//   key={`statement-${id}-${i}`}
+//   statements={statements}
+//   itId={id}
+//   describeId={describeId}
+// /> 
