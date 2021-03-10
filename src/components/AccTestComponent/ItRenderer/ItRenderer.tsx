@@ -47,7 +47,7 @@ const ItRenderer = ({
         id={id}
         className={cn(styles.itClose, 'far fa-window-close')}
       ></i>
-      
+
       <CustomInput
         key={`input-${id}-${i}`}
         id={id}

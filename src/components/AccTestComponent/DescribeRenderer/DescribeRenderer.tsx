@@ -13,7 +13,7 @@ import styles from './DescribeRenderer.module.scss';
 // import action types 
 import { deleteDescribeBlock, addItStatement } from '../../context/actions/accTestCaseActions';
 
-// import from endpointTypes - ### add after html structure is created? 
+// import from accTypes - ### add after html structure is created? 
 import { Assertion, AccObj, Header, Action, EventTarget } from '../../utils/accTypes';
 
 
