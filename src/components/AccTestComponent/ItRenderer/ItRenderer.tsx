@@ -12,9 +12,6 @@ import {
 
 import CustomInput from '../CustomInput/CustomInput';
 
-// ### i added this file... may not be necessary
-// import customStyles from './CustomInput.module.scss';
-
 import styles from './ItRenderer.module.scss';
 
 const ItRenderer = ({
