@@ -40,6 +40,13 @@ import {
   mockDataReducer,
 } from '../../context/reducers/mockDataReducer';
 
+import {
+  AccTestCaseContext,
+  accTestCaseState,
+  accTestCaseReducer,
+} from '../../context/reducers/accTestCaseReducer';
+import AccTestCase from '../../components/TestCase/AccTestCase';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
 
@@ -63,6 +70,10 @@ const TestFile = () => {
   const [puppeteerTestCase, dispatchToPuppeteerTestCase] = useReducer(
     puppeteerTestCaseReducer,
     puppeteerTestCaseState
+  );
+  const [accTestCase, dispatchToAccTestCase] = useReducer(
+    accTestCaseReducer,
+    accTestCaseState
   );
 
   const closeTestModal = () => {
@@ -114,10 +125,13 @@ const TestFile = () => {
             <button id={styles.save} onClick={() => handleToggle('puppeteer')}>
               Puppeteer
             </button>
+            <button id={styles.save} onClick={() => handleToggle('acc')}>
+              Accessibility
+            </button>
           </span>
         </div>
       </ReactModal>
-
+      {/* instantiate context for each test option */}
       {testCase === 'redux' && (
         <section>
           <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
@@ -157,6 +171,15 @@ const TestFile = () => {
           >
             <PuppeteerTestCase />
           </PuppeteerTestCaseContext.Provider>
+        </section>
+      )}
+
+      {testCase === 'acc' && (
+        <section>
+          <AccTestCaseContext.Provider
+            value={[accTestCase, dispatchToAccTestCase]}>
+            <AccTestCase />
+          </AccTestCaseContext.Provider>
         </section>
       )}
 
