@@ -1,5 +1,5 @@
 // import React object and destructure useRef and useEffect hooks 
-import React, { useRef, useEffect } from 'react';           
+import React, { useRef, useEffect } from 'react';
 
 // import It component
 import ItRenderer from '../ItRenderer/ItRenderer';
@@ -10,11 +10,11 @@ import { Draggable } from 'react-beautiful-dnd';
 // import styling 
 import styles from './DescribeRenderer.module.scss';
 
-// import action types - ### build up file after html structure is created
-import { deleteDescribeBlock, addItStatement } from '../../context/actions/accessibiltyTestCaseActions';
+// import action types 
+import { deleteDescribeBlock, addItStatement } from '../../context/actions/accTestCaseActions';
 
 // import from endpointTypes - ### add after html structure is created? 
-// import { Assertion, AccessiblityObj, Header, Action, EventTarget } from '../../utils/accessiblityTypes';
+import { Assertion, AccObj, Header, Action, EventTarget } from '../../utils/accTypes';
 
 
 // require in icons

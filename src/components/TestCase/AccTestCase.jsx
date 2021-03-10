@@ -9,13 +9,13 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 
 // ### this ties in with Sharon's code - did not create a file ### VERIFY PATH
-import AccessibilityTestMenu from '../TestMenu/AccTestMenu';
+import AccTestMenu from '../TestMenu/AccTestMenu';
 
 
-import DecribeRenderer from '../AccessibilityTestComponent/DescribeRenderer/DescribeRenderer';
+import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 
 import {
-  accTestCaseContext,
+  AccTestCaseContext,
   accTestCaseState,
   accTestCaseReducer,
 } from '../../context/reducers/accTestCaseReducer';
@@ -27,7 +27,7 @@ const AccTestCase = () => {
     accTestCaseState
   );
   
-  const { describeBlocks, itStatements, statements } = accessibilityTestCase;
+  const { describeBlocks, itStatements, statements } = accTestCase;
   
   const [{ filePathMap }] = useContext(GlobalContext);
   const draggableStatements = describeBlocks.allIds;
@@ -35,22 +35,22 @@ const AccTestCase = () => {
   const handleChangeDescribeText = (e) => {
     const text = e.target.value;
     const describeId = e.target.id;
-    dispatchToAccessibilityTestCase(updateDescribeText(text, describeId));
+    dispatchToAccTestCase(updateDescribeText(text, describeId));
   };
 
   const handleChangeItStatementText = (e) => {
     const text = e.target.value;
     const itId = e.target.id;
-    dispatchToAccessibilityTestCase(updateItStatementText(text, itId));
+    dispatchToAccTestCase(updateItStatementText(text, itId));
   };
 
   return (
-    <accessibilityTestCaseContext.Provider value={[accessibilityTestCase, dispatchToAccessibilityTestCase]}>
+    <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
 
-      <div id={styles.AccessibilityTestCase}>
+      <div id={styles.AccTestCase}>
 
         <div id='head'>
-          <AccessibilityTestMenu />
+          <AccTestMenu />
         </div>
 
         {/* ###--- Header section may be useful for stretch feature(s) ---###
@@ -61,7 +61,7 @@ const AccTestCase = () => {
             <span className={styles.renderLabel}>Element to Test:</span>
             <SearchInput
               reactTestCase
-              dispatch={dispatchToAccessibilityTestCase}
+              dispatch={dispatchToAccTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
               options={Object.keys(filePathMap)}
@@ -92,18 +92,18 @@ const AccTestCase = () => {
         )} * */}
 
         <DecribeRenderer
-          dispatcher={dispatchToAccessibilityTestCase}
+          dispatcher={dispatchToAccTestCase}
           draggableStatements={draggableStatements}
           describeBlocks={describeBlocks}
           itStatements={itStatements}
           statements={statements}
           handleChangeDescribeText={handleChangeDescribeText}
           handleChangeItStatementText={handleChangeItStatementText}
-          type='accessibility'
+          type='acc'
         />
       </div>
 
-    </accessibilityTestCaseContext.Provider>
+    </AccTestCaseContext.Provider>
   );
 };
-export default AccessibilityTestCase;
+export default AccTestCase;

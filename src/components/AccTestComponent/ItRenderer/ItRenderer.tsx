@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
 
-import { accessibilityTestCaseContext } from '../../../context/reducers/accessibilityTestCaseReducer';
+import { accTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
 
 // test case statements are for action, assertion, and render options
-// import AccessibilityTestStatements from '../../TestCase/AccessibilityTestStatements';
+// import AccTestStatements from '../../TestCase/AccTestStatements';
 
 import {
   deleteItStatement,
-} from '../../../context/actions/accessibilityTestCaseActions';
+} from '../../../context/actions/accTestCaseActions';
 
 import CustomInput from '../CustomInput/CustomInput';
 
@@ -25,7 +25,7 @@ const ItRenderer = ({
   handleChangeItStatementText,
 }) => {
 
-  const [, dispatchToAccessibilityTestCase] = useContext(accessibilityTestCaseContext);
+  const [, dispatchToAccTestCase] = useContext(accTestCaseContext);
 
   // filter out ids not belonging to the correct describe block
   // ### do we need this?
@@ -36,7 +36,7 @@ const ItRenderer = ({
 
   const deleteItStatementHandleClick = (e) => {
     const itId = e.target.id;
-    dispatchToAccessibilityTestCase(deleteItStatement(describeId, itId));
+    dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
 
   return filteredIds.map((id, i) => (

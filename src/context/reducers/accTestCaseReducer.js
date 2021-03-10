@@ -1,10 +1,10 @@
 import { createContext } from 'react';
-import { actionTypes } from '../actions/accessibilityTestCaseActions';
+import { actionTypes } from '../actions/accTestCaseActions';
 
-export const accessibilityTestCaseContext = createContext([]);
+export const AccTestCaseContext = createContext([]);
 
 // ### revisit - is this the default state which is ammended by the reducer?
-export const accessibilityTestCaseState = {
+export const accTestCaseState = {
   modalOpen: false,
 
   describeId: 1,
@@ -75,7 +75,7 @@ const deleteChildren = (object, deletionId, lookup) => {
 
 /* ------------------------- Accessibility Test Case Reducer ------------------------ */
 // ### where is this invoked -> returns an updated state based on state argument and current action
-export const accessibilityTestCaseReducer = (state, action) => {
+export const accTestCaseReducer = (state, action) => {
   Object.freeze(state);
 
   let describeBlocks;

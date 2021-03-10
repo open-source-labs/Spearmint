@@ -1,7 +1,7 @@
 /* ------------------------------ Action Types ------------------------------ */
 
 export const actionTypes = {
-  TOGGLE_ACCESSIBILITY: 'TOGGLE_ACCCESSIBILITY',
+  TOGGLE_ACC: 'TOGGLE_ACC',
 
   ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',
   DELETE_DESCRIBE_BLOCK: 'DELETE_DESCRIBE_BLOCK',
@@ -45,8 +45,8 @@ export const deleteItStatement = (describeId, itId) => ({
   itId,
 });
  
-export const toggleAccessibility = () => ({
-  type: actionTypes.TOGGLE_ACCESSIBILITY,
+export const toggleAcc = () => ({
+  type: actionTypes.TOGGLE_ACC,
 });
   
 export const updateStatementsOrder = (draggableStatements) => ({
