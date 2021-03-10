@@ -40,11 +40,12 @@ import {
   mockDataReducer,
 } from '../../context/reducers/mockDataReducer';
 
-// import {
-//   AccTestCaseContext,
-//   accTestCaseReducer,
-//   accTestCaseReducer,
-// } from '../../context/reducers/accTestCaseReducer';
+import {
+  AccTestCaseContext,
+  accTestCaseState,
+  accTestCaseReducer,
+} from '../../context/reducers/accTestCaseReducer';
+import AccTestCase from '../../components/TestCase/AccTestCase';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
@@ -175,11 +176,10 @@ const TestFile = () => {
 
       {testCase === 'acc' && (
         <section>
-          <PuppeteerTestCaseContext.Provider
-            value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}
-          >
-            <PuppeteerTestCase />
-          </PuppeteerTestCaseContext.Provider>
+          <AccTestCaseContext.Provider
+            value={[accTestCase, dispatchToAccTestCase]}>
+            <AccTestCase />
+          </AccTestCaseContext.Provider>
         </section>
       )}
 

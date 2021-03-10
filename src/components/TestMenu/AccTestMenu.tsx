@@ -5,7 +5,6 @@ import { openBrowserDocs } from '../../context/actions/globalActions';
 import { addDescribeBlock, createNewTest } from '../../context/actions/accTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
-//import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import {
   updateFile,
   setFilePath,
@@ -25,19 +24,22 @@ const AccTestMenu = () => {
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
   const generateTest = useGenerateTest('react', projectFilePath);
 
-
+  // setValidCode to true on load. 
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
   }, []);
 
+  // handle change to add a Describe Block
   const handleAddDescribeBlock = () => {
     dispatchToAccTestCase(addDescribeBlock());
   };
 
+  // handle change to open accessibility URL docs on right panel
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(accUrl));
   };
 
+  // handle change for 'preview' button to generate test
   const fileHandle = () => {
     dispatchToGlobal(updateFile(generateTest(accTestCase)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
@@ -62,6 +64,7 @@ const AccTestMenu = () => {
             title={title}
             isModalOpen={isModalOpen}
             closeModal={closeModal}
+            dispatchToMockData={null}
             dispatchTestCase={dispatchToAccTestCase}
             createTest={createNewTest}
           />
