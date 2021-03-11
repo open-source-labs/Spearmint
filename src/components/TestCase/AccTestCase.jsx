@@ -13,7 +13,7 @@ import AccTestMenu from '../TestMenu/AccTestMenu';
 
 
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
-
+import { updateImportFilePath } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
   accTestCaseState,
@@ -45,51 +45,20 @@ const AccTestCase = () => {
   };
 
   return (
-    <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
-
       <div id={styles.AccTestCase}>
-
         <div id='head'>
           <AccTestMenu />
         </div>
-
-        {/* ###--- Header section may be useful for stretch feature(s) ---###
-        <div className={styles.header}>
-
-       ### Save for stretch feature use? 
-          <div className={styles.renderComponent}>
-            <span className={styles.renderLabel}>Element to Test:</span>
+        <section id={styles.testCaseHeader}>
+        <label htmlFor='fileImport'>Import File From</label>
+          <div id={styles.labelInput} style={{ width: '80%' }}>
             <SearchInput
-              reactTestCase
-              dispatch={dispatchToAccTestCase}
-              action={updateRenderComponent}
-              filePathMap={filePathMap}
               options={Object.keys(filePathMap)}
+              dispatch={dispatchToAccTestCase}
+              action={updateImportFilePath}
+              filePathMap={filePathMap}
             />
           </div>
-
-           ### button might be useful for stretch
-          <button type='button' className={styles.mockBtn} onClick={handleAddMockData}>
-            <i className={cn(styles.addIcon, 'fas fa-plus')} />
-            Mock Data
-          </button> 
-
-        </div>
-
-        {mockData.length > 0 && (
-          <section id={styles.mockDataHeader}>
-            {mockData.map((data) => {
-              return (
-                <MockData
-                  key={data.id}
-                  mockDatumId={data.id}
-                  dispatchToMockData={dispatchToMockData}
-                  fieldKeys={data.fieldKeys}
-                />
-              );
-            })}
-          </section>
-        )} * */}
 
         <DecribeRenderer
           dispatcher={dispatchToAccTestCase}
@@ -101,9 +70,8 @@ const AccTestCase = () => {
           handleChangeItStatementText={handleChangeItStatementText}
           type='acc'
         />
+        </section>
       </div>
-
-    </AccTestCaseContext.Provider>
   );
 };
 export default AccTestCase;
