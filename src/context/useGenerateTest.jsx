@@ -1,3 +1,4 @@
+/* eslint-disable */
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
@@ -787,7 +788,96 @@ function useGenerateTest(test, projectFilePath) {
         `;
     };
 
+    const addAccImportStatements = () => {
+      const componentPath = accTestCase.statements.componentPath;
+      let filePath = path.relative(projectFilePath, componentPath);
+      filePath = filePath.replace(/\\/g, '/');
+
+      testFile += `
+        import axe from 'axe-core';
+        const regeneratorRuntime = require('regenerator-runtime');
+
+        const path = require('path');
+        const fs = require('fs');
+        const html = fs.readFileSync(path.resolve(__dirname, '${filePath}'), 'utf8');
+      `;
+    };
+
+    const addAccDescribeBlocks = () => {
+      const { describeBlocks } = accTestCase;
+
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        addAccItStatements(id);
+        testFileCode += `}); \n`;
+      });
+    };
+
+    const addAccItStatements = (id) => {
+      const { itStatements } = accTestCase;
+      itStatements.allIds.forEach((itId) => {
+        if (itStatements.byId[itId].describeId === describeId) {
+          testFileCode += `it('${itStatements.byId[itId].text}', () => {
+          // exclude tests that are incompatible
+            const config = {
+              rules: {
+                'color-contrast': { enabled: false },
+                'link-in-text-block': { enabled: false }
+              }
+            };
+        
+            // get language tag from imported html file and assign to jsdom document
+            const langTag = html.match(/<html lang="(.*)"/)[1];
+            document.documentElement.lang = langTag;
+            document.documentElement.innerHTML = html.toString();
+        
+            axe.run(config, async (err, { violations }) => {
+              if (err) {
+                console.log('err: ', err);
+                done();
+              }
+        
+              if (violations.length === 0) {
+                console.log('Congrats! Keep up the good work, you have 0 known violations!');
+              } else {
+                violations.forEach(axeViolation => {
+                  console.log('-------');
+                  const whereItFailed = axeViolation.nodes[0].html;
+                  // const failureSummary = axeViolation.nodes[0].failureSummary;
+            
+                  const { description, help, helpUrl } = axeViolation;
+        
+                  console.log('TEST DESCRIPTION: ', description,
+                    '\nISSUE: ', help,
+                    '\nMORE INFO: ', helpUrl,
+                    '\nWHERE IT FAILED: ', whereItFailed,
+                    // '\nhow to fix: ', failureSummary
+                  );
+                });
+              }
+        
+              expect(err).toBe(null);
+              expect(violations).toHaveLength(0);
+              done();
+            });
+          })`;
+        }
+        testFileCode += '\n';
+      });
+    };
+
     switch (test) {
+      case 'acc':
+        var accTestCase = testState;
+        return (
+          addAccImportStatements(),
+          addAccDescribeBlocks(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
       case 'react':
         var reactTestCase = testState;
         var mockData = mockDataState;
