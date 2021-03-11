@@ -793,7 +793,7 @@ function useGenerateTest(test, projectFilePath) {
       let filePath = path.relative(projectFilePath, componentPath);
       filePath = filePath.replace(/\\/g, '/');
 
-      testFile += `
+      testFileCode += `
         import axe from 'axe-core';
         const regeneratorRuntime = require('regenerator-runtime');
 
