@@ -22,7 +22,7 @@ const AccTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('acc');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
-  const generateTest = useGenerateTest('react', projectFilePath);
+  const generateTest = useGenerateTest('acc', projectFilePath);
 
   // setValidCode to true on load. 
   useEffect(() => {

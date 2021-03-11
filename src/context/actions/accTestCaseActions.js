@@ -34,7 +34,7 @@ export const deleteDescribeBlock = (describeId) => {
   };
 };
  
-export const addItstatement = (describeId) => ({
+export const addItStatement = (describeId) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
 });

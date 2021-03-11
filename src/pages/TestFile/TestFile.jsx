@@ -177,7 +177,12 @@ const TestFile = () => {
       {testCase === 'acc' && (
         <section>
           <AccTestCaseContext.Provider
+<<<<<<< HEAD
             value={[accTestCase, dispatchToAccTestCase]}>
+=======
+            value={[accTestCase, dispatchToAccTestCase]}
+          >
+>>>>>>> 3bd5904064b5e0d92324b0a8e2c9104c400901de
             <AccTestCase />
           </AccTestCaseContext.Provider>
         </section>

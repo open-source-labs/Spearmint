@@ -11,14 +11,14 @@ import { Draggable } from 'react-beautiful-dnd';
 import styles from './DescribeRenderer.module.scss';
 
 // import action types 
-import { deleteDescribeBlock, addItStatement } from '../../context/actions/accTestCaseActions';
+import { deleteDescribeBlock, addItstatement } from '../../../context/actions/accTestCaseActions';
 
 // import from accTypes - ### add after html structure is created? 
 import { Assertion, AccObj, Header, Action, EventTarget } from '../../utils/accTypes';
 
-
+import cn from 'classnames';
 // require in icons
-const closeIcon = require('../../assets/images/close.png');
+const closeIcon = require('../../../assets/images/close.png');
 // const dragIcon = require('../../assets/images/drag-vertical.png');
 // const minusIcon = require('../../assets/images/minus-box-outline.png');
 
@@ -84,11 +84,11 @@ const DescribeRenderer = ({
         />
 
         {/* Implement Button For Stretch */}
-        {/* <div className={styles.buttonContainer}>
+        <div className={styles.buttonContainer}>
           <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
             +It Statement
           </button>
-        </div> */}
+        </div>
 
       </div>
     );

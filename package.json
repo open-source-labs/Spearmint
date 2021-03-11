@@ -23,7 +23,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-modal": "^3.10.5",
     "classnames": "^2.2.6",
-    "concurrently": "^4.1.2",
+    "concurrently": "^6.0.0",
     "cross-env": "^5.2.1",
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.1.0",
@@ -37,21 +37,21 @@
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
     "react-monaco-editor": "^0.25.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^4.0.3",
     "sass": "^1.26.5",
     "typescript": "^3.9.2",
     "wait-on": "^3.3.0"
   },
   "scripts": {
     "react-start": "react-scripts start",
-    "react-build": "NODE_ENV=production react-scripts build",
+    "react-build": "SET NODE_ENV=production react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:watch": "jest --watch",
     "react-eject": "react-scripts eject",
-    "electron-build": "NODE_ENV=production electron-builder -mwl",
+    "electron-build": "SET NODE_ENV=production electron-builder -mwl",
     "release": "npm run react-build && electron-builder --publish=always",
-    "build": "NODE_ENV=production npm run react-build && npm run electron-build",
-    "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+    "build": "SET NODE_ENV=production npm run react-build && npm run electron-build",
+    "start": "SET NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "browserslist": {
     "production": [
@@ -73,7 +73,7 @@
     "@types/jest": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
-    "electron": "^5.0.3",
+    "electron": "^12.0.1",
     "electron-builder": "^22.6.1",
     "electron-devtools-installer": "^3.0.0",
     "enzyme": "^3.10.0",
@@ -84,7 +84,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.1",
     "react-test-renderer": "^16.12.0",
-    "spectron": "^5.0.0",
+    "spectron": "^14.0.0",
     "test-data-bot": "^0.8.0"
   }
 }
