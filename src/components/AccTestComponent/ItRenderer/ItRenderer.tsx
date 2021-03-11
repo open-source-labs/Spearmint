@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
 
-import { accTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
+import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
 
 // test case statements are for action, assertion, and render options
 // import AccTestStatements from '../../TestCase/AccTestStatements';
@@ -22,7 +22,7 @@ const ItRenderer = ({
   handleChangeItStatementText,
 }) => {
 
-  const [, dispatchToAccTestCase] = useContext(accTestCaseContext);
+  const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
   // filter out ids not belonging to the correct describe block
   // ### do we need this?
