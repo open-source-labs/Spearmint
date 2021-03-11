@@ -17,6 +17,8 @@ export const actionTypes = {
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
+
+  UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -77,3 +79,9 @@ export const openInfoModal = () => {
 export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
+
+export const updateImportFilePath = (fileName, filePath) => ({
+  type: actionTypes.UPDATE_FILE_PATH,
+  fileName, 
+  filePath,
+});

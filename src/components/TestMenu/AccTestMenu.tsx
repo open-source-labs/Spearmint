@@ -5,7 +5,6 @@ import { openBrowserDocs } from '../../context/actions/globalActions';
 import { addDescribeBlock, createNewTest } from '../../context/actions/accTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
-//import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import {
   updateFile,
   setFilePath,
@@ -14,6 +13,7 @@ import {
 } from '../../context/actions/globalActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+
 
 const AccTestMenu = () => {
   // link to accessibility testing docs url
@@ -78,6 +78,7 @@ const AccTestMenu = () => {
         </div>
       </div>
     </div>
+    
   );
 }
 
