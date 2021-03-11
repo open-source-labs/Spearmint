@@ -1,8 +1,9 @@
-import styles from '../../components/Modals/ExportFileModal.module.scss';
+/* eslint-disable linebreak-style */
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
+import styles from '../../components/Modals/ExportFileModal.module.scss';
 
-//may be able to delete toggleReact, etc. from their respective action files
+// may be able to delete toggleReact, etc. from their respective action files
 
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
 
@@ -177,12 +178,8 @@ const TestFile = () => {
       {testCase === 'acc' && (
         <section>
           <AccTestCaseContext.Provider
-<<<<<<< HEAD
-            value={[accTestCase, dispatchToAccTestCase]}>
-=======
             value={[accTestCase, dispatchToAccTestCase]}
           >
->>>>>>> 3bd5904064b5e0d92324b0a8e2c9104c400901de
             <AccTestCase />
           </AccTestCaseContext.Provider>
         </section>

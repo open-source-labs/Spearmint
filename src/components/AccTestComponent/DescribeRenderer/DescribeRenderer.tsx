@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable linebreak-style */
+/* eslint-disable no-trailing-spaces */
 // import React object and destructure useRef and useEffect hooks 
 import React, { useRef, useEffect } from 'react';
 
@@ -11,7 +14,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import styles from './DescribeRenderer.module.scss';
 
 // import action types 
-import { deleteDescribeBlock, addItstatement } from '../../../context/actions/accTestCaseActions';
+import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
 
 // import from accTypes - ### add after html structure is created? 
 import { Assertion, AccObj, Header, Action, EventTarget } from '../../utils/accTypes';
