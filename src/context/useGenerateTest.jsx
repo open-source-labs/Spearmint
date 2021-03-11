@@ -799,7 +799,8 @@ function useGenerateTest(test, projectFilePath) {
 
         const path = require('path');
         const fs = require('fs');
-        const html = fs.readFileSync(path.resolve(__dirname, '${filePath}'), 'utf8');
+        const html = fs.readFileSync(path.resolve(__dirname,
+          '${filePath}'), 'utf8');
       `;
     };
 
@@ -813,10 +814,10 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-    const addAccItStatements = (id) => {
+    const addAccItStatements = (descId) => {
       const { itStatements } = accTestCase;
       itStatements.allIds.forEach((itId) => {
-        if (itStatements.byId[itId].describeId === describeId) {
+        if (itStatements.byId[itId].describeId === descId) {
           testFileCode += `it('${itStatements.byId[itId].text}', () => {
           // exclude tests that are incompatible
             const config = {
