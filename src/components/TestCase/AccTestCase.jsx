@@ -45,15 +45,12 @@ const AccTestCase = () => {
   };
 
   return (
-    <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
-
       <div id={styles.AccTestCase}>
-
         <div id='head'>
           <AccTestMenu />
         </div>
         <section id={styles.testCaseHeader}>
-        <label htmlFor='endpointServer'>Import File From</label>
+        <label htmlFor='fileImport'>Import File From</label>
           <div id={styles.labelInput} style={{ width: '80%' }}>
             <SearchInput
               options={Object.keys(filePathMap)}
@@ -75,8 +72,6 @@ const AccTestCase = () => {
         />
         </section>
       </div>
-
-    </AccTestCaseContext.Provider>
   );
 };
 export default AccTestCase;
