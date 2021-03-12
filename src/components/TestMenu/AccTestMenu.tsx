@@ -17,7 +17,7 @@ import { useToggleModal } from './testMenuHooks';
 
 const AccTestMenu = () => {
   // link to accessibility testing docs url
-  const accUrl = ''; 
+  const accUrl = 'https://www.deque.com/axe/core-documentation/api-documentation/'; 
 
   // initialize hooks
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('acc');
