@@ -791,20 +791,20 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ ACCESSIBILITY TESTING ------------------------------------------ */
     
     const addAccImportStatements = () => {
+      const filePath = accTestCase.statements.componentPath;
+      // or the following block of code ( alternate approach )
       // const componentPath = accTestCase.statements.componentPath;
       // let filePath = path.relative(projectFilePath, componentPath);
       // filePath = filePath.replace(/\\/g, '/');
 
       // testFileCode += JSON.stringify(accTestCase);
 
-      const filePath = accTestCase.statements.componentPath;
-
       testFileCode += `
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');
-        
         const path = require('path');
         const fs = require('fs');
+        
         const html = fs.readFileSync(path.resolve(__dirname,
           '${filePath}'), 'utf8');
         
@@ -823,6 +823,7 @@ function useGenerateTest(test, projectFilePath) {
 
     const addAccItStatements = (descId) => {
       const { itStatements } = accTestCase;
+      
       itStatements.allIds.forEach((itId) => {
         if (itStatements.byId[itId].describeId === descId) {
           testFileCode += `it('${itStatements.byId[itId].text}', (done) => {
