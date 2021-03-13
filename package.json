@@ -44,14 +44,15 @@
   },
   "scripts": {
     "react-start": "react-scripts start",
-    "react-build": "SET NODE_ENV=production react-scripts build",
+    "react-build": "NODE_ENV=production react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:watch": "jest --watch",
     "react-eject": "react-scripts eject",
-    "electron-build": "SET NODE_ENV=production electron-builder -mwl",
+    "electron-build": "NODE_ENV=production electron-builder -mwl",
     "release": "npm run react-build && electron-builder --publish=always",
-    "build": "SET NODE_ENV=production npm run react-build && npm run electron-build",
-    "start": "SET NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+    "build": "NODE_ENV=production npm run react-build && npm run electron-build",
+    "start-windows": "SET NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "browserslist": {
     "production": [
