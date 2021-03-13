@@ -37,7 +37,7 @@
     "react-dom": "^16.8.6",
     "react-modal": "^3.8.1",
     "react-monaco-editor": "^0.25.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.1",
     "sass": "^1.26.5",
     "typescript": "^3.9.2",
     "wait-on": "^3.3.0"
@@ -51,6 +51,7 @@
     "electron-build": "NODE_ENV=production electron-builder -mwl",
     "release": "npm run react-build && electron-builder --publish=always",
     "build": "NODE_ENV=production npm run react-build && npm run electron-build",
+    "start-windows": "SET NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "browserslist": {
@@ -69,6 +70,7 @@
     "@testing-library/jest-dom": "^5.8.0",
     "@testing-library/react": "^8.0.9",
     "@testing-library/react-hooks": "^3.2.1",
+    "@types/classnames": "^2.2.11",
     "@types/jest": "^25.2.3",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
