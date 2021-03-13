@@ -50,7 +50,7 @@ const DescribeRenderer = ({
 
   const addItStatementHandleClick = (e) => {
     const describeId = e.target.id;
-    dispatcher(addItstatement(describeId));
+    dispatcher(addItStatement(describeId));
   };
 
   return draggableStatements.map((id, i) => {
