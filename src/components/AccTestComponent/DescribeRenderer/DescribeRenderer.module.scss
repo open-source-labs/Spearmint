@@ -1,0 +1,82 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+@import '../../../pages/LeftPanel/LeftPanel.module.scss';
+
+#describeBlock {
+  position: relative;
+  background-color: white;
+  border-radius: 3px;
+  padding: 1rem;
+  margin-top: 10px;
+  box-shadow: 1px 1px 5px gray;
+  display: flex;
+  flex-direction: column;
+  z-index: 0;
+  margin-top: 1rem;
+
+  .describeClose {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 1.25rem;
+    z-index: 3;
+    transition: 250ms;
+
+    &:hover {
+      color: red;
+      cursor: pointer;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  }
+
+  .separator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    // background-color: rgba(128, 128, 128, 0.20);
+    background-color: #02c3c33f;
+    border-bottom: 2px solid gray;
+    opacity: 100%;
+    z-index: 0;
+  }
+
+  .describeLabel {
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 3;
+    font-family: $oxygen;
+  }
+
+  .describeInput {
+    border: none;
+    // border-bottom: 1px solid $mint;
+    background-color: rgba(0, 0, 0, 0);
+    margin-top: 0.3rem;
+    font-size: 0.9rem;
+    z-index: 3;
+  }
+
+  .buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    margin-top: 1rem;
+
+    .addIt {
+      height: auto;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 5px;
+      background-color: $mint;
+
+      &:hover {
+        background-color: white;
+        color: $mint;
+      }
+    }
+  }
+}

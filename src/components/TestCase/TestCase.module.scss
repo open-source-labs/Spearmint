@@ -1,5 +1,5 @@
-@import '/../../assets/stylesheets/fonts.scss';
-@import '/../../assets/stylesheets/colors.scss';
+@import './../../assets/stylesheets/fonts.scss';
+@import './../../assets/stylesheets/colors.scss';
 @import '../../pages/LeftPanel/LeftPanel.module.scss';
 @import '../EndpointTestComponent/Endpoint.module.scss';
 
@@ -18,7 +18,6 @@ div {
 
 #testCaseHeader {
   margin: 15px 25px 15px 15px;
-  // background-color: red;
 }
 
 #testMockSection {
