@@ -42,6 +42,7 @@ const ItRenderer = ({
     const itId = e.target.id;
     dispatchToReactTestCase(addAssertion(describeId, itId));
   };
+  
 
   return filteredIds.map((id, i) => (
     <div id={styles.ItRenderer} key={i}>
