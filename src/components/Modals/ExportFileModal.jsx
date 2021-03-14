@@ -84,10 +84,10 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
         if (fileData.isDirectory()) {
           file.files = generateFileTreeObject(file.filePath);
           file.files.forEach((file) => {
-            let javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
-            let fileType = file.fileName.split('.')[1];
-            if (javaScriptFileTypes.includes(fileType)) {
-              let componentName = file.fileName.split('.')[0];
+            const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
+            const fileType = file.fileName.split('.')[1];
+            if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
+              const componentName = file.fileName.split('.')[0];
               filePathMap[componentName] = file.filePath;
             }
           });
