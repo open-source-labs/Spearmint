@@ -15,10 +15,11 @@ export const actionTypes = {
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
 
+  UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
+
   // not yet implemented:
   TOGGLE_ACC: 'TOGGLE_ACC',
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
-  UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -71,6 +72,12 @@ export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
 
+export const updateImportFilePath = (fileName, filePath) => ({
+  type: actionTypes.UPDATE_FILE_PATH,
+  fileName,
+  filePath,
+});
+
 // the below have no corresponding functions in Reducer
 export const toggleAcc = () => ({
   type: actionTypes.TOGGLE_ACC,
@@ -79,10 +86,4 @@ export const toggleAcc = () => ({
 export const updateStatementsOrder = (draggableStatements) => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
   draggableStatements,
-});
-
-export const updateImportFilePath = (fileName, filePath) => ({
-  type: actionTypes.UPDATE_FILE_PATH,
-  fileName, 
-  filePath,
 });

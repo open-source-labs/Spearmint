@@ -41,8 +41,8 @@ export const accTestCaseState = {
       },
     },
     allIds: ['statement0'],
-    componentPath: '',
-    componentName: '',
+    fileName: '',
+    filePath: '',
   },
 };
 
@@ -246,6 +246,14 @@ export const accTestCaseReducer = (state, action) => {
       return {
         ...state,
         modalOpen: false,
+      };
+    }
+    case actionTypes.UPDATE_FILE_PATH: {
+      const { fileName, filePath } = action;
+      return {
+        ...state,
+        fileName,
+        filePath,
       };
     }
     default:
