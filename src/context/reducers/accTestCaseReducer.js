@@ -106,24 +106,6 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
-    case actionTypes.UPDATE_DESCRIBE_TEXT: {
-      const { describeId, text } = action;
-      const byIds = { ...describeBlocks.byId };
-      const block = { ...describeBlocks.byId[describeId] };
-      return {
-        ...state,
-        describeBlocks: {
-          ...describeBlocks,
-          byId: {
-            ...byIds,
-            [describeId]: {
-              ...block,
-              text,
-            },
-          },
-        },
-      };
-    }
     case actionTypes.DELETE_DESCRIBE_BLOCK: {
       const { describeId } = action;
       const byId = { ...describeBlocks.byId };
@@ -158,6 +140,24 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
+    case actionTypes.UPDATE_DESCRIBE_TEXT: {
+      const { describeId, text } = action;
+      const byIds = { ...describeBlocks.byId };
+      const block = { ...describeBlocks.byId[describeId] };
+      return {
+        ...state,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...byIds,
+            [describeId]: {
+              ...block,
+              text,
+            },
+          },
+        },
+      };
+    }
     case actionTypes.ADD_ITSTATEMENT: {
       const { describeId } = action;
       const itId = `it${state.itId}`;
@@ -173,24 +173,6 @@ export const accTestCaseReducer = (state, action) => {
             [itId]: createItStatement(describeId, itId),
           },
           allIds: [...(itStatements.allIds || []), itId],
-        },
-      };
-    }
-    case actionTypes.UPDATE_ITSTATEMENT_TEXT: {
-      const { itId, text } = action;
-      const byIds = { ...itStatements.byId };
-      const block = { ...itStatements.byId[itId] };
-      return {
-        ...state,
-        itStatements: {
-          ...itStatements,
-          byId: {
-            ...byIds,
-            [itId]: {
-              ...block,
-              text,
-            },
-          },
         },
       };
     }
@@ -216,6 +198,24 @@ export const accTestCaseReducer = (state, action) => {
             ...statements.byId,
           },
           allIds: [...statementAllIds],
+        },
+      };
+    }
+    case actionTypes.UPDATE_ITSTATEMENT_TEXT: {
+      const { itId, text } = action;
+      const byIds = { ...itStatements.byId };
+      const block = { ...itStatements.byId[itId] };
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...byIds,
+            [itId]: {
+              ...block,
+              text,
+            },
+          },
         },
       };
     }
