@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import './SearchInput.scss';
 
@@ -83,30 +85,26 @@ const SearchInput = ({
 
   let optionList;
   if (showOptions && userInput) {
-    if (filteredOptions) {
-      optionList = (
+    optionList = filteredOptions
+      ? (
         <ul className={reactTestCase ? 'react-test-options' : 'options'}>
-          {filteredOptions.map((optionName, index) => {
-            return (
-              <li
-                className={index === activeOption ? 'option-active' : ''}
-                key={optionName}
-                type={optionName}
-                onClick={handleClick}
-              >
-                {optionName}
-              </li>
-            );
-          })}
+          {filteredOptions.map((optionName, index) => (
+            <li
+              className={index === activeOption ? 'option-active' : ''}
+              key={optionName}
+              type={optionName}
+              onClick={handleClick}
+            >
+              {optionName}
+            </li>
+          ))}
         </ul>
-      );
-    } else {
-      optionList = (
+      )
+      : (
         <div className='no-options'>
           <em>No Option!</em>
         </div>
       );
-    }
   }
 
   return (
@@ -123,8 +121,7 @@ const SearchInput = ({
             placeholder='File Name'
           />
         </div>
-        {
-        }
+        {optionList}
       </div>
     </div>
   );
