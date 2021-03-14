@@ -6,10 +6,10 @@ const SearchInput = ({
   action,
   filePathMap,
   options,
-  reactTestCase,
-  updateTypesFilePath,
-  updateActionsFilePath,
-  type,
+  reactTestCase = null,
+  updateTypesFilePath = null,
+  updateActionsFilePath = null,
+  type = null,
   label,
 }) => {
   const [activeOption, setActiveOption] = useState(0);
