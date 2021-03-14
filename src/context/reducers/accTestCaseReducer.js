@@ -106,7 +106,6 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
-
     case actionTypes.UPDATE_DESCRIBE_TEXT: {
       const { describeId, text } = action;
       const byIds = { ...describeBlocks.byId };
@@ -125,7 +124,6 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
-
     case actionTypes.DELETE_DESCRIBE_BLOCK: {
       const { describeId } = action;
       const byId = { ...describeBlocks.byId };
@@ -160,7 +158,6 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
-
     case actionTypes.ADD_ITSTATEMENT: {
       const { describeId } = action;
       const itId = `it${state.itId}`;
@@ -179,7 +176,6 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
-
     case actionTypes.UPDATE_ITSTATEMENT_TEXT: {
       const { itId, text } = action;
       const byIds = { ...itStatements.byId };
@@ -198,7 +194,6 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
-
     case actionTypes.DELETE_ITSTATEMENT: {
       const { itId } = action;
       const byId = { ...itStatements.byId };
@@ -224,7 +219,6 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
-
     case actionTypes.CREATE_NEW_TEST: {
       return {
         ...state,
@@ -242,16 +236,18 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
-    case actionTypes.OPEN_INFO_MODAL:
+    case actionTypes.OPEN_INFO_MODAL: {
       return {
         ...state,
         modalOpen: true,
       };
-    case actionTypes.CLOSE_INFO_MODAL:
+    }
+    case actionTypes.CLOSE_INFO_MODAL: {
       return {
         ...state,
         modalOpen: false,
       };
+    }
     default:
       return state;
   }
