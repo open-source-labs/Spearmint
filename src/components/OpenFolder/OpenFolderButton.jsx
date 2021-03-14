@@ -60,24 +60,23 @@ const OpenFolder = () => {
     }
   };
 
-  // reads contents within the selected directory and checks if it is a file/folder
   const generateFileTreeObject = (directoryPath) => {
     const fileArray = electronFs.readdirSync(directoryPath).map((fileName) => {
       // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
-      let filePath = `${directoryPath}/${fileName}`;
+      const filePath = `${directoryPath}/${fileName}`;
       const file = {
         filePath,
         fileName,
         files: [],
       };
+
+      populateFilePathMap(file);
+
       // generateFileTreeObj will be recursively called if it is a folder
       const fileData = electronFs.statSync(file.filePath);
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
-        if (fileData.isDirectory()) {
-          file.files = generateFileTreeObject(file.filePath);
-          file.files.forEach(populateFilePathMap);
-        }
+      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && fileData.isDirectory()) {
+        file.files = generateFileTreeObject(file.filePath);
       }
       return file;
     });

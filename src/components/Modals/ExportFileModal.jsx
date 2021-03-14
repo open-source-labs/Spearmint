@@ -81,19 +81,19 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     const fileArray = fs.readdirSync(projectFilePath).map((fileName) => {
       // replace backslashes for Windows OS
       projectFilePath = projectFilePath.replace(/\\/g, '/');
-      let filePath = `${projectFilePath}/${fileName}`;
+      const filePath = `${projectFilePath}/${fileName}`;
       const file = {
         filePath,
         fileName,
         files: [],
       };
+
+      populateFilePathMap(file);
+
       // generateFileTreeObj will be recursively called if it is a folder
       const fileData = fs.statSync(file.filePath);
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
-        if (fileData.isDirectory()) {
-          file.files = generateFileTreeObject(file.filePath);
-          file.files.forEach(populateFilePathMap);
-        }
+      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && fileData.isDirectory()) {
+        file.files = generateFileTreeObject(file.filePath);
       }
       return file;
     });
