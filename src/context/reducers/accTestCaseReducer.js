@@ -252,8 +252,11 @@ export const accTestCaseReducer = (state, action) => {
       const { fileName, filePath } = action;
       return {
         ...state,
-        fileName,
-        filePath,
+        statements: {
+          ...state.statements,
+          fileName,
+          filePath,
+        },
       };
     }
     default:
