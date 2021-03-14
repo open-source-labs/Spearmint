@@ -16,6 +16,7 @@ const SearchInput = ({
   const [filteredOptions, setFilteredOptions] = useState([]);
   const [showOptions, setShowOptions] = useState(false);
   const [userInput, setUserInput] = useState('');
+
   const handleChange = (e) => {
     const input = e.currentTarget.value;
 
@@ -37,12 +38,16 @@ const SearchInput = ({
 
     const selectedOption = e.target.type;
     const filePath = filePathMap[selectedOption] || '';
+
+    // updateTypesFilePath and updateActionsFilePath are only not-null if used within Redux
     if (updateTypesFilePath) {
       dispatch(updateTypesFilePath(selectedOption, filePath, type));
     }
     if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
+
     if (action) dispatch(action(selectedOption, filePath));
   };
+
   const handleKeyDown = (e) => {
     if (action) dispatch(action('', ''));
     if (e.keyCode === 13) {
@@ -67,6 +72,7 @@ const SearchInput = ({
       setActiveOption(activeOption + 1);
     }
   };
+
   let optionList;
   if (showOptions && userInput) {
     if (filteredOptions) {
@@ -94,6 +100,7 @@ const SearchInput = ({
       );
     }
   }
+
   return (
     <div className='flex-item'>
       <label htmlFor='typesFile'>{label}</label>
