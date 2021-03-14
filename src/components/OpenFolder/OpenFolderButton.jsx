@@ -23,9 +23,8 @@ const { dialog } = remote;
 
 const OpenFolder = () => {
   const [{ isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
-    GlobalContext
+    GlobalContext,
   );
-  const filePathMap = {};
 
   const handleOpenFolder = () => {
     const directory = dialog.showOpenDialog({
@@ -51,10 +50,20 @@ const OpenFolder = () => {
     }
   };
 
-  //reads contents within the selected directory and checks if it is a file/folder
+  const filePathMap = {};
+  const populateFilePathMap = (file) => {
+    const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
+    const fileType = file.fileName.split('.')[1];
+    if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
+      const componentName = file.fileName.split('.')[0];
+      filePathMap[componentName] = file.filePath;
+    }
+  };
+
+  // reads contents within the selected directory and checks if it is a file/folder
   const generateFileTreeObject = (directoryPath) => {
     const fileArray = electronFs.readdirSync(directoryPath).map((fileName) => {
-      //replace backslashes for Windows OS
+      // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       let filePath = `${directoryPath}/${fileName}`;
       const file = {
@@ -62,19 +71,12 @@ const OpenFolder = () => {
         fileName,
         files: [],
       };
-      //generateFileTreeObj will be recursively called if it is a folder
+      // generateFileTreeObj will be recursively called if it is a folder
       const fileData = electronFs.statSync(file.filePath);
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (fileData.isDirectory()) {
           file.files = generateFileTreeObject(file.filePath);
-          file.files.forEach((file) => {
-            const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
-            const fileType = file.fileName.split('.')[1];
-            if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
-              const componentName = file.fileName.split('.')[0];
-              filePathMap[componentName] = file.filePath;
-            }
-          });
+          file.files.forEach(populateFilePathMap);
         }
       }
       return file;

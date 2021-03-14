@@ -66,11 +66,20 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
   };
-  // co
+
   const filePathMap = {};
+  const populateFilePathMap = (file) => {
+    const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
+    const fileType = file.fileName.split('.')[1];
+    if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
+      const componentName = file.fileName.split('.')[0];
+      filePathMap[componentName] = file.filePath;
+    }
+  };
+
   const generateFileTreeObject = (projectFilePath) => {
     const fileArray = fs.readdirSync(projectFilePath).map((fileName) => {
-      //replace backslashes for Windows OS
+      // replace backslashes for Windows OS
       projectFilePath = projectFilePath.replace(/\\/g, '/');
       let filePath = `${projectFilePath}/${fileName}`;
       const file = {
@@ -78,19 +87,12 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
         fileName,
         files: [],
       };
-      //generateFileTreeObj will be recursively called if it is a folder
+      // generateFileTreeObj will be recursively called if it is a folder
       const fileData = fs.statSync(file.filePath);
       if (file.fileName !== 'node_modules' && file.fileName !== '.git') {
         if (fileData.isDirectory()) {
           file.files = generateFileTreeObject(file.filePath);
-          file.files.forEach((file) => {
-            const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
-            const fileType = file.fileName.split('.')[1];
-            if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
-              const componentName = file.fileName.split('.')[0];
-              filePathMap[componentName] = file.filePath;
-            }
-          });
+          file.files.forEach(populateFilePathMap);
         }
       }
       return file;
