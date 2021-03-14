@@ -20,10 +20,8 @@ import {
 } from '../../context/reducers/accTestCaseReducer';
 
 const AccTestCase = () => {
-  // changes to pull down context
-  const [accTestCase, dispatchToAccTestCase] = useReducer(
-    accTestCaseReducer,
-    accTestCaseState,
+  const [accTestCase, dispatchToAccTestCase] = useContext(
+    AccTestCaseContext,
   );
 
   const { describeBlocks, itStatements, statements } = accTestCase;
@@ -44,40 +42,36 @@ const AccTestCase = () => {
   };
 
   return (
-    <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
+    <div id={styles.AccTestCase}>
 
-      <div id={styles.AccTestCase}>
-
-        <div id="head">
-          <AccTestMenu />
-        </div>
-
-        <section id={styles.testCaseHeader}>
-          <div id={styles.labelInput} style={{ width: '80%' }}>
-            <SearchInput
-              label='Import File From:'
-              dispatch={dispatchToAccTestCase}
-              action={updateImportFilePath}
-              filePathMap={filePathMap}
-              options={Object.keys(filePathMap)}
-            />
-          </div>
-
-          <DecribeRenderer
-            dispatcher={dispatchToAccTestCase}
-            draggableStatements={draggableStatements}
-            describeBlocks={describeBlocks}
-            itStatements={itStatements}
-            statements={statements}
-            handleChangeDescribeText={handleChangeDescribeText}
-            handleChangeItStatementText={handleChangeItStatementText}
-            type="acc"
-          />
-        </section>
-
+      <div id="head">
+        <AccTestMenu />
       </div>
 
-    </AccTestCaseContext.Provider>
+      <section id={styles.testCaseHeader}>
+        <label htmlFor="fileImport">Import File From</label>
+        <div id={styles.labelInput} style={{ width: '80%' }}>
+          <SearchInput
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToAccTestCase}
+            action={updateImportFilePath}
+            filePathMap={filePathMap}
+          />
+        </div>
+
+        <DecribeRenderer
+          dispatcher={dispatchToAccTestCase}
+          draggableStatements={draggableStatements}
+          describeBlocks={describeBlocks}
+          itStatements={itStatements}
+          statements={statements}
+          handleChangeDescribeText={handleChangeDescribeText}
+          handleChangeItStatementText={handleChangeItStatementText}
+          type="acc"
+        />
+      </section>
+
+    </div>
   );
 };
 export default AccTestCase;
