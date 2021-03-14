@@ -1,5 +1,3 @@
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable linebreak-style */
 /* ------------------------------ Action Types ------------------------------ */
 
 export const actionTypes = {
@@ -29,7 +27,7 @@ export const addDescribeBlock = () => {
     type: actionTypes.ADD_DESCRIBE_BLOCK,
   };
 };
- 
+
 export const deleteDescribeBlock = (describeId) => {
   return {
     type: actionTypes.DELETE_DESCRIBE_BLOCK,
@@ -42,7 +40,7 @@ export const updateDescribeText = (text, describeId) => ({
   text,
   describeId,
 });
- 
+
 export const addItStatement = (describeId) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
@@ -59,15 +57,15 @@ export const updateItStatementText = (text, itId) => ({
   itId,
   text,
 });
- 
+
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });
- 
+
 export const openInfoModal = () => {
   return { type: actionTypes.OPEN_INFO_MODAL };
 };
- 
+
 export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
@@ -82,7 +80,7 @@ export const updateImportFilePath = (fileName, filePath) => ({
 export const toggleAcc = () => ({
   type: actionTypes.TOGGLE_ACC,
 });
-  
+
 export const updateStatementsOrder = (draggableStatements) => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
   draggableStatements,
