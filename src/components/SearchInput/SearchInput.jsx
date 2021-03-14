@@ -20,12 +20,13 @@ const SearchInput = ({
   const handleChange = (e) => {
     const input = e.currentTarget.value;
 
-    const filteredOptions = options.filter(
-      (optionName) => optionName.toLowerCase().indexOf(input.toLowerCase()) > -1
+    // this filters the options as we type, showing only relevant results from file tree
+    const newFilteredOptions = options.filter(
+      (optionName) => (optionName.toLowerCase().indexOf(input.toLowerCase()) > -1)
     );
 
     setActiveOption(0);
-    setFilteredOptions(filteredOptions);
+    setFilteredOptions(newFilteredOptions);
     setShowOptions(true);
     setUserInput(e.currentTarget.value);
   };
@@ -50,22 +51,29 @@ const SearchInput = ({
 
   const handleKeyDown = (e) => {
     if (action) dispatch(action('', ''));
-    if (e.keyCode === 13) {
+
+    if (e.keyCode === 13) { // keycode 13 = enter
       setActiveOption(0);
       setShowOptions(false);
       setUserInput(filteredOptions[activeOption]);
+
       const selectedOption = filteredOptions[activeOption];
       const filePath = filePathMap[selectedOption] || '';
+
       if (action) dispatch(action(selectedOption, filePath));
+
+      // following if is only relevant to redux
       if (updateTypesFilePath) {
         dispatch(updateTypesFilePath(selectedOption, filePath, type));
       }
     } else if (e.keyCode === 38) {
+      // keycode 38 = up arrow - if at top, return, else, move active option highlight up
       if (activeOption === 0) {
         return;
       }
       setActiveOption(activeOption - 1);
     } else if (e.keyCode === 40) {
+      // keycode 40 = down arrow - if at bottom, return, else, move active option highlight down
       if (activeOption === filteredOptions.length - 1) {
         return;
       }
@@ -115,7 +123,8 @@ const SearchInput = ({
             placeholder='File Name'
           />
         </div>
-        {optionList}
+        {
+        }
       </div>
     </div>
   );
