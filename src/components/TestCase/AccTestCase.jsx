@@ -11,7 +11,6 @@ import SearchInput from '../SearchInput/SearchInput';
 // ### this ties in with Sharon's code - did not create a file ### VERIFY PATH
 import AccTestMenu from '../TestMenu/AccTestMenu';
 
-
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 import { updateImportFilePath } from '../../context/actions/accTestCaseActions';
 import {
@@ -24,11 +23,11 @@ const AccTestCase = () => {
   // changes to pull down context
   const [accTestCase, dispatchToAccTestCase] = useReducer(
     accTestCaseReducer,
-    accTestCaseState
+    accTestCaseState,
   );
-  
+
   const { describeBlocks, itStatements, statements } = accTestCase;
-  
+
   const [{ filePathMap }] = useContext(GlobalContext);
   const draggableStatements = describeBlocks.allIds;
 
@@ -46,15 +45,15 @@ const AccTestCase = () => {
 
   return (
     <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
-  
+
       <div id={styles.AccTestCase}>
 
-        <div id='head'>
+        <div id="head">
           <AccTestMenu />
         </div>
 
         <section id={styles.testCaseHeader}>
-          <label htmlFor='fileImport'>Import File From</label>
+          <label htmlFor="fileImport">Import File From</label>
           <div id={styles.labelInput} style={{ width: '80%' }}>
             <SearchInput
               options={Object.keys(filePathMap)}
@@ -72,7 +71,7 @@ const AccTestCase = () => {
             statements={statements}
             handleChangeDescribeText={handleChangeDescribeText}
             handleChangeItStatementText={handleChangeItStatementText}
-            type='acc'
+            type="acc"
           />
         </section>
 
