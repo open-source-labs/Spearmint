@@ -53,13 +53,13 @@ const AccTestCase = () => {
         </div>
 
         <section id={styles.testCaseHeader}>
-          <label htmlFor="fileImport">Import File From</label>
           <div id={styles.labelInput} style={{ width: '80%' }}>
             <SearchInput
-              options={Object.keys(filePathMap)}
+              label='Import File From:'
               dispatch={dispatchToAccTestCase}
               action={updateImportFilePath}
               filePathMap={filePathMap}
+              options={Object.keys(filePathMap)}
             />
           </div>
 
