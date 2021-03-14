@@ -1,3 +1,4 @@
+/* eslint-disable */
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
@@ -787,7 +788,105 @@ function useGenerateTest(test, projectFilePath) {
         `;
     };
 
+    /* ------------------------------------------ ACCESSIBILITY TESTING ------------------------------------------ */
+    
+    const addAccImportStatements = () => {
+      const filePath = accTestCase.statements.componentPath;
+      // or the following block of code ( alternate approach )
+      // const componentPath = accTestCase.statements.componentPath;
+      // let filePath = path.relative(projectFilePath, componentPath);
+      // filePath = filePath.replace(/\\/g, '/');
+
+      // testFileCode += JSON.stringify(accTestCase);
+
+      testFileCode += `
+        const axe = require('axe-core');
+        const regeneratorRuntime = require('regenerator-runtime');
+        const path = require('path');
+        const fs = require('fs');
+        
+        const html = fs.readFileSync(path.resolve(__dirname,
+          '${filePath}'), 'utf8');
+        
+      `;
+    };
+
+    const addAccDescribeBlocks = () => {
+      const { describeBlocks } = accTestCase;
+
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        addAccItStatements(id);
+        testFileCode += `}); \n`;
+      });
+    };
+
+    const addAccItStatements = (descId) => {
+      const { itStatements } = accTestCase;
+      
+      itStatements.allIds.forEach((itId) => {
+        if (itStatements.byId[itId].describeId === descId) {
+          testFileCode += `it('${itStatements.byId[itId].text}', (done) => {
+          // exclude tests that are incompatible
+            const config = {
+              rules: {
+                'color-contrast': { enabled: false },
+                'link-in-text-block': { enabled: false }
+              }
+            };
+        
+            // get language tag from imported html file and assign to jsdom document
+            const langTag = html.match(/<html lang="(.*)"/);
+            if (langTag) document.documentElement.lang = langTag[1];
+            document.documentElement.innerHTML = html.toString();
+        
+            axe.run(config, async (err, { violations }) => {
+              if (err) {
+                console.log('err: ', err);
+                done();
+              }
+        
+              if (violations.length === 0) {
+                console.log('Congrats! Keep up the good work, you have 0 known violations!');
+              } else {
+                violations.forEach(axeViolation => {
+                  console.log('-------');
+                  const whereItFailed = axeViolation.nodes[0].html;
+                  // const failureSummary = axeViolation.nodes[0].failureSummary;
+            
+                  const { description, help, helpUrl } = axeViolation;
+        
+                  console.log('TEST DESCRIPTION: ', description,
+                  'ISSUE: ', help,
+                  'MORE INFO: ', helpUrl,
+                  'WHERE IT FAILED: ', whereItFailed,
+                  //'how to fix: ', failureSummary
+                  );
+                });
+              }
+        
+              expect(err).toBe(null);
+              expect(violations).toHaveLength(0);
+              done();
+            });
+          })`;
+        }
+        testFileCode += '\n';
+      });
+    };
+
     switch (test) {
+      case 'acc':
+        var accTestCase = testState;
+        return (
+          addAccImportStatements(),
+          addAccDescribeBlocks(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
       case 'react':
         var reactTestCase = testState;
         var mockData = mockDataState;
