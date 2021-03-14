@@ -45,13 +45,16 @@ const AccTestCase = () => {
   };
 
   return (
-    
+    <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
+  
       <div id={styles.AccTestCase}>
+
         <div id='head'>
           <AccTestMenu />
         </div>
+
         <section id={styles.testCaseHeader}>
-        <label htmlFor='fileImport'>Import File From</label>
+          <label htmlFor='fileImport'>Import File From</label>
           <div id={styles.labelInput} style={{ width: '80%' }}>
             <SearchInput
               options={Object.keys(filePathMap)}
@@ -61,18 +64,21 @@ const AccTestCase = () => {
             />
           </div>
 
-        <DecribeRenderer
-          dispatcher={dispatchToAccTestCase}
-          draggableStatements={draggableStatements}
-          describeBlocks={describeBlocks}
-          itStatements={itStatements}
-          statements={statements}
-          handleChangeDescribeText={handleChangeDescribeText}
-          handleChangeItStatementText={handleChangeItStatementText}
-          type='acc'
-        />
+          <DecribeRenderer
+            dispatcher={dispatchToAccTestCase}
+            draggableStatements={draggableStatements}
+            describeBlocks={describeBlocks}
+            itStatements={itStatements}
+            statements={statements}
+            handleChangeDescribeText={handleChangeDescribeText}
+            handleChangeItStatementText={handleChangeItStatementText}
+            type='acc'
+          />
         </section>
+
       </div>
+
+    </AccTestCaseContext.Provider>
   );
 };
 export default AccTestCase;
