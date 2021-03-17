@@ -20,12 +20,10 @@ import {
 } from '../../context/reducers/reactTestCaseReducer';
 
 const ReactTestCase = () => {
-  //changes to pull down context
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
     reactTestCaseReducer,
-    reactTestCaseState
+    reactTestCaseState,
   );
-  //
 
   const { describeBlocks, itStatements, statements } = reactTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
@@ -51,7 +49,7 @@ const ReactTestCase = () => {
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
       <div id={styles.ReactTestCase}>
-        <div id='head'>
+        <div id="head">
           <ReactTestMenu />
         </div>
 
@@ -66,11 +64,12 @@ const ReactTestCase = () => {
               options={Object.keys(filePathMap)}
             />
           </div>
-          <button type='button' className={styles.mockBtn} onClick={handleAddMockData}>
+          <button type="button" className={styles.mockBtn} onClick={handleAddMockData}>
             <i className={cn(styles.addIcon, 'fas fa-plus')} />
             Mock Data
           </button>
         </div>
+
         {mockData.length > 0 && (
           <section id={styles.mockDataHeader}>
             {mockData.map((data) => {
@@ -85,6 +84,7 @@ const ReactTestCase = () => {
             })}
           </section>
         )}
+
         <DecribeRenderer
           dispatcher={dispatchToReactTestCase}
           draggableStatements={draggableStatements}
@@ -93,10 +93,11 @@ const ReactTestCase = () => {
           statements={statements}
           handleChangeDescribeText={handleChangeDescribeText}
           handleChangeItStatementText={handleChangeItStatementText}
-          type='react'
+          type="react"
         />
       </div>
     </ReactTestCaseContext.Provider>
   );
 };
+
 export default ReactTestCase;
