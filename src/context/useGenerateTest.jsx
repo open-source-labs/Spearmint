@@ -848,17 +848,17 @@ function useGenerateTest(test, projectFilePath) {
                 console.log('Congrats! Keep up the good work, you have 0 known violations!');
               } else {
                 violations.forEach(axeViolation => {
-                  console.log('-------');
-                  const whereItFailed = axeViolation.nodes[0].html;
-                  // const failureSummary = axeViolation.nodes[0].failureSummary;
+                  const whereItFailed = axeViolation.nodes.map(node => node.html);
+                  // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
             
                   const { description, help, helpUrl } = axeViolation;
         
-                  console.log('TEST DESCRIPTION: ', description,
-                  'ISSUE: ', help,
-                  'MORE INFO: ', helpUrl,
-                  'WHERE IT FAILED: ', whereItFailed,
-                  //'how to fix: ', failureSummary
+                  console.log('---------',
+                    '\\nTEST DESCRIPTION: ', description,
+                    '\\nISSUE: ', help,
+                    '\\nMORE INFO: ', helpUrl,
+                    '\\nWHERE IT FAILED: ', whereItFailed,
+                    // '\\nhow to fix: ', failureSummary
                   );
                 });
               }
