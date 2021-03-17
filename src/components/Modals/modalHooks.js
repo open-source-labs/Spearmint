@@ -38,6 +38,12 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 export function useGenerateScript(test) {
   const [{ projectFilePath }] = useContext(GlobalContext);
   switch (test) {
+    case 'acc':
+      return (
+        `cd ${projectFilePath}\n` +
+        'npm i -D axe-core regenerator-runtime jest\n' +
+        'jest'
+      );
     case 'react':
       return (
         `cd ${projectFilePath}\n` +
