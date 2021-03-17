@@ -55,8 +55,8 @@ const OpenFolder = () => {
     const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
     const fileType = file.fileName.split('.')[1];
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
-      const componentName = file.fileName.split('.')[0];
-      filePathMap[componentName] = file.filePath;
+      // const componentName = file.fileName.split('.')[0];
+      filePathMap[file.fileName] = file.filePath;
     }
   };
 
