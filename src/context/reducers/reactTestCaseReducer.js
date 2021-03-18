@@ -27,7 +27,9 @@ export const reactTestCaseState = {
         text: '',
       },
     },
-    allIds: ['it0'],
+    allIds: {
+      describe0: ['it0'],
+    },
   },
   statements: {
     byId: {
@@ -102,14 +104,26 @@ const createProp = (propId, statementId) => ({
   propValue: '',
 });
 
-const deleteChildren = (object, deletionId, lookup) => {
-  const allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
-
-  object.allIds.forEach((id) => {
-    if (object.byId[id][lookup] === deletionId) {
+const deleteChildren = (object, deletionId, lookup, it) => {
+  let allIdCopy;
+  if (it) {
+    // delete everything appropriate in itStatements.byId object
+    object.allIds[deletionId].forEach((id) => {
       delete object.byId[id];
-    }
-  });
+    });
+    // delete everything appropriate in itStatements.allIds object
+    delete object.allIds[deletionId];
+    allIdCopy = object.allIds;
+  } else {
+    // use .filter to delete from statements.allIds array
+    allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
+    // delete from statements.byId object
+    object.allIds.forEach((id) => {
+      if (object.byId[id][lookup] === deletionId) {
+        delete object.byId[id];
+      }
+    });
+  }
 
   return allIdCopy;
 };
@@ -145,6 +159,47 @@ export const reactTestCaseReducer = (state, action) => {
           },
           allIds: [...(describeBlocks.allIds || []), describeId],
         },
+        itStatements: {
+          ...itStatements,
+          allIds: {
+            ...itStatements.allIds,
+            [describeId]: [],
+          },
+        },
+      };
+    }
+    case actionTypes.DELETE_DESCRIBE_BLOCK: {
+      const { describeId } = action;
+      const byId = { ...describeBlocks.byId };
+      delete byId[describeId];
+      const allIds = describeBlocks.allIds.filter((id) => id !== describeId);
+
+      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId', 'it');
+      const statementAllIds = deleteChildren(statements, describeId, 'describeId');
+
+      return {
+        ...state,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds],
+        },
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...itStatements.byId,
+          },
+          allIds: itStatementAllIds,
+        },
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+          },
+          allIds: [...statementAllIds],
+        },
       };
     }
     case actionTypes.UPDATE_DESCRIBE_TEXT: {
@@ -165,37 +220,13 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
-    case actionTypes.DELETE_DESCRIBE_BLOCK: {
-      const { describeId } = action;
-      const byId = { ...describeBlocks.byId };
-      delete byId[describeId];
-      const allIds = describeBlocks.allIds.filter((id) => id !== describeId);
-
-      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId');
-      const statementAllIds = deleteChildren(statements, describeId, 'describeId');
-
+    case actionTypes.UPDATE_DESCRIBE_ORDER: {
+      const { reorderedDescribe } = action;
       return {
         ...state,
         describeBlocks: {
           ...describeBlocks,
-          byId: {
-            ...byId,
-          },
-          allIds: [...allIds],
-        },
-        itStatements: {
-          ...itStatements,
-          byId: {
-            ...itStatements.byId,
-          },
-          allIds: [...itStatementAllIds],
-        },
-        statements: {
-          ...statements,
-          byId: {
-            ...statements.byId,
-          },
-          allIds: [...statementAllIds],
+          allIds: reorderedDescribe,
         },
       };
     }
@@ -214,7 +245,10 @@ export const reactTestCaseReducer = (state, action) => {
             ...itStatements.byId,
             [itId]: createItStatement(describeId, itId),
           },
-          allIds: [...(itStatements.allIds || []), itId],
+          allIds: {
+            ...itStatements.allIds,
+            [describeId]: [...itStatements.allIds[describeId], itId],
+          },
         },
       };
     }
@@ -238,9 +272,10 @@ export const reactTestCaseReducer = (state, action) => {
     }
     case actionTypes.DELETE_ITSTATEMENT: {
       const { itId } = action;
+      const { describeId } = itStatements.byId[itId];
       const byId = { ...itStatements.byId };
       delete byId[itId];
-      const allIds = itStatements.allIds.filter((id) => id !== itId);
+      const allIds = itStatements.allIds[describeId].filter((id) => id !== itId);
       const statementAllIds = deleteChildren(statements, itId, 'itId');
 
       return {
@@ -250,7 +285,10 @@ export const reactTestCaseReducer = (state, action) => {
           byId: {
             ...byId,
           },
-          allIds: [...allIds],
+          allIds: {
+            ...itStatements.allIds,
+            [describeId]: [...allIds],
+          },
         },
         statements: {
           ...statements,
@@ -261,6 +299,20 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
+    case actionTypes.UPDATE_ITSTATEMENT_ORDER: {
+      const { reorderedIt, describeId } = action;
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          allIds: {
+            ...itStatements.allIds,
+            [describeId]: reorderedIt,
+          },
+        },
+      };
+    }
+
     case actionTypes.ADD_ACTION: {
       const { describeId, itId } = action;
       const byIds = { ...statements.byId };
@@ -278,6 +330,22 @@ export const reactTestCaseReducer = (state, action) => {
             [statementId]: createAction(describeId, itId, statementId),
           },
           allIds: [...allIds, statementId],
+        },
+      };
+    }
+    case actionTypes.DELETE_ACTION: {
+      const { statementId } = action;
+      const byId = { ...statements.byId };
+      delete byId[statementId];
+      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds],
         },
       };
     }
@@ -315,22 +383,7 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
-    case actionTypes.DELETE_ACTION: {
-      const { statementId } = action;
-      const byId = { ...statements.byId };
-      delete byId[statementId];
-      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
-      return {
-        ...state,
-        statements: {
-          ...statements,
-          byId: {
-            ...byId,
-          },
-          allIds: [...allIds],
-        },
-      };
-    }
+
     case actionTypes.ADD_ASSERTION: {
       const { describeId, itId } = action;
       const byIds = { ...statements.byId };
@@ -348,6 +401,22 @@ export const reactTestCaseReducer = (state, action) => {
             [statementId]: createAssertion(describeId, itId, statementId),
           },
           allIds: [...allIds, statementId],
+        },
+      };
+    }
+    case actionTypes.DELETE_ASSERTION: {
+      const { statementId } = action;
+      const byId = { ...statements.byId };
+      delete byId[statementId];
+      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+          },
+          allIds: [...allIds],
         },
       };
     }
@@ -387,22 +456,7 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
-    case actionTypes.DELETE_ASSERTION: {
-      const { statementId } = action;
-      const byId = { ...statements.byId };
-      delete byId[statementId];
-      const allIds = [...statements.allIds].filter((statement) => statement !== statementId);
-      return {
-        ...state,
-        statements: {
-          ...statements,
-          byId: {
-            ...byId,
-          },
-          allIds: [...allIds],
-        },
-      };
-    }
+
     case actionTypes.ADD_RENDER: {
       const { describeId, itId } = action;
       const byIds = { ...statements.byId };
@@ -423,15 +477,6 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
-    case actionTypes.UPDATE_RENDER_COMPONENT: {
-      const { componentName, filePath } = action;
-      statements.componentName = componentName;
-      statements.componentPath = filePath;
-      return {
-        ...state,
-        statements,
-      };
-    }
     case actionTypes.DELETE_RENDER: {
       const { statementId } = action;
       const byId = { ...statements.byId };
@@ -448,6 +493,16 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
+    case actionTypes.UPDATE_RENDER_COMPONENT: {
+      const { componentName, filePath } = action;
+      statements.componentName = componentName;
+      statements.componentPath = filePath;
+      return {
+        ...state,
+        statements,
+      };
+    }
+
     case actionTypes.ADD_PROP: {
       const { statementId } = action;
       const propId = `prop${state.propId}`;
@@ -464,6 +519,23 @@ export const reactTestCaseReducer = (state, action) => {
             [statementId]: {
               ...statements.byId[statementId],
               props: [...statements.byId[statementId].props, createProp(propId, statementId)],
+            },
+          },
+        },
+      };
+    }
+    case actionTypes.DELETE_PROP: {
+      const { id, statementId } = action;
+      const props = statements.byId[statementId].props.filter((prop) => prop.id !== id);
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              props,
             },
           },
         },
@@ -494,23 +566,7 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
-    case actionTypes.DELETE_PROP: {
-      const { id, statementId } = action;
-      const props = statements.byId[statementId].props.filter((prop) => prop.id !== id);
-      return {
-        ...state,
-        statements: {
-          ...statements,
-          byId: {
-            ...statements.byId,
-            [statementId]: {
-              ...statements.byId[statementId],
-              props,
-            },
-          },
-        },
-      };
-    }
+
     case actionTypes.CREATE_NEW_TEST: {
       return {
         ...state,
@@ -520,7 +576,7 @@ export const reactTestCaseReducer = (state, action) => {
         },
         itStatements: {
           byId: {},
-          allIds: [],
+          allIds: {},
         },
         statements: {
           byId: {},
@@ -528,16 +584,18 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
-    case actionTypes.OPEN_INFO_MODAL:
+    case actionTypes.OPEN_INFO_MODAL: {
       return {
         ...state,
         modalOpen: true,
       };
-    case actionTypes.CLOSE_INFO_MODAL:
+    }
+    case actionTypes.CLOSE_INFO_MODAL: {
       return {
         ...state,
         modalOpen: false,
       };
+    }
     default:
       return state;
   }
