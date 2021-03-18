@@ -59,23 +59,16 @@ const ReactTestCase = () => {
     // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
     if (!result.destination) return;
     if (result.destination.index === result.source.index) return;
-    console.log(result)
 
-    if (result.draggableId.slice(0, 8) === 'describe') {
-      const reorderedStatements = reorder(
-        describeBlocks.allIds,
-        result.source.index,
-        result.destination.index,
-      );
-      dispatchToReactTestCase(updateDescribeOrder(reorderedStatements));
-    } else if (result.draggableId.slice(0, 2) === 'it') {
-      const reorderedStatements = reorder(
-        itStatements.allIds,
-        result.source.index,
-        result.destination.index,
-      );
-      dispatchToReactTestCase(updateItStatementOrder(reorderedStatements));
-    }
+    const list = result.draggableId.includes('describe') ? describeBlocks.allIds : itStatements.allIds;
+    const func = result.draggableId.includes('describe') ? updateDescribeOrder : updateItStatementOrder;
+
+    const reorderedStatements = reorder(
+      list,
+      result.source.index,
+      result.destination.index,
+    );
+    dispatchToReactTestCase(func(reorderedStatements));
   };
 
   return (
