@@ -75,7 +75,7 @@ export type HooksAction =
         | 'CLOSE_INFO_MODAL';
     }
   | { type: 'UPDATE_HOOKS_TEST_STATEMENT'; hooksTestStatement: string }
-  | { type: 'DELETE_CONTEXT' | 'DELETE_HOOK_UPDATES' | 'TOGGLE_TYPEOF'; id: number }
+  | { type: 'DELETE_CONTEXT' | 'DELETE_HOOK_UPDATES' | 'TOGGLE_TYPEOF' | 'ADD_CALLBACKFUNC'; id: number }
   | {
       type: 'UPDATE_CONTEXT';
       id: number;
