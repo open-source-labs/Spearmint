@@ -7,6 +7,7 @@ import {
   updateRenderComponent,
   updateItStatementText,
   updateDescribeOrder,
+  updateItStatementOrder,
 } from '../../context/actions/reactTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -56,18 +57,26 @@ const ReactTestCase = () => {
   };
 
   const onDragEnd = (result) => {
-    if (!result.destination) {
-      return;
+    // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
+    if (!result.destination) return;
+    if (result.destination.index === result.source.index) return;
+    console.log(result)
+
+    if (result.draggableId.slice(0, 8) === 'describe') {
+      const reorderedStatements = reorder(
+        describeBlocks.allIds,
+        result.source.index,
+        result.destination.index,
+      );
+      dispatchToReactTestCase(updateDescribeOrder(reorderedStatements));
+    } else if (result.draggableId.slice(0, 2) === 'it') {
+      const reorderedStatements = reorder(
+        itStatements.allIds,
+        result.source.index,
+        result.destination.index,
+      );
+      dispatchToReactTestCase(updateItStatementOrder(reorderedStatements));
     }
-    if (result.destination.index === result.source.index) {
-      return;
-    }
-    const reorderedStatements = reorder(
-      describeBlocks.allIds,
-      result.source.index,
-      result.destination.index,
-    );
-    dispatchToReactTestCase(updateDescribeOrder(reorderedStatements));
   };
 
   return (
