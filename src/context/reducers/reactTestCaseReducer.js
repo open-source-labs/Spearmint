@@ -271,6 +271,16 @@ export const reactTestCaseReducer = (state, action) => {
         },
       };
     }
+    case actionTypes.UPDATE_ITSTATEMENT_ORDER: {
+      const { reorderedIt } = action;
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          allIds: reorderedIt,
+        },
+      };
+    }
 
     case actionTypes.ADD_ACTION: {
       const { describeId, itId } = action;

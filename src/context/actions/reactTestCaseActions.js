@@ -9,6 +9,7 @@ export const actionTypes = {
   ADD_ITSTATEMENT: 'ADD_ITSTATEMENT',
   DELETE_ITSTATEMENT: 'DELETE_ITSTATEMENT',
   UPDATE_ITSTATEMENT_TEXT: 'UPDATE_ITSTATEMENT_TEXT',
+  UPDATE_ITSTATEMENT_ORDER: 'UPDATE_ITSTATEMENT_ORDER',
 
   ADD_ACTION: 'ADD_ACTION',
   DELETE_ACTION: 'DELETE_ACTION',
@@ -76,6 +77,11 @@ export const updateItStatementText = (text, itId) => ({
   type: actionTypes.UPDATE_ITSTATEMENT_TEXT,
   itId,
   text,
+});
+
+export const updateItStatementOrder = (reorderedIt) => ({
+  type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
+  reorderedIt,
 });
 
 
