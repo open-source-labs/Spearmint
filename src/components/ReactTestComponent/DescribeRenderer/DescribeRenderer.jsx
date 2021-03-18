@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import cn from 'classnames';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../../context/actions/reactTestCaseActions';
@@ -65,14 +65,24 @@ const DescribeRenderer = ({
               onChange={handleChangeDescribeText}
             />
             <div className={styles.separator}></div>
-            <ItRenderer
-              type={type}
-              key={`it-${id}-${i}`}
-              itStatements={itStatements}
-              statements={statements}
-              describeId={id}
-              handleChangeItStatementText={handleChangeItStatementText}
-            />
+
+            <Droppable droppableId="droppableReactIt">
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  <ItRenderer
+                    type={type}
+                    key={`it-${id}-${i}`}
+                    itStatements={itStatements}
+                    statements={statements}
+                    describeId={id}
+                    handleChangeItStatementText={handleChangeItStatementText}
+                  />
+                </div>
+              )}
+            </Droppable>
             <div className={styles.buttonContainer}>
               <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
                 +It Statement
