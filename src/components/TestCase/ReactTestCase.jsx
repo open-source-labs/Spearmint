@@ -1,10 +1,12 @@
 import React, { useContext, useReducer } from 'react';
 import cn from 'classnames';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
   updateRenderComponent,
   updateItStatementText,
+  updateDescribeOrder,
 } from '../../context/actions/reactTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -46,6 +48,28 @@ const ReactTestCase = () => {
     dispatchToReactTestCase(updateItStatementText(text, itId));
   };
 
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+    const reorderedStatements = reorder(
+      describeBlocks.allIds,
+      result.source.index,
+      result.destination.index,
+    );
+    dispatchToReactTestCase(updateDescribeOrder(reorderedStatements));
+  };
+
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
       <div id={styles.ReactTestCase}>
@@ -85,16 +109,27 @@ const ReactTestCase = () => {
           </section>
         )}
 
-        <DecribeRenderer
-          dispatcher={dispatchToReactTestCase}
-          // draggableStatements={draggableStatements}
-          describeBlocks={describeBlocks}
-          itStatements={itStatements}
-          statements={statements}
-          handleChangeDescribeText={handleChangeDescribeText}
-          handleChangeItStatementText={handleChangeItStatementText}
-          type="react"
-        />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                <DecribeRenderer
+                  dispatcher={dispatchToReactTestCase}
+                  // draggableStatements={draggableStatements}
+                  describeBlocks={describeBlocks}
+                  itStatements={itStatements}
+                  statements={statements}
+                  handleChangeDescribeText={handleChangeDescribeText}
+                  handleChangeItStatementText={handleChangeItStatementText}
+                  type="react"
+                />
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
     </ReactTestCaseContext.Provider>
   );
