@@ -36,7 +36,11 @@ const DescribeRenderer = ({
 
   return describeBlocks.allIds.map((id, i) => {
     return (
-      <Draggable draggableId={id.toString()} index={i}>
+      <Draggable
+        draggableId={id.toString()}
+        index={i}
+        type="describe"
+      >
         {(provided) => (
           <div
             id={styles.describeBlock}
@@ -66,7 +70,10 @@ const DescribeRenderer = ({
             />
             <div className={styles.separator}></div>
 
-            <Droppable droppableId="droppableReactIt">
+            <Droppable
+              droppableId="droppableReactIt"
+              type={id}
+            >
               {(provided) => (
                 <div
                   ref={provided.innerRef}

@@ -119,7 +119,10 @@ const ReactTestCase = () => {
         )}
 
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="droppableReactDescribe">
+          <Droppable
+            droppableId="droppableReactDescribe"
+            type="describe"
+          >
             {(provided) => (
               <div
                 ref={provided.innerRef}

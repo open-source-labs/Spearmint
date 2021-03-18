@@ -46,7 +46,11 @@ const ItRenderer = ({
   
 
   return filteredIds.map((id, i) => (
-    <Draggable draggableId={id.toString()} index={i}>
+    <Draggable
+      draggableId={id.toString()}
+      index={i}
+      type={id}
+    >
       {(provided) => (
         <div
           id={styles.ItRenderer}
