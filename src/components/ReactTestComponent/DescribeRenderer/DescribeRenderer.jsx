@@ -70,14 +70,15 @@ const DescribeRenderer = ({
             <div className={styles.separator}></div>
 
             <Droppable
-              droppableId="droppableReactIt"
+              droppableId={"droppableReactIt" + id}
               type={id}
             >
-              {(provided) => (
+              {(innerProvided) => (
                 <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
+                  ref={innerProvided.innerRef}
+                  {...innerProvided.droppableProps}
                 >
+                  {/* {JSON.stringify(provided)} */}
                   <ItRenderer
                     type={type}
                     key={`it-${id}-${i}`}
@@ -86,7 +87,7 @@ const DescribeRenderer = ({
                     describeId={id}
                     handleChangeItStatementText={handleChangeItStatementText}
                   />
-                  {provided.placeholder}
+                  {innerProvided.placeholder}
                 </div>
               )}
             </Droppable>
