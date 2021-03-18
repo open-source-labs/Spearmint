@@ -50,7 +50,7 @@ const ItRenderer = ({
       key={id}
       draggableId={id}
       index={i}
-      type={describeId}
+      // type={describeId} // passed down automatically
     >
       {(provided) => (
         <div
