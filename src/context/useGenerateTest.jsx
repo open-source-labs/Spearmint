@@ -39,13 +39,10 @@ function useGenerateTest(test, projectFilePath) {
     // React It Statements
     const addReactItStatement = (describeId) => {
       const itStatements = reactTestCase.itStatements;
-      itStatements.allIds.forEach((itId) => {
-        if (itStatements.byId[itId].describeId === describeId) {
-          testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
-          addReactStatements(itId);
-          testFileCode += '})';
-        }
-        testFileCode += '\n';
+      itStatements.allIds[describeId].forEach((itId) => {
+        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
+        addReactStatements(itId);
+        testFileCode += '})\n';
       });
     };
 
