@@ -135,6 +135,7 @@ const ReactTestCase = () => {
                   handleChangeItStatementText={handleChangeItStatementText}
                   type="react"
                 />
+                {provided.placeholder}
               </div>
             )}
           </Droppable>

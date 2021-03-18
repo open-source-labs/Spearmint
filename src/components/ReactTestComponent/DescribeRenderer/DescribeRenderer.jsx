@@ -80,6 +80,7 @@ const DescribeRenderer = ({
                     describeId={id}
                     handleChangeItStatementText={handleChangeItStatementText}
                   />
+                  {provided.placeholder}
                 </div>
               )}
             </Droppable>
