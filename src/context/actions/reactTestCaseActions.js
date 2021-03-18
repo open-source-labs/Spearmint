@@ -4,6 +4,7 @@ export const actionTypes = {
   ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',
   DELETE_DESCRIBE_BLOCK: 'DELETE_DESCRIBE_BLOCK',
   UPDATE_DESCRIBE_TEXT: 'UPDATE_DESCRIBE_TEXT',
+  UPDATE_DESCRIBE_ORDER: 'UPDATE_DESCRIBE_ORDER',
 
   ADD_ITSTATEMENT: 'ADD_ITSTATEMENT',
   DELETE_ITSTATEMENT: 'DELETE_ITSTATEMENT',
@@ -52,6 +53,11 @@ export const updateDescribeText = (text, describeId) => ({
   type: actionTypes.UPDATE_DESCRIBE_TEXT,
   text,
   describeId,
+});
+
+export const updateDescribeOrder = (reorderedDescribe) => ({
+  type: actionTypes.UPDATE_DESCRIBE_ORDER,
+  reorderedDescribe,
 });
 
 
