@@ -158,6 +158,17 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
+    case actionTypes.UPDATE_DESCRIBE_ORDER: {
+      const { reorderedDescribe } = action;
+
+      return {
+        ...state,
+        describeBlocks: {
+          ...describeBlocks,
+          allIds: reorderedDescribe,
+        },
+      };
+    }
     case actionTypes.ADD_ITSTATEMENT: {
       const { describeId } = action;
       const itId = `it${state.itId}`;

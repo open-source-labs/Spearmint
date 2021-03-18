@@ -1,9 +1,11 @@
 import React, { useContext, useReducer } from 'react';
 import cn from 'classnames';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
   updateItStatementText,
+  updateDescribeOrder,
 } from '../../context/actions/accTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -41,6 +43,29 @@ const AccTestCase = () => {
     dispatchToAccTestCase(updateItStatementText(text, itId));
   };
 
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  const onDragEnd = (result) => {
+    // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
+    if (!result.destination) return;
+    if (result.destination.index === result.source.index) return;
+
+    // const list = result.draggableId.includes('describe') ? describeBlocks.allIds : itStatements.allIds[result.type];
+    // const func = result.draggableId.includes('describe') ? updateDescribeOrder : updateItStatementOrder;
+
+    const reorderedStatements = reorder(
+      describeBlocks.allIds,
+      result.source.index,
+      result.destination.index,
+    );
+    dispatchToAccTestCase(updateDescribeOrder(reorderedStatements));
+  };
+
   return (
     <div id={styles.AccTestCase}>
 
@@ -59,16 +84,30 @@ const AccTestCase = () => {
           />
         </div>
 
-        <DecribeRenderer
-          dispatcher={dispatchToAccTestCase}
-          draggableStatements={draggableStatements}
-          describeBlocks={describeBlocks}
-          itStatements={itStatements}
-          statements={statements}
-          handleChangeDescribeText={handleChangeDescribeText}
-          handleChangeItStatementText={handleChangeItStatementText}
-          type="acc"
-        />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable
+            droppableId="droppableAccDescribe"
+            type="describe"
+          >
+            {(provided) => (
+              <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              >
+                <DecribeRenderer
+                  dispatcher={dispatchToAccTestCase}
+                  draggableStatements={draggableStatements}
+                  describeBlocks={describeBlocks}
+                  itStatements={itStatements}
+                  statements={statements}
+                  handleChangeDescribeText={handleChangeDescribeText}
+                  handleChangeItStatementText={handleChangeItStatementText}
+                  type="acc"
+                />
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </section>
 
     </div>

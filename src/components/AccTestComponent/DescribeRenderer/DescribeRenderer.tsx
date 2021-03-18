@@ -1,7 +1,7 @@
 // import React object and destructure useRef and useEffect hooks
 import React, { useRef, useEffect } from 'react';
 import cn from 'classnames';
-// import { Draggable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 
 // import It component
 import ItRenderer from '../ItRenderer/ItRenderer';
@@ -49,46 +49,70 @@ const DescribeRenderer = ({
   };
 
   return draggableStatements.map((id, i) => (
-      <div id={styles.describeBlock} key={i}>
-        <label htmlFor="describe-label" className={styles.describeLabel}>
-          Describe Block
-        </label>
+    <Draggable
+      key={id}
+      draggableId={id}
+      index={i}
+      type="describe"
+    >
+      {(provided) => (
+        <div
+          id={styles.describeBlock}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <div id={styles.describeBlock} key={i}>
+            <label htmlFor="describe-label" className={styles.describeLabel}>
+              Describe Block
+            </label>
 
-        <i
-          onClick={deleteDescribeBlockHandleClick}
-          id={id}
-          className={cn('far fa-window-close', styles.describeClose)}
-         />
+            <i
+              onClick={deleteDescribeBlockHandleClick}
+              id={id}
+              className={cn('far fa-window-close', styles.describeClose)}
+            />
 
-        <input
-          ref={testDescription}
-          id={id}
-          className={styles.describeInput}
-          name="describe-label"
-          type="text"
-          placeholder="Component has basic accessibility"
-          value={describeBlocks.byId[id].text || ''}
-          onChange={handleChangeDescribeText}
-        />
+            <input
+              ref={testDescription}
+              id={id}
+              className={styles.describeInput}
+              name="describe-label"
+              type="text"
+              placeholder="Component has basic accessibility"
+              value={describeBlocks.byId[id].text || ''}
+              onChange={handleChangeDescribeText}
+            />
 
-        <div className={styles.separator} />
-        <ItRenderer
-          type={type}
-          key={`it-${id}-${i}`}
-          itStatements={itStatements}
-          statements={statements}
-          describeId={id}
-          handleChangeItStatementText={handleChangeItStatementText}
-        />
+            <div className={styles.separator} />
+            <ItRenderer
+              type={type}
+              key={`it-${id}-${i}`}
+              itStatements={itStatements}
+              statements={statements}
+              describeId={id}
+              handleChangeItStatementText={handleChangeItStatementText}
+            />
 
-        {/* Implement Button For Stretch */}
-        <div className={styles.buttonContainer}>
-          <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
-            +It Statement
-          </button>
+            {/* Implement Button For Stretch */}
+            <div className={styles.buttonContainer}>
+              <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
+                +It Statement
+              </button>
+            </div>
+
+          </div>
+
+
+
         </div>
+      )}
+    </Draggable>
 
-      </div>
+
+
+
+
   ));
 };
 
