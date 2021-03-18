@@ -48,8 +48,7 @@ const DescribeRenderer = ({
     dispatcher(addItStatement(describeId));
   };
 
-  return draggableStatements.map((id, i) => {
-    return (
+  return draggableStatements.map((id, i) => (
       <div id={styles.describeBlock} key={i}>
         <label htmlFor="describe-label" className={styles.describeLabel}>
           Describe Block
@@ -90,8 +89,7 @@ const DescribeRenderer = ({
         </div>
 
       </div>
-    );
-  });
+  ));
 };
 
 export default DescribeRenderer;
