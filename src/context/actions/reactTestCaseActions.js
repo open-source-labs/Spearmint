@@ -76,9 +76,10 @@ export const updateItStatementText = (text, itId) => ({
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt) => ({
+export const updateItStatementOrder = (reorderedIt, describeId) => ({
   type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
   reorderedIt,
+  describeId,
 });
 
 

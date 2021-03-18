@@ -21,11 +21,6 @@ const ItRenderer = ({
 }) => {
   const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
 
-  // filter out ids not belonging to the correct describe block
-  const filteredIds = itStatements.allIds.filter((id) => {
-    return itStatements.byId[id].describeId === describeId;
-  });
-
   const addRenderHandleClick = (e) => {
     const itId = e.target.id;
     dispatchToReactTestCase(addRender(describeId, itId));
@@ -43,9 +38,8 @@ const ItRenderer = ({
     const itId = e.target.id;
     dispatchToReactTestCase(addAssertion(describeId, itId));
   };
-  
 
-  return filteredIds.map((id, i) => (
+  return itStatements.allIds[describeId].map((id, i) => (
     <Draggable
       key={id}
       draggableId={id}

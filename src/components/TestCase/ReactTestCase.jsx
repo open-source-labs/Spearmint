@@ -60,7 +60,7 @@ const ReactTestCase = () => {
     if (!result.destination) return;
     if (result.destination.index === result.source.index) return;
 
-    const list = result.draggableId.includes('describe') ? describeBlocks.allIds : itStatements.allIds;
+    const list = result.draggableId.includes('describe') ? describeBlocks.allIds : itStatements.allIds[result.type];
     const func = result.draggableId.includes('describe') ? updateDescribeOrder : updateItStatementOrder;
 
     const reorderedStatements = reorder(
@@ -68,7 +68,7 @@ const ReactTestCase = () => {
       result.source.index,
       result.destination.index,
     );
-    dispatchToReactTestCase(func(reorderedStatements));
+    dispatchToReactTestCase(func(reorderedStatements, result.type));
   };
 
   return (
