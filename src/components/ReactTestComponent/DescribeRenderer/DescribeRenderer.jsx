@@ -36,14 +36,14 @@ const DescribeRenderer = ({
   return describeBlocks.allIds.map((id, i) => {
     return (
       <Draggable
-        draggableId={id.toString()}
+        key={id}
+        draggableId={id}
         index={i}
         type="describe"
       >
         {(provided) => (
           <div
             id={styles.describeBlock}
-            key={i}
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
