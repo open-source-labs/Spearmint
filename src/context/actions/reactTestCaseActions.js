@@ -30,9 +30,6 @@ export const actionTypes = {
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
-
-  // not used in reducer
-  // UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -200,12 +197,3 @@ export const openInfoModal = () => {
 export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
-
-
-
-
-// not used in reducer
-// export const updateStatementsOrder = (draggableStatements) => ({
-//   type: actionTypes.UPDATE_STATEMENTS_ORDER,
-//   draggableStatements,
-// });

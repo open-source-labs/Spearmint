@@ -31,7 +31,6 @@ const ReactTestCase = () => {
   const { describeBlocks, itStatements, statements } = reactTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap }] = useContext(GlobalContext);
-  // const draggableStatements = describeBlocks.allIds;
 
   const handleAddMockData = () => {
     dispatchToMockData(createMockData());
@@ -130,7 +129,6 @@ const ReactTestCase = () => {
               >
                 <DecribeRenderer
                   dispatcher={dispatchToReactTestCase}
-                  // draggableStatements={draggableStatements}
                   describeBlocks={describeBlocks}
                   itStatements={itStatements}
                   statements={statements}

@@ -12,7 +12,6 @@ const DescribeRenderer = ({
   describeBlocks,
   itStatements,
   statements,
-  // draggableStatements,
   handleChangeDescribeText,
   handleChangeItStatementText,
   type,
