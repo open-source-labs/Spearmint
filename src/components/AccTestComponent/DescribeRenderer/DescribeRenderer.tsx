@@ -56,7 +56,6 @@ const DescribeRenderer = ({
     >
       {(provided) => (
         <div
-          id={styles.describeBlock}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
