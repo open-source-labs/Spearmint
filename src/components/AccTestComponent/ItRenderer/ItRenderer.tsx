@@ -19,7 +19,6 @@ const ItRenderer = ({
   type,
   itStatements,
   describeId,
-  statements,
   handleChangeItStatementText,
 }) => {
 

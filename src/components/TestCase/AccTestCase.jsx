@@ -27,10 +27,9 @@ const AccTestCase = () => {
     AccTestCaseContext,
   );
 
-  const { describeBlocks, itStatements, statements } = accTestCase;
+  const { describeBlocks, itStatements } = accTestCase;
 
   const [{ filePathMap }] = useContext(GlobalContext);
-  const draggableStatements = describeBlocks.allIds;
 
   const handleChangeDescribeText = (e) => {
     const text = e.target.value;
@@ -99,10 +98,8 @@ const AccTestCase = () => {
               >
                 <DecribeRenderer
                   dispatcher={dispatchToAccTestCase}
-                  draggableStatements={draggableStatements}
                   describeBlocks={describeBlocks}
                   itStatements={itStatements}
-                  statements={statements}
                   handleChangeDescribeText={handleChangeDescribeText}
                   handleChangeItStatementText={handleChangeItStatementText}
                   type="acc"

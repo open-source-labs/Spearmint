@@ -24,8 +24,6 @@ const DescribeRenderer = ({
   dispatcher,
   describeBlocks,
   itStatements,
-  statements,
-  draggableStatements,
   handleChangeDescribeText,
   handleChangeItStatementText,
   type,
@@ -47,7 +45,7 @@ const DescribeRenderer = ({
     dispatcher(addItStatement(describeId));
   };
 
-  return draggableStatements.map((id, i) => (
+  return describeBlocks.allIds.map((id, i) => (
     <Draggable
       key={id}
       draggableId={id}
@@ -98,7 +96,6 @@ const DescribeRenderer = ({
                     type={type}
                     key={`it-${id}-${i}`}
                     itStatements={itStatements}
-                    statements={statements}
                     describeId={id}
                     handleChangeItStatementText={handleChangeItStatementText}
                   />
