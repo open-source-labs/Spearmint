@@ -788,7 +788,7 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ ACCESSIBILITY TESTING ------------------------------------------ */
     
     const addAccImportStatements = () => {
-      let { filePath } = accTestCase.statements;
+      let { filePath } = accTestCase;
       filePath = path.relative(projectFilePath, filePath);
       filePath = filePath.replace(/\\/g, '/');
 

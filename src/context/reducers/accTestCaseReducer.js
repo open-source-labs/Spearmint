@@ -3,7 +3,7 @@ import { actionTypes } from '../actions/accTestCaseActions';
 
 export const AccTestCaseContext = createContext([]);
 
-// ### revisit - is this the default state which is ammended by the reducer?
+
 export const accTestCaseState = {
   modalOpen: false,
 
@@ -30,20 +30,8 @@ export const accTestCaseState = {
     },
     allIds: ['it0'],
   },
-  statements: {
-    byId: {
-      statement0: {
-        id: 'statement0',
-        itId: 'it0',
-        describeId: 'describe0',
-        type: 'render',
-        props: [],
-      },
-    },
-    allIds: ['statement0'],
-    fileName: '',
-    filePath: '',
-  },
+  fileName: '',
+  filePath: '',
 };
 
 /* ---------------------------- Helper Functions ---------------------------- */
@@ -80,12 +68,10 @@ export const accTestCaseReducer = (state, action) => {
 
   let describeBlocks;
   let itStatements;
-  let statements;
 
   if (state && action) {
     describeBlocks = { ...state.describeBlocks };
     itStatements = { ...state.itStatements };
-    statements = { ...state.statements };
   }
 
   switch (action.type) {
@@ -113,7 +99,6 @@ export const accTestCaseReducer = (state, action) => {
       const allIds = describeBlocks.allIds.filter((id) => id !== describeId);
 
       const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId');
-      const statementAllIds = deleteChildren(statements, describeId, 'describeId');
 
       return {
         ...state,
@@ -130,13 +115,6 @@ export const accTestCaseReducer = (state, action) => {
             ...itStatements.byId,
           },
           allIds: [...itStatementAllIds],
-        },
-        statements: {
-          ...statements,
-          byId: {
-            ...statements.byId,
-          },
-          allIds: [...statementAllIds],
         },
       };
     }
@@ -192,7 +170,6 @@ export const accTestCaseReducer = (state, action) => {
       const byId = { ...itStatements.byId };
       delete byId[itId];
       const allIds = itStatements.allIds.filter((id) => id !== itId);
-      const statementAllIds = deleteChildren(statements, itId, 'itId');
 
       return {
         ...state,
@@ -202,13 +179,6 @@ export const accTestCaseReducer = (state, action) => {
             ...byId,
           },
           allIds: [...allIds],
-        },
-        statements: {
-          ...statements,
-          byId: {
-            ...statements.byId,
-          },
-          allIds: [...statementAllIds],
         },
       };
     }
@@ -252,10 +222,6 @@ export const accTestCaseReducer = (state, action) => {
           byId: {},
           allIds: [],
         },
-        statements: {
-          byId: {},
-          allIds: [],
-        },
       };
     }
     case actionTypes.OPEN_INFO_MODAL: {
@@ -274,11 +240,8 @@ export const accTestCaseReducer = (state, action) => {
       const { fileName, filePath } = action;
       return {
         ...state,
-        statements: {
-          ...state.statements,
-          fileName,
-          filePath,
-        },
+        fileName,
+        filePath,
       };
     }
     default:

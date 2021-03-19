@@ -19,7 +19,6 @@ export const actionTypes = {
 
   // not yet implemented:
   TOGGLE_ACC: 'TOGGLE_ACC',
-  UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -95,9 +94,4 @@ export const updateImportFilePath = (fileName, filePath) => ({
 // the below have no corresponding functions in Reducer
 export const toggleAcc = () => ({
   type: actionTypes.TOGGLE_ACC,
-});
-
-export const updateStatementsOrder = (draggableStatements) => ({
-  type: actionTypes.UPDATE_STATEMENTS_ORDER,
-  draggableStatements,
 });
