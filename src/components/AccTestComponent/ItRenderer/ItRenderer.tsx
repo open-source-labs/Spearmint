@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
+import { Draggable } from 'react-beautiful-dnd';
 
 import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
 
@@ -30,33 +31,44 @@ const ItRenderer = ({
     return itStatements.byId[id].describeId === describeId;
   });
 
-
   const deleteItStatementHandleClick = (e) => {
     const itId = e.target.id;
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
 
   return filteredIds.map((id, i) => (
-    <div id={styles.ItRenderer} key={i}>
+    <Draggable
+      draggableId={describeId + id}
+      index={i}
+    >
+      {(provided) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          id={styles.ItRenderer}
+          key={i}
+        >
 
-      <i
-        onClick={deleteItStatementHandleClick}
-        id={id}
-        className={cn(styles.itClose, 'far fa-window-close')}
-      ></i>
+          <i
+            onClick={deleteItStatementHandleClick}
+            id={id}
+            className={cn(styles.itClose, 'far fa-window-close')}
+          />
 
-      <CustomInput
-        key={`input-${id}-${i}`}
-        id={id}
-        label={'The element should...'}
-        placeholder={'The tested element should...'}
-        value={itStatements.byId[id].text}
-        handleChange={handleChangeItStatementText}
-      />
+          <CustomInput
+            key={`input-${id}-${i}`}
+            id={id}
+            label={'The element should...'}
+            placeholder={'The tested element should...'}
+            value={itStatements.byId[id].text}
+            handleChange={handleChangeItStatementText}
+          />
+          <hr />
 
-      <hr />
- 
-    </div>
+        </div>
+      )}
+    </Draggable>
   ));
 };
 

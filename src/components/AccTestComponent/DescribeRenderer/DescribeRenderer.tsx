@@ -1,11 +1,10 @@
 // import React object and destructure useRef and useEffect hooks
 import React, { useRef, useEffect } from 'react';
 import cn from 'classnames';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 // import It component
 import ItRenderer from '../ItRenderer/ItRenderer';
-
 
 // import styling
 import styles from './DescribeRenderer.module.scss';
@@ -66,6 +65,7 @@ const DescribeRenderer = ({
             <label htmlFor="describe-label" className={styles.describeLabel}>
               Describe Block
             </label>
+            {id}
 
             <i
               onClick={deleteDescribeBlockHandleClick}
@@ -85,14 +85,28 @@ const DescribeRenderer = ({
             />
 
             <div className={styles.separator} />
-            <ItRenderer
-              type={type}
-              key={`it-${id}-${i}`}
-              itStatements={itStatements}
-              statements={statements}
-              describeId={id}
-              handleChangeItStatementText={handleChangeItStatementText}
-            />
+
+            <Droppable
+              droppableId={"droppableAccIt" + id}
+              type={id}
+            >
+              {(innerProvided) => (
+                <div
+                  ref={innerProvided.innerRef}
+                  {...innerProvided.droppableProps}
+                >
+                  <ItRenderer
+                    type={type}
+                    key={`it-${id}-${i}`}
+                    itStatements={itStatements}
+                    statements={statements}
+                    describeId={id}
+                    handleChangeItStatementText={handleChangeItStatementText}
+                  />
+                  {innerProvided.placeholder}
+                </div>
+              )}
+            </Droppable>
 
             {/* Implement Button For Stretch */}
             <div className={styles.buttonContainer}>
@@ -102,17 +116,9 @@ const DescribeRenderer = ({
             </div>
 
           </div>
-
-
-
         </div>
       )}
     </Draggable>
-
-
-
-
-
   ));
 };
 

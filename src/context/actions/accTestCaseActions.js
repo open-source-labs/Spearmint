@@ -9,6 +9,7 @@ export const actionTypes = {
   ADD_ITSTATEMENT: 'ADD_ITSTATEMENT',
   DELETE_ITSTATEMENT: 'DELETE_ITSTATEMENT',
   UPDATE_ITSTATEMENT_TEXT: 'UPDATE_ITSTATEMENT_TEXT',
+  UPDATE_ITSTATEMENT_ORDER: 'UPDATE_ITSTATEMENT_ORDER',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
@@ -65,6 +66,13 @@ export const updateItStatementText = (text, itId) => ({
   itId,
   text,
 });
+
+export const updateItStatementOrder = (reorderedIt) => {
+  return {
+    type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
+    reorderedIt,
+  };
+};
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,

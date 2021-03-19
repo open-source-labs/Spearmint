@@ -6,6 +6,7 @@ import {
   updateDescribeText,
   updateItStatementText,
   updateDescribeOrder,
+  updateItStatementOrder,
 } from '../../context/actions/accTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -51,25 +52,27 @@ const AccTestCase = () => {
   };
 
   const onDragEnd = (result) => {
+    console.log(result);
     // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
     if (!result.destination) return;
     if (result.destination.index === result.source.index) return;
 
-    // const list = result.draggableId.includes('describe') ? describeBlocks.allIds : itStatements.allIds[result.type];
-    // const func = result.draggableId.includes('describe') ? updateDescribeOrder : updateItStatementOrder;
+    const list = result.draggableId.includes('describe') ? describeBlocks.allIds : itStatements.allIds;
+    const func = result.draggableId.includes('describe') ? updateDescribeOrder : updateItStatementOrder;
 
     const reorderedStatements = reorder(
-      describeBlocks.allIds,
+      list,
       result.source.index,
       result.destination.index,
     );
-    dispatchToAccTestCase(updateDescribeOrder(reorderedStatements));
+    dispatchToAccTestCase(func(reorderedStatements));
   };
 
   return (
     <div id={styles.AccTestCase}>
 
       <div id="head">
+        {JSON.stringify(accTestCase)}
         <AccTestMenu />
       </div>
 
@@ -104,6 +107,7 @@ const AccTestCase = () => {
                   handleChangeItStatementText={handleChangeItStatementText}
                   type="acc"
                 />
+                {provided.placeholder}
               </div>
             )}
           </Droppable>

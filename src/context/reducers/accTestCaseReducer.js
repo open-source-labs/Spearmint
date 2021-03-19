@@ -230,6 +230,17 @@ export const accTestCaseReducer = (state, action) => {
         },
       };
     }
+    case actionTypes.UPDATE_ITSTATEMENT_ORDER: {
+      const { reorderedIt } = action;
+
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          allIds: reorderedIt,
+        },
+      };
+    }
     case actionTypes.CREATE_NEW_TEST: {
       return {
         ...state,
