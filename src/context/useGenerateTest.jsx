@@ -812,7 +812,7 @@ function useGenerateTest(test, projectFilePath) {
       describeBlocks.allIds.forEach((id) => {
         testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
         addAccItStatements(id);
-        testFileCode += `}); \n`;
+        testFileCode += `}); \n \n`;
       });
     };
 
