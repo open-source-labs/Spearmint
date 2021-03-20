@@ -109,11 +109,11 @@ export const accTestCaseReducer = (state, action) => {
       return {
         ...state,
         describeBlocks: {
-          byIds: newDescById,
+          byId: newDescById,
           allIds: newDescAllIds,
         },
         itStatements: {
-          byIds: newItById,
+          byId: newItById,
           allIds: newItAllIds,
         },
       };
@@ -190,14 +190,14 @@ export const accTestCaseReducer = (state, action) => {
     }
     case actionTypes.UPDATE_ITSTATEMENT_TEXT: {
       const { itId, text } = action;
-      const byIds = { ...itStatements.byId };
+      const byId = { ...itStatements.byId };
       const block = { ...itStatements.byId[itId] };
       return {
         ...state,
         itStatements: {
           ...itStatements,
           byId: {
-            ...byIds,
+            ...byId,
             [itId]: {
               ...block,
               text,
