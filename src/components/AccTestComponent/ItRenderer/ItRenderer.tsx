@@ -1,11 +1,7 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
-
 import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
-
-// test case statements are for action, assertion, and render options
-// import AccTestStatements from '../../TestCase/AccTestStatements';
 
 import {
   deleteItStatement,
@@ -24,20 +20,14 @@ const ItRenderer = ({
 
   const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
-  // filter out ids not belonging to the correct describe block
-  // ### do we need this?
-  const filteredIds = itStatements.allIds.filter((id) => {
-    return itStatements.byId[id].describeId === describeId;
-  });
-
   const deleteItStatementHandleClick = (e) => {
     const itId = e.target.id;
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
 
-  return filteredIds.map((id, i) => (
+  return itStatements.allIds[describeId].map((id, i) => (
     <Draggable
-      draggableId={describeId + id}
+      draggableId={id}
       index={i}
     >
       {(provided) => (
@@ -72,12 +62,3 @@ const ItRenderer = ({
 };
 
 export default ItRenderer;
-
-
-// ## stretch use?
-// <ReactTestStatements
-//   key={`statement-${id}-${i}`}
-//   statements={statements}
-//   itId={id}
-//   describeId={describeId}
-// /> 

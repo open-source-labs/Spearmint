@@ -1,24 +1,9 @@
-// import React object and destructure useRef and useEffect hooks
 import React, { useRef, useEffect } from 'react';
 import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
-
-// import It component
 import ItRenderer from '../ItRenderer/ItRenderer';
-
-// import styling
 import styles from './DescribeRenderer.module.scss';
-
-// import action types
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
-
-// import from accTypes - ### add after html structure is created?
-// import { Assertion, AccObj, Header, Action, EventTarget } from '../../utils/accTypes';
-
-// require in icons
-// const closeIcon = require('../../../assets/images/close.png');
-// const dragIcon = require('../../assets/images/drag-vertical.png');
-// const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 const DescribeRenderer = ({
   dispatcher,
@@ -62,7 +47,6 @@ const DescribeRenderer = ({
             <label htmlFor="describe-label" className={styles.describeLabel}>
               Describe Block
             </label>
-            {id}
 
             <i
               onClick={deleteDescribeBlockHandleClick}
@@ -104,7 +88,6 @@ const DescribeRenderer = ({
               )}
             </Droppable>
 
-            {/* Implement Button For Stretch */}
             <div className={styles.buttonContainer}>
               <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
                 +It Statement

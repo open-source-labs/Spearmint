@@ -66,10 +66,11 @@ export const updateItStatementText = (text, itId) => ({
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt) => {
+export const updateItStatementOrder = (reorderedIt, describeId) => {
   return {
     type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
     reorderedIt,
+    describeId,
   };
 };
 
@@ -89,9 +90,4 @@ export const updateImportFilePath = (fileName, filePath) => ({
   type: actionTypes.UPDATE_FILE_PATH,
   fileName,
   filePath,
-});
-
-// the below have no corresponding functions in Reducer
-export const toggleAcc = () => ({
-  type: actionTypes.TOGGLE_ACC,
 });

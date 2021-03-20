@@ -1,8 +1,7 @@
-import { createContext } from 'react'; 
+import { createContext } from 'react';
 import { actionTypes } from '../actions/accTestCaseActions';
 
 export const AccTestCaseContext = createContext([]);
-
 
 export const accTestCaseState = {
   modalOpen: false,
@@ -28,7 +27,9 @@ export const accTestCaseState = {
         text: '',
       },
     },
-    allIds: ['it0'],
+    allIds: {
+      describe0: ['it0'],
+    },
   },
   fileName: '',
   filePath: '',
@@ -49,20 +50,8 @@ const createItStatement = (describeId, itId) => ({
   text: '',
 });
 
-const deleteChildren = (object, deletionId, lookup) => {
-  const allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
-
-  object.allIds.forEach((id) => {
-    if (object.byId[id][lookup] === deletionId) {
-      delete object.byId[id];
-    }
-  });
-
-  return allIdCopy;
-};
-
 /* ------------------------- Accessibility Test Case Reducer ------------------------ */
-// ### where is this invoked -> returns an updated state based on state argument and current action
+
 export const accTestCaseReducer = (state, action) => {
   Object.freeze(state);
 
@@ -90,31 +79,38 @@ export const accTestCaseReducer = (state, action) => {
           },
           allIds: [...(describeBlocks.allIds || []), describeId],
         },
+        itStatements: {
+          ...itStatements,
+          allIds: {
+            ...itStatements.allIds,
+            [describeId]: [],
+          },
+        },
       };
     }
     case actionTypes.DELETE_DESCRIBE_BLOCK: {
       const { describeId } = action;
-      const byId = { ...describeBlocks.byId };
-      delete byId[describeId];
-      const allIds = describeBlocks.allIds.filter((id) => id !== describeId);
 
-      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId');
+      // delete it from describeBlocks.byId
+      delete describeBlocks.byId[describeId];
+      // delete it from describeBlocks.allIds
+      const newAllIds = describeBlocks.allIds.filter((id) => id !== describeId);
+
+      // delete from itStatements.byId
+      itStatements.allIds[describeId].forEach((itId) => {
+        delete itStatements.byId[itId];
+      });
+      // delete from itStatements.allIds
+      delete itStatements.allIds[describeId];
 
       return {
         ...state,
         describeBlocks: {
           ...describeBlocks,
-          byId: {
-            ...byId,
-          },
-          allIds: [...allIds],
+          allIds: newAllIds,
         },
         itStatements: {
           ...itStatements,
-          byId: {
-            ...itStatements.byId,
-          },
-          allIds: [...itStatementAllIds],
         },
       };
     }
@@ -161,15 +157,18 @@ export const accTestCaseReducer = (state, action) => {
             ...itStatements.byId,
             [itId]: createItStatement(describeId, itId),
           },
-          allIds: [...(itStatements.allIds || []), itId],
+          allIds: {
+            ...itStatements.allIds,
+            [describeId]: [...(itStatements.allIds[describeId]), itId],
+          },
         },
       };
     }
     case actionTypes.DELETE_ITSTATEMENT: {
-      const { itId } = action;
+      const { itId, describeId } = action;
       const byId = { ...itStatements.byId };
       delete byId[itId];
-      const allIds = itStatements.allIds.filter((id) => id !== itId);
+      const newAllIds = itStatements.allIds[describeId].filter((id) => id !== itId);
 
       return {
         ...state,
@@ -178,7 +177,10 @@ export const accTestCaseReducer = (state, action) => {
           byId: {
             ...byId,
           },
-          allIds: [...allIds],
+          allIds: {
+            ...itStatements.allIds,
+            [describeId]: [...newAllIds],
+          },
         },
       };
     }
@@ -201,28 +203,21 @@ export const accTestCaseReducer = (state, action) => {
       };
     }
     case actionTypes.UPDATE_ITSTATEMENT_ORDER: {
-      const { reorderedIt } = action;
+      const { reorderedIt, describeId } = action;
 
       return {
         ...state,
         itStatements: {
           ...itStatements,
-          allIds: reorderedIt,
+          allIds: {
+            ...itStatements.allIds,
+            [describeId]: reorderedIt,
+          },
         },
       };
     }
     case actionTypes.CREATE_NEW_TEST: {
-      return {
-        ...state,
-        describeBlocks: {
-          byId: {},
-          allIds: [],
-        },
-        itStatements: {
-          byId: {},
-          allIds: [],
-        },
-      };
+      return { ...accTestCaseState };
     }
     case actionTypes.OPEN_INFO_MODAL: {
       return {
