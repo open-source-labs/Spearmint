@@ -90,27 +90,31 @@ export const accTestCaseReducer = (state, action) => {
     }
     case actionTypes.DELETE_DESCRIBE_BLOCK: {
       const { describeId } = action;
+      const newDescById = { ...describeBlocks.byId };
+      const newItById = { ...itStatements.byId };
+      const newItAllIds = { ...itStatements.allIds };
 
       // delete it from describeBlocks.byId
-      delete describeBlocks.byId[describeId];
+      delete newDescById[describeId];
       // delete it from describeBlocks.allIds
-      const newAllIds = describeBlocks.allIds.filter((id) => id !== describeId);
+      const newDescAllIds = describeBlocks.allIds.filter((id) => id !== describeId);
 
       // delete from itStatements.byId
       itStatements.allIds[describeId].forEach((itId) => {
-        delete itStatements.byId[itId];
+        delete newItById[itId];
       });
       // delete from itStatements.allIds
-      delete itStatements.allIds[describeId];
+      delete newItAllIds[describeId];
 
       return {
         ...state,
         describeBlocks: {
-          ...describeBlocks,
-          allIds: newAllIds,
+          byIds: newDescById,
+          allIds: newDescAllIds,
         },
         itStatements: {
-          ...itStatements,
+          byIds: newItById,
+          allIds: newItAllIds,
         },
       };
     }
