@@ -788,22 +788,31 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ ACCESSIBILITY TESTING ------------------------------------------ */
     
     const addAccImportStatements = () => {
-      let { fileName } = accTestCase;
-      fileName = path.relative(projectFilePath, fileName);
-      fileName = fileName.replace(/\\/g, '/');
+      let { filePath, fileName } = accTestCase;
+      filePath = path.relative(projectFilePath, filePath);
+      filePath = filePath.replace(/\\/g, '/');
 
-      // testFileCode += JSON.stringify(accTestCase);
+      testFileCode += JSON.stringify(accTestCase);
 
       testFileCode += `
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');`;
       
-      if (usesHtml) testFileCode += `
+      if (usesHtml) {
+        testFileCode += `
         const path = require('path');
         const fs = require('fs');
         
         const html = fs.readFileSync(path.resolve(__dirname,
-          '../${fileName}'), 'utf8');`;
+          '../${filePath}'), 'utf8');`;
+      } else if (usesReact) {
+        testFileCode += `
+        import React from 'react';
+        import { configure, mount } from 'enzyme';
+        import Adapter from 'enzyme-adapter-react-16';
+
+        import ${fileName.split('.')[0]} from '../${filePath}';`;
+      }
     };
 
     const addAccDescribeBlocks = () => {
@@ -813,39 +822,13 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `
 
         describe('${describeBlocks.byId[id].text}', () => {`;
-        addAccBeforeAll();
         addAccPrint();
+        if (usesReact) addMount();
+        addAccBeforeAll();
         addAccItStatements(id);
         testFileCode += `}); \n`;
       });
     };
-
-    const addAccBeforeAll = () => {
-      testFileCode += `
-        let options;
-      
-        beforeAll((done) => {
-          // exclude tests that are incompatible
-          options = {
-            rules: {
-              'color-contrast': { enabled: false },
-              'link-in-text-block': { enabled: false }
-            },
-          };
-        `;
-      
-      if (usesHtml) testFileCode += `
-        // get language tag from imported html file and assign to jsdom document
-        const langTag = html.match(/<html lang="(.*)"/);
-        if (langTag) document.documentElement.lang = langTag[1];
-        document.documentElement.innerHTML = html.toString();
-        `;
-        
-      testFileCode += `
-          done();
-        });
-      `;
-    }
 
     const addAccPrint = () => {
       testFileCode += `
@@ -872,27 +855,99 @@ function useGenerateTest(test, projectFilePath) {
       `;
     }
 
+    const addMount = () => {
+      testFileCode += `
+        const mountToDoc = (reactElm) => {
+          configure({ adapter: new Adapter() });
+          if (!document) {
+            // Set up a basic DOM
+            global.document = jsdom('<!doctype html><html><body></body></html>');
+          }
+          if (!wrapper) {
+            wrapper = document.createElement('main');
+            document.body.appendChild(wrapper);
+          }
+        
+          const container = mount(reactElm);
+          wrapper.innerHTML = '';
+          wrapper.appendChild(container.getDOMNode());
+          return container;
+        }
+      `;
+    }
+
+    const addAccBeforeAll = () => {
+      testFileCode += `
+        let options;`;
+
+      if (usesReact) {
+        testFileCode += `
+          let linkNode;
+          let wrapper;`;
+      }
+      
+      testFileCode += `\n
+        beforeAll((done) => {
+          // exclude tests that are incompatible
+          options = {
+            rules: {
+              'color-contrast': { enabled: false },
+              'link-in-text-block': { enabled: false }
+            },
+          };
+        `;
+      
+      if (usesHtml) {
+        testFileCode += `
+          // get language tag from imported html file and assign to jsdom document
+          const langTag = html.match(/<html lang="(.*)"/);
+          if (langTag) document.documentElement.lang = langTag[1];
+          document.documentElement.innerHTML = html.toString();
+        `;
+      } else if (usesReact) {
+        testFileCode += `
+        const linkComponent = mountToDoc(
+          < Link />
+        );
+        linkNode = linkComponent.getDOMNode();
+        `;
+      }
+        
+      testFileCode += `
+          done();
+        });
+      `;
+    }
+
     const addAccItStatements = (descId) => {
       const { itStatements } = accTestCase;
       
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
-          it('${itStatements.byId[itId].text}', (done) => {
+          it('${itStatements.byId[itId].text}', (done) => {`
         
-            axe.run(options, async (err, { violations }) => {
-              if (err) {
-                console.log('err: ', err);
-                done();
-              }
+        if (usesReact) {
+          testFileCode += `
+            axe.run(linkNode, options, async (err, { violations }) => {`
+        } else {
+          testFileCode += `
+            axe.run(options, async (err, { violations }) => {`
+        }
 
-              print(violations);      
-        
-              expect(err).toBe(null);
-              expect(violations).toHaveLength(0);
+        testFileCode += `
+            if (err) {
+              console.log('err: ', err);
               done();
-            });
-          })
-        `;
+            }
+
+            print(violations);      
+      
+            expect(err).toBe(null);
+            expect(violations).toHaveLength(0);
+            done();
+          });
+        })
+      `;
       });
     };
 
@@ -900,6 +955,7 @@ function useGenerateTest(test, projectFilePath) {
       case 'acc':
         var accTestCase = testState;
         var usesHtml = accTestCase.fileName.split('.')[1] === 'html' ? true : false;
+        var usesReact = ['js', 'jsx', 'ts', 'tsx'].includes(accTestCase.fileName.split('.')[1]) ? true : false;
         return (
           addAccImportStatements(),
           addAccDescribeBlocks(),
