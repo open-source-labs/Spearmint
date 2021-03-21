@@ -15,7 +15,7 @@ export const actionTypes = {
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
 
-  UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
+  UPDATE_HTML_PATH: 'UPDATE_HTML_PATH',
 
   // not yet implemented:
   TOGGLE_ACC: 'TOGGLE_ACC',
@@ -86,8 +86,8 @@ export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
 
-export const updateImportFilePath = (fileName, filePath) => ({
-  type: actionTypes.UPDATE_FILE_PATH,
-  fileName,
-  filePath,
+export const updateHtmlPath = (htmlFileName, htmlFilePath) => ({
+  type: actionTypes.UPDATE_HTML_PATH,
+  htmlFileName,
+  htmlFilePath,
 });

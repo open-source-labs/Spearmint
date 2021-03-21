@@ -14,7 +14,7 @@ import SearchInput from '../SearchInput/SearchInput';
 import AccTestMenu from '../TestMenu/AccTestMenu';
 
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
-import { updateImportFilePath } from '../../context/actions/accTestCaseActions';
+import { updateHtmlPath } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
   accTestCaseState,
@@ -75,7 +75,7 @@ const AccTestCase = () => {
           <SearchInput
             options={Object.keys(filePathMap)}
             dispatch={dispatchToAccTestCase}
-            action={updateImportFilePath}
+            action={updateHtmlPath}
             filePathMap={filePathMap}
           />
         </div>

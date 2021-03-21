@@ -788,9 +788,9 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ ACCESSIBILITY TESTING ------------------------------------------ */
     
     const addAccImportStatements = () => {
-      let { filePath } = accTestCase;
-      filePath = path.relative(projectFilePath, filePath);
-      filePath = filePath.replace(/\\/g, '/');
+      let { htmlFilePath } = accTestCase;
+      htmlFilePath = path.relative(projectFilePath, htmlFilePath);
+      htmlFilePath = htmlFilePath.replace(/\\/g, '/');
 
       // testFileCode += JSON.stringify(accTestCase);
 
@@ -801,7 +801,7 @@ function useGenerateTest(test, projectFilePath) {
         const fs = require('fs');
         
         const html = fs.readFileSync(path.resolve(__dirname,
-          '../${filePath}'), 'utf8');
+          '../${htmlFilePath}'), 'utf8');
         
       `;
     };
