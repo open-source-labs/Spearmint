@@ -788,89 +788,118 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ ACCESSIBILITY TESTING ------------------------------------------ */
     
     const addAccImportStatements = () => {
-      let { htmlFilePath } = accTestCase;
-      htmlFilePath = path.relative(projectFilePath, htmlFilePath);
-      htmlFilePath = htmlFilePath.replace(/\\/g, '/');
+      let { fileName } = accTestCase;
+      fileName = path.relative(projectFilePath, fileName);
+      fileName = fileName.replace(/\\/g, '/');
 
       // testFileCode += JSON.stringify(accTestCase);
 
       testFileCode += `
         const axe = require('axe-core');
-        const regeneratorRuntime = require('regenerator-runtime');
+        const regeneratorRuntime = require('regenerator-runtime');`;
+      
+      if (usesHtml) testFileCode += `
         const path = require('path');
         const fs = require('fs');
         
         const html = fs.readFileSync(path.resolve(__dirname,
-          '../${htmlFilePath}'), 'utf8');
-        
-      `;
+          '../${fileName}'), 'utf8');`;
     };
 
     const addAccDescribeBlocks = () => {
       const { describeBlocks } = accTestCase;
 
       describeBlocks.allIds.forEach((id) => {
-        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        testFileCode += `
+
+        describe('${describeBlocks.byId[id].text}', () => {`;
+        addAccBeforeAll();
+        addAccPrint();
         addAccItStatements(id);
         testFileCode += `}); \n`;
       });
     };
 
+    const addAccBeforeAll = () => {
+      testFileCode += `
+        let options;
+      
+        beforeAll((done) => {
+          // exclude tests that are incompatible
+          options = {
+            rules: {
+              'color-contrast': { enabled: false },
+              'link-in-text-block': { enabled: false }
+            },
+          };
+        `;
+      
+      if (usesHtml) testFileCode += `
+        // get language tag from imported html file and assign to jsdom document
+        const langTag = html.match(/<html lang="(.*)"/);
+        if (langTag) document.documentElement.lang = langTag[1];
+        document.documentElement.innerHTML = html.toString();
+        `;
+        
+      testFileCode += `
+          done();
+        });
+      `;
+    }
+
+    const addAccPrint = () => {
+      testFileCode += `
+        const print = (violations) => {
+          if (violations.length === 0) {
+            console.log('Congrats! Keep up the good work, you have 0 known violations!');
+          } else {
+            violations.forEach(axeViolation => {
+              const whereItFailed = axeViolation.nodes.map(node => node.html);
+              // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
+        
+              const { description, help, helpUrl } = axeViolation;
+      
+              console.log('---------',
+                '\\nTEST DESCRIPTION: ', description,
+                '\\nISSUE: ', help,
+                '\\nMORE INFO: ', helpUrl,
+                '\\nWHERE IT FAILED: ', whereItFailed,
+                // '\\nhow to fix: ', failureSummary
+              );
+            });
+          }
+        }
+      `;
+    }
+
     const addAccItStatements = (descId) => {
       const { itStatements } = accTestCase;
       
       itStatements.allIds[descId].forEach((itId) => {
-        testFileCode += `it('${itStatements.byId[itId].text}', (done) => {
-        // exclude tests that are incompatible
-          const config = {
-            rules: {
-              'color-contrast': { enabled: false },
-              'link-in-text-block': { enabled: false }
-            }
-          };
-      
-          // get language tag from imported html file and assign to jsdom document
-          const langTag = html.match(/<html lang="(.*)"/);
-          if (langTag) document.documentElement.lang = langTag[1];
-          document.documentElement.innerHTML = html.toString();
-      
-          axe.run(config, async (err, { violations }) => {
-            if (err) {
-              console.log('err: ', err);
+        testFileCode += `
+          it('${itStatements.byId[itId].text}', (done) => {
+        
+            axe.run(options, async (err, { violations }) => {
+              if (err) {
+                console.log('err: ', err);
+                done();
+              }
+
+              print(violations);      
+        
+              expect(err).toBe(null);
+              expect(violations).toHaveLength(0);
               done();
-            }
-      
-            if (violations.length === 0) {
-              console.log('Congrats! Keep up the good work, you have 0 known violations!');
-            } else {
-              violations.forEach(axeViolation => {
-                const whereItFailed = axeViolation.nodes.map(node => node.html);
-                // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
-          
-                const { description, help, helpUrl } = axeViolation;
-      
-                console.log('---------',
-                  '\\nTEST DESCRIPTION: ', description,
-                  '\\nISSUE: ', help,
-                  '\\nMORE INFO: ', helpUrl,
-                  '\\nWHERE IT FAILED: ', whereItFailed,
-                  // '\\nhow to fix: ', failureSummary
-                );
-              });
-            }
-      
-            expect(err).toBe(null);
-            expect(violations).toHaveLength(0);
-            done();
-          });
-        })`;
-        testFileCode += '\n';
+            });
+          })
+        `;
       });
     };
 
     switch (test) {
       case 'acc':
         var accTestCase = testState;
+        var usesHtml = accTestCase.fileName.split('.')[1] === 'html' ? true : false;
         return (
           addAccImportStatements(),
           addAccDescribeBlocks(),
