@@ -31,8 +31,8 @@ export const accTestCaseState = {
       describe0: ['it0'],
     },
   },
-  htmlFileName: '',
-  htmlFilePath: '',
+  fileName: '',
+  filePath: '',
 };
 
 /* ---------------------------- Helper Functions ---------------------------- */
@@ -235,12 +235,12 @@ export const accTestCaseReducer = (state, action) => {
         modalOpen: false,
       };
     }
-    case actionTypes.UPDATE_HTML_PATH: {
-      const { htmlFileName, htmlFilePath } = action;
+    case actionTypes.UPDATE_FILE_PATH: {
+      const { fileName, filePath } = action;
       return {
         ...state,
-        htmlFileName,
-        htmlFilePath,
+        fileName,
+        filePath,
       };
     }
     default:
