@@ -1,14 +1,16 @@
 import React, { useContext, useReducer } from 'react';
 import cn from 'classnames';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
   updateItStatementText,
+  updateDescribeOrder,
+  updateItStatementOrder,
 } from '../../context/actions/accTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 
-// ### this ties in with Sharon's code - did not create a file ### VERIFY PATH
 import AccTestMenu from '../TestMenu/AccTestMenu';
 
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
@@ -24,10 +26,9 @@ const AccTestCase = () => {
     AccTestCaseContext,
   );
 
-  const { describeBlocks, itStatements, statements } = accTestCase;
+  const { describeBlocks, itStatements } = accTestCase;
 
   const [{ filePathMap }] = useContext(GlobalContext);
-  const draggableStatements = describeBlocks.allIds;
 
   const handleChangeDescribeText = (e) => {
     const text = e.target.value;
@@ -39,6 +40,26 @@ const AccTestCase = () => {
     const text = e.target.value;
     const itId = e.target.id;
     dispatchToAccTestCase(updateItStatementText(text, itId));
+  };
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  const onDragEnd = (result) => {
+    // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
+    if (!result.destination) return;
+    if (result.destination.index === result.source.index) return;
+
+    const list = result.draggableId.includes('describe') ? describeBlocks.allIds : itStatements.allIds[result.type];
+    const func = result.draggableId.includes('describe') ? updateDescribeOrder : updateItStatementOrder;
+
+    const reorderedStatements = reorder(list, result.source.index, result.destination.index);
+
+    dispatchToAccTestCase(func(reorderedStatements, result.type));
   };
 
   return (
@@ -59,16 +80,29 @@ const AccTestCase = () => {
           />
         </div>
 
-        <DecribeRenderer
-          dispatcher={dispatchToAccTestCase}
-          draggableStatements={draggableStatements}
-          describeBlocks={describeBlocks}
-          itStatements={itStatements}
-          statements={statements}
-          handleChangeDescribeText={handleChangeDescribeText}
-          handleChangeItStatementText={handleChangeItStatementText}
-          type="acc"
-        />
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable
+            droppableId="droppableAccDescribe"
+            type="describe"
+          >
+            {(provided) => (
+              <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              >
+                <DecribeRenderer
+                  dispatcher={dispatchToAccTestCase}
+                  describeBlocks={describeBlocks}
+                  itStatements={itStatements}
+                  handleChangeDescribeText={handleChangeDescribeText}
+                  handleChangeItStatementText={handleChangeItStatementText}
+                  type="acc"
+                />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       </section>
 
     </div>
