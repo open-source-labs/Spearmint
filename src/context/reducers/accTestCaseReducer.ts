@@ -1,18 +1,10 @@
-<<<<<<< HEAD:src/context/reducers/accTestCaseReducer.ts
 import { createContext } from 'react'; 
-import { AccTestCaseState, DescribeBlock, DescribeId} from '../../utils/accTypes';
-=======
-import { createContext } from 'react';
->>>>>>> f2bf901cfb50109a256ae1c00d5c5934f303f371:src/context/reducers/accTestCaseReducer.js
+import { AccTestCaseState, Action} from '../../utils/accTypes';
 import { actionTypes } from '../actions/accTestCaseActions';
 
 export const AccTestCaseContext:any = createContext([]);
 
-<<<<<<< HEAD:src/context/reducers/accTestCaseReducer.ts
 export const accTestCaseState: AccTestCaseState = {
-=======
-export const accTestCaseState = {
->>>>>>> f2bf901cfb50109a256ae1c00d5c5934f303f371:src/context/reducers/accTestCaseReducer.js
   modalOpen: false,
 
   describeId: 1,
@@ -61,7 +53,7 @@ const createItStatement = (describeId: string , itId: string) => ({
 
 /* ------------------------- Accessibility Test Case Reducer ------------------------ */
 
-export const accTestCaseReducer = (state, action) => {
+export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
   Object.freeze(state);
 
   let describeBlocks;
@@ -106,10 +98,10 @@ export const accTestCaseReducer = (state, action) => {
       // delete it from describeBlocks.byId
       delete newDescById[describeId];
       // delete it from describeBlocks.allIds
-      const newDescAllIds = describeBlocks.allIds.filter((id) => id !== describeId);
+      const newDescAllIds = describeBlocks.allIds.filter((id: string) => id !== describeId);
 
       // delete from itStatements.byId
-      itStatements.allIds[describeId].forEach((itId) => {
+      itStatements.allIds[describeId].forEach((itId: number) => {
         delete newItById[itId];
       });
       // delete from itStatements.allIds
@@ -181,7 +173,7 @@ export const accTestCaseReducer = (state, action) => {
       const { itId, describeId } = action;
       const byId = { ...itStatements.byId };
       delete byId[itId];
-      const newAllIds = itStatements.allIds[describeId].filter((id) => id !== itId);
+      const newAllIds = itStatements.allIds[describeId].filter((id: number) => id !== itId);
 
       return {
         ...state,

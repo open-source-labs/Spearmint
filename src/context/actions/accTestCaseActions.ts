@@ -28,44 +28,44 @@ export const addDescribeBlock = () => {
   };
 };
 
-export const deleteDescribeBlock = (describeId) => {
+export const deleteDescribeBlock = (describeId: number) => {
   return {
     type: actionTypes.DELETE_DESCRIBE_BLOCK,
     describeId,
   };
 };
 
-export const updateDescribeText = (text, describeId) => ({
+export const updateDescribeText = (text: string, describeId: number) => ({
   type: actionTypes.UPDATE_DESCRIBE_TEXT,
   text,
   describeId,
 });
 
-export const updateDescribeOrder = (reorderedDescribe) => {
+export const updateDescribeOrder = (reorderedDescribe: Object) => {
   return {
     type: actionTypes.UPDATE_DESCRIBE_ORDER,
     reorderedDescribe,
   };
 };
 
-export const addItStatement = (describeId) => ({
+export const addItStatement = (describeId: number) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
 });
 
-export const deleteItStatement = (describeId, itId) => ({
+export const deleteItStatement = (describeId: number, itId: number) => ({
   type: actionTypes.DELETE_ITSTATEMENT,
   describeId,
   itId,
 });
 
-export const updateItStatementText = (text, itId) => ({
+export const updateItStatementText = (text: string, itId: number) => ({
   type: actionTypes.UPDATE_ITSTATEMENT_TEXT,
   itId,
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt, describeId) => {
+export const updateItStatementOrder = (reorderedIt:, describeId: number) => {
   return {
     type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
     reorderedIt,
