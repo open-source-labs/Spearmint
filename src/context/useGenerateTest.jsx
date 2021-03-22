@@ -877,6 +877,7 @@ function useGenerateTest(test, projectFilePath) {
     }
 
     const addAccBeforeAll = () => {
+      const { fileName } = accTestCase;
       testFileCode += `
         let options;`;
 
@@ -907,7 +908,7 @@ function useGenerateTest(test, projectFilePath) {
       } else if (usesReact) {
         testFileCode += `
         const linkComponent = mountToDoc(
-          < Link />
+          < ${fileName.split('.')[0]} />
         );
         linkNode = linkComponent.getDOMNode();
         `;
