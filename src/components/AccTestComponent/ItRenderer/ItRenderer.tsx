@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import cn from 'classnames';
 
 import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
@@ -13,12 +13,11 @@ import {
 import CustomInput from '../CustomInput/CustomInput';
 
 import styles from './ItRenderer.module.scss';
+import { ItStatements } from '../../../utils/accTypes';
 
 const ItRenderer = ({
-  type,
   itStatements,
   describeId,
-  statements,
   handleChangeItStatementText,
 }) => {
 
@@ -26,17 +25,17 @@ const ItRenderer = ({
 
   // filter out ids not belonging to the correct describe block
   // ### do we need this?
-  const filteredIds = itStatements.allIds.filter((id) => {
+  const filteredIds = itStatements.allIds.filter((id: string) => {
     return itStatements.byId[id].describeId === describeId;
   });
 
 
-  const deleteItStatementHandleClick = (e) => {
+  const deleteItStatementHandleClick = (e: ChangeEvent) => {
     const itId = e.target.id;
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
 
-  return filteredIds.map((id, i) => (
+  return filteredIds.map((id: ItStatements, i: number) => (
     <div id={styles.ItRenderer} key={i}>
 
       <i
@@ -52,6 +51,7 @@ const ItRenderer = ({
         placeholder={'The tested element should...'}
         value={itStatements.byId[id].text}
         handleChange={handleChangeItStatementText}
+        bold={null}
       />
 
       <hr />
@@ -61,12 +61,3 @@ const ItRenderer = ({
 };
 
 export default ItRenderer;
-
-
-// ## stretch use?
-// <ReactTestStatements
-//   key={`statement-${id}-${i}`}
-//   statements={statements}
-//   itId={id}
-//   describeId={describeId}
-// /> 

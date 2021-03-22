@@ -8,15 +8,12 @@ import {
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 
-// ### this ties in with Sharon's code - did not create a file ### VERIFY PATH
 import AccTestMenu from '../TestMenu/AccTestMenu';
 
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 import { updateImportFilePath } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
-  accTestCaseState,
-  accTestCaseReducer,
 } from '../../context/reducers/accTestCaseReducer';
 
 const AccTestCase = () => {

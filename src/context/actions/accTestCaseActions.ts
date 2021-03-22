@@ -15,7 +15,6 @@ export const actionTypes = {
 
   UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
 
-  // not yet implemented:
   TOGGLE_ACC: 'TOGGLE_ACC',
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
 };

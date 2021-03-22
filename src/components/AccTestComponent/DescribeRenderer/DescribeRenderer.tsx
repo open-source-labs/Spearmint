@@ -2,7 +2,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-trailing-spaces */
 // import React object and destructure useRef and useEffect hooks 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, ChangeEvent } from 'react';
 
 // import It component
 import ItRenderer from '../ItRenderer/ItRenderer';
@@ -17,7 +17,7 @@ import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
 
 // import from accTypes - ### add after html structure is created? 
-import { Assertion, AccObj, Header, Action, EventTarget } from '../../utils/accTypes';
+import { AccTestCaseState, DescribeBlocks } from '../../../utils/accTypes';
 
 import cn from 'classnames';
 // require in icons
@@ -35,26 +35,27 @@ const DescribeRenderer = ({
   handleChangeDescribeText,
   handleChangeItStatementText,
   type,
-}) => {
-  const testDescription = useRef(null);
+}): AccTestCaseState => {
+  const testDescription = useRef<HTMLInputElement>(null!);
 
   useEffect(() => {
     testDescription.current.focus();
   }, []);
 
-  const deleteDescribeBlockHandleClick = (e) => {
+  const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
     const describeId = e.target.id;
     dispatcher(deleteDescribeBlock(describeId));
   };
 
-  const addItStatementHandleClick = (e) => {
+  const addItStatementHandleClick = (e: ChangeEvent) => {
     const describeId = e.target.id;
     dispatcher(addItStatement(describeId));
   };
 
-  return draggableStatements.map((id, i) => {
+  return draggableStatements.map((id: DescribeBlocks, i: number) => {
     return (
+      <>
       <div id={styles.describeBlock} key={i}>
         <label htmlFor='describe-label' className={styles.describeLabel}>
           Describe Block
@@ -95,6 +96,7 @@ const DescribeRenderer = ({
         </div>
 
       </div>
+      </>
     );
   });
 };

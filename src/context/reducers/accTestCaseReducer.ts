@@ -1,18 +1,18 @@
 import { createContext } from 'react'; 
+import { AccTestCaseState, DescribeBlock, DescribeId} from '../../utils/accTypes';
 import { actionTypes } from '../actions/accTestCaseActions';
 
-export const AccTestCaseContext = createContext([]);
+export const AccTestCaseContext:any = createContext([]);
 
-// ### revisit - is this the default state which is ammended by the reducer?
-export const accTestCaseState = {
+export const accTestCaseState: AccTestCaseState = {
   modalOpen: false,
 
   describeId: 1,
   itId: 1,
   statementId: 1,
   propId: 1,
-  describeBlocks: {
-    byId: {
+  describeBlocks:  {
+    byId:  {
       describe0: {
         id: 'describe0',
         text: '',
@@ -48,14 +48,14 @@ export const accTestCaseState = {
 
 /* ---------------------------- Helper Functions ---------------------------- */
 
-const createDescribeBlock = (describeId) => {
+const createDescribeBlock = (describeId: string) => {
   return {
     id: describeId,
     text: '',
   };
 };
 
-const createItStatement = (describeId, itId) => ({
+const createItStatement = (describeId: string , itId: string) => ({
   id: itId,
   describeId,
   text: '',
