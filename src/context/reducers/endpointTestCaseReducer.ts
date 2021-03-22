@@ -66,7 +66,7 @@ const deepCopy = (endpointStatements: EndpointObj[]) => {
 
 export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Action) => {
   Object.freeze(state);
-  let endpointStatements = [...state.endpointStatements];
+  let endpointStatements: Array<any> = [...state.endpointStatements];
 
   switch (action.type) {
     case actionTypes.ADD_ENDPOINT:
@@ -106,7 +106,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         endpointStatements,
       };
     case actionTypes.UPDATE_SERVER_FILEPATH:
-      const { serverFilePath, serverFileName } = action;
+      const { serverFilePath, serverFileName }  = action;
       return {
         ...state,
         serverFilePath,
