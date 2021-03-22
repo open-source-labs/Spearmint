@@ -65,7 +65,7 @@ export const updateItStatementText = (text: string, itId: number) => ({
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt:, describeId: number) => {
+export const updateItStatementOrder = (reorderedIt, describeId: number) => {
   return {
     type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
     reorderedIt,
@@ -85,7 +85,7 @@ export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
 
-export const updateImportFilePath = (fileName, filePath) => ({
+export const updateImportFilePath = (fileName: string, filePath: string) => ({
   type: actionTypes.UPDATE_FILE_PATH,
   fileName,
   filePath,
