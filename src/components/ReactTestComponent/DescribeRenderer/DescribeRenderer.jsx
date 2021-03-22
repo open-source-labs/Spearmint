@@ -33,8 +33,7 @@ const DescribeRenderer = ({
     dispatcher(addItstatement(describeId));
   };
 
-  return describeBlocks.allIds.map((id, i) => {
-    return (
+  return describeBlocks.allIds.map((id, i) => (
       <Draggable
         key={id}
         draggableId={id}
@@ -100,8 +99,7 @@ const DescribeRenderer = ({
 
         )}
       </Draggable>
-    );
-  });
+  ));
 };
 
 export default DescribeRenderer;
