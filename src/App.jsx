@@ -8,10 +8,6 @@ import RightPanel from './pages/RightPanel/RightPanel';
 import About from './pages/About/About';
 
 const App = () => {
-  // useReducer takes a reducer and initial state as
-  // args and return the current state paired with a dispatch method
-  // distpatchTo method invokes associated reducer function
-
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   if (!global.isProjectLoaded) {

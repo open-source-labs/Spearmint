@@ -4,10 +4,12 @@ export const actionTypes = {
   ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',
   DELETE_DESCRIBE_BLOCK: 'DELETE_DESCRIBE_BLOCK',
   UPDATE_DESCRIBE_TEXT: 'UPDATE_DESCRIBE_TEXT',
+  UPDATE_DESCRIBE_ORDER: 'UPDATE_DESCRIBE_ORDER',
 
   ADD_ITSTATEMENT: 'ADD_ITSTATEMENT',
   DELETE_ITSTATEMENT: 'DELETE_ITSTATEMENT',
   UPDATE_ITSTATEMENT_TEXT: 'UPDATE_ITSTATEMENT_TEXT',
+  UPDATE_ITSTATEMENT_ORDER: 'UPDATE_ITSTATEMENT_ORDER',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
@@ -17,7 +19,6 @@ export const actionTypes = {
 
   // not yet implemented:
   TOGGLE_ACC: 'TOGGLE_ACC',
-  UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -41,6 +42,13 @@ export const updateDescribeText = (text, describeId) => ({
   describeId,
 });
 
+export const updateDescribeOrder = (reorderedDescribe) => {
+  return {
+    type: actionTypes.UPDATE_DESCRIBE_ORDER,
+    reorderedDescribe,
+  };
+};
+
 export const addItStatement = (describeId) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
@@ -58,6 +66,14 @@ export const updateItStatementText = (text, itId) => ({
   text,
 });
 
+export const updateItStatementOrder = (reorderedIt, describeId) => {
+  return {
+    type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
+    reorderedIt,
+    describeId,
+  };
+};
+
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });
@@ -74,14 +90,4 @@ export const updateImportFilePath = (fileName, filePath) => ({
   type: actionTypes.UPDATE_FILE_PATH,
   fileName,
   filePath,
-});
-
-// the below have no corresponding functions in Reducer
-export const toggleAcc = () => ({
-  type: actionTypes.TOGGLE_ACC,
-});
-
-export const updateStatementsOrder = (draggableStatements) => ({
-  type: actionTypes.UPDATE_STATEMENTS_ORDER,
-  draggableStatements,
 });
