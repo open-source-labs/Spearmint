@@ -89,6 +89,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
   }
+
 }
 
 #text {
@@ -100,6 +101,9 @@
   background-color: rgb(232, 232, 232);
   color: $mint;
   border-radius: 3px;
+}
+#save:focus{
+  outline: 1px solid dark-green;
 }
 
 #newTestButtons {
