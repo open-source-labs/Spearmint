@@ -4,23 +4,16 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 
 // specifies the path of the application to launch
-// const electronPath = path.join(__dirname, '..', 'node_modules', '.bin', 'electron');
 const electronPath = require('electron');
 
-// provides syntax concatenation for windows compatibility
-// if (process.platform === 'win32') {
-// electronPath += '.cmd';
-// }
-
 // Tell spectron to look and use the main.js file + package.json located 1 level above
-const appPath = path.join(__dirname, '../../public');
+const appPath = path.join(__dirname, '../..');
 
-const mainPath = path.join(__dirname, '../public');
 
 // instantiates the spearmint application given the optional paramaters of the Application API
 const app = new Application({
   path: electronPath, // string path to the Electron application executable to launch
-  args: [appPath] // array of paths to find the executable files and package.json ### try to add additional paths and
+  args: [appPath] // array of paths to find the executable files and package.json 
 
 });
 
@@ -44,7 +37,7 @@ describe('Test Example', function () {
         .getWindowCount().should.eventually.equal(1);
   });
 
-  it('tests accessibility', function () {
+  it('audits accessibility', function () {
         return app.client.auditAccessibility().then(function (audit) {
             if (audit.failed) {
             console.error(audit.results)

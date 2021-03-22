@@ -4,10 +4,12 @@
 #upperPart {
   width: 100%;
   height: 50vh;
-  background-color: #02c2c3;
+  background-color: #038181;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
+  // border: thin solid red;
 }
 
 #title {
@@ -16,7 +18,21 @@
   vertical-align: bottom;
   font-family: 'comfortaa';
   color: #fff;
-  margin-bottom: 30px;
+  padding-top: 30px;
+  margin-top: 30px;
+  flex: 1;
+  border: thin solid red;
+}
+
+#purpose {
+  font-size: 1rem;
+  text-align: center;
+  vertical-align: bottom;
+  font-family: 'comfortaa';
+  color: #fff;
+  padding-top: 30px;
+  flex: 1;
+  border: thin solid blue;
 }
 
 #leaf {
@@ -25,6 +41,7 @@
   margin-bottom: 38px;
   margin-left: 5px;
   color: #fff;
+  border: thin solid red;
 }
 
 #lowerPart {
