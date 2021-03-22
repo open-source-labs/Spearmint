@@ -1,7 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
 import styles from './CustomInput.module.scss';
-import { CustomInput } from '../../../utils/accTypes';
 
 const CustomInput = ({ id, label, placeholder, handleChange, value, bold }) => {
   return (
