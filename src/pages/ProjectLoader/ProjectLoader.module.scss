@@ -91,6 +91,7 @@
   letter-spacing: 1px;
 }
 
+
 #helpBtn {
   color: white;
   background-color: $mint;
@@ -109,6 +110,9 @@
 #helpBtn:hover {
   background-color: white;
   color: $mint;
+}
+#helpBtn:focus {
+  outline: 1px solid dark-green
 }
 
 #bottomDiv {

@@ -89,7 +89,7 @@ video {
 
 /* make sure to set some focus styles for accessibility */
 :focus {
-  outline: 0;
+  outline: 1px solid dark-green;
 }
 
 /* HTML5 display-role reset for older browsers */
