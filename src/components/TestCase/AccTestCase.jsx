@@ -71,9 +71,9 @@ const AccTestCase = () => {
 
       <section id={styles.testCaseHeader}>
         <div id="sampleAccTest">
-          <label for="accTestCases">Choose Type of Accessibility Test:</label>
+          <label for="accTestTypes">Choose Type of Accessibility Test:</label>
 
-          <select name="accTestCases" id="accTestCases">
+          <select name="accTestTypes" id="accTestTypes">
             <option value="html">HTML</option>
             <option value="react">React</option>
             <option value="puppeteer">Puppeteer</option>
