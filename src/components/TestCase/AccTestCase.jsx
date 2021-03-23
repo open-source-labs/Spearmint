@@ -8,6 +8,7 @@ import {
   updateDescribeOrder,
   updateItStatementOrder,
   updateFilePath,
+  updateTestType,
 } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
