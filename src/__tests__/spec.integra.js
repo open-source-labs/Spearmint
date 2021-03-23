@@ -33,5 +33,4 @@ describe('Application launch', function () {
       }
     })
   })
-
 })
