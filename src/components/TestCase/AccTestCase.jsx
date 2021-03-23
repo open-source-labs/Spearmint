@@ -1,30 +1,29 @@
 import React, { useContext, useReducer } from 'react';
 import cn from 'classnames';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import styles from './TestCase.module.scss';
+
 import {
   updateDescribeText,
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
+  updateFilePath,
 } from '../../context/actions/accTestCaseActions';
-import { GlobalContext } from '../../context/reducers/globalReducer';
-import SearchInput from '../SearchInput/SearchInput';
-
-import AccTestMenu from '../TestMenu/AccTestMenu';
-
-import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
-import { updateFilePath } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
   accTestCaseState,
   accTestCaseReducer,
 } from '../../context/reducers/accTestCaseReducer';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+
+import styles from './TestCase.module.scss';
+import AccTestMenu from '../TestMenu/AccTestMenu';
+import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
+import SearchInput from '../SearchInput/SearchInput';
+import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 
 const AccTestCase = () => {
-  const [accTestCase, dispatchToAccTestCase] = useContext(
-    AccTestCaseContext,
-  );
+  const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
   const { describeBlocks, itStatements } = accTestCase;
 
@@ -70,16 +69,10 @@ const AccTestCase = () => {
       </div>
 
       <section id={styles.testCaseHeader}>
-        <div id="sampleAccTest">
-          <label for="accTestTypes">Choose Type of Accessibility Test:</label>
-
-          <select name="accTestTypes" id="accTestTypes">
-            <option value="html">HTML</option>
-            <option value="react">React</option>
-            <option value="puppeteer">Puppeteer</option>
-          </select>
-        </div>
-
+        <AccTestTypes
+          dispatch={dispatchToAccTestCase}
+          action={updateFilePath}
+        />
         <label htmlFor="fileImport">Import File From</label>
         <div id={styles.labelInput} style={{ width: '80%' }}>
           <SearchInput
