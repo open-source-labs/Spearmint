@@ -7,13 +7,12 @@ const electronPath = require('electron') // Require Electron from the binaries i
 const path = require('path')
 
 describe('Application launch', function () {
-  this.timeout(10000)
+  this.timeout(10000);
   beforeEach(function () {
+    // instantiates the spearmint application given the optional paramaters of the Application API
     this.app = new Application({
-    // specifies the path of the application to launch
-    path: electronPath,
-    // Tells spectron where to look for the main.js file and the package.json located 2 levels above
-    args: [path.join(__dirname, '../..')]
+    path: electronPath,                   // specifies the path of the application to launch
+    args: [path.join(__dirname, '../..')] // Tells spectron where to look for the main.js file and the package.json located 2 levels above
   })
   return this.app.start();
   })
@@ -28,6 +27,9 @@ describe('Application launch', function () {
     return this.app.client.auditAccessibility().then(function (audit) {
       if (audit.failed) {
         console.error(audit.message)
+      }
+      else {
+        console.log('No accessibility issues have been found.')
       }
     })
   })
