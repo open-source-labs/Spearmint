@@ -26,7 +26,7 @@ import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRender
 const AccTestCase = () => {
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
-  const { describeBlocks, itStatements } = accTestCase;
+  const { describeBlocks, itStatements, testType } = accTestCase;
 
   const [{ filePathMap }] = useContext(GlobalContext);
 
@@ -73,6 +73,7 @@ const AccTestCase = () => {
         <AccTestTypes
           dispatch={dispatchToAccTestCase}
           action={updateTestType}
+          currType={testType}
         />
         <label htmlFor="fileImport">Import File From</label>
         <div id={styles.labelInput} style={{ width: '80%' }}>
