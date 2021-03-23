@@ -792,7 +792,7 @@ function useGenerateTest(test, projectFilePath) {
       filePath = path.relative(projectFilePath, filePath);
       filePath = filePath.replace(/\\/g, '/');
 
-      testFileCode += JSON.stringify(accTestCase);
+      // testFileCode += JSON.stringify(accTestCase);
 
       testFileCode += `
         const axe = require('axe-core');
@@ -951,16 +951,9 @@ function useGenerateTest(test, projectFilePath) {
       `;
       });
     };
-
-    const axeCoreInvocation = () => {`
-      // Inject axe source code
-      ${axeCore.source}
-      // Run axe
-      axe.run();
-    `}
     
-     const addAccPuppeteer = () => {
-        `
+    const addAccPuppeteer = () => {
+      testFileCode += `
         const puppeteer = require('puppeteer');
         const axeCore = require('axe-core');
         const { parse: parseURL } = require('url');
@@ -988,7 +981,12 @@ function useGenerateTest(test, projectFilePath) {
             await page.goto(url);
 
             // Inject and run axe-core
-            const handle = await page.evaluateHandle(axeCoreInvocation());
+            const handle = await page.evaluateHandle(\`
+              // Inject axe source code
+              \${axeCore.source}
+              // Run axe
+              axe.run();
+            \`);
 
             // Get the results from 'axe.run()'.
             results = await handle.jsonValue();
@@ -1041,7 +1039,7 @@ function useGenerateTest(test, projectFilePath) {
             process.exit(1);
           });
         `
-     };
+    };
 
      //const generatePuppeteerScriptTag = () => {`"node <replaceWithJavascriptTestFileName.js> ${url}"`}
 
