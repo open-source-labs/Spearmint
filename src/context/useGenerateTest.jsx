@@ -798,14 +798,14 @@ function useGenerateTest(test, projectFilePath) {
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');`;
       
-      if (usesHtml) {
+      if (accTestCase.testType === 'html') {
         testFileCode += `
         const path = require('path');
         const fs = require('fs');
         
         const html = fs.readFileSync(path.resolve(__dirname,
           '../${filePath}'), 'utf8');`;
-      } else if (usesReact) {
+      } else if (accTestCase.testType === 'react') {
         testFileCode += `
         import React from 'react';
         import { configure, mount } from 'enzyme';
@@ -823,7 +823,7 @@ function useGenerateTest(test, projectFilePath) {
 
         describe('${describeBlocks.byId[id].text}', () => {`;
         addAccPrint();
-        if (usesReact) addMount();
+        if (accTestCase.testType === 'react') addMount();
         addAccBeforeAll();
         addAccItStatements(id);
         testFileCode += `}); \n`;
@@ -881,7 +881,7 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += `
         let options;`;
 
-      if (usesReact) {
+      if (accTestCase.testType === 'react') {
         testFileCode += `
           let linkNode;
           let wrapper;`;
@@ -898,14 +898,14 @@ function useGenerateTest(test, projectFilePath) {
           };
         `;
       
-      if (usesHtml) {
+      if (accTestCase.testType === 'html') {
         testFileCode += `
           // get language tag from imported html file and assign to jsdom document
           const langTag = html.match(/<html lang="(.*)"/);
           if (langTag) document.documentElement.lang = langTag[1];
           document.documentElement.innerHTML = html.toString();
         `;
-      } else if (usesReact) {
+      } else if (accTestCase.testType === 'react') {
         testFileCode += `
         const linkComponent = mountToDoc(
           < ${fileName.split('.')[0]} />
@@ -927,7 +927,7 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `
           it('${itStatements.byId[itId].text}', (done) => {`
         
-        if (usesReact) {
+        if (accTestCase.testType === 'react') {
           testFileCode += `
             axe.run(linkNode, options, async (err, { violations }) => {`
         } else {
@@ -952,11 +952,110 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
+    const axeCoreInvocation = () => {`
+      // Inject axe source code
+      ${axeCore.source}
+      // Run axe
+      axe.run();
+    `}
+    
+     const addAccPuppeteer = () => {
+        `
+        const puppeteer = require('puppeteer');
+        const axeCore = require('axe-core');
+        const { parse: parseURL } = require('url');
+        const assert = require('assert');
+
+        // Cheap URL validation
+        const isValidURL = input => {
+          const u = parseURL(input);
+          return u.protocol && u.host;
+        };
+
+        // node axe-puppeteer.js <url>
+        const url = process.argv[2];
+        assert(isValidURL(url), 'Invalid URL');
+
+        const main = async url => {
+          let browser;
+          let results;
+          try {
+            // Setup Puppeteer
+            browser = await puppeteer.launch();
+
+            // Get new page
+            const page = await browser.newPage();
+            await page.goto(url);
+
+            // Inject and run axe-core
+            const handle = await page.evaluateHandle(axeCoreInvocation());
+
+            // Get the results from 'axe.run()'.
+            results = await handle.jsonValue();
+            // Destroy the handle & return axe results.
+            await handle.dispose();
+          } catch (err) {
+            // Ensure we close the puppeteer connection when possible
+            if (browser) {
+              await browser.close();
+            }
+
+            // Re-throw
+            throw err;
+          }
+
+          // test violations
+          results = results.violations;
+          console.log('--------------violations length: ', results.length);
+
+          await browser.close();
+          return results;
+        };
+
+        main(url)
+          .then(results => {
+            // console.log(results);
+            const violations = results;
+            violations.forEach(axeViolation => {
+              const whereItFailed = axeViolation.nodes.map(node => node.html);
+              // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
+
+              const { description, help, helpUrl } = axeViolation;
+
+              console.log(
+                '---------',
+                '\\nTEST DESCRIPTION: ',
+                description,
+                '\\nISSUE: ',
+                help,
+                '\\nMORE INFO: ',
+                helpUrl,
+                '\\nWHERE IT FAILED: ',
+                whereItFailed
+                // '\\nhow to fix: ', failureSummary
+              );
+            });
+          })
+          .catch(err => {
+            console.error('Error running axe-core:', err.message);
+            process.exit(1);
+          });
+        `
+     };
+
+     //const generatePuppeteerScriptTag = () => {`"node <replaceWithJavascriptTestFileName.js> ${url}"`}
+
     switch (test) {
       case 'acc':
         var accTestCase = testState;
-        var usesHtml = accTestCase.fileName.split('.')[1] === 'html' ? true : false;
-        var usesReact = ['js', 'jsx', 'ts', 'tsx'].includes(accTestCase.fileName.split('.')[1]) ? true : false;
+        if (accTestCase.testType === 'puppeteer') {
+          return addAccPuppeteer(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        }
         return (
           addAccImportStatements(),
           addAccDescribeBlocks(),
