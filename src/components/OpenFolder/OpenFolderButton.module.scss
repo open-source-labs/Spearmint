@@ -30,6 +30,10 @@
   -moz-appearance: none;
 }
 
+#openBtn:focus{
+  outline: 2px solid darkblue
+}
+
 .tooltip {
   visibility: hidden;
   width: 120px;
@@ -56,6 +60,6 @@
   outline: 1px solid dark-green
 }
 
-tooltip:focus {
-  outline: 1px solid 
+.tooltip:focus {
+  outline: 1px solid dark-green
 }

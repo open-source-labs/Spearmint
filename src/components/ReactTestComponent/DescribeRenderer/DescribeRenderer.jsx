@@ -16,11 +16,7 @@ const DescribeRenderer = ({
   handleChangeItStatementText,
   type,
 }) => {
-  const testDescription = useRef(null);
 
-  useEffect(() => {
-    testDescription.current.focus();
-  }, []);
 
   const deleteDescribeBlockHandleClick = (e) => {
     e.stopPropagation();
@@ -57,7 +53,6 @@ const DescribeRenderer = ({
               className={cn('far fa-window-close', styles.describeClose)}
             ></i>
             <input
-              ref={testDescription}
               id={id}
               className={styles.describeInput}
               name='describe-label'

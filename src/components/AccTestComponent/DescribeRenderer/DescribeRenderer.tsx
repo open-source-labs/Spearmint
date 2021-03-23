@@ -13,11 +13,11 @@ const DescribeRenderer = ({
   handleChangeItStatementText,
   type,
 }) => {
-  const testDescription = useRef(null);
+  // const testDescription = useRef(null);
 
-  useEffect(() => {
-    testDescription.current.focus();
-  }, []);
+  // useEffect(() => {
+  //   testDescription.current.focus();
+  // }, []);
 
   const deleteDescribeBlockHandleClick = (e) => {
     e.stopPropagation();
@@ -55,7 +55,7 @@ const DescribeRenderer = ({
             />
 
             <input
-              ref={testDescription}
+              // ref={testDescription}
               id={id}
               className={styles.describeInput}
               name="describe-label"

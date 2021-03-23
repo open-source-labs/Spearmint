@@ -13,13 +13,7 @@ import { HooksStatements } from '../../utils/hooksTypes';
 const HooksTestCase = () => {
   const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
 
-  const testDescription = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (testDescription && testDescription.current) {
-      testDescription.current.focus();
-    }
-  }, []);
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
@@ -57,7 +51,7 @@ const HooksTestCase = () => {
           <br />
           <br />
           <input
-            ref={testDescription}
+            
             type='text'
             id={styles.testStatement}
             onChange={handleUpdateHooksTestStatement}

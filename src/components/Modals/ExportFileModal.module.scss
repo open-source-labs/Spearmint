@@ -89,6 +89,9 @@
     -webkit-appearance: none;
     -moz-appearance: none;
   }
+  button:focus {
+    outline: 2px solid darkblue
+  }
 
 }
 
@@ -109,6 +112,9 @@
 #newTestButtons {
   display: flex;
   justify-content: center;
+}
+#newTestButtons:focus {
+  outline: 1px solid dark-green
 }
 
 #testMenu {
