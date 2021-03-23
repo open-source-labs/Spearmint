@@ -33,6 +33,7 @@ export const accTestCaseState = {
   },
   fileName: '',
   filePath: '',
+  testType: 'html',
 };
 
 /* ---------------------------- Helper Functions ---------------------------- */
@@ -241,6 +242,13 @@ export const accTestCaseReducer = (state, action) => {
         ...state,
         fileName,
         filePath,
+      };
+    }
+    case actionTypes.UPDATE_TEST_TYPE: {
+      const { testType } = action;
+      return {
+        ...state,
+        testType,
       };
     }
     default:

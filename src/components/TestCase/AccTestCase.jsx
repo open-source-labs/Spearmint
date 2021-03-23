@@ -71,7 +71,7 @@ const AccTestCase = () => {
       <section id={styles.testCaseHeader}>
         <AccTestTypes
           dispatch={dispatchToAccTestCase}
-          action={updateFilePath}
+          action={updateTestType}
         />
         <label htmlFor="fileImport">Import File From</label>
         <div id={styles.labelInput} style={{ width: '80%' }}>
