@@ -16,6 +16,7 @@ export const actionTypes = {
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
 
   UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
+  UPDATE_TEST_TYPE: 'UPDATE_TEST_TYPE',
 
   // not yet implemented:
   TOGGLE_ACC: 'TOGGLE_ACC',
@@ -23,18 +24,14 @@ export const actionTypes = {
 
 /* --------------------------------- Actions -------------------------------- */
 
-export const addDescribeBlock = () => {
-  return {
-    type: actionTypes.ADD_DESCRIBE_BLOCK,
-  };
-};
+export const addDescribeBlock = () => ({
+  type: actionTypes.ADD_DESCRIBE_BLOCK,
+});
 
-export const deleteDescribeBlock = (describeId) => {
-  return {
-    type: actionTypes.DELETE_DESCRIBE_BLOCK,
-    describeId,
-  };
-};
+export const deleteDescribeBlock = (describeId) => ({
+  type: actionTypes.DELETE_DESCRIBE_BLOCK,
+  describeId,
+});
 
 export const updateDescribeText = (text, describeId) => ({
   type: actionTypes.UPDATE_DESCRIBE_TEXT,
@@ -42,12 +39,10 @@ export const updateDescribeText = (text, describeId) => ({
   describeId,
 });
 
-export const updateDescribeOrder = (reorderedDescribe) => {
-  return {
-    type: actionTypes.UPDATE_DESCRIBE_ORDER,
-    reorderedDescribe,
-  };
-};
+export const updateDescribeOrder = (reorderedDescribe) => ({
+  type: actionTypes.UPDATE_DESCRIBE_ORDER,
+  reorderedDescribe,
+});
 
 export const addItStatement = (describeId) => ({
   type: actionTypes.ADD_ITSTATEMENT,
@@ -66,28 +61,31 @@ export const updateItStatementText = (text, itId) => ({
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt, describeId) => {
-  return {
-    type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
-    reorderedIt,
-    describeId,
-  };
-};
+export const updateItStatementOrder = (reorderedIt, describeId) => ({
+  type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
+  reorderedIt,
+  describeId,
+});
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });
 
-export const openInfoModal = () => {
-  return { type: actionTypes.OPEN_INFO_MODAL };
-};
+export const openInfoModal = () => ({
+  type: actionTypes.OPEN_INFO_MODAL,
+});
 
-export const closeInfoModal = () => {
-  return { type: actionTypes.CLOSE_INFO_MODAL };
-};
+export const closeInfoModal = () => ({
+  type: actionTypes.CLOSE_INFO_MODAL,
+});
 
 export const updateFilePath = (fileName, filePath) => ({
   type: actionTypes.UPDATE_FILE_PATH,
   fileName,
   filePath,
+});
+
+export const updateTestType = (testType) => ({
+  type: actionTypes.UPDATE_TEST_TYPE,
+  testType,
 });
