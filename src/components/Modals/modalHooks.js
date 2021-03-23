@@ -35,15 +35,28 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
   return { handleNewTest };
 }
 
-export function useGenerateScript(test) {
+export function useGenerateScript(test, testType = null) {
   const [{ projectFilePath }] = useContext(GlobalContext);
   switch (test) {
     case 'acc':
-      return (
-        `cd ${projectFilePath}\n` +
-        'npm i -D axe-core regenerator-runtime jest\n' +
-        'jest'
-      );
+      if (testType === 'html') {
+        return (
+          `cd ${projectFilePath}
+          npm i -D axe-core regenerator-runtime jest
+          jest`
+        );
+      }
+      if (testType === 'react') {
+        return (
+          `cd ${projectFilePath}
+          npm i -D axe-core regenerator-runtime jest enzyme enzyme-adapter-react-16
+          jest`
+        );
+      }
+      if (testType === 'puppeteer') {
+        return 'puppeteer run script';
+      }
+      return 'error';
     case 'react':
       return (
         `cd ${projectFilePath}\n` +

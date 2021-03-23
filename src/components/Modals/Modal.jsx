@@ -15,6 +15,7 @@ const Modal = ({
   dispatchToMockData,
   dispatchTestCase,
   createTest,
+  testType = null,
 }) => {
   const { copySuccess, codeRef, handleCopy } = useCopy();
   const { handleNewTest } = useNewTest(
@@ -24,7 +25,7 @@ const Modal = ({
     closeModal,
   );
 
-  const script = useGenerateScript(title);
+  const script = useGenerateScript(title, testType);
 
   const modalStyles = {
     overlay: {
@@ -61,6 +62,15 @@ const Modal = ({
                 <code ref={codeRef}>
                   {script}
                 </code>
+
+                {testType === 'react'
+                  ?
+                    <p id={styles.endpoint}>
+                    Requires React version 16 or less.
+                    </p>
+                  : null
+                }
+
                 <p id={styles.endpoint}>
                   Note if you are using Create React App do not install jest
                 </p>
