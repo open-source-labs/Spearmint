@@ -70,6 +70,16 @@ const AccTestCase = () => {
       </div>
 
       <section id={styles.testCaseHeader}>
+        <div id="sampleAccTest">
+          <label for="accTestCases">Choose Type of Accessibility Test:</label>
+
+          <select name="accTestCases" id="accTestCases">
+            <option value="html">HTML</option>
+            <option value="react">React</option>
+            <option value="puppeteer">Puppeteer</option>
+          </select>
+        </div>
+
         <label htmlFor="fileImport">Import File From</label>
         <div id={styles.labelInput} style={{ width: '80%' }}>
           <SearchInput
