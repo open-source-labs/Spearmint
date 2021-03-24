@@ -10,7 +10,7 @@ const AccTestTypes = ({ dispatch, action }) => {
   return (
     <div id={styles.AccTestTypesComponent}>
       <label id={styles.AccTestTypesLabel}>URL to be Tested:</label>
-      <input onChange = { handleChange }>
+      <input onChange = { handleChange } placeholder='https://sample.io'>
       </input>
     </div>
   );
