@@ -2,7 +2,6 @@ import React, { useRef, useEffect, ChangeEvent } from 'react';
 import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
-import CatTagFilter from '../CatTagFilter/CatTagFilter';
 import StandardTagFilter from '../StandardTagFilter/StandardTagFilter';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
@@ -18,7 +17,6 @@ const DescribeRenderer = ({
   updateItCatTag,
   type,
 }): AccTestCaseState => {
-  const testDescription = useRef<HTMLInputElement>(null!);
 
   const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();

@@ -8,8 +8,6 @@ import {
   deleteItStatement,
 } from '../../../context/actions/accTestCaseActions';
 
-import CustomInput from '../CustomInput/CustomInput';
-
 import styles from './ItRenderer.module.scss';
 
 const ItRenderer = ({
@@ -40,31 +38,19 @@ const ItRenderer = ({
           key={i}
         >
 
-
-
-            < CatTagFilter
-              dispatch={dispatchToAccTestCase}
-              tagAction={updateItCatTag}
-              textAction={updateItStatementText}
-              describeId={describeId}
-              itId={id}
-              catTag={itStatements.byId[id].catTag}
-            />
+          <CatTagFilter
+            dispatch={dispatchToAccTestCase}
+            tagAction={updateItCatTag}
+            textAction={updateItStatementText}
+            itId={id}
+            catTag={itStatements.byId[id].catTag}
+          />
 
           <i
             onClick={deleteItStatementHandleClick}
             id={id}
             className={cn(styles.itClose, 'far fa-window-close')}
           />
-
-          {/* <CustomInput
-            key={`input-${id}-${i}`}
-            id={id}
-            label={'The element should...'}
-            placeholder={'The tested element should...'}
-            value={itStatements.byId[id].text}
-            handleChange={handleChangeItStatementText}
-          /> */}
 
           <p class={styles.itStatement}>{itStatements.byId[id].text}</p>
           <hr />

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './CatTagFilter.module.scss';
 
-const CatTagFilter = ({ dispatch, tagAction, textAction, describeId, itId = null, catTag }) => {
+const CatTagFilter = ({ dispatch, tagAction, textAction, itId, catTag }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(tagAction(itId, e.target.value));
     if (e.target.value === 'none') dispatch(textAction(`Component is accessible regarding all axe-core categories.`, itId));
@@ -10,7 +10,7 @@ const CatTagFilter = ({ dispatch, tagAction, textAction, describeId, itId = null
 
   return (
     <div id={styles.CatTagFilter}>
-      <label for='accTestTypes'>Choose A Content Filter:  </label>
+      <label for='accTestTypes'>Choose A Content Filter: </label>
       <select value={catTag} id='accTestTypes' onChange={handleChange}>
         <option value='none'>No Tag</option>
         <option value='aria'>ARIA</option>

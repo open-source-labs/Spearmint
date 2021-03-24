@@ -32,18 +32,6 @@ const AccTestCase = () => {
 
   const [{ filePathMap }] = useContext<any>(GlobalContext);
 
-  // const handleChangeDescribeText = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const text = e.target.value;
-  //   const describeId = e.target.id;
-  //   dispatchToAccTestCase(updateDescribeText(text, describeId));
-  // };
-
-  // const handleChangeItStatementText = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const text = e.target.value;
-  //   const itId = e.target.id;
-  //   dispatchToAccTestCase(updateItStatementText(text, itId));
-  // };
-
   const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);

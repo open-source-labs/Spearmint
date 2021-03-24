@@ -11,7 +11,7 @@ export const accTestCaseState: AccTestCaseState = {
   itId: 1,
   statementId: 1,
   propId: 1,
-  describeBlocks:  {
+  describeBlocks: {
     byId: {
       describe0: {
         id: 'describe0',
@@ -45,15 +45,15 @@ export const accTestCaseState: AccTestCaseState = {
 const createDescribeBlock = (describeId: string) => {
   return {
     id: describeId,
-    text: 'Component is accessible regarding all axe-core categories.',
-    catTag: '',
+    text: 'Component is accessible according to all standards enforced by axe-core.',
+    standardTag: '',
   };
 };
 
-const createItStatement = (describeId: string , itId: string) => ({
+const createItStatement = (describeId: string, itId: string) => ({
   id: itId,
   describeId,
-  text: '',
+  text: 'Component is accessible regarding all axe-core categories.',
   catTag: '',
 });
 
@@ -252,6 +252,7 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
         itStatements: {
           ...itStatements,
           byId: {
+            ...itStatements.byId,
             [itId]: {
               ...itStatements.byId[itId],
               catTag,

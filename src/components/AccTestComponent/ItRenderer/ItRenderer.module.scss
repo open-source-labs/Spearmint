@@ -10,6 +10,7 @@
   background-color: $light-gray2;
   border-radius: 3px;
   box-shadow: 2px 2px 5px gray;
+  height: 100px;
 
   .itClose {
     position: absolute;
@@ -27,19 +28,15 @@
   }
 
   .itStatement {
-    width: 100%;
+    position: absolute;
+    bottom: 20px;
+    width: 97.4%;
     padding: 0.1rem;
     padding-left: 0.4rem;
     padding-top: 10px;
-    font-size: 0.8rem;
-    border: none;
+    font-size: 1.1em;
     border-bottom: 1px solid $mint;
     background-color: rgba(0, 0, 0, 0);
-
-    &:focus {
-      outline: none;
-      border-bottom: 1.5px solid $mint;
-    }
   }
 
   .buttonsContainer {

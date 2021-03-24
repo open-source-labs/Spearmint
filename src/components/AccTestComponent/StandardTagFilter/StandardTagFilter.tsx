@@ -18,9 +18,9 @@ const StandardTagFilter = ({ dispatch, tagAction, textAction, describeId, catTag
         <option value='wcag21a'>WCAG 2.1 Level A</option>
         <option value='wcag21aa'>WCAG 2.1 Level AA</option>
         <option value='best-practice'>Common best practices</option>
-        <option value='ACT'>Accessibility Conformance Testing(W3C)</option>
+        <option value='ACT'>ACT (by W3C)</option>
         <option value='section508'>Section 508</option>
-        <option value='experimental'>Cutting-edge rules, disabled by default</option>
+        <option value='experimental'>Experimental (auto-disabled)</option>
       </select>
     </div>
   );
