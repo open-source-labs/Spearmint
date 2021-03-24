@@ -1,11 +1,10 @@
-import React, { useRef, useEffect, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import StandardTagFilter from '../StandardTagFilter/StandardTagFilter';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
-import { AccTestCaseState } from '../../../utils/accTypes';
 
 const DescribeRenderer = ({
   dispatcher,
@@ -28,12 +27,12 @@ const DescribeRenderer = ({
     dispatcher(addItStatement(describeId));
   };
 
-  const deleteDescribeBlockOnKeyUp = (e) => {
+  const deleteDescribeBlockOnKeyUp = (e: ChangeEvent) => {
     if (e.charCode === 13) {
-    const describeId = e.target.id;
-    dispatcher(deleteDescribeBlock(describeId));
+      const describeId = e.target.id;
+      dispatcher(deleteDescribeBlock(describeId));
     }
-}
+  };
 
   return describeBlocks.allIds.map((id: string , i: number) => (
     <Draggable
@@ -53,12 +52,12 @@ const DescribeRenderer = ({
               Describe Block
             </label>
 
-            < StandardTagFilter
+            <StandardTagFilter
               dispatch={dispatcher}
               tagAction={updateDescribeStandardTag}
               textAction={updateDescribeText}
               describeId={id}
-              catTag={describeBlocks.byId[id].catTag}
+              standardTag={describeBlocks.byId[id].standardTag}
             />
 
             <i

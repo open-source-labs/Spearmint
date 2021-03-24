@@ -1,4 +1,4 @@
-import React, { useContext, ChangeEvent } from 'react';
+import React, { useContext } from 'react';
 import cn from 'classnames';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
