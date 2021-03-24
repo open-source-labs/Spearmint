@@ -22,16 +22,16 @@ const DescribeRenderer = ({
 
   const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
-    const describeId = Number(e.target.id);
+    const describeId = e.target.id;
     dispatcher(deleteDescribeBlock(describeId));
   };
 
   const addItStatementHandleClick = (e: ChangeEvent) => {
-    const describeId = Number(e.target.id);
+    const describeId = e.target.id;
     dispatcher(addItStatement(describeId));
   };
 
-  return describeBlocks.allIds.map((id, i: number) => (
+  return describeBlocks.allIds.map((id: string, i: number) => (
     <Draggable
       key={id}
       draggableId={id}

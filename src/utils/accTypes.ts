@@ -36,8 +36,8 @@ export interface Action {
   text?: string;
   itId?: number;
   describeId?: number | string;
-  reorderedDescribe?: Object;
-  //reoderedIt?: 
+  reorderedDescribe?: Array<string>;
+  reorderedIt?: Array<string>;
   fileName?: string;
   filePath?: string;
   describeBlocks: any[];

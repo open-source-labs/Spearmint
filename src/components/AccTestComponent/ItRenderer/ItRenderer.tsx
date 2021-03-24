@@ -10,7 +10,6 @@ import {
 import CustomInput from '../CustomInput/CustomInput';
 
 import styles from './ItRenderer.module.scss';
-import { ItStatements } from '../../../utils/accTypes';
 
 const ItRenderer = ({
   itStatements,
@@ -21,11 +20,11 @@ const ItRenderer = ({
   const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
   const deleteItStatementHandleClick = (e: ChangeEvent) => {
-    const itId = Number(e.target.id);
+    const itId = e.target.id;
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
 
-  return itStatements.allIds[describeId].map((id, i:number) => (
+  return itStatements.allIds[describeId].map((id: string, i:number) => (
     <Draggable
       draggableId={id}
       index={i}
