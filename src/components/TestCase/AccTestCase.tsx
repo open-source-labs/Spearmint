@@ -7,7 +7,7 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
-  updateDescribeCatTag,
+  updateDescribeStandardTag,
   updateItCatTag,
   updateFilePath,
   updateTestType,
@@ -109,7 +109,7 @@ const AccTestCase = () => {
                   itStatements={itStatements}
                   updateDescribeText={updateDescribeText}
                   updateItStatementText={updateItStatementText}
-                  updateDescribeCatTag={updateDescribeCatTag}
+                  updateDescribeStandardTag={updateDescribeStandardTag}
                   updateItCatTag={updateItCatTag}
                   type="acc"
                 />

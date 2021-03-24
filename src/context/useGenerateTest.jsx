@@ -896,7 +896,7 @@ function useGenerateTest(test, projectFilePath) {
               'link-in-text-block': { enabled: false },
               runOnly: {
                 type: 'tag',
-                value: ['cat.${accTestCase.describeBlocks.byId[descId].catTag}']
+                value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
             }
             },
           };

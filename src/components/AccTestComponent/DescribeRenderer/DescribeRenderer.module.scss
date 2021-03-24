@@ -14,7 +14,7 @@
   z-index: 0;
   margin-top: 1rem;
 
-  #describeStatement{
+  #heading{
     display: flex;
     flex-direction: row;
   }
@@ -55,11 +55,11 @@
     font-family: $oxygen;
   }
 
-  .describeInput {
+  .describeStatement {
     border: none;
     border-bottom: 1px solid $mint;
     background-color: rgba(0, 0, 0, 0);
-    margin-top: 0.3rem;
+    margin-top: 0.6rem;
     font-size: 0.9rem;
     z-index: 3;
   }

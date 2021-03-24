@@ -14,7 +14,7 @@ const DescribeRenderer = ({
   itStatements,
   updateDescribeText,
   updateItStatementText,
-  updateDescribeCatTag,
+  updateDescribeStandardTag,
   updateItCatTag,
   type,
 }): AccTestCaseState => {
@@ -45,25 +45,18 @@ const DescribeRenderer = ({
           {...provided.dragHandleProps}
         >
           <div id={styles.describeBlock} key={i}>
-            <div id={styles.describeStatement}>
-            <label htmlFor="describe-label" className={styles.describeLabel}>
-              Describe Block
-            </label>
+            <div id={styles.heading}>
+              <label htmlFor="describe-label" className={styles.describeLabel}>
+                Describe Block
+              </label>
 
-            < CatTagFilter
-              dispatch={dispatcher}
-              tagAction={updateDescribeCatTag}
-              textAction={updateDescribeText}
-              describeId={id}
-              catTag={describeBlocks.byId[id].catTag}
-            />
-            {/* < StandardTagFilter
-              dispatch={dispatcher}
-              tagAction={updateDescribeCatTag}
-              textAction={updateDescribeText}
-              describeId={id}
-              catTag={describeBlocks.byId[id].catTag}
-            /> */}
+              < StandardTagFilter
+                dispatch={dispatcher}
+                tagAction={updateDescribeStandardTag}
+                textAction={updateDescribeText}
+                describeId={id}
+                catTag={describeBlocks.byId[id].catTag}
+              />
             </div>
 
             <i
@@ -72,18 +65,7 @@ const DescribeRenderer = ({
               className={cn('far fa-window-close', styles.describeClose)}
             />
 
-
-            {/* <input
-              ref={testDescription}
-              id={id}
-              className={styles.describeInput}
-              name="describe-label"
-              type="text"
-              placeholder="Component has basic accessibility"
-              value={describeBlocks.byId[id].text || ''}
-              onChange={handleChangeDescribeText}
-            /> */}
-            <p className={styles.describeInput}>{describeBlocks.byId[id].text}</p>
+            <p className={styles.describeStatement}>{describeBlocks.byId[id].text}</p>
             <div className={styles.separator} />
 
             <Droppable

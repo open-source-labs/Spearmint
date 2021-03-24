@@ -15,8 +15,8 @@ export const accTestCaseState: AccTestCaseState = {
     byId: {
       describe0: {
         id: 'describe0',
-        text: 'Component is accessible regarding all axe-core categories.',
-        catTag: '',
+        text: 'Component is accessible according to all standards enforced by axe-core.',
+        standardTag: '',
       },
     },
     allIds: ['describe0'],
@@ -154,8 +154,8 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
         },
       };
     }
-    case actionTypes.UPDATE_DESCRIBE_CAT_TAG: {
-      const { describeId, catTag } = action;
+    case actionTypes.UPDATE_DESCRIBE_STANDARD_TAG: {
+      const { describeId, standardTag } = action;
 
       return {
         ...state,
@@ -165,7 +165,7 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
             ...describeBlocks.byId,
             [describeId]: {
               ...describeBlocks.byId[describeId],
-              catTag,
+              standardTag,
             },
           },
         },
