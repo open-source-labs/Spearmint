@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 // import { actionTypes } from '../actions/hooksTestCaseActions';
-import { HooksTestCaseState, Assertion, Action, Hooks, Callback } from '../../utils/hooksTypes';
+import { HooksTestCaseState, Assertion, HooksAction, Hooks, Callback } from '../../utils/hooksTypes';
 
 export const HooksTestCaseContext: any = createContext(null);
 
@@ -62,6 +62,8 @@ export const hooksTestCaseState: HooksTestCaseState = {
   hooksTestStatement: '',
   hooksStatements: [],
   statementId: 0,
+  hookFileName: '',
+  hookFilePath: '',
 };
 
 // const createContexts = (statementId: number) => ({
@@ -106,7 +108,7 @@ const deepCopy = (hooksStatements: Hooks[]) => {
   return fullCopy;
 };
 
-export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) => {
+export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAction) => {
   Object.freeze(state);
   let hooksStatements = [...state.hooksStatements];
 

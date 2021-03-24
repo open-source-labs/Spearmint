@@ -19,7 +19,6 @@ export const actionTypes = {
   UPDATE_TEST_TYPE: 'UPDATE_TEST_TYPE',
   CREATE_PUPPETEER_URL: 'CREATE_PUPPETEER_URL',
 
-  // not yet implemented:
   TOGGLE_ACC: 'TOGGLE_ACC',
 };
 
@@ -29,44 +28,50 @@ export const addDescribeBlock = () => ({
   type: actionTypes.ADD_DESCRIBE_BLOCK,
 });
 
-export const deleteDescribeBlock = (describeId) => ({
-  type: actionTypes.DELETE_DESCRIBE_BLOCK,
-  describeId,
-});
+export const deleteDescribeBlock = (describeId: string) => {
+  return {
+    type: actionTypes.DELETE_DESCRIBE_BLOCK,
+    describeId,
+  };
+};
 
-export const updateDescribeText = (text, describeId) => ({
+export const updateDescribeText = (text: string, describeId: string) => ({
   type: actionTypes.UPDATE_DESCRIBE_TEXT,
   text,
   describeId,
 });
 
-export const updateDescribeOrder = (reorderedDescribe) => ({
-  type: actionTypes.UPDATE_DESCRIBE_ORDER,
-  reorderedDescribe,
-});
+export const updateDescribeOrder = (reorderedDescribe: Array<string>) => {
+  return {
+    type: actionTypes.UPDATE_DESCRIBE_ORDER,
+    reorderedDescribe,
+  };
+};
 
-export const addItStatement = (describeId) => ({
+export const addItStatement = (describeId: string) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
 });
 
-export const deleteItStatement = (describeId, itId) => ({
+export const deleteItStatement = (describeId: string, itId: string) => ({
   type: actionTypes.DELETE_ITSTATEMENT,
   describeId,
   itId,
 });
 
-export const updateItStatementText = (text, itId) => ({
+export const updateItStatementText = (text: string, itId: string) => ({
   type: actionTypes.UPDATE_ITSTATEMENT_TEXT,
   itId,
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt, describeId) => ({
-  type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
-  reorderedIt,
-  describeId,
-});
+export const updateItStatementOrder = (reorderedIt: Array<string>, describeId: string) => {
+  return {
+    type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
+    reorderedIt,
+    describeId,
+  };
+};
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
@@ -80,7 +85,7 @@ export const closeInfoModal = () => ({
   type: actionTypes.CLOSE_INFO_MODAL,
 });
 
-export const updateFilePath = (fileName, filePath) => ({
+export const updateFilePath = (fileName: string, filePath: string) => ({
   type: actionTypes.UPDATE_FILE_PATH,
   fileName,
   filePath,

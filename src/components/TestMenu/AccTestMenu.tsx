@@ -22,7 +22,7 @@ const AccTestMenu = () => {
   // initialize hooks
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('acc');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('acc', projectFilePath);
 
   // setValidCode to true on load.
