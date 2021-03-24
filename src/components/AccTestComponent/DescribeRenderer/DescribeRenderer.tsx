@@ -1,10 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, ChangeEvent } from 'react';
 import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import CatTagFilter from '../CatTagFilter/CatTagFilter';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
+import { AccTestCaseState } from '../../../utils/accTypes';
 
 const DescribeRenderer = ({
   dispatcher,
@@ -14,25 +15,25 @@ const DescribeRenderer = ({
   handleChangeItStatementText,
   updateDescribeCatTag,
   type,
-}) => {
-  const testDescription = useRef(null);
+}): AccTestCaseState => {
+  const testDescription = useRef<HTMLInputElement>(null!);
 
   useEffect(() => {
     testDescription.current.focus();
   }, []);
 
-  const deleteDescribeBlockHandleClick = (e) => {
+  const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
     const describeId = e.target.id;
     dispatcher(deleteDescribeBlock(describeId));
   };
 
-  const addItStatementHandleClick = (e) => {
+  const addItStatementHandleClick = (e: ChangeEvent) => {
     const describeId = e.target.id;
     dispatcher(addItStatement(describeId));
   };
 
-  return describeBlocks.allIds.map((id, i) => (
+  return describeBlocks.allIds.map((id: string, i: number) => (
     <Draggable
       key={id}
       draggableId={id}
