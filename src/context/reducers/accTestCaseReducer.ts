@@ -1,17 +1,18 @@
-import { createContext } from 'react';
+import { createContext } from 'react'; 
+import { AccTestCaseState, Action} from '../../utils/accTypes';
 import { actionTypes } from '../actions/accTestCaseActions';
 
-export const AccTestCaseContext = createContext([]);
+export const AccTestCaseContext:any = createContext([]);
 
-export const accTestCaseState = {
+export const accTestCaseState: AccTestCaseState = {
   modalOpen: false,
 
   describeId: 1,
   itId: 1,
   statementId: 1,
   propId: 1,
-  describeBlocks: {
-    byId: {
+  describeBlocks:  {
+    byId:  {
       describe0: {
         id: 'describe0',
         text: '',
@@ -38,14 +39,14 @@ export const accTestCaseState = {
 
 /* ---------------------------- Helper Functions ---------------------------- */
 
-const createDescribeBlock = (describeId) => {
+const createDescribeBlock = (describeId: string) => {
   return {
     id: describeId,
     text: '',
   };
 };
 
-const createItStatement = (describeId, itId) => ({
+const createItStatement = (describeId: string , itId: string) => ({
   id: itId,
   describeId,
   text: '',
@@ -53,7 +54,7 @@ const createItStatement = (describeId, itId) => ({
 
 /* ------------------------- Accessibility Test Case Reducer ------------------------ */
 
-export const accTestCaseReducer = (state, action) => {
+export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
   Object.freeze(state);
 
   let describeBlocks;
@@ -98,10 +99,10 @@ export const accTestCaseReducer = (state, action) => {
       // delete it from describeBlocks.byId
       delete newDescById[describeId];
       // delete it from describeBlocks.allIds
-      const newDescAllIds = describeBlocks.allIds.filter((id) => id !== describeId);
+      const newDescAllIds = describeBlocks.allIds.filter((id: string) => id !== describeId);
 
       // delete from itStatements.byId
-      itStatements.allIds[describeId].forEach((itId) => {
+      itStatements.allIds[describeId].forEach((itId: number) => {
         delete newItById[itId];
       });
       // delete from itStatements.allIds
@@ -173,7 +174,7 @@ export const accTestCaseReducer = (state, action) => {
       const { itId, describeId } = action;
       const byId = { ...itStatements.byId };
       delete byId[itId];
-      const newAllIds = itStatements.allIds[describeId].filter((id) => id !== itId);
+      const newAllIds = itStatements.allIds[describeId].filter((id: number) => id !== itId);
 
       return {
         ...state,

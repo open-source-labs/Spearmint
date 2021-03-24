@@ -1,6 +1,6 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, ChangeEvent } from 'react';
 import cn from 'classnames';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import {
   updateDescribeText,
@@ -12,8 +12,6 @@ import {
 } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
-  accTestCaseState,
-  accTestCaseReducer,
 } from '../../context/reducers/accTestCaseReducer';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
@@ -28,28 +26,28 @@ const AccTestCase = () => {
 
   const { describeBlocks, itStatements, testType } = accTestCase;
 
-  const [{ filePathMap }] = useContext(GlobalContext);
+  const [{ filePathMap }] = useContext<any>(GlobalContext);
 
-  const handleChangeDescribeText = (e) => {
+  const handleChangeDescribeText = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     const describeId = e.target.id;
     dispatchToAccTestCase(updateDescribeText(text, describeId));
   };
 
-  const handleChangeItStatementText = (e) => {
+  const handleChangeItStatementText = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     const itId = e.target.id;
     dispatchToAccTestCase(updateItStatementText(text, itId));
   };
 
-  const reorder = (list, startIndex, endIndex) => {
+  const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result;
   };
 
-  const onDragEnd = (result) => {
+  const onDragEnd = (result: DropResult) => {
     // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
     if (!result.destination) return;
     if (result.destination.index === result.source.index) return;
