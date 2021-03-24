@@ -9,7 +9,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  // border: thin solid red;
 }
 
 #title {
@@ -21,18 +20,14 @@
   padding-top: 30px;
   margin-top: 30px;
   flex: 1;
-  // border: thin solid red;
 }
 
 #purpose {
   font-size: 1rem;
   text-align: center;
-  // vertical-align: center;
   font-family: 'comfortaa';
   color: #fff;
-  // padding-top: 30px;
   flex: 1;
-  // border: thin solid blue;
 }
 
 #leaf {
@@ -41,7 +36,6 @@
   margin-bottom: 38px;
   margin-left: 5px;
   color: #fff;
-  // border: thin solid red;
 }
 
 #lowerPart {
@@ -111,8 +105,6 @@
 #helpBtn {
   color: white;
   background-color: $mint;
-  // margin-right: 4px;
-  // margin-bottom: 4px;
   margin: 15px 4px 4px 4px;
   height: 40px;
   width: 110px;
