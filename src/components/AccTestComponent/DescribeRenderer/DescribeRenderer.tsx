@@ -34,7 +34,7 @@ const DescribeRenderer = ({
     }
   };
 
-  return describeBlocks.allIds.map((id: string , i: number) => (
+  return describeBlocks.allIds.map((id: string, i: number) => (
     <Draggable
       key={id}
       draggableId={id}

@@ -19,7 +19,6 @@ export interface ItStatements {
   byId: Object;
   allIds: Object;
 }
-
 export interface Action {
   type: string;
   id?: string;
@@ -33,5 +32,6 @@ export interface Action {
   fileName?: string;
   filePath?: string;
   describeBlocks: any[];
-
+  standardTag: string;
+  catTag: string;
 }
