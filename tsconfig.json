@@ -23,6 +23,7 @@
   "include": [
     "src",
     "src/context/__tests__",
-    "__tests__/hello.test.js"
+    "__tests__/hello.test.js",   
+    "tests/spec.integra.js"  
   ]
 }

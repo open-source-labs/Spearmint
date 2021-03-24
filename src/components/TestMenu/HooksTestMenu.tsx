@@ -59,7 +59,7 @@ const HooksTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button type='button' onClick={openModal}>
+          <button type='button' autoFocus onClick={openModal}>
             New Test +
           </button>
           <button id={styles.example} onClick={fileHandle}>

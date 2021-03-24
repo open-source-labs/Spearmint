@@ -89,6 +89,10 @@
     -webkit-appearance: none;
     -moz-appearance: none;
   }
+  button:focus {
+    outline: 2px solid darkblue
+  }
+
 }
 
 #text {
@@ -101,10 +105,16 @@
   color: $mint;
   border-radius: 3px;
 }
+#save:focus{
+  outline: 1px solid darkblue;
+}
 
 #newTestButtons {
   display: flex;
   justify-content: center;
+}
+#newTestButtons:focus {
+  outline: 1px solid darkblue
 }
 
 #testMenu {

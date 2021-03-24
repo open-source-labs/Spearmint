@@ -13,12 +13,8 @@ const DescribeRenderer = ({
   handleChangeDescribeText,
   handleChangeItStatementText,
   type,
-}): AccTestCaseState => {
-  const testDescription = useRef<HTMLInputElement>(null!);
+}) => {
 
-  useEffect(() => {
-    testDescription.current.focus();
-  }, []);
 
   const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
@@ -31,7 +27,14 @@ const DescribeRenderer = ({
     dispatcher(addItStatement(describeId));
   };
 
-  return describeBlocks.allIds.map((id: string, i: number) => (
+  const deleteDescribeBlockOnKeyUp = (e) => {
+    if (e.charCode === 13) {
+    const describeId = e.target.id;
+    dispatcher(deleteDescribeBlock(describeId));
+    }
+}
+
+  return describeBlocks.allIds.map((id: string , i: number) => (
     <Draggable
       key={id}
       draggableId={id}
@@ -48,15 +51,18 @@ const DescribeRenderer = ({
             <label htmlFor="describe-label" className={styles.describeLabel}>
               Describe Block
             </label>
-
+            
             <i
+              tabIndex={0}
+              onKeyPress={deleteDescribeBlockOnKeyUp}
               onClick={deleteDescribeBlockHandleClick}
               id={id}
               className={cn('far fa-window-close', styles.describeClose)}
             />
 
+
             <input
-              ref={testDescription}
+              
               id={id}
               className={styles.describeInput}
               name="describe-label"
