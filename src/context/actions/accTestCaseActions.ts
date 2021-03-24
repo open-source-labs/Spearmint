@@ -17,7 +17,6 @@ export const actionTypes = {
 
   UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
 
-  // not yet implemented:
   TOGGLE_ACC: 'TOGGLE_ACC',
 };
 
@@ -29,44 +28,44 @@ export const addDescribeBlock = () => {
   };
 };
 
-export const deleteDescribeBlock = (describeId) => {
+export const deleteDescribeBlock = (describeId: string) => {
   return {
     type: actionTypes.DELETE_DESCRIBE_BLOCK,
     describeId,
   };
 };
 
-export const updateDescribeText = (text, describeId) => ({
+export const updateDescribeText = (text: string, describeId: string) => ({
   type: actionTypes.UPDATE_DESCRIBE_TEXT,
   text,
   describeId,
 });
 
-export const updateDescribeOrder = (reorderedDescribe) => {
+export const updateDescribeOrder = (reorderedDescribe: Array<string>) => {
   return {
     type: actionTypes.UPDATE_DESCRIBE_ORDER,
     reorderedDescribe,
   };
 };
 
-export const addItStatement = (describeId) => ({
+export const addItStatement = (describeId: string) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
 });
 
-export const deleteItStatement = (describeId, itId) => ({
+export const deleteItStatement = (describeId: string, itId: string) => ({
   type: actionTypes.DELETE_ITSTATEMENT,
   describeId,
   itId,
 });
 
-export const updateItStatementText = (text, itId) => ({
+export const updateItStatementText = (text: string, itId: string) => ({
   type: actionTypes.UPDATE_ITSTATEMENT_TEXT,
   itId,
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt, describeId) => {
+export const updateItStatementOrder = (reorderedIt: Array<string>, describeId: string) => {
   return {
     type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
     reorderedIt,
@@ -86,7 +85,7 @@ export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
 
-export const updateImportFilePath = (fileName, filePath) => ({
+export const updateImportFilePath = (fileName: string, filePath: string) => ({
   type: actionTypes.UPDATE_FILE_PATH,
   fileName,
   filePath,
