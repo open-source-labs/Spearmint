@@ -110,7 +110,7 @@ const TestFile = () => {
         <div id={styles.body}>
           <p id={styles.text}>What would you like to test?</p>
           <span id={styles.newTestButtons}>
-            <button id={styles.save} onClick={() => handleToggle('react')}>
+            <button id={styles.save} autoFocus onClick={() => handleToggle('react')}>
               React
             </button>
             <button id={styles.save} onClick={() => handleToggle('redux')}>

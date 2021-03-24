@@ -16,8 +16,7 @@ const DescribeRenderer = ({
   updateDescribeStandardTag,
   updateItCatTag,
   type,
-}): AccTestCaseState => {
-
+}) => {
   const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
     const describeId = e.target.id;
@@ -29,7 +28,14 @@ const DescribeRenderer = ({
     dispatcher(addItStatement(describeId));
   };
 
-  return describeBlocks.allIds.map((id: string, i: number) => (
+  const deleteDescribeBlockOnKeyUp = (e) => {
+    if (e.charCode === 13) {
+    const describeId = e.target.id;
+    dispatcher(deleteDescribeBlock(describeId));
+    }
+}
+
+  return describeBlocks.allIds.map((id: string , i: number) => (
     <Draggable
       key={id}
       draggableId={id}
@@ -56,6 +62,8 @@ const DescribeRenderer = ({
             />
 
             <i
+              tabIndex={0}
+              onKeyPress={deleteDescribeBlockOnKeyUp}
               onClick={deleteDescribeBlockHandleClick}
               id={id}
               className={cn('far fa-window-close', styles.describeClose)}
