@@ -11,7 +11,7 @@ const StandardTagFilter = ({ dispatch, tagAction, textAction, describeId, catTag
   return (
     <div id={styles.StandardTagFilter}>
       <label for='accTestStandardTypes'>Choose An Accessibility Standard:  </label>
-      <select value={catTag} id='accTestStandardTypes' onChange={handleChange}>
+      <select value={catTag} id={styles.accTestStandardTypes} onChange={handleChange}>
         <option value='none'>No Tag</option>
         <option value='wcag2a'>WCAG 2.0 Level A</option>
         <option value='wcag2aa'>WCAG 2.0 Level AA</option>

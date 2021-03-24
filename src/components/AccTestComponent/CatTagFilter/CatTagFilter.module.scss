@@ -8,4 +8,8 @@
   margin-left: 5px;
   margin-top: 10px;
   z-index: 3;
+
+  #accTestCatTypes:focus {
+    border: 2px solid darkblue;
+  }
 }

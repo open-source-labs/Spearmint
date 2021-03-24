@@ -10,8 +10,8 @@ const CatTagFilter = ({ dispatch, tagAction, textAction, itId, catTag }) => {
 
   return (
     <div id={styles.CatTagFilter}>
-      <label for='accTestTypes'>Choose A Content Filter: </label>
-      <select value={catTag} id='accTestTypes' onChange={handleChange}>
+      <label for='accTestCatTypes'>Choose A Content Filter: </label>
+      <select value={catTag} id={styles.accTestCatTypes} onChange={handleChange}>
         <option value='none'>No Tag</option>
         <option value='aria'>ARIA</option>
         <option value='color'>Color</option>
