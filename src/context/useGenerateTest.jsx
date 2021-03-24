@@ -827,6 +827,10 @@ function useGenerateTest(test, projectFilePath) {
               'color-contrast': { enabled: false },
               'link-in-text-block': { enabled: false }
             }
+            runOnly: {
+              type: 'tag',
+              value: ['${accTestCase.describeBlocks.byId[descId].catTag}']
+            }
           };
       
           // get language tag from imported html file and assign to jsdom document
