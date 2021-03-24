@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import CatTagFilter from '../CatTagFilter/CatTagFilter';
+import StandardTagFilter from '../StandardTagFilter/StandardTagFilter';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
 import { AccTestCaseState } from '../../../utils/accTypes';
@@ -49,6 +50,13 @@ const DescribeRenderer = ({
             </label>
 
             < CatTagFilter
+              dispatch={dispatcher}
+              tagAction={updateDescribeCatTag}
+              textAction={updateDescribeText}
+              describeId={id}
+              catTag={describeBlocks.byId[id].catTag}
+            />
+            < StandardTagFilter
               dispatch={dispatcher}
               tagAction={updateDescribeCatTag}
               textAction={updateDescribeText}
