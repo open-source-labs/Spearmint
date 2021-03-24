@@ -4,7 +4,6 @@ import ReactModal from 'react-modal';
 import styles from '../../components/Modals/ExportFileModal.module.scss';
 
 // may be able to delete toggleReact, etc. from their respective action files
-
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
 
 import {
@@ -111,23 +110,23 @@ const TestFile = () => {
         <div id={styles.body}>
           <p id={styles.text}>What would you like to test?</p>
           <span id={styles.newTestButtons}>
-            <button id={styles.save} autoFocus onClick={() => handleToggle('react')}>
-              React
-            </button>
-            <button id={styles.save} onClick={() => handleToggle('redux')}>
-              Redux
-            </button>
-            <button id={styles.save} onClick={() => handleToggle('hooks')}>
-              Hooks
+            <button id={styles.save} autoFocus onClick={() => handleToggle('acc')}>
+              Accessibility
             </button>
             <button id={styles.save} onClick={() => handleToggle('endpoint')}>
               Endpoint
             </button>
+            <button id={styles.save} onClick={() => handleToggle('hooks')}>
+              Hooks
+            </button>
             <button id={styles.save} onClick={() => handleToggle('puppeteer')}>
               Puppeteer
             </button>
-            <button id={styles.save} onClick={() => handleToggle('acc')}>
-              Accessibility
+            <button id={styles.save} onClick={() => handleToggle('react')}>
+              React
+            </button>
+            <button id={styles.save} onClick={() => handleToggle('redux')}>
+              Redux
             </button>
           </span>
         </div>
