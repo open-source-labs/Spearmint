@@ -4,7 +4,6 @@ import ReactModal from 'react-modal';
 import styles from '../../components/Modals/ExportFileModal.module.scss';
 
 // may be able to delete toggleReact, etc. from their respective action files
-
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
 
 import {

@@ -35,7 +35,7 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
   return { handleNewTest };
 }
 
-export function useGenerateScript(test, testType = null) {
+export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
   const [{ projectFilePath }] = useContext(GlobalContext);
   switch (test) {
     case 'acc':
@@ -54,7 +54,13 @@ export function useGenerateScript(test, testType = null) {
         );
       }
       if (testType === 'puppeteer') {
-        return 'puppeteer run script';
+        return (
+          `cd ${projectFilePath}
+          npm i -D axe-core puppeteer
+          node <YOUR_TEST_FILE_NAME.JS> ${puppeteerUrl}
+          `
+        );
+        
       }
       return 'error';
     case 'react':

@@ -17,6 +17,7 @@ export const actionTypes = {
 
   UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
   UPDATE_TEST_TYPE: 'UPDATE_TEST_TYPE',
+  CREATE_PUPPETEER_URL: 'CREATE_PUPPETEER_URL',
 
   TOGGLE_ACC: 'TOGGLE_ACC',
 };
@@ -87,4 +88,9 @@ export const updateFilePath = (fileName: string, filePath: string) => ({
 export const updateTestType = (testType: string) => ({
   type: actionTypes.UPDATE_TEST_TYPE,
   testType,
+});
+
+export const createPuppeteerUrl = (puppeteerUrl: string) => ({
+  type: actionTypes.CREATE_PUPPETEER_URL,
+  puppeteerUrl,
 });
