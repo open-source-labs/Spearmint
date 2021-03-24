@@ -14,7 +14,6 @@ import {
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
 
-
 const AccTestMenu = () => {
   // link to accessibility testing docs url
   const accUrl = 'https://www.deque.com/axe/core-documentation/api-documentation/'; 
@@ -25,7 +24,7 @@ const AccTestMenu = () => {
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('acc', projectFilePath);
 
-  // setValidCode to true on load. 
+  // setValidCode to true on load.
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
   }, []);
@@ -68,6 +67,8 @@ const AccTestMenu = () => {
             dispatchToMockData={null}
             dispatchTestCase={dispatchToAccTestCase}
             createTest={createNewTest}
+            testType={accTestCase.testType}
+            puppeteerUrl={accTestCase.puppeteerUrl}
           />
           {/* Just send user to docs on button click */}
         </div>
@@ -81,8 +82,7 @@ const AccTestMenu = () => {
           </button>
         </div>
       </div>
-    </div>
-    
+    </div> 
   );
 }
 
