@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
@@ -12,7 +12,6 @@ import CustomInput from '../CustomInput/CustomInput';
 import styles from './ItRenderer.module.scss';
 
 const ItRenderer = ({
-  type,
   itStatements,
   describeId,
   handleChangeItStatementText,
@@ -20,12 +19,12 @@ const ItRenderer = ({
 
   const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
-  const deleteItStatementHandleClick = (e) => {
+  const deleteItStatementHandleClick = (e: ChangeEvent) => {
     const itId = e.target.id;
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
 
-  return itStatements.allIds[describeId].map((id, i) => (
+  return itStatements.allIds[describeId].map((id: string, i:number) => (
     <Draggable
       draggableId={id}
       index={i}

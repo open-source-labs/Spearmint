@@ -61,50 +61,31 @@ export interface Header {
 export type EventTarget = {
   target: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 };
-
-// export interface GlobalState {
-//   url: string;
-//   projectUrl: string;
-//   isProjectLoaded: boolean;
-//   fileTree: string;
-//   componentName: string;
-//   isFileDirectoryOpen: boolean;
-//   isRightPanelOpen: boolean;
-//   rightPanelDisplay: string;
-//   isFolderOpen: object;
-//   isFileHighlighted: string;
-//   projectFilePath: string;
-//   filePathMap: object;
-//   file: string;
-//   testCase: string;
-//   docsOpen: boolean;
-//   isTestModalOpen: boolean;
-//   exportBool: boolean;
-//   fileName: string;
-//   filePath: string;
-//   validCode: boolean;
-// }
-
-// export type HooksAction =
-// | { type: 'TOGGLE_HOOKS' | 'ADD_CONTEXT' | 'ADD_HOOKRENDER' | 'ADD_HOOK_UPDATES' | 'ADD_HOOKRENDER' | 'CREATE_NEW_HOOKS_TEST' }
-// | { type: 'UPDATE_HOOKS_TEST_STATEMENT'; hooksTestStatement: string }
-// | { type: 'DELETE_CONTEXT' | 'DELETE_HOOKRENDER' | 'DELETE_HOOK_UPDATES'; id: number }
-// | { type: 'UPDATE_CONTEXT'; id: number; queryVariant: string; querySelector: string; queryValue: string; values: string; textNodes: string; providerComponent: string; consumerComponent: string; context: string; }
-// | { type: 'UPDATE_HOOKRENDER'; id: number; hook: string; parameterOne: string; expectedReturnValue: string; returnValue: string; }
-// | { type: 'UPDATE_HOOK_UPDATES'; id: number; hook: string; hookFileName: string; hookFilePath: string; callbackFunc: string; managedState: string; updatedState: string;}
-// | { type: 'UPDATE_HOOKS_FILEPATH'; hookFileName: string; hookFilePath: string }
-// | { type: 'UPDATE_CONTEXT_FILEPATH'; contextFileName: string; contextFilePath: string }
-// | { type: 'UPDATE_STATEMENTS_ORDER'; draggableStatements: Array<object> };
-
 export interface EndpointTestMenuProps {
   dispatchToEndpointTestCase: (action: object) => void;
 }
-
-// export interface HooksTestModalProps extends HooksTestMenuProps {
-//   isHooksModalOpen: boolean;
-//   closeHooksModal: () => void;
-// }
-
 export interface EndpointTestStatementsProps extends EndpointTestMenuProps {
   endpointStatements: Array<EndpointStatements>;
 }
+
+// export type EndpointAction =
+//    {
+//       type:
+//         | 'TOGGLE_ENDPOINT'
+//         | 'CREATE_NEW_ENDPOINT_TEST'
+//         | 'ADD_ENDPOINT'
+//         | 'OPEN_INFO_MODAL'
+//         | 'CLOSE_INFO_MODAL';
+//     }
+//   | { type: 'TOGGLE_POST'; index: number }
+//   | { type: 'UPDATE_ENDPOINT_STATEMENTS_ORDER'; draggableStatements: string }
+//   | { type: 'UPDATE_SERVER_FILEPATH'; serverFilePath: string; serverFileName: string }
+//   | { type: 'DELETE_ENDPOINT' | 'ADD_HEADER' | 'ADD_ASSERTION'; id: number}
+//   | { type: 'UPDATE_ENDPOINT'; endpoint: object; id: number}
+//   | { type: 'UPDATE_STATEMENTS_ORDER'; draggableStatements: Array<EndpointStatements> }
+//   | { type: 'DELETE_HEADER' | 'DELETE_ASSERTION'; index: number; id: number }
+  
+//   | { type: 'UPDATE_POST'; text: string; index: number }
+//   | { type: 'UPDATE_ASSERTION'; id: number; index: number; assertion: Assertion }
+//   | { type: 'TOGGLE_DB'; db: string | boolean }
+//   | { type: 'UPDATE_DB_FILEPATH'; dbFilePath: string };
