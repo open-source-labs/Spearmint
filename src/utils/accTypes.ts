@@ -12,7 +12,7 @@ export interface AccTestCaseState {
 }
 export interface DescribeBlocks {
   byId: Object; 
-  allIds: Array<any>;
+  allIds: Array<string>;
 }
 export interface ItStatements {
   byId: Object;
@@ -35,12 +35,12 @@ export interface Action {
   index?: number;
   text?: string;
   itId?: number;
-  describeId?: number;
+  describeId?: number | string;
   reorderedDescribe?: Object;
+  //reoderedIt?: 
   fileName?: string;
   filePath?: string;
-  describeBlocks: DescribeBlocks;
-  reorderedIt?: Array;
+  describeBlocks: any[];
 
 }
 
