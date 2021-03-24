@@ -836,6 +836,7 @@ function useGenerateTest(test, projectFilePath) {
           } else {
             violations.forEach(axeViolation => {
               const whereItFailed = axeViolation.nodes.map(node => node.html);
+              // uncomment the line(s) below to see suggestions on how to fix accessibility issues
               // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
         
               const { description, help, helpUrl } = axeViolation;
@@ -845,7 +846,7 @@ function useGenerateTest(test, projectFilePath) {
                 '\\nISSUE: ', help,
                 '\\nMORE INFO: ', helpUrl,
                 '\\nWHERE IT FAILED: ', whereItFailed,
-                // '\\nhow to fix: ', failureSummary
+                // '\\nHOW TO FIX: ', failureSummary
               );
             });
           }
@@ -1023,6 +1024,7 @@ function useGenerateTest(test, projectFilePath) {
             const violations = results;
             violations.forEach(axeViolation => {
               const whereItFailed = axeViolation.nodes.map(node => node.html);
+              // uncomment the line(s) below to see suggestions on how to fix accessibility issues
               // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
 
               const { description, help, helpUrl } = axeViolation;
@@ -1037,7 +1039,7 @@ function useGenerateTest(test, projectFilePath) {
                 helpUrl,
                 '\\nWHERE IT FAILED: ',
                 whereItFailed
-                // '\\nhow to fix: ', failureSummary
+                // '\\nHOW TO FIX: ', failureSummary
               );
             });
           })
@@ -1047,8 +1049,6 @@ function useGenerateTest(test, projectFilePath) {
           });
         `
     };
-
-     //const generatePuppeteerScriptTag = () => {`"node <replaceWithJavascriptTestFileName.js> ${url}"`}
 
     switch (test) {
       case 'acc':
