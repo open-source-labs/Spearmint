@@ -11,16 +11,12 @@ const DescribeRenderer = ({
   dispatcher,
   describeBlocks,
   itStatements,
-  handleChangeDescribeText,
+  updateDescribeText,
   handleChangeItStatementText,
   updateDescribeCatTag,
   type,
 }): AccTestCaseState => {
   const testDescription = useRef<HTMLInputElement>(null!);
-
-  useEffect(() => {
-    testDescription.current.focus();
-  }, []);
 
   const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
@@ -47,9 +43,19 @@ const DescribeRenderer = ({
           {...provided.dragHandleProps}
         >
           <div id={styles.describeBlock} key={i}>
+            <div id={styles.describeStatement}>
             <label htmlFor="describe-label" className={styles.describeLabel}>
               Describe Block
             </label>
+
+            < CatTagFilter
+              dispatch={dispatcher}
+              tagAction={updateDescribeCatTag}
+              textAction={updateDescribeText}
+              describeId={id}
+              catTag={describeBlocks.byId[id].catTag}
+            />
+            </div>
 
             <i
               onClick={deleteDescribeBlockHandleClick}
@@ -57,7 +63,8 @@ const DescribeRenderer = ({
               className={cn('far fa-window-close', styles.describeClose)}
             />
 
-            <input
+
+            {/* <input
               ref={testDescription}
               id={id}
               className={styles.describeInput}
@@ -66,16 +73,9 @@ const DescribeRenderer = ({
               placeholder="Component has basic accessibility"
               value={describeBlocks.byId[id].text || ''}
               onChange={handleChangeDescribeText}
-            />
-
+            /> */}
+            <p className={styles.describeInput}>{describeBlocks.byId[id].text}</p>
             <div className={styles.separator} />
-
-            < CatTagFilter
-              dispatch={dispatcher}
-              action={updateDescribeCatTag}
-              describeId={id}
-              catTag={describeBlocks.byId[id].catTag}
-            />
 
             <Droppable
               droppableId={"droppableAccIt" + id}

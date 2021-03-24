@@ -29,11 +29,11 @@ const AccTestCase = () => {
 
   const [{ filePathMap }] = useContext<any>(GlobalContext);
 
-  const handleChangeDescribeText = (e: ChangeEvent<HTMLInputElement>) => {
-    const text = e.target.value;
-    const describeId = e.target.id;
-    dispatchToAccTestCase(updateDescribeText(text, describeId));
-  };
+  // const handleChangeDescribeText = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const text = e.target.value;
+  //   const describeId = e.target.id;
+  //   dispatchToAccTestCase(updateDescribeText(text, describeId));
+  // };
 
   const handleChangeItStatementText = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
@@ -93,7 +93,7 @@ const AccTestCase = () => {
                   dispatcher={dispatchToAccTestCase}
                   describeBlocks={describeBlocks}
                   itStatements={itStatements}
-                  handleChangeDescribeText={handleChangeDescribeText}
+                  updateDescribeText={updateDescribeText}
                   handleChangeItStatementText={handleChangeItStatementText}
                   updateDescribeCatTag={updateDescribeCatTag}
                   type="acc"

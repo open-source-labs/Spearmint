@@ -12,10 +12,10 @@ export const accTestCaseState: AccTestCaseState = {
   statementId: 1,
   propId: 1,
   describeBlocks:  {
-    byId:  {
+    byId: {
       describe0: {
         id: 'describe0',
-        text: '',
+        text: 'Component is accessible regarding all axe-core categories.',
         catTag: '',
       },
     },
