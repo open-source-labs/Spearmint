@@ -78,16 +78,11 @@ const AccTestCase = () => {
           currType={testType}
         />
 
-        {testType === 'puppeteer'
-          ? (
-              <PuppeteerUrl
-                dispatch={dispatchToAccTestCase}
-                action={createPuppeteerUrl}
-              />
-            )
-          : (
-            <div>
-              <label htmlFor="fileImport">Import File From</label>
+        {testType === 'puppeteer' ? (
+          <PuppeteerUrl dispatch={dispatchToAccTestCase} action={createPuppeteerUrl} />
+        ) : (
+          <div>
+            <label htmlFor="fileImport">Import File From</label>
               <div id={styles.labelInput} style={{ width: '80%' }}>
                 <SearchInput
                   options={Object.keys(filePathMap)}
