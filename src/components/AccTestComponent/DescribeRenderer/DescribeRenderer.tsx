@@ -13,11 +13,7 @@ const DescribeRenderer = ({
   handleChangeItStatementText,
   type,
 }) => {
-  // const testDescription = useRef(null);
 
-  // useEffect(() => {
-  //   testDescription.current.focus();
-  // }, []);
 
   const deleteDescribeBlockHandleClick = (e) => {
     e.stopPropagation();
@@ -29,6 +25,13 @@ const DescribeRenderer = ({
     const describeId = e.target.id;
     dispatcher(addItStatement(describeId));
   };
+
+  const deleteDescribeBlockOnKeyUp = (e) => {
+    if (e.charCode === 13) {
+    const describeId = e.target.id;
+    dispatcher(deleteDescribeBlock(describeId));
+    }
+}
 
   return describeBlocks.allIds.map((id, i) => (
     <Draggable
@@ -49,6 +52,8 @@ const DescribeRenderer = ({
             </label>
             
             <i
+              tabIndex={0}
+              onKeyPress={deleteDescribeBlockOnKeyUp}
               onClick={deleteDescribeBlockHandleClick}
               id={id}
               className={cn('far fa-window-close', styles.describeClose)}

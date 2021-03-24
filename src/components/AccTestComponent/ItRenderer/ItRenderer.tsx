@@ -25,6 +25,13 @@ const ItRenderer = ({
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
 
+  const deleteItStatementOnKeyUp = (e) => {
+    if (e.charCode === 13) {
+      const itId = e.target.id;
+      dispatchToAccTestCase(deleteItStatement(describeId, itId));
+    }
+}
+
   return itStatements.allIds[describeId].map((id, i) => (
     <Draggable
       draggableId={id}
@@ -40,6 +47,8 @@ const ItRenderer = ({
         >
 
           <i
+            tabIndex={0}
+            onKeyPress={deleteItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}
             id={id}
             className={cn(styles.itClose, 'far fa-window-close')}
