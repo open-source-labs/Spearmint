@@ -954,8 +954,6 @@ function useGenerateTest(test, projectFilePath) {
     };
     
     const addAccPuppeteer = () => {
-      // taotao
-      testFileCode += JSON.stringify(accTestCase.puppeteerUrl);
       testFileCode += `
         const puppeteer = require('puppeteer');
         const axeCore = require('axe-core');

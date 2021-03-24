@@ -16,7 +16,7 @@ const Modal = ({
   dispatchTestCase,
   createTest,
   testType = null,
-  puppeteerUrl = null,
+  puppeteerUrl = 'sample.io',
 }) => {
   const { copySuccess, codeRef, handleCopy } = useCopy();
   const { handleNewTest } = useNewTest(

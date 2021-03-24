@@ -8,14 +8,8 @@ const AccTestTypes = ({ dispatch, action }) => {
   return (
     <div>
       <label>URL to be Tested:</label>
-      <input id='taoan456'  onChange={handleChange}>
+      <input onChange = { handleChange }>
       </input>
-      {/* <label for='accTestTypes'>Choose Type of Accessibility Test:  </label>
-      <select value={currTypes} id='accTestTypes' onChange={handleChange}>
-        <option value='html'>HTML</option>
-        <option value='react'>React</option>
-        <option value='puppeteer'>Puppeteer</option>
-      </select> */}
     </div>
   );
 };

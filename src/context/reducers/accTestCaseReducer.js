@@ -34,7 +34,7 @@ export const accTestCaseState = {
   fileName: '',
   filePath: '',
   testType: 'html',
-  puppeteerUrl: '',
+  puppeteerUrl: 'sample.io',
 };
 
 /* ---------------------------- Helper Functions ---------------------------- */
