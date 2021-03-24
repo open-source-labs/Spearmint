@@ -13,7 +13,6 @@ import {
 } from '../../context/actions/globalActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
-import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
 
 const AccTestMenu = () => {
   // link to accessibility testing docs url

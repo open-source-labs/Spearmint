@@ -68,7 +68,6 @@ const AccTestCase = () => {
       </div>
 
       <section id={styles.testCaseHeader}>
-        {/* //taotao  */}
         <div id={styles.accTestDiv}>
           <AccTestTypes
             dispatch={dispatchToAccTestCase}
