@@ -28,13 +28,13 @@ const AccTestCase = () => {
 
   const [{ filePathMap }] = useContext<any>(GlobalContext);
 
-  const handleChangeDescribeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeDescribeText = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     const describeId = e.target.id;
     dispatchToAccTestCase(updateDescribeText(text, describeId));
   };
 
-  const handleChangeItStatementText = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeItStatementText = (e: ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
     const itId = e.target.id;
     dispatchToAccTestCase(updateItStatementText(text, itId));
