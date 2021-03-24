@@ -21,7 +21,9 @@
   margin-bottom: 40px;
   cursor: pointer;
   background-color: transparent;
-  outline: none;
+  :focus {
+    outline: 2px solid darkblue
+  } 
 }
 
 .icons {

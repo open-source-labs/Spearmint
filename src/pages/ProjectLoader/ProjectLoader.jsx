@@ -58,7 +58,7 @@ const ProjectLoader = () => {
           <div className={styles.contentBox}>
             <span className={styles.number}>01</span>
             <span className={styles.text}> Enter test site's URL</span> <br />
-            <input type='text' id={styles.url} placeholder={placehold} onChange={handleChangeUrl} />
+            <input type='text' autoFocus id={styles.url} placeholder={placehold} onChange={handleChangeUrl} />
           </div>
           <div className={styles.contentBox}>
             <span className={styles.number}>02</span>
