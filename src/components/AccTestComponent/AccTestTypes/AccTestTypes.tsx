@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './AccTestTypes.module.scss';
 
 const AccTestTypes = ({ dispatch, action, currTypes }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -6,8 +7,10 @@ const AccTestTypes = ({ dispatch, action, currTypes }) => {
   };
 
   return (
-    <div id='sampleAccTest'>
-      <label for='accTestTypes'>Choose Type of Accessibility Test:  </label>
+    <div id={styles.AccTestTypesComponent}>
+      <label id={styles.AccTestTypesLabel} for='accTestTypes'>
+        Choose Type of Accessibility Test
+      </label>
       <select value={currTypes} id='accTestTypes' onChange={handleChange}>
         <option value='html'>HTML</option>
         <option value='react'>React</option>
