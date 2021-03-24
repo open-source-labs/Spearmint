@@ -792,8 +792,6 @@ function useGenerateTest(test, projectFilePath) {
       filePath = path.relative(projectFilePath, filePath);
       filePath = filePath.replace(/\\/g, '/');
 
-      // testFileCode += JSON.stringify(accTestCase);
-
       testFileCode += `
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');`;
@@ -831,7 +829,6 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     const addAccPrint = () => {
-      testFileCode += JSON.stringify(accTestCase);
       testFileCode += `
         const print = (violations) => {
           if (violations.length === 0) {
