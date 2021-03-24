@@ -8,6 +8,7 @@ import {
   updateDescribeOrder,
   updateItStatementOrder,
   updateDescribeCatTag,
+  updateItCatTag,
   updateFilePath,
   updateTestType,
   createPuppeteerUrl,
@@ -37,11 +38,11 @@ const AccTestCase = () => {
   //   dispatchToAccTestCase(updateDescribeText(text, describeId));
   // };
 
-  const handleChangeItStatementText = (e: ChangeEvent<HTMLInputElement>) => {
-    const text = e.target.value;
-    const itId = e.target.id;
-    dispatchToAccTestCase(updateItStatementText(text, itId));
-  };
+  // const handleChangeItStatementText = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const text = e.target.value;
+  //   const itId = e.target.id;
+  //   dispatchToAccTestCase(updateItStatementText(text, itId));
+  // };
 
   const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
@@ -107,8 +108,9 @@ const AccTestCase = () => {
                   describeBlocks={describeBlocks}
                   itStatements={itStatements}
                   updateDescribeText={updateDescribeText}
-                  handleChangeItStatementText={handleChangeItStatementText}
+                  updateItStatementText={updateItStatementText}
                   updateDescribeCatTag={updateDescribeCatTag}
+                  updateItCatTag={updateItCatTag}
                   type="acc"
                 />
                 {provided.placeholder}

@@ -13,8 +13,9 @@ const DescribeRenderer = ({
   describeBlocks,
   itStatements,
   updateDescribeText,
-  handleChangeItStatementText,
+  updateItStatementText,
   updateDescribeCatTag,
+  updateItCatTag,
   type,
 }): AccTestCaseState => {
   const testDescription = useRef<HTMLInputElement>(null!);
@@ -56,13 +57,13 @@ const DescribeRenderer = ({
               describeId={id}
               catTag={describeBlocks.byId[id].catTag}
             />
-            < StandardTagFilter
+            {/* < StandardTagFilter
               dispatch={dispatcher}
               tagAction={updateDescribeCatTag}
               textAction={updateDescribeText}
               describeId={id}
               catTag={describeBlocks.byId[id].catTag}
-            />
+            /> */}
             </div>
 
             <i
@@ -99,7 +100,8 @@ const DescribeRenderer = ({
                     key={`it-${id}-${i}`}
                     itStatements={itStatements}
                     describeId={id}
-                    handleChangeItStatementText={handleChangeItStatementText}
+                    updateItStatementText={updateItStatementText}
+                    updateItCatTag={updateItCatTag}
                   />
                   {innerProvided.placeholder}
                 </div>

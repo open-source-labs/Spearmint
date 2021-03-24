@@ -11,6 +11,7 @@ export const actionTypes = {
   DELETE_ITSTATEMENT: 'DELETE_ITSTATEMENT',
   UPDATE_ITSTATEMENT_TEXT: 'UPDATE_ITSTATEMENT_TEXT',
   UPDATE_ITSTATEMENT_ORDER: 'UPDATE_ITSTATEMENT_ORDER',
+  UPDATE_IT_CAT_TAG: 'UPDATE_IT_CAT_TAG',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
@@ -72,6 +73,12 @@ export const updateItStatementOrder = (reorderedIt: Array<string>, describeId: s
   type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
   reorderedIt,
   describeId,
+});
+
+export const updateItCatTag = (itId: string, catTag: string) => ({
+  type: actionTypes.UPDATE_IT_CAT_TAG,
+  itId,
+  catTag,
 });
 
 export const createNewTest = () => ({

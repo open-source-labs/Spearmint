@@ -26,7 +26,8 @@ export const accTestCaseState: AccTestCaseState = {
       it0: {
         id: 'it0',
         describeId: 'describe0',
-        text: '',
+        text: 'Component is accessible regarding all axe-core categories.',
+        catTag: '',
       },
     },
     allIds: {
@@ -53,6 +54,7 @@ const createItStatement = (describeId: string , itId: string) => ({
   id: itId,
   describeId,
   text: '',
+  catTag: '',
 });
 
 /* ------------------------- Accessibility Test Case Reducer ------------------------ */
@@ -238,6 +240,22 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
           allIds: {
             ...itStatements.allIds,
             [describeId]: reorderedIt,
+          },
+        },
+      };
+    }
+    case actionTypes.UPDATE_IT_CAT_TAG: {
+      const { itId, catTag } = action;
+
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            [itId]: {
+              ...itStatements.byId[itId],
+              catTag,
+            },
           },
         },
       };

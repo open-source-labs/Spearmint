@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './CatTagFilter.module.scss';
 
-const CatTagFilter = ({ dispatch, tagAction, textAction, describeId, catTag }) => {
+const CatTagFilter = ({ dispatch, tagAction, textAction, describeId, itId = null, catTag }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(tagAction(describeId, e.target.value));
-    if (e.target.value === 'none') dispatch(textAction(`Component is accessible regarding all axe-core categories.`, describeId));
-    else dispatch(textAction(`Component is accessible regarding ${e.target.value}.`, describeId));
+    dispatch(tagAction(itId, e.target.value));
+    if (e.target.value === 'none') dispatch(textAction(`Component is accessible regarding all axe-core categories.`, itId));
+    else dispatch(textAction(`Component is accessible regarding ${e.target.value}.`, itId));
   };
 
   return (
