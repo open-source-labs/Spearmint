@@ -54,7 +54,13 @@ export function useGenerateScript(test, testType = null) {
         );
       }
       if (testType === 'puppeteer') {
-        return 'puppeteer run script';
+        return (
+          `cd ${projectFilePath}
+          npm i -D axe-core puppeteer
+          node <fileName> <urlToTest>
+          `
+        );
+        
       }
       return 'error';
     case 'react':

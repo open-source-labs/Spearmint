@@ -75,15 +75,24 @@ const AccTestCase = () => {
           action={updateTestType}
           currType={testType}
         />
-        <label htmlFor="fileImport">Import File From</label>
-        <div id={styles.labelInput} style={{ width: '80%' }}>
-          <SearchInput
-            options={Object.keys(filePathMap)}
-            dispatch={dispatchToAccTestCase}
-            action={updateFilePath}
-            filePathMap={filePathMap}
-          />
-        </div>
+
+        {testType === 'puppeteer'
+          ? (
+            <label>URL to be tested:</label>
+            <input>
+            </input>
+          )
+          : (
+            <label htmlFor="fileImport">Import File From</label>
+            <div id={styles.labelInput} style={{ width: '80%' }}>
+              <SearchInput
+                options={Object.keys(filePathMap)}
+                dispatch={dispatchToAccTestCase}
+                action={updateFilePath}
+                filePathMap={filePathMap}
+              />
+            </div>
+          )}
 
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable
