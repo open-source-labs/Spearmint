@@ -16,6 +16,7 @@ const Modal = ({
   dispatchTestCase,
   createTest,
   testType = null,
+  puppeteerUrl = null,
 }) => {
   const { copySuccess, codeRef, handleCopy } = useCopy();
   const { handleNewTest } = useNewTest(
@@ -25,7 +26,7 @@ const Modal = ({
     closeModal,
   );
 
-  const script = useGenerateScript(title, testType);
+  const script = useGenerateScript(title, testType, puppeteerUrl);
 
   const modalStyles = {
     overlay: {

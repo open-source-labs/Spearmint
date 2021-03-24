@@ -8,7 +8,7 @@ const AccTestTypes = ({ dispatch, action }) => {
   return (
     <div>
       <label>URL to be Tested:</label>
-      <input id='taoan456'>
+      <input id='taoan456'  onChange={handleChange}>
       </input>
       {/* <label for='accTestTypes'>Choose Type of Accessibility Test:  </label>
       <select value={currTypes} id='accTestTypes' onChange={handleChange}>

@@ -4,13 +4,6 @@ import { toggleModal, setTestCase, updateFile } from '../../context/actions/glob
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './ExportFileModal.module.scss';
 
-// taoan delete
-import {
-  
-  accTestCaseState,
-
-} from '../../context/reducers/accTestCaseReducer';
-
 export function useCopy() {
   const [copySuccess, setCopySuccess] = useState(false);
   const codeRef = useRef(null);
@@ -42,7 +35,7 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
   return { handleNewTest };
 }
 
-export function useGenerateScript(test, testType = null) {
+export function useGenerateScript(test, testType = null, puppeteerUrl = null) {
   const [{ projectFilePath }] = useContext(GlobalContext);
   switch (test) {
     case 'acc':
@@ -61,11 +54,10 @@ export function useGenerateScript(test, testType = null) {
         );
       }
       if (testType === 'puppeteer') {
-        console.log(accTestCaseState);
         return (
           `cd ${projectFilePath}
           npm i -D axe-core puppeteer
-          node <fileName> <urlToTest>
+          node <fileName> ${puppeteerUrl}
           `
         );
         

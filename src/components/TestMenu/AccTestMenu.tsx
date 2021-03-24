@@ -70,6 +70,7 @@ const AccTestMenu = () => {
             dispatchTestCase={dispatchToAccTestCase}
             createTest={createNewTest}
             testType={accTestCase.testType}
+            puppeteerUrl={accTestCase.puppeteerUrl}
           />
           {/* Just send user to docs on button click */}
         </div>

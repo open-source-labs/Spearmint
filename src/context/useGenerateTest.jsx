@@ -831,6 +831,7 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     const addAccPrint = () => {
+      testFileCode += JSON.stringify(accTestCase);
       testFileCode += `
         const print = (violations) => {
           if (violations.length === 0) {
@@ -953,6 +954,8 @@ function useGenerateTest(test, projectFilePath) {
     };
     
     const addAccPuppeteer = () => {
+      // taotao
+      testFileCode += JSON.stringify(accTestCase.puppeteerUrl);
       testFileCode += `
         const puppeteer = require('puppeteer');
         const axeCore = require('axe-core');
@@ -1047,22 +1050,26 @@ function useGenerateTest(test, projectFilePath) {
       case 'acc':
         var accTestCase = testState;
         if (accTestCase.testType === 'puppeteer') {
-          return addAccPuppeteer(),
-          (testFileCode = beautify(testFileCode, {
-            indent_size: 2,
-            space_in_empty_paren: true,
-            e4x: true,
-          }))
+          return (
+            addAccPuppeteer(),
+            (testFileCode = beautify(testFileCode, {
+              indent_size: 2,
+              space_in_empty_paren: true,
+              e4x: true,
+            }))
+          )
+        } else {
+          return (
+            addAccImportStatements(),
+            addAccDescribeBlocks(),
+            (testFileCode = beautify(testFileCode, {
+              indent_size: 2,
+              space_in_empty_paren: true,
+              e4x: true,
+            }))
+          );
         }
-        return (
-          addAccImportStatements(),
-          addAccDescribeBlocks(),
-          (testFileCode = beautify(testFileCode, {
-            indent_size: 2,
-            space_in_empty_paren: true,
-            e4x: true,
-          }))
-        );
+        
       case 'react':
         var reactTestCase = testState;
         var mockData = mockDataState;
