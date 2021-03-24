@@ -30,6 +30,13 @@ const ItRenderer = ({
     const itId = e.target.id;
     dispatchToReactTestCase(deleteItStatement(describeId, itId));
   };
+
+  const deleteReactItStatementOnKeyUp = (e) => {
+    if (e.charCode === 13) {
+      const itId = e.target.id;
+      dispatchToReactTestCase(deleteItStatement(describeId, itId));
+    }
+  }
   const addActionHandleClick = (e) => {
     const itId = e.target.id;
     dispatchToReactTestCase(addAction(describeId, itId));
@@ -54,6 +61,8 @@ const ItRenderer = ({
           {...provided.dragHandleProps}
         >
           <i
+            tabIndex={0}
+            onKeyPress={deleteReactItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}
             id={id}
             className={cn(styles.itClose, 'far fa-window-close')}
