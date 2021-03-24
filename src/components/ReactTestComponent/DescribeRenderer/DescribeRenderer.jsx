@@ -24,6 +24,12 @@ const DescribeRenderer = ({
     dispatcher(deleteDescribeBlock(describeId));
   };
 
+  const deleteReactDescribeBlockOnKeyUp = (e) => {
+    if (e.charCode === 13) {
+      const describeId = e.target.id;
+      dispatcher(deleteDescribeBlock(describeId));
+    }
+}
   const addItStatementHandleClick = (e) => {
     const describeId = e.target.id;
     dispatcher(addItstatement(describeId));
@@ -48,10 +54,13 @@ const DescribeRenderer = ({
             </label>
 
             <i
+              tabIndex={0}
+              onKeyPress={deleteReactDescribeBlockOnKeyUp}
               onClick={deleteDescribeBlockHandleClick}
               id={id}
               className={cn('far fa-window-close', styles.describeClose)}
             ></i>
+
             <input
               id={id}
               className={styles.describeInput}

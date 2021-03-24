@@ -30,7 +30,7 @@ const ItRenderer = ({
       const itId = e.target.id;
       dispatchToAccTestCase(deleteItStatement(describeId, itId));
     }
-}
+  }
 
   return itStatements.allIds[describeId].map((id, i) => (
     <Draggable
