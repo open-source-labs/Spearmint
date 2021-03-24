@@ -57,7 +57,7 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
         return (
           `cd ${projectFilePath}
           npm i -D axe-core puppeteer
-          node <YOUR_TEST_FILE_NAME.JS> ${puppeteerUrl}
+          node <YOUR_DIR_PATH/TEST_FILE.JS> ${puppeteerUrl}
           `
         );
         
