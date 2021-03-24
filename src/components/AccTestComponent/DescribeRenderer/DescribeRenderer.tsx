@@ -43,19 +43,17 @@ const DescribeRenderer = ({
           {...provided.dragHandleProps}
         >
           <div id={styles.describeBlock} key={i}>
-            <div id={styles.heading}>
-              <label htmlFor="describe-label" className={styles.describeLabel}>
-                Describe Block
-              </label>
+            <label htmlFor="describe-label" className={styles.describeLabel}>
+              Describe Block
+            </label>
 
-              < StandardTagFilter
-                dispatch={dispatcher}
-                tagAction={updateDescribeStandardTag}
-                textAction={updateDescribeText}
-                describeId={id}
-                catTag={describeBlocks.byId[id].catTag}
-              />
-            </div>
+            < StandardTagFilter
+              dispatch={dispatcher}
+              tagAction={updateDescribeStandardTag}
+              textAction={updateDescribeText}
+              describeId={id}
+              catTag={describeBlocks.byId[id].catTag}
+            />
 
             <i
               onClick={deleteDescribeBlockHandleClick}
