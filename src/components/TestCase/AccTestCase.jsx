@@ -9,6 +9,7 @@ import {
   updateItStatementOrder,
   updateFilePath,
   updateTestType,
+  createPuppeteerUrl,
 } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
@@ -20,6 +21,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './TestCase.module.scss';
 import AccTestMenu from '../TestMenu/AccTestMenu';
 import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
+import PuppeteerUrl from '../AccTestComponent/PuppeteerUrl/PuppeteerUrl';
 import SearchInput from '../SearchInput/SearchInput';
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 
@@ -78,19 +80,22 @@ const AccTestCase = () => {
 
         {testType === 'puppeteer'
           ? (
-            <label>URL to be tested:</label>
-            <input>
-            </input>
-          )
-          : (
-            <label htmlFor="fileImport">Import File From</label>
-            <div id={styles.labelInput} style={{ width: '80%' }}>
-              <SearchInput
-                options={Object.keys(filePathMap)}
+              <PuppeteerUrl
                 dispatch={dispatchToAccTestCase}
-                action={updateFilePath}
-                filePathMap={filePathMap}
+                action={createPuppeteerUrl}
               />
+            )
+          : (
+            <div>
+              <label htmlFor="fileImport">Import File From</label>
+              <div id={styles.labelInput} style={{ width: '80%' }}>
+                <SearchInput
+                  options={Object.keys(filePathMap)}
+                  dispatch={dispatchToAccTestCase}
+                  action={updateFilePath}
+                  filePathMap={filePathMap}
+                />
+              </div>
             </div>
           )}
 
