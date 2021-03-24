@@ -107,6 +107,11 @@ const About = ({ dispatch: dispatchToGlobal }: { dispatch: (action: Action) => v
         <h2>Team</h2>
         <blockquote>
           <p>
+            Alfred <a href='https://github.com/astaiglesia'>@staiglesia</a>  ·  Annie{' '}
+            <a href='https://github.com/annieshinn'>@annieshinn</a>  ·  Gabriel{' '}
+            <a href='https://github.com/bielchristo'>@bielchristo</a>  ·  Sharon{' '}
+            <a href='https://github.com/sharon-zhu'>@sharon-zhu</a>  ·  Tolan{' '}
+            <a href='https://github.com/taoantaoan'>@taoantaoan</a> <br></br>
             Ben <a href='https://github.com/bkwak'>@bkwak</a>  ·  Evan{' '}
             <a href='https://github.com/Berghoer'>@Berghoer</a>  ·  Nicolas{' '}
             <a href='https://github.com/nicolaspita'>@nicolaspita</a>  ·  Luis{' '}
