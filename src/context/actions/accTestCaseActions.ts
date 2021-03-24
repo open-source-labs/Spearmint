@@ -28,12 +28,10 @@ export const addDescribeBlock = () => ({
   type: actionTypes.ADD_DESCRIBE_BLOCK,
 });
 
-export const deleteDescribeBlock = (describeId: string) => {
-  return {
-    type: actionTypes.DELETE_DESCRIBE_BLOCK,
-    describeId,
-  };
-};
+export const deleteDescribeBlock = (describeId: string) => ({
+  type: actionTypes.DELETE_DESCRIBE_BLOCK,
+  describeId,
+});
 
 export const updateDescribeText = (text: string, describeId: string) => ({
   type: actionTypes.UPDATE_DESCRIBE_TEXT,
@@ -41,12 +39,10 @@ export const updateDescribeText = (text: string, describeId: string) => ({
   describeId,
 });
 
-export const updateDescribeOrder = (reorderedDescribe: Array<string>) => {
-  return {
-    type: actionTypes.UPDATE_DESCRIBE_ORDER,
-    reorderedDescribe,
-  };
-};
+export const updateDescribeOrder = (reorderedDescribe: Array<string>) => ({
+  type: actionTypes.UPDATE_DESCRIBE_ORDER,
+  reorderedDescribe,
+});
 
 export const addItStatement = (describeId: string) => ({
   type: actionTypes.ADD_ITSTATEMENT,
@@ -65,13 +61,11 @@ export const updateItStatementText = (text: string, itId: string) => ({
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt: Array<string>, describeId: string) => {
-  return {
-    type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
-    reorderedIt,
-    describeId,
-  };
-};
+export const updateItStatementOrder = (reorderedIt: Array<string>, describeId: string) => ({
+  type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
+  reorderedIt,
+  describeId,
+});
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
