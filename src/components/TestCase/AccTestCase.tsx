@@ -1,31 +1,30 @@
 import React, { useContext, ChangeEvent } from 'react';
 import cn from 'classnames';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
-  updateFilePath,
-  updateTestType,
-  createPuppeteerUrl,
 } from '../../context/actions/accTestCaseActions';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import SearchInput from '../SearchInput/SearchInput';
+
+import AccTestMenu from '../TestMenu/AccTestMenu';
+
+import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
+import { updateImportFilePath } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
 } from '../../context/reducers/accTestCaseReducer';
-import { GlobalContext } from '../../context/reducers/globalReducer';
-
-import styles from './TestCase.module.scss';
-import AccTestMenu from '../TestMenu/AccTestMenu';
-import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
-import PuppeteerUrl from '../AccTestComponent/PuppeteerUrl/PuppeteerUrl';
-import SearchInput from '../SearchInput/SearchInput';
-import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 
 const AccTestCase = () => {
-  const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
+  const [accTestCase, dispatchToAccTestCase] = useContext(
+    AccTestCaseContext,
+  );
 
-  const { describeBlocks, itStatements, testType } = accTestCase;
+  const { describeBlocks, itStatements } = accTestCase;
 
   const [{ filePathMap }] = useContext<any>(GlobalContext);
 
@@ -63,33 +62,20 @@ const AccTestCase = () => {
 
   return (
     <div id={styles.AccTestCase}>
+
       <div id="head">
         <AccTestMenu />
       </div>
 
       <section id={styles.testCaseHeader}>
-        <div id={styles.accTestDiv}>
-          <AccTestTypes
+        <label htmlFor="fileImport">Import File From</label>
+        <div id={styles.labelInput} style={{ width: '80%' }}>
+          <SearchInput
+            options={Object.keys(filePathMap)}
             dispatch={dispatchToAccTestCase}
-            action={updateTestType}
-            currType={testType}
+            action={updateImportFilePath}
+            filePathMap={filePathMap}
           />
-
-          {testType === 'puppeteer' ? (
-            <PuppeteerUrl dispatch={dispatchToAccTestCase} action={createPuppeteerUrl} />
-          ) : (
-            <div>
-              <label htmlFor="fileImport">Import File From</label>
-                <div id={styles.labelInput} style={{ width: '80%' }}>
-                  <SearchInput
-                    options={Object.keys(filePathMap)}
-                    dispatch={dispatchToAccTestCase}
-                    action={updateFilePath}
-                    filePathMap={filePathMap}
-                  />
-                </div>
-              </div>
-            )}
         </div>
 
         <DragDropContext onDragEnd={onDragEnd}>
@@ -116,6 +102,7 @@ const AccTestCase = () => {
           </Droppable>
         </DragDropContext>
       </section>
+
     </div>
   );
 };
