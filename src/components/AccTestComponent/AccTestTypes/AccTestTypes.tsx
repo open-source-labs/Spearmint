@@ -11,7 +11,7 @@ const AccTestTypes = ({ dispatch, action, currTypes }) => {
       <label id={styles.AccTestTypesLabel} for='accTestTypes'>
         Choose Type of Accessibility Test
       </label>
-      <select value={currTypes} id='accTestTypes' onChange={handleChange}>
+      <select value={currTypes} id='accTestTypes' className={styles.AccTestTypesInput} onChange={handleChange}>
         <option value='html'>HTML</option>
         <option value='react'>React</option>
         <option value='puppeteer'>Puppeteer</option>
