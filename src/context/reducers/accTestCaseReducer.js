@@ -15,6 +15,7 @@ export const accTestCaseState = {
       describe0: {
         id: 'describe0',
         text: '',
+        catTag: '',
       },
     },
     allIds: ['describe0'],
@@ -144,6 +145,23 @@ export const accTestCaseReducer = (state, action) => {
         describeBlocks: {
           ...describeBlocks,
           allIds: reorderedDescribe,
+        },
+      };
+    }
+    case actionTypes.UPDATE_DESCRIBE_CAT_TAG: {
+      const { describeId, catTag } = action;
+
+      return {
+        ...state,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...describeBlocks.byId,
+            [describeId]: {
+              ...describeBlocks.byId[describeId],
+              catTag,
+            },
+          },
         },
       };
     }

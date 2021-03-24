@@ -7,6 +7,7 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
+  updateDescribeCatTag,
 } from '../../context/actions/accTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -96,6 +97,7 @@ const AccTestCase = () => {
                   itStatements={itStatements}
                   handleChangeDescribeText={handleChangeDescribeText}
                   handleChangeItStatementText={handleChangeItStatementText}
+                  updateDescribeCatTag={updateDescribeCatTag}
                   type="acc"
                 />
                 {provided.placeholder}

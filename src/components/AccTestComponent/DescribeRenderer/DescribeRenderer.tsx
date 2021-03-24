@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
+import CatTagFilter from '../CatTagFilter/CatTagFilter';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
 
@@ -11,6 +12,7 @@ const DescribeRenderer = ({
   itStatements,
   handleChangeDescribeText,
   handleChangeItStatementText,
+  updateDescribeCatTag,
   type,
 }) => {
   const testDescription = useRef(null);
@@ -66,6 +68,13 @@ const DescribeRenderer = ({
             />
 
             <div className={styles.separator} />
+
+            < CatTagFilter
+              dispatch={dispatcher}
+              action={updateDescribeCatTag}
+              describeId={id}
+              catTag={describeBlocks.byId[id].catTag}
+            />
 
             <Droppable
               droppableId={"droppableAccIt" + id}
