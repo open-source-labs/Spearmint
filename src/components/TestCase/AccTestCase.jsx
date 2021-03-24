@@ -66,7 +66,6 @@ const AccTestCase = () => {
 
   return (
     <div id={styles.AccTestCase}>
-
       <div id="head">
         <AccTestMenu />
       </div>
@@ -118,7 +117,6 @@ const AccTestCase = () => {
           </Droppable>
         </DragDropContext>
       </section>
-
     </div>
   );
 };

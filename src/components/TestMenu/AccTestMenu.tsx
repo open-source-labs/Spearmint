@@ -15,7 +15,6 @@ import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
 import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
 
-
 const AccTestMenu = () => {
   // link to accessibility testing docs url
   const accUrl = 'https://www.deque.com/axe/core-documentation/api-documentation/'; 
@@ -84,8 +83,7 @@ const AccTestMenu = () => {
           </button>
         </div>
       </div>
-    </div>
-    
+    </div> 
   );
 }
 
