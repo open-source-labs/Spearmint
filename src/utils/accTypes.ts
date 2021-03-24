@@ -9,6 +9,8 @@ export interface AccTestCaseState {
   itStatements: ItStatements;
   fileName: string;
   filePath: string;
+  testType: string;
+  puppeteerUrl: string;
 }
 export interface DescribeBlocks {
   byId: Object; 
