@@ -47,15 +47,16 @@ const DescribeRenderer = ({
             <label htmlFor="describe-label" className={styles.describeLabel}>
               Describe Block
             </label>
-
+            
             <i
               onClick={deleteDescribeBlockHandleClick}
               id={id}
               className={cn('far fa-window-close', styles.describeClose)}
             />
 
+
             <input
-              // ref={testDescription}
+              
               id={id}
               className={styles.describeInput}
               name="describe-label"
