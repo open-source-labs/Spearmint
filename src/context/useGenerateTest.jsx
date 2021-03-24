@@ -930,6 +930,11 @@ function useGenerateTest(test, projectFilePath) {
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
           it('${itStatements.byId[itId].text}', (done) => {`
+
+        if(itStatements.byId[itId].catTag !== '') {
+          testFileCode += `  
+            options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`
+        }
         
         if (accTestCase.testType === 'react') {
           testFileCode += `
