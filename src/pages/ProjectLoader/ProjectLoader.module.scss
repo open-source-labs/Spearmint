@@ -4,10 +4,11 @@
 #upperPart {
   width: 100%;
   height: 50vh;
-  background-color: #02c2c3;
+  background-color: #038181;
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
 }
 
 #title {
@@ -16,7 +17,17 @@
   vertical-align: bottom;
   font-family: 'comfortaa';
   color: #fff;
-  margin-bottom: 30px;
+  padding-top: 30px;
+  margin-top: 30px;
+  flex: 1;
+}
+
+#purpose {
+  font-size: 1rem;
+  text-align: center;
+  font-family: 'comfortaa';
+  color: #fff;
+  flex: 1;
 }
 
 #leaf {
@@ -94,8 +105,6 @@
 #helpBtn {
   color: white;
   background-color: $mint;
-  // margin-right: 4px;
-  // margin-bottom: 4px;
   margin: 15px 4px 4px 4px;
   height: 40px;
   width: 110px;
