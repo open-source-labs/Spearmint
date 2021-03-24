@@ -34,8 +34,6 @@ export const accTestCaseState: AccTestCaseState = {
   },
   fileName: '',
   filePath: '',
-  testType: 'html',
-  puppeteerUrl: 'sample.io',
 };
 
 /* ---------------------------- Helper Functions ---------------------------- */
@@ -244,20 +242,6 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
         ...state,
         fileName,
         filePath,
-      };
-    }
-    case actionTypes.UPDATE_TEST_TYPE: {
-      const { testType } = action;
-      return {
-        ...state,
-        testType,
-      };
-    }
-    case actionTypes.CREATE_PUPPETEER_URL: {
-      const { puppeteerUrl } = action;
-      return {
-        ...state,
-        puppeteerUrl,
       };
     }
     default:
