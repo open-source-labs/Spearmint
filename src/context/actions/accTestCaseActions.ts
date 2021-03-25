@@ -20,8 +20,6 @@ export const actionTypes = {
   UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
   UPDATE_TEST_TYPE: 'UPDATE_TEST_TYPE',
   CREATE_PUPPETEER_URL: 'CREATE_PUPPETEER_URL',
-
-  TOGGLE_ACC: 'TOGGLE_ACC',
 };
 
 /* --------------------------------- Actions -------------------------------- */
