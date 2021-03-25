@@ -893,11 +893,17 @@ function useGenerateTest(test, projectFilePath) {
             rules: {
               'color-contrast': { enabled: false },
               'link-in-text-block': { enabled: false },
+            },`
+        
+      if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
+        testFileCode += `
               runOnly: {
                 type: 'tag',
                 value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
-            }
-            },
+            }`
+          }
+            
+      testFileCode += `
           };
         `;
       
@@ -930,7 +936,7 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `
           it('${itStatements.byId[itId].text}', (done) => {`
 
-        if(itStatements.byId[itId].catTag !== '') {
+        if(itStatements.byId[itId].catTag !== 'none') {
           testFileCode += `  
             options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`
         }

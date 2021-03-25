@@ -16,7 +16,7 @@ export const accTestCaseState: AccTestCaseState = {
       describe0: {
         id: 'describe0',
         text: 'Component is accessible according to all standards enforced by axe-core.',
-        standardTag: '',
+        standardTag: 'none',
       },
     },
     allIds: ['describe0'],
@@ -27,7 +27,7 @@ export const accTestCaseState: AccTestCaseState = {
         id: 'it0',
         describeId: 'describe0',
         text: 'Component is accessible regarding all axe-core categories.',
-        catTag: '',
+        catTag: 'none',
       },
     },
     allIds: {
