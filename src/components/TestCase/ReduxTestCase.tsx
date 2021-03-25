@@ -20,11 +20,7 @@ const ReduxTestCase = () => {
     ReduxTestCaseContext
   );
 
-  const testDescription: Ref = useRef(null);
 
-  useEffect(() => {
-    testDescription.current.focus();
-  }, []);
 
   const handleUpdateReduxTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));
@@ -61,8 +57,7 @@ const ReduxTestCase = () => {
         <section id={styles.testCaseHeader}>
           <label htmlFor='test-statement'>Describe Block</label>
           <input
-            ref={testDescription}
-            // name='test-statement'
+
             type='text'
             id={styles.testStatement}
             value={reduxTestStatement}

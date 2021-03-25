@@ -1,9 +1,9 @@
-import styles from '../../components/Modals/ExportFileModal.module.scss';
+/* eslint-disable linebreak-style */
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
+import styles from '../../components/Modals/ExportFileModal.module.scss';
 
-//may be able to delete toggleReact, etc. from their respective action files
-
+// may be able to delete toggleReact, etc. from their respective action files
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
 
 import {
@@ -40,6 +40,13 @@ import {
   mockDataReducer,
 } from '../../context/reducers/mockDataReducer';
 
+import {
+  AccTestCaseContext,
+  accTestCaseState,
+  accTestCaseReducer,
+} from '../../context/reducers/accTestCaseReducer';
+import AccTestCase from '../../components/TestCase/AccTestCase';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
 
@@ -63,6 +70,10 @@ const TestFile = () => {
   const [puppeteerTestCase, dispatchToPuppeteerTestCase] = useReducer(
     puppeteerTestCaseReducer,
     puppeteerTestCaseState
+  );
+  const [accTestCase, dispatchToAccTestCase] = useReducer(
+    accTestCaseReducer,
+    accTestCaseState
   );
 
   const closeTestModal = () => {
@@ -99,25 +110,28 @@ const TestFile = () => {
         <div id={styles.body}>
           <p id={styles.text}>What would you like to test?</p>
           <span id={styles.newTestButtons}>
+            <button id={styles.save} autoFocus onClick={() => handleToggle('acc')}>
+              Accessibility
+            </button>
+            <button id={styles.save} onClick={() => handleToggle('endpoint')}>
+              Endpoint
+            </button>
+            <button id={styles.save} onClick={() => handleToggle('hooks')}>
+              Hooks
+            </button>
+            <button id={styles.save} onClick={() => handleToggle('puppeteer')}>
+              Puppeteer
+            </button>
             <button id={styles.save} onClick={() => handleToggle('react')}>
               React
             </button>
             <button id={styles.save} onClick={() => handleToggle('redux')}>
               Redux
             </button>
-            <button id={styles.save} onClick={() => handleToggle('hooks')}>
-              Hooks
-            </button>
-            <button id={styles.save} onClick={() => handleToggle('endpoint')}>
-              Endpoint
-            </button>
-            <button id={styles.save} onClick={() => handleToggle('puppeteer')}>
-              Puppeteer
-            </button>
           </span>
         </div>
       </ReactModal>
-
+      {/* instantiate context for each test option */}
       {testCase === 'redux' && (
         <section>
           <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
@@ -157,6 +171,16 @@ const TestFile = () => {
           >
             <PuppeteerTestCase />
           </PuppeteerTestCaseContext.Provider>
+        </section>
+      )}
+
+      {testCase === 'acc' && (
+        <section>
+          <AccTestCaseContext.Provider
+            value={[accTestCase, dispatchToAccTestCase]}
+          >
+            <AccTestCase />
+          </AccTestCaseContext.Provider>
         </section>
       )}
 

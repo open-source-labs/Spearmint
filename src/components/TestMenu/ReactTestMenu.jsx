@@ -50,7 +50,7 @@ const ReactTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openModal}>New Test +</button>
+          <button onClick={openModal} autoFocus >New Test +</button>
           <button onClick={fileHandle}>Preview</button>
           <button id={styles.example} onClick={openScriptModal}>
             Run Test

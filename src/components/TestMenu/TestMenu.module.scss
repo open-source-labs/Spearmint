@@ -22,12 +22,15 @@
     border: 0.5px $light-gray solid;
   }
 
+  
+ 
   button:hover {
     background-color: white;
     color: $mint;
     border-radius: 5px;
   }
 }
+
 
 #left {
   float: left;

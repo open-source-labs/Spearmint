@@ -37,9 +37,10 @@ export const globalReducer = (state, action) => {
         projectUrl: url,
       };
     case actionTypes.LOAD_PROJECT:
+      const isProjectLoaded = action.load;
       return {
         ...state,
-        isProjectLoaded: action.load,
+        isProjectLoaded,
       };
     case actionTypes.CREATE_FILE_TREE:
       const fileTree = action.fileTree;
@@ -49,10 +50,9 @@ export const globalReducer = (state, action) => {
       };
 
     case actionTypes.TOGGLE_FILE_DIRECTORY:
-      const isFileDirectoryOpen = !state.isFileDirectoryOpen;
       return {
         ...state,
-        isFileDirectoryOpen,
+        isFileDirectoryOpen: !state.isFileDirectoryOpen,
       };
     case actionTypes.CLOSE_RIGHT_PANEL:
       const projUrl = state.projectUrl;
@@ -111,11 +111,11 @@ export const globalReducer = (state, action) => {
         isTestModalOpen: !state.isTestModalOpen,
       };
     //
-    case actionTypes.UPDATE_FILE_SHOW:
-      const updatedFile = action.testString;
+    case actionTypes.UPDATE_FILE:
+      const file = action.testString;
       return {
         ...state,
-        file: updatedFile,
+        file,
       };
     case actionTypes.OPEN_BROWSER_DOCS:
       const docsUrl = action.docsUrl;
@@ -125,18 +125,18 @@ export const globalReducer = (state, action) => {
         isRightPanelOpen: true,
         rightPanelDisplay: 'browserView',
       };
-    case actionTypes.NEW_TEST_CLOSE_BROWSER_DOCS:
+    case actionTypes.RESET_TO_PROJECT_URL:
+      // formerly NEW_TEST_CLOSE_BROWSER_DOCS
       const urlReset = state.projectUrl;
       return {
         ...state,
         url: urlReset,
         projectUrl: urlReset,
       };
-    case actionTypes.EXPORT:
-      let exportBool = !state.exportBool;
+    case actionTypes.TOGGLE_EXPORT_BOOL:
       return {
         ...state,
-        exportBool,
+        exportBool: !state.exportBool,
       };
     case actionTypes.SET_FILE_PATH:
       const filePath = action.filePath;
@@ -145,9 +145,10 @@ export const globalReducer = (state, action) => {
         filePath,
       };
     case actionTypes.SET_VALID_CODE:
+      const validCode = action.validCode;
       return {
         ...state,
-        validCode: action.validCode,
+        validCode,
       };
     default:
       return state;
