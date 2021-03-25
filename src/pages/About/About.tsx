@@ -22,7 +22,7 @@ const About = ({ dispatch: dispatchToGlobal }: { dispatch: (action: Action) => v
           />
         </p>
         <p>
-          Spearmint helps developers easily create functional React/Redux/Endpoint/Paint Timing
+          Spearmint helps developers easily create functional React/Redux/Endpoint/Paint Timing/Accessibility
           tests without writing any code. It dynamically converts user inputs into executable Jest
           test code by using DOM query selectors provided by @testing-library.
         </p>
