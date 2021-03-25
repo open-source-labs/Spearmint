@@ -5,11 +5,13 @@ export const actionTypes = {
   DELETE_DESCRIBE_BLOCK: 'DELETE_DESCRIBE_BLOCK',
   UPDATE_DESCRIBE_TEXT: 'UPDATE_DESCRIBE_TEXT',
   UPDATE_DESCRIBE_ORDER: 'UPDATE_DESCRIBE_ORDER',
+  UPDATE_DESCRIBE_STANDARD_TAG: 'UPDATE_DESCRIBE_STANDARD_TAG',
 
   ADD_ITSTATEMENT: 'ADD_ITSTATEMENT',
   DELETE_ITSTATEMENT: 'DELETE_ITSTATEMENT',
   UPDATE_ITSTATEMENT_TEXT: 'UPDATE_ITSTATEMENT_TEXT',
   UPDATE_ITSTATEMENT_ORDER: 'UPDATE_ITSTATEMENT_ORDER',
+  UPDATE_IT_CAT_TAG: 'UPDATE_IT_CAT_TAG',
 
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
@@ -44,6 +46,12 @@ export const updateDescribeOrder = (reorderedDescribe: Array<string>) => ({
   reorderedDescribe,
 });
 
+export const updateDescribeStandardTag = (describeId: string, standardTag: string) => ({
+  type: actionTypes.UPDATE_DESCRIBE_STANDARD_TAG,
+  describeId,
+  standardTag,
+});
+
 export const addItStatement = (describeId: string) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
@@ -65,6 +73,12 @@ export const updateItStatementOrder = (reorderedIt: Array<string>, describeId: s
   type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
   reorderedIt,
   describeId,
+});
+
+export const updateItCatTag = (itId: string, catTag: string) => ({
+  type: actionTypes.UPDATE_IT_CAT_TAG,
+  itId,
+  catTag,
 });
 
 export const createNewTest = () => ({

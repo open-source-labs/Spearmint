@@ -822,9 +822,9 @@ function useGenerateTest(test, projectFilePath) {
         describe('${describeBlocks.byId[id].text}', () => {`;
         addAccPrint();
         if (accTestCase.testType === 'react') addMount();
-        addAccBeforeAll();
+        addAccBeforeAll(id);
         addAccItStatements(id);
-        testFileCode += `}); \n`;
+        testFileCode += `}); \n \n`;
       });
     };
 
@@ -875,7 +875,7 @@ function useGenerateTest(test, projectFilePath) {
       `;
     }
 
-    const addAccBeforeAll = () => {
+    const addAccBeforeAll = (descId) => {
       const { fileName } = accTestCase;
       testFileCode += `
         let options;`;
@@ -892,8 +892,18 @@ function useGenerateTest(test, projectFilePath) {
           options = {
             rules: {
               'color-contrast': { enabled: false },
-              'link-in-text-block': { enabled: false }
-            },
+              'link-in-text-block': { enabled: false },
+            },`
+        
+      if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
+        testFileCode += `
+              runOnly: {
+                type: 'tag',
+                value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
+            }`
+          }
+            
+      testFileCode += `
           };
         `;
       
@@ -925,13 +935,18 @@ function useGenerateTest(test, projectFilePath) {
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
           it('${itStatements.byId[itId].text}', (done) => {`
+
+        if(itStatements.byId[itId].catTag !== 'none') {
+          testFileCode += `  
+            options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`
+        }
         
         if (accTestCase.testType === 'react') {
           testFileCode += `
-            axe.run(linkNode, options, async (err, { violations }) => {`
+            axe.run(linkNode, options, async (err, results) => {`
         } else {
           testFileCode += `
-            axe.run(options, async (err, { violations }) => {`
+            axe.run(options, async (err, results) => {`
         }
 
         testFileCode += `
@@ -940,10 +955,10 @@ function useGenerateTest(test, projectFilePath) {
               done();
             }
 
-            print(violations);      
+            print(results.violations);      
       
             expect(err).toBe(null);
-            expect(violations).toHaveLength(0);
+            expect(results.violations).toHaveLength(0);
             done();
           });
         })
