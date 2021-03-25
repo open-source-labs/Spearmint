@@ -1,0 +1,15 @@
+{
+  "extends": ["airbnb-typescript"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "arrow-body-style": "off",
+    "no-plusplus": "off",
+    "no-param-reassign": "off"
+  },
+  "env": {
+    "jest": true,
+    "browser": true
+  }
+}

@@ -1,0 +1,12 @@
+#rightPanel {
+  display: flex;
+  flex-direction: column;
+  grid-area: rightPanel;
+  grid-column-start: 3;
+  padding: 8px 7px 5px 5px;
+}
+#close {
+  align-self: flex-end;
+  margin-right: .5rem;
+  cursor: pointer;
+}

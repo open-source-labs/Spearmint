@@ -1,11 +1,11 @@
 language: node_js
 node_js:
-  - 'node'
+  - node
 cache:
   directories:
     - node_modules
-script:
-  - npm run build
-deplloy:
+script: 
+  - npm test
+deploy:
   skip_cleanup: true
   on: master

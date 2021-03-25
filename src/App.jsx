@@ -1,59 +1,23 @@
 import React, { useReducer } from 'react';
 import styles from './App.module.scss';
-import { GlobalContext, globalState, globalReducer } from './context/globalReducer';
-import { TestCaseContext, testCaseState, testCaseReducer } from './context/testCaseReducer';
-import {
-  EndpointTestCaseContext,
-  endpointTestCaseState,
-  endpointTestCaseReducer,
-} from './context/endpointTestCaseReducer';
-import {
-  ReduxTestCaseContext,
-  reduxTestCaseState,
-  reduxTestCaseReducer,
-} from './context/reduxTestCaseReducer';
-import {
-  HooksTestCaseContext,
-  hooksTestCaseState,
-  hooksTestCaseReducer,
-} from './context/hooksTestCaseReducer';
-import {
-  TestFileModalContext,
-  testFileModalState,
-  testFileModalReducer,
-} from './context/testFileModalReducer';
-
-import { MockDataContext, mockDataState, mockDataReducer } from './context/mockDataReducer';
-import ProjectLoader from './containers/ProjectLoader/ProjectLoader';
-import NavBar from './containers/NavBar/NavBar';
-import LeftPanel from './containers//LeftPanel/LeftPanel';
-import RightPanel from './containers/RightPanel/RightPanel';
+import { GlobalContext, globalState, globalReducer } from './context/reducers/globalReducer';
+import ProjectLoader from './pages/ProjectLoader/ProjectLoader';
+import NavBar from './components/NavBar/NavBar';
+import LeftPanel from './pages//LeftPanel/LeftPanel';
+import RightPanel from './pages/RightPanel/RightPanel';
+import About from './pages/About/About';
 
 const App = () => {
-  const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
-  const [testCase, dispatchToTestCase] = useReducer(testCaseReducer, testCaseState);
-  const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
-  const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
-    endpointTestCaseReducer,
-    endpointTestCaseState
-  );
+  // useReducer takes a reducer and initial state as
+  // args and return the current state paired with a dispatch method
+  // distpatchTo method invokes associated reducer function
 
-  const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
-    reduxTestCaseReducer,
-    reduxTestCaseState
-  );
-  const [hooksTestCase, dispatchToHooksTestCase] = useReducer(
-    hooksTestCaseReducer,
-    hooksTestCaseState
-  );
-  const [testFileModal, dispatchToTestFileModal] = useReducer(
-    testFileModalReducer,
-    testFileModalState
-  );
+  const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   if (!global.isProjectLoaded) {
     return (
       <div>
+        {/* pass global state and dispatch function as prop to context provider for child components */}
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <ProjectLoader />
         </GlobalContext.Provider>
@@ -62,7 +26,7 @@ const App = () => {
   } else {
     return (
       /**
-       * Wrap the components that we want to share the unique states with (ex: share testCase state with navbar & left panel (the two containers that hold the components that need testCaseRducer)) in the unique providers (ex: TestCaseContext.Provider).
+       * Wrap the components that we want to share the unique states with.
        * You can only provide one value to a Provider.
        *  - In order to avoid creating separate Contexts, wrap multiples in an array (ex: testCase and dispatchToTestCase).
        *
@@ -73,25 +37,32 @@ const App = () => {
        *
        * We access the value that we gave to the Provider through useContext
        */
-      <div id={global.isFileDirectoryOpen ? styles.appGridOpen : styles.appGridClose}>
+      <div
+        id={
+          global.isProjectLoaded === 'about'
+            ? ''
+            : global.isFileDirectoryOpen
+            ? global.isRightPanelOpen
+              ? styles.fileDirectoryOpenRightPanelOpen
+              : styles.fileDirectoryOpenRightPanelClosed
+            : global.isRightPanelOpen
+            ? styles.fileDirectoryClosedRightPanelOpen
+            : styles.fileDirectoryClosedRightPanelClosed
+        }
+      >
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          <TestCaseContext.Provider value={[testCase, dispatchToTestCase]}>
-            <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-              <EndpointTestCaseContext.Provider
-                value={[endpointTestCase, dispatchToEndpointTestCase]}
-              >
-                <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
-                  <TestFileModalContext.Provider value={[testFileModal, dispatchToTestFileModal]}>
-                    <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-                      <NavBar />
-                      <LeftPanel />
-                    </MockDataContext.Provider>
-                  </TestFileModalContext.Provider>
-                </HooksTestCaseContext.Provider>
-              </EndpointTestCaseContext.Provider>
-            </ReduxTestCaseContext.Provider>
-          </TestCaseContext.Provider>
-          <RightPanel />
+          {global.isProjectLoaded === 'about' ? (
+            <>
+              <NavBar inAboutPage={true} />
+              <About dispatch={dispatchToGlobal} />{' '}
+            </>
+          ) : (
+            <>
+              <NavBar inAboutPage={false} />
+              <LeftPanel />
+            </>
+          )}
+          {global.isRightPanelOpen ? <RightPanel /> : ''}
         </GlobalContext.Provider>
       </div>
     );
