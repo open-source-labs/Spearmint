@@ -11,11 +11,12 @@ export const accTestCaseState: AccTestCaseState = {
   itId: 1,
   statementId: 1,
   propId: 1,
-  describeBlocks:  {
-    byId:  {
+  describeBlocks: {
+    byId: {
       describe0: {
         id: 'describe0',
-        text: '',
+        text: 'Component is accessible according to all standards enforced by axe-core.',
+        standardTag: 'none',
       },
     },
     allIds: ['describe0'],
@@ -25,7 +26,8 @@ export const accTestCaseState: AccTestCaseState = {
       it0: {
         id: 'it0',
         describeId: 'describe0',
-        text: '',
+        text: 'Component is accessible regarding all axe-core categories.',
+        catTag: 'none',
       },
     },
     allIds: {
@@ -43,14 +45,16 @@ export const accTestCaseState: AccTestCaseState = {
 const createDescribeBlock = (describeId: string) => {
   return {
     id: describeId,
-    text: '',
+    text: 'Component is accessible according to all standards enforced by axe-core.',
+    standardTag: 'none',
   };
 };
 
-const createItStatement = (describeId: string , itId: string) => ({
+const createItStatement = (describeId: string, itId: string) => ({
   id: itId,
   describeId,
-  text: '',
+  text: 'Component is accessible regarding all axe-core categories.',
+  catTag: 'none',
 });
 
 /* ------------------------- Accessibility Test Case Reducer ------------------------ */
@@ -150,6 +154,23 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
         },
       };
     }
+    case actionTypes.UPDATE_DESCRIBE_STANDARD_TAG: {
+      const { describeId, standardTag } = action;
+
+      return {
+        ...state,
+        describeBlocks: {
+          ...describeBlocks,
+          byId: {
+            ...describeBlocks.byId,
+            [describeId]: {
+              ...describeBlocks.byId[describeId],
+              standardTag,
+            },
+          },
+        },
+      };
+    }
     case actionTypes.ADD_ITSTATEMENT: {
       const { describeId } = action;
       const itId = `it${state.itId}`;
@@ -219,6 +240,23 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
           allIds: {
             ...itStatements.allIds,
             [describeId]: reorderedIt,
+          },
+        },
+      };
+    }
+    case actionTypes.UPDATE_IT_CAT_TAG: {
+      const { itId, catTag } = action;
+
+      return {
+        ...state,
+        itStatements: {
+          ...itStatements,
+          byId: {
+            ...itStatements.byId,
+            [itId]: {
+              ...itStatements.byId[itId],
+              catTag,
+            },
           },
         },
       };

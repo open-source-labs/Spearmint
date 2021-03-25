@@ -1,11 +1,14 @@
-import React, { useContext, ChangeEvent } from 'react';
+import React, { useContext } from 'react';
 import cn from 'classnames';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+
 import {
   updateDescribeText,
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
+  updateDescribeStandardTag,
+  updateItCatTag,
   updateFilePath,
   updateTestType,
   createPuppeteerUrl,
@@ -28,18 +31,6 @@ const AccTestCase = () => {
   const { describeBlocks, itStatements, testType } = accTestCase;
 
   const [{ filePathMap }] = useContext<any>(GlobalContext);
-
-  const handleChangeDescribeText = (e: ChangeEvent<HTMLInputElement>) => {
-    const text = e.target.value;
-    const describeId = e.target.id;
-    dispatchToAccTestCase(updateDescribeText(text, describeId));
-  };
-
-  const handleChangeItStatementText = (e: ChangeEvent<HTMLInputElement>) => {
-    const text = e.target.value;
-    const itId = e.target.id;
-    dispatchToAccTestCase(updateItStatementText(text, itId));
-  };
 
   const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
@@ -106,8 +97,10 @@ const AccTestCase = () => {
                   dispatcher={dispatchToAccTestCase}
                   describeBlocks={describeBlocks}
                   itStatements={itStatements}
-                  handleChangeDescribeText={handleChangeDescribeText}
-                  handleChangeItStatementText={handleChangeItStatementText}
+                  updateDescribeText={updateDescribeText}
+                  updateItStatementText={updateItStatementText}
+                  updateDescribeStandardTag={updateDescribeStandardTag}
+                  updateItCatTag={updateItCatTag}
                   type="acc"
                 />
                 {provided.placeholder}

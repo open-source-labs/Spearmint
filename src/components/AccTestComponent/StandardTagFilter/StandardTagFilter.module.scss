@@ -1,0 +1,14 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+
+#StandardTagFilter {
+  font-weight: bold;
+  font-size: 0.8rem;
+  position: relative;
+  margin-top: 10px;
+  z-index: 3;
+
+  #accTestStandardTypes:focus {
+    border: 2px solid darkblue;
+  }
+}

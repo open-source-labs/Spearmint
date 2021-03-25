@@ -1,4 +1,3 @@
-
 export interface AccTestCaseState {
   modalOpen: boolean;
   describeId: number;
@@ -13,23 +12,13 @@ export interface AccTestCaseState {
   puppeteerUrl: string;
 }
 export interface DescribeBlocks {
-  byId: Object; 
+  byId: Object;
   allIds: Array<string>;
 }
 export interface ItStatements {
   byId: Object;
   allIds: Object;
 }
-export interface CustomInput {
-  id: number;
-  type: string;
-  name: string;
-  placeholder: string;
-  defaultValue: string;
-  label: string;
-  bold: boolean;
-}
-
 export interface Action {
   type: string;
   id?: string;
@@ -43,10 +32,6 @@ export interface Action {
   fileName?: string;
   filePath?: string;
   describeBlocks: any[];
-
+  standardTag: string;
+  catTag: string;
 }
-
-
-
-
-

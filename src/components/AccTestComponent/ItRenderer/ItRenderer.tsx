@@ -2,19 +2,19 @@ import React, { ChangeEvent, useContext } from 'react';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
+import CatTagFilter from '../CatTagFilter/CatTagFilter';
 
 import {
   deleteItStatement,
 } from '../../../context/actions/accTestCaseActions';
-
-import CustomInput from '../CustomInput/CustomInput';
 
 import styles from './ItRenderer.module.scss';
 
 const ItRenderer = ({
   itStatements,
   describeId,
-  handleChangeItStatementText,
+  updateItStatementText,
+  updateItCatTag,
 }) => {
 
   const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
@@ -45,6 +45,14 @@ const ItRenderer = ({
           key={i}
         >
 
+          <CatTagFilter
+            dispatch={dispatchToAccTestCase}
+            tagAction={updateItCatTag}
+            textAction={updateItStatementText}
+            itId={id}
+            catTag={itStatements.byId[id].catTag}
+          />
+
           <i
             tabIndex={0}
             onKeyPress={deleteItStatementOnKeyUp}
@@ -53,14 +61,7 @@ const ItRenderer = ({
             className={cn(styles.itClose, 'far fa-window-close')}
           />
 
-          <CustomInput
-            key={`input-${id}-${i}`}
-            id={id}
-            label={'The element should...'}
-            placeholder={'The tested element should...'}
-            value={itStatements.byId[id].text}
-            handleChange={handleChangeItStatementText}
-          />
+          <p class={styles.itStatement}>{itStatements.byId[id].text}</p>
           <hr />
 
         </div>

@@ -1,21 +1,21 @@
-import React, { useRef, useEffect, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
+import StandardTagFilter from '../StandardTagFilter/StandardTagFilter';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
-import { AccTestCaseState } from '../../../utils/accTypes';
 
 const DescribeRenderer = ({
   dispatcher,
   describeBlocks,
   itStatements,
-  handleChangeDescribeText,
-  handleChangeItStatementText,
+  updateDescribeText,
+  updateItStatementText,
+  updateDescribeStandardTag,
+  updateItCatTag,
   type,
 }) => {
-
-
   const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
     const describeId = e.target.id;
@@ -27,14 +27,14 @@ const DescribeRenderer = ({
     dispatcher(addItStatement(describeId));
   };
 
-  const deleteDescribeBlockOnKeyUp = (e) => {
+  const deleteDescribeBlockOnKeyUp = (e: ChangeEvent) => {
     if (e.charCode === 13) {
-    const describeId = e.target.id;
-    dispatcher(deleteDescribeBlock(describeId));
+      const describeId = e.target.id;
+      dispatcher(deleteDescribeBlock(describeId));
     }
-}
+  };
 
-  return describeBlocks.allIds.map((id: string , i: number) => (
+  return describeBlocks.allIds.map((id: string, i: number) => (
     <Draggable
       key={id}
       draggableId={id}
@@ -51,7 +51,15 @@ const DescribeRenderer = ({
             <label htmlFor="describe-label" className={styles.describeLabel}>
               Describe Block
             </label>
-            
+
+            <StandardTagFilter
+              dispatch={dispatcher}
+              tagAction={updateDescribeStandardTag}
+              textAction={updateDescribeText}
+              describeId={id}
+              standardTag={describeBlocks.byId[id].standardTag}
+            />
+
             <i
               tabIndex={0}
               onKeyPress={deleteDescribeBlockOnKeyUp}
@@ -60,18 +68,7 @@ const DescribeRenderer = ({
               className={cn('far fa-window-close', styles.describeClose)}
             />
 
-
-            <input
-              
-              id={id}
-              className={styles.describeInput}
-              name="describe-label"
-              type="text"
-              placeholder="Component has basic accessibility"
-              value={describeBlocks.byId[id].text || ''}
-              onChange={handleChangeDescribeText}
-            />
-
+            <p className={styles.describeStatement}>{describeBlocks.byId[id].text}</p>
             <div className={styles.separator} />
 
             <Droppable
@@ -88,7 +85,8 @@ const DescribeRenderer = ({
                     key={`it-${id}-${i}`}
                     itStatements={itStatements}
                     describeId={id}
-                    handleChangeItStatementText={handleChangeItStatementText}
+                    updateItStatementText={updateItStatementText}
+                    updateItCatTag={updateItCatTag}
                   />
                   {innerProvided.placeholder}
                 </div>
