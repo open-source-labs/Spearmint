@@ -46,7 +46,7 @@ const createDescribeBlock = (describeId: string) => {
   return {
     id: describeId,
     text: 'Component is accessible according to all standards enforced by axe-core.',
-    standardTag: '',
+    standardTag: 'none',
   };
 };
 
@@ -54,7 +54,7 @@ const createItStatement = (describeId: string, itId: string) => ({
   id: itId,
   describeId,
   text: 'Component is accessible regarding all axe-core categories.',
-  catTag: '',
+  catTag: 'none',
 });
 
 /* ------------------------- Accessibility Test Case Reducer ------------------------ */
