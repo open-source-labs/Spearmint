@@ -70,13 +70,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
     dispatchToEndpointTestCase(addAssertion(index));
   };
 
-  const testDescription = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (testDescription && testDescription.current) {
-      testDescription.current.focus();
-    }
-  }, []);
 
   return (
     <div style={{ maxWidth: '650px' }}>
@@ -109,7 +103,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                 >
                   <div id={styles.labelInputTest}>
                     <input
-                      ref={testDescription}
+                      
                       type='text'
                       id={styles.testStatement}
                       value={endpoint.testName}

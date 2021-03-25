@@ -18,7 +18,6 @@ import { useToggleModal, validateInputs } from './testMenuHooks';
 const HooksTestMenu = () => {
   // Hooks testing docs url
   const hooksUrl = 'https://react-hooks-testing-library.com/usage/basic-hooks';
-  let valid;
   const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
     HooksTestCaseContext
   );
@@ -45,23 +44,22 @@ const HooksTestMenu = () => {
   };
 
   if (exportBool) {
-    valid = validateInputs('hooks', hooksStatements);
-    valid ? dispatchToGlobal(setValidCode(true)) : dispatchToGlobal(setValidCode(false));
+    const valid = validateInputs('hooks', hooksStatements);
+    dispatchToGlobal(setValidCode(valid));
     dispatchToGlobal(toggleExportBool());
     if (valid && !file) dispatchToGlobal(updateFile(generateTest(hooksStatements)));
   }
 
   if (!file && exportBool) {
-    validateInputs('hooks', hooksStatements)
-      ? dispatchToGlobal(setValidCode(true))
-      : dispatchToGlobal(setValidCode(false));
+    const valid = validateInputs('hooks', hooksStatements);
+    dispatchToGlobal(setValidCode(valid));
     dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
   }
   return (
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button type='button' onClick={openModal}>
+          <button type='button' autoFocus onClick={openModal}>
             New Test +
           </button>
           <button id={styles.example} onClick={fileHandle}>

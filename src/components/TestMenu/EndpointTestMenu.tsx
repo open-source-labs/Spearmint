@@ -27,7 +27,6 @@ const EndpointTestMenu = () => {
   const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
-  let valid;
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
@@ -59,8 +58,8 @@ const EndpointTestMenu = () => {
   };
 
   if (exportBool) {
-    valid = validateInputs('endpoint', endpointTestCase);
-    valid ? dispatchToGlobal(setValidCode(true)) : dispatchToGlobal(setValidCode(false));
+    const valid = validateInputs('endpoint', endpointTestCase);
+    dispatchToGlobal(setValidCode(valid));
     dispatchToGlobal(toggleExportBool());
     if (valid && !file) dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
@@ -69,7 +68,7 @@ const EndpointTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openModal}>New Test +</button>
+          <button onClick={openModal} autoFocus >New Test +</button>
           <button id={styles.preview} onClick={fileHandle}>
             Preview
           </button>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
@@ -38,13 +39,10 @@ function useGenerateTest(test, projectFilePath) {
     // React It Statements
     const addReactItStatement = (describeId) => {
       const itStatements = reactTestCase.itStatements;
-      itStatements.allIds.forEach((itId) => {
-        if (itStatements.byId[itId].describeId === describeId) {
-          testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
-          addReactStatements(itId);
-          testFileCode += '})';
-        }
-        testFileCode += '\n';
+      itStatements.allIds[describeId].forEach((itId) => {
+        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
+        addReactStatements(itId);
+        testFileCode += '})\n';
       });
     };
 
@@ -787,7 +785,301 @@ function useGenerateTest(test, projectFilePath) {
         `;
     };
 
+    /* ------------------------------------------ ACCESSIBILITY TESTING ------------------------------------------ */
+    
+    const addAccImportStatements = () => {
+      let { filePath, fileName } = accTestCase;
+      filePath = path.relative(projectFilePath, filePath);
+      filePath = filePath.replace(/\\/g, '/');
+
+      testFileCode += `
+        const axe = require('axe-core');
+        const regeneratorRuntime = require('regenerator-runtime');`;
+      
+      if (accTestCase.testType === 'html') {
+        testFileCode += `
+        const path = require('path');
+        const fs = require('fs');
+        
+        const html = fs.readFileSync(path.resolve(__dirname,
+          '../${filePath}'), 'utf8');`;
+      } else if (accTestCase.testType === 'react') {
+        testFileCode += `
+        import React from 'react';
+        import { configure, mount } from 'enzyme';
+        import Adapter from 'enzyme-adapter-react-16';
+
+        import ${fileName.split('.')[0]} from '../${filePath}';`;
+      }
+    };
+
+    const addAccDescribeBlocks = () => {
+      const { describeBlocks } = accTestCase;
+
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `
+
+        describe('${describeBlocks.byId[id].text}', () => {`;
+        addAccPrint();
+        if (accTestCase.testType === 'react') addMount();
+        addAccBeforeAll(id);
+        addAccItStatements(id);
+        testFileCode += `}); \n \n`;
+      });
+    };
+
+    const addAccPrint = () => {
+      testFileCode += `
+        const print = (violations) => {
+          if (violations.length === 0) {
+            console.log('Congrats! Keep up the good work, you have 0 known violations!');
+          } else {
+            violations.forEach(axeViolation => {
+              const whereItFailed = axeViolation.nodes.map(node => node.html);
+              // uncomment the line(s) below to see suggestions on how to fix accessibility issues
+              // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
+        
+              const { description, help, helpUrl } = axeViolation;
+      
+              console.log('---------',
+                '\\nTEST DESCRIPTION: ', description,
+                '\\nISSUE: ', help,
+                '\\nMORE INFO: ', helpUrl,
+                '\\nWHERE IT FAILED: ', whereItFailed,
+                // '\\nHOW TO FIX: ', failureSummary
+              );
+            });
+          }
+        }
+      `;
+    }
+
+    const addMount = () => {
+      testFileCode += `
+        const mountToDoc = (reactElm) => {
+          configure({ adapter: new Adapter() });
+          if (!document) {
+            // Set up a basic DOM
+            global.document = jsdom('<!doctype html><html><body></body></html>');
+          }
+          if (!wrapper) {
+            wrapper = document.createElement('main');
+            document.body.appendChild(wrapper);
+          }
+        
+          const container = mount(reactElm);
+          wrapper.innerHTML = '';
+          wrapper.appendChild(container.getDOMNode());
+          return container;
+        }
+      `;
+    }
+
+    const addAccBeforeAll = (descId) => {
+      const { fileName } = accTestCase;
+      testFileCode += `
+        let options;`;
+
+      if (accTestCase.testType === 'react') {
+        testFileCode += `
+          let linkNode;
+          let wrapper;`;
+      }
+      
+      testFileCode += `\n
+        beforeAll((done) => {
+          // exclude tests that are incompatible
+          options = {
+            rules: {
+              'color-contrast': { enabled: false },
+              'link-in-text-block': { enabled: false },
+            },`
+        
+      if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
+        testFileCode += `
+              runOnly: {
+                type: 'tag',
+                value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
+            }`
+          }
+            
+      testFileCode += `
+          };
+        `;
+      
+      if (accTestCase.testType === 'html') {
+        testFileCode += `
+          // get language tag from imported html file and assign to jsdom document
+          const langTag = html.match(/<html lang="(.*)"/);
+          if (langTag) document.documentElement.lang = langTag[1];
+          document.documentElement.innerHTML = html.toString();
+        `;
+      } else if (accTestCase.testType === 'react') {
+        testFileCode += `
+        const linkComponent = mountToDoc(
+          < ${fileName.split('.')[0]} />
+        );
+        linkNode = linkComponent.getDOMNode();
+        `;
+      }
+        
+      testFileCode += `
+          done();
+        });
+      `;
+    }
+
+    const addAccItStatements = (descId) => {
+      const { itStatements } = accTestCase;
+      
+      itStatements.allIds[descId].forEach((itId) => {
+        testFileCode += `
+          it('${itStatements.byId[itId].text}', (done) => {`
+
+        if(itStatements.byId[itId].catTag !== 'none') {
+          testFileCode += `  
+            options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`
+        }
+        
+        if (accTestCase.testType === 'react') {
+          testFileCode += `
+            axe.run(linkNode, options, async (err, results) => {`
+        } else {
+          testFileCode += `
+            axe.run(options, async (err, results) => {`
+        }
+
+        testFileCode += `
+            if (err) {
+              console.log('err: ', err);
+              done();
+            }
+
+            print(results.violations);      
+      
+            expect(err).toBe(null);
+            expect(results.violations).toHaveLength(0);
+            done();
+          });
+        })
+      `;
+      });
+    };
+    
+    const addAccPuppeteer = () => {
+      testFileCode += `
+        const puppeteer = require('puppeteer');
+        const axeCore = require('axe-core');
+        const { parse: parseURL } = require('url');
+        const assert = require('assert');
+
+        // Cheap URL validation
+        const isValidURL = input => {
+          const u = parseURL(input);
+          return u.protocol && u.host;
+        };
+
+        // node axe-puppeteer.js <url>
+        const url = process.argv[2];
+        assert(isValidURL(url), 'Invalid URL');
+
+        const main = async url => {
+          let browser;
+          let results;
+          try {
+            // Setup Puppeteer
+            browser = await puppeteer.launch();
+
+            // Get new page
+            const page = await browser.newPage();
+            await page.goto(url);
+
+            // Inject and run axe-core
+            const handle = await page.evaluateHandle(\`
+              // Inject axe source code
+              \${axeCore.source}
+              // Run axe
+              axe.run();
+            \`);
+
+            // Get the results from 'axe.run()'.
+            results = await handle.jsonValue();
+            // Destroy the handle & return axe results.
+            await handle.dispose();
+          } catch (err) {
+            // Ensure we close the puppeteer connection when possible
+            if (browser) {
+              await browser.close();
+            }
+
+            // Re-throw
+            throw err;
+          }
+
+          // test violations
+          results = results.violations;
+          console.log('--------------violations length: ', results.length);
+
+          await browser.close();
+          return results;
+        };
+
+        main(url)
+          .then(results => {
+            // console.log(results);
+            const violations = results;
+            violations.forEach(axeViolation => {
+              const whereItFailed = axeViolation.nodes.map(node => node.html);
+              // uncomment the line(s) below to see suggestions on how to fix accessibility issues
+              // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
+
+              const { description, help, helpUrl } = axeViolation;
+
+              console.log(
+                '---------',
+                '\\nTEST DESCRIPTION: ',
+                description,
+                '\\nISSUE: ',
+                help,
+                '\\nMORE INFO: ',
+                helpUrl,
+                '\\nWHERE IT FAILED: ',
+                whereItFailed
+                // '\\nHOW TO FIX: ', failureSummary
+              );
+            });
+          })
+          .catch(err => {
+            console.error('Error running axe-core:', err.message);
+            process.exit(1);
+          });
+        `
+    };
+
     switch (test) {
+      case 'acc':
+        var accTestCase = testState;
+        if (accTestCase.testType === 'puppeteer') {
+          return (
+            addAccPuppeteer(),
+            (testFileCode = beautify(testFileCode, {
+              indent_size: 2,
+              space_in_empty_paren: true,
+              e4x: true,
+            }))
+          )
+        } else {
+          return (
+            addAccImportStatements(),
+            addAccDescribeBlocks(),
+            (testFileCode = beautify(testFileCode, {
+              indent_size: 2,
+              space_in_empty_paren: true,
+              e4x: true,
+            }))
+          );
+        }
+        
       case 'react':
         var reactTestCase = testState;
         var mockData = mockDataState;
