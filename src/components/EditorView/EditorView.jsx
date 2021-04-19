@@ -54,13 +54,9 @@ const Editor = () => {
 
   return (
     <div>
-      <button id={styles.save} onClick={saveFile}>
-        Save Changes
-      </button>
-      <span id={styles.span}>{wasSaved}</span>
       <div onClick={() => setWasSaved('')}>
         <MonacoEditor
-          height='100vh'
+          height='80vh'
           language='javascript'
           theme='light-dark'
           value={
@@ -75,6 +71,15 @@ const Editor = () => {
           onChange={updatafile}
         />
       </div>
+
+      <div>
+        <button id={styles.save} onClick={saveFile}>
+          Save Changes
+        </button>
+        <span id={styles.span}>{wasSaved}</span>
+      </div>
+
+
     </div>
   );
 };
