@@ -20,7 +20,7 @@ import ExportFileModal from '../Modals/ExportFileModal';
 
 const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');
-const browserIcon = require('../../assets/images/google-chrome.png');
+// const browserIcon = require('../../assets/images/google-chrome.png');
 const codeIcon = require('../../assets/images/visual-studio-code.png');
 const homeIcon = require('../../assets/images/home.png');
 
