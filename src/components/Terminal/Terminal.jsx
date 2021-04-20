@@ -13,7 +13,6 @@ const TerminalGenerator = () => {
     term.write('Hello, world')
   }, []);
   return <div></div>
-
 }
 
 export default TerminalGenerator
