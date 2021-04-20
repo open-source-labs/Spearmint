@@ -6,6 +6,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { closeRightPanel } from '../../context/actions/globalActions';
 const closeIcon = require('../../assets/images/close.png');
 
+// add tabviews (convert the code preview and browser preview) - mintyBois 4/16
+
 const RightPanel = () => {
   const [{ rightPanelDisplay, url }, dispatchToGlobal] = useContext(GlobalContext);
 
