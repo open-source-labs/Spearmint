@@ -36,7 +36,7 @@ const RightPanel = () => {
       <div hidden={tabIndex !== 0}>
         <EditorView />
       </div>
-      {/* Browser Tab */}
+      {/* rBrowser Tab */}
       <div hidden={tabIndex !== 1}>
         <BrowserView />
       </div>
@@ -45,7 +45,6 @@ const RightPanel = () => {
         <div className="terminal">
           <TerminalGenerator />
         </div>
-        
       </div>
       {/* Test Coverage */}
       <div hidden={tabIndex !== 3}>
