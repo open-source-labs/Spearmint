@@ -27,6 +27,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
+      // EnableRemoteModule true is required for electron v10 and above. 
+      enableRemoteModule: true,
     },
   });
   mainWindow.loadURL(
