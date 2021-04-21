@@ -18,6 +18,7 @@
   "homepage": "./",
   "private": true,
   "dependencies": {
+    "@electron/remote": "^1.1.0",
     "@material-ui/core": "^4.11.3",
     "@types/jest": "^25.2.3",
     "@types/react-beautiful-dnd": "^12.1.2",
@@ -81,7 +82,7 @@
     "@typescript-eslint/parser": "^2.33.0",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "electron": "8.5.4",
+    "electron": "9.0.0",
     "electron-builder": "^22.6.1",
     "electron-devtools-installer": "^3.0.0",
     "enzyme": "^3.10.0",
