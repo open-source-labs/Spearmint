@@ -20,7 +20,7 @@ import ExportFileModal from '../Modals/ExportFileModal';
 
 const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');
-const browserIcon = require('../../assets/images/google-chrome.png');
+// const browserIcon = require('../../assets/images/google-chrome.png');
 const codeIcon = require('../../assets/images/visual-studio-code.png');
 const homeIcon = require('../../assets/images/home.png');
 
@@ -69,10 +69,12 @@ const NavBar = ({ inAboutPage }) => {
    */
   return (
     <div id={inAboutPage ? styles.inAboutPage : styles.navBar}>
+      {/* File Explorer */}
       <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
         <img src={menuIcon} className={styles.icons} alt='fileExplorer' />
         <span className={styles.tooltip}>Expand File Explorer</span>
       </button>
+      {/* Export */}
       <button className={styles.navBtn} onClick={openExportModal}>
         <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
         <span className={styles.tooltip}>Export</span>
@@ -83,15 +85,16 @@ const NavBar = ({ inAboutPage }) => {
           setIsExportModalOpen={setIsExportModalOpen}
         />
       )}
+      {/* Open Folder */}
       <OpenFolder />
+      
+      {/* Code View */}
       <button className={styles.navBtn} onClick={handleEditorToggle}>
         <img src={codeIcon} className={styles.icons} alt='codeview' title='Code View' />
         <span className={styles.tooltip}>Code View</span>
       </button>
-      <button className={styles.navBtn} onClick={handleBrowserToggle}>
-        <img src={browserIcon} className={styles.icons} alt='browserview' title='Browser view' />
-        <span className={styles.tooltip}>Browser View</span>
-      </button>
+
+      {/* Home Button */}
       <button className={styles.navBtn} onClick={handleBrowserToggle}>
         <img
           src={homeIcon}
