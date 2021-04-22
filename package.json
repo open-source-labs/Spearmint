@@ -55,6 +55,7 @@
     "build": "NODE_ENV=production npm run react-build && npm run electron-build",
     "react-build": "NODE_ENV=production react-scripts build",
     "electron-build": "NODE_ENV=production electron-builder -mwl",
+    "electron-rebuild": "electron-rebuild",
     "release": "npm run react-build && electron-builder --publish=always",
     "start-windows": "cross-env NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
@@ -84,6 +85,7 @@
     "electron": "11.4.3",
     "electron-builder": "^22.6.1",
     "electron-devtools-installer": "^3.0.0",
+    "electron-rebuild": "^2.3.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint-config-airbnb-typescript": "^7.2.1",
