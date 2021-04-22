@@ -42,9 +42,7 @@ const RightPanel = () => {
       </div>
       {/* Test Terminal */}
       <div hidden={tabIndex !== 2}>
-        <div className="terminal">
-          <TerminalGenerator />
-        </div>
+        <TerminalGenerator />
       </div>
       {/* Test Coverage */}
       <div hidden={tabIndex !== 3}>

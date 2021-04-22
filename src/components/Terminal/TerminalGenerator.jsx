@@ -5,7 +5,9 @@ const term = new Terminal()
 
 
 const TerminalGenerator = () => {
+
   useEffect(() => {
+   console.log('this is terminal div', document.getElementsByClassName('terminal')[0])
     term.open(document.getElementsByClassName('terminal')[0]);
     term.onData(e => {
       ipc.send('terminal.toTerm', e);
@@ -14,7 +16,8 @@ const TerminalGenerator = () => {
       term.write(data);
     });
   }, []);
-  return <div/>;
+
+  return <div className='terminal'/>;
 }
 
 export default TerminalGenerator;
