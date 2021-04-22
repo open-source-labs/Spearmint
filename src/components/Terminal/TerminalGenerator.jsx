@@ -17,7 +17,7 @@ const TerminalGenerator = () => {
     });
   }, []);
 
-  return <div className='terminal'/>;
+  return <div className='terminal'/>
 }
 
 export default TerminalGenerator;
