@@ -26,8 +26,8 @@ const OpenFolder = () => {
     GlobalContext,
   );
 
-  const handleOpenFolder = () => {
-    const directory = dialog.showOpenDialog({
+  const handleOpenFolder = async () => {
+    const directory = await dialog.showOpenDialog({
       properties: ['openDirectory', 'createDirectory'],
       filters: [
         { name: 'Javascript Files', extensions: ['js', 'jsx'] },
@@ -36,9 +36,9 @@ const OpenFolder = () => {
       ],
       message: 'Please select your project folder',
     });
-
-    if (directory && directory[0]) {
-      let directoryPath = directory[0];
+    console.log(directory)
+    if (directory && directory.filePaths[0]) {
+      let directoryPath = directory.filePaths[0];
       //replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       dispatchToGlobal(setProjectFilePath(directoryPath));

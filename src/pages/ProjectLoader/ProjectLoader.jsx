@@ -55,22 +55,28 @@ const ProjectLoader = () => {
 
       <section id={styles.lowerPart}>
         <div id={styles.appBox}>
-          <div className={styles.contentBox}>
+
+          {/* Enter Starting URL */}
+          {/* <div className={styles.contentBox}>
             <span className={styles.number}>01</span>
             <span className={styles.text}> Enter test site's URL</span> <br />
             <input type='text' autoFocus id={styles.url} placeholder={placehold} onChange={handleChangeUrl} />
-          </div>
+          </div> */}
+          
+          {/* Open Project Directory */}
           <div className={styles.contentBox}>
-            <span className={styles.number}>02</span>
+            {/* <span className={styles.number}>02</span> */}
             <span className={styles.text}>Select your application</span> <br/>
             <OpenFolder />
           </div>
         </div>
-        <div id={styles.bottomDiv}>
+        
+        {/* Get started */}
+        {/* <div id={styles.bottomDiv}>
           <button id={styles.helpBtn} onClick={handleChangeAbout}>
             <span className={styles.text}>Get Started</span>
           </button>
-        </div>
+        </div> */}
       </section>
     </div>
   );

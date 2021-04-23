@@ -965,7 +965,7 @@ function useGenerateTest(test, projectFilePath) {
       `;
       });
     };
-    
+
     const addAccPuppeteer = () => {
       testFileCode += `
         const puppeteer = require('puppeteer');
