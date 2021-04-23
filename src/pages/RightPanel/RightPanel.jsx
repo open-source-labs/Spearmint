@@ -37,7 +37,7 @@ const RightPanel = () => {
       <div hidden={tabIndex !== 0}>
         <EditorView />
       </div>
-      {/* rBrowser Tab */}
+      {/* Browser Tab */}
       <div hidden={tabIndex !== 1}>
         <BrowserView />
       </div>
