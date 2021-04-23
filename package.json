@@ -43,7 +43,8 @@
     "sass": "^1.26.5",
     "typescript": "^3.9.2",
     "wait-on": "^3.3.0",
-    "xterm": "^4.11.0"
+    "xterm": "^4.11.0",
+    "xterm-for-react": "^1.0.4"
   },
   "scripts": {
     "test": "react-app-rewired test --env=jsdom",

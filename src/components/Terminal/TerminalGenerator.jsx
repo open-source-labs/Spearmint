@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
+import { XTerm } from 'xterm-for-react';
 const { Terminal } = require('xterm');
 const ipc = require('electron').ipcRenderer;
-const term = new Terminal()
+
+
+const term = new Terminal();
 
 
 const TerminalGenerator = () => {
@@ -17,7 +20,8 @@ const TerminalGenerator = () => {
     });
   }, []);
 
-  return <div className='terminal'/>
+
+  return <XTerm className='terminal' options={{ fontSize: 100 }} />
 }
 
 export default TerminalGenerator;
