@@ -43,21 +43,24 @@
     "sass": "^1.26.5",
     "typescript": "^3.9.2",
     "wait-on": "^3.3.0",
-    "xterm": "^4.11.0"
+    "xterm": "^4.11.0",
+    "xterm-addon-fit": "^0.5.0",
+    "xterm-for-react": "^1.0.4"
   },
   "scripts": {
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-app-rewired test --env=jsdom",
     "test:e2e": "./node_modules/mocha/bin/mocha src/__tests__/spec.e2e.js",
     "test:integra": "mocha src/__tests__/spec.integra.js",
     "test:watch": "jest --watch",
     "react-start": "react-scripts start",
     "react-eject": "react-scripts eject",
-    "build": "NODE_ENV=production npm run react-build && npm run electron-build",
+    "build": "NODE_ENV=production react-app-rewired build && npm run electron-build",
     "react-build": "NODE_ENV=production react-scripts build",
     "electron-build": "NODE_ENV=production electron-builder -mwl",
+    "electron-rebuild": "electron-rebuild -f -w node-pty",
     "release": "npm run react-build && electron-builder --publish=always",
-    "start-windows": "SET NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+    "start-windows": "cross-env NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\"",
+    "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "browserslist": {
     "production": [
@@ -84,6 +87,7 @@
     "electron": "11.4.3",
     "electron-builder": "^22.6.1",
     "electron-devtools-installer": "^3.0.0",
+    "electron-rebuild": "^2.3.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint-config-airbnb-typescript": "^7.2.1",
@@ -92,6 +96,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.1",
     "mocha": "^8.3.2",
+    "react-app-rewired": "^2.1.8",
     "react-test-renderer": "^16.12.0",
     "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"

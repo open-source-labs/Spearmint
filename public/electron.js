@@ -1,6 +1,12 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
+const os = require('os');
+const pty = require('node-pty');
+
+//Dynamic variable to change terminal type based on os
+let shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+
 let mainWindow;
 
 if (isDev) console.log('electron version', process.versions.electron);
@@ -35,6 +41,21 @@ function createWindow() {
     isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`
   );
   mainWindow.on('closed', () => (mainWindow = null));
+
+  const ptyProcess = pty.spawn(shell, [], {
+    name: 'xterm-color',
+    cols: 80,
+    rows: 80,
+    cwd: process.env.HOME,
+    env: process.env,
+  });
+  ptyProcess.on('data', (data) => {
+    // process.stdout.write(data);
+    mainWindow.webContents.send('terminal.incData', data);
+  });
+  ipcMain.on('terminal.toTerm', function(event, data) {
+    ptyProcess.write(data);
+  })
 }
 
 if (isDev) {
