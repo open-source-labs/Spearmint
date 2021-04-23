@@ -1,7 +1,7 @@
-import { cyan } from '@material-ui/core/colors';
 import React, { useEffect } from 'react';
 import { XTerm } from 'xterm-for-react';
 import { FitAddon } from 'xterm-addon-fit';
+import styles from './BrowserView.module.scss'
 const { Terminal } = require('xterm');
 const ipc = require('electron').ipcRenderer;
 
@@ -31,7 +31,7 @@ const TerminalGenerator = () => {
   }, []);
 
 
-  return <XTerm className='terminal' />
+  return <XTerm id={styles.terminalView} className='terminal' />
 }
 
 export default TerminalGenerator;
