@@ -10,6 +10,7 @@ import TerminalGenerator from '../../components/Terminal/TerminalGenerator';
 import terminalStyles from '../../components/Terminal/TerminalView.module.scss';
 const closeIcon = require('../../assets/images/close.png');
 
+// add tabviews (convert the code preview and browser preview) - mintyBois 4/16
 // eslint-disable
 
 const RightPanel = () => {
@@ -37,7 +38,7 @@ const RightPanel = () => {
       <div hidden={tabIndex !== 0}>
         <EditorView />
       </div>
-      {/* rBrowser Tab */}
+      {/* Browser Tab */}
       <div hidden={tabIndex !== 1}>
         <BrowserView />
       </div>

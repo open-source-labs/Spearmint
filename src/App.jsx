@@ -3,7 +3,7 @@ import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/reducers/globalReducer';
 import ProjectLoader from './pages/ProjectLoader/ProjectLoader';
 import NavBar from './components/NavBar/NavBar';
-import LeftPanel from './pages//LeftPanel/LeftPanel';
+import LeftPanel from './pages/LeftPanel/LeftPanel';
 import RightPanel from './pages/RightPanel/RightPanel';
 import About from './pages/About/About';
 
@@ -19,9 +19,9 @@ const App = () => {
         </GlobalContext.Provider>
       </div>
     );
-  } else {
-    return (
-      /**
+  }
+  return (
+  /**
        * Wrap the components that we want to share the unique states with.
        * You can only provide one value to a Provider.
        *  - In order to avoid creating separate Contexts, wrap multiples in an array (ex: testCase and dispatchToTestCase).
@@ -33,36 +33,36 @@ const App = () => {
        *
        * We access the value that we gave to the Provider through useContext
        */
-      <div
-        id={
+    <div
+      id={
           global.isProjectLoaded === 'about'
             ? ''
             : global.isFileDirectoryOpen
-            ? global.isRightPanelOpen
-              ? styles.fileDirectoryOpenRightPanelOpen
-              : styles.fileDirectoryOpenRightPanelClosed
-            : global.isRightPanelOpen
-            ? styles.fileDirectoryClosedRightPanelOpen
-            : styles.fileDirectoryClosedRightPanelClosed
+              ? global.isRightPanelOpen
+                ? styles.fileDirectoryOpenRightPanelOpen
+                : styles.fileDirectoryOpenRightPanelClosed
+              : global.isRightPanelOpen
+                ? styles.fileDirectoryClosedRightPanelOpen
+                : styles.fileDirectoryClosedRightPanelClosed
         }
-      >
-        <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          {global.isProjectLoaded === 'about' ? (
-            <>
-              <NavBar inAboutPage={true} />
-              <About dispatch={dispatchToGlobal} />{' '}
-            </>
-          ) : (
-            <>
-              <NavBar inAboutPage={false} />
-              <LeftPanel />
-            </>
-          )}
-          {global.isRightPanelOpen ? <RightPanel /> : ''}
-        </GlobalContext.Provider>
-      </div>
-    );
-  }
+    >
+      <GlobalContext.Provider value={[global, dispatchToGlobal]}>
+        {global.isProjectLoaded === 'about' ? (
+          <>
+            <NavBar inAboutPage />
+            <About dispatch={dispatchToGlobal} />
+            {' '}
+          </>
+        ) : (
+          <>
+            <NavBar inAboutPage={false} />
+            <LeftPanel />
+          </>
+        )}
+        {global.isRightPanelOpen ? <RightPanel /> : ''}
+      </GlobalContext.Provider>
+    </div>
+  );
 };
 
 export default App;
