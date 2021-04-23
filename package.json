@@ -44,6 +44,7 @@
     "typescript": "^3.9.2",
     "wait-on": "^3.3.0",
     "xterm": "^4.11.0",
+    "xterm-addon-fit": "^0.5.0",
     "xterm-for-react": "^1.0.4"
   },
   "scripts": {

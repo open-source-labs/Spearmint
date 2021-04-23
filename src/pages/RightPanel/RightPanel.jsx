@@ -41,7 +41,7 @@ const RightPanel = () => {
         <BrowserView />
       </div>
       {/* Test Terminal */}
-      <div hidden={tabIndex !== 2}>
+      <div hidden={tabIndex !== 2} style={{height: '100%'}}>
         <TerminalGenerator />
       </div>
       {/* Test Coverage */}
