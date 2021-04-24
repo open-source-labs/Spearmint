@@ -49,10 +49,12 @@ function createWindow() {
     cwd: process.env.HOME,
     env: process.env,
   });
+  // with ptyProcess, we want to send incoming data to the channel terminal.incData
   ptyProcess.on('data', (data) => {
-    // process.stdout.write(data);
     mainWindow.webContents.send('terminal.incData', data);
   });
+  // in the main process, at terminal.toTerm channel, when data is received, 
+  // main process will write to ptyProcess
   ipcMain.on('terminal.toTerm', function(event, data) {
     ptyProcess.write(data);
   })
