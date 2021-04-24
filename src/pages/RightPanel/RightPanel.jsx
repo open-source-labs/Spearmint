@@ -7,7 +7,7 @@ import BrowserView from '../../components/BrowserView/BrowserView';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { closeRightPanel } from '../../context/actions/globalActions';
 import TerminalGenerator from '../../components/Terminal/TerminalGenerator';
-import terminalStyles from '../../components/Terminal/TerminalView.module.scss';
+// import terminalStyles from '../../components/Terminal/TerminalView.module.scss';
 const closeIcon = require('../../assets/images/close.png');
 
 // eslint-disable
@@ -42,7 +42,7 @@ const RightPanel = () => {
         <BrowserView />
       </div>
       {/* Test Terminal */}
-      <div hidden={tabIndex !== 2} id={terminalStyles.terminalView}>
+      <div hidden={tabIndex !== 2} >
         <TerminalGenerator />
       </div>
       {/* Test Coverage */}
