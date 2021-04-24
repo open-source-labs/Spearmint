@@ -32,7 +32,7 @@
     "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
     "node-pty": "^0.10.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.14.0",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
     "react-beautiful-dnd": "^11.0.3",
@@ -57,7 +57,7 @@
     "build": "NODE_ENV=production react-app-rewired build && npm run electron-build",
     "react-build": "NODE_ENV=production react-scripts build",
     "electron-build": "NODE_ENV=production electron-builder -mwl",
-    "electron-rebuild": "electron-rebuild -f -w node-pty",
+    "electron-rebuild": "electron-rebuild",
     "release": "npm run react-build && electron-builder --publish=always",
     "start-windows": "cross-env NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\""
