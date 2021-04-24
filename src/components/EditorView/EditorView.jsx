@@ -56,9 +56,9 @@ const Editor = () => {
     <div>
       <div onClick={() => setWasSaved('')}>
         <MonacoEditor
-          height='80vh'
-          language='javascript'
-          theme='light-dark'
+          height="80vh"
+          language="javascript"
+          theme="light-dark"
           value={
             file
               ? extensionChecker[fileType]
