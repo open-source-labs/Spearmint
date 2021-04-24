@@ -15,6 +15,7 @@ import {
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
+const ipc = require('electron').ipcRenderer;
 const folderOpenIcon = require('../../assets/images/folder-open.png');
 
 const { remote } = window.require('electron');
@@ -36,10 +37,9 @@ const OpenFolder = () => {
       ],
       message: 'Please select your project folder',
     });
-    console.log(directory)
     if (directory && directory.filePaths[0]) {
       let directoryPath = directory.filePaths[0];
-      //replace backslashes for Windows OS
+      // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       dispatchToGlobal(setProjectFilePath(directoryPath));
       dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
@@ -47,6 +47,9 @@ const OpenFolder = () => {
       dispatchToGlobal(setTestCase(''));
       if (!isTestModalOpen) dispatchToGlobal(toggleModal());
       if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
+
+      // Re-direct terminal directory to user selected directory
+      ipc.send('terminal.toTerm', `cd ${directoryPath}\n`);
     }
   };
 
