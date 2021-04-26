@@ -7,6 +7,8 @@ import {
   setFilePath,
   setValidCode,
   toggleExportBool,
+  setTestCase,
+  toggleModal,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
@@ -24,7 +26,7 @@ import { useToggleModal, validateInputs } from './testMenuHooks';
 const EndpointTestMenu = () => {
   const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
   // Endpoint testing docs url
@@ -57,6 +59,10 @@ const EndpointTestMenu = () => {
     } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
   };
 
+  const openNewTestModal = () => {
+    if (!isTestModalOpen) dispatchToGlobal(toggleModal());
+  };
+
   if (exportBool) {
     const valid = validateInputs('endpoint', endpointTestCase);
     dispatchToGlobal(setValidCode(valid));
@@ -64,11 +70,12 @@ const EndpointTestMenu = () => {
     if (valid && !file) dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
   }
 
+
   return (
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openModal} autoFocus >New Test +</button>
+          <button onClick={openNewTestModal} autoFocus >New Test +</button>
           <button id={styles.preview} onClick={fileHandle}>
             Preview
           </button>
