@@ -27,11 +27,10 @@ const RightPanel = () => {
     <div id={styles.rightPanel}>
       <img src={closeIcon} id={styles.close} alt='close' onClick={handleCloseRightPanelView} />
 
-      <Tabs value={tabIndex} onChange={(event, newValue) => setTabIndex(newValue)} variant='scrollable' >
+      <Tabs style = {{marginBottom: 5}} value={tabIndex} onChange={(event, newValue) => setTabIndex(newValue)} centered >
         <Tab value={0} label="Code Editor" />
         <Tab value={1} label="Browser" />
         <Tab value={2} label="Test Terminal" />
-        <Tab value={3} label="Test Coverage" />
       </Tabs>
 
       {/* Editor Tab */}
@@ -45,10 +44,6 @@ const RightPanel = () => {
       {/* Test Terminal */}
       <div hidden={tabIndex !== 2} >
         <TerminalGenerator />
-      </div>
-      {/* Test Coverage */}
-      <div hidden={tabIndex !== 3}>
-        Test Coverage - persistent results
       </div>
     </div>
   );
