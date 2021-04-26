@@ -4,7 +4,7 @@ import { actionTypes } from '../actions/globalActions';
 export const GlobalContext = createContext(null);
 
 export const globalState = {
-  url: null,
+  url: "http://www.google.com/",
   projectUrl: null,
   isProjectLoaded: false,
   fileTree: null,
