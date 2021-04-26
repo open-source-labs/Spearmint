@@ -7,6 +7,8 @@ import {
   toggleRightPanel,
   setValidCode,
   toggleExportBool,
+  setTestCase,
+  toggleModal,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import { addHookUpdates, createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
@@ -22,7 +24,7 @@ const HooksTestMenu = () => {
     HooksTestCaseContext
   );
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('hooks');
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('hooks', projectFilePath);
 
   useEffect(() => {
@@ -43,6 +45,10 @@ const HooksTestMenu = () => {
     dispatchToGlobal(setFilePath(''));
   };
 
+  const openNewTestModal = () => {
+    if (!isTestModalOpen) dispatchToGlobal(toggleModal());
+  };
+
   if (exportBool) {
     const valid = validateInputs('hooks', hooksStatements);
     dispatchToGlobal(setValidCode(valid));
@@ -59,7 +65,7 @@ const HooksTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button type='button' autoFocus onClick={openModal}>
+          <button type='button' autoFocus onClick={openNewTestModal}>
             New Test +
           </button>
           <button id={styles.example} onClick={fileHandle}>

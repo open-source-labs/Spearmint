@@ -42,10 +42,11 @@
   padding: 20px 25px 10px 25px;
 
   #endpoint {
-    color: black;
-    span {
-      margin-left: 50px;
-    }
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+    // span {
+    //   margin-left: 50px;
+    // }
 
     span:hover {
       color: $mint;
@@ -72,7 +73,7 @@
     width: 430px;
   }
   button {
-    margin: 10px 5px 5px 5px;
+    margin: 5px 10px 5px 0px;
     font-size: 12px;
     text-align: center;
     vertical-align: middle;
@@ -111,7 +112,7 @@
 
 #newTestButtons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start
 }
 #newTestButtons:focus {
   outline: 1px solid darkblue

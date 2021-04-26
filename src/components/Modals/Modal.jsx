@@ -3,10 +3,13 @@
  * which render on the top Test Menu component.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
+
+
+const ipc = require('electron').ipcRenderer;
 
 const Modal = ({
   title,
@@ -25,6 +28,7 @@ const Modal = ({
     createTest,
     closeModal,
   );
+  const [fileName, setFileName] = useState('');
 
   const script = useGenerateScript(title, testType, puppeteerUrl);
 
@@ -33,6 +37,33 @@ const Modal = ({
       zIndex: 3,
     },
   };
+
+  const changeDirectory = () => {
+    ipc.send('terminal.toTerm', `${script.cd}\n`);
+  };
+
+  const installDependencies = () => {
+    ipc.send('terminal.toTerm', `${script.install}\n`);
+  };
+
+  const submitFileName = () => {
+    const fileName = document.getElementById('inputFileName').value;
+    setFileName(fileName);
+  }
+
+  const jestTest = () => {
+    ipc.send('terminal.toTerm', `${script.test} ${fileName}\n`);
+    closeModal();
+  };
+  const verboseTest = () => {
+    ipc.send('terminal.toTerm', `${script.verbose} ${fileName}\n`);
+    closeModal();
+  };
+  const coverageTest = () => {
+    ipc.send('terminal.toTerm', `${script.coverage} ${fileName}\n`);
+    closeModal();
+  };
+
 
   return (
     <ReactModal
@@ -45,55 +76,79 @@ const Modal = ({
       ariaHideApp={false}
       style={modalStyles}
     >
+      {/* Modal Title */}
       <div id={styles.title}>
-        <p>{title === 'New Test' ? title : 'Copy to Terminal'}</p>
+        <p>Run Tests in Terminal</p>
       </div>
+      {/* Code snippets */}
       <div id={styles.body}>
-        {title === 'New Test'
-          ? (
-            <p id={styles.text}>
-              Do you want to start a new test? All unsaved changes
-              <br />
-              will be lost.
-            </p>
-          )
-          : (
-            <pre>
-              <div className="code-wrapper">
-                <code ref={codeRef}>
-                  {script}
-                </code>
+        {/* Change Directory to root */}
+        <div>
+          <p id={styles.endpoint}>1. Change directory to root</p>
+          <pre>
+            <div className="code-wrapper">
+              <code>
+                {script.cd}
+              </code>
+            </div>
+          </pre>
+          <span id={styles.newTestButtons}>
+            <button id={styles.save} onClick={changeDirectory}>Change Directory</button>
+          </span>
+        </div>
 
-                {testType === 'react'
-                  ?
-                    <p id={styles.endpoint}>
-                    Requires React version 16 or less.
-                    </p>
-                  : null
-                }
+        <div>
+          <p id={styles.endpoint}>2. Install dependencies and Jest. Note if you are using create react app you can skip installing Jest.</p>
+          <pre>
+            <div className="code-wrapper">
+              <code>
+                {script.install}
+              </code>
+            </div>
+          </pre>
+          <span id={styles.newTestButtons}>
+            <button id={styles.save} onClick={installDependencies}>Install Dependencies</button>
+          </span>
+        </div>
+        {/* Specify file to test */}
+        <div>
+          <p id={styles.endpoint}>3. Specify filename.</p>
+          <input id='inputFileName' placeholder="test.js" />
+          <span id={styles.newTestButtons}>
+            <button id={styles.save} onClick={submitFileName}>Submit file Name</button>
+          </span>
+        </div>
 
-                <p id={styles.endpoint}>
-                  Note if you are using Create React App do not install jest
-                </p>
-              </div>
-            </pre>
-          )}
-        <span id={styles.newTestButtons}>
-          {title === 'New Test'
-            ? (
-              <button id={styles.save} onClick={handleNewTest}>
-                {title}
-              </button>
-            )
-            : (
-              <button id={styles.save} onClick={handleCopy}>
-                {copySuccess ? 'Copied!' : 'Copy'}
-              </button>
-            )}
-          <button id={styles.save} onClick={closeModal}>
-            Cancel
-          </button>
-        </span>
+        {/* Select test to run */}
+        <div>
+          <p id={styles.endpoint}>4. Select test to run</p>
+          <pre>
+            <div className="code-wrapper">
+              <code>
+                {script.test + ' ' + fileName + '\n'}
+                {script.verbose + ' ' + fileName + '\n'}
+                {script.coverage + ' ' + fileName + '\n'}
+              </code>
+            </div>
+          </pre>
+          <span id={styles.newTestButtons}>
+            <button id={styles.save} onClick={jestTest}>
+              Jest Test
+            </button>
+            <button id={styles.save} onClick={verboseTest}>
+              Verbose Test
+            </button>
+            <button id={styles.save} onClick={coverageTest}>
+              Coverage Test
+            </button>
+          </span>
+        </div>
+        {title === 'react' ?
+          <p id={styles.endpoint}>
+            Requires React version 16 or less.
+          </p>
+          : null
+        }
       </div>
     </ReactModal>
   );

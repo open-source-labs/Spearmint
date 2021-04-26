@@ -36,21 +36,29 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 }
 
 export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
-  const [{ projectFilePath }] = useContext(GlobalContext);
+  const [{ projectFilePath }] = useContext(GlobalContext)
   switch (test) {
     case 'acc':
       if (testType === 'html') {
         return (
-          `cd ${projectFilePath}
-          npm i -D axe-core regenerator-runtime jest
-          jest`
+          {
+            cd: `cd ${projectFilePath}`,
+            install: 'npm i -D axe-core regenerator-runtime jest',
+            test: `jest`,
+            verbose: `jest --verbose`,
+            coverage: `jest --coverage`,
+          }
         );
       }
       if (testType === 'react') {
         return (
-          `cd ${projectFilePath}
-          npm i -D axe-core regenerator-runtime jest enzyme enzyme-adapter-react-16
-          jest`
+          {
+            cd: `cd ${projectFilePath}`,
+            install: 'npm i -D axe-core regenerator-runtime jest enzyme enzyme-adapter-react-16',
+            test: `jest`,
+            verbose: `jest --verbose`,
+            coverage: `jest --coverage`,
+          }
         );
       }
       if (testType === 'puppeteer') {
@@ -60,26 +68,37 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
           node <YOUR_DIR_PATH/TEST_FILE.JS> ${puppeteerUrl}
           `
         );
-        
       }
       return 'error';
     case 'react':
       return (
-        `cd ${projectFilePath}\n` +
-        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest\n' +
-        'npm run test'
+        {
+          cd: `cd ${projectFilePath}`,
+          install: `npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest`,
+          test: `jest`,
+          verbose: `jest --verbose`,
+          coverage: `jest --coverage`,
+        }
       );
     case 'redux':
       return (
-        `cd ${projectFilePath}\n` +
-        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch jest\n' +
-        'npm run test'
+        {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch jest',
+          test: `jest`,
+          verbose: `jest --verbose`,
+          coverage: `jest --coverage`,
+        }
       );
     case 'hooks':
       return (
-        `cd ${projectFilePath}\n` +
-        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot @testing-library/react-hooks jest\n' +
-        'npm run test'
+        {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot @testing-library/react-hooks jest',
+          test: `jest`,
+          verbose: `jest --verbose`,
+          coverage: `jest --coverage`,
+        }
       );
     case 'endpoint':
       return (
