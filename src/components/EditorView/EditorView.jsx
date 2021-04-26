@@ -5,7 +5,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
 import styles from './EditorView.module.scss';
 
-const remote = window.require('electron').remote;
+const { remote } = window.require('electron');
+
 const fs = remote.require('fs');
 
 const Editor = () => {
@@ -45,7 +46,7 @@ const Editor = () => {
     }
   };
 
-  let fileType = filePath.split('.')[1];
+  const fileType = filePath.split('.')[1];
   const extensionChecker = {
     png: 1,
     jpg: 1,
@@ -71,15 +72,12 @@ const Editor = () => {
           onChange={updatafile}
         />
       </div>
-
       <div>
-        <button id={styles.save} onClick={saveFile}>
+        <button type="button" id={styles.save} onClick={saveFile}>
           Save Changes
         </button>
         <span id={styles.span}>{wasSaved}</span>
       </div>
-
-
     </div>
   );
 };

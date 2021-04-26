@@ -12,6 +12,7 @@ import {
 const { remote } = window.require('electron');
 const fs = remote.require('fs');
 const fileImg = require('../../assets/images/file-document-outline.svg');
+
 const FileDirectory = ({ fileTree }) => {
   const [{ isFolderOpen, isFileHighlighted, projectFilePath }, dispatchToGlobal] = useContext(
     GlobalContext
