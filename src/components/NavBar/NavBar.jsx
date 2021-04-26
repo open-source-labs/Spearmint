@@ -60,9 +60,9 @@ const NavBar = ({ inAboutPage }) => {
   };
 
   /*returns to project loader screen */
-  const handleClickHome = () => {
-    dispatchToGlobal(loadProject(false));
-  };
+  // const handleClickHome = () => {
+  //   dispatchToGlobal(loadProject(false));
+  // };
 
   /*
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
@@ -94,8 +94,8 @@ const NavBar = ({ inAboutPage }) => {
         <span className={styles.tooltip}>Code View</span>
       </button>
 
-      {/* Home Button */}
-      <button className={styles.navBtn} onClick={handleBrowserToggle}>
+      {/* Home Button. Deprecated as it results in redundant ptyProcess. Use Open folder to change directory. */}
+      {/* <button className={styles.navBtn} onClick={handleBrowserToggle}>
         <img
           src={homeIcon}
           className={styles.icons}
@@ -104,7 +104,7 @@ const NavBar = ({ inAboutPage }) => {
           onClick={handleClickHome}
         />
         <span className={styles.tooltip}>Home</span>
-      </button>
+      </button> */}
       {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>
   );
