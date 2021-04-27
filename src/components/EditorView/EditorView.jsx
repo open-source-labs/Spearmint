@@ -5,9 +5,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
 import styles from './EditorView.module.scss';
 
-const { remote } = window.require('electron');
+const { ipcRenderer } = require('electron');
 
-const fs = remote.require('fs');
 
 const Editor = () => {
   const [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
@@ -39,10 +38,10 @@ const Editor = () => {
       if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');
     } else setWasSaved('No Changes to Save');
     if (filePath.length && editedText.length) {
-      setWasSaved('Changes Saved');
-      await fs.writeFile(filePath, editedText, (err) => {
-        if (err) throw err;
-      });
+      // Send main process the filePath and editedText in obj to save
+      const reply = ipcRenderer.sendSync('EditorView.saveFile', { filePath, editedText });
+      // Upon reply from main process, update wasSaved state
+      setWasSaved(reply);
     }
   };
 

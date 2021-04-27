@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
+const fs = require('fs');
 const os = require('os');
 const pty = require('node-pty');
 
@@ -42,6 +43,7 @@ function createWindow() {
   );
   mainWindow.on('closed', () => (mainWindow = null));
 
+  // PTY PROCESS FOR IN APP TERMINAL
   const ptyProcess = pty.spawn(shell, [], {
     name: 'xterm-color',
     cols: 80,
@@ -60,6 +62,17 @@ function createWindow() {
   })
 }
 
+// EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
+    ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
+      fs.writeFile(filePath, editedText, (err) => {
+        if (err) throw err;
+      });
+      // Return a success message upon save
+      e.returnValue = 'Changes Saved'
+    })
+
+
+// ELECTRON BOILERPLATE FOR DEVTOOLS AND WINDOW CREATION
 if (isDev) {
   app.on('ready', addDevTools);
 }
