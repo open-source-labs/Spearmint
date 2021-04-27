@@ -42,10 +42,17 @@
   padding: 20px 25px 10px 25px;
 
   #endpoint {
+<<<<<<< HEAD
     color: black;
-    span {
-      margin-left: 50px;
-    }
+  }
+  #step {
+=======
+>>>>>>> 85ff6b83f39282b25e2192d22641785f2e59d963
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+    // span {
+    //   margin-left: 50px;
+    // }
 
     span:hover {
       color: $mint;
@@ -72,7 +79,7 @@
     width: 430px;
   }
   button {
-    margin: 10px 5px 5px 5px;
+    margin: 5px 10px 5px 0px;
     font-size: 12px;
     text-align: center;
     vertical-align: middle;
@@ -111,7 +118,7 @@
 
 #newTestButtons {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start
 }
 #newTestButtons:focus {
   outline: 1px solid darkblue

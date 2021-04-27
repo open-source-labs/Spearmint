@@ -54,15 +54,11 @@ const Editor = () => {
 
   return (
     <div>
-      <button id={styles.save} onClick={saveFile}>
-        Save Changes
-      </button>
-      <span id={styles.span}>{wasSaved}</span>
       <div onClick={() => setWasSaved('')}>
         <MonacoEditor
-          height='100vh'
-          language='javascript'
-          theme='light-dark'
+          height="80vh"
+          language="javascript"
+          theme="light-dark"
           value={
             file
               ? extensionChecker[fileType]
@@ -75,6 +71,15 @@ const Editor = () => {
           onChange={updatafile}
         />
       </div>
+
+      <div>
+        <button id={styles.save} onClick={saveFile}>
+          Save Changes
+        </button>
+        <span id={styles.span}>{wasSaved}</span>
+      </div>
+
+
     </div>
   );
 };

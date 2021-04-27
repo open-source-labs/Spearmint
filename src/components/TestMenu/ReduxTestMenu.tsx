@@ -6,6 +6,8 @@ import {
   toggleRightPanel,
   setValidCode,
   openBrowserDocs,
+  setTestCase,
+  toggleModal,
 } from '../../context/actions/globalActions';
 import {
   addAsync,
@@ -25,7 +27,7 @@ const ReduxTestMenu = () => {
     ReduxTestCaseContext
   );
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('redux');
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('redux', projectFilePath);
   // Redux testing docs url
   const reduxUrl = 'https://redux.js.org/recipes/writing-tests';
@@ -60,6 +62,10 @@ const ReduxTestMenu = () => {
     dispatchToGlobal(setFilePath(''));
   };
 
+  const openNewTestModal = () => {
+    if (!isTestModalOpen) dispatchToGlobal(toggleModal());
+  };
+
   if (!file && exportBool)
     dispatchToGlobal(updateFile(generateTest({ reduxTestStatement, reduxStatements })));
 
@@ -67,7 +73,7 @@ const ReduxTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openModal} autoFocus >New Test +</button>
+          <button onClick={openNewTestModal} autoFocus >New Test +</button>
           <button id={styles.preview} onClick={fileHandle}>
             Preview
           </button>
