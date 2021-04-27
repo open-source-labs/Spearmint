@@ -62,14 +62,19 @@ function createWindow() {
   })
 }
 
+// FILEDIRECTORY.JSX READ FILE FUNCTIONALITY
+  ipcMain.on('FileDirectory.readFile', (e, filePath) => {
+    e.returnValue = fs.readFileSync(filePath, 'utf8');
+  })
+
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
-    ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
-      fs.writeFile(filePath, editedText, (err) => {
-        if (err) throw err;
-      });
-      // Return a success message upon save
-      e.returnValue = 'Changes Saved'
-    })
+  ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
+    fs.writeFile(filePath, editedText, (err) => {
+      if (err) throw err;
+    });
+    // Return a success message upon save
+    e.returnValue = 'Changes Saved'
+  })
 
 
 // ELECTRON BOILERPLATE FOR DEVTOOLS AND WINDOW CREATION
