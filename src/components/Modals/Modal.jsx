@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
+import Popover from '@material-ui/core/Popover';
 
 
 const ipc = require('electron').ipcRenderer;
@@ -29,7 +30,7 @@ const Modal = ({
     closeModal,
   );
   const [fileName, setFileName] = useState('');
-
+  const [anchorEl, setAnchorEl] = useState(null);
   const script = useGenerateScript(title, testType, puppeteerUrl);
 
   const modalStyles = {
@@ -52,15 +53,15 @@ const Modal = ({
   }
 
   const jestTest = () => {
-    ipc.send('terminal.toTerm', `${script.test} ${fileName}\n`);
+    ipc.send('terminal.toTerm', `jest ${fileName}\n`);
     closeModal();
   };
   const verboseTest = () => {
-    ipc.send('terminal.toTerm', `${script.verbose} ${fileName}\n`);
+    ipc.send('terminal.toTerm', `jest --verbose ${fileName}\n`);
     closeModal();
   };
   const coverageTest = () => {
-    ipc.send('terminal.toTerm', `${script.coverage} ${fileName}\n`);
+    ipc.send('terminal.toTerm', `jest --coverage ${fileName}\n`);
     closeModal();
   };
 
@@ -84,7 +85,7 @@ const Modal = ({
       <div id={styles.body}>
         {/* Change Directory to root */}
         <div>
-          <p id={styles.endpoint}>1. Change directory to root</p>
+          <p id={styles.step}>1. Change directory to root</p>
           <pre>
             <div className="code-wrapper">
               <code>
@@ -98,7 +99,7 @@ const Modal = ({
         </div>
 
         <div>
-          <p id={styles.endpoint}>2. Install dependencies and Jest. Note if you are using create react app you can skip installing Jest.</p>
+          <p id={styles.step}>2. Install dependencies and Jest. Note if you are using create react app you can skip installing Jest.</p>
           <pre>
             <div className="code-wrapper">
               <code>
@@ -112,7 +113,7 @@ const Modal = ({
         </div>
         {/* Specify file to test */}
         <div>
-          <p id={styles.endpoint}>3. Specify filename.</p>
+          <p id={styles.step}>3. Specify filename.</p>
           <input id='inputFileName' placeholder="test.js" />
           <span id={styles.newTestButtons}>
             <button id={styles.save} onClick={submitFileName}>Submit file Name</button>
@@ -121,13 +122,16 @@ const Modal = ({
 
         {/* Select test to run */}
         <div>
-          <p id={styles.endpoint}>4. Select test to run</p>
+          <p id={styles.step}>4. Select test to run</p>
+          {/* To do: make button toggle on/off */}
+          <button onClick={(e) => { setAnchorEl(e.currentTarget) }}>Config Help</button>
+
           <pre>
             <div className="code-wrapper">
               <code>
-                {script.test + ' ' + fileName + '\n'}
-                {script.verbose + ' ' + fileName + '\n'}
-                {script.coverage + ' ' + fileName + '\n'}
+                {'jest ' + fileName + '\n'}
+                {'jest --verbose ' + fileName + '\n'}
+                {'jest --coverage ' + fileName + '\n'}
               </code>
             </div>
           </pre>
@@ -144,12 +148,38 @@ const Modal = ({
           </span>
         </div>
         {title === 'react' ?
-          <p id={styles.endpoint}>
+          <p id={styles.step}>
             Requires React version 16 or less.
           </p>
           : null
         }
       </div>
+      <Popover
+        // To do: increase the width of popover
+
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <p1>
+          {script.endPointGuide.pre + '\n'}
+          {script.endPointGuide['1'] + '\n'}
+          {script.endPointGuide['2'] + '\n'}
+          {script.endPointGuide['3'] + '\n'}
+          {script.endPointGuide['4'] + '\n'}
+          {script.endPointGuide['4a'] + '\n'}
+          {script.endPointGuide['4b'] + '\n'}
+          {script.endPointGuide['4c'] + '\n'}
+        </p1>
+      </Popover>
     </ReactModal>
   );
 };
