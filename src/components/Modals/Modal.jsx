@@ -12,6 +12,9 @@ import Popover from '@material-ui/core/Popover';
 
 const ipc = require('electron').ipcRenderer;
 
+
+const ipc = require('electron').ipcRenderer;
+
 const Modal = ({
   title,
   isModalOpen,
