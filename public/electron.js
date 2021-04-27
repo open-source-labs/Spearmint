@@ -24,7 +24,8 @@ if (isDev) {
         .catch((err) => console.log('An error occurred: ', err));
     });
   }
-}
+};
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1550,
@@ -60,22 +61,65 @@ function createWindow() {
   ipcMain.on('terminal.toTerm', function(event, data) {
     ptyProcess.write(data);
   })
-}
+};
 
 // FILEDIRECTORY.JSX READ FILE FUNCTIONALITY
-  ipcMain.on('FileDirectory.readFile', (e, filePath) => {
-    e.returnValue = fs.readFileSync(filePath, 'utf8');
-  })
+ipcMain.on('FileDirectory.readFile', (e, filePath) => {
+  e.returnValue = fs.readFileSync(filePath, 'utf8', (err) => {
+    if (err) throw err;
+  });
+});
 
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
-  ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
-    fs.writeFile(filePath, editedText, (err) => {
-      if (err) throw err;
-    });
-    // Return a success message upon save
-    e.returnValue = 'Changes Saved'
-  })
+ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
+  fs.writeFile(filePath, editedText, (err) => {
+    if (err) throw err;
+  });
+  // Return a success message upon save
+  e.returnValue = 'Changes Saved'
+});
 
+/* 
+  EXPORTFILEMODAL.JSX FILE FUNCTIONALITY 
+  (check existence and create folder)
+*/
+ipcMain.on('ExportFileModal.exists', (e, fileOrFolderPath) => {
+  e.returnValue = fs.existsSync(fileOrFolderPath, (err) => {
+    if (err) throw err;
+  });
+});
+
+ipcMain.on('ExportFileModal.mkdir', (e, folderPath) => {
+  e.returnValue = fs.mkdirSync(folderPath, (err) => {
+    if (err) throw err;
+  });
+});
+
+ipcMain.on('ExportFileModal.fileCreate', (e, {filePath, file}) => {
+  e.returnValue = fs.writeFile(filePath, file, (err) => {
+    if (err) throw err;
+  });
+});
+
+ipcMain.on('ExportFileModal.readFile', (e, filePath) => {
+  e.returnValue = fs.readFileSync(filePath, 'utf8', (err) => {
+    if (err) throw err;
+  });
+});
+
+ipcMain.on('ExportFileModal.readDir', (e, projectFilePath) => {
+  e.returnValue = fs.readdirSync(projectFilePath, (err) => {
+    if (err) throw err;
+  });
+});
+
+ipcMain.on('ExportFileModal.stat' , (e, filePath) => { 
+  e.returnValue = fs.statSync(filePath, (err) => {
+    if (err) throw err;
+  });
+});
+
+// OPENFOLDERBUTTON.JSX FILE FUNCTIONALITY
 
 // ELECTRON BOILERPLATE FOR DEVTOOLS AND WINDOW CREATION
 if (isDev) {

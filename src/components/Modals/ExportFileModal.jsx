@@ -12,6 +12,8 @@ import {
 
 import styles from './ExportFileModal.module.scss';
 
+const { ipcRenderer } = require('electron');
+
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 
@@ -38,7 +40,9 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   const handleClickSave = () => {
     // file name uniqueness check
-    if (fs.existsSync(projectFilePath + `/__tests__/${fileName}.test.js`)) {
+    const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;
+    const fileExists = ipcRenderer.sendSync('ExportFileModal.exists', filePath);
+    if (fileExists) {
       setInvalidFileName(true);
       return;
     }
@@ -50,18 +54,22 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
 
   const exportTestFile = async () => {
-    if (!fs.existsSync(projectFilePath + '/__tests__')) {
-      fs.mkdirSync(projectFilePath + '/__tests__');
+    const folderPath = `${projectFilePath}/__tests__`;
+    const folderExists = ipcRenderer.sendSync('ExportFileModal.exists', folderPath);
+    if (!folderExists) {
+      ipcRenderer.sendSync('ExportFileModal.mkdir', folderPath);
     }
-    await fs.writeFile(projectFilePath + `/__tests__/${fileName}.test.js`, file, (err) => {
-      if (err) throw err;
-    });
+    const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;
+    ipcRenderer.sendSync('ExportFileModal.fileCreate', { filePath, file });
+
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
-    displayTestFile(projectFilePath + '/__tests__');
+    displayTestFile(folderPath);
   };
 
   const displayTestFile = (testFolderFilePath) => {
-    const fileContent = fs.readFileSync(testFolderFilePath + `/${fileName}.test.js`, 'utf8');
+    const filePath = `${testFolderFilePath}/${fileName}.test.js`;
+    const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
+
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(toggleFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
@@ -78,7 +86,8 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
   const generateFileTreeObject = (projectFilePath) => {
-    const fileArray = fs.readdirSync(projectFilePath).map((fileName) => {
+    const filePaths = ipcRenderer.sendSync('ExportFileModal.readDir', projectFilePath);
+    const fileArray = filePaths.map((fileName) => {
       // replace backslashes for Windows OS
       projectFilePath = projectFilePath.replace(/\\/g, '/');
       const filePath = `${projectFilePath}/${fileName}`;
@@ -91,7 +100,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
       populateFilePathMap(file);
 
       // generateFileTreeObj will be recursively called if it is a folder
-      const fileData = fs.statSync(file.filePath);
+      const fileData = ipcRenderer.sendSync('ExportFileModal.stat', file.filePath);
       if (file.fileName !== 'node_modules' && file.fileName !== '.git' && fileData.isDirectory()) {
         file.files = generateFileTreeObject(file.filePath);
       }
