@@ -2,7 +2,8 @@
 const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
-const beautify = remote.require('js-beautify');
+
+const beautify = require('js-beautify');
 
 function useGenerateTest(test, projectFilePath) {
   return (testState, mockDataState) => {
