@@ -38,11 +38,10 @@
   display: grid;
   position: fixed; 
   inset: 0px; 
-  background-color: rgba(255, 255, 255, .75); 
+  background-color: rgba(255, 255, 255, 0.75); 
   z-index: 3;
   // Overlay should only show in LeftPanel. Currently hard-coded.
   // min-width: 876px;
-  width: 59.9%;
 }
 
 #title {

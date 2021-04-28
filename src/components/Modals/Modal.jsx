@@ -39,7 +39,7 @@ const Modal = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{isFileDirectoryOpen}, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
@@ -85,10 +85,11 @@ const Modal = ({
         content: {
           top: '25%',
           left: isFileDirectoryOpen ? '22%' : '11%',
+
         },
         overlay: {
-          minWidth: isFileDirectoryOpen ? '876px' : '676px',
-
+          minWidth: isFileDirectoryOpen ? '876px' : '650px',
+          width: isFileDirectoryOpen ? '59.9%' : '49.9%',
         }
       }}
     >

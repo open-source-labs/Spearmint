@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { openBrowserDocs } from '../../context/actions/globalActions';
+import { openBrowserDocs, setTabIndex } from '../../context/actions/globalActions';
 import { addDescribeBlock, createNewTest } from '../../context/actions/accTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
@@ -47,6 +47,7 @@ const AccTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest(accTestCase)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0));
   };
 
   const openNewTestModal = () => {
@@ -61,7 +62,7 @@ const AccTestMenu = () => {
         <div id={styles.left}>
           <button id={styles.newTestBtn} autoFocus onClick={openNewTestModal}>New Test +</button>
           <button onClick={fileHandle}>Preview</button>
-          <button id={styles.example} onClick={openScriptModal}>
+          <button id={styles.example} onClick={openScriptModal} >
             Run Test
           </button>
           <button id={styles.example} onClick={openDocs}>

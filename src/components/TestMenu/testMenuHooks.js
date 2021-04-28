@@ -1,8 +1,10 @@
-import { useState } from 'react';
-
+import { useState, useContext } from 'react';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { setTabIndex } from '../../context/actions/globalActions';
 export function useToggleModal(test) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState(test);
+  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const openModal = () => {
     setTitle('New Test');
@@ -12,6 +14,7 @@ export function useToggleModal(test) {
   const openScriptModal = () => {
     setTitle(title);
     setIsModalOpen(true);
+    dispatchToGlobal(setTabIndex(2));
   };
 
   const closeModal = () => {
