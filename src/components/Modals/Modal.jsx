@@ -13,9 +13,18 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
+import { isImportClause } from 'typescript';
 
 const ipc = require('electron').ipcRenderer;
+const os = require('os');
+
+// ipc.on('Modal.shellType', (e, shellType) => {
+//   //Check os platform to change cmd for terminal execution
+//   let execute = '\n';
+//   if (shellType === 'win32') {
+//     execute = '\r';
+//   }
+// });
 
 // Colors
 const mint = '#038181';
@@ -57,13 +66,19 @@ const Modal = ({
     },
   };
 
+  // Change execute command based on os platform
+  let execute = '\n';
+  if (os.platform() === 'win32') {
+    execute = '\r';
+  }
+
   const changeDirectory = () => {
-    ipc.send('terminal.toTerm', `${script.cd}\n`);
+    ipc.send('terminal.toTerm', `${script.cd}${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
   };
 
   const installDependencies = () => {
-    ipc.send('terminal.toTerm', `${script.install}\n`);
+    ipc.send('terminal.toTerm', `${script.install}${execute}`);
     setBtnFeedback({ ...btnFeedback, installed: true });
   };
 
@@ -73,15 +88,15 @@ const Modal = ({
   }
 
   const jestTest = () => {
-    ipc.send('terminal.toTerm', `jest ${fileName}\n`);
+    ipc.send('terminal.toTerm', `jest ${fileName}${execute}`);
     clearAndClose();
   };
   const verboseTest = () => {
-    ipc.send('terminal.toTerm', `jest --verbose ${fileName}\n`);
+    ipc.send('terminal.toTerm', `jest --verbose ${fileName}${execute}`);
     clearAndClose();
   };
   const coverageTest = () => {
-    ipc.send('terminal.toTerm', `jest --coverage ${fileName}\n`);
+    ipc.send('terminal.toTerm', `jest --coverage ${fileName}${execute}`);
     clearAndClose();
   };
 
@@ -207,10 +222,10 @@ const Modal = ({
               {/* To do: make button toggle on/off */}
               <pre>
                 <div className="code-wrapper">
-                  <code>
-                    {'jest ' + fileName + '\n'}
-                    {'jest --verbose ' + fileName + '\n'}
-                    {'jest --coverage ' + fileName + '\n'}
+                  <code>  
+                    {`jest ${fileName}${execute}`}
+                    {`jest --verbose ${fileName}${execute}`}
+                    {`jest --coverage ${fileName}${execute}`}
                   </code>
                 </div>
               </pre>
@@ -234,4 +249,3 @@ const Modal = ({
 };
 
 export default Modal;
-

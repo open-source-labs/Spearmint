@@ -16,7 +16,14 @@ import {
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const { ipcRenderer } = require('electron');
+const os = require('os');
 const folderOpenIcon = require('../../assets/images/folder-open.png');
+
+// Change execute command based on os platform
+let execute = '\n';
+if (os.platform() === 'win32') {
+  execute = '\r';
+}
 
 const OpenFolder = () => {
   const [{ isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
@@ -38,7 +45,7 @@ const OpenFolder = () => {
       if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
 
       // Re-direct terminal directory to user selected directory
-      ipcRenderer.send('terminal.toTerm', `cd ${directoryPath}\n`);
+      ipcRenderer.send('terminal.toTerm', `cd ${directoryPath}${execute}`);
     }
   };
 

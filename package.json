@@ -28,7 +28,7 @@
     "concurrently": "^4.1.2",
     "cross-env": "^5.2.1",
     "dotenv": "^8.2.0",
-    "electron": "11.4.3",
+    "electron": "^12.0.5",
     "electron-is-dev": "^1.1.0",
     "fibers": "^5.0.0",
     "js-beautify": "^1.10.0",
@@ -58,7 +58,7 @@
     "build": "NODE_ENV=production react-app-rewired build && npm run electron-build",
     "react-build": "NODE_ENV=production react-scripts build",
     "electron-build": "NODE_ENV=production electron-builder -mwl",
-    "electron-rebuild": "electron-rebuild",
+    "electron-rebuild": "electron-rebuild -f -w node-pty",
     "release": "npm run react-build && electron-builder --publish=always",
     "start-windows": "cross-env NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\""

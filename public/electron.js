@@ -8,6 +8,8 @@ const pty = require('node-pty');
 //Dynamic variable to change terminal type based on os
 let shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 
+
+
 let mainWindow;
 
 if (isDev) console.log('electron version', process.versions.electron);
@@ -35,14 +37,16 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
-      // EnableRemoteModule true is required for electron v10 and above. 
-      enableRemoteModule: true,
+      contextIsolation: false,
     },
   });
   mainWindow.loadURL(
     isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`
   );
   mainWindow.on('closed', () => (mainWindow = null));
+
+ // Send shell type to modal for custom terminal commands
+  mainWindow.webContents.send('Modal.shellType', shell)
 
   // PTY PROCESS FOR IN APP TERMINAL
   const ptyProcess = pty.spawn(shell, [], {
