@@ -1,6 +1,5 @@
 /* eslint-disable */
 const remote = window.require('electron').remote;
-const fs = remote.require('fs');
 const path = remote.require('path');
 
 const { ipcRenderer } = require('electron');
@@ -23,7 +22,7 @@ function useGenerateTest(test, projectFilePath) {
     // React Component Import Statement (Render Card)
     const addComponentImportStatement = () => {
       const componentPath = reactTestCase.statements.componentPath;
-      let filePath = path.relative(projectFilePath, componentPath);
+      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
       filePath = filePath.replace(/\\/g, '/');
       testFileCode += `import ${reactTestCase.statements.componentName} from '../${filePath}';`;
     };
@@ -411,7 +410,6 @@ function useGenerateTest(test, projectFilePath) {
     }
     // This function returns true when actiontypes are declared in the same file as the action creators like with this app
     const areActionTypesDeclaredInSameFileAsActionCreators = (file) => {
-      // const page = fs.readFileSync(file);
       const page = ipcRenderer.sendSync('Universal.readFile', file);
       if (page.includes(`export const actionTypes`)) return true;
       else return false;

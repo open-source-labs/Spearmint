@@ -57,7 +57,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
       ipcRenderer.sendSync('ExportFileModal.mkdir', folderPath);
     }
     const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;
-    ipcRenderer.sendSync('ExportFileModal.fileCreate', { filePath, file });
+    ipcRenderer.sendSync('ExportFileModal.fileCreate', filePath, file);
 
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
     displayTestFile(folderPath);

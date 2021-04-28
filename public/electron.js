@@ -64,7 +64,7 @@ function createWindow() {
 };
 
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
-ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
+ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
   fs.writeFile(filePath, editedText, (err) => {
     if (err) throw err;
   });
@@ -88,7 +88,7 @@ ipcMain.on('ExportFileModal.mkdir', (e, folderPath) => {
   });
 });
 
-ipcMain.on('ExportFileModal.fileCreate', (e, {filePath, file}) => {
+ipcMain.on('ExportFileModal.fileCreate', (e, filePath, file) => {
   e.returnValue = fs.writeFile(filePath, file, (err) => {
     if (err) throw err;
   });
@@ -137,6 +137,12 @@ ipcMain.on('Universal.readFile', (e, filePath) => {
     if (err) throw err;
   });
 });
+
+ipcMain.on('Universal.path', (e, folderPath, filePath) => {
+  e.returnValue = path.relative(folderPath, filePath, (err) => {
+    if (err) throw err;
+  });
+})
 
 // ELECTRON BOILERPLATE FOR DEVTOOLS AND WINDOW CREATION
 if (isDev) {

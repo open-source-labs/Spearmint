@@ -39,7 +39,7 @@ const Editor = () => {
     } else setWasSaved('No Changes to Save');
     if (filePath.length && editedText.length) {
       // Send main process the filePath and editedText in obj to save
-      const reply = ipcRenderer.sendSync('EditorView.saveFile', { filePath, editedText });
+      const reply = ipcRenderer.sendSync('EditorView.saveFile', filePath, editedText);
       // Upon reply from main process, update wasSaved state
       setWasSaved(reply);
     }
