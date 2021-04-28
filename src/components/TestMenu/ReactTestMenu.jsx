@@ -13,6 +13,7 @@ import {
   setValidCode,
   setTestCase,
   toggleModal,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
@@ -44,6 +45,7 @@ const ReactTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0));
   };
 
   const openNewTestModal = () => {

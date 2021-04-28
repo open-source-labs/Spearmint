@@ -8,6 +8,7 @@ import {
   openBrowserDocs,
   setTestCase,
   toggleModal,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 import {
   addAsync,
@@ -60,6 +61,7 @@ const ReduxTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0));
   };
 
   const openNewTestModal = () => {

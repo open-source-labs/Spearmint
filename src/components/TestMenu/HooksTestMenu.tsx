@@ -9,6 +9,7 @@ import {
   toggleExportBool,
   setTestCase,
   toggleModal,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import { addHookUpdates, createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
@@ -43,6 +44,7 @@ const HooksTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0));
   };
 
   const openNewTestModal = () => {
