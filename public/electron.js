@@ -79,7 +79,7 @@ ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
   e.returnValue = 'Changes Saved'
 });
 
-/* B
+/*
   EXPORTFILEMODAL.JSX FILE FUNCTIONALITY 
   (check existence and create folder)
 */
