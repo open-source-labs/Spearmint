@@ -3,10 +3,7 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
 
-// const remote = window.require('electron').remote;
-// const fs = require('fs');
-// const path = require('path');
-
+const { ipcRenderer } = require('electron');
 const beautify = require('js-beautify');
 
 function useGenerateTest(test, projectFilePath) {
@@ -414,7 +411,8 @@ function useGenerateTest(test, projectFilePath) {
     }
     // This function returns true when actiontypes are declared in the same file as the action creators like with this app
     const areActionTypesDeclaredInSameFileAsActionCreators = (file) => {
-      const page = fs.readFileSync(file);
+      // const page = fs.readFileSync(file);
+      const page = ipcRenderer.sendSync('Universal.readFile', file);
       if (page.includes(`export const actionTypes`)) return true;
       else return false;
     };

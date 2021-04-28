@@ -63,13 +63,6 @@ function createWindow() {
   })
 };
 
-// FILEDIRECTORY.JSX READ FILE FUNCTIONALITY
-ipcMain.on('FileDirectory.readFile', (e, filePath) => {
-  e.returnValue = fs.readFileSync(filePath, 'utf8', (err) => {
-    if (err) throw err;
-  });
-});
-
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
 ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
   fs.writeFile(filePath, editedText, (err) => {
@@ -135,6 +128,12 @@ ipcMain.on('Universal.stat' , (e, filePath) => {
 
 ipcMain.on('Universal.readDir', (e, projectFilePath) => {
   e.returnValue = fs.readdirSync(projectFilePath, (err) => {
+    if (err) throw err;
+  });
+});
+
+ipcMain.on('Universal.readFile', (e, filePath) => {
+  e.returnValue = fs.readFileSync(filePath, 'utf8', (err) => {
     if (err) throw err;
   });
 });
