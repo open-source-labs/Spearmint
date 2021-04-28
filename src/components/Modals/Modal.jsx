@@ -3,7 +3,7 @@
  * which render on the top Test Menu component.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
@@ -12,6 +12,8 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import cn from 'classnames';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 
 const ipc = require('electron').ipcRenderer;
@@ -36,7 +38,8 @@ const Modal = ({
   const [fileName, setFileName] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const script = useGenerateScript(title, testType, puppeteerUrl);
-  const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false })
+  const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
+  const [{isFileDirectoryOpen}, dispatchToGlobal] = useContext(GlobalContext);
 
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
@@ -78,10 +81,27 @@ const Modal = ({
       shouldCloseOnEsc={true}
       overlayClassName={styles.modalCustomOverlay}
       ariaHideApp={false}
+      style={{
+        content: {
+          top: '25%',
+          left: isFileDirectoryOpen ? '22%' : '11%',
+        },
+        overlay: {
+          minWidth: isFileDirectoryOpen ? '876px' : '676px',
+
+        }
+      }}
     >
       {/* Modal Title */}
       <div id={styles.title}>
         <p style={{ fontSize: 20 }}>Run Tests in Terminal</p>
+        <i
+          tabIndex={0}
+          onKeyPress={clearAndClose}
+          onClick={clearAndClose}
+          id={styles.escapeButton}
+          className={cn('far fa-window-close', styles.describeClose)}
+        />
       </div>
       {/* Accordian View */}
       <div>
