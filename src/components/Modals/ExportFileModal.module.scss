@@ -42,18 +42,15 @@
   padding: 20px 25px 10px 25px;
 
   #endpoint {
-<<<<<<< HEAD
     color: black;
   }
   #step {
-=======
->>>>>>> 85ff6b83f39282b25e2192d22641785f2e59d963
     color: rgb(255, 255, 255);
     margin-bottom: 10px;
     // span {
     //   margin-left: 50px;
-    // }
 
+    // }
     span:hover {
       color: $mint;
     }
@@ -67,6 +64,8 @@
     li:first-child {
       margin-top: 4px;
     }
+
+    
   }
 
   p {
@@ -118,7 +117,17 @@
 
 #newTestButtons {
   display: flex;
-  justify-content: flex-start
+  justify-content: flex-start;
+
+  #feedback {
+
+    p {
+
+      font-size: 12px;
+      margin-top: 6px;
+    }
+  };
+  
 }
 #newTestButtons:focus {
   outline: 1px solid darkblue

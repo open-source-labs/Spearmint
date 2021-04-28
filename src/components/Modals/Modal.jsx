@@ -8,12 +8,15 @@ import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
 import Popover from '@material-ui/core/Popover';
+// Accordion view
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 const ipc = require('electron').ipcRenderer;
 
-
-const ipc = require('electron').ipcRenderer;
 
 const Modal = ({
   title,
@@ -35,6 +38,12 @@ const Modal = ({
   const [fileName, setFileName] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const script = useGenerateScript(title, testType, puppeteerUrl);
+  const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false })
+
+  const clearAndClose = () => {
+    setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
+    closeModal();
+  }
 
   const modalStyles = {
     overlay: {
@@ -44,10 +53,12 @@ const Modal = ({
 
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}\n`);
+    setBtnFeedback({ ...btnFeedback, changedDir: true });
   };
 
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}\n`);
+    setBtnFeedback({ ...btnFeedback, installed: true });
   };
 
   const submitFileName = () => {
@@ -57,23 +68,22 @@ const Modal = ({
 
   const jestTest = () => {
     ipc.send('terminal.toTerm', `jest ${fileName}\n`);
-    closeModal();
+    clearAndClose();
   };
   const verboseTest = () => {
     ipc.send('terminal.toTerm', `jest --verbose ${fileName}\n`);
-    closeModal();
+    clearAndClose();
   };
   const coverageTest = () => {
     ipc.send('terminal.toTerm', `jest --coverage ${fileName}\n`);
-    closeModal();
+    clearAndClose();
   };
-
 
   return (
     <ReactModal
       className={styles.modal}
       isOpen={isModalOpen}
-      onRequestClose={closeModal}
+      onRequestClose={clearAndClose}
       contentLabel="Save?"
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
@@ -82,13 +92,13 @@ const Modal = ({
     >
       {/* Modal Title */}
       <div id={styles.title}>
-        <p>Run Tests in Terminal</p>
+        <p>Setup and Run Tests</p>
       </div>
       {/* Code snippets */}
       <div id={styles.body}>
         {/* Change Directory to root */}
         <div>
-          <p id={styles.step}>1. Change directory to root</p>
+          <p id={styles.step}>1. Set terminal to root directory</p>
           <pre>
             <div className="code-wrapper">
               <code>
@@ -97,12 +107,15 @@ const Modal = ({
             </div>
           </pre>
           <span id={styles.newTestButtons}>
-            <button id={styles.save} onClick={changeDirectory}>Change Directory</button>
+            <button id={styles.save} className='changeDirectory' onClick={changeDirectory}>Change Directory</button>
+            <div id={styles.feedback}>
+              {btnFeedback.changedDir === false ? null : <p>Directory has been changed to root directory.</p>}
+            </div>
           </span>
         </div>
 
         <div>
-          <p id={styles.step}>2. Install dependencies and Jest. Note if you are using create react app you can skip installing Jest.</p>
+          <p id={styles.step}>2. Install dependencies and Jest. Note if you are using create react app you can skip installing Jest</p>
           <pre>
             <div className="code-wrapper">
               <code>
@@ -111,12 +124,15 @@ const Modal = ({
             </div>
           </pre>
           <span id={styles.newTestButtons}>
-            <button id={styles.save} onClick={installDependencies}>Install Dependencies</button>
+            <button id={styles.save} onClick={installDependencies}>Install</button>
+            <div id={styles.feedback}>
+              {btnFeedback.installed === false ? null : <p>Dependencies installation have been complete</p>}
+            </div>
           </span>
         </div>
         {/* Specify file to test */}
         <div>
-          <p id={styles.step}>3. Specify filename.</p>
+          <p id={styles.step}>3. (optional) Specify filename to test</p>
           <input id='inputFileName' placeholder="test.js" />
           <span id={styles.newTestButtons}>
             <button id={styles.save} onClick={submitFileName}>Submit file Name</button>
@@ -172,7 +188,7 @@ const Modal = ({
           horizontal: 'left',
         }}
       >
-        <p1>
+        {/* <p1>
           {script.endPointGuide.pre + '\n'}
           {script.endPointGuide['1'] + '\n'}
           {script.endPointGuide['2'] + '\n'}
@@ -181,7 +197,7 @@ const Modal = ({
           {script.endPointGuide['4a'] + '\n'}
           {script.endPointGuide['4b'] + '\n'}
           {script.endPointGuide['4c'] + '\n'}
-        </p1>
+        </p1> */}
       </Popover>
     </ReactModal>
   );
