@@ -18,26 +18,16 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 const { ipcRenderer } = require('electron');
 const folderOpenIcon = require('../../assets/images/folder-open.png');
 
-const { remote } = window.require('electron');
-const { dialog } = remote;
-
 const OpenFolder = () => {
   const [{ isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
     GlobalContext,
   );
 
-  const handleOpenFolder = async () => {
-    const directory = await dialog.showOpenDialog({
-      properties: ['openDirectory', 'createDirectory'],
-      filters: [
-        { name: 'Javascript Files', extensions: ['js', 'jsx'] },
-        { name: 'Style', extensions: ['css'] },
-        { name: 'Html', extensions: ['html'] },
-      ],
-      message: 'Please select your project folder',
-    });
-    if (directory && directory.filePaths[0]) {
-      let directoryPath = directory.filePaths[0];
+  const handleOpenFolder = () => {
+    const directory = ipcRenderer.sendSync('OpenFolderButton.dialog');
+
+    if (directory && directory[0]) {
+      let directoryPath = directory[0];
       // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       dispatchToGlobal(setProjectFilePath(directoryPath));

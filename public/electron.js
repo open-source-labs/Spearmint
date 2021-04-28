@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const fs = require('fs');
@@ -110,6 +110,19 @@ ipcMain.on('ExportFileModal.readFile', (e, filePath) => {
 // OPENFOLDERBUTTON.JSX FILE FUNCTIONALITY
 ipcMain.on('OpenFolderButton.isDirectory' , (e, filePath) => { 
   e.returnValue = fs.statSync(filePath).isDirectory();
+});
+
+ipcMain.on('OpenFolderButton.dialog' , (e) => { 
+  const dialogOptions = {
+    properties: ['openDirectory', 'createDirectory'],
+    filters: [
+      { name: 'Javascript Files', extensions: ['js', 'jsx'] },
+      { name: 'Style', extensions: ['css'] },
+      { name: 'Html', extensions: ['html'] },
+    ],
+    message: 'Please select your project folder',
+  };
+  e.returnValue = dialog.showOpenDialogSync(dialogOptions);
 });
 
 /*
