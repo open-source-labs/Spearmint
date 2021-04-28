@@ -2,6 +2,7 @@
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
 import styles from '../../components/Modals/ExportFileModal.module.scss';
+import cn from 'classnames';
 
 // may be able to delete toggleReact, etc. from their respective action files
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
@@ -105,7 +106,14 @@ const TestFile = () => {
         style={modalStyles}
       >
         <div id={styles.title}>
-          <p>Test</p>
+          <p style={{ fontSize: 15 }}>Test</p>
+          <i
+            tabIndex={0}
+            onKeyPress={closeTestModal}
+            onClick={closeTestModal}
+            id={styles.escapeButton}
+            className={cn('far fa-window-close', styles.describeClose)}
+          />
         </div>
         <div id={styles.body}>
           <p id={styles.text}>What would you like to test?</p>
