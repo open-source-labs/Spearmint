@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
-import Popover from '@material-ui/core/Popover';
 // Accordion view
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -16,13 +15,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
 const ipc = require('electron').ipcRenderer;
-
-// Colors
-const mint = '#038181';
-const mint2 = '#02c3c33f';
-const mint3 = '#4ef2f258'
-const lightGray4 = '#bceeeed7';
-const darkGray = '#808080';
 
 const Modal = ({
   title,
@@ -51,12 +43,6 @@ const Modal = ({
     closeModal();
   }
 
-  const modalStyles = {
-    overlay: {
-      zIndex: 3,
-    },
-  };
-
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}\n`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
@@ -74,15 +60,12 @@ const Modal = ({
 
   const jestTest = () => {
     ipc.send('terminal.toTerm', `jest ${fileName}\n`);
-    clearAndClose();
   };
   const verboseTest = () => {
     ipc.send('terminal.toTerm', `jest --verbose ${fileName}\n`);
-    clearAndClose();
   };
   const coverageTest = () => {
     ipc.send('terminal.toTerm', `jest --coverage ${fileName}\n`);
-    clearAndClose();
   };
 
   return (
@@ -93,12 +76,12 @@ const Modal = ({
       contentLabel="Save?"
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      overlayClassName={styles.modalCustomOverlay}
       ariaHideApp={false}
-      style={modalStyles}
     >
       {/* Modal Title */}
       <div id={styles.title}>
-        <p style={{fontSize: 20}}>Run Tests in Terminal</p>
+        <p style={{ fontSize: 20 }}>Run Tests in Terminal</p>
       </div>
       {/* Accordian View */}
       <div>
@@ -114,7 +97,7 @@ const Modal = ({
           </AccordionSummary>
           <AccordionDetails id={styles.accordionDetails}>
             <div style={{ width: '100%' }}>
-            {/* Change Directory */}
+              {/* Change Directory */}
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -141,11 +124,11 @@ const Modal = ({
                   </div>
                 </AccordionDetails>
               </Accordion>
-            {/* Install Dependencies */}
+              {/* Install Dependencies */}
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content" 
+                  aria-controls="panel1a-content"
                   id={styles.accordionSummary}>
                   2. Install dependencies and Jest.
                 </AccordionSummary>
@@ -190,7 +173,6 @@ const Modal = ({
             </div>
           </AccordionDetails>
         </Accordion>
-
         {/* Testing */}
         <Accordion>
           <AccordionSummary

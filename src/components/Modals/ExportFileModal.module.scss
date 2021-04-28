@@ -1,6 +1,11 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
+// .grid-container {
+//   display: grid;
+//   grid-template-areas: 'myArea myArea myArea myArea';
+// }
+
 .modal {
   position: fixed;
   width: 500px;
@@ -19,7 +24,7 @@
   position: fixed;
   width: 500px;
   font-family: $openSans;
-  background-color: $mint2;
+  background-color: white;
   opacity: 1;
   border: 8px solid $mint;
   border-radius: 5px;
@@ -27,6 +32,25 @@
   object-fit: cover;
   top: 25%;
   left: 22%;
+  // display: grid;
+  // grid-area: 'leftPanel';
+  // grid-column-start: 1;
+  // grid-column-end: 2;
+
+
+}
+
+.modalCustomOverlay {
+  display: grid;
+  position: fixed; 
+  inset: 0px; 
+  background-color: rgba(255, 255, 255, .75); 
+  z-index: 3;
+  // Overlay should only show in LeftPanel. Currently hard-coded.
+  min-width: 876px;
+  width: 59.9%;
+
+
 }
 
 #title {
