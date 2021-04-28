@@ -8,10 +8,10 @@ import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
 import Popover from '@material-ui/core/Popover';
+// Accordion view
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
-import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 
@@ -23,7 +23,6 @@ const mint2 = '#02c3c33f';
 const mint3 = '#4ef2f258'
 const lightGray4 = '#bceeeed7';
 const darkGray = '#808080';
-
 
 const Modal = ({
   title,
@@ -45,6 +44,12 @@ const Modal = ({
   const [fileName, setFileName] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const script = useGenerateScript(title, testType, puppeteerUrl);
+  const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false })
+
+  const clearAndClose = () => {
+    setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
+    closeModal();
+  }
 
   const modalStyles = {
     overlay: {
@@ -54,10 +59,12 @@ const Modal = ({
 
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}\n`);
+    setBtnFeedback({ ...btnFeedback, changedDir: true });
   };
 
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}\n`);
+    setBtnFeedback({ ...btnFeedback, installed: true });
   };
 
   const submitFileName = () => {
@@ -67,22 +74,22 @@ const Modal = ({
 
   const jestTest = () => {
     ipc.send('terminal.toTerm', `jest ${fileName}\n`);
-    closeModal();
+    clearAndClose();
   };
   const verboseTest = () => {
     ipc.send('terminal.toTerm', `jest --verbose ${fileName}\n`);
-    closeModal();
+    clearAndClose();
   };
   const coverageTest = () => {
     ipc.send('terminal.toTerm', `jest --coverage ${fileName}\n`);
-    closeModal();
+    clearAndClose();
   };
 
   return (
     <ReactModal
       className={styles.modal2}
       isOpen={isModalOpen}
-      onRequestClose={closeModal}
+      onRequestClose={clearAndClose}
       contentLabel="Save?"
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
@@ -126,8 +133,10 @@ const Modal = ({
                       </div>
                     </pre>
                     <span id={styles.newTestButtons}>
-                      <button id={styles.save} onClick={changeDirectory}>Change Directory</button>
-                      <div className='feedback'  >Directory has been changed to root</div>
+                      <button id={styles.save} className='changeDirectory' onClick={changeDirectory}>Change Directory</button>
+                      <div id={styles.feedback}>
+                        {btnFeedback.changedDir === false ? null : <p>Directory has been changed to root directory.</p>}
+                      </div>
                     </span>
                   </div>
                 </AccordionDetails>
@@ -151,6 +160,9 @@ const Modal = ({
                     </pre>
                     <span id={styles.newTestButtons}>
                       <button id={styles.save} onClick={installDependencies}>Install</button>
+                      <div id={styles.feedback}>
+                        {btnFeedback.installed === false ? null : <p>Dependencies installation have been complete</p>}
+                      </div>
                     </span>
                   </div>
                 </AccordionDetails>
@@ -217,7 +229,6 @@ const Modal = ({
           </AccordionDetails>
         </Accordion>
       </div>
-
     </ReactModal>
   );
 };
