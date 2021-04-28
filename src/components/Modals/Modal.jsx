@@ -17,6 +17,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const ipc = require('electron').ipcRenderer;
 
+// Colors
+const mint = '#038181';
+const mint2 = '#02c3c33f';
+const mint3 = '#4ef2f258'
+const lightGray4 = '#bceeeed7';
+const darkGray = '#808080';
 
 const Modal = ({
   title,
@@ -81,7 +87,7 @@ const Modal = ({
 
   return (
     <ReactModal
-      className={styles.modal}
+      className={styles.modal2}
       isOpen={isModalOpen}
       onRequestClose={clearAndClose}
       contentLabel="Save?"
@@ -92,115 +98,140 @@ const Modal = ({
     >
       {/* Modal Title */}
       <div id={styles.title}>
-        <p>Setup and Run Tests</p>
+        <p style={{fontSize: 20}}>Run Tests in Terminal</p>
       </div>
-      {/* Code snippets */}
-      <div id={styles.body}>
-        {/* Change Directory to root */}
-        <div>
-          <p id={styles.step}>1. Set terminal to root directory</p>
-          <pre>
-            <div className="code-wrapper">
-              <code>
-                {script.cd}
-              </code>
+      {/* Accordian View */}
+      <div>
+        {/* Configuration Guide */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            id={styles.accordionSummary}
+          >
+            Configuration Guide
+          </AccordionSummary>
+          <AccordionDetails id={styles.accordionDetails}>
+            <div style={{ width: '100%' }}>
+            {/* Change Directory */}
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id={styles.accordionSummary}
+                >
+                  1. Set terminal to root directory.
+                </AccordionSummary>
+                <AccordionDetails id={styles.accordionDetails}>
+                  <div id={styles.accordionDiv}>
+                    <pre>
+                      <div className="code-wrapper">
+                        <code>
+                          {script.cd}
+                        </code>
+                      </div>
+                    </pre>
+                    <span id={styles.newTestButtons}>
+                      <button id={styles.save} className='changeDirectory' onClick={changeDirectory}>Change Directory</button>
+                      <div id={styles.feedback}>
+                        {btnFeedback.changedDir === false ? null : <p>Directory has been changed to root directory.</p>}
+                      </div>
+                    </span>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
+            {/* Install Dependencies */}
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content" 
+                  id={styles.accordionSummary}>
+                  2. Install dependencies and Jest.
+                </AccordionSummary>
+                <AccordionDetails id={styles.accordionDetails}>
+                  <div>
+                    <pre>
+                      <div className="code-wrapper">
+                        <code>
+                          {script.install}
+                        </code>
+                      </div>
+                    </pre>
+                    <span id={styles.newTestButtons}>
+                      <button id={styles.save} onClick={installDependencies}>Install</button>
+                      <div id={styles.feedback}>
+                        {btnFeedback.installed === false ? null : <p>Dependencies installation have been complete</p>}
+                      </div>
+                    </span>
+                  </div>
+                </AccordionDetails>
+              </Accordion>
             </div>
-          </pre>
-          <span id={styles.newTestButtons}>
-            <button id={styles.save} className='changeDirectory' onClick={changeDirectory}>Change Directory</button>
-            <div id={styles.feedback}>
-              {btnFeedback.changedDir === false ? null : <p>Directory has been changed to root directory.</p>}
+          </AccordionDetails>
+        </Accordion>
+        {/* Specify File to test */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            // id="panel1a-header"
+            id={styles.accordionSummary}
+          >
+            Specify file to test (optional)
+          </AccordionSummary>
+          <AccordionDetails id={styles.accordionDetails}>
+            {/* Select test to run */}
+            <div id={styles.accordionDiv}>
+              <input id='inputFileName' placeholder="example.js" />
+              <span id={styles.newTestButtons}>
+                <button id={styles.save} onClick={submitFileName}>Submit</button>
+              </span>
             </div>
-          </span>
-        </div>
+          </AccordionDetails>
+        </Accordion>
 
-        <div>
-          <p id={styles.step}>2. Install dependencies and Jest. Note if you are using create react app you can skip installing Jest</p>
-          <pre>
-            <div className="code-wrapper">
-              <code>
-                {script.install}
-              </code>
+        {/* Testing */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            // id="panel1a-header"
+            id={styles.accordionSummary}
+          >
+            Select and Run Tests
+          </AccordionSummary>
+          <AccordionDetails id={styles.accordionDetails}>
+            {/* Select test to run */}
+            <div id={styles.accordionDiv}>
+              {/* To do: make button toggle on/off */}
+              <pre>
+                <div className="code-wrapper">
+                  <code>
+                    {'jest ' + fileName + '\n'}
+                    {'jest --verbose ' + fileName + '\n'}
+                    {'jest --coverage ' + fileName + '\n'}
+                  </code>
+                </div>
+              </pre>
+              <span id={styles.newTestButtons}>
+                <button id={styles.save} onClick={jestTest}>
+                  Jest Test
+                </button>
+                <button id={styles.save} onClick={verboseTest}>
+                  Verbose Test
+                </button>
+                <button id={styles.save} onClick={coverageTest}>
+                  Coverage Test
+                </button>
+              </span>
             </div>
-          </pre>
-          <span id={styles.newTestButtons}>
-            <button id={styles.save} onClick={installDependencies}>Install</button>
-            <div id={styles.feedback}>
-              {btnFeedback.installed === false ? null : <p>Dependencies installation have been complete</p>}
-            </div>
-          </span>
-        </div>
-        {/* Specify file to test */}
-        <div>
-          <p id={styles.step}>3. (optional) Specify filename to test</p>
-          <input id='inputFileName' placeholder="test.js" />
-          <span id={styles.newTestButtons}>
-            <button id={styles.save} onClick={submitFileName}>Submit file Name</button>
-          </span>
-        </div>
-
-        {/* Select test to run */}
-        <div>
-          <p id={styles.step}>4. Select test to run</p>
-          {/* To do: make button toggle on/off */}
-          <button onClick={(e) => { setAnchorEl(e.currentTarget) }}>Config Help</button>
-
-          <pre>
-            <div className="code-wrapper">
-              <code>
-                {'jest ' + fileName + '\n'}
-                {'jest --verbose ' + fileName + '\n'}
-                {'jest --coverage ' + fileName + '\n'}
-              </code>
-            </div>
-          </pre>
-          <span id={styles.newTestButtons}>
-            <button id={styles.save} onClick={jestTest}>
-              Jest Test
-            </button>
-            <button id={styles.save} onClick={verboseTest}>
-              Verbose Test
-            </button>
-            <button id={styles.save} onClick={coverageTest}>
-              Coverage Test
-            </button>
-          </span>
-        </div>
-        {title === 'react' ?
-          <p id={styles.step}>
-            Requires React version 16 or less.
-          </p>
-          : null
-        }
+          </AccordionDetails>
+        </Accordion>
       </div>
-      <Popover
-        // To do: increase the width of popover
-
-        open={Boolean(anchorEl)}
-        anchorEl={anchorEl}
-        onClose={() => setAnchorEl(null)}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-      >
-        {/* <p1>
-          {script.endPointGuide.pre + '\n'}
-          {script.endPointGuide['1'] + '\n'}
-          {script.endPointGuide['2'] + '\n'}
-          {script.endPointGuide['3'] + '\n'}
-          {script.endPointGuide['4'] + '\n'}
-          {script.endPointGuide['4a'] + '\n'}
-          {script.endPointGuide['4b'] + '\n'}
-          {script.endPointGuide['4c'] + '\n'}
-        </p1> */}
-      </Popover>
     </ReactModal>
   );
 };
 
 export default Modal;
+

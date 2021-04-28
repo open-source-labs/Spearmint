@@ -10,14 +10,28 @@
   border-radius: 5px;
   box-shadow: 0 0 0 1px white inset;
   object-fit: cover;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 25%;
+  left: 22%;
+  // transform: translate(-90%, -50%);
+}
+
+.modal2 {
+  position: fixed;
+  width: 500px;
+  font-family: $openSans;
+  background-color: $mint2;
+  opacity: 1;
+  border: 8px solid $mint;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px white inset;
+  object-fit: cover;
+  top: 25%;
+  left: 22%;
 }
 
 #title {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background-color: $mint;
   margin: 1px;
@@ -106,6 +120,7 @@
   text-align: center;
 }
 
+
 #save:hover {
   background-color: rgb(232, 232, 232);
   color: $mint;
@@ -162,33 +177,35 @@
   }
 }
 
+#accordionSummary {
+  background-color: $mint2;
+}
+
+#accordionDetails {
+  background-color: 'white';
+  opacity: 1;
+
+}
+
+#accordionDiv {
+  // background-color: $mint;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
 pre {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: 12px 15px;
   margin-top: -4px;
   margin-bottom: 8px;
   overflow: auto;
+  width: 97.5%;
   font-size: 85%;
   line-height: 1.45;
-  background-color: #f6f8fa;
+  background-color: #0a1f40;
+  color: white;
   // border-radius: 6px;
-  .code-wrapper {
-    background: #f4f4f4;
-    // padding: 1rem;
-    border: 1px solid #ddd;
-    color: #666;
-    width: 500px;
-
-    code {
-      display: inline;
-      max-width: auto;
-      padding: 0;
-      margin: 0;
-      overflow: visible;
-      line-height: inherit;
-      word-wrap: normal;
-      background-color: initial;
-      white-space: pre;
-      border: 0;
-    }
-  }
 }
