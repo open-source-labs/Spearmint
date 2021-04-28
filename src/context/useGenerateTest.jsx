@@ -3,6 +3,10 @@ const remote = window.require('electron').remote;
 const fs = remote.require('fs');
 const path = remote.require('path');
 
+// const remote = window.require('electron').remote;
+// const fs = require('fs');
+// const path = require('path');
+
 const beautify = require('js-beautify');
 
 function useGenerateTest(test, projectFilePath) {

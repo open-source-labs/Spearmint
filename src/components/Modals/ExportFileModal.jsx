@@ -98,7 +98,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
       // generateFileTreeObj will be recursively called if it is a folder
       const fileData = ipcRenderer.sendSync('Universal.stat', file.filePath);
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && fileData.isDirectory()) {
+      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && fileData) {
         file.files = generateFileTreeObject(file.filePath);
       }
       return file;

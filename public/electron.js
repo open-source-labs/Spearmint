@@ -130,16 +130,14 @@ UNIVERSAL IPC CALLS
 (The following IPC calls are made from various components in the codebase)
 */
 ipcMain.on('Universal.stat' , (e, filePath) => { 
-  e.returnValue = fs.statSync(filePath);
+  e.returnValue = fs.statSync(filePath).isDirectory();
 });
-
 
 ipcMain.on('Universal.readDir', (e, projectFilePath) => {
   e.returnValue = fs.readdirSync(projectFilePath, (err) => {
     if (err) throw err;
   });
 });
-
 
 // ELECTRON BOILERPLATE FOR DEVTOOLS AND WINDOW CREATION
 if (isDev) {
