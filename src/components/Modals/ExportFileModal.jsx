@@ -14,9 +14,6 @@ import styles from './ExportFileModal.module.scss';
 
 const { ipcRenderer } = require('electron');
 
-const remote = window.require('electron').remote;
-const fs = remote.require('fs');
-
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
@@ -86,7 +83,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   };
 
   const generateFileTreeObject = (projectFilePath) => {
-    const filePaths = ipcRenderer.sendSync('ExportFileModal.readDir', projectFilePath);
+    const filePaths = ipcRenderer.sendSync('Universal.readDir', projectFilePath);
     const fileArray = filePaths.map((fileName) => {
       // replace backslashes for Windows OS
       projectFilePath = projectFilePath.replace(/\\/g, '/');
@@ -100,7 +97,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
       populateFilePathMap(file);
 
       // generateFileTreeObj will be recursively called if it is a folder
-      const fileData = ipcRenderer.sendSync('ExportFileModal.stat', file.filePath);
+      const fileData = ipcRenderer.sendSync('Universal.stat', file.filePath);
       if (file.fileName !== 'node_modules' && file.fileName !== '.git' && fileData.isDirectory()) {
         file.files = generateFileTreeObject(file.filePath);
       }

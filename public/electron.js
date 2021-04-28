@@ -79,7 +79,7 @@ ipcMain.on('EditorView.saveFile', (e, {filePath, editedText}) => {
   e.returnValue = 'Changes Saved'
 });
 
-/* 
+/* B
   EXPORTFILEMODAL.JSX FILE FUNCTIONALITY 
   (check existence and create folder)
 */
@@ -107,19 +107,26 @@ ipcMain.on('ExportFileModal.readFile', (e, filePath) => {
   });
 });
 
-ipcMain.on('ExportFileModal.readDir', (e, projectFilePath) => {
+// OPENFOLDERBUTTON.JSX FILE FUNCTIONALITY
+ipcMain.on('OpenFolderButton.isDirectory' , (e, filePath) => { 
+  e.returnValue = fs.statSync(filePath).isDirectory();
+});
+
+/*
+UNIVERSAL IPC CALLS
+(The following IPC calls are made from various components in the codebase)
+*/
+ipcMain.on('Universal.stat' , (e, filePath) => { 
+  e.returnValue = fs.statSync(filePath);
+});
+
+
+ipcMain.on('Universal.readDir', (e, projectFilePath) => {
   e.returnValue = fs.readdirSync(projectFilePath, (err) => {
     if (err) throw err;
   });
 });
 
-ipcMain.on('ExportFileModal.stat' , (e, filePath) => { 
-  e.returnValue = fs.statSync(filePath, (err) => {
-    if (err) throw err;
-  });
-});
-
-// OPENFOLDERBUTTON.JSX FILE FUNCTIONALITY
 
 // ELECTRON BOILERPLATE FOR DEVTOOLS AND WINDOW CREATION
 if (isDev) {

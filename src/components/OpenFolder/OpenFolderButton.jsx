@@ -15,11 +15,10 @@ import {
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
-const ipc = require('electron').ipcRenderer;
+const { ipcRenderer } = require('electron');
 const folderOpenIcon = require('../../assets/images/folder-open.png');
 
 const { remote } = window.require('electron');
-const electronFs = remote.require('fs');
 const { dialog } = remote;
 
 const OpenFolder = () => {
@@ -49,7 +48,7 @@ const OpenFolder = () => {
       if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
 
       // Re-direct terminal directory to user selected directory
-      ipc.send('terminal.toTerm', `cd ${directoryPath}\n`);
+      ipcRenderer.send('terminal.toTerm', `cd ${directoryPath}\n`);
     }
   };
 
@@ -64,7 +63,8 @@ const OpenFolder = () => {
   };
 
   const generateFileTreeObject = (directoryPath) => {
-    const fileArray = electronFs.readdirSync(directoryPath).map((fileName) => {
+    const filePaths = ipcRenderer.sendSync('Universal.readDir', directoryPath);
+    const fileArray = filePaths.map((fileName) => {
       // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       const filePath = `${directoryPath}/${fileName}`;
@@ -77,8 +77,8 @@ const OpenFolder = () => {
       populateFilePathMap(file);
 
       // generateFileTreeObj will be recursively called if it is a folder
-      const fileData = electronFs.statSync(file.filePath);
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && fileData.isDirectory()) {
+      const isDirectory = ipcRenderer.sendSync('OpenFolderButton.isDirectory', filePath);
+      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && isDirectory) {
         file.files = generateFileTreeObject(file.filePath);
       }
       return file;
