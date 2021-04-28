@@ -1,15 +1,12 @@
 /* eslint-disable */
-const remote = window.require('electron').remote;
-const path = remote.require('path');
-
 const { ipcRenderer } = require('electron');
 const beautify = require('js-beautify');
 
 function useGenerateTest(test, projectFilePath) {
   return (testState, mockDataState) => {
     let testFileCode = '';
-    // import React from "react";
-    /* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
+
+/* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // React Import Statements
     const addReactImportStatements = () => {
@@ -93,7 +90,7 @@ function useGenerateTest(test, projectFilePath) {
       }, '');
     };
 
-    /* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
+/* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // Redux Import Statements
     function addReduxImportStatements() {
@@ -227,7 +224,7 @@ function useGenerateTest(test, projectFilePath) {
       }
     }
 
-    /* ------------------------------------------ HOOKS & CONTEXT IMPORT + TEST STATEMENTS ------------------------------------------ */
+/* ------------------------------------------ HOOKS & CONTEXT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // Hooks & Context Import Statements
     const addHooksImportStatements = () => {
@@ -282,7 +279,7 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '\n';
     };
 
-    /* ------------------------------------------ ENDPOINT IMPORT + TEST STATEMENTS ------------------------------------------ */
+/* ------------------------------------------ ENDPOINT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // Endpoint Import Statements
     const addEndpointImportStatements = () => {
@@ -303,7 +300,7 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-    /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
+/* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     /* getLargestContentfulPaint()
         - creating a new PerformanceObserver object which will call the callback function when observed performance events happen
@@ -357,14 +354,14 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-    /* ------------------------------------------ FILEPATHS ------------------------------------------ */
+/* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
     // Actions Filepath
     // creates import statement for action creators
     const createPathToActions = (statement) => {
       let filePath = null;
       if (statement.filePath) {
-        filePath = path.relative(projectFilePath, statement.filePath);
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.filePath);
         filePath = filePath.replace(/\\/g, '/');
       }
       if (!testFileCode.includes(`import * as actions from from`) && filePath) {
@@ -376,7 +373,7 @@ function useGenerateTest(test, projectFilePath) {
     function createPathToReducers(statement) {
       let filePath = null;
       if (statement.reducersFilePath) {
-        filePath = path.relative(projectFilePath, statement.reducersFilePath);
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.reducersFilePath);
         filePath = filePath.replace(/\\/g, '/');
       }
       if (
@@ -394,7 +391,7 @@ function useGenerateTest(test, projectFilePath) {
       let filePath = null;
       let bool = false;
       if (statement.typesFilePath) {
-        filePath = path.relative(projectFilePath, statement.typesFilePath);
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.typesFilePath);
         filePath = filePath.replace(/\\/g, '/');
         bool = areActionTypesDeclaredInSameFileAsActionCreators(statement.typesFilePath);
       }
@@ -420,7 +417,7 @@ function useGenerateTest(test, projectFilePath) {
       let filePath = null;
       console.log(filePath);
       if (statement.middlewaresFilePath) {
-        filePath = path.relative(projectFilePath, statement.middlewaresFilePath);
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.middlewaresFilePath);
         filePath = filePath.replace(/\\/g, '/');
       }
 
@@ -445,7 +442,7 @@ function useGenerateTest(test, projectFilePath) {
         return str;
       }, '');
       if (!testFileCode.includes(`import { ${hooksStatements[0].hook}`) && statement.hookFilePath) {
-        let filePath = path.relative(projectFilePath, statement.hookFilePath);
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
         filePath = filePath.replace(/\\/g, '/');
 
         testFileCode += `import { ${hookImports} } from '../${filePath}';`;
@@ -466,14 +463,14 @@ function useGenerateTest(test, projectFilePath) {
     // Endpoint Filepath
     const createPathToEndFiles = (serverFilePath, dbFilePath, addDB) => {
       if (serverFilePath) {
-        let filePath = path.relative(projectFilePath, serverFilePath);
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest')
       const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
       if (dbFilePath) {
-        let filePath = path.relative(projectFilePath, dbFilePath);
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, dbFilePath);
         filePath = filePath.replace(/\\/g, '/');
 
         switch (addDB) {
@@ -495,7 +492,7 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-    /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
+/* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
 
     const addMockData = () => {
       mockData.forEach((mockDatum) => {
@@ -515,7 +512,7 @@ function useGenerateTest(test, projectFilePath) {
       }, '');
     };
 
-    /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
+/* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
     const addAction = (action) => {
@@ -790,7 +787,7 @@ function useGenerateTest(test, projectFilePath) {
     
     const addAccImportStatements = () => {
       let { filePath, fileName } = accTestCase;
-      filePath = path.relative(projectFilePath, filePath);
+      filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, filePath);
       filePath = filePath.replace(/\\/g, '/');
 
       testFileCode += `
