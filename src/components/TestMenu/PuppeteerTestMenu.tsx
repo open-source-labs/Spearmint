@@ -6,6 +6,9 @@ import {
   setFilePath,
   updateFile,
   setValidCode,
+  setTestCase,
+  toggleModal,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
@@ -24,7 +27,7 @@ const PuppeteerTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal(
     'puppeteer'
   );
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('puppeteer', projectFilePath);
 
   useEffect(() => {
@@ -46,14 +49,20 @@ const PuppeteerTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0))
   };
+
+  const openNewTestModal = () => {
+    if (!isTestModalOpen) dispatchToGlobal(toggleModal());
+  };
+
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
 
   return (
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button type='button' autoFocus data-testid='puppeteerNewTestButton' onClick={openModal}>
+          <button type='button' autoFocus data-testid='puppeteerNewTestButton' onClick={openNewTestModal}>
             New Test +
           </button>
           <button onClick={fileHandle}>Preview</button>

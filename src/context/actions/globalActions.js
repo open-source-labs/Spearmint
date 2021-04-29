@@ -19,6 +19,7 @@ export const actionTypes = {
   TOGGLE_EXPORT_BOOL: 'TOGGLE_EXPORT_BOOL',
   SET_FILE_PATH: 'SET_FILE_PATH',
   SET_VALID_CODE: 'SET_VALID_CODE',
+  SET_TAB_INDEX: 'SET_TAB_INDEX',
 };
 
 export const setProjectUrl = (url) => ({
@@ -106,3 +107,8 @@ export const setValidCode = (validCode) => ({
   type: actionTypes.SET_VALID_CODE,
   validCode,
 });
+
+export const setTabIndex = (tabIndex) => ({
+  type: actionTypes.SET_TAB_INDEX,
+  tabIndex,
+})

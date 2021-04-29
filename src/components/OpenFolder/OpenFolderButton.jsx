@@ -15,30 +15,26 @@ import {
 } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
-const ipc = require('electron').ipcRenderer;
+const { ipcRenderer } = require('electron');
+const os = require('os');
 const folderOpenIcon = require('../../assets/images/folder-open.png');
 
-const { remote } = window.require('electron');
-const electronFs = remote.require('fs');
-const { dialog } = remote;
+// Change execute command based on os platform
+let execute = '\n';
+if (os.platform() === 'win32') {
+  execute = '\r';
+}
 
 const OpenFolder = () => {
   const [{ isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
     GlobalContext,
   );
 
-  const handleOpenFolder = async () => {
-    const directory = await dialog.showOpenDialog({
-      properties: ['openDirectory', 'createDirectory'],
-      filters: [
-        { name: 'Javascript Files', extensions: ['js', 'jsx'] },
-        { name: 'Style', extensions: ['css'] },
-        { name: 'Html', extensions: ['html'] },
-      ],
-      message: 'Please select your project folder',
-    });
-    if (directory && directory.filePaths[0]) {
-      let directoryPath = directory.filePaths[0];
+  const handleOpenFolder = () => {
+    const directory = ipcRenderer.sendSync('OpenFolderButton.dialog');
+
+    if (directory && directory[0]) {
+      let directoryPath = directory[0];
       // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       dispatchToGlobal(setProjectFilePath(directoryPath));
@@ -49,7 +45,7 @@ const OpenFolder = () => {
       if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
 
       // Re-direct terminal directory to user selected directory
-      ipc.send('terminal.toTerm', `cd ${directoryPath}\n`);
+      ipcRenderer.send('terminal.toTerm', `cd ${directoryPath}${execute}`);
     }
   };
 
@@ -64,7 +60,8 @@ const OpenFolder = () => {
   };
 
   const generateFileTreeObject = (directoryPath) => {
-    const fileArray = electronFs.readdirSync(directoryPath).map((fileName) => {
+    const filePaths = ipcRenderer.sendSync('Universal.readDir', directoryPath);
+    const fileArray = filePaths.map((fileName) => {
       // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       const filePath = `${directoryPath}/${fileName}`;
@@ -77,8 +74,8 @@ const OpenFolder = () => {
       populateFilePathMap(file);
 
       // generateFileTreeObj will be recursively called if it is a folder
-      const fileData = electronFs.statSync(file.filePath);
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && fileData.isDirectory()) {
+      const isDirectory = ipcRenderer.sendSync('OpenFolderButton.isDirectory', filePath);
+      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && isDirectory) {
         file.files = generateFileTreeObject(file.filePath);
       }
       return file;

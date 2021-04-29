@@ -5,8 +5,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
 import styles from './EditorView.module.scss';
 
-const remote = window.require('electron').remote;
-const fs = remote.require('fs');
+const { ipcRenderer } = require('electron');
+
 
 const Editor = () => {
   const [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
@@ -38,14 +38,14 @@ const Editor = () => {
       if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');
     } else setWasSaved('No Changes to Save');
     if (filePath.length && editedText.length) {
-      setWasSaved('Changes Saved');
-      await fs.writeFile(filePath, editedText, (err) => {
-        if (err) throw err;
-      });
+      // Send main process the filePath and editedText in obj to save
+      const reply = ipcRenderer.sendSync('EditorView.saveFile', filePath, editedText);
+      // Upon reply from main process, update wasSaved state
+      setWasSaved(reply);
     }
   };
 
-  let fileType = filePath.split('.')[1];
+  const fileType = filePath.split('.')[1];
   const extensionChecker = {
     png: 1,
     jpg: 1,
@@ -71,15 +71,12 @@ const Editor = () => {
           onChange={updatafile}
         />
       </div>
-
       <div>
-        <button id={styles.save} onClick={saveFile}>
+        <button type="button" id={styles.save} onClick={saveFile}>
           Save Changes
         </button>
         <span id={styles.span}>{wasSaved}</span>
       </div>
-
-
     </div>
   );
 };

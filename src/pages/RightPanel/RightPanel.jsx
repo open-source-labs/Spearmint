@@ -5,7 +5,7 @@ import Tab from '@material-ui/core/Tab';
 import EditorView from '../../components/EditorView/EditorView';
 import BrowserView from '../../components/BrowserView/BrowserView';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { closeRightPanel } from '../../context/actions/globalActions';
+import { closeRightPanel, setTabIndex } from '../../context/actions/globalActions';
 import TerminalGenerator from '../../components/Terminal/TerminalGenerator';
 // import terminalStyles from '../../components/Terminal/TerminalView.module.scss';
 const closeIcon = require('../../assets/images/close.png');
@@ -14,8 +14,8 @@ const closeIcon = require('../../assets/images/close.png');
 // eslint-disable
 
 const RightPanel = () => {
-  const [{ rightPanelDisplay, url }, dispatchToGlobal] = useContext(GlobalContext);
-  const [tabIndex, setTabIndex] = useState(0);
+  const [{ rightPanelDisplay, url, tabIndex }, dispatchToGlobal] = useContext(GlobalContext);
+
 
   const handleCloseRightPanelView = () => {
     dispatchToGlobal(closeRightPanel());
@@ -27,7 +27,7 @@ const RightPanel = () => {
     <div id={styles.rightPanel}>
       <img src={closeIcon} id={styles.close} alt='close' onClick={handleCloseRightPanelView} />
 
-      <Tabs style = {{marginBottom: 5}} value={tabIndex} onChange={(event, newValue) => setTabIndex(newValue)} centered >
+      <Tabs style={{ marginBottom: 5 }} value={tabIndex} onChange={(event, newValue) => dispatchToGlobal(setTabIndex(newValue))} centered>
         <Tab value={0} label="Code Editor" />
         <Tab value={1} label="Browser" />
         <Tab value={2} label="Test Terminal" />
