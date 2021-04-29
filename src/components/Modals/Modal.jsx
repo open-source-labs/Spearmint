@@ -15,8 +15,6 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { callbackify } from 'util';
-
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
