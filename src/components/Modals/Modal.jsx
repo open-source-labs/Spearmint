@@ -14,6 +14,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { callbackify } from 'util';
 
 
 const ipc = require('electron').ipcRenderer;
@@ -109,9 +110,10 @@ const Modal = ({
 
         },
         overlay: {
-          minWidth: isFileDirectoryOpen ? '876px' : '650px',
-          width: isFileDirectoryOpen ? '59.9%' : '49.9%',
-        }
+          left: isFileDirectoryOpen ? '276px' : '46px',
+          minWidth: isFileDirectoryOpen ? '600px' : '600px',
+          width: isFileDirectoryOpen ? 'calc(59.9% - 276px)':'calc(49.9% - 46px)',
+        },
       }}
     >
       {/* Modal Title */}
