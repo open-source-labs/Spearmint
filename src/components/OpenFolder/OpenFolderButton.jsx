@@ -45,7 +45,7 @@ const OpenFolder = () => {
       if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
 
       // Re-direct terminal directory to user selected directory
-      ipcRenderer.send('terminal.toTerm', `cd ${directoryPath}${execute}`);
+      ipcRenderer.send('terminal.toTerm', `cd "${directoryPath}"${execute}`);
     }
   };
 
