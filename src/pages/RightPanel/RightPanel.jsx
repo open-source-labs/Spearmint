@@ -25,7 +25,7 @@ const RightPanel = () => {
 
   return (
     <div id={styles.rightPanel}>
-      <img src={closeIcon} id={styles.close} alt='close' onClick={handleCloseRightPanelView} />
+      {/* <img src={closeIcon} id={styles.close} alt='close' onClick={handleCloseRightPanelView} /> */}
 
       <Tabs style={{ marginBottom: 5 }} value={tabIndex} onChange={(event, newValue) => dispatchToGlobal(setTabIndex(newValue))} centered>
         <Tab value={0} label="Code Editor" />

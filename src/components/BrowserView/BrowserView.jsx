@@ -79,7 +79,7 @@ const BrowserView = () => {
     <div>
       <input
         id={styles.browserAddress}
-        placeholder="Enter a new URL"
+        placeholder="Enter a new URL (localhost:3000)"
         type='text'
         onKeyDown={handleChangeUrl}
       />

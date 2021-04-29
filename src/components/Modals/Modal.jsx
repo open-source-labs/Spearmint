@@ -7,6 +7,7 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
+import {setTabIndex,} from '../../context/actions/globalActions';
 // Accordion view
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -14,7 +15,6 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -75,6 +75,7 @@ const Modal = ({
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}${execute}`);
     setBtnFeedback({ ...btnFeedback, installed: true });
+    dispatchToGlobal(setTabIndex(2));
   };
 
   const submitFileName = () => {
@@ -84,12 +85,15 @@ const Modal = ({
 
   const jestTest = () => {
     ipc.send('terminal.toTerm', `jest ${fileName}${execute}`);
+    dispatchToGlobal(setTabIndex(2));
   };
   const verboseTest = () => {
     ipc.send('terminal.toTerm', `jest --verbose ${fileName}${execute}`);
+    dispatchToGlobal(setTabIndex(2));
   };
   const coverageTest = () => {
     ipc.send('terminal.toTerm', `jest --coverage ${fileName}${execute}`);
+    dispatchToGlobal(setTabIndex(2));
   };
 
   return (
@@ -104,14 +108,15 @@ const Modal = ({
       ariaHideApp={false}
       style={{
         content: {
-          top: '25%',
+          top: '20%',
           left: isFileDirectoryOpen ? '22%' : '11%',
 
         },
         overlay: {
-          minWidth: isFileDirectoryOpen ? '876px' : '650px',
-          width: isFileDirectoryOpen ? '59.9%' : '49.9%',
-        }
+          left: isFileDirectoryOpen ? '276px' : '46px',
+          minWidth: isFileDirectoryOpen ? '600px' : '600px',
+          width: isFileDirectoryOpen ? 'calc(59.9% - 276px)':'calc(49.9% - 46px)',
+        },
       }}
     >
       {/* Modal Title */}

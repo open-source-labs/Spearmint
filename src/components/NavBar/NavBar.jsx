@@ -88,11 +88,12 @@ const NavBar = ({ inAboutPage }) => {
       {/* Open Folder */}
       <OpenFolder />
       
-      {/* Code View */}
+      {/* Deprecated as right panel is no longer closable and does not need a button to open*/}
+      {/* Code View
       <button className={styles.navBtn} onClick={handleEditorToggle}>
         <img src={codeIcon} className={styles.icons} alt='codeview' title='Code View' />
         <span className={styles.tooltip}>Code View</span>
-      </button>
+      </button> */}
 
       {/* Home Button. Deprecated as it results in redundant ptyProcess. Use Open folder to change directory. */}
       {/* <button className={styles.navBtn} onClick={handleBrowserToggle}>
