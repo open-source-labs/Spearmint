@@ -7,6 +7,7 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
+import {setTabIndex,} from '../../context/actions/globalActions';
 // Accordion view
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -76,6 +77,7 @@ const Modal = ({
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}${execute}`);
     setBtnFeedback({ ...btnFeedback, installed: true });
+    dispatchToGlobal(setTabIndex(2));
   };
 
   const submitFileName = () => {
@@ -85,12 +87,15 @@ const Modal = ({
 
   const jestTest = () => {
     ipc.send('terminal.toTerm', `jest ${fileName}${execute}`);
+    dispatchToGlobal(setTabIndex(2));
   };
   const verboseTest = () => {
     ipc.send('terminal.toTerm', `jest --verbose ${fileName}${execute}`);
+    dispatchToGlobal(setTabIndex(2));
   };
   const coverageTest = () => {
     ipc.send('terminal.toTerm', `jest --coverage ${fileName}${execute}`);
+    dispatchToGlobal(setTabIndex(2));
   };
 
   return (
