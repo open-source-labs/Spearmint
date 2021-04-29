@@ -8,6 +8,7 @@ import {
   setValidCode,
   setTestCase,
   toggleModal,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
@@ -48,6 +49,7 @@ const PuppeteerTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0))
   };
 
   const openNewTestModal = () => {

@@ -7,6 +7,7 @@ import {
   toggleRightPanel,
   updateFile,
   setFilePath,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 
 const { ipcRenderer } = require('electron');
@@ -96,6 +97,7 @@ const FileDirectory = ({ fileTree }) => {
                   onClick={() => {
                     handleDisplayFileCode(file.filePath);
                     handleClickHighlightFile(file.fileName);
+                    dispatchToGlobal(setTabIndex(0));
                   }}
                 >
                   {differImg(file.fileName)}

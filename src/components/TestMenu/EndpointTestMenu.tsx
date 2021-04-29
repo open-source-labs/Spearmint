@@ -9,6 +9,7 @@ import {
   toggleExportBool,
   setTestCase,
   toggleModal,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
@@ -50,6 +51,7 @@ const EndpointTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0));
   };
 
   const handleClickAddDatabase = () => {

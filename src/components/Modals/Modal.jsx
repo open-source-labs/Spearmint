@@ -3,17 +3,18 @@
  * which render on the top Test Menu component.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
-import Popover from '@material-ui/core/Popover';
 // Accordion view
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { isImportClause } from 'typescript';
+import cn from 'classnames';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -25,13 +26,6 @@ const os = require('os');
 //     execute = '\r';
 //   }
 // });
-
-// Colors
-const mint = '#038181';
-const mint2 = '#02c3c33f';
-const mint3 = '#4ef2f258'
-const lightGray4 = '#bceeeed7';
-const darkGray = '#808080';
 
 const Modal = ({
   title,
@@ -53,7 +47,8 @@ const Modal = ({
   const [fileName, setFileName] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const script = useGenerateScript(title, testType, puppeteerUrl);
-  const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false })
+  const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
+  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
@@ -89,15 +84,12 @@ const Modal = ({
 
   const jestTest = () => {
     ipc.send('terminal.toTerm', `jest ${fileName}${execute}`);
-    clearAndClose();
   };
   const verboseTest = () => {
     ipc.send('terminal.toTerm', `jest --verbose ${fileName}${execute}`);
-    clearAndClose();
   };
   const coverageTest = () => {
     ipc.send('terminal.toTerm', `jest --coverage ${fileName}${execute}`);
-    clearAndClose();
   };
 
   return (
@@ -108,12 +100,30 @@ const Modal = ({
       contentLabel="Save?"
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
+      overlayClassName={styles.modalCustomOverlay}
       ariaHideApp={false}
-      style={modalStyles}
+      style={{
+        content: {
+          top: '25%',
+          left: isFileDirectoryOpen ? '22%' : '11%',
+
+        },
+        overlay: {
+          minWidth: isFileDirectoryOpen ? '876px' : '650px',
+          width: isFileDirectoryOpen ? '59.9%' : '49.9%',
+        }
+      }}
     >
       {/* Modal Title */}
       <div id={styles.title}>
-        <p style={{fontSize: 20}}>Run Tests in Terminal</p>
+        <p style={{ fontSize: 20 }}>Run Tests in Terminal</p>
+        <i
+          tabIndex={0}
+          onKeyPress={clearAndClose}
+          onClick={clearAndClose}
+          id={styles.escapeButton}
+          className={cn('far fa-window-close', styles.describeClose)}
+        />
       </div>
       {/* Accordian View */}
       <div>
@@ -129,7 +139,7 @@ const Modal = ({
           </AccordionSummary>
           <AccordionDetails id={styles.accordionDetails}>
             <div style={{ width: '100%' }}>
-            {/* Change Directory */}
+              {/* Change Directory */}
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -156,11 +166,11 @@ const Modal = ({
                   </div>
                 </AccordionDetails>
               </Accordion>
-            {/* Install Dependencies */}
+              {/* Install Dependencies */}
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content" 
+                  aria-controls="panel1a-content"
                   id={styles.accordionSummary}>
                   2. Install dependencies and Jest.
                 </AccordionSummary>
@@ -205,7 +215,6 @@ const Modal = ({
             </div>
           </AccordionDetails>
         </Accordion>
-
         {/* Testing */}
         <Accordion>
           <AccordionSummary
