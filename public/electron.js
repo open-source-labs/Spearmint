@@ -45,9 +45,6 @@ function createWindow() {
   );
   mainWindow.on('closed', () => (mainWindow = null));
 
- // Send shell type to modal for custom terminal commands
-  mainWindow.webContents.send('Modal.shellType', shell)
-
   // PTY PROCESS FOR IN APP TERMINAL
   const ptyProcess = pty.spawn(shell, [], {
     name: 'xterm-color',
