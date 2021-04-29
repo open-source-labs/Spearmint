@@ -68,7 +68,7 @@ const Modal = ({
   }
 
   const changeDirectory = () => {
-    ipc.send('terminal.toTerm', `${script.cd}${execute}`);
+    ipc.send('terminal.toTerm', `"${script.cd}"${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
   };
 
@@ -232,9 +232,9 @@ const Modal = ({
               <pre>
                 <div className="code-wrapper">
                   <code>  
-                    {`jest ${fileName}${execute}`}
-                    {`jest --verbose ${fileName}${execute}`}
-                    {`jest --coverage ${fileName}${execute}`}
+                    {`jest ${fileName}\n`}
+                    {`jest --verbose ${fileName}\n`}
+                    {`jest --coverage ${fileName}\n`}
                   </code>
                 </div>
               </pre>

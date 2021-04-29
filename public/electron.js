@@ -64,6 +64,7 @@ function createWindow() {
   })
 };
 
+
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
 ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
   fs.writeFile(filePath, editedText, (err) => {
