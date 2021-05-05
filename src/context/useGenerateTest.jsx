@@ -10,7 +10,9 @@ function useGenerateTest(test, projectFilePath) {
 
     // React Import Statements
     const addReactImportStatements = () => {
-      testFileCode += `import { render, fireEvent } from '@testing-library/react'; 
+      testFileCode += `
+        import React from 'react';
+        import { render, fireEvent } from '@testing-library/react'; 
         import { build, fake } from 'test-data-bot'; 
         import '@testing-library/jest-dom/extend-expect'
         \n`;
@@ -21,7 +23,8 @@ function useGenerateTest(test, projectFilePath) {
       const componentPath = reactTestCase.statements.componentPath;
       let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
       filePath = filePath.replace(/\\/g, '/');
-      testFileCode += `import ${reactTestCase.statements.componentName} from '../${filePath}';`;
+      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/,'')
+      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
     };
 
     const addDescribeBlocks = () => {
@@ -80,7 +83,8 @@ function useGenerateTest(test, projectFilePath) {
     // Render Jest Test Code
     const addRender = (statement, methods) => {
       let props = createRenderProps(statement.props);
-      testFileCode += `const {${methods}} = render(<${reactTestCase.statements.componentName} ${props}/>);`;
+      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/,'');
+      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
     };
 
     // Render Props Jest Test Code
@@ -228,7 +232,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks & Context Import Statements
     const addHooksImportStatements = () => {
-      hooksTestCase.hooksStatements.forEach((statement) => {
+      hooksTestCase["hooksStatements"].forEach((statement) => {
         switch (statement.type) {
           case 'hooks':
             return addRenderHooksImportStatement(), createPathToHooks(statement);
