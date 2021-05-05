@@ -232,7 +232,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks & Context Import Statements
     const addHooksImportStatements = () => {
-      hooksTestCase["hooksStatements"].forEach((statement) => {
+      hooksTestCase.hooksStatements.forEach((statement) => {
         switch (statement.type) {
           case 'hooks':
             return addRenderHooksImportStatement(), createPathToHooks(statement);
