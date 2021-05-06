@@ -60,7 +60,7 @@ const AccTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button id={styles.newTestBtn} autoFocus onClick={openNewTestModal}>New Test +</button>
+          <button id={styles.newTestBtn} autoFocus onClick={openModal}>New Test +</button>
           <button onClick={fileHandle}>Preview</button>
           <button id={styles.example} onClick={openScriptModal} >
             Run Test

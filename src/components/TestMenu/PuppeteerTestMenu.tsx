@@ -62,7 +62,7 @@ const PuppeteerTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button type='button' autoFocus data-testid='puppeteerNewTestButton' onClick={openNewTestModal}>
+          <button type='button' autoFocus data-testid='puppeteerNewTestButton' onClick={openModal}>
             New Test +
           </button>
           <button onClick={fileHandle}>Preview</button>

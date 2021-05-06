@@ -77,7 +77,7 @@ const EndpointTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openNewTestModal} autoFocus >New Test +</button>
+          <button onClick={openModal} autoFocus >New Test +</button>
           <button id={styles.preview} onClick={fileHandle}>
             Preview
           </button>

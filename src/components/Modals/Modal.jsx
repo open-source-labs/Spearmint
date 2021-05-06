@@ -96,6 +96,52 @@ const Modal = ({
     dispatchToGlobal(setTabIndex(2));
   };
 
+  // Warning that tests will not be saved while transitioning between test types
+  if (title === 'New Test') {
+    return (
+      <ReactModal
+      className={styles.modal}
+      isOpen={isModalOpen}
+      onRequestClose={closeModal}
+      contentLabel="Save?"
+      shouldCloseOnOverlayClick={true}
+      shouldCloseOnEsc={true}
+      ariaHideApp={false}
+      style={{
+        content: {
+          top: '20%',
+          left: isFileDirectoryOpen ? '22%' : '11%',
+        },
+        overlay: {
+          zIndex: 3,
+          left: isFileDirectoryOpen ? '276px' : '46px',
+          minWidth: isFileDirectoryOpen ? '600px' : '600px',
+          width: isFileDirectoryOpen ? 'calc(59.9% - 276px)':'calc(49.9% - 46px)',
+        },
+      }}>
+        <div id={styles.title}>
+          <p>{title}</p>
+        </div>
+
+        <div id={styles.body}>
+          <p id={styles.text}>
+            Do you want to start a new test? All unsaved changes
+            <br/>
+            will be lost.
+          </p>
+          <span id={styles.newTestButtons} style={{justifyContent: 'center', alignItems: 'center'}}>
+            <button id={styles.save} onClick={handleNewTest}>
+              {title}
+            </button>
+            <button id={styles.save} onClick={closeModal}>
+              Cancel
+            </button>
+          </span>
+        </div>
+      </ReactModal>
+      );
+  }
+
   return (
     <ReactModal
       className={styles.modal2}
