@@ -1,17 +1,19 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
+@import './accecss.scss';
+
+@include accecss( 
+  #browserView,
+  false,
+  true,
+  false
+);
+
 
 #browserView {
   height: 100vh;
   width: auto;
 }
-
-// // Disable clicking for accessibility testing
-// #browserViewNoClick {
-//   height: 100vh;
-//   width: auto;
-//   pointer-events: none;
-// }
 
 #browserAddress {
   display: flex;
@@ -36,6 +38,22 @@
 #formControlLabel{
   display: flex;
 
+}
+
+#title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $mint;
+  margin: 1px;
+  height: 20%;
+  background-color: #fff;
+  p {
+    color: $mint;
+    margin: 10px;
+    font-weight: bold;
+    align-content: center;
+  }
 }
 
 // button {

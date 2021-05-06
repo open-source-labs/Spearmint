@@ -1,0 +1,176 @@
+/// GRID
+
+$path-to-filter: '../svg';
+
+@mixin log(){
+  content:'.'attr(class);position: absolute;
+  top: 0;left: 0;z-index: 99999999;padding: .1em;background: rgba(0,0,0, .9);
+  opacity: .1;
+  color: #fff !important;
+  font-size: 14px;
+}
+
+@mixin grid(){
+
+
+  box-shadow: inset 0 0 0 1px rgba(purple, .1) !important;
+  &:hover{
+    box-shadow: inset 0 0 0 1px rgba(purple, 1) !important;
+  }
+  *{
+    box-shadow: inset 0 0 0 1px rgba(red, .1) !important;
+    &:hover{
+      box-shadow: inset 0 0 0 1px rgba(red, 1) !important;
+    }
+    + *{
+      box-shadow: inset 0 0 0 1px rgba(blue, .1) !important;
+      &:hover{
+        box-shadow: inset 0 0 0 1px rgba(blue, 1) !important;
+      }
+      + *{
+        box-shadow: inset 0 0 0 1px rgba(green, .1) !important;
+        &:hover{
+          box-shadow: inset 0 0 0 1px rgba(green, 1) !important;
+        }
+        + *{
+          box-shadow: inset 0 0 0 1px rgba(purple, .1) !important;
+          &:hover{
+            box-shadow: inset 0 0 0 1px rgba(purple, 1) !important;
+          }
+          + *{
+            box-shadow: inset 0 0 0 1px rgba(red, .1) !important;
+            &:hover{
+              box-shadow: inset 0 0 0 1px rgba(red, 1) !important;
+            }
+            +  *{
+              box-shadow: inset 0 0 0 1px rgba(blue, .1) !important;
+              &:hover{
+                box-shadow: inset 0 0 0 1px rgba(blue, 1) !important;
+              }
+              +  *{
+                box-shadow: inset 0 0 0 1px rgba(green, .1) !important;
+                &:hover{
+                  box-shadow: inset 0 0 0 1px rgba(green, 1) !important;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/// Mixin debug
+/// @include debug(<true:false>, <true:false>, <false:filterName>, <false:elementName>); 
+/// Param : 
+///        [1]: Specified debug element
+///        [2]: css zone
+///        [3]: Grayscale view
+///        [4]: Colorblind filters **
+///
+/// ** Available filters : `protanopia`, `protanomaly`, `deuteranopia`, `deuteranomaly`, `tritanopia`, `tritanomaly`, `achromatopsia`, `achromatomal
+///
+/// 
+/// Usage : 
+/// `@include accecss(<element:false>, <true:false>, <true:false>, <filterName:false>);` 
+///
+/// @group helpers
+
+@mixin accecss($element: false, $zones: false, $grayscale: false, $cbFilter: false){
+
+  @if $grayscale == true and $cbFilter == false {
+    @if $element != false {
+      #{$element} {
+        filter: grayscale(100%);
+      }
+    }
+
+    @else {
+      html body {
+        filter: grayscale(100%);
+      }
+    }
+  }
+  @else if $grayscale == true and $cbFilter != false {
+    @if $element != false {
+      #{$element} {
+
+
+        filter: url('#{$path-to-filter}/filters.svg##{$cbFilter}');
+
+      }
+    }
+
+    @else {
+      html body {
+        filter: url('#{$path-to-filter}/filters.svg##{$cbFilter}') grayscale(0) !important;
+      }
+    }
+  }
+
+  @else if $grayscale == false and $cbFilter != false{
+    @if $element != false {
+      #{$element} {
+
+
+        filter: url('#{$path-to-filter}/filters.svg##{$cbFilter}');
+
+      }
+    }
+
+    @else {
+      html body {
+        filter: url('#{$path-to-filter}/filters.svg##{$cbFilter}') grayscale(0) !important;
+      }
+    }
+  }
+
+  @else if $cbFilter != false and $element != false {
+    @if $element != false {
+      #{$element} {
+
+        filter: url('#{$path-to-filter}/filters.svg##{$cbFilter}');
+
+      }
+    }
+
+    @else {
+      html body {
+        filter: url('#{$path-to-filter}/filters.svg##{$cbFilter}') grayscale(0) !important;
+      }
+    }
+  }
+  
+  @if $zones == true or
+  $zones == 'logs' or
+  $grayscale == true and $cbFilter == false and $zones == true or
+  $grayscale == true and $cbFilter != false and $zones == true or
+  $grayscale == false and $cbFilter != false and $zones == true    {
+    /*
+      CSS accecss : TRUE
+      */
+
+      @if $element == false {
+        html, body{
+          @include grid();
+        }
+      }
+
+      @else if $element != false {
+        #{$element}{
+          @include grid();
+        }
+      }
+    }
+
+
+  @else{
+  /*
+  CSS accecss : FALSE
+  */
+  }
+}
+
+

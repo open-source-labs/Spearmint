@@ -6,6 +6,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
 import { isPropertySignature } from 'typescript';
 
+
 const BrowserView = () => {
   const [{ url }, dispatchToGlobal] = useContext(GlobalContext);
   // Track checked button state
@@ -13,15 +14,16 @@ const BrowserView = () => {
   const [checkedBoxes, setCheckBox] = useState({
     checkedMouse: false,
     muted: false,
+    checkedGrayscale: false,
   });
-     
+
   // Mute/Unmute webview
   const muteAudio = (muted) => {
     const webview = document.querySelector('webview');
     console.log(webview);
     webview.setAudioMuted(muted);
   };
-  
+
   // helper function to add the https or http
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
@@ -34,7 +36,7 @@ const BrowserView = () => {
     url = 'https://' + url;
     return url;
   };
-      
+
   const handleChangeUrl = (e) => {
     if (e.keyCode === 13) {
       const testSiteURL = addHttps(e.target.value);
@@ -62,11 +64,11 @@ const BrowserView = () => {
         });
         break;
 
-      // checkedKeyboard state does not impact app usability
-      case 'checkedKeyboard':
+      // checkedGrayscale state does not impact app usability
+      case 'checkedGrayscale':
         setCheckBox({
           ...checkedBoxes,
-          checkedKeyboard: !checkedBoxes.checkedKeyboard,
+          checkedGrayscale: !checkedBoxes.checkedGrayscale,
         });
         break;
 
@@ -77,50 +79,57 @@ const BrowserView = () => {
 
   return (
     <div>
+      {/* Accessibility Lens */}
+      <div id={styles.FormControlContainer}>
+        <div id={styles.title} style={{ flex: 1 }}>
+          Accessibility Lens
+        </div>
+        <div style={{ flex: 2, background: 'white' }}>
+          {/* Disable Mouse Checkbox */}
+          <FormControlLabel
+            control={
+              <Checkbox
+                value="disable mouse clicks"
+                checked={checkedBoxes['checkedMouse']}
+                onChange={handleChangeCheckBox}
+                name="checkedMouse"
+              />
+            }
+            label="Disable Mouse Clicks"
+          />
+          {/* Grayscale Checkbox */}
+          <FormControlLabel
+            control={
+              <Checkbox
+                value="grayscale"
+                checked={checkedBoxes['checkedGrayscale']}
+                onChange={handleChangeCheckBox}
+                name="checkedGrayscale"
+              />
+            }
+            label="Grayscale"
+          />
+          {/* Mute Audio Checkbox */}
+          <FormControlLabel
+            control={
+              <Checkbox
+                value="muted"
+                checked={checkedBoxes['muted']}
+                onChange={handleChangeCheckBox}
+                name="muted"
+              />
+            }
+            label="Mute"
+          />
+        </div>
+      </div>
+      {/* Search bar */}
       <input
         id={styles.browserAddress}
         placeholder="Enter a new URL (localhost:3000)"
         type='text'
         onKeyDown={handleChangeUrl}
       />
-      <div id={styles.FormControlContainer}>
-        {/* Disable Mouse Checkbox */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              value="disable mouse clicks"
-              checked={checkedBoxes['checkedMouse']}
-              onChange={handleChangeCheckBox}
-              name="checkedMouse"
-            />
-          }
-          label="Disable Mouse Clicks"
-        />
-        {/* Disable Keyboard Checkbox */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              value="disable keyboard"
-              checked={checkedBoxes['checkedKeyboard']}
-              onChange={handleChangeCheckBox}
-              name="checkedKeyboard"
-            />
-          }
-          label="Disable Keyboard Clicks"
-        />
-        {/* Mute Audio Checkbox */}
-        <FormControlLabel
-          control={
-            <Checkbox
-              value="muted"
-              checked={checkedBoxes['muted']}
-              onChange={handleChangeCheckBox}
-              name="muted"
-            />
-          }
-          label="Mute"
-        />
-      </div>
       <webview
         id={styles.browserView}
         src={url}
