@@ -224,6 +224,15 @@
   flex: 1;
   flex-direction: column;
 }
+#endPointGuide {
+  margin: 8px;
+}
+#configGuide {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  line-height: normal;
+}
 
 pre {
   display: flex;
