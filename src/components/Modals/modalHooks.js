@@ -57,10 +57,10 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
       }
       if (testType === 'puppeteer') {
         return (
-          `cd ${projectFilePath}
-          npm i -D axe-core puppeteer
-          node <YOUR_DIR_PATH/TEST_FILE.JS> ${puppeteerUrl}
-          `
+          {
+            cd: `cd ${projectFilePath}`,
+            install: 'npm i -D axe-core puppeteer',
+          }
         );
       }
       return 'error';
@@ -87,14 +87,14 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
       );
     case 'endpoint':
       const endPointGuide = {
-        Pre: "Please follow these steps to configure your files correctly. The tests will not run properly if you skip these steps",
+        Pre: `Please follow these steps to configure your files correctly. The tests will not run properly if you skip these steps.`,
         1: `Your server file MUST export your server object.`,
-        2: `Comment out or remove the appropriate lines of code where the call to the server's listen method takes place`,
-        3: `If you are testing a route that involves querying a database, you must import the file where your database instance is created.`,
-        4: `In that file, you must export your database instance object`,
-        '4a': `PostgreSQL: Pool, Client, or pg object`,
-        '4b': `MongoDB: MongoClient instance`,
-        '4c': `Mongoose: mongoose instance`,
+        2: `Comment out or remove the appropriate lines of code where the call to the server's listen method takes place.`,
+        3: `If you are testing a route that involves querying a database, you must import the file where your database instance is created.\n`,
+        4: `In that file, you must export your database instance object.`,
+        '4a': `PostgreSQL: Pool, Client, or pg object.`,
+        '4b': `MongoDB: MongoClient instance.`,
+        '4c': `Mongoose: mongoose instance.`,
       }
       return (
         {
@@ -104,7 +104,12 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
         }
       );
     case 'puppeteer':
-      return `cd ${projectFilePath}\nnpm i -D jest puppeteer\nnpm run test`;
+      return (
+        {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D puppeteer',
+        }
+      );
     default:
       return '';
     // code block

@@ -7,7 +7,7 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './ExportFileModal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
-import {setTabIndex,} from '../../context/actions/globalActions';
+import { setTabIndex, } from '../../context/actions/globalActions';
 // Accordion view
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -68,7 +68,7 @@ const Modal = ({
   }
 
   const changeDirectory = () => {
-    ipc.send('terminal.toTerm', `"${script.cd}"${execute}`);
+    ipc.send('terminal.toTerm', `${script.cd}${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
   };
 
@@ -100,25 +100,25 @@ const Modal = ({
   if (title === 'New Test') {
     return (
       <ReactModal
-      className={styles.modal}
-      isOpen={isModalOpen}
-      onRequestClose={closeModal}
-      contentLabel="Save?"
-      shouldCloseOnOverlayClick={true}
-      shouldCloseOnEsc={true}
-      ariaHideApp={false}
-      style={{
-        content: {
-          top: '20%',
-          left: isFileDirectoryOpen ? '22%' : '11%',
-        },
-        overlay: {
-          zIndex: 3,
-          left: isFileDirectoryOpen ? '276px' : '46px',
-          minWidth: isFileDirectoryOpen ? '600px' : '600px',
-          width: isFileDirectoryOpen ? 'calc(59.9% - 276px)':'calc(49.9% - 46px)',
-        },
-      }}>
+        className={styles.modal}
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Save?"
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        ariaHideApp={false}
+        style={{
+          content: {
+            top: '20%',
+            left: isFileDirectoryOpen ? '22%' : '11%',
+          },
+          overlay: {
+            zIndex: 3,
+            left: isFileDirectoryOpen ? '276px' : '46px',
+            minWidth: isFileDirectoryOpen ? '600px' : '600px',
+            width: isFileDirectoryOpen ? 'calc(59.9% - 276px)' : 'calc(49.9% - 46px)',
+          },
+        }}>
         <div id={styles.title}>
           <p>{title}</p>
         </div>
@@ -126,10 +126,10 @@ const Modal = ({
         <div id={styles.body}>
           <p id={styles.text}>
             Do you want to start a new test? All unsaved changes
-            <br/>
+            <br />
             will be lost.
           </p>
-          <span id={styles.newTestButtons} style={{justifyContent: 'center', alignItems: 'center'}}>
+          <span id={styles.newTestButtons} style={{ justifyContent: 'center', alignItems: 'center' }}>
             <button id={styles.save} onClick={handleNewTest}>
               {title}
             </button>
@@ -139,7 +139,7 @@ const Modal = ({
           </span>
         </div>
       </ReactModal>
-      );
+    );
   }
 
   return (
@@ -161,7 +161,7 @@ const Modal = ({
         overlay: {
           left: isFileDirectoryOpen ? '276px' : '46px',
           minWidth: isFileDirectoryOpen ? '600px' : '600px',
-          width: isFileDirectoryOpen ? 'calc(59.9% - 276px)':'calc(49.9% - 46px)',
+          width: isFileDirectoryOpen ? 'calc(59.9% - 276px)' : 'calc(49.9% - 46px)',
         },
       }}
     >
@@ -179,6 +179,42 @@ const Modal = ({
       {/* Accordian View */}
       <div>
         {/* Configuration Guide */}
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            id={styles.accordionSummary}
+          >
+            Endpoint Testing Configuration Guide
+          </AccordionSummary>
+          <AccordionDetails id={styles.configGuide}>
+            <div style={{ width: '100%' }}>
+              {script.endPointGuide['Pre']}
+            </div>
+            <div style={{ width: '100%' }}>
+              {script.endPointGuide['1']}
+            </div>
+            <div style={{ width: '100%' }}>
+              {script.endPointGuide['2']}
+            </div>
+            <div style={{ width: '100%' }}>
+              {script.endPointGuide['3']}
+            </div>
+            <div style={{ width: '100%' }}>
+              {script.endPointGuide['4']}
+            </div>
+            <div style={{ width: '100%' }}>
+              {script.endPointGuide['4a']}
+            </div>
+            <div style={{ width: '100%' }}>
+              {script.endPointGuide['4b']}
+            </div>
+            <div style={{ width: '100%' }}>
+              {script.endPointGuide['4c']}
+            </div>
+          </AccordionDetails>
+        </Accordion>
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -282,7 +318,7 @@ const Modal = ({
               {/* To do: make button toggle on/off */}
               <pre>
                 <div className="code-wrapper">
-                  <code>  
+                  <code>
                     {`jest ${fileName}\n`}
                     {`jest --verbose ${fileName}\n`}
                     {`jest --coverage ${fileName}\n`}

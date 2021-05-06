@@ -225,6 +225,13 @@
   flex-direction: column;
 }
 
+#configGuide {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  line-height: normal;
+}
+
 pre {
   display: flex;
   flex: 1;
