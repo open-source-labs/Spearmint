@@ -2,14 +2,6 @@
 @import '../../assets/stylesheets/fonts.scss';
 @import './accecss.scss';
 
-@include accecss( 
-  #browserView,
-  false,
-  true,
-  false
-);
-
-
 #browserView {
   height: 100vh;
   width: auto;

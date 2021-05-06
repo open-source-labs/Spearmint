@@ -4,8 +4,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import styles from './BrowserView.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
-import { isPropertySignature } from 'typescript';
-
 
 const BrowserView = () => {
   const [{ url }, dispatchToGlobal] = useContext(GlobalContext);
@@ -87,38 +85,38 @@ const BrowserView = () => {
         <div style={{ flex: 2, background: 'white' }}>
           {/* Disable Mouse Checkbox */}
           <FormControlLabel
-            control={
+            control={(
               <Checkbox
                 value="disable mouse clicks"
-                checked={checkedBoxes['checkedMouse']}
+                checked={checkedBoxes.checkedMouse}
                 onChange={handleChangeCheckBox}
                 name="checkedMouse"
               />
-            }
+            )}
             label="Disable Mouse Clicks"
           />
           {/* Grayscale Checkbox */}
           <FormControlLabel
-            control={
+            control={(
               <Checkbox
                 value="grayscale"
-                checked={checkedBoxes['checkedGrayscale']}
+                checked={checkedBoxes.checkedGrayscale}
                 onChange={handleChangeCheckBox}
                 name="checkedGrayscale"
               />
-            }
+            )}
             label="Grayscale"
           />
           {/* Mute Audio Checkbox */}
           <FormControlLabel
-            control={
+            control={(
               <Checkbox
                 value="muted"
-                checked={checkedBoxes['muted']}
+                checked={checkedBoxes.muted}
                 onChange={handleChangeCheckBox}
                 name="muted"
               />
-            }
+            )}
             label="Mute"
           />
         </div>
@@ -127,13 +125,14 @@ const BrowserView = () => {
       <input
         id={styles.browserAddress}
         placeholder="Enter a new URL (localhost:3000)"
-        type='text'
+        type="text"
         onKeyDown={handleChangeUrl}
       />
       <webview
         id={styles.browserView}
         src={url}
         style={{
+          filter: checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : 'grayscale(0%)',
           pointerEvents: checkedBoxes.checkedMouse ? 'none' : 'auto',
         }}
       />
