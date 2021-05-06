@@ -142,6 +142,36 @@ const Modal = ({
     );
   }
 
+
+  const EndPointGuide = () => {
+    // endpoint guide only exists when user is in endpoint testing
+    if (script.endPointGuide) {
+      const array = [];
+      for (let step in script.endPointGuide) {
+        array.push(<div id={styles.endPointGuide}>{script.endPointGuide[step]}{'\n'}</div>)
+      }
+      // return accordion element 
+      return (
+        <Accordion hidden={false}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            id={styles.accordionSummary}
+          >
+            Endpoint Testing Configuration Guide
+        </AccordionSummary>
+          <AccordionDetails id={styles.configGuide}>
+            {array}
+          </AccordionDetails>
+        </Accordion>
+      );
+    }
+
+    // return anything to not render accordion
+    return true;
+  };
+
   return (
     <ReactModal
       className={styles.modal2}
@@ -179,42 +209,7 @@ const Modal = ({
       {/* Accordian View */}
       <div>
         {/* Configuration Guide */}
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-            id={styles.accordionSummary}
-          >
-            Endpoint Testing Configuration Guide
-          </AccordionSummary>
-          <AccordionDetails id={styles.configGuide}>
-            <div style={{ width: '100%' }}>
-              {script.endPointGuide['Pre']}
-            </div>
-            <div style={{ width: '100%' }}>
-              {script.endPointGuide['1']}
-            </div>
-            <div style={{ width: '100%' }}>
-              {script.endPointGuide['2']}
-            </div>
-            <div style={{ width: '100%' }}>
-              {script.endPointGuide['3']}
-            </div>
-            <div style={{ width: '100%' }}>
-              {script.endPointGuide['4']}
-            </div>
-            <div style={{ width: '100%' }}>
-              {script.endPointGuide['4a']}
-            </div>
-            <div style={{ width: '100%' }}>
-              {script.endPointGuide['4b']}
-            </div>
-            <div style={{ width: '100%' }}>
-              {script.endPointGuide['4c']}
-            </div>
-          </AccordionDetails>
-        </Accordion>
+        <EndPointGuide />
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
