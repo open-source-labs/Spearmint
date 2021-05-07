@@ -232,14 +232,25 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks & Context Import Statements
     const addHooksImportStatements = () => {
-      hooksTestCase.hooksStatements.forEach((statement) => {
-        switch (statement.type) {
-          case 'hooks':
-            return addRenderHooksImportStatement(), createPathToHooks(statement);
-          default:
-            return statement;
-        }
-      });
+      if (Array.isArray(hooksTestCase)) {
+        hooksTestCase.forEach((statement) => {
+          switch (statement.type) {
+            case 'hooks':
+              return addRenderHooksImportStatement(), createPathToHooks(statement);
+            default:
+              return statement;
+          }
+        })        
+      } else if (typeof hooksTestCase === 'object') {
+        hooksTestCase.hooksStatements.forEach((statement) => {
+          switch (statement.type) {
+            case 'hooks':
+              return addRenderHooksImportStatement(), createPathToHooks(statement);
+            default:
+              return statement;
+          }
+        });
+      }
       testFileCode += '\n';
     };
 
@@ -271,14 +282,26 @@ function useGenerateTest(test, projectFilePath) {
     // Hooks & Context Test Statements
     const addHooksDescribeBlock = () => {
       testFileCode += `\nafterEach(cleanup);\ndescribe('${hooksTestCase.hooksTestStatement}', () => {`;
-      hooksTestCase.hooksStatements.forEach((statement) => {
+      if (Array.isArray(hooksTestCase)) {
+      hooksTestCase.forEach((statement) => {
         switch (statement.type) {
           case 'hooks':
             return addHookUpdates(statement);
           default:
             return statement;
         }
-      });
+      });  
+      } else if (typeof hooksTestCase === 'object') {
+        hooksTestCase.hooksStatements.forEach((statement) => {
+          switch (statement.type) {
+            case 'hooks':
+              return addHookUpdates(statement);
+            default:
+              return statement;
+          }
+        });  
+      }
+      
       testFileCode += '});';
       testFileCode += '\n';
     };
@@ -440,16 +463,37 @@ function useGenerateTest(test, projectFilePath) {
       //   str += `${curr}, `;
       //   return str;
       // }, '');
-      const { hooksStatements } = hooksTestCase;
-      const hookImports = hooksStatements.reduce((str, { hook }) => {
-        str += `${hook}, `;
-        return str;
-      }, '');
-      if (!testFileCode.includes(`import { ${hooksStatements[0].hook}`) && statement.hookFilePath) {
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
-        filePath = filePath.replace(/\\/g, '/');
 
-        testFileCode += `import { ${hookImports} } from '../${filePath}';`;
+      // const { hooksStatements } = hooksTestCase;
+      // const hooksStatements = hooksTestCase.hooksStatements;
+
+
+      if (Array.isArray(hooksTestCase)) {
+        const hookImports = hooksTestCase.reduce((str, { hook }) => {
+          str += `${hook}, `;
+          return str;
+        }, '');
+
+        if (!testFileCode.includes(`import { ${hooksTestCase[0].hook}`) && statement.hookFilePath) {
+          let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
+          filePath = filePath.replace(/\\/g, '/');
+  
+          testFileCode += `import { ${hookImports} } from '../${filePath}';`;
+        }
+
+      } else if (typeof hooksTestCase === 'object') {
+        const hookImports = hooksTestCase.hooksStatements.reduce((str, { hook }) => {
+          str += `${hook}, `;
+          return str;
+        }, '');
+
+        if (!testFileCode.includes(`import { ${hooksTestCase.hooksStatements[0].hook}`) && statement.hookFilePath) {
+          let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
+          filePath = filePath.replace(/\\/g, '/');
+  
+          testFileCode += `import { ${hookImports} } from '../${filePath}';`;
+        }
+
       }
     }
 
