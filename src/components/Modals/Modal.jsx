@@ -257,9 +257,9 @@ const Modal = ({
                   2. Install dependencies and Jest.
                 </AccordionSummary>
                 <AccordionDetails id={styles.accordionDetails}>
-                  <div>
+                  <div id={styles.accordionDiv}>
                     <pre>
-                      <div className="code-wrapper">
+                      <div className="code-wrapper" id={styles.codeWrapper}>
                         <code>
                           {script.install}
                         </code>
