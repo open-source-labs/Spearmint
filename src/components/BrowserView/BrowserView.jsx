@@ -1,7 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { makeStyles } from '@material-ui/core/styles';
 import styles from './BrowserView.module.scss';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
 
@@ -18,7 +20,7 @@ const BrowserView = () => {
   // Mute/Unmute webview
   const muteAudio = (muted) => {
     const webview = document.querySelector('webview');
-    console.log(webview);
+    // console.log(webview);
     webview.setAudioMuted(muted);
   };
 
@@ -28,10 +30,10 @@ const BrowserView = () => {
       return url;
     }
     if (url.startsWith('localhost')) {
-      url = 'http://' + url;
+      url = `http://${url}`;
       return url;
     }
-    url = 'https://' + url;
+    url = `https://${url}`;
     return url;
   };
 
@@ -75,18 +77,39 @@ const BrowserView = () => {
     }
   };
 
+  const useStyles = makeStyles(() => ({
+    FormControlLabel: {
+      // fontSize doesn't work, but color does work...
+      fontSize: '1px',
+      // color: 'white',
+      // ,
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
-    <div>
-      {/* Accessibility Lens */}
-      <div id={styles.FormControlContainer}>
-        <div id={styles.title} style={{ flex: 1 }}>
+    <div id="Accessibility Lens">
+      <div className={styles.accessLensContainer}>
+        <div id={styles.accessLensLabel}>
           Accessibility Lens
         </div>
-        <div style={{ flex: 2, background: 'white' }}>
-          {/* Disable Mouse Checkbox */}
+        {/* trying to put some sort of flex style or centered style here to center the 3 check boxes...but no avail */}
+        <div
+          id="Check Boxes"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // fontSize: 22,
+          }}
+        >
           <FormControlLabel
+              // style={{fontSize:2}}
+            id="Disable Mouse Checkbox"
             control={(
               <Checkbox
+                // style={{fontSize:2}}
                 value="disable mouse clicks"
                 checked={checkedBoxes.checkedMouse}
                 onChange={handleChangeCheckBox}
@@ -95,8 +118,8 @@ const BrowserView = () => {
             )}
             label="Disable Mouse Clicks"
           />
-          {/* Grayscale Checkbox */}
           <FormControlLabel
+            id="Grayscale Checkbox"
             control={(
               <Checkbox
                 value="grayscale"
@@ -107,8 +130,8 @@ const BrowserView = () => {
             )}
             label="Grayscale"
           />
-          {/* Mute Audio Checkbox */}
           <FormControlLabel
+            id="Mute Audio Checkbox"
             control={(
               <Checkbox
                 value="muted"

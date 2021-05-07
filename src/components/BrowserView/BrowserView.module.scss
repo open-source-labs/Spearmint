@@ -1,6 +1,5 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
-@import './accecss.scss';
 
 #browserView {
   height: 100vh;
@@ -18,34 +17,22 @@
   text-indent: 10px;
 }
 
-#address {
-  width: 89%;
-  height: 28px;
-  border: none;
-  border: 1px solid $light-gray;
-  border-radius: 8px;
-  padding-left: 10px;
+.accessLensContainer{
+  background-color: $mint2;
+  height: 55px;
 }
 
-#formControlLabel{
+.accessLensCheckBoxes{
   display: flex;
-
+  // background-color: $mint2;
 }
 
-#title {
+#accessLensLabel {
   display: flex;
   justify-content: center;
-  align-items: center;
   background-color: $mint;
-  margin: 1px;
-  height: 20%;
-  background-color: #fff;
-  p {
-    color: $mint;
-    margin: 10px;
-    font-weight: bold;
-    align-content: center;
-  }
+  color: white;
+  font-size: 18px;
 }
 
 // button {
@@ -61,4 +48,21 @@
 // button:hover {
 //   background-color: $mint;
 //   color: white;
+// }
+
+// #formControlLabel{
+//   display: flex;
+//   background-color: $mint2;
+//   color: "white";
+//   size: "20px";
+//   margin: "10px";
+// }
+
+// #address {
+//   width: 89%;
+//   height: 28px;
+//   border: none;
+//   border: 1px solid $light-gray;
+//   border-radius: 8px;
+//   padding-left: 10px;
 // }
