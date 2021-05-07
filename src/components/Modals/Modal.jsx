@@ -184,7 +184,7 @@ const Modal = ({
       ariaHideApp={false}
       style={{
         content: {
-          top: '20%',
+          top: '10%',
           left: isFileDirectoryOpen ? '22%' : '11%',
 
         },
