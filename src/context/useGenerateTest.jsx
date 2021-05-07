@@ -232,7 +232,6 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks & Context Import Statements
     const addHooksImportStatements = () => {
-      console.log('this is hooksTestCase', hooksTestCase);
       if (Array.isArray(hooksTestCase)) {
         hooksTestCase.forEach((statement) => {
           switch (statement.type) {
@@ -283,7 +282,6 @@ function useGenerateTest(test, projectFilePath) {
     // Hooks & Context Test Statements
     const addHooksDescribeBlock = () => {
       testFileCode += `\nafterEach(cleanup);\ndescribe('${hooksTestCase.hooksTestStatement}', () => {`;
-      console.log('this is hooksTestCase', hooksTestCase)
       if (Array.isArray(hooksTestCase)) {
       hooksTestCase.forEach((statement) => {
         switch (statement.type) {
