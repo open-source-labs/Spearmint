@@ -15,6 +15,7 @@ const BrowserView = () => {
     checkedMouse: false,
     muted: false,
     checkedGrayscale: false,
+    checkedContrast: false,
   });
 
   // Mute/Unmute webview
@@ -69,6 +70,14 @@ const BrowserView = () => {
         setCheckBox({
           ...checkedBoxes,
           checkedGrayscale: !checkedBoxes.checkedGrayscale,
+        });
+        break;
+
+      // Updates contrast
+      case 'checkedContrast':
+        setCheckBox({
+          ...checkedBoxes,
+          checkedContrast: !checkedBoxes.checkedContrast,
         });
         break;
 
@@ -131,6 +140,18 @@ const BrowserView = () => {
             label="Grayscale"
           />
           <FormControlLabel
+            id="contrastCheckbox"
+            control={(
+              <Checkbox
+                value="contrast"
+                checked={checkedBoxes.checkedContrast}
+                onChange={handleChangeCheckBox}
+                name="checkedContrast"
+              />
+            )}
+            label="Low Contrast"
+          />
+          <FormControlLabel
             id="Mute Audio Checkbox"
             control={(
               <Checkbox
@@ -155,7 +176,9 @@ const BrowserView = () => {
         id={styles.browserView}
         src={url}
         style={{
-          filter: checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : 'grayscale(0%)',
+          // filter: checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : 'grayscale(0%)',
+          filter: checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast ? 'grayscale(100%) contrast(0.2)'
+           : checkedBoxes.checkedGrayscale? 'grayscale(100%)': checkedBoxes.checkedContrast?'contrast(0.2)': null,
           pointerEvents: checkedBoxes.checkedMouse ? 'none' : 'auto',
         }}
       />
