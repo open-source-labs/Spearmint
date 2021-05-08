@@ -224,9 +224,11 @@
   flex: 1;
   flex-direction: column;
 }
+
 #endPointGuide {
   margin: 8px;
 }
+
 #configGuide {
   display: flex;
   flex: 1;
@@ -235,6 +237,7 @@
 }
 
 pre {
+  white-space: pre-wrap;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -242,7 +245,7 @@ pre {
   margin-top: -4px;
   margin-bottom: 8px;
   overflow: auto;
-  width: 97.5%;
+  // width: 97.5%;
   font-size: 85%;
   line-height: 1.45;
   background-color: #0a1f40;

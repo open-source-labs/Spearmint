@@ -26,10 +26,10 @@ export function useToggleModal(test) {
 }
 
 export const validateInputs = (testSuite, testCaseState) => {
+  let endpoint, assertion;
   switch (testSuite) {
     case 'endpoint':
       const { serverFilePath, addDB, dbFilePath, endpointStatements } = testCaseState;
-      let endpoint, assertion;
       if (!serverFilePath || (addDB && !dbFilePath)) return false;
       for (endpoint of endpointStatements) {
         if (!endpoint.method || !endpoint.route) return false;
