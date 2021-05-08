@@ -14,7 +14,7 @@ const term = new Terminal({
   },
 });
 
-const TerminalGenerator = () => {
+const TerminalView = () => {
   useEffect(() => {
     // console.log(global.projectFilePath);
     term.open(document.getElementsByClassName('terminal')[0]);
@@ -32,4 +32,4 @@ const TerminalGenerator = () => {
   return <XTerm className='terminal' />;
 };
 
-export default TerminalGenerator;
+export default TerminalView;
