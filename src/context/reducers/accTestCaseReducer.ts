@@ -6,7 +6,6 @@ export const AccTestCaseContext:any = createContext([]);
 
 export const accTestCaseState: AccTestCaseState = {
   modalOpen: false,
-
   describeId: 1,
   itId: 1,
   statementId: 1,
