@@ -46,13 +46,16 @@ function createWindow() {
   mainWindow.on('closed', () => (mainWindow = null));
 
   // PTY PROCESS FOR IN APP TERMINAL
-  const ptyProcess = pty.spawn(shell, [], {
+  let ptyArgs = {
     name: 'xterm-color',
     cols: 80,
     rows: 80,
     cwd: process.env.HOME,
     env: process.env,
-  });
+  }
+
+
+  const ptyProcess = pty.spawn(shell, [], ptyArgs);
   // with ptyProcess, we want to send incoming data to the channel terminal.incData
   ptyProcess.on('data', (data) => {
     mainWindow.webContents.send('terminal.incData', data);
