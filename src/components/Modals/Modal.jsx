@@ -309,7 +309,6 @@ const Modal = ({
                     <span id={styles.newTestButtons}>
                       <button id={styles.save} onClick={installDependencies}>Install</button>
                       <div id={styles.feedback}>
-                        {btnFeedback.installed === false ? null : <p>Dependencies installation have been complete</p>}
                       </div>
                     </span>
                   </div>
