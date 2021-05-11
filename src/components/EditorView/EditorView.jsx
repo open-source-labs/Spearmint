@@ -21,11 +21,14 @@ const Editor = () => {
     colorDecorators: true,
     wrappingIndent: 'indent',
     automaticLayout: true,
+    codeLens: true,
+    // Added specific fontfamily and fontsize to address Windows curson misalignment issue
+    fontFamily: 'courier new',
+    fontSize: 12,
   };
 
   const editorDidMount = () => {
     editor.setTheme('light-dark');
-    // editor.focus();
   };
 
   const updatafile = (newValue, e) => {
