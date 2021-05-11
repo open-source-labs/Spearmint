@@ -142,15 +142,15 @@ const Modal = ({
     );
   }
 
-
+// EndPointGuide component definition, conditionally rendered
   const EndPointGuide = () => {
     // endpoint guide only exists when user is in endpoint testing
     if (script.endPointGuide) {
       const array = [];
       for (let step in script.endPointGuide) {
         array.push(<div id={styles.endPointGuide}>{script.endPointGuide[step]}{'\n'}</div>)
-      }
-      // return accordion element 
+      };
+      // return accordion element
       return (
         <Accordion hidden={false}>
           <AccordionSummary
@@ -167,10 +167,51 @@ const Modal = ({
         </Accordion>
       );
     }
-
     // return anything to not render accordion
-    return true;
+    return null;
   };
+
+  // ReactDependencies component definition, conditionally rendered
+  const ReactDependencies = () => {
+    if (title === 'hooks' || title === 'react') {
+      return (
+        <Accordion hidden={false}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          id={styles.accordionSummary}
+        >
+          3. Important React Babel Configuration
+      </AccordionSummary>
+        <AccordionDetails id={styles.configGuide}>
+         <div id={styles.accordionDiv}>
+           <div> Ensure that your project contains the following file: </div>
+            <pre>
+              <div className="code-wrapper">
+                <code>
+                  babel.config.js
+                </code>
+              </div>
+            </pre>
+         </div>
+          <div>
+            and includes the following code:
+            <br />
+          </div>
+          <pre>
+            <div className="code-wrapper">
+              <code>
+               {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`}
+              </code>
+            </div>
+          </pre>
+        </AccordionDetails>
+      </Accordion>
+      )
+    }
+    return null;
+  }
 
   return (
     <ReactModal
@@ -274,6 +315,8 @@ const Modal = ({
                   </div>
                 </AccordionDetails>
               </Accordion>
+              {/* Create config file only if title is react or hook */}
+              <ReactDependencies />
             </div>
           </AccordionDetails>
         </Accordion>
