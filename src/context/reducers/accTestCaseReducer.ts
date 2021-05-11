@@ -1,5 +1,5 @@
-import { createContext } from 'react'; 
-import { AccTestCaseState, Action} from '../../utils/accTypes';
+import { createContext } from 'react';
+import { AccTestCaseState, Action } from '../../utils/accTypes';
 import { actionTypes } from '../actions/accTestCaseActions';
 
 export const AccTestCaseContext:any = createContext([]);

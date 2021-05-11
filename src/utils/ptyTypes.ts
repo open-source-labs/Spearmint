@@ -1,7 +1,7 @@
 export interface PtyArgs {
-  name: string,
-  cols: number,
-  rows: number,
-  cwd: string,
-  env: Object,
+  name: string;
+  cols: number;
+  rows: number;
+  cwd: string;
+  env: Object;
 }
