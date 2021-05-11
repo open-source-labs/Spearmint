@@ -514,7 +514,8 @@ function useGenerateTest(test, projectFilePath) {
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
-      const supertest = require('supertest')
+      const supertest = require('supertest');
+      const regeneratorRuntime = require('regenerator-runtime');
       const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
       if (dbFilePath) {
@@ -749,7 +750,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}');`;
       testFileCode += statement.postData
         ? `.send( ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
         : statement.headers.length
@@ -768,7 +769,7 @@ function useGenerateTest(test, projectFilePath) {
           .replace(/\(([^)]+)\)/, '')
           .split(' ')
           .join('');
-        testFileCode += `expect(response.${expectedResponse.toLowerCase()})`;
+        testFileCode += `\n expect(response.${expectedResponse.toLowerCase()})`;
         testFileCode += not ? `.not.${matcher}(${value});` : `.${matcher}(${value});`;
       });
       testFileCode += '});';
