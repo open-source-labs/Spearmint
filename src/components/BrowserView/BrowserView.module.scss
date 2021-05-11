@@ -6,13 +6,6 @@
   width: auto;
 }
 
-// // Disable clicking for accessibility testing
-// #browserViewNoClick {
-//   height: 100vh;
-//   width: auto;
-//   pointer-events: none;
-// }
-
 #browserAddress {
   display: flex;
   justify-content: center;
@@ -24,18 +17,22 @@
   text-indent: 10px;
 }
 
-#address {
-  width: 89%;
-  height: 28px;
-  border: none;
-  border: 1px solid $light-gray;
-  border-radius: 8px;
-  padding-left: 10px;
+.accessLensContainer{
+  background-color: $mint2;
+  height: 55px;
 }
 
-#formControlLabel{
+.accessLensCheckBoxes{
   display: flex;
+  // background-color: $mint2;
+}
 
+#accessLensLabel {
+  display: flex;
+  justify-content: center;
+  background-color: $mint;
+  color: white;
+  font-size: 18px;
 }
 
 // button {
@@ -51,4 +48,21 @@
 // button:hover {
 //   background-color: $mint;
 //   color: white;
+// }
+
+// #formControlLabel{
+//   display: flex;
+//   background-color: $mint2;
+//   color: "white";
+//   size: "20px";
+//   margin: "10px";
+// }
+
+// #address {
+//   width: 89%;
+//   height: 28px;
+//   border: none;
+//   border: 1px solid $light-gray;
+//   border-radius: 8px;
+//   padding-left: 10px;
 // }

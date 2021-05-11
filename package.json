@@ -1,6 +1,6 @@
 {
   "name": "spearmint",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
   "author": "spearmintjs",
   "build": {
@@ -49,6 +49,7 @@
     "xterm-for-react": "^1.0.4"
   },
   "scripts": {
+    "install-once": "npm install ; npm run electron-rebuild",
     "test": "react-app-rewired test --env=jsdom",
     "test:e2e": "./node_modules/mocha/bin/mocha src/__tests__/spec.e2e.js",
     "test:integra": "mocha src/__tests__/spec.integra.js",
