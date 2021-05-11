@@ -195,11 +195,14 @@ const Modal = ({
               </div>
             </pre>
          </div>
-         <div>and includes the following code:<br/></div>
+          <div>
+            and includes the following code:
+            <br />
+          </div>
          <pre>
               <div className="code-wrapper">
                 <code>
-                {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`};
+                  {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`};
                 </code>
               </div>
             </pre>
