@@ -86,43 +86,37 @@ const BrowserView = () => {
     }
   };
 
-  const useStyles = makeStyles(() => ({
-    FormControlLabel: {
-      // fontSize doesn't work, but color does work...
-      fontSize: '1px',
-      // color: 'white',
-      // ,
-    },
-  }));
+  // const useStyles = makeStyles(() => ({
+  //   FormControlLabel: {
+  //     // fontSize doesn't work, but color does work...
+  //     fontSize: '1px',
+  //     color: 'red',
+  //     // ,
+  //   },
+  // }));
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
-    <div id="Accessibility Lens">
-      <div className={styles.accessLensContainer}>
+    <div id={styles.browswerComponentTopLevelDiv}>
+      <div id={styles.accessLensContainer}>
         <div id={styles.accessLensLabel}>
           Accessibility Lens
         </div>
         {/* trying to put some sort of flex style or centered style here to center the 3 check boxes...but no avail */}
         <div
-          id="Check Boxes"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            // fontSize: 22,
-          }}
+          id={styles.accessLensCheckBoxes}
         >
           <FormControlLabel
               // style={{fontSize:2}}
-            id="Disable Mouse Checkbox"
-            control={(
-              <Checkbox
-                // style={{fontSize:2}}
+              id="Disable Mouse Checkbox"
+              control={(
+                <Checkbox
                 value="disable mouse clicks"
                 checked={checkedBoxes.checkedMouse}
                 onChange={handleChangeCheckBox}
                 name="checkedMouse"
+                size='small'
               />
             )}
             label="Disable Mouse Clicks"
@@ -135,6 +129,7 @@ const BrowserView = () => {
                 checked={checkedBoxes.checkedGrayscale}
                 onChange={handleChangeCheckBox}
                 name="checkedGrayscale"
+                size='small'
               />
             )}
             label="Grayscale"
@@ -147,6 +142,7 @@ const BrowserView = () => {
                 checked={checkedBoxes.checkedContrast}
                 onChange={handleChangeCheckBox}
                 name="checkedContrast"
+                size='small'
               />
             )}
             label="Low Contrast"
@@ -159,6 +155,7 @@ const BrowserView = () => {
                 checked={checkedBoxes.muted}
                 onChange={handleChangeCheckBox}
                 name="muted"
+                size='small'
               />
             )}
             label="Mute"
