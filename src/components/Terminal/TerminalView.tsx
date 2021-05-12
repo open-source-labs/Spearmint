@@ -5,7 +5,6 @@ import { TerminalType } from '../../utils/terminalTypes';
 const { Terminal } = require('xterm');
 const ipc = require('electron').ipcRenderer;
 
-
 const terminalArgs: TerminalType = {
   fontSize: 15,
   // Currently rows are hardcoded, next step is to make terminal sizing dynamic.

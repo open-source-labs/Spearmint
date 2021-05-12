@@ -21,12 +21,14 @@ import ExportFileModal from '../Modals/ExportFileModal';
 const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');
 // const browserIcon = require('../../assets/images/google-chrome.png');
-const codeIcon = require('../../assets/images/visual-studio-code.png');
-const homeIcon = require('../../assets/images/home.png');
+// const codeIcon = require('../../assets/images/visual-studio-code.png');
+// const homeIcon = require('../../assets/images/home.png');
 
 const NavBar = ({ inAboutPage }) => {
   const [
-    { fileTree, isFileDirectoryOpen, projectUrl, rightPanelDisplay },
+    {
+      fileTree, isFileDirectoryOpen, projectUrl, rightPanelDisplay,
+    },
     dispatchToGlobal,
   ] = useContext(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -37,21 +39,21 @@ const NavBar = ({ inAboutPage }) => {
   };
 
   /* switches between code and browser view */
-  const handleEditorToggle = () => {
-    if (!inAboutPage) dispatchToGlobal(toggleRightPanel('codeEditorView'));
-  };
+  // const handleEditorToggle = () => {
+  //   if (!inAboutPage) dispatchToGlobal(toggleRightPanel('codeEditorView'));
+  // };
 
   /* switches between code and browser view */
-  const handleBrowserToggle = () => {
-    if (inAboutPage) return;
-    if (rightPanelDisplay === 'browserView' && projectUrl) {
-      dispatchToGlobal(resetToProjectUrl());
-    }
-    if (!projectUrl) {
-      dispatchToGlobal(setProjectUrl('https://google.com'));
-    }
-    dispatchToGlobal(toggleRightPanel('browserView'));
-  };
+  // const handleBrowserToggle = () => {
+  //   if (inAboutPage) return;
+  //   if (rightPanelDisplay === 'browserView' && projectUrl) {
+  //     dispatchToGlobal(resetToProjectUrl());
+  //   }
+  //   if (!projectUrl) {
+  //     dispatchToGlobal(setProjectUrl('https://google.com'));
+  //   }
+  //   dispatchToGlobal(toggleRightPanel('browserView'));
+  // };
 
   /* exports the file (when true) */
   const openExportModal = () => {

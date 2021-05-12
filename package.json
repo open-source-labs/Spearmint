@@ -2,7 +2,7 @@
   "name": "spearmint",
   "version": "0.6.0",
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
-  "author": "team spearmint <germanbluemax@gmail.com>",
+  "author": "team spearmint",
   "build": {
     "appId": "com.spearmint",
     "files": [
@@ -21,6 +21,9 @@
     }
   },
   "main": "public/electron.js",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/spearmint_LA42/issues",
+  },
   "homepage": "./",
   "private": true,
   "dependencies": {
@@ -65,6 +68,7 @@
     "react-build": "NODE_ENV=production react-scripts build",
     "electron-build": "NODE_ENV=production electron-builder -l",
     "electron-rebuild": "electron-rebuild -f -w node-pty",
+    "postinstall": "electron-builder install-app-deps",
     "release": "npm run react-build && electron-builder --publish=always",
     "start-windows": "cross-env NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\"",
     "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\""

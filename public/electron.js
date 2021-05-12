@@ -1,4 +1,6 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const {
+  app, BrowserWindow, ipcMain, dialog,
+} = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
 const fs = require('fs');
@@ -7,8 +9,6 @@ const pty = require('node-pty');
 
 //Dynamic variable to change terminal type based on os
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
-
-
 
 let mainWindow;
 
@@ -41,32 +41,30 @@ function createWindow() {
     },
   });
   mainWindow.loadURL(
-    isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`
+    isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`,
   );
   mainWindow.on('closed', () => (mainWindow = null));
 
   // PTY PROCESS FOR IN APP TERMINAL
-  let ptyArgs = {
+  const ptyArgs = {
     name: 'xterm-color',
     cols: 80,
     rows: 80,
     cwd: process.env.HOME,
     env: process.env,
-  }
-
+  };
 
   const ptyProcess = pty.spawn(shell, [], ptyArgs);
   // with ptyProcess, we want to send incoming data to the channel terminal.incData
   ptyProcess.on('data', (data) => {
     mainWindow.webContents.send('terminal.incData', data);
   });
-  // in the main process, at terminal.toTerm channel, when data is received, 
+  // in the main process, at terminal.toTerm channel, when data is received,
   // main process will write to ptyProcess
-  ipcMain.on('terminal.toTerm', function(event, data) {
+  ipcMain.on('terminal.toTerm', (event, data) => {
     ptyProcess.write(data);
-  })
-};
-
+  });
+}
 
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
 ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
@@ -74,11 +72,11 @@ ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
     if (err) throw err;
   });
   // Return a success message upon save
-  e.returnValue = 'Changes Saved'
+  e.returnValue = 'Changes Saved';
 });
 
 /*
-  EXPORTFILEMODAL.JSX FILE FUNCTIONALITY 
+  EXPORTFILEMODAL.JSX FILE FUNCTIONALITY
   (check existence and create folder)
 */
 ipcMain.on('ExportFileModal.exists', (e, fileOrFolderPath) => {
@@ -106,11 +104,11 @@ ipcMain.on('ExportFileModal.readFile', (e, filePath) => {
 });
 
 // OPENFOLDERBUTTON.JSX FILE FUNCTIONALITY
-ipcMain.on('OpenFolderButton.isDirectory' , (e, filePath) => { 
+ipcMain.on('OpenFolderButton.isDirectory', (e, filePath) => {
   e.returnValue = fs.statSync(filePath).isDirectory();
 });
 
-ipcMain.on('OpenFolderButton.dialog' , (e) => { 
+ipcMain.on('OpenFolderButton.dialog', (e) => {
   const dialogOptions = {
     properties: ['openDirectory', 'createDirectory'],
     filters: [
@@ -127,7 +125,7 @@ ipcMain.on('OpenFolderButton.dialog' , (e) => {
 UNIVERSAL IPC CALLS
 (The following IPC calls are made from various components in the codebase)
 */
-ipcMain.on('Universal.stat' , (e, filePath) => { 
+ipcMain.on('Universal.stat' , (e, filePath) => {
   e.returnValue = fs.statSync(filePath).isDirectory();
 });
 
