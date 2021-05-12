@@ -100,7 +100,7 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
         {
           endPointGuide: endPointGuide,
           cd: `cd ${projectFilePath}`,
-          install: 'npm i -D jest supertest',
+          install: 'npm i -D jest supertest regenerator-runtime',
         }
       );
     case 'puppeteer':
