@@ -6,7 +6,7 @@ import EditorView from '../../components/EditorView/EditorView';
 import BrowserView from '../../components/BrowserView/BrowserView';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { closeRightPanel, setTabIndex } from '../../context/actions/globalActions';
-import TerminalGenerator from '../../components/Terminal/TerminalGenerator';
+import TerminalView from '../../components/Terminal/TerminalView';
 // import terminalStyles from '../../components/Terminal/TerminalView.module.scss';
 const closeIcon = require('../../assets/images/close.png');
 
@@ -43,7 +43,7 @@ const RightPanel = () => {
       </div>
       {/* Test Terminal */}
       <div hidden={tabIndex !== 2} >
-        <TerminalGenerator />
+        <TerminalView />
       </div>
     </div>
   );

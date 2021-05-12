@@ -232,14 +232,25 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks & Context Import Statements
     const addHooksImportStatements = () => {
-      hooksTestCase.hooksStatements.forEach((statement) => {
-        switch (statement.type) {
-          case 'hooks':
-            return addRenderHooksImportStatement(), createPathToHooks(statement);
-          default:
-            return statement;
-        }
-      });
+      if (Array.isArray(hooksTestCase)) {
+        hooksTestCase.forEach((statement) => {
+          switch (statement.type) {
+            case 'hooks':
+              return addRenderHooksImportStatement(), createPathToHooks(statement);
+            default:
+              return statement;
+          }
+        })        
+      } else if (typeof hooksTestCase === 'object') {
+        hooksTestCase.hooksStatements.forEach((statement) => {
+          switch (statement.type) {
+            case 'hooks':
+              return addRenderHooksImportStatement(), createPathToHooks(statement);
+            default:
+              return statement;
+          }
+        });
+      }
       testFileCode += '\n';
     };
 
@@ -271,14 +282,26 @@ function useGenerateTest(test, projectFilePath) {
     // Hooks & Context Test Statements
     const addHooksDescribeBlock = () => {
       testFileCode += `\nafterEach(cleanup);\ndescribe('${hooksTestCase.hooksTestStatement}', () => {`;
-      hooksTestCase.hooksStatements.forEach((statement) => {
+      if (Array.isArray(hooksTestCase)) {
+      hooksTestCase.forEach((statement) => {
         switch (statement.type) {
           case 'hooks':
             return addHookUpdates(statement);
           default:
             return statement;
         }
-      });
+      });  
+      } else if (typeof hooksTestCase === 'object') {
+        hooksTestCase.hooksStatements.forEach((statement) => {
+          switch (statement.type) {
+            case 'hooks':
+              return addHookUpdates(statement);
+            default:
+              return statement;
+          }
+        });  
+      }
+      
       testFileCode += '});';
       testFileCode += '\n';
     };
@@ -440,16 +463,37 @@ function useGenerateTest(test, projectFilePath) {
       //   str += `${curr}, `;
       //   return str;
       // }, '');
-      const { hooksStatements } = hooksTestCase;
-      const hookImports = hooksStatements.reduce((str, { hook }) => {
-        str += `${hook}, `;
-        return str;
-      }, '');
-      if (!testFileCode.includes(`import { ${hooksStatements[0].hook}`) && statement.hookFilePath) {
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
-        filePath = filePath.replace(/\\/g, '/');
 
-        testFileCode += `import { ${hookImports} } from '../${filePath}';`;
+      // const { hooksStatements } = hooksTestCase;
+      // const hooksStatements = hooksTestCase.hooksStatements;
+
+
+      if (Array.isArray(hooksTestCase)) {
+        const hookImports = hooksTestCase.reduce((str, { hook }) => {
+          str += `${hook}, `;
+          return str;
+        }, '');
+
+        if (!testFileCode.includes(`import { ${hooksTestCase[0].hook}`) && statement.hookFilePath) {
+          let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
+          filePath = filePath.replace(/\\/g, '/');
+  
+          testFileCode += `import { ${hookImports} } from '../${filePath}';`;
+        }
+
+      } else if (typeof hooksTestCase === 'object') {
+        const hookImports = hooksTestCase.hooksStatements.reduce((str, { hook }) => {
+          str += `${hook}, `;
+          return str;
+        }, '');
+
+        if (!testFileCode.includes(`import { ${hooksTestCase.hooksStatements[0].hook}`) && statement.hookFilePath) {
+          let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
+          filePath = filePath.replace(/\\/g, '/');
+  
+          testFileCode += `import { ${hookImports} } from '../${filePath}';`;
+        }
+
       }
     }
 
@@ -470,7 +514,8 @@ function useGenerateTest(test, projectFilePath) {
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
-      const supertest = require('supertest')
+      const supertest = require('supertest');
+      const regeneratorRuntime = require('regenerator-runtime');
       const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
       if (dbFilePath) {
@@ -705,7 +750,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
-      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}');`;
       testFileCode += statement.postData
         ? `.send( ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
         : statement.headers.length
@@ -724,7 +769,7 @@ function useGenerateTest(test, projectFilePath) {
           .replace(/\(([^)]+)\)/, '')
           .split(' ')
           .join('');
-        testFileCode += `expect(response.${expectedResponse.toLowerCase()})`;
+        testFileCode += `\n expect(response.${expectedResponse.toLowerCase()})`;
         testFileCode += not ? `.not.${matcher}(${value});` : `.${matcher}(${value});`;
       });
       testFileCode += '});';
