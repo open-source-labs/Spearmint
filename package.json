@@ -67,7 +67,7 @@
     "react-eject": "react-scripts eject",
     "build": "NODE_ENV=production react-app-rewired build && npm run electron-build",
     "react-build": "NODE_ENV=production react-scripts build",
-    "electron-build": "NODE_ENV=production electron-builder -w",
+    "electron-build": "NODE_ENV=production electron-builder -mwl",
     "electron-rebuild": "electron-rebuild -f -w node-pty",
     "postinstall": "electron-builder install-app-deps",
     "release": "npm run react-build && electron-builder --publish=always",
