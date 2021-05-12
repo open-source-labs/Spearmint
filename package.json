@@ -12,6 +12,21 @@
     ],
     "directories": {
       "buildResources": "build"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "maintainer": "Team Spearmint"
     }
   },
   "main": "public/electron.js",
@@ -57,7 +72,7 @@
     "react-eject": "react-scripts eject",
     "build": "NODE_ENV=production react-app-rewired build && npm run electron-build",
     "react-build": "NODE_ENV=production react-scripts build",
-    "electron-build": "NODE_ENV=production electron-builder -mwl",
+    "electron-build": "NODE_ENV=production electron-builder -l",
     "electron-rebuild": "electron-rebuild -f -w node-pty",
     "release": "npm run react-build && electron-builder --publish=always",
     "start-windows": "cross-env NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\"",
