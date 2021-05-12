@@ -2,7 +2,7 @@
   "name": "spearmint",
   "version": "0.6.0",
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
-  "author": "spearmintjs",
+  "author": "team spearmint <germanbluemax@gmail.com>",
   "build": {
     "appId": "com.spearmint",
     "files": [
@@ -12,7 +12,13 @@
     ],
     "directories": {
       "buildResources": "build"
-    }
+    },
+    "linux": {
+      "target": [
+      "deb"
+      ],
+      "maintainer": "team spearmint"
+    } 
   },
   "main": "public/electron.js",
   "homepage": "./",
@@ -28,7 +34,6 @@
     "concurrently": "^4.1.2",
     "cross-env": "^5.2.1",
     "dotenv": "^8.2.0",
-    "electron": "^12.0.5",
     "electron-is-dev": "^1.1.0",
     "fibers": "^5.0.0",
     "js-beautify": "^1.10.0",
@@ -57,7 +62,7 @@
     "react-eject": "react-scripts eject",
     "build": "NODE_ENV=production react-app-rewired build && npm run electron-build",
     "react-build": "NODE_ENV=production react-scripts build",
-    "electron-build": "NODE_ENV=production electron-builder -mwl",
+    "electron-build": "NODE_ENV=production electron-builder -l",
     "electron-rebuild": "electron-rebuild -f -w node-pty",
     "release": "npm run react-build && electron-builder --publish=always",
     "start-windows": "cross-env NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\"",
@@ -85,6 +90,7 @@
     "@typescript-eslint/parser": "^2.33.0",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
+    "electron": "^12.0.5",
     "electron-builder": "^22.6.1",
     "electron-devtools-installer": "^3.0.0",
     "electron-rebuild": "^2.3.5",
