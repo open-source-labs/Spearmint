@@ -2,7 +2,9 @@
 @import '../../assets/stylesheets/fonts.scss';
 
 #browserView {
-  height: 100vh;
+  display: flex;
+  justify-content: center;
+  height: 97vh;
   width: auto;
 }
 
@@ -17,14 +19,38 @@
   text-indent: 10px;
 }
 
-.accessLensContainer{
-  background-color: $mint2;
-  height: 55px;
+#browswerComponentTopLevelDiv{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
-.accessLensCheckBoxes{
-  display: flex;
+#accessLensContainer{
   // background-color: $mint2;
+  display: flex;
+  flex-direction: column;
+  height: 8vh;
+  min-width: 100px;
+  // border: $mint;
+  // border-width: .1em;
+  // border-radius: 5px;
+  // border-style: solid;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+#accessLensCheckBoxes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $mint2;
+  border: $mint2;
+  border-width: .1em;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-style: solid;
 }
 
 #accessLensLabel {
@@ -33,6 +59,11 @@
   background-color: $mint;
   color: white;
   font-size: 18px;
+  height: 2vh;
+  border: $mint;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-style: solid;
 }
 
 // button {
