@@ -23,7 +23,6 @@
   "main": "public/electron.js",
   "bugs": {
     "url": "https://github.com/oslabs-beta/spearmint_LA42/issues",
-    "email": "dieuhhuynh@gmail.com"
   },
   "homepage": "./",
   "private": true,
