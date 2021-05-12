@@ -7,8 +7,9 @@ const fs = require('fs');
 const os = require('os');
 const pty = require('node-pty');
 
-// Dynamic variable to change terminal type based on os
+//Dynamic variable to change terminal type based on os
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+
 let mainWindow;
 
 if (isDev) console.log('electron version', process.versions.electron);
