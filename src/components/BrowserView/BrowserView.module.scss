@@ -29,7 +29,7 @@
   // background-color: $mint2;
   display: flex;
   flex-direction: column;
-  height: 8vh;
+  height: 80px;
   min-width: 100px;
   // border: $mint;
   // border-width: .1em;
@@ -59,7 +59,8 @@
   background-color: $mint;
   color: white;
   font-size: 18px;
-  height: 2vh;
+  font-family: $oxygen;
+  height: 25px;
   border: $mint;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
