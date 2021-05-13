@@ -84,15 +84,15 @@ const Modal = ({
   }
 
   const jestTest = () => {
-    ipc.send('terminal.toTerm', `jest ${fileName}${execute}`);
+    ipc.send('terminal.toTerm', `npx jest ${fileName}${execute}`);
     dispatchToGlobal(setTabIndex(2));
   };
   const verboseTest = () => {
-    ipc.send('terminal.toTerm', `jest --verbose ${fileName}${execute}`);
+    ipc.send('terminal.toTerm', `npx jest --verbose ${fileName}${execute}`);
     dispatchToGlobal(setTabIndex(2));
   };
   const coverageTest = () => {
-    ipc.send('terminal.toTerm', `jest --coverage ${fileName}${execute}`);
+    ipc.send('terminal.toTerm', `npx jest --coverage ${fileName}${execute}`);
     dispatchToGlobal(setTabIndex(2));
   };
 
@@ -142,7 +142,7 @@ const Modal = ({
     );
   }
 
-// EndPointGuide component definition, conditionally rendered
+  // EndPointGuide component definition, conditionally rendered
   const EndPointGuide = () => {
     // endpoint guide only exists when user is in endpoint testing
     if (script.endPointGuide) {
@@ -176,38 +176,38 @@ const Modal = ({
     if (title === 'hooks' || title === 'react') {
       return (
         <Accordion hidden={false}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          id={styles.accordionSummary}
-        >
-          3. Important React Babel Configuration
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            id={styles.accordionSummary}
+          >
+            3. Important React Babel Configuration
       </AccordionSummary>
-        <AccordionDetails id={styles.configGuide}>
-         <div id={styles.accordionDiv}>
-           <div> Ensure that your project contains the following file: </div>
+          <AccordionDetails id={styles.configGuide}>
+            <div id={styles.accordionDiv}>
+              <div> Ensure that your project contains the following file: </div>
+              <pre>
+                <div className="code-wrapper">
+                  <code>
+                    babel.config.js
+                </code>
+                </div>
+              </pre>
+            </div>
+            <div>
+              and includes the following code:
+            <br />
+            </div>
             <pre>
               <div className="code-wrapper">
                 <code>
-                  babel.config.js
+                  {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`}
                 </code>
               </div>
             </pre>
-         </div>
-          <div>
-            and includes the following code:
-            <br />
-          </div>
-          <pre>
-            <div className="code-wrapper">
-              <code>
-               {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`}
-              </code>
-            </div>
-          </pre>
-        </AccordionDetails>
-      </Accordion>
+          </AccordionDetails>
+        </Accordion>
       )
     }
     return null;
@@ -356,9 +356,9 @@ const Modal = ({
               <pre>
                 <div className="code-wrapper">
                   <code>
-                    {`jest ${fileName}\n`}
-                    {`jest --verbose ${fileName}\n`}
-                    {`jest --coverage ${fileName}\n`}
+                    {`npx jest ${fileName}\n`}
+                    {`npx jest --verbose ${fileName}\n`}
+                    {`npx jest --coverage ${fileName}\n`}
                   </code>
                 </div>
               </pre>
