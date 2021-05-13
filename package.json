@@ -1,8 +1,8 @@
 {
   "name": "spearmint",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
-  "author": "spearmintjs",
+  "author": "team spearmint",
   "build": {
     "appId": "com.spearmint",
     "files": [
@@ -12,12 +12,24 @@
     ],
     "directories": {
       "buildResources": "build"
+    },
+    "linux": {
+      "target": [
+        "deb"
+      ],
+      "icon": "build/icon.*",
+      "maintainer": "Team Spearmint"
     }
   },
   "main": "public/electron.js",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/spearmint_LA42/issues"
+  },
   "homepage": "./",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@types/jest": "^25.2.3",
     "@types/react-beautiful-dnd": "^12.1.2",
     "@types/react-dom": "^16.9.8",
@@ -28,9 +40,10 @@
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.1.0",
     "fibers": "^5.0.0",
+    "fix-path": "^3.0.0",
     "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
-    "node-sass": "^4.12.0",
+    "node-pty": "^0.10.0",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
     "react-beautiful-dnd": "^11.0.3",
@@ -38,23 +51,29 @@
     "react-modal": "^3.8.1",
     "react-monaco-editor": "^0.25.1",
     "react-scripts": "^3.4.1",
-    "sass": "^1.26.5",
+    "sass": "^1.32.11",
     "typescript": "^3.9.2",
-    "wait-on": "^3.3.0"
+    "wait-on": "^3.3.0",
+    "xterm": "^4.11.0",
+    "xterm-addon-fit": "^0.5.0",
+    "xterm-for-react": "^1.0.4"
   },
   "scripts": {
-    "test": "react-scripts test --env=jsdom",
+    "install-once": "npm i && npm run electron-rebuild",
+    "test": "react-app-rewired test --env=jsdom",
     "test:e2e": "./node_modules/mocha/bin/mocha src/__tests__/spec.e2e.js",
     "test:integra": "mocha src/__tests__/spec.integra.js",
     "test:watch": "jest --watch",
     "react-start": "react-scripts start",
     "react-eject": "react-scripts eject",
-    "build": "NODE_ENV=production npm run react-build && npm run electron-build",
+    "build": "NODE_ENV=production react-app-rewired build && npm run electron-build",
     "react-build": "NODE_ENV=production react-scripts build",
     "electron-build": "NODE_ENV=production electron-builder -mwl",
+    "electron-rebuild": "electron-rebuild -f -w node-pty",
+    "postinstall": "electron-builder install-app-deps",
     "release": "npm run react-build && electron-builder --publish=always",
-    "start-windows": "SET NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+    "start-windows": "cross-env NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\"",
+    "start": "NODE_ENV=development concurrently \"cross-env BROWSER=none react-app-rewired start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "browserslist": {
     "production": [
@@ -78,9 +97,10 @@
     "@typescript-eslint/parser": "^2.33.0",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",
-    "electron": "^5.0.3",
+    "electron": "^12.0.5",
     "electron-builder": "^22.6.1",
     "electron-devtools-installer": "^3.0.0",
+    "electron-rebuild": "^2.3.5",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint-config-airbnb-typescript": "^7.2.1",
@@ -89,6 +109,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.1",
     "mocha": "^8.3.2",
+    "react-app-rewired": "^2.1.8",
     "react-test-renderer": "^16.12.0",
     "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"

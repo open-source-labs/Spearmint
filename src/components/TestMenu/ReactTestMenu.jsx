@@ -11,6 +11,9 @@ import {
   setFilePath,
   toggleRightPanel,
   setValidCode,
+  setTestCase,
+  toggleModal,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
@@ -23,7 +26,7 @@ const ReactTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('react');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [reactTestCase, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext(GlobalContext);
   const generateTest = useGenerateTest('react', projectFilePath);
 
   useEffect(() => {
@@ -42,6 +45,11 @@ const ReactTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0));
+  };
+
+  const openNewTestModal = () => {
+    if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));

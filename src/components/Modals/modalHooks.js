@@ -36,82 +36,80 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 }
 
 export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
-  const [{ projectFilePath }] = useContext(GlobalContext);
+  const [{ projectFilePath }] = useContext(GlobalContext)
   switch (test) {
     case 'acc':
       if (testType === 'html') {
         return (
-          `cd ${projectFilePath}
-          npm i -D axe-core regenerator-runtime jest
-          jest`
+          {
+            cd: `cd ${projectFilePath}`,
+            install: 'npm i -D axe-core regenerator-runtime jest',
+          }
         );
       }
       if (testType === 'react') {
         return (
-          `cd ${projectFilePath}
-          npm i -D axe-core regenerator-runtime jest enzyme enzyme-adapter-react-16
-          jest`
+          {
+            cd: `cd ${projectFilePath}`,
+            install: 'npm i -D axe-core regenerator-runtime jest enzyme enzyme-adapter-react-16',
+          }
         );
       }
       if (testType === 'puppeteer') {
         return (
-          `cd ${projectFilePath}
-          npm i -D axe-core puppeteer
-          node <YOUR_DIR_PATH/TEST_FILE.JS> ${puppeteerUrl}
-          `
+          {
+            cd: `cd ${projectFilePath}`,
+            install: 'npm i -D axe-core puppeteer',
+          }
         );
-        
       }
       return 'error';
     case 'react':
       return (
-        `cd ${projectFilePath}\n` +
-        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest\n' +
-        'npm run test'
+        {
+          cd: `cd ${projectFilePath}`,
+          install: `npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest`,
+        }
       );
     case 'redux':
       return (
-        `cd ${projectFilePath}\n` +
-        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch jest\n' +
-        'npm run test'
+        {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch jest',
+        }
       );
     case 'hooks':
       return (
-        `cd ${projectFilePath}\n` +
-        'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot @testing-library/react-hooks jest\n' +
-        'npm run test'
+        {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot @testing-library/react-hooks jest',
+        }
       );
     case 'endpoint':
+      const endPointGuide = {
+        1: `1. Please follow these steps to configure your files correctly. The tests will not run properly if you skip these steps.`,
+        2: `2. Your server file MUST export your server object.`,
+        3: `3. Comment out or remove the appropriate lines of code where the call to the server's listen method takes place.`,
+        4: `4. If you are testing a route that involves querying a database, you must import the file where your database instance is created.`,
+        5: `5. In that file, you must export your database instance object.`,
+        '5a': `5a. PostgreSQL: Pool, Client, or pg object.`,
+        '5b': `5b. MongoDB: MongoClient instance.`,
+        '5c': `5c. Mongoose: mongoose instance.`,
+      }
       return (
-        <>
-          <p id={styles.endpoint}>
-            Please follow these steps to configure your files correctly. The tests will not run
-            properly if you skip these steps!
-            <br></br>
-            <br></br> 1. Your server file MUST export your server object.
-            <br></br> 2. Comment out or remove the appropriate lines of code where the call to the
-            server's listen method takes place
-            <br></br>
-            <span>Example</span>
-            <br></br>3. If your are testing a route that involves querying a database, you must
-            import the file where your database instance is created.
-            <br></br>
-            <ul>
-              4. In that file, you must export your database instance object
-              <li>PostgreSQL: Pool, Client, or pg object</li>
-              <li>MongoDB: MongoClient instance</li>
-              <li>Mongoose: mongoose instance</li>
-            </ul>
-            5. Make sure to add "jest" to the test script in the package.json file.
-          </p>
-          <br></br>
-          <code>npm i -D jest supertest</code>
-          <br></br>
-          <code>npm run test</code>
-        </>
+        {
+          endPointGuide: endPointGuide,
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D jest supertest regenerator-runtime',
+        }
       );
     case 'puppeteer':
-      return `cd ${projectFilePath}\nnpm i -D jest puppeteer\nnpm run test`;
+      return (
+        {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D puppeteer',
+        }
+      );
     default:
       return '';
     // code block

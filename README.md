@@ -5,6 +5,7 @@ Spearmint helps developers easily create functional React/Redux/Endpoint/Paint T
 # Installation 
 Please download spearmint from our [website](https://www.spearmintjs.com/). Available for Mac OS, Windows and Linux.
 
+
 # How to use in development mode
 
 ### For Mac developers
@@ -29,9 +30,19 @@ In an Administrator PowerShell run the following command:
 2. ```npm run install-once```
 3. ```npm run start-windows```
 
+Download spearmint @ spearmintjs.com. Available for Mac OS, Windows and Linux.
+
+
+Mac users: 
+### Pre-requisite
+    * Download latest version of Xcode  
+    * run "npm install-once" to install dependencies and run electron rebuild sequentially
+    
+<br>
 
 
 # How it works
+
 
 1.  On the initial screen, load your application to start creating tests.
 
