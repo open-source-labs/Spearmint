@@ -17,7 +17,8 @@
       "target": [
         "deb"
       ],
-      "maintainer": "team spearmint"
+      "icon": "build/icon.*",
+      "maintainer": "Team Spearmint"
     }
   },
   "main": "public/electron.js",
