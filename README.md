@@ -35,19 +35,29 @@ In an Administrator PowerShell run the following command:
 
 1.  On the initial screen, load your application to start creating tests.
 
-![](/public/spearmint_open_folder_page.JPG)
+![](/public/mainPage.JPG)
 
 2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, and endpoint test statements.
 
-![](/public/newReact.png?raw=true)
+![](/public/generateTest.JPG)
 
-3.  Refer to the browser view of your app that is displayed on the right to quickly identify values for your selectors and use the file directory to open up a code editor view to easily refer to your codebase for props information.
-
-4.  Spearmint will then convert user input to dynamically generate a test file that will be saved inside a **tests** folder, which you can use to run ‘npm test’ on.
+3.  Spearmint will then convert user input to dynamically generate a test file, which you can click export icon on the left nav bar to automatically save the test file in the **\_\_tests\_\_** folder.  
 
 
+4.  Lastly click **Run Test** button and follow the guide and click what type of test you would like to perform
+![](/public/runTest.JPG) 
+
+5.  Optionally, accessibility lenese have been added in the app to give developers with different mismatches various options to interact with the app. 
+![](/public/AccLens_Demo.gif)
 
 <br>
+
+
+# Demo
+
+![](/public/AccLens_Demo.gif)
+
+***
 
 ### The Spearmint Team
 <hr>
