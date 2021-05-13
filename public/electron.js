@@ -6,10 +6,17 @@ const isDev = require('electron-is-dev');
 const fs = require('fs');
 const os = require('os');
 const pty = require('node-pty');
+const fixPath = require('fix-path');
 
 //Dynamic variable to change terminal type based on os
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+console.log("process.env.Path1: ", process.env.PATH);
+//=> '/usr/bin'
 
+fixPath();
+
+console.log("process.env.Path2: ", process.env.PATH);
+//=> '/usr/local/bin:/usr/bin'
 let mainWindow;
 
 if (isDev) console.log('electron version', process.versions.electron);
@@ -53,6 +60,7 @@ function createWindow() {
     cwd: process.env.HOME,
     env: process.env,
   };
+  console.log("process.env.HOME: ", process.env.HOME);
 
   const ptyProcess = pty.spawn(shell, [], ptyArgs);
   // with ptyProcess, we want to send incoming data to the channel terminal.incData
@@ -125,7 +133,7 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
 UNIVERSAL IPC CALLS
 (The following IPC calls are made from various components in the codebase)
 */
-ipcMain.on('Universal.stat' , (e, filePath) => {
+ipcMain.on('Universal.stat', (e, filePath) => {
   e.returnValue = fs.statSync(filePath).isDirectory();
 });
 

@@ -17,12 +17,13 @@
       "target": [
         "deb"
       ],
-      "maintainer": "team spearmint"
+      "icon": "build/icon.*",
+      "maintainer": "Team Spearmint"
     }
   },
   "main": "public/electron.js",
   "bugs": {
-    "url": "https://github.com/oslabs-beta/spearmint_LA42/issues",
+    "url": "https://github.com/oslabs-beta/spearmint_LA42/issues"
   },
   "homepage": "./",
   "private": true,
@@ -39,6 +40,7 @@
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.1.0",
     "fibers": "^5.0.0",
+    "fix-path": "^3.0.0",
     "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
     "node-pty": "^0.10.0",
@@ -57,7 +59,7 @@
     "xterm-for-react": "^1.0.4"
   },
   "scripts": {
-    "install-once": "concurrently \"npm i\" \"npm run electron-rebuild\"",
+    "install-once": "npm i && npm run electron-rebuild",
     "test": "react-app-rewired test --env=jsdom",
     "test:e2e": "./node_modules/mocha/bin/mocha src/__tests__/spec.e2e.js",
     "test:integra": "mocha src/__tests__/spec.integra.js",
