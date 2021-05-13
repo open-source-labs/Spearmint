@@ -23,21 +23,15 @@ First install
 
 **Prerequisite**: Install Python and Microsoft C++ Build Tools.
 
-In an Administrator PowerShell run the following command:
-```choco install python visualcpp-build-tools -y npm config set msvs_version 2017```
+In an Administrator PowerShell run the following commands: <br />
+```choco install python visualcpp-build-tools -y``` <br />
+```npm config set msvs_version 2017```
         
 1. Fork and clone this repository.
 2. ```npm run install-once```
 3. ```npm run start-windows```
 
-Download spearmint @ spearmintjs.com. Available for Mac OS, Windows and Linux.
 
-
-Mac users: 
-### Pre-requisite
-    * Download latest version of Xcode  
-    * run "npm install-once" to install dependencies and run electron rebuild sequentially
-    
 <br>
 
 
@@ -46,19 +40,19 @@ Mac users:
 
 1.  On the initial screen, load your application to start creating tests.
 
-![](/public/mainPage.JPG)
+![](/public/mainPage.png)
 
 2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, and endpoint test statements.
 
-![](/public/generateTest.JPG)
+![](/public/generateTest.png)
 
 3.  Spearmint will then convert user input to dynamically generate a test file, which you can click export icon on the left nav bar to automatically save the test file in the **\_\_tests\_\_** folder.  
 
 
-4.  Lastly click **Run Test** button and follow the guide and click what type of test you would like to perform
-![](/public/runTest.JPG) 
+4.  Lastly click **Run Test** button and follow the guide and click what type of test you would like to perform.
+![](/public/runTest.png) 
 
-5.  Optionally, accessibility lenese have been added in the app to give developers with different mismatches various options to interact with the app. 
+5.  Accessibility lens have been added in the app to give developers with different mismatches various options to interact with the app. 
 ![](/public/AccLens_Demo.gif)
 
 <br>
@@ -66,7 +60,7 @@ Mac users:
 
 # Demo
 
-![](/public/AccLens_Demo.gif)
+![](/public/inapp-test-demo-run-test.gif)
 
 ***
 
