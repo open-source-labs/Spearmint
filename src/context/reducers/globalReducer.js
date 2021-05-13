@@ -4,7 +4,7 @@ import { actionTypes } from '../actions/globalActions';
 export const GlobalContext = createContext(null);
 
 export const globalState = {
-  url: null,
+  url: "http://www.google.com/",
   projectUrl: null,
   isProjectLoaded: false,
   fileTree: null,
@@ -23,6 +23,8 @@ export const globalState = {
   fileName: '',
   filePath: '',
   validCode: true,
+  // added new state for tab index
+  tabIndex: 0,
 };
 
 export const globalReducer = (state, action) => {
@@ -110,7 +112,7 @@ export const globalReducer = (state, action) => {
         ...state,
         isTestModalOpen: !state.isTestModalOpen,
       };
-    //
+
     case actionTypes.UPDATE_FILE:
       const file = action.testString;
       return {
@@ -123,7 +125,7 @@ export const globalReducer = (state, action) => {
         ...state,
         url: docsUrl,
         isRightPanelOpen: true,
-        rightPanelDisplay: 'browserView',
+        tabIndex: 1,
       };
     case actionTypes.RESET_TO_PROJECT_URL:
       // formerly NEW_TEST_CLOSE_BROWSER_DOCS
@@ -150,7 +152,17 @@ export const globalReducer = (state, action) => {
         ...state,
         validCode,
       };
+
+    case actionTypes.SET_TAB_INDEX:
+      const tabIndex = action.tabIndex;
+      return {
+        ...state,
+        tabIndex,
+      }
     default:
       return state;
+
+
   }
+
 };

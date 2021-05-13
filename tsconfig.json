@@ -21,9 +21,9 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src",
+    "src/**/*",
     "src/context/__tests__",
-    "__tests__/hello.test.js",   
-    "tests/spec.integra.js"  
+    "__tests__/hello.test.js",
+    "tests/spec.integra.js"
   ]
 }

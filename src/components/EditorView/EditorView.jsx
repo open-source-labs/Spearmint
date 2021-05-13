@@ -5,8 +5,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
 import styles from './EditorView.module.scss';
 
-const remote = window.require('electron').remote;
-const fs = remote.require('fs');
+const { ipcRenderer } = require('electron');
+
 
 const Editor = () => {
   const [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
@@ -21,11 +21,14 @@ const Editor = () => {
     colorDecorators: true,
     wrappingIndent: 'indent',
     automaticLayout: true,
+    codeLens: true,
+    // Added specific fontfamily and fontsize to address Windows curson misalignment issue
+    fontFamily: 'courier new',
+    fontSize: 12,
   };
 
   const editorDidMount = () => {
     editor.setTheme('light-dark');
-    // editor.focus();
   };
 
   const updatafile = (newValue, e) => {
@@ -38,14 +41,14 @@ const Editor = () => {
       if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');
     } else setWasSaved('No Changes to Save');
     if (filePath.length && editedText.length) {
-      setWasSaved('Changes Saved');
-      await fs.writeFile(filePath, editedText, (err) => {
-        if (err) throw err;
-      });
+      // Send main process the filePath and editedText in obj to save
+      const reply = ipcRenderer.sendSync('EditorView.saveFile', filePath, editedText);
+      // Upon reply from main process, update wasSaved state
+      setWasSaved(reply);
     }
   };
 
-  let fileType = filePath.split('.')[1];
+  const fileType = filePath.split('.')[1];
   const extensionChecker = {
     png: 1,
     jpg: 1,
@@ -54,15 +57,11 @@ const Editor = () => {
 
   return (
     <div>
-      <button id={styles.save} onClick={saveFile}>
-        Save Changes
-      </button>
-      <span id={styles.span}>{wasSaved}</span>
       <div onClick={() => setWasSaved('')}>
         <MonacoEditor
-          height='100vh'
-          language='javascript'
-          theme='light-dark'
+          height="80vh"
+          language="javascript"
+          theme="light-dark"
           value={
             file
               ? extensionChecker[fileType]
@@ -74,6 +73,12 @@ const Editor = () => {
           editorDidMount={editorDidMount}
           onChange={updatafile}
         />
+      </div>
+      <div>
+        <button type="button" id={styles.save} onClick={saveFile}>
+          Save Changes
+        </button>
+        <span id={styles.span}>{wasSaved}</span>
       </div>
     </div>
   );

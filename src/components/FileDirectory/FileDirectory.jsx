@@ -7,11 +7,13 @@ import {
   toggleRightPanel,
   updateFile,
   setFilePath,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 
-const { remote } = window.require('electron');
-const fs = remote.require('fs');
+const { ipcRenderer } = require('electron');
+
 const fileImg = require('../../assets/images/file-document-outline.svg');
+
 const FileDirectory = ({ fileTree }) => {
   const [{ isFolderOpen, isFileHighlighted, projectFilePath }, dispatchToGlobal] = useContext(
     GlobalContext
@@ -44,7 +46,8 @@ const FileDirectory = ({ fileTree }) => {
   };
 
   const handleDisplayFileCode = (filePath) => {
-    const fileContent = fs.readFileSync(filePath, 'utf8');
+    // const fileContent = fs.readFileSync(filePath, 'utf8');
+    const fileContent = ipcRenderer.sendSync('Universal.readFile', filePath);
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(setFilePath(filePath));
   };
@@ -94,6 +97,7 @@ const FileDirectory = ({ fileTree }) => {
                   onClick={() => {
                     handleDisplayFileCode(file.filePath);
                     handleClickHighlightFile(file.fileName);
+                    dispatchToGlobal(setTabIndex(0));
                   }}
                 >
                   {differImg(file.fileName)}

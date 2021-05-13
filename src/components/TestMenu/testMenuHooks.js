@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import { setTabIndex } from '../../context/actions/globalActions';
 
 export function useToggleModal(test) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState(test);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const openModal = () => {
     setTitle('New Test');
@@ -12,6 +16,7 @@ export function useToggleModal(test) {
   const openScriptModal = () => {
     setTitle(title);
     setIsModalOpen(true);
+    dispatchToGlobal(setTabIndex(2));
   };
 
   const closeModal = () => {
@@ -19,14 +24,16 @@ export function useToggleModal(test) {
     setTitle(test);
   };
 
-  return { title, isModalOpen, openModal, openScriptModal, closeModal };
+  return {
+    title, isModalOpen, openModal, openScriptModal, closeModal
+  };
 }
 
 export const validateInputs = (testSuite, testCaseState) => {
+  let endpoint, assertion;
   switch (testSuite) {
     case 'endpoint':
       const { serverFilePath, addDB, dbFilePath, endpointStatements } = testCaseState;
-      let endpoint, assertion;
       if (!serverFilePath || (addDB && !dbFilePath)) return false;
       for (endpoint of endpointStatements) {
         if (!endpoint.method || !endpoint.route) return false;

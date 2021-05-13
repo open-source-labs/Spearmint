@@ -6,6 +6,9 @@ import {
   toggleRightPanel,
   setValidCode,
   openBrowserDocs,
+  setTestCase,
+  toggleModal,
+  setTabIndex,
 } from '../../context/actions/globalActions';
 import {
   addAsync,
@@ -25,7 +28,7 @@ const ReduxTestMenu = () => {
     ReduxTestCaseContext
   );
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('redux');
-  const [{ projectFilePath, file, exportBool }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('redux', projectFilePath);
   // Redux testing docs url
   const reduxUrl = 'https://redux.js.org/recipes/writing-tests';
@@ -58,6 +61,11 @@ const ReduxTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ reduxStatements, reduxTestStatement })));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
+    dispatchToGlobal(setTabIndex(0));
+  };
+
+  const openNewTestModal = () => {
+    if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
   if (!file && exportBool)

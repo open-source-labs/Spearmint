@@ -2,7 +2,9 @@
 @import '../../assets/stylesheets/fonts.scss';
 
 #browserView {
-  height: 100vh;
+  display: flex;
+  justify-content: center;
+  height: 97vh;
   width: auto;
 }
 
@@ -17,13 +19,52 @@
   text-indent: 10px;
 }
 
-#address {
-  width: 89%;
-  height: 28px;
-  border: none;
-  border: 1px solid $light-gray;
-  border-radius: 8px;
-  padding-left: 10px;
+#browswerComponentTopLevelDiv{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+#accessLensContainer{
+  // background-color: $mint2;
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+  min-width: 100px;
+  // border: $mint;
+  // border-width: .1em;
+  // border-radius: 5px;
+  // border-style: solid;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+#accessLensCheckBoxes{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $mint2;
+  border: $mint2;
+  border-width: .1em;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-style: solid;
+}
+
+#accessLensLabel {
+  display: flex;
+  justify-content: center;
+  background-color: $mint;
+  color: white;
+  font-size: 18px;
+  font-family: $oxygen;
+  height: 25px;
+  border: $mint;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-style: solid;
 }
 
 // button {
@@ -39,4 +80,21 @@
 // button:hover {
 //   background-color: $mint;
 //   color: white;
+// }
+
+// #formControlLabel{
+//   display: flex;
+//   background-color: $mint2;
+//   color: "white";
+//   size: "20px";
+//   margin: "10px";
+// }
+
+// #address {
+//   width: 89%;
+//   height: 28px;
+//   border: none;
+//   border: 1px solid $light-gray;
+//   border-radius: 8px;
+//   padding-left: 10px;
 // }

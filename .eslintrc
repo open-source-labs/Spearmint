@@ -6,7 +6,8 @@
   "rules": {
     "arrow-body-style": "off",
     "no-plusplus": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "linebreak-style": "off"
   },
   "env": {
     "jest": true,
