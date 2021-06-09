@@ -43,6 +43,7 @@
     "fix-path": "^3.0.0",
     "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
+    "mongoose": "^5.12.13",
     "node-pty": "^0.10.0",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
