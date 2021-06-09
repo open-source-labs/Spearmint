@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MONGO_URI =
-  'postgres://tvbwuzta:m_4lxbce7W5l7YCMwbRl2R9JIy7xrYrc@batyr.db.elephantsql.com/tvbwuzta';
+  'mongodb+srv://ericgpark:jENk%40eW6QEGez-g@codesmith.xbncu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 mongoose
   .connect(MONGO_URI)
