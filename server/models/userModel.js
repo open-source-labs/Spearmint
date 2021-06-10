@@ -4,7 +4,7 @@ const MONGO_URI =
   'mongodb+srv://ericgpark:jENk%40eW6QEGez-g@codesmith.xbncu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to Mongo DB Successfully'))
   .catch((err) => console.log(err));
 
@@ -12,7 +12,7 @@ const Schema = mongoose.Schema;
 
 // Schema and model for 'user' collection
 const userSchema = new Schema({
-  username: { type: String, require: true },
+  username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
   tests: [
     {
@@ -23,13 +23,4 @@ const userSchema = new Schema({
 });
 const User = mongoose.model('user', userSchema);
 
-// Schema and model for 'test' collection
-const testSchema = new Schema({
-  name: String,
-});
-const Test = mongoose.model('test', testSchema);
-
-module.exports = {
-  User,
-  Test,
-};
+module.exports = User;

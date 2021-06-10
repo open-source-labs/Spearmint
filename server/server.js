@@ -1,18 +1,16 @@
 const express = require('express');
 const app = express();
-const path = require('path');
 // TODO: Import router file
+const router = require('./routes/router');
 const PORT = 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// TODO: Add route handler
+// Handler to direct all requests to the endpoint / to router file
+app.use('/', router);
 
-app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
-});
-
+// Any other request is caught here
 app.use((req, res) => res.status(404).send('Error 404: No content found'));
 
 // Express global error handler
