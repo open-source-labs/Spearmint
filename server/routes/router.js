@@ -1,16 +1,30 @@
 const path = require('path');
 const express = require('express');
 
-const userController = require('../controllers/userController.js');
-const testController = require('../controllers/testController.js');
+const userController = require('../controllers/userController');
+const cookieController = require('../controllers/cookieController');
+const sessionController = require('../controllers/sessionController');
 const router = express.Router();
 
-router.post('/signup', userController.bcrypt, userController.signup, (req, res) => {
-  res.status(200).send(res.locals.newUser);
-});
+router.post(
+  '/signup',
+  userController.bcrypt,
+  userController.signup,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+  (req, res) => {
+    res.status(200).json('Sign Up Successful');
+  }
+);
 
-router.post('/login', userController.login, (req, res) => {
-  res.status(200).send('Logged in');
-});
+router.post(
+  '/login',
+  userController.login,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+  (req, res) => {
+    res.status(200).json('Logged in');
+  }
+);
 
 module.exports = router;

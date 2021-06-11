@@ -1,11 +1,12 @@
 const express = require('express');
 const app = express();
-// TODO: Import router file
+const cookieParser = require('cookie-parser');
 const router = require('./routes/router');
 const PORT = 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Handler to direct all requests to the endpoint / to router file
 app.use('/', router);
@@ -21,8 +22,8 @@ app.use((err, req, res, next) => {
     message: { err: 'An error occurred' },
   };
   const errorObj = Object.assign({}, defaultErr, err);
-  console.log(errorObj.log, ' ', errorObj.err);
-  return res.status(errorObj.status).json(errorObj.message);
+  console.log(errorObj.log, ' ', err);
+  return res.status(errorObj.status).json(err);
 });
 
 // Start server
