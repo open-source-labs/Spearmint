@@ -16,6 +16,7 @@ const BrowserView = () => {
     muted: false,
     checkedGrayscale: false,
     checkedContrast: false,
+    checkedReader: false,
   });
 
   // Mute/Unmute webview
@@ -81,6 +82,10 @@ const BrowserView = () => {
         });
         break;
 
+      // Updates screen reader
+      case 'checkedReader':
+        setCheckBox({});
+        break;
       default:
         break;
     }
@@ -108,10 +113,10 @@ const BrowserView = () => {
           id={styles.accessLensCheckBoxes}
         >
           <FormControlLabel
-              // style={{fontSize:2}}
-              id="Disable Mouse Checkbox"
-              control={(
-                <Checkbox
+            // style={{fontSize:2}}
+            id="Disable Mouse Checkbox"
+            control={(
+              <Checkbox
                 value="disable mouse clicks"
                 checked={checkedBoxes.checkedMouse}
                 onChange={handleChangeCheckBox}
@@ -160,6 +165,19 @@ const BrowserView = () => {
             )}
             label="Mute"
           />
+          <FormControlLabel
+            id="Turn on Screen Reader"
+            control={(
+              <Checkbox
+                value="reader"
+                checked={checkedBoxes.reader}
+                onChange={handleChangeCheckBox}
+                name="reader"
+                size='small'
+              />
+            )}
+            label="Screen Reader"
+          />
         </div>
       </div>
       {/* Search bar */}
@@ -175,7 +193,7 @@ const BrowserView = () => {
         style={{
           // filter: checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : 'grayscale(0%)',
           filter: checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast ? 'grayscale(100%) contrast(0.2)'
-           : checkedBoxes.checkedGrayscale? 'grayscale(100%)': checkedBoxes.checkedContrast?'contrast(0.2)': null,
+            : checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : checkedBoxes.checkedContrast ? 'contrast(0.2)' : null,
           pointerEvents: checkedBoxes.checkedMouse ? 'none' : 'auto',
         }}
       />
