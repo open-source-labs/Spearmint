@@ -708,47 +708,6 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '})\n\n';
     };
     /* ------------------Context needs to be integrated with Hooks as business logic------------------- */
-    // // Context Jest Test Code
-    // const addContext = (context) => {
-    //   testFileCode += `test('${context.testName}', () => {`;
-    //   if (context.queryValue === 'shows_default_value') {
-    //     testFileCode += `const mockValue = {Data: '${context.values}'}
-    //       const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
-    //       expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
-    //   }
-    //   if (context.queryValue === 'shows_value_from_provider') {
-    //     testFileCode += `const mockValue = {Data: '${context.values}'}
-    //       const { ${context.querySelector} } = render (
-    //         <${context.context}.Provider value={mockValue}>
-    //           <${context.consumerComponent}/>
-    //         </${context.context}.Provider>
-    //       )
-    //       expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
-    //   }
-    //   if (context.queryValue === 'component_provides_context_value') {
-    //     testFileCode += `const mockValue = {Data: '${context.values}'}
-    //       const { ${context.querySelector} } = render (
-    //         <${context.providerComponent} value={mockValue}>
-    //           <${context.context}.Consumer>
-    //           {value => <span>Recieved: {value} </span>}
-    //           <${context.context}.Consumer/>
-    //         </${context.providerComponent}>
-    //       )
-    //       expect(${context.querySelector}(/^Recieved:/).textContent).${context.queryVariant}('${context.values}')`;
-    //   }
-    //   if (context.queryValue === 'renders_providers_+_consumers_normally') {
-    //     testFileCode += `const mockValue = {Data: '${context.values}'}
-    //       const { ${context.querySelector} } = render (
-    //         <${context.providerComponent} value={mockValue}>
-    //           <${context.consumerComponent}/>
-    //         </${context.providerComponent}>
-    //       )
-    //       expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
-    //   }
-    //   testFileCode += '})\n\n';
-    // };
-
-    // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}');`;
       testFileCode += statement.postData

@@ -46,7 +46,6 @@ const FileDirectory = ({ fileTree }) => {
   };
 
   const handleDisplayFileCode = (filePath) => {
-    // const fileContent = fs.readFileSync(filePath, 'utf8');
     const fileContent = ipcRenderer.sendSync('Universal.readFile', filePath);
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(setFilePath(filePath));
@@ -65,7 +64,6 @@ const FileDirectory = ({ fileTree }) => {
     return filetree.map((file) => {
       if (
         file.fileName !== 'node_modules' &&
-        // file.fileName !== '.git' &&
         file.fileName[0] !== '.'
       ) {
         if (file.files.length) {
