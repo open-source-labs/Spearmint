@@ -51,7 +51,10 @@ userController.login = (req, res, next) => {
       // If an error occurs in the compare method, invoke global error handler
       if (err) return next(err);
       // If there is a match, invoke next middleware
-      if (match) return next();
+      if (match) {
+        res.locals.userId = result[0]._id;
+        return next();
+      }
       // If there is no match, invoke global error handler
       return next('Incorrect password');
     });

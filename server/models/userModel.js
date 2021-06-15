@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MONGO_URI =
-  'mongodb+srv://ericgpark:jENk%40eW6QEGez-g@codesmith.xbncu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+  'mongodb+srv://ericgpark:jENk%40eW6QEGez-g@spearmint.xbncu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -14,12 +14,6 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
-  tests: [
-    {
-      name: String,
-      id: { type: 'ObjectId', ref: 'test' },
-    },
-  ],
 });
 const User = mongoose.model('user', userSchema);
 
