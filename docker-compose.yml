@@ -1,7 +1,8 @@
 version: '3'
 services:
   frontend:
-    image: frontend
+    container_name: frontend
+    image: frontend-test2
     security_opt:
       - seccomp=profile.json
     environment:
@@ -12,7 +13,8 @@ services:
     networks:
       - spearmint
   backend:
-    image: backend
+    container_name: backend
+    image: backend-test2
     ports:
       - "3001:3001"
     networks:
