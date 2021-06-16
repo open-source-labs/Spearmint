@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const MONGO_URI =
-  'mongodb+srv://ericgpark:jENk%40eW6QEGez-g@codesmith.xbncu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+  'mongodb://ericgpark:jENk%40eW6QEGez-g@spearmint-shard-00-00.xbncu.mongodb.net:27017,spearmint-shard-00-01.xbncu.mongodb.net:27017,spearmint-shard-00-02.xbncu.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-rbxspt-shard-0&authSource=admin&retryWrites=true&w=majority';
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
