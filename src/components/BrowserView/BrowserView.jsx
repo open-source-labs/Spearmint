@@ -8,6 +8,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
 import { InvertColors } from '@material-ui/icons';
 
+import { ScreenReader } from '@capacitor/screen-reader';
+
 const BrowserView = () => {
   const [{ url }, dispatchToGlobal] = useContext(GlobalContext);
   // Track checked button state
@@ -28,6 +30,11 @@ const BrowserView = () => {
     console.log(webview);
     webview.setAudioMuted(muted);
   };
+
+  const activateReader = () => { 
+    // Ternary statement is backwards, as checkedBoxes.checkedReader updates after the case break
+    checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
+  }
 
   // helper function to add the https or http
   const addHttps = (url) => {
@@ -83,11 +90,19 @@ const BrowserView = () => {
           ...checkedBoxes,
           checkedContrast: !checkedBoxes.checkedContrast,
         });
+        console.log('after everything: ' + checkedBoxes.checkedReader);
         break;
 
       // Updates screen reader
       case 'checkedReader':
-        setCheckBox({});
+        console.log('before setCheckBox: ' + checkedBoxes.checkedReader);
+        setCheckBox({
+          ...checkedBoxes,
+          checkedReader: !checkedBoxes.checkedReader,
+        });
+        console.log('after setCheckBox: ' + checkedBoxes.checkedReader);
+
+        activateReader(checkedBoxes.checkedReader);
         break;
       // a filter for low Vision, easier on eyes
       case 'checkedLowVision':
@@ -186,10 +201,10 @@ const BrowserView = () => {
             id="Turn on Screen Reader"
             control={(
               <Checkbox
-                value="reader"
-                checked={checkedBoxes.reader}
+                value="checkedReader"
+                checked={checkedBoxes.checkedReader}
                 onChange={handleChangeCheckBox}
-                name="reader"
+                name="checkedReader"
                 size='small'
               />
             )}
