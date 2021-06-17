@@ -219,7 +219,7 @@ const BrowserView = () => {
                 size='small'
               />
             )}
-            label="Brightness"
+            label="Light Sensitivity"
           />
         </div>
       </div>
