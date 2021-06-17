@@ -136,6 +136,9 @@ const TestFile = () => {
             <button id={styles.save} onClick={() => handleToggle('redux')}>
               Redux
             </button>
+            <button id={styles.save} onClick={() => handleToggle('vue')}>
+              Vue
+            </button>
           </span>
         </div>
       </ReactModal>
@@ -189,6 +192,14 @@ const TestFile = () => {
           >
             <AccTestCase />
           </AccTestCaseContext.Provider>
+        </section>
+      )}
+      //incomplete functionality: this is wired to go to a react test for now
+      {testCase === 'vue' && (
+        <section>
+          <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+            <ReactTestCase />
+          </MockDataContext.Provider>
         </section>
       )}
 

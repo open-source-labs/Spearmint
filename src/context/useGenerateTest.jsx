@@ -1165,7 +1165,7 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-      case 'endpoint':
+      case 'endpoint test':
         var endpointTestCase = testState;
         return (
           addEndpointImportStatements(),
