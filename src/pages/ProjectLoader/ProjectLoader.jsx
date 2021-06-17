@@ -1,9 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { setProjectUrl, closeRightPanel } from '../../context/actions/globalActions';
-import { loadProject, toggleFileDirectory } from '../../context/actions/globalActions';
 import { Button, TextField } from '@material-ui/core';
 require('dotenv').config();
 
@@ -13,8 +11,7 @@ const ProjectLoader = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginStatus, setLoginStatus] = useState('');
-  const [signupStatus, setSignupStatus] = useState('');
+  const [message, setMessage] = useState('');
 
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
@@ -26,17 +23,6 @@ const ProjectLoader = () => {
       url = 'https://' + url;
       return url;
     }
-  };
-
-  const handleChangeUrl = (e) => {
-    const testSiteURL = addHttps(e.target.value);
-    dispatchToGlobal(setProjectUrl(testSiteURL));
-  };
-
-  const handleChangeAbout = () => {
-    dispatchToGlobal(loadProject('about'));
-    dispatchToGlobal(closeRightPanel());
-    if (isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
   };
 
   //updates state when user enters username as login input
@@ -51,6 +37,7 @@ const ProjectLoader = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    logout();
     fetch('/login', {
       method: 'POST',
       headers: {
@@ -63,12 +50,11 @@ const ProjectLoader = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setSignupStatus('');
-        setLoginStatus(data);
-        if (data === 'Logged in') {
-          console.log('login successful');
+        if (data.ssid) {
           setIsLoggedIn(true);
-        }
+        } else if (typeof data === 'string') {
+          setMessage(data);
+        } else setMessage('Login Failed: Unknown');
       })
       .catch((err) => console.log(err));
   };
@@ -87,9 +73,14 @@ const ProjectLoader = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoginStatus('');
-        setSignupStatus(data);
+        setMessage(data);
       })
+      .catch((err) => console.log(err));
+  };
+
+  const logout = () => {
+    fetch('/logout')
+      .then((res) => res.json())
       .catch((err) => console.log(err));
   };
 
@@ -115,9 +106,9 @@ const ProjectLoader = () => {
           type='password'
         />
         <br />
-        <span>{loginStatus}</span>
         <br />
-        <span>{signupStatus}</span>
+        <span>{message}</span>
+        <br />
         <br />
         <Button variant='primary' type='submit' id='login'>
           Log In
@@ -128,9 +119,6 @@ const ProjectLoader = () => {
       </form>
     </div>
   );
-
-  const placehold =
-    process.env.NODE_ENV === 'development' ? 'Dev mode do not fill out' : 'ex: localhost:3000';
 
   return (
     <div id={styles.projectLoader}>
@@ -152,12 +140,6 @@ const ProjectLoader = () => {
 
       <section id={styles.lowerPart}>
         <div id={styles.appBox}>
-          {/* Enter Starting URL */}
-          {/* <div className={styles.contentBox}>
-            <span className={styles.number}>01</span>
-            <span className={styles.text}> Enter test site's URL</span> <br />
-            <input type='text' autoFocus id={styles.url} placeholder={placehold} onChange={handleChangeUrl} />
-          </div> */}
 
           {/* Open Project Directory If User is Logged In */}
           {!isLoggedIn ? (
@@ -175,11 +157,6 @@ const ProjectLoader = () => {
         </div>
 
         {/* Get started */}
-        {/* <div id={styles.bottomDiv}>
-          <button id={styles.helpBtn} onClick={handleChangeAbout}>
-            <span className={styles.text}>Get Started</span>
-          </button>
-        </div> */}
       </section>
     </div>
   );

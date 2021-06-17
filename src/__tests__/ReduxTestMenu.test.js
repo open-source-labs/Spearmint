@@ -1,6 +1,6 @@
 window.require = jest.fn();
 
-import { actionTypes, ReduxTestCaseState } from '../utils/reduxTypes';
+import { ReduxTestCaseState } from '../utils/reduxTypes';
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';

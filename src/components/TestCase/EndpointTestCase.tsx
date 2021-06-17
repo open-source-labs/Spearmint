@@ -1,7 +1,6 @@
 import React, { useContext, ChangeEvent } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
-// import style from '../EndpointTestComponent/Endpoint.module.scss';
 
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import {

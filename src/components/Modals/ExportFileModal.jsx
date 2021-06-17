@@ -10,7 +10,7 @@ import {
   updateFile,
 } from '../../context/actions/globalActions';
 
-import styles from './ExportFileModal.module.scss';
+import styles from './Modal.module.scss';
 
 const { ipcRenderer } = require('electron');
 

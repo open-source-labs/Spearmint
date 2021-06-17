@@ -49,15 +49,6 @@ describe('Global Reducer works properly', () => {
       projectUrl: 'www.google.com',
     });
   });
-
-  // it('should handle LOAD_PROJECT', () => {
-  //   const action = { type: 'LOAD_PROJECT', load};
-  //   expect(globalReducer(initialState, action)).toEqual({
-  //     ...initialState,
-  //     isProjectLoaded
-  //   })
-  // })
-
   it('should handle CREATE_FILE_TREE', () => {
     const fileTree = [
       {
@@ -112,11 +103,7 @@ describe('Global Reducer works properly', () => {
       rightPanelDisplay: 'browserView',
     });
   });
-  // it('should handle DISPLAY_FILE_CODE', () => {
-
-  // })
   it('should handle TOGGLE_FOLDER_VIEW', () => {
-    //const filePath = 'src/__tests__/globalReducer.test.js';
     const action = { type: 'TOGGLE_FOLDER_VIEW', filePath: 'src/__tests__/globalReducer.test.js' };
     expect(globalReducer(initialState, action)).toEqual({
       ...initialState,

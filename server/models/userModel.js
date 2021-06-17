@@ -14,12 +14,6 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
-  tests: [
-    {
-      name: String,
-      id: { type: 'ObjectId', ref: 'test' },
-    },
-  ],
 });
 const User = mongoose.model('user', userSchema);
 
