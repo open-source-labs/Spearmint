@@ -5,6 +5,9 @@ import styles from './BrowserView.module.scss';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
+import { InvertColors } from '@material-ui/icons';
+
+import { ScreenReader } from '@capacitor/screen-reader';
 
 const BrowserView = () => {
   const [{ url }, dispatchToGlobal] = useContext(GlobalContext);
@@ -15,14 +18,22 @@ const BrowserView = () => {
     muted: false,
     checkedGrayscale: false,
     checkedContrast: false,
+    checkedReader: false,
+    checkedLowVision: false,
+    checkedBrightness: false,
   });
 
   // Mute/Unmute webview
   const muteAudio = (muted) => {
     const webview = document.querySelector('webview');
-    // console.log(webview);
+    console.log(webview);
     webview.setAudioMuted(muted);
   };
+
+  const activateReader = () => { 
+    // Ternary statement is backwards, as checkedBoxes.checkedReader updates after the case break
+    checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
+  }
 
   // helper function to add the https or http
   const addHttps = (url) => {
@@ -78,8 +89,34 @@ const BrowserView = () => {
           ...checkedBoxes,
           checkedContrast: !checkedBoxes.checkedContrast,
         });
+        console.log('after everything: ' + checkedBoxes.checkedReader);
         break;
 
+      // Updates screen reader
+      case 'checkedReader':
+        console.log('before setCheckBox: ' + checkedBoxes.checkedReader);
+        setCheckBox({
+          ...checkedBoxes,
+          checkedReader: !checkedBoxes.checkedReader,
+        });
+        console.log('after setCheckBox: ' + checkedBoxes.checkedReader);
+
+        activateReader(checkedBoxes.checkedReader);
+        break;
+      // a filter for low Vision, easier on eyes
+      case 'checkedLowVision':
+        setCheckBox({
+          ...checkedBoxes,
+          checkedLowVision: !checkedBoxes.checkedLowVision,
+        });
+        break;
+      //brightness test to emulate vision with light sensitivity 
+        case 'checkedBrightness' :
+          setCheckBox({
+            ...checkedBoxes,
+            checkedBrightness: !checkedBoxes.checkedBrightness,
+          });
+          break;
       default:
         break;
     }
@@ -96,10 +133,10 @@ const BrowserView = () => {
           id={styles.accessLensCheckBoxes}
         >
           <FormControlLabel
-              // style={{fontSize:2}}
-              id="Disable Mouse Checkbox"
-              control={(
-                <Checkbox
+            // style={{fontSize:2}}
+            id="Disable Mouse Checkbox"
+            control={(
+              <Checkbox
                 value="disable mouse clicks"
                 checked={checkedBoxes.checkedMouse}
                 onChange={handleChangeCheckBox}
@@ -148,6 +185,45 @@ const BrowserView = () => {
             )}
             label="Mute"
           />
+          <FormControlLabel
+            id="Turn on Screen Reader"
+            control={(
+              <Checkbox
+                value="checkedReader"
+                checked={checkedBoxes.checkedReader}
+                onChange={handleChangeCheckBox}
+                name="checkedReader"
+                size='small'
+              />
+            )}
+            label="Screen Reader"
+          />
+          <FormControlLabel
+            id="Low Vision Checkbox"
+            control={(
+              <Checkbox
+                value="filter"
+                checked={checkedBoxes.checkedLowVision}
+                onChange={handleChangeCheckBox}
+                name="checkedLowVision"
+                size='small'
+              />
+            )}
+            label="Low Vision "
+          />
+           <FormControlLabel
+            id="Brightness Checkbox"
+            control={(
+              <Checkbox
+                value="filter"
+                checked={checkedBoxes.checkedBrightness}
+                onChange={handleChangeCheckBox}
+                name="checkedBrightness"
+                size='small'
+              />
+            )}
+            label="Light Sensitivity"
+          />
         </div>
       </div>
       {/* Search bar */}
@@ -161,8 +237,10 @@ const BrowserView = () => {
         id={styles.browserView}
         src={url}
         style={{
-          filter: checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast ? 'grayscale(100%) contrast(0.2)'
-           : checkedBoxes.checkedGrayscale? 'grayscale(100%)': checkedBoxes.checkedContrast?'contrast(0.2)': null,
+          // filter: checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : 'grayscale(0%)',
+          filter: checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast && checkedBoxes.checkedLowVision && checkedBoxes.checkedBrightness ? 'grayscale(100%) contrast(0.2) invert(100%) brightness(150%)'
+            : checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast ? 'grayscale(100%) contrast(0.2)'
+            : checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : checkedBoxes.checkedContrast ? 'contrast(0.2)' : checkedBoxes.checkedLowVision ? 'invert(100%)' : checkedBoxes.checkedBrightness ? 'brightness(150%)' : null,
           pointerEvents: checkedBoxes.checkedMouse ? 'none' : 'auto',
         }}
       />
