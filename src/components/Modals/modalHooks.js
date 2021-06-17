@@ -2,7 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { clearMockData } from '../../context/actions/mockDataActions';
 import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import styles from './ExportFileModal.module.scss';
+import styles from './Modal.module.scss';
 
 export function useCopy() {
   const [copySuccess, setCopySuccess] = useState(false);
@@ -36,55 +36,45 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 }
 
 export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
-  const [{ projectFilePath }] = useContext(GlobalContext)
+  const [{ projectFilePath }] = useContext(GlobalContext);
   switch (test) {
     case 'acc':
       if (testType === 'html') {
-        return (
-          {
-            cd: `cd ${projectFilePath}`,
-            install: 'npm i -D axe-core regenerator-runtime jest',
-          }
-        );
+        return {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D axe-core regenerator-runtime jest',
+        };
       }
       if (testType === 'react') {
-        return (
-          {
-            cd: `cd ${projectFilePath}`,
-            install: 'npm i -D axe-core regenerator-runtime jest enzyme enzyme-adapter-react-16',
-          }
-        );
+        return {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D axe-core regenerator-runtime jest enzyme enzyme-adapter-react-16',
+        };
       }
       if (testType === 'puppeteer') {
-        return (
-          {
-            cd: `cd ${projectFilePath}`,
-            install: 'npm i -D axe-core puppeteer',
-          }
-        );
+        return {
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D axe-core puppeteer',
+        };
       }
       return 'error';
     case 'react':
-      return (
-        {
-          cd: `cd ${projectFilePath}`,
-          install: `npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest`,
-        }
-      );
+      return {
+        cd: `cd ${projectFilePath}`,
+        install: `npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest`,
+      };
     case 'redux':
-      return (
-        {
-          cd: `cd ${projectFilePath}`,
-          install: 'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch jest',
-        }
-      );
+      return {
+        cd: `cd ${projectFilePath}`,
+        install:
+          'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot redux-mock-store redux-thunk fetch-mock node-fetch jest',
+      };
     case 'hooks':
-      return (
-        {
-          cd: `cd ${projectFilePath}`,
-          install: 'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot @testing-library/react-hooks jest',
-        }
-      );
+      return {
+        cd: `cd ${projectFilePath}`,
+        install:
+          'npm i -D @testing-library/jest-dom @testing-library/react test-data-bot @testing-library/react-hooks jest',
+      };
     case 'endpoint':
       const endPointGuide = {
         1: `1. Please follow these steps to configure your files correctly. The tests will not run properly if you skip these steps.`,
@@ -95,21 +85,17 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
         '5a': `5a. PostgreSQL: Pool, Client, or pg object.`,
         '5b': `5b. MongoDB: MongoClient instance.`,
         '5c': `5c. Mongoose: mongoose instance.`,
-      }
-      return (
-        {
-          endPointGuide: endPointGuide,
-          cd: `cd ${projectFilePath}`,
-          install: 'npm i -D jest supertest regenerator-runtime',
-        }
-      );
+      };
+      return {
+        endPointGuide: endPointGuide,
+        cd: `cd ${projectFilePath}`,
+        install: 'npm i -D jest supertest regenerator-runtime',
+      };
     case 'puppeteer':
-      return (
-        {
-          cd: `cd ${projectFilePath}`,
-          install: 'npm i -D puppeteer',
-        }
-      );
+      return {
+        cd: `cd ${projectFilePath}`,
+        install: 'npm i -D puppeteer',
+      };
     default:
       return '';
     // code block

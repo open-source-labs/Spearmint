@@ -4,7 +4,7 @@ import { actionTypes } from '../actions/globalActions';
 export const GlobalContext = createContext(null);
 
 export const globalState = {
-  url: "http://www.google.com/",
+  url: 'http://www.google.com/',
   projectUrl: null,
   isProjectLoaded: false,
   fileTree: null,
@@ -158,11 +158,14 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         tabIndex,
-      }
+      };
+
+    case actionTypes.UPLOAD_TEST:
+      const testState = action.testState;
+      return {
+        ...state,
+      };
     default:
       return state;
-
-
   }
-
 };

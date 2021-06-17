@@ -97,10 +97,6 @@ const HooksAssertion = ({ assertion, index, id }) => {
             </span>
           </span>
         </div>
-        {/* <div id={stylez.autoTool}>
-      <input type='text' /> */}
-
-        {/* </div> */}
       </div>
       <div id={styles.labelInput}>
         <label htmlFor='expectedValue'>Expected Value</label>
