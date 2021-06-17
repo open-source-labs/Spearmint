@@ -36,12 +36,18 @@
 
 .modalCustomOverlay {
   display: grid;
-  position: fixed; 
-  inset: 0px; 
-  background-color: rgba(255, 255, 255, 0.75); 
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
   z-index: 3;
   // Overlay should only show in LeftPanel. Currently hard-coded.
   // min-width: 876px;
+}
+
+.root {
+  width: 100%;
+  max-width: 360;
+  background-color: white;
 }
 
 #title {
@@ -109,8 +115,6 @@
     li:first-child {
       margin-top: 4px;
     }
-
-    
   }
 
   p {
@@ -141,9 +145,8 @@
     -moz-appearance: none;
   }
   button:focus {
-    outline: 2px solid darkblue
+    outline: 2px solid darkblue;
   }
-
 }
 
 #text {
@@ -151,13 +154,12 @@
   text-align: center;
 }
 
-
 #save:hover {
   background-color: rgb(232, 232, 232);
   color: $mint;
   border-radius: 3px;
 }
-#save:focus{
+#save:focus {
   outline: 1px solid darkblue;
 }
 
@@ -166,17 +168,14 @@
   justify-content: flex-start;
 
   #feedback {
-
     p {
-
       font-size: 12px;
       margin-top: 6px;
     }
-  };
-  
+  }
 }
 #newTestButtons:focus {
-  outline: 1px solid darkblue
+  outline: 1px solid darkblue;
 }
 
 #testMenu {
@@ -215,7 +214,6 @@
 #accordionDetails {
   background-color: 'white';
   opacity: 1;
-
 }
 
 #accordionDiv {
@@ -249,5 +247,4 @@ pre {
   line-height: 1.45;
   background-color: #0a1f40;
   color: white;
-
 }

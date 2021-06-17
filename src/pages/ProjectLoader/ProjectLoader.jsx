@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
@@ -13,8 +13,7 @@ const ProjectLoader = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loginStatus, setLoginStatus] = useState('');
-  const [signupStatus, setSignupStatus] = useState('');
+  const [message, setMessage] = useState('');
 
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
@@ -51,6 +50,7 @@ const ProjectLoader = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    logout();
     fetch('/login', {
       method: 'POST',
       headers: {
@@ -63,12 +63,11 @@ const ProjectLoader = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setSignupStatus('');
-        setLoginStatus(data);
-        if (data === 'Logged in') {
-          console.log('login successful');
+        if (data.ssid) {
           setIsLoggedIn(true);
-        }
+        } else if (typeof data === 'string') {
+          setMessage(data);
+        } else setMessage('Login Failed: Unknown');
       })
       .catch((err) => console.log(err));
   };
@@ -87,9 +86,14 @@ const ProjectLoader = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoginStatus('');
-        setSignupStatus(data);
+        setMessage(data);
       })
+      .catch((err) => console.log(err));
+  };
+
+  const logout = () => {
+    fetch('/logout')
+      .then((res) => res.json())
       .catch((err) => console.log(err));
   };
 
@@ -115,9 +119,9 @@ const ProjectLoader = () => {
           type='password'
         />
         <br />
-        <span>{loginStatus}</span>
         <br />
-        <span>{signupStatus}</span>
+        <span>{message}</span>
+        <br />
         <br />
         <Button variant='primary' type='submit' id='login'>
           Log In

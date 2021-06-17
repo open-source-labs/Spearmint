@@ -20,6 +20,8 @@ export const actionTypes = {
   SET_FILE_PATH: 'SET_FILE_PATH',
   SET_VALID_CODE: 'SET_VALID_CODE',
   SET_TAB_INDEX: 'SET_TAB_INDEX',
+
+  UPLOAD_TEST: 'UPLOAD_TEST',
 };
 
 export const setProjectUrl = (url) => ({
@@ -111,4 +113,9 @@ export const setValidCode = (validCode) => ({
 export const setTabIndex = (tabIndex) => ({
   type: actionTypes.SET_TAB_INDEX,
   tabIndex,
-})
+});
+
+export const uploadTest = (testState) => ({
+  type: actionTypes.UPLOAD_TEST,
+  testState,
+});

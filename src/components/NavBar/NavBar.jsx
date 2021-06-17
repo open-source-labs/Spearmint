@@ -25,12 +25,8 @@ const exportIcon = require('../../assets/images/file-export.png');
 // const homeIcon = require('../../assets/images/home.png');
 
 const NavBar = ({ inAboutPage }) => {
-  const [
-    {
-      fileTree, isFileDirectoryOpen, projectUrl, rightPanelDisplay,
-    },
-    dispatchToGlobal,
-  ] = useContext(GlobalContext);
+  const [{ fileTree, isFileDirectoryOpen, projectUrl, rightPanelDisplay }, dispatchToGlobal] =
+    useContext(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   /* opens/closes the filedirectory */
@@ -89,7 +85,7 @@ const NavBar = ({ inAboutPage }) => {
       )}
       {/* Open Folder */}
       <OpenFolder />
-      
+
       {/* Deprecated as right panel is no longer closable and does not need a button to open*/}
       {/* Code View
       <button className={styles.navBtn} onClick={handleEditorToggle}>
@@ -108,6 +104,7 @@ const NavBar = ({ inAboutPage }) => {
         />
         <span className={styles.tooltip}>Home</span>
       </button> */}
+
       {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>
   );

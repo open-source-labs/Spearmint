@@ -5,9 +5,9 @@
 
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
-import styles from './ExportFileModal.module.scss';
+import styles from './Modal.module.scss';
 import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
-import { setTabIndex, } from '../../context/actions/globalActions';
+import { setTabIndex } from '../../context/actions/globalActions';
 // Accordion view
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -42,7 +42,7 @@ const Modal = ({
     dispatchToMockData,
     dispatchTestCase,
     createTest,
-    closeModal,
+    closeModal
   );
   const [fileName, setFileName] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
@@ -53,7 +53,7 @@ const Modal = ({
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
     closeModal();
-  }
+  };
 
   const modalStyles = {
     overlay: {
@@ -81,7 +81,7 @@ const Modal = ({
   const submitFileName = () => {
     const fileName = document.getElementById('inputFileName').value;
     setFileName(fileName);
-  }
+  };
 
   const jestTest = () => {
     ipc.send('terminal.toTerm', `npx jest ${fileName}${execute}`);
@@ -103,7 +103,7 @@ const Modal = ({
         className={styles.modal}
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        contentLabel="Save?"
+        contentLabel='Save?'
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
@@ -118,7 +118,8 @@ const Modal = ({
             minWidth: isFileDirectoryOpen ? '600px' : '600px',
             width: isFileDirectoryOpen ? 'calc(59.9% - 276px)' : 'calc(49.9% - 46px)',
           },
-        }}>
+        }}
+      >
         <div id={styles.title}>
           <p>{title}</p>
         </div>
@@ -129,7 +130,10 @@ const Modal = ({
             <br />
             will be lost.
           </p>
-          <span id={styles.newTestButtons} style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <span
+            id={styles.newTestButtons}
+            style={{ justifyContent: 'center', alignItems: 'center' }}
+          >
             <button id={styles.save} onClick={handleNewTest}>
               {title}
             </button>
@@ -148,22 +152,25 @@ const Modal = ({
     if (script.endPointGuide) {
       const array = [];
       for (let step in script.endPointGuide) {
-        array.push(<div id={styles.endPointGuide}>{script.endPointGuide[step]}{'\n'}</div>)
-      };
+        array.push(
+          <div id={styles.endPointGuide}>
+            {script.endPointGuide[step]}
+            {'\n'}
+          </div>
+        );
+      }
       // return accordion element
       return (
         <Accordion hidden={false}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls='panel1a-content'
+            id='panel1a-header'
             id={styles.accordionSummary}
           >
             Endpoint Testing Configuration Guide
-        </AccordionSummary>
-          <AccordionDetails id={styles.configGuide}>
-            {array}
-          </AccordionDetails>
+          </AccordionSummary>
+          <AccordionDetails id={styles.configGuide}>{array}</AccordionDetails>
         </Accordion>
       );
     }
@@ -178,29 +185,27 @@ const Modal = ({
         <Accordion hidden={false}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls='panel1a-content'
+            id='panel1a-header'
             id={styles.accordionSummary}
           >
             3. Important React Babel Configuration
-      </AccordionSummary>
+          </AccordionSummary>
           <AccordionDetails id={styles.configGuide}>
             <div id={styles.accordionDiv}>
               <div> Ensure that your project contains the following file: </div>
               <pre>
-                <div className="code-wrapper">
-                  <code>
-                    babel.config.js
-                </code>
+                <div className='code-wrapper'>
+                  <code>babel.config.js</code>
                 </div>
               </pre>
             </div>
             <div>
               and includes the following code:
-            <br />
+              <br />
             </div>
             <pre>
-              <div className="code-wrapper">
+              <div className='code-wrapper'>
                 <code>
                   {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`}
                 </code>
@@ -208,17 +213,17 @@ const Modal = ({
             </pre>
           </AccordionDetails>
         </Accordion>
-      )
+      );
     }
     return null;
-  }
+  };
 
   return (
     <ReactModal
       className={styles.modal2}
       isOpen={isModalOpen}
       onRequestClose={clearAndClose}
-      contentLabel="Save?"
+      contentLabel='Save?'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
       overlayClassName={styles.modalCustomOverlay}
@@ -227,7 +232,6 @@ const Modal = ({
         content: {
           top: '10%',
           left: isFileDirectoryOpen ? '22%' : '11%',
-
         },
         overlay: {
           left: isFileDirectoryOpen ? '276px' : '46px',
@@ -254,8 +258,8 @@ const Modal = ({
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls='panel1a-content'
+            id='panel1a-header'
             id={styles.accordionSummary}
           >
             Configuration Guide
@@ -266,7 +270,7 @@ const Modal = ({
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
+                  aria-controls='panel1a-content'
                   id={styles.accordionSummary}
                 >
                   1. Set terminal to root directory.
@@ -274,16 +278,22 @@ const Modal = ({
                 <AccordionDetails id={styles.accordionDetails}>
                   <div id={styles.accordionDiv}>
                     <pre>
-                      <div className="code-wrapper">
-                        <code>
-                          {script.cd}
-                        </code>
+                      <div className='code-wrapper'>
+                        <code>{script.cd}</code>
                       </div>
                     </pre>
                     <span id={styles.newTestButtons}>
-                      <button id={styles.save} className='changeDirectory' onClick={changeDirectory}>Change Directory</button>
+                      <button
+                        id={styles.save}
+                        className='changeDirectory'
+                        onClick={changeDirectory}
+                      >
+                        Change Directory
+                      </button>
                       <div id={styles.feedback}>
-                        {btnFeedback.changedDir === false ? null : <p>Directory has been changed to root directory.</p>}
+                        {btnFeedback.changedDir === false ? null : (
+                          <p>Directory has been changed to root directory.</p>
+                        )}
                       </div>
                     </span>
                   </div>
@@ -293,23 +303,23 @@ const Modal = ({
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id={styles.accordionSummary}>
+                  aria-controls='panel1a-content'
+                  id={styles.accordionSummary}
+                >
                   2. Install dependencies and Jest.
                 </AccordionSummary>
                 <AccordionDetails id={styles.accordionDetails}>
                   <div id={styles.accordionDiv}>
                     <pre>
-                      <div className="code-wrapper" id={styles.codeWrapper}>
-                        <code>
-                          {script.install}
-                        </code>
+                      <div className='code-wrapper' id={styles.codeWrapper}>
+                        <code>{script.install}</code>
                       </div>
                     </pre>
                     <span id={styles.newTestButtons}>
-                      <button id={styles.save} onClick={installDependencies}>Install</button>
-                      <div id={styles.feedback}>
-                      </div>
+                      <button id={styles.save} onClick={installDependencies}>
+                        Install
+                      </button>
+                      <div id={styles.feedback}></div>
                     </span>
                   </div>
                 </AccordionDetails>
@@ -323,7 +333,7 @@ const Modal = ({
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
+            aria-controls='panel1a-content'
             // id="panel1a-header"
             id={styles.accordionSummary}
           >
@@ -332,9 +342,11 @@ const Modal = ({
           <AccordionDetails id={styles.accordionDetails}>
             {/* Select test to run */}
             <div id={styles.accordionDiv}>
-              <input id='inputFileName' placeholder="example.js" />
+              <input id='inputFileName' placeholder='example.js' />
               <span id={styles.newTestButtons}>
-                <button id={styles.save} onClick={submitFileName}>Submit</button>
+                <button id={styles.save} onClick={submitFileName}>
+                  Submit
+                </button>
               </span>
             </div>
           </AccordionDetails>
@@ -343,7 +355,7 @@ const Modal = ({
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
+            aria-controls='panel1a-content'
             // id="panel1a-header"
             id={styles.accordionSummary}
           >
@@ -354,7 +366,7 @@ const Modal = ({
             <div id={styles.accordionDiv}>
               {/* To do: make button toggle on/off */}
               <pre>
-                <div className="code-wrapper">
+                <div className='code-wrapper'>
                   <code>
                     {`npx jest ${fileName}\n`}
                     {`npx jest --verbose ${fileName}\n`}

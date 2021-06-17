@@ -297,6 +297,10 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
         puppeteerUrl,
       };
     }
+    case actionTypes.REPLACE_TEST: {
+      const { testState } = action;
+      return testState;
+    }
     default:
       return state;
   }

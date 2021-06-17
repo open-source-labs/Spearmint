@@ -20,6 +20,8 @@ export const actionTypes = {
   UPDATE_FILE_PATH: 'UPDATE_FILE_PATH',
   UPDATE_TEST_TYPE: 'UPDATE_TEST_TYPE',
   CREATE_PUPPETEER_URL: 'CREATE_PUPPETEER_URL',
+
+  REPLACE_TEST: 'REPLACE_TEST',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -105,4 +107,9 @@ export const updateTestType = (testType: string) => ({
 export const createPuppeteerUrl = (puppeteerUrl: string) => ({
   type: actionTypes.CREATE_PUPPETEER_URL,
   puppeteerUrl,
+});
+
+export const replaceTest = (testState: object) => ({
+  type: actionTypes.REPLACE_TEST,
+  testState,
 });
