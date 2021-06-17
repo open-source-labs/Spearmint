@@ -48,6 +48,7 @@
     "monaco-editor": "^0.17.0",
     "mongoose": "^5.12.13",
     "node-pty": "^0.10.0",
+    "nodemon": "^2.0.7",
     "react": "^16.8.6",
     "react-autosuggest": "^9.4.3",
     "react-beautiful-dnd": "^11.0.3",
@@ -118,5 +119,5 @@
     "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://backend:3001"
 }

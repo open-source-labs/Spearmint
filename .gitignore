@@ -28,6 +28,3 @@ yarn-error.log*
 
 #configuration
 .vscode
-
-.eslintignore
-
