@@ -6,7 +6,7 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './Modal.module.scss';
-import { useCopy, useNewTest, useGenerateScript } from './modalHooks';
+import { useNewTest, useGenerateScript } from './modalHooks';
 import { setTabIndex } from '../../context/actions/globalActions';
 // Accordion view
 import Accordion from '@material-ui/core/Accordion';
@@ -19,14 +19,6 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
 
-// ipc.on('Modal.shellType', (e, shellType) => {
-//   //Check os platform to change cmd for terminal execution
-//   let execute = '\n';
-//   if (shellType === 'win32') {
-//     execute = '\r';
-//   }
-// });
-
 const Modal = ({
   title,
   isModalOpen,
@@ -37,7 +29,6 @@ const Modal = ({
   testType = null,
   puppeteerUrl = 'sample.io',
 }) => {
-  const { copySuccess, codeRef, handleCopy } = useCopy();
   const { handleNewTest } = useNewTest(
     dispatchToMockData,
     dispatchTestCase,
@@ -45,7 +36,6 @@ const Modal = ({
     closeModal
   );
   const [fileName, setFileName] = useState('');
-  const [anchorEl, setAnchorEl] = useState(null);
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
   const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
@@ -53,12 +43,6 @@ const Modal = ({
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
     closeModal();
-  };
-
-  const modalStyles = {
-    overlay: {
-      zIndex: 3,
-    },
   };
 
   // Change execute command based on os platform
@@ -355,8 +339,7 @@ const Modal = ({
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            // id="panel1a-header"
+            aria-controls="panel1a-content"
             id={styles.accordionSummary}
           >
             Select and Run Tests

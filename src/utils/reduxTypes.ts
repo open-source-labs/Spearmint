@@ -129,16 +129,6 @@ interface CreateNewReduxTestAction {
   payload?: null;
 }
 
-// interface OpenModalAction {
-//   type: typeof actionTypes.OPEN_INFO_MODAL;
-//   payload?: null;
-// }
-
-// interface CloseModalAction {
-//   type: typeof actionTypes.CLOSE_INFO_MODAL;
-//   payload?: null;
-// }
-
 // -------------Reducer Types--------------
 
 export interface ReduxTestCaseState {

@@ -2,8 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { setProjectUrl, closeRightPanel } from '../../context/actions/globalActions';
-import { loadProject, toggleFileDirectory } from '../../context/actions/globalActions';
 import { Button, TextField } from '@material-ui/core';
 require('dotenv').config();
 
@@ -25,17 +23,6 @@ const ProjectLoader = () => {
       url = 'https://' + url;
       return url;
     }
-  };
-
-  const handleChangeUrl = (e) => {
-    const testSiteURL = addHttps(e.target.value);
-    dispatchToGlobal(setProjectUrl(testSiteURL));
-  };
-
-  const handleChangeAbout = () => {
-    dispatchToGlobal(loadProject('about'));
-    dispatchToGlobal(closeRightPanel());
-    if (isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
   };
 
   //updates state when user enters username as login input
@@ -133,9 +120,6 @@ const ProjectLoader = () => {
     </div>
   );
 
-  const placehold =
-    process.env.NODE_ENV === 'development' ? 'Dev mode do not fill out' : 'ex: localhost:3000';
-
   return (
     <div id={styles.projectLoader}>
       <section id={styles.upperPart}>
@@ -156,12 +140,6 @@ const ProjectLoader = () => {
 
       <section id={styles.lowerPart}>
         <div id={styles.appBox}>
-          {/* Enter Starting URL */}
-          {/* <div className={styles.contentBox}>
-            <span className={styles.number}>01</span>
-            <span className={styles.text}> Enter test site's URL</span> <br />
-            <input type='text' autoFocus id={styles.url} placeholder={placehold} onChange={handleChangeUrl} />
-          </div> */}
 
           {/* Open Project Directory If User is Logged In */}
           {!isLoggedIn ? (
@@ -179,11 +157,6 @@ const ProjectLoader = () => {
         </div>
 
         {/* Get started */}
-        {/* <div id={styles.bottomDiv}>
-          <button id={styles.helpBtn} onClick={handleChangeAbout}>
-            <span className={styles.text}>Get Started</span>
-          </button>
-        </div> */}
       </section>
     </div>
   );

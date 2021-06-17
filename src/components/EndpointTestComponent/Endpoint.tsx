@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
@@ -24,14 +24,6 @@ interface EndpointProps {
   index: number;
   dispatchToEndpointTestCase: (action: Action) => void;
 }
-
-// declare global {
-//   namespace JSX {
-//     interface IntrinsicElements {
-//       input: { id: number | string };
-//     }
-//   }
-// }
 
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps) => {
   const handleChangeEndpointFields = ({ target }: EventTarget, field: string) => {

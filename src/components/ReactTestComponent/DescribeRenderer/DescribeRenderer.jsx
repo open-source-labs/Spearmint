@@ -5,8 +5,6 @@ import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../../context/actions/reactTestCaseActions';
 
-// const questionIcon = require('../../../assets/images/help-circle.png');
-
 const DescribeRenderer = ({
   dispatcher,
   describeBlocks,
@@ -81,7 +79,6 @@ const DescribeRenderer = ({
                   ref={innerProvided.innerRef}
                   {...innerProvided.droppableProps}
                 >
-                  {/* {JSON.stringify(provided)} */}
                   <ItRenderer
                     type={type}
                     key={`it-${id}-${i}`}

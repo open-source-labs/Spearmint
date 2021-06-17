@@ -118,16 +118,6 @@
     // Center the triangle.
     margin-left: ($tooltip-border-width - $tooltip-arrow-base / 2);
   }
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   // Draw another triangle to simulate a border.
-  //   border-top: $tooltip-arrow-length solid $tooltip-border-color;
-  //   border-left: ($tooltip-arrow-base / 2) solid transparent;
-  //   border-right: ($tooltip-arrow-base / 2) solid transparent;
-  //   // Center the triangle.
-  //   margin-left: ($tooltip-arrow-base / -4);
-  // }
 }
 
 @mixin hastooltip($tooltip-transition-in-duration: 0.3s) {
