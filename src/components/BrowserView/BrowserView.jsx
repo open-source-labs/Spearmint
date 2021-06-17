@@ -28,8 +28,9 @@ const BrowserView = () => {
     webview.setAudioMuted(muted);
   };
 
-  const activateReader = () => {
-    checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is On' }) : ScreenReader.speak({ value: 'Screen Reader is off' });
+  const activateReader = () => { 
+    // Ternary statement is backwards, as checkedBoxes.checkedReader updates after the case break
+    checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
   }
 
   // helper function to add the https or http
@@ -86,6 +87,7 @@ const BrowserView = () => {
           ...checkedBoxes,
           checkedContrast: !checkedBoxes.checkedContrast,
         });
+        console.log('after everything: ' + checkedBoxes.checkedReader);
         break;
 
       // Updates screen reader
@@ -95,7 +97,7 @@ const BrowserView = () => {
           ...checkedBoxes,
           checkedReader: !checkedBoxes.checkedReader,
         });
-        console.log('after setCehckBox: ' + checkedBoxes.checkedReader);
+        console.log('after setCheckBox: ' + checkedBoxes.checkedReader);
 
         activateReader(checkedBoxes.checkedReader);
         break;
