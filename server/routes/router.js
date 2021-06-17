@@ -17,16 +17,19 @@ router.post(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   (req, res) => {
-    res.status(200).json('Logged in');
+    res.status(200).json({ ssid: res.locals.ssid });
   }
 );
+
+router.get('/logout', sessionController.endSession, (req, res) => {
+  res.status(200).json('Logged Out Successfully');
+});
 
 router.post('/upload', sessionController.isLoggedIn, testStateController.upload, (req, res) => {
   res.status(200).json('Test Uploaded Successfully');
 });
 
 router.get('/getTests', sessionController.isLoggedIn, testStateController.getTests, (req, res) => {
-  console.log(res.locals.tests);
   res.status(200).json(res.locals.tests);
 });
 
