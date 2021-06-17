@@ -2,7 +2,6 @@ import React, { useState, useRef, useContext } from 'react';
 import { clearMockData } from '../../context/actions/mockDataActions';
 import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import styles from './ExportFileModal.module.scss';
 
 export function useCopy() {
   const [copySuccess, setCopySuccess] = useState(false);

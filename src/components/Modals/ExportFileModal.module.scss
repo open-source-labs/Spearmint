@@ -1,11 +1,6 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
-// .grid-container {
-//   display: grid;
-//   grid-template-areas: 'myArea myArea myArea myArea';
-// }
-
 .modal {
   position: fixed;
   width: 500px;
@@ -17,7 +12,6 @@
   object-fit: cover;
   top: 25%;
   left: 22%;
-  // transform: translate(-90%, -50%);
 }
 
 .modal2 {
@@ -30,8 +24,6 @@
   border-radius: 5px;
   box-shadow: 0 0 0 1px white inset;
   object-fit: cover;
-  // top: 25%;
-  // left: 22%;
 }
 
 .modalCustomOverlay {
@@ -40,10 +32,7 @@
   inset: 0px; 
   background-color: rgba(255, 255, 255, 0.75); 
   z-index: 3;
-  // Overlay should only show in LeftPanel. Currently hard-coded.
-  // min-width: 876px;
 }
-
 #title {
   display: flex;
   justify-content: center;
@@ -92,10 +81,6 @@
   #step {
     color: rgb(255, 255, 255);
     margin-bottom: 10px;
-    // span {
-    //   margin-left: 50px;
-
-    // }
     span:hover {
       color: $mint;
     }
@@ -242,7 +227,6 @@ pre {
   flex: 1;
   flex-direction: column;
   padding: 12px 15px;
-  // margin-top: -4px;
   margin-bottom: 8px;
   overflow: auto;
   font-size: 85%;

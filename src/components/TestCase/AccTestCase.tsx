@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import cn from 'classnames';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import {

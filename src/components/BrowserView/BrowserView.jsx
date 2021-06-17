@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { makeStyles } from '@material-ui/core/styles';
 import styles from './BrowserView.module.scss';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -85,18 +84,7 @@ const BrowserView = () => {
         break;
     }
   };
-
-  // const useStyles = makeStyles(() => ({
-  //   FormControlLabel: {
-  //     // fontSize doesn't work, but color does work...
-  //     fontSize: '1px',
-  //     color: 'red',
-  //     // ,
-  //   },
-  // }));
-
-  // const classes = useStyles();
-
+  
   return (
     <div id={styles.browswerComponentTopLevelDiv}>
       <div id={styles.accessLensContainer}>
@@ -173,7 +161,6 @@ const BrowserView = () => {
         id={styles.browserView}
         src={url}
         style={{
-          // filter: checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : 'grayscale(0%)',
           filter: checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast ? 'grayscale(100%) contrast(0.2)'
            : checkedBoxes.checkedGrayscale? 'grayscale(100%)': checkedBoxes.checkedContrast?'contrast(0.2)': null,
           pointerEvents: checkedBoxes.checkedMouse ? 'none' : 'auto',
