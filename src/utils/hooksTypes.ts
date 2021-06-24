@@ -19,36 +19,10 @@ export interface Assertion {
   expectedValue: string;
   not: boolean;
 }
-
 export interface Callback {
   id: number;
   callbackFunc: string;
 }
-
-// export interface Action {
-//   type: string;
-//   id?: number;
-//   context?: string;
-//   hook?: string;
-//   parameters?: any;
-//   expectedState?: any;
-//   expectedValue?: any;
-//   textNodes?: string;
-//   queryVariant?: string;
-//   querySelector?: string;
-//   queryValue?: string;
-//   values?: string;
-//   providerComponent?: string;
-//   consumerComponent?: string;
-//   draggableStatements?: Array<HooksStatements>;
-//   testName?: string;
-//   index?: number;
-//   text?: string;
-//   contextFileName?: string;
-//   contextFilePath?: string;
-//   assertions?: Assertion;
-//   callbackfunc?: Callback;
-// }
 
 export interface Hooks {
   id: number;

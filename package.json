@@ -28,10 +28,14 @@
   "homepage": "./",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@capacitor/cli": "^3.0.1",
     "@capacitor/core": "^3.0.1",
     "@capacitor/screen-reader": "^1.0.1",
     "@material-ui/core": "^4.11.3",
+=======
+    "@material-ui/core": "^4.11.4",
+>>>>>>> master
     "@material-ui/icons": "^4.11.2",
     "@types/jest": "^25.2.3",
     "@types/react-beautiful-dnd": "^12.1.2",
@@ -47,6 +51,7 @@
     "install": "^0.13.0",
     "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
+    "mongoose": "^5.12.13",
     "node-pty": "^0.10.0",
     "npm": "^7.18.0",
     "react": "^16.8.6",
@@ -118,5 +123,10 @@
     "react-test-renderer": "^16.12.0",
     "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"
+<<<<<<< HEAD
   }
+=======
+  },
+  "proxy": "http://localhost:3001"
+>>>>>>> master
 }

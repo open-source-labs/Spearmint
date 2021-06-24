@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
-import styles from '../../components/Modals/ExportFileModal.module.scss';
+import styles from '../../components/Modals/Modal.module.scss';
 import cn from 'classnames';
 
 // may be able to delete toggleReact, etc. from their respective action files
@@ -72,10 +72,7 @@ const TestFile = () => {
     puppeteerTestCaseReducer,
     puppeteerTestCaseState
   );
-  const [accTestCase, dispatchToAccTestCase] = useReducer(
-    accTestCaseReducer,
-    accTestCaseState
-  );
+  const [accTestCase, dispatchToAccTestCase] = useReducer(accTestCaseReducer, accTestCaseState);
 
   const closeTestModal = () => {
     dispatchToGlobal(toggleModal());
@@ -187,9 +184,7 @@ const TestFile = () => {
 
       {testCase === 'acc' && (
         <section>
-          <AccTestCaseContext.Provider
-            value={[accTestCase, dispatchToAccTestCase]}
-          >
+          <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
             <AccTestCase />
           </AccTestCaseContext.Provider>
         </section>

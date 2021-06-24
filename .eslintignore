@@ -1,1 +1,7 @@
 node_modules
+
+*.js
+
+*.tsx
+
+*.jsx

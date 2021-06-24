@@ -6,7 +6,7 @@ function useGenerateTest(test, projectFilePath) {
   return (testState, mockDataState) => {
     let testFileCode = '';
 
-/* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
+    /* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // React Import Statements
     const addReactImportStatements = () => {
@@ -23,7 +23,7 @@ function useGenerateTest(test, projectFilePath) {
       const componentPath = reactTestCase.statements.componentPath;
       let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
       filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/,'')
+      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
     };
 
@@ -83,7 +83,7 @@ function useGenerateTest(test, projectFilePath) {
     // Render Jest Test Code
     const addRender = (statement, methods) => {
       let props = createRenderProps(statement.props);
-      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/,'');
+      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
     };
 
@@ -94,7 +94,7 @@ function useGenerateTest(test, projectFilePath) {
       }, '');
     };
 
-/* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
+    /* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // Redux Import Statements
     function addReduxImportStatements() {
@@ -228,7 +228,7 @@ function useGenerateTest(test, projectFilePath) {
       }
     }
 
-/* ------------------------------------------ HOOKS & CONTEXT IMPORT + TEST STATEMENTS ------------------------------------------ */
+    /* ------------------------------------------ HOOKS & CONTEXT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // Hooks & Context Import Statements
     const addHooksImportStatements = () => {
@@ -240,7 +240,7 @@ function useGenerateTest(test, projectFilePath) {
             default:
               return statement;
           }
-        })        
+        });
       } else if (typeof hooksTestCase === 'object') {
         hooksTestCase.hooksStatements.forEach((statement) => {
           switch (statement.type) {
@@ -283,14 +283,14 @@ function useGenerateTest(test, projectFilePath) {
     const addHooksDescribeBlock = () => {
       testFileCode += `\nafterEach(cleanup);\ndescribe('${hooksTestCase.hooksTestStatement}', () => {`;
       if (Array.isArray(hooksTestCase)) {
-      hooksTestCase.forEach((statement) => {
-        switch (statement.type) {
-          case 'hooks':
-            return addHookUpdates(statement);
-          default:
-            return statement;
-        }
-      });  
+        hooksTestCase.forEach((statement) => {
+          switch (statement.type) {
+            case 'hooks':
+              return addHookUpdates(statement);
+            default:
+              return statement;
+          }
+        });
       } else if (typeof hooksTestCase === 'object') {
         hooksTestCase.hooksStatements.forEach((statement) => {
           switch (statement.type) {
@@ -299,14 +299,14 @@ function useGenerateTest(test, projectFilePath) {
             default:
               return statement;
           }
-        });  
+        });
       }
-      
+
       testFileCode += '});';
       testFileCode += '\n';
     };
 
-/* ------------------------------------------ ENDPOINT IMPORT + TEST STATEMENTS ------------------------------------------ */
+    /* ------------------------------------------ ENDPOINT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // Endpoint Import Statements
     const addEndpointImportStatements = () => {
@@ -327,7 +327,7 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-/* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
+    /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     /* getLargestContentfulPaint()
         - creating a new PerformanceObserver object which will call the callback function when observed performance events happen
@@ -381,7 +381,7 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-/* ------------------------------------------ FILEPATHS ------------------------------------------ */
+    /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
     // Actions Filepath
     // creates import statement for action creators
@@ -400,7 +400,11 @@ function useGenerateTest(test, projectFilePath) {
     function createPathToReducers(statement) {
       let filePath = null;
       if (statement.reducersFilePath) {
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.reducersFilePath);
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          statement.reducersFilePath
+        );
         filePath = filePath.replace(/\\/g, '/');
       }
       if (
@@ -418,7 +422,11 @@ function useGenerateTest(test, projectFilePath) {
       let filePath = null;
       let bool = false;
       if (statement.typesFilePath) {
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.typesFilePath);
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          statement.typesFilePath
+        );
         filePath = filePath.replace(/\\/g, '/');
         bool = areActionTypesDeclaredInSameFileAsActionCreators(statement.typesFilePath);
       }
@@ -444,7 +452,11 @@ function useGenerateTest(test, projectFilePath) {
       let filePath = null;
       console.log(filePath);
       if (statement.middlewaresFilePath) {
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.middlewaresFilePath);
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          statement.middlewaresFilePath
+        );
         filePath = filePath.replace(/\\/g, '/');
       }
 
@@ -467,7 +479,6 @@ function useGenerateTest(test, projectFilePath) {
       // const { hooksStatements } = hooksTestCase;
       // const hooksStatements = hooksTestCase.hooksStatements;
 
-
       if (Array.isArray(hooksTestCase)) {
         const hookImports = hooksTestCase.reduce((str, { hook }) => {
           str += `${hook}, `;
@@ -475,25 +486,34 @@ function useGenerateTest(test, projectFilePath) {
         }, '');
 
         if (!testFileCode.includes(`import { ${hooksTestCase[0].hook}`) && statement.hookFilePath) {
-          let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
+          let filePath = ipcRenderer.sendSync(
+            'Universal.path',
+            projectFilePath,
+            statement.hookFilePath
+          );
           filePath = filePath.replace(/\\/g, '/');
-  
+
           testFileCode += `import { ${hookImports} } from '../${filePath}';`;
         }
-
       } else if (typeof hooksTestCase === 'object') {
         const hookImports = hooksTestCase.hooksStatements.reduce((str, { hook }) => {
           str += `${hook}, `;
           return str;
         }, '');
 
-        if (!testFileCode.includes(`import { ${hooksTestCase.hooksStatements[0].hook}`) && statement.hookFilePath) {
-          let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.hookFilePath);
+        if (
+          !testFileCode.includes(`import { ${hooksTestCase.hooksStatements[0].hook}`) &&
+          statement.hookFilePath
+        ) {
+          let filePath = ipcRenderer.sendSync(
+            'Universal.path',
+            projectFilePath,
+            statement.hookFilePath
+          );
           filePath = filePath.replace(/\\/g, '/');
-  
+
           testFileCode += `import { ${hookImports} } from '../${filePath}';`;
         }
-
       }
     }
 
@@ -541,7 +561,7 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-/* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
+    /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
 
     const addMockData = () => {
       mockData.forEach((mockDatum) => {
@@ -561,7 +581,7 @@ function useGenerateTest(test, projectFilePath) {
       }, '');
     };
 
-/* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
+    /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
     const addAction = (action) => {
@@ -708,47 +728,6 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '})\n\n';
     };
     /* ------------------Context needs to be integrated with Hooks as business logic------------------- */
-    // // Context Jest Test Code
-    // const addContext = (context) => {
-    //   testFileCode += `test('${context.testName}', () => {`;
-    //   if (context.queryValue === 'shows_default_value') {
-    //     testFileCode += `const mockValue = {Data: '${context.values}'}
-    //       const { ${context.querySelector} } = render(<${context.consumerComponent}/>)
-    //       expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
-    //   }
-    //   if (context.queryValue === 'shows_value_from_provider') {
-    //     testFileCode += `const mockValue = {Data: '${context.values}'}
-    //       const { ${context.querySelector} } = render (
-    //         <${context.context}.Provider value={mockValue}>
-    //           <${context.consumerComponent}/>
-    //         </${context.context}.Provider>
-    //       )
-    //       expect(${context.querySelector}(mockValue.Data)).${context.queryVariant}('${context.values}')`;
-    //   }
-    //   if (context.queryValue === 'component_provides_context_value') {
-    //     testFileCode += `const mockValue = {Data: '${context.values}'}
-    //       const { ${context.querySelector} } = render (
-    //         <${context.providerComponent} value={mockValue}>
-    //           <${context.context}.Consumer>
-    //           {value => <span>Recieved: {value} </span>}
-    //           <${context.context}.Consumer/>
-    //         </${context.providerComponent}>
-    //       )
-    //       expect(${context.querySelector}(/^Recieved:/).textContent).${context.queryVariant}('${context.values}')`;
-    //   }
-    //   if (context.queryValue === 'renders_providers_+_consumers_normally') {
-    //     testFileCode += `const mockValue = {Data: '${context.values}'}
-    //       const { ${context.querySelector} } = render (
-    //         <${context.providerComponent} value={mockValue}>
-    //           <${context.consumerComponent}/>
-    //         </${context.providerComponent}>
-    //       )
-    //       expect(${context.querySelector}(mockValue.Data).textContent).${context.queryVariant}('${context.values}')`;
-    //   }
-    //   testFileCode += '})\n\n';
-    // };
-
-    // // Endpoint Jest Test Code
     const addEndpoint = (statement) => {
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}');`;
       testFileCode += statement.postData
@@ -833,7 +812,7 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     /* ------------------------------------------ ACCESSIBILITY TESTING ------------------------------------------ */
-    
+
     const addAccImportStatements = () => {
       let { filePath, fileName } = accTestCase;
       filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, filePath);
@@ -842,7 +821,7 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += `
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');`;
-      
+
       if (accTestCase.testType === 'html') {
         testFileCode += `
         const path = require('path');
@@ -899,7 +878,7 @@ function useGenerateTest(test, projectFilePath) {
           }
         }
       `;
-    }
+    };
 
     const addMount = () => {
       testFileCode += `
@@ -920,7 +899,7 @@ function useGenerateTest(test, projectFilePath) {
           return container;
         }
       `;
-    }
+    };
 
     const addAccBeforeAll = (descId) => {
       const { fileName } = accTestCase;
@@ -932,7 +911,7 @@ function useGenerateTest(test, projectFilePath) {
           let linkNode;
           let wrapper;`;
       }
-      
+
       testFileCode += `\n
         beforeAll((done) => {
           // exclude tests that are incompatible
@@ -940,20 +919,20 @@ function useGenerateTest(test, projectFilePath) {
             rules: {
               'color-contrast': { enabled: false },
               'link-in-text-block': { enabled: false },
-            },`
-        
+            },`;
+
       if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
         testFileCode += `
               runOnly: {
                 type: 'tag',
                 value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
-            }`
-          }
-            
+            }`;
+      }
+
       testFileCode += `
           };
         `;
-      
+
       if (accTestCase.testType === 'html') {
         testFileCode += `
           // get language tag from imported html file and assign to jsdom document
@@ -969,31 +948,31 @@ function useGenerateTest(test, projectFilePath) {
         linkNode = linkComponent.getDOMNode();
         `;
       }
-        
+
       testFileCode += `
           done();
         });
       `;
-    }
+    };
 
     const addAccItStatements = (descId) => {
       const { itStatements } = accTestCase;
-      
+
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
-          it('${itStatements.byId[itId].text}', (done) => {`
+          it('${itStatements.byId[itId].text}', (done) => {`;
 
-        if(itStatements.byId[itId].catTag !== 'none') {
+        if (itStatements.byId[itId].catTag !== 'none') {
           testFileCode += `  
-            options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`
+            options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`;
         }
-        
+
         if (accTestCase.testType === 'react') {
           testFileCode += `
-            axe.run(linkNode, options, async (err, results) => {`
+            axe.run(linkNode, options, async (err, results) => {`;
         } else {
           testFileCode += `
-            axe.run(options, async (err, results) => {`
+            axe.run(options, async (err, results) => {`;
         }
 
         testFileCode += `
@@ -1100,7 +1079,7 @@ function useGenerateTest(test, projectFilePath) {
             console.error('Error running axe-core:', err.message);
             process.exit(1);
           });
-        `
+        `;
     };
 
     switch (test) {
@@ -1114,7 +1093,7 @@ function useGenerateTest(test, projectFilePath) {
               space_in_empty_paren: true,
               e4x: true,
             }))
-          )
+          );
         } else {
           return (
             addAccImportStatements(),
@@ -1126,7 +1105,7 @@ function useGenerateTest(test, projectFilePath) {
             }))
           );
         }
-        
+
       case 'react':
         var reactTestCase = testState;
         var mockData = mockDataState;

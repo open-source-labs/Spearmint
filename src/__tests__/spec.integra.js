@@ -1,6 +1,5 @@
 const Application = require('spectron').Application;
 const path = require('path');
-const assert = require('assert');
 
 // specifies the path of the application to launch
 const electronPath = require('electron');
