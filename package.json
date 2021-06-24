@@ -122,5 +122,5 @@
     "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"
   },
-  "proxy": "http://backend:3001"
+  "proxy": "http://localhost:3001"
 }
