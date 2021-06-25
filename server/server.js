@@ -9,6 +9,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Handler to direct all requests to the endpoint / to router file
+// app.get('/', (req, res) => {
+//   const requestToken = req.query.code
+
+//   fetch('https://github.com/login/oauth/authorize?client_id=/231673e9fd54f1b427ec&client_secret=e5a38a6341e7d67c4d91ba70934100e3c74e5600', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     }
+//   })
+//   .then((response) => {
+//     const accessToken = response.data.access_token
+//     console.log(response.data)
+
+//   })
+//   .catch((err) => console.log(err))
+  
+//   // redirect the user to the home page, along with the access token
+//   res.redirect(`/`)
+// })
+
 app.use('/', router);
 
 // Any other request is caught here

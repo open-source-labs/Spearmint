@@ -41,6 +41,7 @@
     "concurrently": "^4.1.2",
     "cross-env": "^5.2.1",
     "dotenv": "^8.2.0",
+    "electron-deeplink": "^1.0.6",
     "electron-is-dev": "^1.1.0",
     "fibers": "^5.0.0",
     "fix-path": "^3.0.0",
@@ -53,6 +54,8 @@
     "react-autosuggest": "^9.4.3",
     "react-beautiful-dnd": "^11.0.3",
     "react-dom": "^16.8.6",
+    "react-google-login": "^5.2.2",
+    "react-login-github": "^1.0.7",
     "react-modal": "^3.8.1",
     "react-monaco-editor": "^0.25.1",
     "react-scripts": "^3.4.1",
@@ -119,5 +122,5 @@
     "spectron": "^5.0.0",
     "test-data-bot": "^0.8.0"
   },
-  "proxy": "http://backend:3001"
+  "proxy": "http://localhost:3001"
 }

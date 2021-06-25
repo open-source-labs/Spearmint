@@ -17,6 +17,7 @@ router.post(
   cookieController.setSSIDCookie,
   sessionController.startSession,
   (req, res) => {
+    console.log('ssid:', res.locals.ssid);
     res.status(200).json({ ssid: res.locals.ssid });
   }
 );
@@ -31,6 +32,10 @@ router.post('/upload', sessionController.isLoggedIn, testStateController.upload,
 
 router.get('/getTests', sessionController.isLoggedIn, testStateController.getTests, (req, res) => {
   res.status(200).json(res.locals.tests);
+});
+
+router.get('/getallusers', userController.getUsers, (req, res) => {
+  res.status(200).json(res.locals.users);
 });
 
 module.exports = router;

@@ -3,6 +3,9 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
 import { Button, TextField } from '@material-ui/core';
+import LoginGithub from 'react-login-github';
+
+
 require('dotenv').config();
 
 const ProjectLoader = () => {
@@ -84,7 +87,12 @@ const ProjectLoader = () => {
       .catch((err) => console.log(err));
   };
 
+  const onSuccess = response => console.log(response);
+  const onFailure = response => console.error(response);
+  
   const renderLogin = () => (
+
+    
     <div className={styles.contentBox}>
       <form onSubmit={handleLogin}>
         <TextField
@@ -116,7 +124,13 @@ const ProjectLoader = () => {
         <Button variant='secondary' type='button' onClick={handleSignup} id='signup'>
           Sign up
         </Button>
+        <br />
       </form>
+      <LoginGithub
+      clientId=""
+      onSuccess={onSuccess}
+      onFailure={onFailure}
+      />
     </div>
   );
 
