@@ -109,7 +109,7 @@ export const createPuppeteerUrl = (puppeteerUrl: string) => ({
   puppeteerUrl,
 });
 
-export const replaceTest = (testState: object) => ({
+export const accReplaceTest = (testState: object) => ({
   type: actionTypes.REPLACE_TEST,
   testState,
 });

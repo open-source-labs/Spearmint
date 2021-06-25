@@ -3,7 +3,7 @@ import ReactModal from 'react-modal';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import styles from './Modal.module.scss';
 
-const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen }) => {
+const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, testType }) => {
   const [testName, setTestName] = useState('');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
@@ -21,7 +21,7 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen }) =>
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ testName, testState: accTestCase }),
+      body: JSON.stringify({ testName, testType, testState: accTestCase }),
     })
       .then((res) => res.json())
       .then((data) => console.log(data))

@@ -29,8 +29,13 @@ router.post('/upload', sessionController.isLoggedIn, testStateController.upload,
   res.status(200).json('Test Uploaded Successfully');
 });
 
-router.get('/getTests', sessionController.isLoggedIn, testStateController.getTests, (req, res) => {
-  res.status(200).json(res.locals.tests);
-});
+router.get(
+  '/getTests/:testType',
+  sessionController.isLoggedIn,
+  testStateController.getTests,
+  (req, res) => {
+    res.status(200).json(res.locals.tests);
+  }
+);
 
 module.exports = router;

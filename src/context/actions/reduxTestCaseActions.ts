@@ -124,3 +124,8 @@ export const openInfoModal = () => {
 export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
+
+export const reduxReplaceTest = (testState: object) => ({
+  type: actionTypes.REPLACE_TEST,
+  testState,
+});
