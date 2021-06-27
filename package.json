@@ -48,6 +48,7 @@
     "js-beautify": "^1.10.0",
     "monaco-editor": "^0.17.0",
     "mongoose": "^5.12.13",
+    "node-fetch": "^2.6.1",
     "node-pty": "^0.10.0",
     "nodemon": "^2.0.7",
     "react": "^16.8.6",

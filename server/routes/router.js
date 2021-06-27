@@ -5,6 +5,7 @@ const userController = require('../controllers/userController');
 const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 const testStateController = require('../controllers/testStateController');
+const githubController = require('../controllers/githubController');
 const router = express.Router();
 
 router.post('/signup', userController.bcrypt, userController.signup, (req, res) => {
@@ -34,8 +35,11 @@ router.get('/getTests', sessionController.isLoggedIn, testStateController.getTes
   res.status(200).json(res.locals.tests);
 });
 
-router.get('/getallusers', userController.getUsers, (req, res) => {
-  res.status(200).json(res.locals.users);
-});
+router.get('/github/:code', githubController.getToken, githubController.getUser, sessionController.startSession, (req, res) => {
+  res.status(200).json({ ssid: res.locals.userId });
+})
+// router.get('/getallusers', userController.getUsers, (req, res) => {
+//   res.status(200).json(res.locals.users);
+// });
 
 module.exports = router;
