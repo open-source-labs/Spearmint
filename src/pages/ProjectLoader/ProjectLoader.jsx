@@ -5,9 +5,6 @@ import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
 import { Button, TextField } from '@material-ui/core';
 import LoginGithub from 'react-login-github';
 
-
-require('dotenv').config();
-
 const ProjectLoader = () => {
   const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
@@ -87,12 +84,11 @@ const ProjectLoader = () => {
       .catch((err) => console.log(err));
   };
 
-  const onSuccess = response => {
+  const handleGithubLogin = (response) => {
     logout();
     fetch('/github/' + response.code)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.ssid) {
           setIsLoggedIn(true);
         } else if (typeof data === 'string') {
@@ -102,11 +98,9 @@ const ProjectLoader = () => {
       .catch((err) => console.log(err));
   };
 
-  const onFailure = response => console.error(response);
-  
-  const renderLogin = () => (
+  const onFailure = (response) => console.error(response);
 
-    
+  const renderLogin = () => (
     <div className={styles.contentBox}>
       <form onSubmit={handleLogin}>
         <TextField
@@ -141,13 +135,13 @@ const ProjectLoader = () => {
         <br />
       </form>
       <Button variant='primary' id={styles.gitButton}>
-      <LoginGithub
-      clientId="7dc8c4f030f9201bf917"
-      className={styles.gitLogin}
-      onSuccess={onSuccess}
-      onFailure={onFailure}
-      />
-      <i class="fab fa-github"></i>
+        <LoginGithub
+          clientId='7dc8c4f030f9201bf917'
+          className={styles.gitLogin}
+          onSuccess={handleGithubLogin}
+          onFailure={onFailure}
+        />
+        <i class='fab fa-github'></i>
       </Button>
     </div>
   );
@@ -172,7 +166,6 @@ const ProjectLoader = () => {
 
       <section id={styles.lowerPart}>
         <div id={styles.appBox}>
-
           {/* Open Project Directory If User is Logged In */}
           {!isLoggedIn ? (
             renderLogin()
