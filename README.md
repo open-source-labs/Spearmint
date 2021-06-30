@@ -38,7 +38,7 @@ In an Administrator PowerShell run the following commands: <br />
 # How it works
 
 
-1.  On the initial screen, a user is prompt to login or sign up. Once logged in choose your file and load your application to start creating tests.
+1.  On the initial screen, a user is prompt to login or sign up (via OAuth or standard sign-up/login). Once logged in choose your file and load your application to start creating tests.
 
 ![](/public/mainPage.png)
 
@@ -58,6 +58,8 @@ In an Administrator PowerShell run the following commands: <br />
 # New features with version 0.7.0
 
 -Sign-up and Login
+
+-OAuth Login available through GitHub
 
 -Save test states
 
