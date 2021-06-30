@@ -75,11 +75,21 @@ router.get(
   }
 );
 
-router.get('/github/:code', githubController.getToken, githubController.getUser, sessionController.startSession, (req, res) => {
-  res.status(200).json({ ssid: res.locals.userId });
-})
-// router.get('/getallusers', userController.getUsers, (req, res) => {
-//   res.status(200).json(res.locals.users);
-// });
+// Set up route for get requests to /github with account code passed as param
+router.get(
+  '/github/:code',
+  // Github controller to retrieve signin token with API
+  githubController.getToken,
+  // Github middleware to retrieve user object with API
+  githubController.getUser,
+  // Cookie middleware to set up a new cookie
+  cookieController.setSSIDCookie,
+  // Session middleware to check if current user is signed in
+  sessionController.startSession,
+  // Anonymous middleware to send back valid response
+  (req, res) => {
+    res.status(200).json({ ssid: res.locals.userId });
+  }
+);
 
 module.exports = router;

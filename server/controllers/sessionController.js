@@ -5,7 +5,6 @@ const sessionController = {};
 
 // Middleware to initialize a session upon successful login
 sessionController.startSession = (req, res, next) => {
-  console.log(typeof res.locals.userId)
   Session.create({ cookieId: res.locals.userId }, (err, result) => {
     if (err && err.code !== 11000) return next(err);
     res.locals.ssid = res.locals.userId;
@@ -23,7 +22,6 @@ sessionController.endSession = (req, res, next) => {
 
 // Middleware to check if entered user is currently already logged in
 sessionController.isLoggedIn = (req, res, next) => {
-  console.log('sessionController.isLoggedIn: req.cookies.ssid:', req.cookies.ssid);
   Session.find({ cookieId: req.cookies.ssid }, (err, data) => {
     if (err) return next(err);
     if (data.length === 0) return next('User Not Logged In');
