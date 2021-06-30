@@ -1,6 +1,6 @@
 {
   "name": "spearmint",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
   "author": "team spearmint",
   "build": {

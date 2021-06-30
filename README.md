@@ -38,11 +38,11 @@ In an Administrator PowerShell run the following commands: <br />
 # How it works
 
 
-1.  On the initial screen, load your application to start creating tests.
+1.  On the initial screen, a user is prompt to login or sign up. Once logged in choose your file and load your application to start creating tests.
 
 ![](/public/mainPage.png)
 
-2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, and endpoint test statements.
+2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, and endpoint test statements. Spearmint can save test templates for future use for logged in user. 
 
 ![](/public/generateTest.png)
 
@@ -54,6 +54,14 @@ In an Administrator PowerShell run the following commands: <br />
 
 5.  Accessibility lens have been added in the app to give developers with different mismatches various options to interact with the app. 
 ![](/public/AccLens_Demo.gif)
+
+# New features with version 0.7.0
+
+-Sign-up and Login
+
+-Save test states
+
+-**NEW** Accessibility lenses for Low-vision and light sensitivity
 
 <br>
 
@@ -76,6 +84,7 @@ In an Administrator PowerShell run the following commands: <br />
 > Cornelius [@corneeltron](https://github.com/corneeltron)  &nbsp;&middot;&nbsp;
 > Dave [@davefranz](https://github.com/davefranz) &nbsp;&middot;&nbsp;
 > Dieu [@dieunity](https://github.com/dieunity) &nbsp;&middot;&nbsp;
+> Eric [@ericgpark](https://github.com/ericgpark) &nbsp;&middot;&nbsp;
 > Evan [@Berghoer](https://github.com/Berghoer) &nbsp;&middot;&nbsp; <br />
 > Gabriel [@bielchristo](https://github.com/bielchristo)
 > Johnny [@johnny-lim](https://github.com/johnny-lim) &nbsp;&middot;&nbsp;
@@ -84,15 +93,18 @@ In an Administrator PowerShell run the following commands: <br />
 > Karen [@karenpinilla](https://github.com/karenpinilla) &nbsp;&middot;&nbsp; <br />
 > Linda [@lcwish](https://github.com/lcwish) &nbsp;&middot;&nbsp;
 > Luis [@Luis-KM-Lo](https://github.com/Luis-KM-Lo) &nbsp;&middot;&nbsp;
-> Max [@MaxWeisen](https://github.com/MaxWeisen) &nbsp;&middot;&nbsp;
+> Max B[@mbromet](https://github.com/mbromet) &nbsp;&middot;&nbsp;
+> Max W [@MaxWeisen](https://github.com/MaxWeisen) &nbsp;&middot;&nbsp;
 > Mike [@mbcoker](https://github.com/mbcoker) &nbsp;&middot;&nbsp;
 > Mo [@mhmaidi789](https://github.com/mhmaidi789) &nbsp;&middot;&nbsp; <br />
 > Natlyn [@natlynp](https://github.com/natlynp) &nbsp;&middot;&nbsp; 
 > Nick [@nicolaspita](https://github.com/nicolaspita) &nbsp;&middot;&nbsp;
 > Rachel [@rachethecreator](https://github.com/rachethecreator) &nbsp;&middot;&nbsp;
-> Sean [@sean-haverstock](https://github.com/Sean-Haverstock) &nbsp;&middot;&nbsp; <br />
+> Sean Y [@seanyyoo](https://github.com/seanyyoo)&nbsp;&middot;&nbsp;
+> Sean H [@sean-haverstock](https://github.com/Sean-Haverstock) &nbsp;&middot;&nbsp; <br />
 > Sharon [@sharon-zhu](https://github.com/sharon-zhu) &nbsp;&middot;&nbsp; 
 > Sieun [@sieunjang](https://github.com/sieunjang) &nbsp;&middot;&nbsp;
 > Tolan [@taoantaoan](https://github.com/taoantaoan) &nbsp;&middot;&nbsp;
-> Tristen [@twastell](https://github.com/twastell) 
+> Tristen [@twastell](https://github.com/twastell) &nbsp;&middot;&nbsp;
+> Tyler [@tytyjameson](https://github.com/tytyjameson)
 <hr>
