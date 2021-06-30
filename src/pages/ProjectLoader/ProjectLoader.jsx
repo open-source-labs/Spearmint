@@ -3,7 +3,7 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
 import { Button, TextField } from '@material-ui/core';
-require('dotenv').config();
+import LoginGithub from 'react-login-github';
 
 const ProjectLoader = () => {
   const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
@@ -84,6 +84,22 @@ const ProjectLoader = () => {
       .catch((err) => console.log(err));
   };
 
+  const handleGithubLogin = (response) => {
+    logout();
+    fetch('/github/' + response.code)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.ssid) {
+          setIsLoggedIn(true);
+        } else if (typeof data === 'string') {
+          setMessage(data);
+        } else setMessage('Login Failed: Unknown');
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const onFailure = (response) => console.error(response);
+
   const renderLogin = () => (
     <div className={styles.contentBox}>
       <form onSubmit={handleLogin}>
@@ -110,13 +126,23 @@ const ProjectLoader = () => {
         <span>{message}</span>
         <br />
         <br />
-        <Button variant='primary' type='submit' id='login'>
+        <Button variant='primary' type='submit' id={styles.loginBtn}>
           Log In
         </Button>
-        <Button variant='secondary' type='button' onClick={handleSignup} id='signup'>
+        <Button variant='secondary' type='button' onClick={handleSignup} id={styles.loginBtn}>
           Sign up
         </Button>
+        <br />
       </form>
+      <Button variant='primary' id={styles.gitButton}>
+        <LoginGithub
+          clientId='7dc8c4f030f9201bf917'
+          className={styles.gitLogin}
+          onSuccess={handleGithubLogin}
+          onFailure={onFailure}
+        />
+        <i class='fab fa-github'></i>
+      </Button>
     </div>
   );
 
@@ -140,7 +166,6 @@ const ProjectLoader = () => {
 
       <section id={styles.lowerPart}>
         <div id={styles.appBox}>
-
           {/* Open Project Directory If User is Logged In */}
           {!isLoggedIn ? (
             renderLogin()
