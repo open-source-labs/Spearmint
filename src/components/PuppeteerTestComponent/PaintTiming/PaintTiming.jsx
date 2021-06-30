@@ -55,6 +55,7 @@ const PaintTiming = ({ paintTiming, index }) => {
               <input
                 type='text'
                 name='first-paint-it'
+                value={paintTiming.firstPaintIt}
                 placeholder='should have its first paint in less than 100 ms'
                 onChange={(e) => handleChangePaintTimingFields(e, 'firstPaintIt')}
               />
@@ -62,6 +63,7 @@ const PaintTiming = ({ paintTiming, index }) => {
                 <input
                   type='text'
                   name='first-paint-benchmark'
+                  value={paintTiming.firstPaintTime}
                   placeholder={100}
                   onChange={(e) => handleChangePaintTimingFields(e, 'firstPaintTime')}
                 />
@@ -80,6 +82,7 @@ const PaintTiming = ({ paintTiming, index }) => {
               <input
                 type='text'
                 name='first-contentful-paint-it'
+                value={paintTiming.FCPIt}
                 placeholder='should have its first meaningful paint in less than 100 ms'
                 onChange={(e) => handleChangePaintTimingFields(e, 'FCPIt')}
               />
@@ -87,6 +90,7 @@ const PaintTiming = ({ paintTiming, index }) => {
                 <input
                   type='text'
                   name='first-contentful-paint-benchmark'
+                  value={paintTiming.FCPtTime}
                   placeholder={100}
                   onChange={(e) => handleChangePaintTimingFields(e, 'FCPtTime')}
                 />
@@ -105,6 +109,7 @@ const PaintTiming = ({ paintTiming, index }) => {
               <input
                 type='text'
                 name='largest-contentful-paint-it'
+                value={paintTiming.LCPIt}
                 placeholder='should have its largest contentful paint in less than 250 ms'
                 onChange={(e) => handleChangePaintTimingFields(e, 'LCPIt')}
               />
@@ -112,6 +117,7 @@ const PaintTiming = ({ paintTiming, index }) => {
                 <input
                   type='text'
                   name='largest-contentful-paint-benchmark'
+                  value={paintTiming.LCPTime}
                   placeholder={250}
                   onChange={(e) => handleChangePaintTimingFields(e, 'LCPTime')}
                 />
