@@ -12,7 +12,7 @@ const GetTests = ({ testType }) => {
   return (
     <>
       <button className={styles.getTestBtn} onClick={handleOpenGetTestsModal}>
-        Get Test
+        Get Tests
       </button>
       {getTestsModalIsOpen ? (
         <GetTestsModal
