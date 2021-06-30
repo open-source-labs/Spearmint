@@ -18,6 +18,8 @@ fixPath();
 console.log("process.env.Path2: ", process.env.PATH);
 //=> '/usr/local/bin:/usr/bin'
 let mainWindow;
+const protocol = isDev ? 'dev-app' : 'prod-app';
+
 
 if (isDev) console.log('electron version', process.versions.electron);
 
@@ -45,6 +47,7 @@ function createWindow() {
       nodeIntegration: true,
       webviewTag: true,
       contextIsolation: false,
+      nativeWindowOpen: true,
     },
   });
   mainWindow.loadURL(

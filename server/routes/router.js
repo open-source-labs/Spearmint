@@ -5,6 +5,7 @@ const userController = require('../controllers/userController');
 const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 const testStateController = require('../controllers/testStateController');
+const githubController = require('../controllers/githubController');
 // Initialize an express router
 const router = express.Router();
 
@@ -32,6 +33,7 @@ router.post(
   sessionController.startSession,
   // Anonymous middleware to send back valid response
   (req, res) => {
+    console.log('ssid:', res.locals.ssid);
     res.status(200).json({ ssid: res.locals.ssid });
   }
 );
@@ -72,5 +74,12 @@ router.get(
     res.status(200).json(res.locals.tests);
   }
 );
+
+router.get('/github/:code', githubController.getToken, githubController.getUser, sessionController.startSession, (req, res) => {
+  res.status(200).json({ ssid: res.locals.userId });
+})
+// router.get('/getallusers', userController.getUsers, (req, res) => {
+//   res.status(200).json(res.locals.users);
+// });
 
 module.exports = router;
