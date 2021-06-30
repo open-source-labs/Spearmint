@@ -1,6 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
-import { replaceTest } from '../../context/actions/accTestCaseActions';
+import { accReplaceTest } from '../../context/actions/accTestCaseActions';
+import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
+import { endpointReplaceTest } from '../../context/actions/endpointTestCaseActions';
+import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
+import { hooksReplaceTest } from '../../context/actions/hooksTestCaseActions';
+import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
+import { puppeteerReplaceTest } from '../../context/actions/puppeteerTestCaseActions';
+import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
+import { reactReplaceTest } from '../../context/actions/reactTestCaseActions';
+import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
+import { reduxReplaceTest } from '../../context/actions/reduxTestCaseActions';
 
 import ReactModal from 'react-modal';
 import List from '@material-ui/core/List';
@@ -8,9 +18,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import styles from './Modal.module.scss';
 
-const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen }) => {
+const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }) => {
   const [tests, setTests] = useState([]);
-  const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
+  const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
+  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+  const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
+  const [, dispatchToReactData] = useContext(ReactTestCaseContext);
+  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -25,21 +40,39 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen }) => {
   };
 
   const handleGetTests = (isMounted) => {
-    fetch('/getTests')
+    fetch('/getTests/' + testType)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        if (isMounted) setTests(data);
+        if (data.length > 0 && isMounted) setTests(data);
       })
       .catch((err) => console.log(err));
   };
 
   const handleSelectTest = (i) => {
-    console.log('BEFORE DISPATCH:', accTestCase);
-    dispatchToAccTestCase(replaceTest(tests[i].testState));
-    console.log('SAVED TESTSTATE:', tests[i].testState);
-    console.log('AFTER DISPATCH:', accTestCase);
-
+    console.log(testType + ':', tests[i].testState);
+    switch (testType) {
+      case 'acc':
+        dispatchToAccTestCase(accReplaceTest(tests[i].testState));
+        break;
+      case 'react':
+        dispatchToReactData(reactReplaceTest(tests[i].testState));
+        break;
+      case 'redux':
+        dispatchToReduxTestCase(reduxReplaceTest(tests[i].testState));
+        break;
+      case 'hooks':
+        dispatchToHooksTestCase(hooksReplaceTest(tests[i].testState));
+        break;
+      case 'endpoint test':
+        dispatchToEndpointTestCase(endpointReplaceTest(tests[i].testState));
+        break;
+      case 'puppeteer':
+        dispatchToPuppeteerTestCase(puppeteerReplaceTest(tests[i].testState));
+        break;
+      default:
+        console.log('Incorrect input');
+        break;
+    }
     closeGetTestsModal();
   };
 
@@ -52,8 +85,8 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen }) => {
   const renderTestsArray = [];
   for (let i = 0; i < tests.length; i++) {
     renderTestsArray.push(
-      <ListItem button>
-        <ListItemText primary={tests[i].testName} onClick={() => handleSelectTest(i)} />
+      <ListItem button onClick={() => handleSelectTest(i)}>
+        <ListItemText primary={tests[i].testName} />
       </ListItem>
     );
   }
@@ -77,9 +110,13 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen }) => {
       </div>
       <div id={styles.body}>
         <div className={styles.root}>
-          <List component='nav' aria-label='saved tests'>
-            {renderTestsArray}
-          </List>
+          {tests.length > 0 ? (
+            <List component='nav' aria-label='saved tests'>
+              {renderTestsArray}
+            </List>
+          ) : (
+            <p style={{ color: 'black' }}>User has no saved tests</p>
+          )}
         </div>
       </div>
     </ReactModal>

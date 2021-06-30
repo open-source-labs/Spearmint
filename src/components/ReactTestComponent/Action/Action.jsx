@@ -47,12 +47,18 @@ const Action = ({ statement, statementId, describeId, itId }) => {
       <div id={styles.eventTypeFlexBox}>
         <div id={styles.eventType}>
           <label htmlFor='eventType'>Event Type</label>
-
-          <AutoComplete
+          {/* <AutoComplete
             statement={statement}
             statementType='action'
             dispatchToTestCase={dispatchToReactTestCase}
             id={styles.autoComplete}
+          /> */}
+          <input
+            type='text'
+            id='eventType'
+            value={statement.eventType}
+            onChange={(e) => handleChangeActionFields(e, 'eventType')}
+            placeholder='eg. click, change, keypress'
           />
         </div>
         <div id={styles.eventTypeVal}>
@@ -84,7 +90,11 @@ const Action = ({ statement, statementId, describeId, itId }) => {
             Query Selector
           </label>
           <div id={styles.dropdownFlex}>
-            <select id='queryVariant' onChange={(e) => handleChangeActionFields(e, 'queryVariant')}>
+            <select
+              id='queryVariant'
+              value={statement.queryVariant}
+              onChange={(e) => handleChangeActionFields(e, 'queryVariant')}
+            >
               <option value='' />
               <option value='getBy'>getBy</option>
               <option value='getAllBy'>getAllBy</option>
@@ -102,6 +112,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
 
             <select
               id='querySelector'
+              value={statement.querySelector}
               onChange={(e) => handleChangeActionFields(e, 'querySelector')}
             >
               <option value='' />
@@ -131,6 +142,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
           <input
             type='text'
             id='queryValue'
+            value={statement.queryValue}
             onChange={(e) => handleChangeActionFields(e, 'queryValue')}
           />
         </div>

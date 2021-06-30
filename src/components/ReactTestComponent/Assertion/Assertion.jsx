@@ -110,11 +110,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
           <label htmlFor='queryValue' className={styles.queryLabel}>
             Query
           </label>
-          <AutoCompleteMockData
+          {/* <AutoCompleteMockData
             statement={statement}
             dispatchToTestCase={dispatchToReactTestCase}
             statementType='assertion'
-          />
+          /> */}
         </div>
       </div>
       <div>

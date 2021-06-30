@@ -136,6 +136,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                   <input
                     type='text'
                     name='route'
+                    value={endpoint.route}
                     placeholder='eg. /route'
                     onChange={(e) => handleChangeEndpointFields(e, 'route')}
                   />

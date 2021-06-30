@@ -1,3 +1,4 @@
+// Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 
 const MONGO_URI =
@@ -10,11 +11,11 @@ mongoose
 
 const Schema = mongoose.Schema;
 
-// Schema and model for 'user' collection
+// Initialize a new schema object for collection 'user'
 const userSchema = new Schema({
+  // Save username and password of user
   username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
 });
-const User = mongoose.model('user', userSchema);
 
-module.exports = User;
+module.exports = mongoose.model('user', userSchema);

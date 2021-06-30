@@ -1,16 +1,19 @@
+// Import the session model that defines schema of session
 const Session = require('../models/sessionModel');
 
 const sessionController = {};
 
+// Middleware to initialize a session upon successful login
 sessionController.startSession = (req, res, next) => {
   console.log(typeof res.locals.userId)
   Session.create({ cookieId: res.locals.userId }, (err, result) => {
     if (err && err.code !== 11000) return next(err);
-    res.locals.ssid = req.cookies.ssid;
+    res.locals.ssid = res.locals.userId;
     return next();
   });
 };
 
+// Middleware to end currently active sessions, if any
 sessionController.endSession = (req, res, next) => {
   Session.deleteMany({ cookieId: req.cookies.ssid }, (err) => {
     if (err) return next(err);
@@ -18,6 +21,7 @@ sessionController.endSession = (req, res, next) => {
   });
 };
 
+// Middleware to check if entered user is currently already logged in
 sessionController.isLoggedIn = (req, res, next) => {
   console.log('sessionController.isLoggedIn: req.cookies.ssid:', req.cookies.ssid);
   Session.find({ cookieId: req.cookies.ssid }, (err, data) => {

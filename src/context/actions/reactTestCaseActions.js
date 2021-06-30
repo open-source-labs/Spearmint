@@ -30,6 +30,7 @@ export const actionTypes = {
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
+  REPLACE_TEST: 'REPLACE_TEST',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -58,7 +59,6 @@ export const updateDescribeOrder = (reorderedDescribe) => ({
   reorderedDescribe,
 });
 
-
 export const addItstatement = (describeId) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
@@ -81,7 +81,6 @@ export const updateItStatementOrder = (reorderedIt, describeId) => ({
   reorderedIt,
   describeId,
 });
-
 
 export const addAction = (describeId, itId) => ({
   type: actionTypes.ADD_ACTION,
@@ -112,7 +111,6 @@ export const updateAction = ({
   queryValue,
   suggestions,
 });
-
 
 export const addAssertion = (describeId, itId) => ({
   type: actionTypes.ADD_ASSERTION,
@@ -146,7 +144,6 @@ export const updateAssertion = ({
   suggestions,
 });
 
-
 export const addRender = (describeId, itId) => ({
   type: actionTypes.ADD_RENDER,
   describeId,
@@ -163,7 +160,6 @@ export const updateRenderComponent = (componentName, filePath) => ({
   componentName,
   filePath,
 });
-
 
 export const addProp = (statementId) => ({
   type: actionTypes.ADD_PROP,
@@ -186,7 +182,6 @@ export const updateProp = (statementId, id, propKey, propValue) => ({
   propValue,
 });
 
-
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });
@@ -198,3 +193,8 @@ export const openInfoModal = () => {
 export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
+
+export const reactReplaceTest = (testState) => ({
+  type: actionTypes.REPLACE_TEST,
+  testState,
+});

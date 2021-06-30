@@ -49,6 +49,7 @@ const ActionCreator = ({ actionCreator, index }) => {
               <input
                 type='text'
                 id='it'
+                value={actionCreator.it}
                 onChange={(e) => handleChangeActionCreatorFields(e, 'it')}
                 placeholder='e.g.should return expected action'
               />
@@ -61,6 +62,7 @@ const ActionCreator = ({ actionCreator, index }) => {
               <input
                 type='text'
                 id='actionCreatorFunc'
+                value={actionCreator.actionCreatorFunc}
                 onChange={(e) => handleChangeActionCreatorFields(e, 'actionCreatorFunc')}
                 placeholder='e.g. addTodo'
               />
@@ -71,6 +73,7 @@ const ActionCreator = ({ actionCreator, index }) => {
               <input
                 type='text'
                 id='actionType'
+                value={actionCreator.actionType}
                 onChange={(e) => handleChangeActionCreatorFields(e, 'actionType')}
                 placeholder='e.g. ADD_TODO'
               />
@@ -83,6 +86,7 @@ const ActionCreator = ({ actionCreator, index }) => {
               <input
                 type='text'
                 id='payloadKey'
+                value={actionCreator.payloadKey}
                 onChange={(e) => handleChangeActionCreatorFields(e, 'payloadKey')}
                 placeholder='e.g. todo'
               />
@@ -92,6 +96,7 @@ const ActionCreator = ({ actionCreator, index }) => {
               <label htmlFor='payloadType'>Payload Type</label>
               <select
                 id='payloadType'
+                value={actionCreator.payloadType}
                 onChange={(e) => handleChangeActionCreatorFields(e, 'payloadType')}
               >
                 <option value='' />
