@@ -41,6 +41,7 @@ const Async = ({ async, index }) => {
               <input
                 type='text'
                 name='it'
+                value={async.it}
                 placeholder='e.g. store should hold expected action'
                 onChange={(e) => handleChangeAsyncFields(e, 'it')}
               />
@@ -53,6 +54,7 @@ const Async = ({ async, index }) => {
               <input
                 type='text'
                 name='asyncFunction'
+                value={async.asyncFunction}
                 onChange={(e) => handleChangeAsyncFields(e, 'asyncFunction')}
               />
             </div>
@@ -62,6 +64,7 @@ const Async = ({ async, index }) => {
               <input
                 type='text'
                 id='actionType'
+                value={async.actionType}
                 onChange={(e) => handleChangeAsyncFields(e, 'actionType')}
                 placeholder='e.g. ADD_TODO'
               />
@@ -75,6 +78,7 @@ const Async = ({ async, index }) => {
                 <input
                   type='text'
                   name='expectedArg'
+                  value={async.expectedArg}
                   placeholder='e.g. response'
                   onChange={(e) => handleChangeAsyncFields(e, 'expectedArg')}
                 />
@@ -102,6 +106,7 @@ const Async = ({ async, index }) => {
               <input
                 type='text'
                 id='payloadKey'
+                value={async.payloadKey}
                 onChange={(e) => handleChangeAsyncFields(e, 'payloadKey')}
                 placeholder='e.g. id'
               />
@@ -111,6 +116,7 @@ const Async = ({ async, index }) => {
               <div id={styles.dropdownFlex}>
                 <select
                   id='payloadType'
+                  value={async.payloadType}
                   onChange={(e) => handleChangeAsyncFields(e, 'payloadType')}
                 >
                   <option value='' />
@@ -147,6 +153,7 @@ const Async = ({ async, index }) => {
                 <input
                   type='text'
                   name='route'
+                  value={async.route}
                   placeholder='eg. /route'
                   onChange={(e) => handleChangeAsyncFields(e, 'route')}
                 />

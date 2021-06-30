@@ -13,6 +13,7 @@ export const actionTypes = {
   UPDATE_STATEMENTS_ORDER: 'UPDATE_STATEMENTS_ORDER',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
+  REPLACE_TEST: 'REPLACE_TEST',
 };
 
 export const togglePuppeteer = () => ({
@@ -75,3 +76,8 @@ export const openInfoModal = () => {
 export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
+
+export const puppeteerReplaceTest = (testState: object) => ({
+  type: actionTypes.REPLACE_TEST,
+  testState,
+});

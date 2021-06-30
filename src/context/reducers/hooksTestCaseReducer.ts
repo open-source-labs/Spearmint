@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { HooksTestCaseState, Assertion, HooksAction, Hooks, Callback } from '../../utils/hooksTypes';
 
-export const HooksTestCaseContext: any = createContext(null);
+export const HooksTestCaseContext: any = createContext([]);
 
 const newAssertion: Assertion = {
   id: 0,
@@ -293,6 +293,9 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         ...state,
         hooksStatements,
       };
+    case 'REPLACE_TEST': {
+      return action.testState;
+    }
     default:
       return state;
   }

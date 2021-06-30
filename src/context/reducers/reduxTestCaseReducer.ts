@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { actionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
 
-export const ReduxTestCaseContext: any = createContext(null);
+export const ReduxTestCaseContext: any = createContext([]);
 
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
 /* initial state for testCase */
@@ -299,7 +299,10 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         ...state,
         modalOpen: false,
       };
-
+    case actionTypes.REPLACE_TEST: {
+      const { testState } = action;
+      return testState;
+    }
     default:
       return state;
   }

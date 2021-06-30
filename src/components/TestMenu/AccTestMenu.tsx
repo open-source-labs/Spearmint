@@ -69,8 +69,8 @@ const AccTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <UploadTest />
-          <GetTests />
+          <UploadTest testType="acc" />
+          <GetTests testType="acc" />
           <Modal
             title={title}
             isModalOpen={isModalOpen}

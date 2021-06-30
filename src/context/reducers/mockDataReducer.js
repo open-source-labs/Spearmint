@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/mockDataActions';
 
-export const MockDataContext = createContext(null);
+export const MockDataContext = createContext([]);
 
 export const mockDataState = {
   mockData: [],
@@ -109,6 +109,10 @@ export const mockDataReducer = (state, action) => {
         mockData: [],
         hasMockData: false,
       };
+    case actionTypes.REPLACE_TEST: {
+      const { testState } = action;
+      return testState;
+    }
     default:
       return state;
   }

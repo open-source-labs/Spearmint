@@ -59,6 +59,7 @@ const Middleware = ({ middleware, index }) => {
                 <label htmlFor='typesFile'>Query Value</label>
                 <select
                   id='queryValue'
+                  value={middleware.queryValue}
                   onChange={(e) => handleChangeMiddlewareFields(e, 'queryValue')}
                 >
                   {' '}
@@ -75,6 +76,7 @@ const Middleware = ({ middleware, index }) => {
                 <label htmlFor='typesFile'>Query Variant</label>
                 <select
                   id='queryVariant'
+                  value={middleware.queryVariant}
                   onChange={(e) => handleChangeMiddlewareFields(e, 'queryVariant')}
                 >
                   <option value='' />
@@ -89,6 +91,7 @@ const Middleware = ({ middleware, index }) => {
                 <label htmlFor='typesFile'>Query Selector</label>
                 <select
                   id='querySelector'
+                  value={middleware.querySelector}
                   onChange={(e) => handleChangeMiddlewareFields(e, 'querySelector')}
                 >
                   <option value='' />
@@ -104,6 +107,7 @@ const Middleware = ({ middleware, index }) => {
               <label htmlFor='typesFile'>Middleware Function</label>
               <input
                 id='queryType'
+                value={middleware.queryType}
                 placeholder='eg. thunk'
                 onChange={(e) => handleChangeMiddlewareFields(e, 'queryType')}
               ></input>

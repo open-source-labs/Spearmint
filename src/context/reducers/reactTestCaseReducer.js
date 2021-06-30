@@ -350,15 +350,8 @@ export const reactTestCaseReducer = (state, action) => {
       };
     }
     case actionTypes.UPDATE_ACTION: {
-      const {
-        id,
-        eventType,
-        eventValue,
-        queryVariant,
-        querySelector,
-        queryValue,
-        suggestions,
-      } = action;
+      const { id, eventType, eventValue, queryVariant, querySelector, queryValue, suggestions } =
+        action;
       const byId = { ...statements.byId };
       const oldStatement = { ...statements.byId[id] };
       const newStatement = {
@@ -595,6 +588,9 @@ export const reactTestCaseReducer = (state, action) => {
         ...state,
         modalOpen: false,
       };
+    }
+    case actionTypes.REPLACE_TEST: {
+      return action.testState;
     }
     default:
       return state;

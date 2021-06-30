@@ -74,6 +74,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
                   <input
                     ref={testDescription}
                     type='text'
+                    value={hookUpdates.testName}
                     id={styles.testStatement}
                     onChange={(e) => handleChangeHookUpdatesFields(e, 'testName')}
                   />
@@ -87,6 +88,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
               <input
                 type='text'
                 id='hook'
+                value={hookUpdates.hook}
                 onChange={(e) => handleChangeHookUpdatesFields(e, 'hook')}
                 placeholder='e.g. useToggleCount'
               />
@@ -96,6 +98,7 @@ const HookUpdates = ({ hookUpdates, index }) => {
               <input
                 type='text'
                 id='hookParams'
+                value={hookUpdates.hookParams}
                 placeholder='e.g. false, 0'
                 onChange={(e) => handleChangeHookUpdatesFields(e, 'hookParams')}
               />

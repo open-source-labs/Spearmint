@@ -1,16 +1,14 @@
+// Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
+// Schema constructor
 const Schema = mongoose.Schema;
 
-/**
- * Check out the `createdAt` field below. This is set up to use Mongo's automatic document
- * expiration service by giving the Mongoose schema the `expires` property.
- * After 30 seconds, the session will automatically be removed from the collection!
- * (actually, Mongo's cleanup service only runs once per minute so the session
- * could last up to 90 seconds before it's deleted, but still pretty cool!)
- */
+// Initialize a new schema object for collection 'session'
 const sessionSchema = new Schema({
+  // Save user ID
   cookieId: { type: String, required: true, unique: true },
-  createdAt: { type: Date, expires: 120, default: Date.now },
+  // Save expiration for 30 mins
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Session', sessionSchema);

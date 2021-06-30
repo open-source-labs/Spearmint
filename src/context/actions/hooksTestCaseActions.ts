@@ -22,6 +22,7 @@ export const actionTypes = {
   ADD_CALLBACKFUNC: 'ADD_CALLBACKFUNC',
   DELETE_CALLBACKFUNC: 'DELETE_CALLBACKFUNC',
   UPDATE_CALLBACKFUNC: 'UPDATE_CALLBACKFUNC',
+  REPLACE_TEST: 'REPLACE_TEST',
 };
 
 export const toggleHooks = () => ({
@@ -124,3 +125,8 @@ export const toggleTypeof = (index: number) => {
     index,
   };
 };
+
+export const hooksReplaceTest = (testState: object) => ({
+  type: actionTypes.REPLACE_TEST,
+  testState,
+});
