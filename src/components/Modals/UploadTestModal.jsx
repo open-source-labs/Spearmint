@@ -1,11 +1,21 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
+import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
+import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
+import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
+import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
+import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import styles from './Modal.module.scss';
 
 const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, testType }) => {
   const [testName, setTestName] = useState('');
-  const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
+  const [accTestCase] = useContext(AccTestCaseContext);
+  const [endpointTestCase] = useContext(EndpointTestCaseContext);
+  const [hooksTestCase] = useContext(HooksTestCaseContext);
+  const [puppeteerTestCase] = useContext(PuppeteerTestCaseContext);
+  const [reactTestCase] = useContext(ReactTestCaseContext);
+  const [reduxTestCase] = useContext(ReduxTestCaseContext);
 
   const closeUploadModal = () => {
     setUploadTestModalIsOpen(false);
@@ -16,12 +26,39 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
   };
 
   const handleClickSave = () => {
+    let testState;
+    switch (testType) {
+      case 'acc':
+        testState = accTestCase;
+        break;
+      case 'endpoint test':
+        testState = endpointTestCase;
+        break;
+      case 'hooks':
+        testState = hooksTestCase;
+        break;
+      case 'puppeteer':
+        testState = puppeteerTestCase;
+        break;
+      case 'react':
+        testState = reactTestCase;
+        break;
+      case 'redux':
+        testState = reduxTestCase;
+        break;
+      default:
+        testState = [];
+        break;
+    }
+
+    console.log('test being saved:', testState);
+
     fetch('/upload', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ testName, testType, testState: accTestCase }),
+      body: JSON.stringify({ testName, testType, testState }),
     })
       .then((res) => res.json())
       .then((data) => console.log(data))

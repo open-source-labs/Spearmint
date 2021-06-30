@@ -20,12 +20,12 @@ import styles from './Modal.module.scss';
 
 const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }) => {
   const [tests, setTests] = useState([]);
-  const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
-  const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
-  const [hooksTestCase, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
-  const [puppeteerTestCase, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
-  const [reactTestCase, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
-  const [reduxTestCase, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
+  const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
+  const [, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+  const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+  const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
+  const [, dispatchToReactData] = useContext(ReactTestCaseContext);
+  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -43,27 +43,35 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
     fetch('/getTests/' + testType)
       .then((res) => res.json())
       .then((data) => {
-        if (isMounted) setTests(data);
+        if (data.length > 0 && isMounted) setTests(data);
       })
       .catch((err) => console.log(err));
   };
 
   const handleSelectTest = (i) => {
+    console.log(testType + ':', tests[i].testState);
     switch (testType) {
       case 'acc':
         dispatchToAccTestCase(accReplaceTest(tests[i].testState));
+        break;
       case 'react':
-        dispatchToReactTestCase(reactReplaceTest(tests[i].testState));
+        dispatchToReactData(reactReplaceTest(tests[i].testState));
+        break;
       case 'redux':
         dispatchToReduxTestCase(reduxReplaceTest(tests[i].testState));
+        break;
       case 'hooks':
         dispatchToHooksTestCase(hooksReplaceTest(tests[i].testState));
+        break;
       case 'endpoint test':
         dispatchToEndpointTestCase(endpointReplaceTest(tests[i].testState));
+        break;
       case 'puppeteer':
         dispatchToPuppeteerTestCase(puppeteerReplaceTest(tests[i].testState));
-      case 'default':
+        break;
+      default:
         console.log('Incorrect input');
+        break;
     }
     closeGetTestsModal();
   };
@@ -77,8 +85,8 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
   const renderTestsArray = [];
   for (let i = 0; i < tests.length; i++) {
     renderTestsArray.push(
-      <ListItem button>
-        <ListItemText primary={tests[i].testName} onClick={() => handleSelectTest(i)} />
+      <ListItem button onClick={() => handleSelectTest(i)}>
+        <ListItemText primary={tests[i].testName} />
       </ListItem>
     );
   }
@@ -102,9 +110,13 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
       </div>
       <div id={styles.body}>
         <div className={styles.root}>
-          <List component='nav' aria-label='saved tests'>
-            {renderTestsArray}
-          </List>
+          {tests.length > 0 ? (
+            <List component='nav' aria-label='saved tests'>
+              {renderTestsArray}
+            </List>
+          ) : (
+            <p style={{ color: 'black' }}>User has no saved tests</p>
+          )}
         </div>
       </div>
     </ReactModal>
