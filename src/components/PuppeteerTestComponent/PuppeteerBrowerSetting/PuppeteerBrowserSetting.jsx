@@ -31,12 +31,14 @@ const PuppeteerBrowserSetting = ({ puppeteer, handleChangePuppeteerFields }) => 
         <input
           type='text'
           key={`key${option.id}`}
+          value={option.optionKey}
           id={`key${option.id}`}
           onChange={(e) => handleChangeBrowserOptionFields(e, 'optionKey', option.id)}
         />
         <input
           type='text'
           key={`value${option.id}`}
+          value={option.optionValue}
           id={`value${option.id}`}
           onChange={(e) => handleChangeBrowserOptionFields(e, 'optionValue', option.id)}
         />
@@ -53,6 +55,7 @@ const PuppeteerBrowserSetting = ({ puppeteer, handleChangePuppeteerFields }) => 
           <input
             type='text'
             name='test'
+            value={puppeteer.describe}
             placeholder='eg. Home page performance'
             onChange={(e) => handleChangePuppeteerFields(e, 'describe')}
           />
@@ -65,6 +68,7 @@ const PuppeteerBrowserSetting = ({ puppeteer, handleChangePuppeteerFields }) => 
           <input
             type='text'
             name='url'
+            value={puppeteer.url}
             placeholder='http://localhost:8080/'
             onChange={(e) => handleChangePuppeteerFields(e, 'url')}
           />

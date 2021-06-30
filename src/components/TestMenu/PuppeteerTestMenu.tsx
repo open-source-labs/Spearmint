@@ -19,6 +19,8 @@ import {
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import UploadTest from '../UploadTest/UploadTest';
+import GetTests from '../GetTests/GetTests';
 
 const PuppeteerTestMenu = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
@@ -73,6 +75,8 @@ const PuppeteerTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
+          <UploadTest testType="puppeteer" />
+          <GetTests testType="puppeteer" />
           <Modal
             // passing methods down as props to be used when Modal is opened
             title={title}

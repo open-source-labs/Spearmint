@@ -22,6 +22,8 @@ import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import UploadTest from '../UploadTest/UploadTest';
+import GetTests from '../GetTests/GetTests';
 
 const ReduxTestMenu = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
@@ -85,6 +87,8 @@ const ReduxTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
+          <UploadTest testType='redux' />
+          <GetTests testType='redux' />
           <Modal
             // passing methods down as props to be used when Modal is opened
             title={title}

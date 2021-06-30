@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { PuppeteerTestCaseState, PuppeteerAction } from '../../utils/puppeteerTypes';
 
-export const PuppeteerTestCaseContext = createContext<any>(null);
+export const PuppeteerTestCaseContext = createContext<any>([]);
 
 export const puppeteerTestCaseState = {
   puppeteerStatements: [
@@ -184,6 +184,9 @@ export const puppeteerTestCaseReducer = (
         ...state,
         modalOpen: false,
       };
+    case 'REPLACE_TEST': {
+      return action.testState;
+    }
     default:
       return state;
   }

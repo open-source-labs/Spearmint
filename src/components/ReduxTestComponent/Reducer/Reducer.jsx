@@ -44,6 +44,7 @@ const Reducer = ({ reducer, index }) => {
               <input
                 type='text'
                 id='testStatment'
+                value={reducer.itStatement}
                 placeholder='eg. handles ADD_TODO action properly'
                 onChange={(e) => handleChangeReducerFields(e, 'itStatement')}
               />
@@ -53,6 +54,7 @@ const Reducer = ({ reducer, index }) => {
               <input
                 type='text'
                 id='reducerName'
+                value={reducer.reducerName}
                 placeholder='eg. todoReducer'
                 onChange={(e) => handleChangeReducerFields(e, 'reducerName')}
               />
@@ -64,6 +66,7 @@ const Reducer = ({ reducer, index }) => {
               <input
                 type='text'
                 id='initialState'
+                value={reducer.initialState}
                 placeholder='eg. todosState'
                 onChange={(e) => handleChangeReducerFields(e, 'initialState')}
               />
@@ -73,6 +76,7 @@ const Reducer = ({ reducer, index }) => {
               <input
                 type='text'
                 id='reducerAction'
+                value={reducer.reducerAction}
                 placeholder='eg ADD_TODO'
                 onChange={(e) => handleChangeReducerFields(e, 'reducerAction')}
               />
@@ -84,12 +88,14 @@ const Reducer = ({ reducer, index }) => {
               <input
                 type='text'
                 id='payloadKey'
+                value={reducer.payloadKey}
                 placeholder='Key'
                 onChange={(e) => handleChangeReducerFields(e, 'payloadKey')}
               />
               <input
                 type='text'
                 id='payloadValue'
+                value={reducer.payloadValue}
                 placeholder='Value'
                 onChange={(e) => handleChangeReducerFields(e, 'payloadValue')}
               />
@@ -100,12 +106,14 @@ const Reducer = ({ reducer, index }) => {
                 type='text'
                 placeholder='Key'
                 id='expectedKey'
+                value={reducer.expectedKey}
                 onChange={(e) => handleChangeReducerFields(e, 'expectedKey')}
               />
               <input
                 type='text'
                 placeholder='Value'
                 id='expectedValue'
+                value={reducer.expectedValue}
                 onChange={(e) => handleChangeReducerFields(e, 'expectedValue')}
               />
             </div>

@@ -17,6 +17,8 @@ import {
 } from '../../context/actions/globalActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import UploadTest from '../UploadTest/UploadTest';
+import GetTests from '../GetTests/GetTests';
 
 const ReactTestMenu = () => {
   // React testing docs url
@@ -26,7 +28,8 @@ const ReactTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('react');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [reactTestCase, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] =
+    useContext(GlobalContext);
   const generateTest = useGenerateTest('react', projectFilePath);
 
   useEffect(() => {
@@ -58,7 +61,9 @@ const ReactTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button onClick={openModal} autoFocus >New Test +</button>
+          <button onClick={openModal} autoFocus>
+            New Test +
+          </button>
           <button onClick={fileHandle}>Preview</button>
           <button id={styles.example} onClick={openScriptModal}>
             Run Test
@@ -66,6 +71,8 @@ const ReactTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
+          <UploadTest testType='react' />
+          <GetTests testType='react' />
           <Modal
             title={title}
             isModalOpen={isModalOpen}
