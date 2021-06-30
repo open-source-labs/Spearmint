@@ -20,6 +20,7 @@ export const actionTypes = {
   UPDATE_ASSERTION: 'UPDATE_ASSERTION',
   TOGGLE_DB: 'TOGGLE_DB',
   UPDATE_DB_FILEPATH: 'UPDATE_DB_FILEPATH',
+  REPLACE_TEST: 'REPLACE_TEST',
 };
 
 // Never used
@@ -138,3 +139,8 @@ export const updateDBFilePath = (dbFilePath: string) => {
     dbFilePath,
   };
 };
+
+export const endpointReplaceTest = (testState: object) => ({
+  type: actionTypes.REPLACE_TEST,
+  testState,
+});

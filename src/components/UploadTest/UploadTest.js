@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import styles from './UploadTest.module.scss';
 import UploadTestModal from '../Modals/UploadTestModal';
 
-const UploadTest = () => {
+const UploadTest = ({ testType }) => {
   const [uploadTestModalIsOpen, setUploadTestModalIsOpen] = useState(false);
 
   const handleOpenUploadTestModal = () => {
@@ -22,6 +22,7 @@ const UploadTest = () => {
         <UploadTestModal
           uploadTestModalIsOpen={uploadTestModalIsOpen}
           setUploadTestModalIsOpen={setUploadTestModalIsOpen}
+          testType={testType}
         />
       ) : null}
     </>

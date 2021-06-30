@@ -41,10 +41,11 @@ export type PuppeteerAction =
         | 'CREATE_NEW_PUPPETEER_TEST'
         | 'ADD_PUPPETEER_PAINT_TIMING'
         | 'OPEN_INFO_MODAL'
-        | 'CLOSE_INFO_MODAL';
+        | 'CLOSE_INFO_MODAL'
+        | 'REPLACE_TEST'; testState: any
     }
   | { type: 'DELETE_PUPPETEER_TEST' | 'ADD_BROWSER_OPTIONS'; id: number }
   | { type: 'DELETE_BROWSER_OPTION'; id: number; optionId: number }
   | { type: 'UPDATE_PAINT_TIMING'; id: number; field: string; value: string }
   | { type: 'UPDATE_BROWSER_OPTION'; id: number; field: string; value: string; optionId: number }
-  | { type: 'UPDATE_STATEMENTS_ORDER'; draggableStatements: Array<object> };
+  | { type: 'UPDATE_STATEMENTS_ORDER'; draggableStatements: Array<object> }

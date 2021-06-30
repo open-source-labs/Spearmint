@@ -52,3 +52,8 @@ export const updateMockDataKey = (mockDatumId, mockDatumKeyId, fieldKey, fieldTy
 export const clearMockData = () => ({
   type: actionTypes.CLEAR_MOCK_DATA,
 });
+
+export const mockReplaceTest = (testState) => ({
+  type: actionTypes.REPLACE_TEST,
+  testState,
+});
