@@ -129,5 +129,5 @@
     "test-data-bot": "^0.8.0",
     "vue-jest": "^3.0.7"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://spearmint.us-west-1.elasticbeanstalk.com"
 }
