@@ -61,4 +61,15 @@ userController.login = (req, res, next) => {
   });
 };
 
+userController.getUsers = (req, res, next) => {
+  // Collection.find method to look for all user instances with passed username
+  User.find({}, (err, result) => {
+    // If there is an error, invoke global error handler
+    if (err) return next(err);
+    res.locals.users = result;
+    return next();
+  });
+};
+
+
 module.exports = userController;

@@ -102,7 +102,6 @@
   letter-spacing: 1px;
 }
 
-
 #helpBtn {
   color: white;
   background-color: $mint;
@@ -121,11 +120,26 @@
   color: $mint;
 }
 #helpBtn:focus {
-  outline: 1px solid darkblue
+  outline: 1px solid darkblue;
 }
 
 #bottomDiv {
   display: flex;
   height: 25vh;
   justify-content: center;
+}
+
+.gitLogin {
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+}
+
+#gitButton {
+  margin-top: 13px;
+  padding-left: 10px;
+}
+
+#loginBtn {
+  font-size: 13px;
 }

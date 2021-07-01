@@ -7,7 +7,6 @@ const Schema = mongoose.Schema;
 const sessionSchema = new Schema({
   // Save user ID
   cookieId: { type: String, required: true, unique: true },
-  // Save expiration for 30 mins
   createdAt: { type: Date, default: Date.now },
 });
 

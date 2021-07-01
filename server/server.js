@@ -8,7 +8,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Handler to direct all requests to the endpoint / to router file
 app.use('/', router);
 
 // Any other request is caught here
