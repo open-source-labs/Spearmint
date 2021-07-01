@@ -38,7 +38,7 @@ const ProjectLoader = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     logout();
-    fetch('/login', {
+    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const ProjectLoader = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    fetch('/signup', {
+    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -79,14 +79,14 @@ const ProjectLoader = () => {
   };
 
   const logout = () => {
-    fetch('/logout')
+    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/logout')
       .then((res) => res.json())
       .catch((err) => console.log(err));
   };
 
   const handleGithubLogin = (response) => {
     logout();
-    fetch('/github/' + response.code)
+    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/github/' + response.code)
       .then((res) => res.json())
       .then((data) => {
         if (data.ssid) {

@@ -53,7 +53,7 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
 
     console.log('test being saved:', testState);
 
-    fetch('/upload', {
+    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/upload', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

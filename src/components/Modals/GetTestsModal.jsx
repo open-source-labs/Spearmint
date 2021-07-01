@@ -40,7 +40,7 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
   };
 
   const handleGetTests = (isMounted) => {
-    fetch('/getTests/' + testType)
+    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/getTests/' + testType)
       .then((res) => res.json())
       .then((data) => {
         if (data.length > 0 && isMounted) setTests(data);
