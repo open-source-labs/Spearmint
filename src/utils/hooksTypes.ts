@@ -19,36 +19,10 @@ export interface Assertion {
   expectedValue: string;
   not: boolean;
 }
-
 export interface Callback {
   id: number;
   callbackFunc: string;
 }
-
-// export interface Action {
-//   type: string;
-//   id?: number;
-//   context?: string;
-//   hook?: string;
-//   parameters?: any;
-//   expectedState?: any;
-//   expectedValue?: any;
-//   textNodes?: string;
-//   queryVariant?: string;
-//   querySelector?: string;
-//   queryValue?: string;
-//   values?: string;
-//   providerComponent?: string;
-//   consumerComponent?: string;
-//   draggableStatements?: Array<HooksStatements>;
-//   testName?: string;
-//   index?: number;
-//   text?: string;
-//   contextFileName?: string;
-//   contextFilePath?: string;
-//   assertions?: Assertion;
-//   callbackfunc?: Callback;
-// }
 
 export interface Hooks {
   id: number;
@@ -72,7 +46,8 @@ export type HooksAction =
         | 'ADD_HOOK_UPDATES'
         | 'CREATE_NEW_HOOKS_TEST'
         | 'OPEN_INFO_MODAL'
-        | 'CLOSE_INFO_MODAL';
+        | 'CLOSE_INFO_MODAL'
+        | 'REPLACE_TEST';
     }
   | { type: 'UPDATE_HOOKS_TEST_STATEMENT'; hooksTestStatement: string }
   | { type: 'DELETE_CONTEXT' | 'DELETE_HOOK_UPDATES' | 'TOGGLE_TYPEOF' | 'ADD_CALLBACKFUNC'; id: number }

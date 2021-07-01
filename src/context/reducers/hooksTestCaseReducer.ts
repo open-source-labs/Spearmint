@@ -1,8 +1,7 @@
 import { createContext } from 'react';
-// import { actionTypes } from '../actions/hooksTestCaseActions';
 import { HooksTestCaseState, Assertion, HooksAction, Hooks, Callback } from '../../utils/hooksTypes';
 
-export const HooksTestCaseContext: any = createContext(null);
+export const HooksTestCaseContext: any = createContext([]);
 
 const newAssertion: Assertion = {
   id: 0,
@@ -66,21 +65,6 @@ export const hooksTestCaseState: HooksTestCaseState = {
   hookFilePath: '',
 };
 
-// const createContexts = (statementId: number) => ({
-//   id: statementId,
-//   type: 'context',
-//   queryVariant: '',
-//   querySelector: '',
-//   queryValue: '',
-//   values: '',
-//   textNode: '',
-//   providerComponent: '',
-//   consumerComponent: '',
-//   context: '',
-//   contextFileName: '',
-//   contextFilePath: '',
-// });
-
 const deepCopy = (hooksStatements: Hooks[]) => {
   function copyAssertions(array: Assertion[]) {
     const copy: Assertion[] = array.map((el) => {
@@ -96,7 +80,6 @@ const deepCopy = (hooksStatements: Hooks[]) => {
   }
 
   const fullCopy: Hooks[] = hooksStatements.map((el) => {
-    // if (el.hasOwnProperty('assertions')) {
     return {
       ...el,
       assertions: copyAssertions(el.assertions),
@@ -135,7 +118,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
       });
       return {
         ...state,
-        // statementId: state.statementId + 1,
         hooksStatements,
       };
     case 'DELETE_CONTEXT':
@@ -169,8 +151,6 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
       };
 
     case 'ADD_HOOK_UPDATES':
-      // hooksStatements.push(createHookUpdates(state.statementId));
-      // hooksStatements.push(createContexts(state.statementId));
       if (hooksStatements.length === 0) {
         return {
           ...state,
@@ -209,15 +189,11 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
       };
     case 'UPDATE_HOOKS_FILEPATH':
       hooksStatements = hooksStatements.map((statement) => {
-        // if (statement.type === 'hook-updates' || statement.type === 'hookRender') {
-        //   console.log('statement within UPDATE_HOOKS_FILEPATH', action);
         return {
           ...statement,
           hookFileName: action.hookFileName,
           hookFilePath: action.hookFilePath,
         };
-        // }
-        // return statement;
       });
       return {
         ...state,
@@ -317,6 +293,9 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         ...state,
         hooksStatements,
       };
+    case 'REPLACE_TEST': {
+      return action.testState;
+    }
     default:
       return state;
   }

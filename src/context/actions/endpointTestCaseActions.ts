@@ -2,7 +2,6 @@ import { EndpointStatements, Assertion } from '../../utils/endpointTypes';
 
 export const actionTypes = {
   UPDATE_ENDPOINT_STATEMENTS_ORDER: 'UPDATE_ENDPOINT_STATEMENTS_ORDER',
-  // UPDATE_SERVER_FILE_PATH: 'UPDATE_SERVER_FILE_PATH',
   TOGGLE_ENDPOINT: 'TOGGLE_ENDPOINT',
   CREATE_NEW_ENDPOINT_TEST: 'CREATE_NEW_ENDPOINT_TEST',
   UPDATE_SERVER_FILEPATH: 'UPDATE_SERVER_FILEPATH',
@@ -21,6 +20,7 @@ export const actionTypes = {
   UPDATE_ASSERTION: 'UPDATE_ASSERTION',
   TOGGLE_DB: 'TOGGLE_DB',
   UPDATE_DB_FILEPATH: 'UPDATE_DB_FILEPATH',
+  REPLACE_TEST: 'REPLACE_TEST',
 };
 
 // Never used
@@ -139,3 +139,8 @@ export const updateDBFilePath = (dbFilePath: string) => {
     dbFilePath,
   };
 };
+
+export const endpointReplaceTest = (testState: object) => ({
+  type: actionTypes.REPLACE_TEST,
+  testState,
+});

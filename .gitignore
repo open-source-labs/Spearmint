@@ -28,3 +28,7 @@ yarn-error.log*
 
 #configuration
 .vscode
+
+
+/server/node_modules
+/server/spearmint.zip

@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { actionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
 
-export const ReduxTestCaseContext: any = createContext(null);
+export const ReduxTestCaseContext: any = createContext([]);
 
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
 /* initial state for testCase */
@@ -55,7 +55,6 @@ const createAsync = () => {
     asyncFunction: '',
     method: '',
     route: '',
-    // requestBody: '',
     store: '',
     matcher: '',
     status: '',
@@ -231,7 +230,6 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       };
     case actionTypes.UPDATE_ACTIONS_FILEPATH:
       reduxStatements = reduxStatements.map((statement) => {
-        // if (statement.id === action.payload.id) {
         if (action.payload.type === statement.type) {
           statement.actionsFileName = action.payload.actionsFileName;
           statement.filePath = action.payload.filePath;
@@ -245,7 +243,6 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       };
     case actionTypes.UPDATE_TYPES_FILEPATH:
       reduxStatements = reduxStatements.map((statement) => {
-        // if (statement.id === action.payload.id) {
         if (action.payload.type === statement.type) {
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
@@ -302,7 +299,10 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
         ...state,
         modalOpen: false,
       };
-
+    case actionTypes.REPLACE_TEST: {
+      const { testState } = action;
+      return testState;
+    }
     default:
       return state;
   }

@@ -7,25 +7,12 @@ import BrowserView from '../../components/BrowserView/BrowserView';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { closeRightPanel, setTabIndex } from '../../context/actions/globalActions';
 import TerminalView from '../../components/Terminal/TerminalView';
-// import terminalStyles from '../../components/Terminal/TerminalView.module.scss';
-const closeIcon = require('../../assets/images/close.png');
-
-// add tabviews (convert the code preview and browser preview) - mintyBois 4/16
-// eslint-disable
 
 const RightPanel = () => {
   const [{ rightPanelDisplay, url, tabIndex }, dispatchToGlobal] = useContext(GlobalContext);
 
-
-  const handleCloseRightPanelView = () => {
-    dispatchToGlobal(closeRightPanel());
-  };
-
-  // Tabbed View
-
   return (
     <div id={styles.rightPanel}>
-      {/* <img src={closeIcon} id={styles.close} alt='close' onClick={handleCloseRightPanelView} /> */}
 
       <Tabs style={{ marginBottom: 5 }} value={tabIndex} onChange={(event, newValue) => dispatchToGlobal(setTabIndex(newValue))} centered>
         <Tab value={0} label="Code Editor" />

@@ -25,7 +25,7 @@ import {
 const ReactTestCase = () => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
     reactTestCaseReducer,
-    reactTestCaseState,
+    reactTestCaseState
   );
 
   const { describeBlocks, itStatements, statements } = reactTestCase;
@@ -60,21 +60,21 @@ const ReactTestCase = () => {
     if (!result.destination) return;
     if (result.destination.index === result.source.index) return;
 
-    const list = result.draggableId.includes('describe') ? describeBlocks.allIds : itStatements.allIds[result.type];
-    const func = result.draggableId.includes('describe') ? updateDescribeOrder : updateItStatementOrder;
+    const list = result.draggableId.includes('describe')
+      ? describeBlocks.allIds
+      : itStatements.allIds[result.type];
+    const func = result.draggableId.includes('describe')
+      ? updateDescribeOrder
+      : updateItStatementOrder;
 
-    const reorderedStatements = reorder(
-      list,
-      result.source.index,
-      result.destination.index,
-    );
+    const reorderedStatements = reorder(list, result.source.index, result.destination.index);
     dispatchToReactTestCase(func(reorderedStatements, result.type));
   };
 
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
       <div id={styles.ReactTestCase}>
-        <div id="head">
+        <div id='head'>
           <ReactTestMenu />
         </div>
 
@@ -89,37 +89,33 @@ const ReactTestCase = () => {
               options={Object.keys(filePathMap)}
             />
           </div>
-          <button type="button" className={styles.mockBtn} onClick={handleAddMockData}>
+          <button type='button' className={styles.mockBtn} onClick={handleAddMockData}>
             <i className={cn(styles.addIcon, 'fas fa-plus')} />
             Mock Data
           </button>
         </div>
 
-        {mockData.length > 0 && (
-          <section id={styles.mockDataHeader}>
-            {mockData.map((data) => {
-              return (
-                <MockData
-                  key={data.id}
-                  mockDatumId={data.id}
-                  dispatchToMockData={dispatchToMockData}
-                  fieldKeys={data.fieldKeys}
-                />
-              );
-            })}
-          </section>
-        )}
+        {mockData
+          ? mockData.length > 0 && (
+              <section id={styles.mockDataHeader}>
+                {mockData.map((data) => {
+                  return (
+                    <MockData
+                      key={data.id}
+                      mockDatumId={data.id}
+                      dispatchToMockData={dispatchToMockData}
+                      fieldKeys={data.fieldKeys}
+                    />
+                  );
+                })}
+              </section>
+            )
+          : null}
 
         <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable
-            droppableId="droppableReactDescribe"
-            type="describe"
-          >
+          <Droppable droppableId='droppableReactDescribe' type='describe'>
             {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
+              <div ref={provided.innerRef} {...provided.droppableProps}>
                 <DecribeRenderer
                   dispatcher={dispatchToReactTestCase}
                   describeBlocks={describeBlocks}
@@ -127,7 +123,7 @@ const ReactTestCase = () => {
                   statements={statements}
                   handleChangeDescribeText={handleChangeDescribeText}
                   handleChangeItStatementText={handleChangeItStatementText}
-                  type="react"
+                  type='react'
                 />
                 {provided.placeholder}
               </div>

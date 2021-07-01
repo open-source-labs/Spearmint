@@ -15,7 +15,8 @@ import {
 } from '../../context/actions/globalActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
-import TestFile from '../pages/TestFile';
+import UploadTest from '../UploadTest/UploadTest';
+import GetTests from '../GetTests/GetTests';
 
 const AccTestMenu = () => {
   // link to accessibility testing docs url
@@ -24,7 +25,7 @@ const AccTestMenu = () => {
   // initialize hooks
   const { title, isModalOpen, openModal, openScriptModal, closeModal, } = useToggleModal('acc');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
-  const [{ projectFilePath, file, exportBool, isTestModalOpen, }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('acc', projectFilePath);
 
   // setValidCode to true on load.
@@ -54,8 +55,8 @@ const AccTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
-  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(accTestCase)));
-
+  if (!file && exportBool) {dispatchToGlobal(updateFile(generateTest(accTestCase)))};
+ 
   return (
     <div id='test'>
       <div id={styles.testMenu}>
@@ -68,6 +69,8 @@ const AccTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
+          <UploadTest testType="acc" />
+          <GetTests testType="acc" />
           <Modal
             title={title}
             isModalOpen={isModalOpen}

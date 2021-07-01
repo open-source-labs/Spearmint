@@ -1,7 +1,11 @@
 import React, { useContext, useState } from 'react';
 import styles from '../AutoComplete/AutoCompleteMockData.module.scss';
 import AutoSuggest from 'react-autosuggest';
-import { updateAction, updateAssertion, updateProp } from '../../context/actions/reactTestCaseActions';
+import {
+  updateAction,
+  updateAssertion,
+  updateProp,
+} from '../../context/actions/reactTestCaseActions';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 
 const AutoCompleteMockData = ({
@@ -12,6 +16,7 @@ const AutoCompleteMockData = ({
   renderId,
   propId,
   propKey,
+  propValue,
 }) => {
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
@@ -34,27 +39,27 @@ const AutoCompleteMockData = ({
     }
   };
 
-  mockData.forEach(mockDatum => {
-    let name = mockDatum.name.charAt(0).toUpperCase() + mockDatum.name.slice(1)
-    mockDatum.fieldKeys.forEach(key => {
+  mockData.forEach((mockDatum) => {
+    let name = mockDatum.name.charAt(0).toUpperCase() + mockDatum.name.slice(1);
+    mockDatum.fieldKeys.forEach((key) => {
       mockOptionsList.push({ value: `mock${name}.${key.fieldKey}` });
     });
     mockOptionsList.push({ value: `[mock${name}]` });
     mockOptionsList.push({ value: `{mock${name}}` });
   });
 
-  const getSuggestions = mockDataValue => {
-    const inputValue = mockDataValue.trim().toLowerCase();
-    const inputLength = inputValue.length;
-    return inputLength === 0 ? [] : mockOptionsList.filter(mockOption => mockOption.value);
+  const getSuggestions = (mockDataValue) => {
+    // const inputValue = mockDataValue.trim().toLowerCase();
+    const inputLength = 1;
+    return inputLength === 0 ? [] : mockOptionsList.filter((mockOption) => mockOption.value);
   };
 
   const shouldRenderSuggestions = () => {
     return true;
   };
 
-  const getSuggestionValue = suggestion => suggestion.value;
-  const renderSuggestion = suggestion => <div>{suggestion.value}</div>;
+  const getSuggestionValue = (suggestion) => suggestion.value;
+  const renderSuggestion = (suggestion) => <div>{suggestion.value}</div>;
 
   const onSuggestionsFetchRequested = ({ value }) => {
     setMockDataSuggestions(getSuggestions(value));
@@ -65,7 +70,7 @@ const AutoCompleteMockData = ({
 
   const inputProps = {
     placeholder: 'Enter or select a value.',
-    value: mockDataValue,
+    value: propValue,
     onChange: handleChangeValue,
   };
 

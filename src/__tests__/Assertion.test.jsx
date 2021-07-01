@@ -1,10 +1,9 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { ReactTestCaseContext } from '../context/reducers/reactTestCaseReducer';
 import { MockDataContext } from '../context/reducers/mockDataReducer';
 import Assertion from '../components/ReactTestComponent/Assertion/Assertion';
-import userEvent from '@testing-library/user-event';
 
 const dispatchToReactTextCase = jest.fn();
 const dispatchToMockData = jest.fn();
@@ -47,8 +46,7 @@ describe('Assertion ', () => {
     expect(getByText('Assertion')).toBeInTheDocument;
 
     expect(getAllByRole('textbox')).toBeInTheDocument;
-    // expect()
-    // expect(screen.getAllByRole('Query', { name: 'Query' })).toHaveValue('Hello,\nWorld!');
+  
 
     debug();
   });

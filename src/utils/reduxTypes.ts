@@ -22,6 +22,7 @@ export const actionTypes = {
   CREATE_NEW_REDUX_TEST: 'CREATE_NEW_REDUX_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
+  REPLACE_TEST: 'REPLACE_TEST',
 };
 
 interface ToggleReduxAction {
@@ -128,16 +129,6 @@ interface CreateNewReduxTestAction {
   type: typeof actionTypes.CREATE_NEW_REDUX_TEST;
   payload?: null;
 }
-
-// interface OpenModalAction {
-//   type: typeof actionTypes.OPEN_INFO_MODAL;
-//   payload?: null;
-// }
-
-// interface CloseModalAction {
-//   type: typeof actionTypes.CLOSE_INFO_MODAL;
-//   payload?: null;
-// }
 
 // -------------Reducer Types--------------
 
@@ -314,4 +305,4 @@ export type ReduxActionTypes =
   | UpdateTypesFilePathAction
   | UpdateReducerFilePathAction
   | UpdateMiddlewaresFilePathAction
-  | CreateNewReduxTestAction;
+  | CreateNewReduxTestAction

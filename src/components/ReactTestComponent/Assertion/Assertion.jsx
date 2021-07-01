@@ -16,7 +16,6 @@ import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseRed
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
-// const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
   const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
@@ -111,12 +110,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
           <label htmlFor='queryValue' className={styles.queryLabel}>
             Query
           </label>
-          <AutoCompleteMockData
+          {/* <AutoCompleteMockData
             statement={statement}
             dispatchToTestCase={dispatchToReactTestCase}
             statementType='assertion'
-            // id={styles2.autoCompleteMockData}
-          />
+          /> */}
         </div>
       </div>
       <div>

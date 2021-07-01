@@ -36,7 +36,6 @@
     left: 0;
     width: 100%;
     height: 65px;
-    // background-color: rgba(128, 128, 128, 0.20);
     background-color: #02c3c33f;
     border-bottom: 2px solid gray;
     opacity: 100%;
@@ -52,7 +51,6 @@
 
   .describeInput {
     border: none;
-    // border-bottom: 1px solid $mint;
     background-color: rgba(0, 0, 0, 0);
     margin-top: 0.3rem;
     font-size: 0.9rem;
@@ -80,3 +78,5 @@
     }
   }
 }
+
+/*Animation for Describe block*/
