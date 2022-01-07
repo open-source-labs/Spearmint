@@ -1,0 +1,58 @@
+.search-container {
+  position: relative;
+}
+
+ul.options li:hover {
+  font-weight: bold;
+  color: #00b4cc;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+ul.options li.option-active {
+  background: whitesmoke;
+  color: #00b4cc;
+}
+
+.options {
+  background-color: white;
+  overflow: auto;
+  position: absolute;
+  z-index: 1;
+  width: -webkit-fill-available;
+}
+
+.react-test-options {
+  background-color: white;
+  overflow: auto;
+  position: absolute;
+  z-index: 4;
+  width: 137px;
+}
+ul.react-test-options li:hover {
+  font-weight: bold;
+  color: #00b4cc;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+ul.react-test-options li.option-active {
+  background: whitesmoke;
+  color: #00b4cc;
+}
+
+.flex-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.flex-item {
+  width: 200px;
+  margin-right: 7%;
+  input {
+    margin-top: 6px;
+    width: 100%;
+  }
+  position: relative;
+}

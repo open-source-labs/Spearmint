@@ -1,0 +1,67 @@
+@import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
+
+#browserView {
+  display: flex;
+  justify-content: center;
+  height: 75vh;
+  width: auto;
+}
+
+#browserAddress {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-items: center;
+  border-radius: 10px;
+  margin: 5px;
+  width: 97%;
+  text-indent: 10px;
+}
+
+#browswerComponentTopLevelDiv{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+#accessLensContainer{
+  display: flex;
+  flex-direction: column;
+  height: 115px;
+  min-width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+#accessLensCheckBoxes{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  width:auto;
+  background-color: $mint2;
+  border: $mint2;
+  border-width: .05em;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-style: solid;
+}
+
+#accessLensLabel {
+  display: flex;
+  justify-content: center;
+  background-color: $mint;
+  color: white;
+  font-size: 18px;
+  font-family: $oxygen;
+  height: auto;
+  width: 100%;
+  border: $mint;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-style: solid;
+}
+

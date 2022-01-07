@@ -1,0 +1,15 @@
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../assets/stylesheets/colors.scss';
+
+#CatTagFilter {
+  font-weight: bold;
+  font-size: 0.75rem;
+  position: relative;
+  margin-left: 5px;
+  margin-top: 10px;
+  z-index: 3;
+
+  #accTestCatTypes:focus {
+    border: 2px solid darkblue;
+  }
+}
