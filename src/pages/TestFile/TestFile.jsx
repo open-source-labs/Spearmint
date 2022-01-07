@@ -2,6 +2,7 @@
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
 import styles from '../../components/Modals/Modal.module.scss';
+// A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
 
 // may be able to delete toggleReact, etc. from their respective action files
@@ -48,6 +49,13 @@ import {
 } from '../../context/reducers/accTestCaseReducer';
 import AccTestCase from '../../components/TestCase/AccTestCase';
 
+import {
+  SecTestCaseContext,
+  secTestCaseState,
+  secTestCaseReducer,
+} from '../../context/reducers/secTestCaseReducer';
+import SecTestCase from '../../components/TestCase/SecTestCase';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
 
@@ -72,7 +80,14 @@ const TestFile = () => {
     puppeteerTestCaseReducer,
     puppeteerTestCaseState
   );
-  const [accTestCase, dispatchToAccTestCase] = useReducer(accTestCaseReducer, accTestCaseState);
+  const [accTestCase, dispatchToAccTestCase] = useReducer(
+    accTestCaseReducer,
+    accTestCaseState
+  );
+  const [secTestCase, dispatchToSecTestCase] = useReducer(
+    secTestCaseReducer,
+    secTestCaseState
+  );
 
   const closeTestModal = () => {
     dispatchToGlobal(toggleModal());
@@ -133,6 +148,9 @@ const TestFile = () => {
             <button id={styles.save} onClick={() => handleToggle('redux')}>
               Redux
             </button>
+            <button id={styles.save} onClick={() => handleToggle('sec')}>
+              Security
+            </button>
             {/* <button id={styles.save} onClick={() => handleToggle('vue')}>
               Vue
             </button> */}
@@ -189,7 +207,14 @@ const TestFile = () => {
           </AccTestCaseContext.Provider>
         </section>
       )}
-      {/* {
+      {testCase === 'sec' && (
+        <section>
+          <SecTestCaseContext.Provider value={[secTestCase, dispatchToSecTestCase]}>
+            <SecTestCase />
+          </SecTestCaseContext.Provider>
+        </section>
+      )}
+       {/* {
         //incomplete functionality: this is wired to go to a react test for now
         testCase === 'vue' && (
           <section>

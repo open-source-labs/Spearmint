@@ -31,19 +31,22 @@ const OpenFolder = () => {
   );
 
   const handleOpenFolder = () => {
+    // opens finder (or equivalent), prompts user to select file directory
     const directory = ipcRenderer.sendSync('OpenFolderButton.dialog');
 
     if (directory && directory[0]) {
       let directoryPath = directory[0];
       // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
+      // update state.projectFilePath to 'users/user/project....'
       dispatchToGlobal(setProjectFilePath(directoryPath));
+      // update state.fileTree to be array of files + folders as objects 
       dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
+      // update state.isProjectLoaded to become "load"
       dispatchToGlobal(loadProject('load'));
       dispatchToGlobal(setTestCase(''));
       if (!isTestModalOpen) dispatchToGlobal(toggleModal());
       if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
-
       // Re-direct terminal directory to user selected directory
       ipcRenderer.send('terminal.toTerm', `cd "${directoryPath}"${execute}`);
     }
@@ -85,6 +88,7 @@ const OpenFolder = () => {
   };
 
   return (
+    // <h1> hello world </h1>
     <span>
       {!isProjectLoaded ? (
         <button id={styles.openBtn} onClick={handleOpenFolder}>

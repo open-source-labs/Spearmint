@@ -15,8 +15,8 @@ import {
 } from '../../context/actions/globalActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
-import UploadTest from '../UploadTest/UploadTest';
-import GetTests from '../GetTests/GetTests';
+// import UploadTest from '../UploadTest/UploadTest';
+// import GetTests from '../GetTests/GetTests';
 
 const AccTestMenu = () => {
   // link to accessibility testing docs url
@@ -69,8 +69,8 @@ const AccTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <UploadTest testType="acc" />
-          <GetTests testType="acc" />
+          {/* <UploadTest testType="acc" />
+          <GetTests testType="acc" /> */}
           <Modal
             title={title}
             isModalOpen={isModalOpen}

@@ -36,7 +36,7 @@ const DescribeRenderer = ({
 
   return describeBlocks.allIds.map((id: string, i: number) => (
     <Draggable
-      key={id}
+      key={`describeBlock-${id}`}
       draggableId={id}
       index={i}
       type="describe"
@@ -58,6 +58,7 @@ const DescribeRenderer = ({
               textAction={updateDescribeText}
               describeId={id}
               standardTag={describeBlocks.byId[id].standardTag}
+              key={`StandardTagFilter-${id}-${i}`}
             />
 
             <i
@@ -74,6 +75,7 @@ const DescribeRenderer = ({
             <Droppable
               droppableId={"droppableAccIt" + id}
               type={id}
+              key={`droppable-${id}-${i}`}
             >
               {(innerProvided) => (
                 <div

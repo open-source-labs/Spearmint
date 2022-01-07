@@ -3,7 +3,7 @@
 Spearmint helps developers easily create functional React/Redux/Endpoint/Paint Timing tests without writing any code. It dynamically converts user inputs into executable Jest test code by using DOM query selectors provided by @testing-library.
 
 # Installation 
-Please download spearmint from our [website](https://www.spearmintjs.com/). Available for Mac OS, Windows and Linux.
+Please download spearmint from our [website](https://www.spearmintjs.com/). Available for Mac OS and Windows.
 
 
 # How to use in development mode
@@ -14,22 +14,22 @@ Please download spearmint from our [website](https://www.spearmintjs.com/). Avai
 
 First install
 1. Fork and clone this repository.
-2. ```npm run install-once```
-3. ```npm run start```
+2. ```npm install```
+3. ```npm run watch```
+3. ```npm run start-dev```
 
 ***
 
 ### For Windows developers
-
-**Prerequisite**: Install Python and Microsoft C++ Build Tools.
-
-In an Administrator PowerShell run the following commands: <br />
-```choco install python visualcpp-build-tools -y``` <br />
-```npm config set msvs_version 2017```
         
+**Prerequisite**: Install Node.js globally 
+    
 1. Fork and clone this repository.
-2. ```npm run install-once```
-3. ```npm run start-windows```
+2. ```npm install```
+3. ```npm run watch```
+3. ```npm run start-dev```
+
+Note: Windows users may also have to run Spearmint in admin mode
 
 
 <br>
@@ -38,11 +38,11 @@ In an Administrator PowerShell run the following commands: <br />
 # How it works
 
 
-1.  On the initial screen, a user is prompt to login or sign up (via OAuth or standard sign-up/login). Once logged in choose your file and load your application to start creating tests.
+1.  On the initial screen, a user is prompt to login, sign up (via OAuth or standard sign-up/login), or login as a guest. Once logged in choose your file and load your application to start creating tests.
 
 ![](/public/mainPage.png)
 
-2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, and endpoint test statements. Spearmint can save test templates for future use for logged in user. 
+2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, and endpoint test statements. Spearmint can save test templates for future use for logged in user (not guests). 
 
 ![](/public/generateTest.png)
 
@@ -52,61 +52,108 @@ In an Administrator PowerShell run the following commands: <br />
 4.  Lastly click **Run Test** button and follow the guide and click what type of test you would like to perform.
 ![](/public/runTest.png) 
 
-5.  Accessibility lens have been added in the app to give developers with different mismatches various options to interact with the app. 
+5.  An accessibility lens has been added in the app to give developers with different mismatches various options to interact with the app. 
+
 ![](/public/AccLens_Demo.gif)
 
-# New features with version 0.7.0
+6. The latest version of Spearmint has a specific focus on security. The [Snyk](https://snyk.io/) library has been utilized to ensure your application is up to snuff for various security standards and protect your application from malicious attacks. 
+Users can now test their application for vulnerabilities including: SQL Injection, Cross-site Scripting (XSS), Hardcoded Secrets, and much more! 
 
--Sign-up and Login
+![](/public/demos/snyk-test-app.gif)
 
--OAuth Login available through GitHub
+# New features with version 0.8.0
 
--Save test states
+-Security testing via Snyk 
 
--**NEW** Accessibility lenses for Low-vision and light sensitivity
+-Guest Login
+
+-Cross-platform functionality (Mac OS w/ M1 chip, Mac OS w/ Intel chip, Windows)
+
+-60% reduced package size 
+
+-Accelerated startup time
+
+-Ample bug fixes
+
+<br>
+
+# Demos
+
+### Guest login
+![](/public/guest-login.gif)
+
+### Signup + login 
+![](/public/signup-login.gif)
+
+### Snyk auth + dependency test
+![](/public/snyk-auth-testdep.gif)
+
+### Snyk fix dependencies
+![](/public/snyk-fixdep.gif)
+
+### Generate endpoint test
+![](/public/snyk-auth-testdep.gif)
+
+### Run a specific test 
+![](/public/snyk-auth-testdep.gif)
 
 <br>
 
 
-# Demo
+# Snyk Setup  
 
-![](/public/inapp-test-demo-run-test.gif)
+
+### Authenticate Snyk 
+![](/public/snyk-auth-testdep.gif)
+
+### Enable Snyk code
+![](/public/snyk-enable.gif)
+
+# The Spearmint Team
+<hr>
+
+> Alan [@alanrichardson7](https://github.com/alanrichardson7) <br />
+> Alex [@apark0720](https://github.com/apark0720) <br />
+> Alfred  [@astaiglesia](https://github.com/astaiglesia) <br />
+> Annie  [@annieshinn](https://github.com/annieshinn) <br />
+> Ben [@bkwak](https://github.com/bkwak) <br />
+> Charlie [@charlie-maloney](https://github.com/charlie-maloney) <br /> 
+> Chloe [@HeyItsChloe](https://github.com/HeyItsChloe) <br />
+> Cornelius [@corneeltron](https://github.com/corneeltron)  <br />
+> Dave [@davefranz](https://github.com/davefranz) <br />
+> Dieu [@dieunity](https://github.com/dieunity) <br />
+> Eric [@ericgpark](https://github.com/ericgpark) <br />
+> Evan [@Berghoer](https://github.com/Berghoer) <br /> 
+> Gabriel [@bielchristo](https://github.com/bielchristo) <br />
+> Joe [@josephnagy](https://github.com/Josephnagy) <br />
+> Johnny [@johnny-lim](https://github.com/johnny-lim) <br />
+> Julie [@julicious100](https://github.com/julicious100) <br />
+> Justin [@JIB3377](https://github.com/JIB3377) <br />
+> Karen [@karenpinilla](https://github.com/karenpinilla) <br /> 
+> Linda [@lcwish](https://github.com/lcwish) <br />
+> Luis [@Luis-KM-Lo](https://github.com/Luis-KM-Lo) <br />
+> Max B[@mbromet](https://github.com/mbromet) <br />
+> Max W [@MaxWeisen](https://github.com/MaxWeisen) <br />
+> Mike [@mbcoker](https://github.com/mbcoker) <br />
+> Mo [@mhmaidi789](https://github.com/mhmaidi789) <br /> 
+> Natlyn [@natlynp](https://github.com/natlynp) <br /> 
+> Nick [@nicolaspita](https://github.com/nicolaspita) <br />
+> Owen [@oweneldridge](https://github.com/oweneldridge) <br />
+> Rachel [@rachethecreator](https://github.com/rachethecreator) <br />
+> Sean Y [@seanyyoo](https://github.com/seanyyoo)<br />
+> Sean H [@sean-haverstock](https://github.com/Sean-Haverstock) <br /> 
+> Sharon [@sharon-zhu](https://github.com/sharon-zhu) <br /> 
+> Sieun [@sieunjang](https://github.com/sieunjang) <br />
+> Terence [@TERR-inss](https://github.com/TERR-inss) <br />
+> Tolan [@taoantaoan](https://github.com/taoantaoan) <br />
+> Tristen [@twastell](https://github.com/twastell) <br />
+> Tyler [@tytyjameson](https://github.com/tytyjameson)
+<hr>
 
 ***
 
-### The Spearmint Team
-<hr>
-
-> Alex [@apark0720](https://github.com/apark0720) &nbsp;&middot;&nbsp;
-> Alfred  [@astaiglesia](https://github.com/astaiglesia) &nbsp;&middot;&nbsp;
-> Annie  [@annieshinn](https://github.com/annieshinn) &nbsp;&middot;&nbsp;
-> Ben [@bkwak](https://github.com/bkwak) &nbsp;&middot;&nbsp;
-> Charlie [@charlie-maloney](https://github.com/charlie-maloney) &nbsp;&middot;&nbsp; <br />
-> Chloe [@HeyItsChloe](https://github.com/HeyItsChloe) &nbsp;&middot;&nbsp;
-> Cornelius [@corneeltron](https://github.com/corneeltron)  &nbsp;&middot;&nbsp;
-> Dave [@davefranz](https://github.com/davefranz) &nbsp;&middot;&nbsp;
-> Dieu [@dieunity](https://github.com/dieunity) &nbsp;&middot;&nbsp;
-> Eric [@ericgpark](https://github.com/ericgpark) &nbsp;&middot;&nbsp;
-> Evan [@Berghoer](https://github.com/Berghoer) &nbsp;&middot;&nbsp; <br />
-> Gabriel [@bielchristo](https://github.com/bielchristo)
-> Johnny [@johnny-lim](https://github.com/johnny-lim) &nbsp;&middot;&nbsp;
-> Julie [@julicious100](https://github.com/julicious100) &nbsp;&middot;&nbsp;
-> Justin [@JIB3377](https://github.com/JIB3377) &nbsp;&middot;&nbsp;
-> Karen [@karenpinilla](https://github.com/karenpinilla) &nbsp;&middot;&nbsp; <br />
-> Linda [@lcwish](https://github.com/lcwish) &nbsp;&middot;&nbsp;
-> Luis [@Luis-KM-Lo](https://github.com/Luis-KM-Lo) &nbsp;&middot;&nbsp;
-> Max B[@mbromet](https://github.com/mbromet) &nbsp;&middot;&nbsp;
-> Max W [@MaxWeisen](https://github.com/MaxWeisen) &nbsp;&middot;&nbsp;
-> Mike [@mbcoker](https://github.com/mbcoker) &nbsp;&middot;&nbsp;
-> Mo [@mhmaidi789](https://github.com/mhmaidi789) &nbsp;&middot;&nbsp; <br />
-> Natlyn [@natlynp](https://github.com/natlynp) &nbsp;&middot;&nbsp; 
-> Nick [@nicolaspita](https://github.com/nicolaspita) &nbsp;&middot;&nbsp;
-> Rachel [@rachethecreator](https://github.com/rachethecreator) &nbsp;&middot;&nbsp;
-> Sean Y [@seanyyoo](https://github.com/seanyyoo)&nbsp;&middot;&nbsp;
-> Sean H [@sean-haverstock](https://github.com/Sean-Haverstock) &nbsp;&middot;&nbsp; <br />
-> Sharon [@sharon-zhu](https://github.com/sharon-zhu) &nbsp;&middot;&nbsp; 
-> Sieun [@sieunjang](https://github.com/sieunjang) &nbsp;&middot;&nbsp;
-> Tolan [@taoantaoan](https://github.com/taoantaoan) &nbsp;&middot;&nbsp;
-> Tristen [@twastell](https://github.com/twastell) &nbsp;&middot;&nbsp;
-> Tyler [@tytyjameson](https://github.com/tytyjameson)
-<hr>
+# If You Want To Contribute: 
+The following is a list of features + improvements for future open-source developers that the Spearmint team has either started or would like to see implemented. Or, if you have additional new ideas, feel free to implement those as well! 
+- Vue test generation 
+- Github OAuth login (was available in previous versions, but the components used became deprecated)
+- Additional security testing functionality 

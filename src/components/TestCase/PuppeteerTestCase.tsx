@@ -52,7 +52,7 @@ const PuppeteerTestCase = () => {
       <div id={styles.testMockSection}></div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided) => (
+          {(provided: any) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <PuppeteerTestStatements />
               {provided.placeholder}

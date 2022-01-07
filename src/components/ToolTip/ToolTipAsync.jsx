@@ -17,7 +17,9 @@ const ToolTipAsync = ({ toolTipType }) => {
 
   };
 
-  return <span id={styles.tooltip}>{TOOLTIP_MAP_ASYNC[toolTipType]}</span>;
+  // changed id from styles.tooltip to the string: "styles.tooltip" 
+  // As far as I can tell this isn't necessary
+  return <span id={"styles.tooltip"}>{TOOLTIP_MAP_ASYNC[toolTipType]}</span>;
   // return <span id={styles.tooltip}>{TOOLTIP_MAP_ASYNC}</span>;
 };
 

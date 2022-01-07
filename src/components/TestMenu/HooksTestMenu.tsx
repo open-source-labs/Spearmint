@@ -17,8 +17,8 @@ import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
-import UploadTest from '../UploadTest/UploadTest';
-import GetTests from '../GetTests/GetTests';
+// import UploadTest from '../UploadTest/UploadTest';
+// import GetTests from '../GetTests/GetTests';
 
 const HooksTestMenu = () => {
   // Hooks testing docs url
@@ -81,8 +81,8 @@ const HooksTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <UploadTest testType="hooks" />
-          <GetTests testType="hooks" />
+          {/* <UploadTest testType="hooks" />
+          <GetTests testType="hooks" /> */}
           <Modal
             // passing methods down as props to be used when Modal is opened
             title={title}

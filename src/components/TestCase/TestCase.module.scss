@@ -1,7 +1,7 @@
 @import './../../assets/stylesheets/fonts.scss';
 @import './../../assets/stylesheets/colors.scss';
 @import '../../pages/LeftPanel/LeftPanel.module.scss';
-@import '../EndpointTestComponent/Endpoint.module.scss';
+// @import '../EndpointTestComponent/Endpoint.module.scss';
 
 .displays {
   display: block;
@@ -153,4 +153,21 @@ div {
 #accTestDiv {
   display: flex;
   justify-content: flex-start;
+}
+
+#secTestBtn {
+  
+  min-height: 80px;
+  padding: 16px;
+
+  &:hover {
+      font-size: 0.9rem;
+  }
+}
+
+#secInfo {
+  font-size: 14px !important;
+  font-family: $oxygen;
+  text-align: justify;
+  line-height: 1.3;
 }

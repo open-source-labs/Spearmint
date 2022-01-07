@@ -2,11 +2,11 @@ import React, { useContext, useState } from 'react';
 import styles from './RightPanel.module.scss';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import EditorView from '../../components/EditorView/EditorView';
-import BrowserView from '../../components/BrowserView/BrowserView';
-import { GlobalContext } from '../../context/reducers/globalReducer';
-import { closeRightPanel, setTabIndex } from '../../context/actions/globalActions';
-import TerminalView from '../../components/Terminal/TerminalView';
+import EditorView from './../../components/EditorView/EditorView';
+import BrowserView from './../../components/BrowserView/BrowserView';
+import { GlobalContext } from './../../context/reducers/globalReducer';
+import { closeRightPanel, setTabIndex } from './../../context/actions/globalActions';
+import TerminalView from './../../components/Terminal/TerminalView';
 
 const RightPanel = () => {
   const [{ rightPanelDisplay, url, tabIndex }, dispatchToGlobal] = useContext(GlobalContext);

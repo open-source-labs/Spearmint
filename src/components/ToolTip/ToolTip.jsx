@@ -43,7 +43,9 @@ const ToolTip = ({ toolTipType }) => {
       "The First Contentful Paint (FCP) metric measures the time from when the page starts loading to when any part of the page's content is rendered on the screen. Provide a target value in ms.",
   };
 
-  return <span id={styles.tooltip}>{TOOLTIP_MAP[toolTipType]}</span>;
+  // changed id from styles.tooltip to the string: "styles.tooltip" 
+  // As far as I can tell this isn't necessary
+  return <span id={"styles.tooltip"}>{TOOLTIP_MAP[toolTipType]}</span>;
 };
 
 export default ToolTip;

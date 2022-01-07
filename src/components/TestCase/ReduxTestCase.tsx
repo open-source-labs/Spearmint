@@ -1,4 +1,6 @@
+//not using useRef or useEffect which are both react hooks...
 import React, { useContext, useRef, useEffect } from 'react';
+// if react-beautiful-dnd is declared in declaration.d.ts then eslint becomes unhappy about DropResult
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
@@ -68,7 +70,7 @@ const ReduxTestCase = () => {
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided) => (
+          {(provided: any) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <ReduxTestStatements />
               {provided.placeholder}

@@ -1,3 +1,4 @@
+@use 'sass:math' as math;
 @import '../../assets/stylesheets/fonts.scss';
 @import '../../assets/stylesheets/colors.scss';
 
@@ -113,10 +114,10 @@
     height: 0;
     // Draw a triangle.
     border-top: ($tooltip-arrow-length - $tooltip-border-width) solid $mint;
-    border-left: ($tooltip-arrow-base / 2 - $tooltip-border-width) solid transparent;
-    border-right: ($tooltip-arrow-base / 2 - $tooltip-border-width) solid transparent;
+    border-left: (math.div($tooltip-arrow-base, 2)- $tooltip-border-width) solid transparent;
+    border-right: (math.div($tooltip-arrow-base, 2) - $tooltip-border-width) solid transparent;
     // Center the triangle.
-    margin-left: ($tooltip-border-width - $tooltip-arrow-base / 2);
+    margin-left: ($tooltip-border-width - math.div($tooltip-arrow-base, 2));
   }
 }
 

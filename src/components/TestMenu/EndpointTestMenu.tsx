@@ -22,8 +22,8 @@ import {
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
-import UploadTest from '../UploadTest/UploadTest';
-import GetTests from '../GetTests/GetTests';
+// import UploadTest from '../UploadTest/UploadTest';
+// import GetTests from '../GetTests/GetTests';
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
@@ -50,6 +50,8 @@ const EndpointTestMenu = () => {
   };
 
   const fileHandle = () => {
+    console.log('endpointTestCase'); 
+    console.log(endpointTestCase)
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
@@ -89,8 +91,8 @@ const EndpointTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <UploadTest testType="endpoint test" />
-          <GetTests testType="endpoint test" />
+          {/* <UploadTest testType="endpoint test" />
+          <GetTests testType="endpoint test" /> */}
           <Modal
             // passing methods down as props to be used when TestModal is opened
             title={title}

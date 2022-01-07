@@ -4,14 +4,18 @@ const testStateController = {};
 
 // Middleware to upload a passed test into DB
 testStateController.upload = (req, res, next) => {
+  const { testName, testType, testState } = req.body;
+  const userId = req.cookies.ssid;
+
   TestState.create(
     {
-      userId: req.cookies.ssid,
-      testName: req.body.testName,
-      testType: req.body.testType,
-      testState: req.body.testState,
+      userId,
+      testName,
+      testType,
+      testState
     },
     (err) => {
+      console.log(err);
       if (err) return next('Upload Failed');
       return next();
     }

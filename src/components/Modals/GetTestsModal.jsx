@@ -11,6 +11,8 @@ import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReduce
 import { reactReplaceTest } from '../../context/actions/reactTestCaseActions';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { reduxReplaceTest } from '../../context/actions/reduxTestCaseActions';
+import { SecTestCaseContext } from '../../context/reducers/secTestCaseReducer';
+import { secReplaceTest } from '../../context/actions/secTestCaseActions';
 
 import ReactModal from 'react-modal';
 import List from '@material-ui/core/List';
@@ -26,6 +28,7 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
   const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
   const [, dispatchToReactData] = useContext(ReactTestCaseContext);
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
+  const [, dispatchToSecTestCase] = useContext(SecTestCaseContext)
 
   useEffect(() => {
     let isMounted = true;
@@ -69,6 +72,8 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
       case 'puppeteer':
         dispatchToPuppeteerTestCase(puppeteerReplaceTest(tests[i].testState));
         break;
+      case 'sec':
+        dispatchToSecTestCase(secReplaceTest(tests[i].testState))
       default:
         console.log('Incorrect input');
         break;

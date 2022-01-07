@@ -1,5 +1,7 @@
 /* eslint-disable */
 const { ipcRenderer } = require('electron');
+// used to format testFileCode which is a string 
+// --> makes sure code is readable 
 const beautify = require('js-beautify');
 
 function useGenerateTest(test, projectFilePath) {
@@ -19,6 +21,7 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // React Component Import Statement (Render Card)
+
     const addComponentImportStatement = () => {
       const componentPath = reactTestCase.statements.componentPath;
       let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
@@ -1144,7 +1147,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-      case 'endpoint test':
+      // case was "endpoint test" but that is not the case being dispatched by the frontend
+      case 'endpoint':
         var endpointTestCase = testState;
         return (
           addEndpointImportStatements(),

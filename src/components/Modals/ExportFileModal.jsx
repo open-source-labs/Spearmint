@@ -48,9 +48,9 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     dispatchToGlobal(updateFile(''));
   };
 
-  /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
+  // /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
 
-  const exportTestFile = async () => {
+  const exportTestFile = () => {
     const folderPath = `${projectFilePath}/__tests__`;
     const folderExists = ipcRenderer.sendSync('ExportFileModal.exists', folderPath);
     if (!folderExists) {

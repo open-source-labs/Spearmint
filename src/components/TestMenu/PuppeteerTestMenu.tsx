@@ -75,8 +75,8 @@ const PuppeteerTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <UploadTest testType="puppeteer" />
-          <GetTests testType="puppeteer" />
+          {/* <UploadTest testType="puppeteer" />
+          <GetTests testType="puppeteer" /> */}
           <Modal
             // passing methods down as props to be used when Modal is opened
             title={title}

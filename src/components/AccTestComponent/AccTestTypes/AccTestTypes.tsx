@@ -8,7 +8,7 @@ const AccTestTypes = ({ dispatch, action, currTypes }) => {
 
   return (
     <div id={styles.AccTestTypesComponent}>
-      <label id={styles.AccTestTypesLabel} for='accTestTypes'>
+      <label id={styles.AccTestTypesLabel} htmlFor='accTestTypes'>
         Choose Type of Accessibility Test
       </label>
       <select value={currTypes} id='accTestTypes' className={styles.AccTestTypesInput} onChange={handleChange}>

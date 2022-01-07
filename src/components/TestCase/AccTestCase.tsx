@@ -70,29 +70,31 @@ const AccTestCase = () => {
           ) : (
             <div>
               <label htmlFor="fileImport">Import File From</label>
-                <div id={styles.labelInput} style={{ width: '80%' }}>
-                  <SearchInput
-                    options={Object.keys(filePathMap)}
-                    dispatch={dispatchToAccTestCase}
-                    action={updateFilePath}
-                    filePathMap={filePathMap}
-                  />
-                </div>
+              <div id={styles.labelInput} style={{ width: '80%' }}>
+                <SearchInput
+                  options={Object.keys(filePathMap)}
+                  dispatch={dispatchToAccTestCase}
+                  action={updateFilePath}
+                  filePathMap={filePathMap}
+                />
               </div>
-            )}
+            </div>
+          )}
         </div>
 
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={onDragEnd} key={`acc-dnd-context`}>
           <Droppable
             droppableId="droppableAccDescribe"
+            key="acc-droppable-context"
             type="describe"
           >
             {(provided) => (
               <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              >
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              > 
                 <DecribeRenderer
+                  key="describeRendererAcc"
                   dispatcher={dispatchToAccTestCase}
                   describeBlocks={describeBlocks}
                   itStatements={itStatements}

@@ -47,7 +47,7 @@ const HooksTestCase = () => {
       </div>
       <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
-          Describe Block
+          +Describe Block
           <br />
           <br />
           <input

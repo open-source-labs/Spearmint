@@ -235,7 +235,7 @@ const Modal = ({
           className={cn('far fa-window-close', styles.describeClose)}
         />
       </div>
-      {/* Accordian View */}
+      {/* Accordion View */}
       <div>
         {/* Configuration Guide */}
         <EndPointGuide />

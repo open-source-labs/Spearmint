@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
+import {setGuest} from '../../context/actions/globalActions'
+import OpenFolder from '../../components/OpenFolder/OpenFolderButton.jsx';
 import { Button, TextField } from '@material-ui/core';
-import LoginGithub from 'react-login-github';
 
 const ProjectLoader = () => {
   const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
@@ -35,10 +35,24 @@ const ProjectLoader = () => {
     setPassword(e.target.value);
   };
 
+  // guest login
+  const handleGuestLogin = () => {
+    // dispatch to global context 
+    dispatchToGlobal(setGuest(true));
+    // set logged in to true 
+    setIsLoggedIn(true);
+    // set current username to guest 
+    setUsername('guest'); 
+  }
+
   const handleLogin = (e) => {
     e.preventDefault();
-    logout();
-    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/login', {
+    if (username.length < 4 || password.length < 4) {
+      setMessage('invalid username / password combo');
+      return;
+    }
+    handleLogout();
+    fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +75,11 @@ const ProjectLoader = () => {
 
   const handleSignup = (e) => {
     e.preventDefault();
-    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/signup', {
+    if (username.length < 4 || password.length < 4) {
+      setMessage('invalid username / password combo');
+      return;
+    }
+    fetch('http://localhost:3001/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -78,23 +96,10 @@ const ProjectLoader = () => {
       .catch((err) => console.log(err));
   };
 
-  const logout = () => {
-    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/logout')
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    fetch('http://localhost:3001/logout')
       .then((res) => res.json())
-      .catch((err) => console.log(err));
-  };
-
-  const handleGithubLogin = (response) => {
-    logout();
-    fetch('http://spearmint.us-west-1.elasticbeanstalk.com/github/' + response.code)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.ssid) {
-          setIsLoggedIn(true);
-        } else if (typeof data === 'string') {
-          setMessage(data);
-        } else setMessage('Login Failed: Unknown');
-      })
       .catch((err) => console.log(err));
   };
 
@@ -126,23 +131,17 @@ const ProjectLoader = () => {
         <span>{message}</span>
         <br />
         <br />
-        <Button variant='primary' type='submit' id={styles.loginBtn}>
+        <Button variant='contained' type='submit' id={styles.loginBtn}>
           Log In
         </Button>
-        <Button variant='secondary' type='button' onClick={handleSignup} id={styles.loginBtn}>
+        <Button variant='outlined' type='button' onClick={handleSignup} id={styles.loginBtn}>
           Sign up
         </Button>
         <br />
       </form>
-      <Button variant='primary' id={styles.gitButton}>
-        <LoginGithub
-          clientId='7dc8c4f030f9201bf917'
-          className={styles.gitLogin}
-          onSuccess={handleGithubLogin}
-          onFailure={onFailure}
-        />
-        <i class='fab fa-github'></i>
-      </Button>
+      <Button variant='text' id={styles.gitButton} onClick={handleGuestLogin}>Login as Guest</Button>
+      <br/>
+      <Button variant='text' id={styles.gitButton}>Login with GitHub</Button>
     </div>
   );
 
@@ -171,12 +170,20 @@ const ProjectLoader = () => {
             renderLogin()
           ) : (
             <div className={styles.contentBox}>
-              <span className={styles.text}>Login Successful!</span>
+              <span className={styles.text}>Currently logged in as {username}!</span>
               <br />
               <br />
-              <span className={styles.text}>Select your application</span>
               <br />
-              <OpenFolder />
+              <span className={styles.text}>Select your application:</span>
+              <br />
+                <OpenFolder />
+                <br />
+                <br />
+                <br />
+                <Button variant='contained' type='button' onClick={handleLogout} id={styles.loginBtn}>
+                LOGOUT
+                </Button>
+                <br />
             </div>
           )}
         </div>

@@ -22,6 +22,8 @@ export const actionTypes = {
   SET_TAB_INDEX: 'SET_TAB_INDEX',
 
   UPLOAD_TEST: 'UPLOAD_TEST',
+
+  SET_GUEST: 'SET_GUEST'
 };
 
 export const setProjectUrl = (url) => ({
@@ -118,4 +120,9 @@ export const setTabIndex = (tabIndex) => ({
 export const uploadTest = (testState) => ({
   type: actionTypes.UPLOAD_TEST,
   testState,
+});
+
+export const setGuest = (guestState) => ({
+  type: actionTypes.SET_GUEST,
+  guestState,
 });

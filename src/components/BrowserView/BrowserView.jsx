@@ -7,7 +7,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
 import { InvertColors } from '@material-ui/icons';
 
-import { ScreenReader } from '@capacitor/screen-reader';
+// import { ScreenReader } from '@capacitor/screen-reader';
 
 const BrowserView = () => {
   const [{ url }, dispatchToGlobal] = useContext(GlobalContext);
@@ -32,7 +32,7 @@ const BrowserView = () => {
 
   const activateReader = () => { 
     // Ternary statement is backwards, as checkedBoxes.checkedReader updates after the case break
-    checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
+    // checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
   }
 
   // helper function to add the https or http

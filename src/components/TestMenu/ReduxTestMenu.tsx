@@ -87,8 +87,8 @@ const ReduxTestMenu = () => {
           <button id={styles.example} onClick={openDocs}>
             Need Help?
           </button>
-          <UploadTest testType='redux' />
-          <GetTests testType='redux' />
+          {/* <UploadTest testType='redux' />
+          <GetTests testType='redux' /> */}
           <Modal
             // passing methods down as props to be used when Modal is opened
             title={title}
