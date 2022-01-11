@@ -80,22 +80,22 @@ Users can now test their application for vulnerabilities including: SQL Injectio
 # Demos
 
 ### Guest login
-![](/public/guest-login.gif)
+![](/public/demos/guest-login.gif)
 
 ### Signup + login 
-![](/public/signup-login.gif)
+![](/public/demos/signup-login.gif)
 
 ### Snyk auth + dependency test
-![](/public/snyk-auth-testdep.gif)
+![](/public/demos/snyk-auth-testdep.gif)
 
 ### Snyk fix dependencies
-![](/public/snyk-fixdep.gif)
+![](/public/demos/snyk-fixdep.gif)
 
 ### Generate endpoint test
-![](/public/snyk-auth-testdep.gif)
+![](/public/demos/snyk-auth-testdep.gif)
 
 ### Run a specific test 
-![](/public/snyk-auth-testdep.gif)
+![](/public/demos/snyk-auth-testdep.gif)
 
 <br>
 
