@@ -313,8 +313,8 @@ function useGenerateTest(test, projectFilePath) {
 
     // Endpoint Import Statements
     const addEndpointImportStatements = () => {
-      let { serverFilePath, dbFilePath, addDB } = endpointTestCase;
-      createPathToEndFiles(serverFilePath, dbFilePath, addDB);
+      let { serverFilePath, serverFileName, dbFilePath, addDB } = endpointTestCase;
+      createPathToEndFiles(serverFilePath, serverFileName, dbFilePath, addDB);
       testFileCode += '\n';
     };
 
@@ -363,7 +363,7 @@ function useGenerateTest(test, projectFilePath) {
       puppeteerTestCase.puppeteerStatements.forEach((statement) => {
         switch (statement.type) {
           case 'paintTiming':
-            testFileCode = `import puppeteer from 'puppeteer';\n`;
+            testFileCode = `const puppeteer = require('puppeteer');\n`;
             addLCPfunction();
             return;
           default:
@@ -391,7 +391,7 @@ function useGenerateTest(test, projectFilePath) {
     const createPathToActions = (statement) => {
       let filePath = null;
       if (statement.filePath) {
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.filePath);
+        filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.filePath);
         filePath = filePath.replace(/\\/g, '/');
       }
       if (!testFileCode.includes(`import * as actions from from`) && filePath) {
@@ -403,13 +403,17 @@ function useGenerateTest(test, projectFilePath) {
     function createPathToReducers(statement) {
       let filePath = null;
       if (statement.reducersFilePath) {
-        let filePath = ipcRenderer.sendSync(
+        filePath = ipcRenderer.sendSync(
           'Universal.path',
           projectFilePath,
           statement.reducersFilePath
         );
+        console.log('filepath before replace', filePath)
         filePath = filePath.replace(/\\/g, '/');
       }
+
+      console.log('filepath after replace:', filePath)
+
       if (
         !testFileCode.includes(
           `import {${statement.reducerName}, ${statement.initialState}} from` && filePath
@@ -419,13 +423,14 @@ function useGenerateTest(test, projectFilePath) {
       }
     }
 
+
     // Types Filepath
     // Creates the import statment for actionTypes
     function createPathToTypes(statement) {
       let filePath = null;
       let bool = false;
       if (statement.typesFilePath) {
-        let filePath = ipcRenderer.sendSync(
+        filePath = ipcRenderer.sendSync(
           'Universal.path',
           projectFilePath,
           statement.typesFilePath
@@ -433,6 +438,7 @@ function useGenerateTest(test, projectFilePath) {
         filePath = filePath.replace(/\\/g, '/');
         bool = areActionTypesDeclaredInSameFileAsActionCreators(statement.typesFilePath);
       }
+
       if (bool) {
         if (!testFileCode.includes(`import { actionTypes } from `) && filePath) {
           testFileCode += `import { actionTypes } from '../${filePath}';`;
@@ -455,7 +461,7 @@ function useGenerateTest(test, projectFilePath) {
       let filePath = null;
       console.log(filePath);
       if (statement.middlewaresFilePath) {
-        let filePath = ipcRenderer.sendSync(
+        filePath = ipcRenderer.sendSync(
           'Universal.path',
           projectFilePath,
           statement.middlewaresFilePath
@@ -470,19 +476,11 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-      // let hooksArr = [];
-      // hooksTestCase.hooksStatements.forEach(({ hook }) => {
-      //   hooksArr.push(hook);
-      // });
-      // let hookImports = hooksArr.reduce((str, curr) => {
-      //   str += `${curr}, `;
-      //   return str;
-      // }, '');
-
-      // const { hooksStatements } = hooksTestCase;
-      // const hooksStatements = hooksTestCase.hooksStatements;
+      console.log('createPathtoHooks statement:', statement);
+  
 
       if (Array.isArray(hooksTestCase)) {
+        console.log('hooksTestCase:', hooksTestCase)
         const hookImports = hooksTestCase.reduce((str, { hook }) => {
           str += `${hook}, `;
           return str;
@@ -498,9 +496,14 @@ function useGenerateTest(test, projectFilePath) {
 
           testFileCode += `import { ${hookImports} } from '../${filePath}';`;
         }
+
+        
+
       } else if (typeof hooksTestCase === 'object') {
+        console.log('in hooksTestCase OBJECT:', hooksTestCase)
         const hookImports = hooksTestCase.hooksStatements.reduce((str, { hook }) => {
           str += `${hook}, `;
+
           return str;
         }, '');
 
@@ -532,7 +535,12 @@ function useGenerateTest(test, projectFilePath) {
     // };
 
     // Endpoint Filepath
-    const createPathToEndFiles = (serverFilePath, dbFilePath, addDB) => {
+    const createPathToEndFiles = (serverFilePath, serverFileName, dbFilePath, addDB) => {
+      console.log('serverFileName:', serverFileName);
+      console.log('serverFilePath:', serverFilePath)
+      console.log('dbFilePath:', dbFilePath)
+      console.log('addDB:', addDB)
+      console.log('projectFilePath', projectFilePath);
       if (serverFilePath) {
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
@@ -542,8 +550,13 @@ function useGenerateTest(test, projectFilePath) {
       const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
       if (dbFilePath) {
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, dbFilePath);
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
+        console.log('filePath before replace():', filePath);
         filePath = filePath.replace(/\\/g, '/');
+        console.log('filePath after replace', filePath)
+        filePath = filePath.replace(serverFileName, dbFilePath)
+        console.log('filePath after replace dbFilePath', filePath)
+      
 
         switch (addDB) {
           case 'PostgreSQL':

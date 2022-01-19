@@ -198,9 +198,10 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         addDB: action.db,
       };
     case actionTypes.UPDATE_DB_FILEPATH:
+      const { dbFilePath } = action;
       return {
         ...state,
-        dbFilePath: action.dbFilePath,
+        dbFilePath
       };
     case actionTypes.REPLACE_TEST: {
       const { testState } = action;
