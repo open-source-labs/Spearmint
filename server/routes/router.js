@@ -5,10 +5,14 @@ const userController = require('../controllers/userController');
 const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 const testStateController = require('../controllers/testStateController');
+const passport = require('passport');
 // const githubController = require('../controllers/githubController');
 
 // Initialize an express router
 const router = express.Router();
+
+
+
 
 // Set up route for post requests to /signup
 router.post(
@@ -76,5 +80,24 @@ router.get(
     res.status(200).json(res.locals.tests);
   }
 );
+
+router.get('/auth/github',
+  // first authenticate asks users if they will ALLOW or DENY us permission to request their github profile
+  passport.authenticate('github', { scope: [ 'profile' ] }));
+
+  // if user does allow, then they are automatically redirected to the callback endpoint
+router.get('/auth/github/callback', 
+passport.authenticate('github', { failureRedirect: '/login' }),
+
+// if this authentication is successful, THEN callback function is invoked
+  function(req, res) {
+    console.log('this is req.user', typeof req.user._id);
+    // Successful authentication, redirect home.
+    console.log("github authentication successful!")
+    res.locals.userId = req.user._id;
+  },
+  cookieController.setSSIDCookie,
+  sessionController.startSession
+)
 
 module.exports = router;

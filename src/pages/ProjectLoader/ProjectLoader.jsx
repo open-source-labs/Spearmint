@@ -4,6 +4,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import {setGuest} from '../../context/actions/globalActions'
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton.jsx';
 import { Button, TextField } from '@material-ui/core';
+const { BrowserWindow,ipcRenderer } = require('electron');
+// const remote = require('@electron/remote/main')
 
 const ProjectLoader = () => {
   const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
@@ -73,6 +75,28 @@ const ProjectLoader = () => {
       .catch((err) => console.log(err));
   };
 
+  const handleGithubLogin = () => {
+    console.log('you are in handleGithubLogin')
+    // create new window for github login
+    fetch('http://localhost:3001/auth/github', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(res => {
+        const url = res.url
+        ipcRenderer.send('Github', url)
+        
+      })
+      .catch(err=>console.log(err))
+    }
+    
+    
+  
+
+    // github window will take user to the git url to login...hopefully
+
   const handleSignup = (e) => {
     e.preventDefault();
     if (username.length < 4 || password.length < 4) {
@@ -141,7 +165,7 @@ const ProjectLoader = () => {
       </form>
       <Button variant='text' id={styles.gitButton} onClick={handleGuestLogin}>Login as Guest</Button>
       <br/>
-      <Button variant='text' id={styles.gitButton}>Login with GitHub</Button>
+      <Button variant='text' id={styles.gitButton} onClick={handleGithubLogin}>Login with GitHub</Button>
     </div>
   );
 

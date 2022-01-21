@@ -1,3 +1,6 @@
+
+// The MAIN process: OUR BACKEND // 
+
 const { app, BrowserWindow, ipcMain, dialog} = require('electron');
 const path = require('path');
 const fs = require('fs');
@@ -166,6 +169,13 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
     };
     e.returnValue = dialog.showOpenDialogSync(dialogOptions);
 });
+
+// CHANNEL TO LOGIN TO GITHUB
+ipcMain.on('Github', (event, url) => {
+     new BrowserWindow()
+        .loadURL(url)
+        .show();
+})
 
 
 app.whenReady().then(createWindow);
