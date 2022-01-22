@@ -7,29 +7,29 @@
 
 import React, { useContext } from 'react';
 import styles from './Assertion.module.scss';
-import { deleteAssertion, updateAssertion } from '../../../context/actions/reactTestCaseActions';
+import { deleteAssertion, updateAssertion } from '../../../context/actions/vueTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
-  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [, dispatchToVueTestCase] = useContext(VueTestCaseContext);
 
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...statement };
     field === 'isNot'
       ? (updatedAssertion[field] = !updatedAssertion.isNot)
       : (updatedAssertion[field] = e.target.value);
-    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    dispatchToVueTestCase(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = (e) => {
-    dispatchToReactTestCase(deleteAssertion(statementId));
+    dispatchToVueTestCase(deleteAssertion(statementId));
   };
 
   const needsMatcherValue = (matcherType) => {
@@ -115,12 +115,6 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
             dispatchToTestCase={dispatchToReactTestCase}
             statementType='assertion'
           /> */}
-          <input
-            type='text'
-            id='queryValue'
-            value={statement.queryValue}
-            onChange={(e) => handleChangeAssertionFields(e, 'queryValue')}
-          />
         </div>
       </div>
       <div>
@@ -143,7 +137,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <AutoComplete
                 statement={statement}
                 statementType='assertion'
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={dispatchToVueTestCase}
                 id={styles.matcherAuto}
               />
 

@@ -56,6 +56,13 @@ import {
 } from '../../context/reducers/secTestCaseReducer';
 import SecTestCase from '../../components/TestCase/SecTestCase';
 
+import {
+  VueTestCaseContext,
+  vueTestCaseState,
+  vueTestCaseReducer,
+} from '../../context/reducers/vueTestCaseReducer';
+import VueTestCase from '../../components/TestCase/VueTestCase';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
 
@@ -151,9 +158,9 @@ const TestFile = () => {
             <button id={styles.save} onClick={() => handleToggle('sec')}>
               Security
             </button>
-            {/* <button id={styles.save} onClick={() => handleToggle('vue')}>
+            <button id={styles.save} onClick={() => handleToggle('vue')}>
               Vue
-            </button> */}
+            </button>
           </span>
         </div>
       </ReactModal>
@@ -214,16 +221,16 @@ const TestFile = () => {
           </SecTestCaseContext.Provider>
         </section>
       )}
-       {/* {
+      {
         //incomplete functionality: this is wired to go to a react test for now
         testCase === 'vue' && (
           <section>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-              <ReactTestCase />
+              <VueTestCase />
             </MockDataContext.Provider>
           </section>
         )
-      } */}
+      }
 
       {testCase === '' && (
         <Fragment>

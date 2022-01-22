@@ -1085,6 +1085,89 @@ function useGenerateTest(test, projectFilePath) {
         `;
     };
 
+    // --------------------------------- Vue Test --------------------------------------------------
+    // React Import Statements
+    const addVueImportStatements = () => {
+      testFileCode += `
+        import mount from '@vue/test-utils';
+        import { render, fireEvent } from '@testing-library/react'; 
+        import { build, fake } from 'test-data-bot'; 
+        import '@testing-library/jest-dom/extend-expect'
+        \n`;
+    };
+
+    // React Component Import Statement (Render Card)
+
+    const addVueComponentImportStatement = () => {
+      const componentPath = reactTestCase.statements.componentPath;
+      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      filePath = filePath.replace(/\\/g, '/');
+      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/, '');
+      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
+    };
+
+    const addVueDescribeBlocks = () => {
+      const describeBlocks = vueTestCase.describeBlocks;
+
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        addVueItStatement(id);
+        testFileCode += `}); \n`;
+      });
+    };
+
+    // React It Statements
+    const addVueItStatement = (describeId) => {
+      const itStatements = reactTestCase.itStatements;
+      itStatements.allIds[describeId].forEach((itId) => {
+        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
+        addVueStatements(itId);
+        testFileCode += '})\n';
+      });
+    };
+
+    const addVueStatements = (itId) => {
+      const statements = vueTestCase.statements;
+      const methods = identifyVueMethods(itId);
+      statements.allIds.forEach((id) => {
+        let statement = statements.byId[id];
+        if (statement.itId === itId) {
+          switch (statement.type) {
+            case 'action':
+              return addAction(statement);
+            case 'assertion':
+              return addAssertion(statement);
+            case 'render':
+              return addVueRender(statement, methods);
+            default:
+              return statement;
+          }
+        }
+      });
+    };
+
+    const identifyVueMethods = (itId) => {
+      const methods = new Set([]);
+      vueTestCase.statements.allIds.forEach((id) => {
+        let statement = vueTestCase.statements.byId[id];
+        if (statement.itId === itId) {
+          if (statement.type === 'action' || statement.type === 'assertion') {
+            methods.add(statement.queryVariant + statement.querySelector);
+          }
+        }
+      });
+      return Array.from(methods).join(', ');
+    };
+
+    // Render Jest Test Code
+    const addVueRender = (statement, methods) => {
+      let props = createRenderProps(statement.props);
+      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.jsx?/, '');
+      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
+    };
+
+    // ------------------------------------ switch statement on test type -------------------------
+
     switch (test) {
       case 'acc':
         var accTestCase = testState;
@@ -1117,6 +1200,22 @@ function useGenerateTest(test, projectFilePath) {
           addReactImportStatements(),
           addMockData(),
           addDescribeBlocks(),
+          (testFileCode = beautify(testFileCode, {
+            brace_style: 'collapse, preserve-inline',
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+
+      case 'vue':
+        var vueTestCase = testState;
+        var mockData = mockDataState;
+        return (
+          addComponentImportStatement(),
+          addVueImportStatements(),
+          addMockData(),
+          addVueDescribeBlocks(),
           (testFileCode = beautify(testFileCode, {
             brace_style: 'collapse, preserve-inline',
             indent_size: 2,
