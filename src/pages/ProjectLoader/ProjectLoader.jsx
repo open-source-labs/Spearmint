@@ -66,6 +66,7 @@ const ProjectLoader = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log('this is normal login res.json data', data)
         if (data.ssid) {
           setIsLoggedIn(true);
         } else if (typeof data === 'string') {
@@ -76,7 +77,7 @@ const ProjectLoader = () => {
   };
 
   const handleGithubLogin = () => {
-    console.log('you are in handleGithubLogin')
+    console.log('GithubLogin clicked')
     // create new window for github login
     fetch('http://localhost:3001/auth/github', {
       method: 'GET',
@@ -85,13 +86,33 @@ const ProjectLoader = () => {
       }
     })
       .then(res => {
-        const url = res.url
-        ipcRenderer.send('Github', url)
-        
+        const url = res.url 
+        console.log('1st res:', res.url);
+        ipcRenderer.send('Github-Oauth', url);
+      })
+      .then((data) => {
+        console.log('the DATA:', data)
+        if (data.ssid) {
+          setIsLoggedIn(true);
+          console.log('user isLoggedIn?',isLoggedIn)
+        } else if (typeof data === 'string') {
+          setMessage(data);
+        } else setMessage('Login Failed: Unknown');
       })
       .catch(err=>console.log(err))
     }
     
+    ipcRenderer.on('github-login-authorized', (_, ssid) => {
+      console.log('reached github-login-authorized channel')
+      console.log('ssid', ssid);
+      if (ssid) {
+        setIsLoggedIn(true);
+        console.log('user isLoggedIn?',isLoggedIn)
+      } else if (typeof ssid === 'string') {
+        setMessage(ssid);
+      } else setMessage('Login Failed: Unknown');
+    })
+
     
   
 
@@ -155,7 +176,7 @@ const ProjectLoader = () => {
         <span>{message}</span>
         <br />
         <br />
-        <Button variant='contained' type='submit' id={styles.loginBtn}>
+        <Button variant='contained' type='submit' onClick={handleLogin} id={styles.loginBtn}>
           Log In
         </Button>
         <Button variant='outlined' type='button' onClick={handleSignup} id={styles.loginBtn}>

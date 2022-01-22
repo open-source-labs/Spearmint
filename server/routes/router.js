@@ -6,6 +6,7 @@ const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 const testStateController = require('../controllers/testStateController');
 const passport = require('passport');
+// const { ipcRenderer } = require('electron');
 // const githubController = require('../controllers/githubController');
 
 // Initialize an express router
@@ -87,17 +88,23 @@ router.get('/auth/github',
 
   // if user does allow, then they are automatically redirected to the callback endpoint
 router.get('/auth/github/callback', 
-passport.authenticate('github', { failureRedirect: '/login' }),
+  passport.authenticate('github', { failureRedirect: '/login' }),
 
 // if this authentication is successful, THEN callback function is invoked
-  function(req, res) {
+  function(req, res, next) {
     console.log('this is req.user', typeof req.user._id);
     // Successful authentication, redirect home.
     console.log("github authentication successful!")
     res.locals.userId = req.user._id;
+    return next()
   },
   cookieController.setSSIDCookie,
-  sessionController.startSession
+  sessionController.startSession,
+  (req, res) => {
+    console.log('ssid:', res.locals.ssid);
+    // ipcRenderer.send('github-authorized', {ssid: res.locals.ssid} )
+    res.status(200).json({ ssid: res.locals.ssid });
+  }
 )
 
 module.exports = router;

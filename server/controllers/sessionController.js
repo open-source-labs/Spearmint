@@ -5,9 +5,11 @@ const sessionController = {};
 
 // Middleware to initialize a session upon successful login
 sessionController.startSession = (req, res, next) => {
+  console.log('we made it to startSession!');
   Session.create({ cookieId: res.locals.userId }, (err, result) => {
     if (err && err.code !== 11000) return next(err);
     res.locals.ssid = res.locals.userId;
+    console.log('session created')
     return next();
   });
 };

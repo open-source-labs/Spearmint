@@ -1,7 +1,7 @@
 
 // The MAIN process: OUR BACKEND // 
 
-const { app, BrowserWindow, ipcMain, dialog} = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, webContents} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
@@ -18,8 +18,8 @@ const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 // setup electron window 
 function createWindow(params) {
     const app = new BrowserWindow({
-        width:1782,
-        height:920,
+        width: 800,
+        height:1000,
         backgroundColor: "white",
         icon: path.join(__dirname, 'icon.png'),
         webPreferences:{
@@ -83,6 +83,7 @@ if (isDev) {
 };
 
 
+
 /*
 UNIVERSAL IPC CALLS
 (The following IPC calls are made from various components in the codebase)
@@ -135,47 +136,80 @@ ipcMain.on('ExportFileModal.mkdir', (e, folderPath) => {
 });
 
 ipcMain.on('ExportFileModal.fileCreate', (e, filePath, file) => {
-    e.returnValue = fs.writeFile(filePath, file, (err) => {
-        if (err) throw err;
-    });
+	e.returnValue = fs.writeFile(filePath, file, (err) => {
+		if (err) throw err;
+	});
 });
 
 ipcMain.on('ExportFileModal.readFile', (e, filePath) => {
-    e.returnValue = fs.readFileSync(filePath, 'utf8', (err) => {
-        if (err) throw err;
-    });
+	e.returnValue = fs.readFileSync(filePath, 'utf8', (err) => {
+		if (err) throw err;
+	});
 });
 
 
 // OPENFOLDERBUTTON.JSX FILE FUNCTIONALITY
 ipcMain.on('OpenFolderButton.isDirectory', (e, filePath) => {
-    e.returnValue = fs.statSync(filePath).isDirectory();
+	e.returnValue = fs.statSync(filePath).isDirectory();
 });
 
 ipcMain.on('OpenFolderButton.dialog', (e) => {
-    const dialogOptions = {
-        properties: ['openDirectory', 'createDirectory'],
-// <-------------------------------------------------------------------------------------------------------------------------------------------->
-        // NOTE: The below filters prevented Linux users from being able to choose directories, and therefore from using the app almost entirely.
-        // In the interest of the most possible developers being able to use Spearmint, the filters have been removed.
-
-        // filters: [
-        //     { name: 'Javascript Files', extensions: ['js', 'jsx'] },
-        //     { name: 'Style', extensions: ['css'] },
-        //     { name: 'Html', extensions: ['html'] }
-        // ],
-// <-------------------------------------------------------------------------------------------------------------------------------------------->
-        message: 'Please select your project folder',
+	const dialogOptions = {
+		properties: ['openDirectory', 'createDirectory'],
+		// <-------------------------------------------------------------------------------------------------------------------------------------------->
+		// NOTE: The below filters prevented Linux users from being able to choose directories, and therefore from using the app almost entirely.
+		// In the interest of the most possible developers being able to use Spearmint, the filters have been removed.
+		
+		// filters: [
+			//     { name: 'Javascript Files', extensions: ['js', 'jsx'] },
+			//     { name: 'Style', extensions: ['css'] },
+			//     { name: 'Html', extensions: ['html'] }
+			// ],
+			// <-------------------------------------------------------------------------------------------------------------------------------------------->
+			message: 'Please select your project folder',
     };
     e.returnValue = dialog.showOpenDialogSync(dialogOptions);
-});
+	});
+	
+	app.whenReady()
+		.then(createWindow)
 
-// CHANNEL TO LOGIN TO GITHUB
-ipcMain.on('Github', (event, url) => {
-     new BrowserWindow()
-        .loadURL(url)
-        .show();
+	
+	// CHANNEL TO LOGIN TO GITHUB
+	
+	let githubWindow;
+
+ipcMain.on('Github-Oauth', (event, url) => {
+		console.log('what is sent from ipcRenderer:', url);
+		console.log('opening github oauth window!!')
+    githubWindow = new BrowserWindow({
+			webPreferences: {
+				nodeIntegration: true
+			}
+		});
+		
+		githubWindow.loadURL(url);
+		githubWindow.show();
+
+		const contents = githubWindow.webContents;
+
+		githubWindow.webContents.on('did-redirect-navigation', () => {
+			console.log('github was redirected');
+			// githubWindow.close();
+		})
+		// console.log('github contents', contents)
+        // console.log("this is vanilla JS:", document.body)
+		
+		console.log('this is the event reply:', event.reply)
+	
+  
+})
+
+ipcMain.on('github-authorized', (event, data) => {
+	console.log('receiving data from router.js IPC RENDERER!!')
 })
 
 
-app.whenReady().then(createWindow);
+        
+
+

@@ -12,7 +12,7 @@ module.exports = function (passport) {
             },
             
             function(accessToken, refreshToken, profile, done) {
-              console.log('in passport.js before User.findorCreate')
+              console.log('this is our accessToken:', accessToken);
                 // we are checking if the github profile is in our monogDB
                 GithubUser.findOne({ githubId: profile.id }, (err, result) => {
                   if(result){
