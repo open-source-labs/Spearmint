@@ -536,26 +536,21 @@ function useGenerateTest(test, projectFilePath) {
 
     // Endpoint Filepath
     const createPathToEndFiles = (serverFilePath, serverFileName, dbFilePath, addDB) => {
-      console.log('serverFileName:', serverFileName);
-      console.log('serverFilePath:', serverFilePath)
-      console.log('dbFilePath:', dbFilePath)
-      console.log('addDB:', addDB)
-      console.log('projectFilePath', projectFilePath);
+     
       if (serverFilePath) {
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest');
-      const regeneratorRuntime = require('regenerator-runtime');
+      import "core-js/stable";
+      import "regenerator-runtime/runtime";
       const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
       if (dbFilePath) {
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
-        console.log('filePath before replace():', filePath);
         filePath = filePath.replace(/\\/g, '/');
-        console.log('filePath after replace', filePath)
         filePath = filePath.replace(serverFileName, dbFilePath)
-        console.log('filePath after replace dbFilePath', filePath)
+      
       
 
         switch (addDB) {
