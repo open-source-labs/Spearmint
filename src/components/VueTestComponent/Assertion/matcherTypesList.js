@@ -1,50 +1,20 @@
-export const matcherTypesList = [
+export const vueTypesList = [
   {
-    name: 'toHaveTextContent',
+    name: 'toBe',
   },
   {
-    name: 'toBeInTheDocument',
+    name: 'toEqual',
   },
   {
-    name: 'toContainHTML',
+    name: 'toBeTruthy',
   },
   {
-    name: 'toContainElement',
+    name: 'toBeFalsy',
   },
   {
-    name: 'toHaveAttribute',
+    name: 'toBeNull',
   },
   {
-    name: 'toHaveClass',
-  },
-  {
-    name: 'toHaveStyle',
-  },
-  {
-    name: 'toBeDisabled',
-  },
-  {
-    name: 'toBeEnabled',
-  },
-  {
-    name: 'toBeEmpty',
-  },
-  {
-    name: 'toBeInvalid',
-  },
-  {
-    name: 'toBeRequired',
-  },
-  {
-    name: 'toBeValid',
-  },
-  {
-    name: 'toBeVisible',
-  },
-  {
-    name: 'toHaveFocus',
-  },
-  {
-    name: 'toHaveFormValues',
+    name: 'toBeUndefined',
   },
 ];

@@ -587,20 +587,31 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
-    const addAction = (action) => {
-      if (action.eventValue) {
-        testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                          ('${action.queryValue}'), { target: { value: ${action.eventValue} } });`;
-      } else {
-        testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                          ('${action.queryValue}'));`;
+    const addAction = (action,  type = 'react') => {
+      if (type === 'react'){
+        if (action.eventValue) {
+          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
+                            ('${action.queryValue}'), { target: { value: ${action.eventValue} } });`;
+        } else {
+          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
+                            ('${action.queryValue}'));`;
+        }
+      }
+      else if (type === 'vue'){
+        testFileCode += `await wrapper.${action.queryVariant}('${action.queryValue}').trigger('${action.eventType}');`;
       }
     };
 
     // Assertion Jest Test Code
-    const addAssertion = (assertion) => {
-      testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
+    const addAssertion = (assertion, type = 'react') => {
+
+      if (type === 'react'){
+        testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
           (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
+      }
+      if(type === 'vue'){
+        testFileCode += `expect(wrapper.${assertion.queryVariant}('${assertion.queryValue}').${assertion.querySelector}()).${assertion.matcherType}('${assertion.matcherValue}');`;
+      }
     };
 
     // Middleware Jest Test Code
@@ -1086,23 +1097,19 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // --------------------------------- Vue Test --------------------------------------------------
-    // React Import Statements
+
     const addVueImportStatements = () => {
       testFileCode += `
-        import mount from '@vue/test-utils';
-        import { render, fireEvent } from '@testing-library/react'; 
-        import { build, fake } from 'test-data-bot'; 
-        import '@testing-library/jest-dom/extend-expect'
+        import { mount } from '@vue/test-utils';
         \n`;
     };
 
-    // React Component Import Statement (Render Card)
 
     const addVueComponentImportStatement = () => {
-      const componentPath = reactTestCase.statements.componentPath;
+      const componentPath = vueTestCase.statements.componentPath;
       let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
       filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/, '');
+      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
     };
 
@@ -1115,12 +1122,11 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `}); \n`;
       });
     };
-
-    // React It Statements
+    
     const addVueItStatement = (describeId) => {
-      const itStatements = reactTestCase.itStatements;
+      const itStatements = vueTestCase.itStatements;
       itStatements.allIds[describeId].forEach((itId) => {
-        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
+        testFileCode += `it('${itStatements.byId[itId].text}', async () => {`;
         addVueStatements(itId);
         testFileCode += '})\n';
       });
@@ -1134,9 +1140,9 @@ function useGenerateTest(test, projectFilePath) {
         if (statement.itId === itId) {
           switch (statement.type) {
             case 'action':
-              return addAction(statement);
+              return addAction(statement, 'vue');
             case 'assertion':
-              return addAssertion(statement);
+              return addAssertion(statement, 'vue');
             case 'render':
               return addVueRender(statement, methods);
             default:
@@ -1159,11 +1165,17 @@ function useGenerateTest(test, projectFilePath) {
       return Array.from(methods).join(', ');
     };
 
-    // Render Jest Test Code
     const addVueRender = (statement, methods) => {
-      let props = createRenderProps(statement.props);
+      let props = createVueRenderProps(statement.props);
       const formattedComponentName = vueTestCase.statements.componentName.replace(/\.jsx?/, '');
-      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
+      // change to VUE files
+      testFileCode += `const wrapper = mount(${formattedComponentName}, {props: {${props}}});`;
+    };
+
+    const createVueRenderProps = (props) => {
+      return props.reduce((acc, prop) => {
+        return acc + `${prop.propKey}='${prop.propValue}',`;
+      }, '');
     };
 
     // ------------------------------------ switch statement on test type -------------------------
@@ -1212,7 +1224,7 @@ function useGenerateTest(test, projectFilePath) {
         var vueTestCase = testState;
         var mockData = mockDataState;
         return (
-          addComponentImportStatement(),
+          addVueComponentImportStatement(),
           addVueImportStatements(),
           addMockData(),
           addVueDescribeBlocks(),

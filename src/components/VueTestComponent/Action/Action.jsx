@@ -96,12 +96,10 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               onChange={(e) => handleChangeActionFields(e, 'queryVariant')}
             >
               <option value='' />
-              <option value='getBy'>getBy</option>
-              <option value='getAllBy'>getAllBy</option>
-              <option value='queryBy'>queryBy</option>
-              <option value='queryAllBy'>queryAllBy</option>
-              <option value='findBy'>findBy</option>
-              <option value='findAllBy'>findAllBy</option>
+              <option value='find'>find</option>
+              <option value='findComponent'>findComponent</option>
+              <option value='get'>get</option>
+              <option value='getComponent'>getComponent</option>
             </select>
             <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
@@ -109,43 +107,24 @@ const Action = ({ statement, statementId, describeId, itId }) => {
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
             </span>
+            <div id={styles.query}>
+              <label htmlFor='queryValue' className={styles.queryLabel}>
+                Query
+              </label>
 
-            <select
-              id='querySelector'
-              value={statement.querySelector}
-              onChange={(e) => handleChangeActionFields(e, 'querySelector')}
-            >
-              <option value='' />
-              <option value='LabelText'>LabelText</option>
-              <option value='PlaceholderText'>PlaceholderText</option>
-              <option value='Text'>Text</option>
-              <option value='AltText'>AltText</option>
-              <option value='Title'>Title</option>
-              <option value='DisplayValue'>DisplayValue</option>
-              <option value='Role'>Role</option>
-              <option value='TestId'>TestId</option>
-              {/* TextMatch Precision & Normalization will be added */}
-            </select>
-            <span id={styles.hastooltip} role='tooltip'>
-              <img src={questionIcon} alt='help' />
-              <span id={styles.tooltip}>
-                <ToolTip toolTipType={statement.querySelector} />
-              </span>
-            </span>
+              <input
+                type='text'
+                id='queryValue'
+                value={statement.queryValue}
+                onChange={(e) => handleChangeActionFields(e, 'queryValue')}
+              />
+            </div>
+
+           
+            
           </div>
         </div>
-        <div id={styles.query}>
-          <label htmlFor='queryValue' className={styles.queryLabel}>
-            Query
-          </label>
-
-          <input
-            type='text'
-            id='queryValue'
-            value={statement.queryValue}
-            onChange={(e) => handleChangeActionFields(e, 'queryValue')}
-          />
-        </div>
+        
       </div>
     </div>
   );

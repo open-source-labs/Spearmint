@@ -34,20 +34,10 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
 
   const needsMatcherValue = (matcherType) => {
     const matchersWithValues = [
-      'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
-      'toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
-      'toHaveAttribute', //takes in a string Ex: 'type'
-      'toHaveClass', //takes in a string Ex: 'btn-link'
-      'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
-      'toHaveStyle', //takes in a sting value Ex: 'display: none'
-      'toHaveTextContent', //takes in a string value Ex: 'Content'
-      'not.toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
-      'not.toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
-      'not.toHaveAttribute', //takes in a string Ex: 'type'
-      'not.toHaveClass', //takes in a string Ex: 'btn-link'
-      'not.toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
-      'not.toHaveStyle', //takes in a sting value Ex: 'display: none'
-      'not.toHaveTextContent', //takes in a string value Ex: 'Content'
+      'toBe', //takes in a HTML element Ex: <span data-testid="descendant"></span>
+      'toEqual', //takes in a string Ex: '<span data-testid="child"></span>'
+      'not.toBe', //takes in a HTML element Ex: <span data-testid="descendant"></span>
+      'not.toEqual', //takes in a string Ex: '<span data-testid="child"></span>'
     ];
     return matchersWithValues.includes(matcherType);
   };
@@ -70,13 +60,24 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               onChange={(e) => handleChangeAssertionFields(e, 'queryVariant')}
             >
               <option value='' />
-              <option value='getBy'>getBy</option>
-              <option value='getAllBy'>getAllBy</option>
-              <option value='queryBy'>queryBy</option>
-              <option value='queryAllBy'>queryAllBy</option>
-              <option value='findBy'>findBy</option>
-              <option value='findAllBy'>findAllBy</option>
+              <option value='find'>find</option>
+              <option value='findComponent'>findComponent</option>
+              <option value='get'>get</option>
+              <option value='getComponent'>getComponent</option>
+              {/* <option value='findBy'>findBy</option>
+              <option value='findAllBy'>findAllBy</option> */}
             </select>
+            <div id={styles.query}>
+              <label htmlFor='queryValue' className={styles.queryLabel}>
+                Query
+              </label>
+              <input
+                type='text'
+                id='queryValue'
+                value={statement.queryValue}
+                onChange={(e) => handleChangeAssertionFields(e, 'queryValue')}
+              />
+            </div>
             <span id={styles.hastooltip} role='tooltip'>
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
@@ -88,14 +89,14 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               onChange={(e) => handleChangeAssertionFields(e, 'querySelector')}
             >
               <option value='' />
-              <option value='LabelText'>LabelText</option>
-              <option value='PlaceholderText'>PlaceholderText</option>
-              <option value='Text'>Text</option>
-              <option value='AltText'>AltText</option>
-              <option value='Title'>Title</option>
-              <option value='DisplayValue'>DisplayValue</option>
+              <option value='isVisibile'>isVisible</option>
+              {/* <option value='findAll'>findAll</option> */}
+              <option value='exists'>exists</option>
+              <option value='html'>html</option>
+              <option value='text'>text</option>
+              {/* <option value='DisplayValue'>DisplayValue</option>
               <option value='Role'>Role</option>
-              <option value='TestId'>TestId</option>
+              <option value='TestId'>TestId</option> */}
               {/* TextMatch Precision & Normalization will be added */}
             </select>
             <span id={styles.hastooltip} role='tooltip'>
@@ -106,16 +107,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
             </span>
           </div>
         </div>
-        <div id={styles.query}>
-          <label htmlFor='queryValue' className={styles.queryLabel}>
-            Query
-          </label>
-          {/* <AutoCompleteMockData
-            statement={statement}
-            dispatchToTestCase={dispatchToReactTestCase}
-            statementType='assertion'
-          /> */}
-        </div>
+        
       </div>
       <div>
         <div id={styles.matcherFlexBox}>
@@ -139,6 +131,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
                 statementType='assertion'
                 dispatchToTestCase={dispatchToVueTestCase}
                 id={styles.matcherAuto}
+                type='vue'
               />
 
               <span id={styles.hastooltip} role='tooltip'>
