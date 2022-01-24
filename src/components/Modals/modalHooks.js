@@ -96,6 +96,11 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
         cd: `cd ${projectFilePath}`,
         install: 'npm i -D puppeteer',
       };
+    case 'vue':
+      return {
+        cd: `cd ${projectFilePath}`,
+        install: 'vue add unit-jest',
+      };
     default:
       return '';
     // code block

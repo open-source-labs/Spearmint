@@ -68,15 +68,30 @@ const Modal = ({
   };
 
   const jestTest = () => {
-    ipc.send('terminal.toTerm', `npx jest ${fileName}${execute}`);
+    if (title === 'vue'){
+      ipc.send('terminal.toTerm', `npx vue-cli-service test:unit ${fileName}${execute}`);
+    }
+    else{
+      ipc.send('terminal.toTerm', `npx jest ${fileName}${execute}`);
+    }
     dispatchToGlobal(setTabIndex(2));
   };
   const verboseTest = () => {
-    ipc.send('terminal.toTerm', `npx jest --verbose ${fileName}${execute}`);
+    if (title === 'vue'){
+      ipc.send('terminal.toTerm', `npx vue-cli-service test:unit ${fileName}${execute} --verbose`);
+    }
+    else{
+      ipc.send('terminal.toTerm', `npx jest --verbose ${fileName}${execute}`);
+    }
     dispatchToGlobal(setTabIndex(2));
   };
   const coverageTest = () => {
-    ipc.send('terminal.toTerm', `npx jest --coverage ${fileName}${execute}`);
+    if (title === 'vue'){
+      ipc.send('terminal.toTerm', `npx vue-cli-service test:unit ${fileName}${execute} --coverage`);      
+    }
+    else{
+      ipc.send('terminal.toTerm', `npx jest --coverage ${fileName}${execute}`);
+    }
     dispatchToGlobal(setTabIndex(2));
   };
 
@@ -202,6 +217,7 @@ const Modal = ({
     return null;
   };
 
+  console.log(testType);
   return (
     <ReactModal
       className={styles.modal2}
@@ -290,7 +306,7 @@ const Modal = ({
                   aria-controls='panel1a-content'
                   id={styles.accordionSummary}
                 >
-                  2. Install dependencies and Jest.
+                  2. Install dependencies.
                 </AccordionSummary>
                 <AccordionDetails id={styles.accordionDetails}>
                   <div id={styles.accordionDiv}>
@@ -351,9 +367,10 @@ const Modal = ({
               <pre>
                 <div className='code-wrapper'>
                   <code>
-                    {`npx jest ${fileName}\n`}
-                    {`npx jest --verbose ${fileName}\n`}
-                    {`npx jest --coverage ${fileName}\n`}
+                    {title === 'vue' && `npx vue-cli-service test:unit ${fileName}\n`}
+                    {title !== 'vue' && `npx jest ${fileName}\n`}
+                    {title !== 'vue' && `npx jest --verbose ${fileName}\n`}
+                    {title !== 'vue' && `npx jest --coverage ${fileName}\n`}
                   </code>
                 </div>
               </pre>
