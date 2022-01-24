@@ -44,13 +44,13 @@ const DescribeRenderer = ({
             Describe Block
           </label>
 
-          <i
+          <p
             tabIndex={0}
             onKeyPress={deleteReactDescribeBlockOnKeyUp}
             onClick={deleteDescribeBlockHandleClick}
             id={id}
             className={cn('far fa-window-close', styles.describeClose)}
-          ></i>
+          >close</p>
 
           <input
             id={id}

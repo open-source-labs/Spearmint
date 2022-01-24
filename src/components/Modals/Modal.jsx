@@ -227,13 +227,13 @@ const Modal = ({
       {/* Modal Title */}
       <div id={styles.title}>
         <p style={{ fontSize: 20 }}>Run Tests in Terminal</p>
-        <i
+        <p
           tabIndex={0}
           onKeyPress={clearAndClose}
           onClick={clearAndClose}
           id={styles.escapeButton}
           className={cn('far fa-window-close', styles.describeClose)}
-        />
+        >close</p>
       </div>
       {/* Accordion View */}
       <div>
