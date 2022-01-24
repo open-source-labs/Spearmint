@@ -193,8 +193,10 @@ ipcMain.on('Github-Oauth', (event, url) => {
 
 		const contents = githubWindow.webContents;
 
-		githubWindow.webContents.on('did-redirect-navigation', () => {
-			console.log('github was redirected');
+		githubWindow.webContents.on('did-redirect-navigation', (event, url) => {
+			console.log('github was redirected!!');
+            console.log('redirection url is:', url);
+
 			// githubWindow.close();
 		})
 		// console.log('github contents', contents)
@@ -205,8 +207,9 @@ ipcMain.on('Github-Oauth', (event, url) => {
   
 })
 
-ipcMain.on('github-authorized', (event, data) => {
-	console.log('receiving data from router.js IPC RENDERER!!')
+ipcMain.on('Github-login-success', (event, data) => {
+	console.log(data)
+    githubWindow.close()
 })
 
 

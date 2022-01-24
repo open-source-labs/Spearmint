@@ -86,6 +86,7 @@ router.get('/auth/github',
   // first authenticate asks users if they will ALLOW or DENY us permission to request their github profile
   passport.authenticate('github', { scope: [ 'profile' ] }));
 
+  
   // if user does allow, then they are automatically redirected to the callback endpoint
 router.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),

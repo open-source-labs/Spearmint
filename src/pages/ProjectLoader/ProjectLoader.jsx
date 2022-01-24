@@ -88,16 +88,18 @@ const ProjectLoader = () => {
       .then(res => {
         const url = res.url 
         console.log('1st res:', res.url);
+
+        // how we trigger the Main Process in electron to show our window
         ipcRenderer.send('Github-Oauth', url);
-      })
-      .then((data) => {
-        console.log('the DATA:', data)
-        if (data.ssid) {
+        
+        if (url) {
           setIsLoggedIn(true);
-          console.log('user isLoggedIn?',isLoggedIn)
-        } else if (typeof data === 'string') {
-          setMessage(data);
-        } else setMessage('Login Failed: Unknown');
+          setUsername('Github User')
+          ipcRenderer.send('Github-login-success', 'github login success');
+        } 
+        // else if (typeof data === 'string') {
+        //   setMessage(data);
+        // } else setMessage('Login Failed: Unknown');
       })
       .catch(err=>console.log(err))
     }
