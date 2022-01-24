@@ -1108,8 +1108,9 @@ function useGenerateTest(test, projectFilePath) {
     const addVueComponentImportStatement = () => {
       const componentPath = vueTestCase.statements.componentPath;
       let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      console.log('filePath before replace', filePath)
       filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.jsx?/, '');
+      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.vue?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
     };
 
@@ -1167,7 +1168,7 @@ function useGenerateTest(test, projectFilePath) {
 
     const addVueRender = (statement, methods) => {
       let props = createVueRenderProps(statement.props);
-      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.jsx?/, '');
+      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.vue?/, '');
       // change to VUE files
       testFileCode += `const wrapper = mount(${formattedComponentName}, {props: {${props}}});`;
     };
