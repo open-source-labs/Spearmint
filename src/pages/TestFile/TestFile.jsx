@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import React, { useContext, useReducer, Fragment } from 'react';
-import ReactModal from 'react-modal-resizable-draggable';
+import ReactModal from 'react-modal';
 import styles from '../../components/Modals/Modal.module.scss';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
@@ -105,60 +105,74 @@ const TestFile = () => {
     },
   };
 
+  const styleOverrides = {
+    overlay: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    },
+    content: {
+      bottom: "unset",
+      overflow: "visible",
+      padding: 0,
+      border: "none",
+      borderRadius: 0,
+      position: "static",
+      background: "none",
+      pointerEvents: "none"
+    }
+  };
+
+  const DraggableModal = ({
+    isTestModalOpen,
+    children,
+    onRequestClose,
+    defaultPosition,
+    onDragStop
+  }) => {
+    return (
+      <ReactModal
+        onRequestClose={closeTestModal}
+        isOpen={isTestModalOpen}
+        style={styleOverrides}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+      >
+        <Draggable handle=".handle" >
+
+            <React.Fragment>
+              <div className="handle" 
+                style={handle 
+                  {
+                    height: 10px;
+                    background: #ddd;
+                    border-bottom: 5px solid white;
+                    cursor: move;
+                    width: 200%;
+                    margin-left: -50%;
+                  }
+                }/>
+              {children}
+            </React.Fragment>
+
+        </Draggable>
+      </ReactModal>
+    );
+  };
+
   return (
     // landing modal which displays button choices
 
-            <ReactModal
-              className={styles.modal}
-              isOpen={isTestModalOpen}
-              onRequestClose={closeTestModal}
-              contentLabel='Save?'
-              shouldCloseOnOverlayClick={true}
-              shouldCloseOnEsc={true}
-              ariaHideApp={false}
-              style={modalStyles}
-            >
+            
+              <DraggableModal isTestModalOpen>
+
                 <div id={styles.title}>
 
                   <p style={{ fontSize: 15 }}>Test</p>
-                  <p
-                    tabIndex={0}
-                    onKeyPress={closeTestModal}
-                    onClick={closeTestModal}
-                    id={styles.escapeButton}
-                    className={cn('far fa-window-close', styles.describeClose)}
-                  >close</p>
-                </div>
-              
-              
-                <div id={styles.body}>
-                  <p id={styles.text}>What would you like to test?</p>
-                  <span id={styles.newTestButtons}>
-                    <button id={styles.save} autoFocus onClick={() => handleToggle('acc')}>
-                      Accessibility
-                    </button>
-                    <button id={styles.save} onClick={() => handleToggle('endpoint')}>
-                      Endpoint
-                    </button>
-                    <button id={styles.save} onClick={() => handleToggle('hooks')}>
-                      Hooks
-                    </button>
-                    <button id={styles.save} onClick={() => handleToggle('puppeteer')}>
-                      Puppeteer
-                    </button>
-                    <button id={styles.save} onClick={() => handleToggle('react')}>
-                      React
-                    </button>
-                    <button id={styles.save} onClick={() => handleToggle('redux')}>
-                      Redux
-                    </button>
-                    <button id={styles.save} onClick={() => handleToggle('sec')}>
-                      Security
-                    </button>
-                  </span>
+
                 </div>
 
-            </ReactModal>
+              </DraggableModal>
   );
 };
 
