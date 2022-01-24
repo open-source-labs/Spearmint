@@ -15,6 +15,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -79,6 +80,7 @@ const Modal = ({
     ipc.send('terminal.toTerm', `npx jest --coverage ${fileName}${execute}`);
     dispatchToGlobal(setTabIndex(2));
   };
+
 
   // Warning that tests will not be saved while transitioning between test types
   if (title === 'New Test') {
