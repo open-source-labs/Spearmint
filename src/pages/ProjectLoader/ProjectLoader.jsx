@@ -104,7 +104,15 @@ const ProjectLoader = () => {
            console.log('this is pleasework:', pleasework);
     })
       .then(() => {
-        ipcRenderer.invoke('Github-Callback' )
+        fetch('http://localhost:3001/auth/github/callback', {
+          method: 'GET',
+          headers: {
+          'Content-Type': 'application/json',
+        }
+      }) 
+        .then(res => {
+          ipcRenderer.invoke('Github-Callback', res.url)
+        })
       })
       .catch(err=>console.log(err))
   }
@@ -115,6 +123,10 @@ const ProjectLoader = () => {
 
   ipcRenderer.on('test-channel', (event, string) => {
     console.log('ipcRenderer heard something in ProjectLoader!!!:', string)
+  })
+
+  ipcRenderer.on('github-test-channel', (e, string) => {
+    console.log('ipcRenderer heard github test channel!!!', string);
   })
 
   ipcRenderer.on('github-new-url', (event, value) => {

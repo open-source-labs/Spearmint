@@ -174,6 +174,8 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
 	
 	app.whenReady()
 		.then(createWindow)
+  
+
 
 	
 	// CHANNEL TO LOGIN TO GITHUB
@@ -186,38 +188,49 @@ ipcMain.on('Github-Oauth', (event, url) => {
 
 	console.log('what is sent from ipcRenderer:', url);
 	console.log('opening github oauth window!!')
-    githubWindow = new BrowserWindow({
-			webPreferences: {
-				nodeIntegration: true,
-				contextIsolation: false
-			}
-		});
+    // githubWindow = new BrowserWindow({
+	// 		webPreferences: {
+	// 			nodeIntegration: true,
+    //             worldSafeExecuteJavaScript: true,
+	// 			contextIsolation: false,
+    //             webviewTag: true
+	// 		}
+	// 	});
 		
-	githubWindow.loadURL(url)
-	githubWindow.show()
+	app.loadURL(url)
+	// githubWindow.show()
 
-	githubWindow.webContents.on('did-finish-load', () => {
-		console.log('github Window finished initial load')
-		githubWindow.webContents.send('ping', 'Message: Ping!')
-	})
+	// githubWindow.webContents.on('did-finish-load', () => {
+	// 	console.log('github Window finished initial load')
+	// 	githubWindow.webContents.send('ping', 'Message: Ping!')
+	// })
 
 
-	githubWindow.webContents.on('did-navigate', (event, url) => {
-    const finalurl = url
-		if (url.startsWith('http://localhost:3001/auth/github/callback')) {
-			let newURL = url
-			githubWindow.webContents.send('github-new-url', 'yoohoo');			
-			console.log('we are running in')
+	// githubWindow.webContents.on('did-navigate', (event, url) => {
+    // const finalurl = url
+	// 	if (url.startsWith('http://localhost:3001/auth/github/callback')) {
+	// 		let newURL = url
+	// 		githubWindow.webContents.send('github-new-url', 'yoohoo');			
+	// 		console.log('we are running in')
 
-			console.log('final localhost url is:', url);
-			// app.webContents.send('final-url', 'reached final localhost url');
-			// githubWindow.close();
-		}
-	})
+	// 		console.log('final localhost url is:', url);
+	// 		// app.webContents.send('final-url', 'reached final localhost url');
+	// 		// githubWindow.close();
+	// 	}
+	// })
+        
 
 	
-	 event.reply('test-channel', 'ping')
+	 event.reply('test-channel', url)
 
+})
+
+
+ipcMain.handle('Github-Callback', async(event, url) =>{
+	const result = await function(url) {
+		console.log('url in Github-Callback', url);
+	}
+	return result;
 })
 
 ipcMain.on('pong', (event, arg) => {
