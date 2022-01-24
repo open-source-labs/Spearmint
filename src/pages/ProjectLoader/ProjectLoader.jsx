@@ -103,17 +103,6 @@ const ProjectLoader = () => {
            const pleasework = localStorage.getItem('finalURL');
            console.log('this is pleasework:', pleasework);
     })
-      .then(() => {
-        fetch('http://localhost:3001/auth/github/callback', {
-          method: 'GET',
-          headers: {
-          'Content-Type': 'application/json',
-        }
-      }) 
-        .then(res => {
-          ipcRenderer.invoke('Github-Callback', res.url)
-        })
-      })
       .catch(err=>console.log(err))
   }
         
@@ -135,8 +124,8 @@ const ProjectLoader = () => {
     
   ipcRenderer.on('ping', (event, arg) => {
     console.log('ipcRenderer heard something in ping channel:', arg)
-
-    event.sender.send('pong', 'Message: Pong!');
+    
+    ipcRenderer.send('pong', 'Message: Pong!');
   })
 
     // github window will take user to the git url to login...hopefully
