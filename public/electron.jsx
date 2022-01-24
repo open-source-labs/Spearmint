@@ -9,6 +9,7 @@ const os = require('os');
 const server = require('../server/server.js');
 // react developer tools for electron in dev mode 
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+const { ipcRenderer } = require('electron');
 // global bool to determine if in dev mode or not 
 // const isDev = true; 
 
@@ -179,39 +180,62 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
 	
 	let githubWindow;
 
+
+
 ipcMain.on('Github-Oauth', (event, url) => {
-		console.log('what is sent from ipcRenderer:', url);
-		console.log('opening github oauth window!!')
+
+	console.log('what is sent from ipcRenderer:', url);
+	console.log('opening github oauth window!!')
     githubWindow = new BrowserWindow({
 			webPreferences: {
-				nodeIntegration: true
+				nodeIntegration: true,
+				contextIsolation: false
 			}
 		});
 		
-		githubWindow.loadURL(url);
-		githubWindow.show();
+	githubWindow.loadURL(url)
+	githubWindow.show()
 
-		const contents = githubWindow.webContents;
+	githubWindow.webContents.on('did-finish-load', () => {
+		console.log('github Window finished initial load')
+		githubWindow.webContents.send('ping', 'Message: Ping!')
+	})
 
-		githubWindow.webContents.on('did-redirect-navigation', (event, url) => {
-			console.log('github was redirected!!');
-            console.log('redirection url is:', url);
 
+	githubWindow.webContents.on('did-navigate', (event, url) => {
+    const finalurl = url
+		if (url.startsWith('http://localhost:3001/auth/github/callback')) {
+			let newURL = url
+			githubWindow.webContents.send('github-new-url', 'yoohoo');			
+			console.log('we are running in')
+
+			console.log('final localhost url is:', url);
+			// app.webContents.send('final-url', 'reached final localhost url');
 			// githubWindow.close();
-		})
-		// console.log('github contents', contents)
-        // console.log("this is vanilla JS:", document.body)
-		
-		console.log('this is the event reply:', event.reply)
+		}
+	})
+
 	
-  
+	 event.reply('test-channel', 'ping')
+
+})
+
+ipcMain.on('pong', (event, arg) => {
+	console.log('pong received:', arg)
+})
+
+ipcMain.on('github-new-url', (event, value) => {
+	console.log('github-new-url channel heard something!!', value);
+})
+
+ipcMain.on('test-channel', (event, arg) => {
+	console.log('test channel message received:', arg);
 })
 
 ipcMain.on('Github-login-success', (event, data) => {
 	console.log(data)
     githubWindow.close()
 })
-
 
         
 

@@ -4,7 +4,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import {setGuest} from '../../context/actions/globalActions'
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton.jsx';
 import { Button, TextField } from '@material-ui/core';
-const { BrowserWindow,ipcRenderer } = require('electron');
+const { BrowserWindow, ipcRenderer } = require('electron');
 // const remote = require('@electron/remote/main')
 
 const ProjectLoader = () => {
@@ -91,32 +91,41 @@ const ProjectLoader = () => {
 
         // how we trigger the Main Process in electron to show our window
         ipcRenderer.send('Github-Oauth', url);
-        
-        if (url) {
-          setIsLoggedIn(true);
-          setUsername('Github User')
-          ipcRenderer.send('Github-login-success', 'github login success');
-        } 
-        // else if (typeof data === 'string') {
-        //   setMessage(data);
-        // } else setMessage('Login Failed: Unknown');
+
+        // if (url.includes('localhost')) {
+          //   setIsLoggedIn(true);
+          //   setUsername('Github User')
+          //   ipcRenderer.send('Github-login-success', 'github login success');
+          // } 
+          // else if (typeof data === 'string') {
+            //   setMessage(data);
+            // } else setMessage('Login Failed: Unknown');
+           const pleasework = localStorage.getItem('finalURL');
+           console.log('this is pleasework:', pleasework);
+    })
+      .then(() => {
+        ipcRenderer.invoke('Github-Callback' )
       })
       .catch(err=>console.log(err))
-    }
-    
-    ipcRenderer.on('github-login-authorized', (_, ssid) => {
-      console.log('reached github-login-authorized channel')
-      console.log('ssid', ssid);
-      if (ssid) {
-        setIsLoggedIn(true);
-        console.log('user isLoggedIn?',isLoggedIn)
-      } else if (typeof ssid === 'string') {
-        setMessage(ssid);
-      } else setMessage('Login Failed: Unknown');
-    })
+  }
+        
+  ipcRenderer.on('final-url', (event, string) => {
+    console.log('this is the url string from MAIN PROCESS TO RENDERER PROCESS:', string)
+  })
 
+  ipcRenderer.on('test-channel', (event, string) => {
+    console.log('ipcRenderer heard something in ProjectLoader!!!:', string)
+  })
+
+  ipcRenderer.on('github-new-url', (event, value) => {
+    console.log('github-new-url channel heard something!!', value);
+  })
     
-  
+  ipcRenderer.on('ping', (event, arg) => {
+    console.log('ipcRenderer heard something in ping channel:', arg)
+
+    event.sender.send('pong', 'Message: Pong!');
+  })
 
     // github window will take user to the git url to login...hopefully
 
