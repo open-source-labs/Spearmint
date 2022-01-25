@@ -19,8 +19,8 @@ let mainWindow;
 // setup electron window 
 function createWindow(params) {
     mainWindow = new BrowserWindow({
-        width: 800,
-        height:1000,
+        width: 1782,
+        height:920,
         backgroundColor: "white",
         icon: path.join(__dirname, 'icon.png'),
         webPreferences:{
@@ -82,7 +82,6 @@ if (isDev) {
             .catch((err) => console.log('An error occurred: ', err));
     });
 };
-
 
 
 /*
@@ -172,22 +171,15 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
     e.returnValue = dialog.showOpenDialogSync(dialogOptions);
 	});
 	
-	app.whenReady()
+app.whenReady()
         .then(createWindow)
-		
-  
-
-
 	
-	// CHANNEL TO LOGIN TO GITHUB
-	
-	let githubWindow;
-
-
-// user has clicked on LOGIN WITH GITHUB
+// GITHUB FUNCTIONALITY
+let githubWindow;
+// ipcMain is listening on channel 'Github-Oauth' for an event(user has clicked on github login button)
+// ipbMain receives the url from ProjectLoader.jsx line 94
 ipcMain.on('Github-Oauth', (event, url) => {
 
-	// console.log('what is sent from ipcRenderer:', url);
 	console.log('opening github oauth window!!')
     githubWindow = new BrowserWindow({
 			webPreferences: {
@@ -200,28 +192,25 @@ ipcMain.on('Github-Oauth', (event, url) => {
 		
 	githubWindow.loadURL(url)
 
-
-
-	mainWindow.webContents.on('did-finish-load', () => {
-		// console.log('github Window finished initial load')
-		mainWindow.webContents.send('ping', 'Message: Ping!')
-	})
-
-
+	// everytime the url navigates to another url, this event will be emitted, and have reference to the new url
 	githubWindow.webContents.on('did-navigate', (event, url) => {
+
+		// if the new url matches our final endpoint, then the user has successfully logged in, and we grab the github username via cookies
 		if (url.startsWith('http://localhost:3001/auth/github/callback')) {
-    		// console.log('final localhost url is:', url);
-				session.defaultSession.cookies.get({name: 'dotcom_user'})
-					.then((cookies) => {
-						// console.log('session cookies:', cookies)
-						if (cookies) mainWindow.webContents.send('github-new-url', cookies);
-					})
-		
+			// console.log('final localhost url is:', url);
+
+			// gets the cookie with the name property of 'dotcom_user' 
+			session.defaultSession.cookies.get({name: 'dotcom_user'})
+				.then((cookies) => {
+
+					// if we get cookies with the key of dotcom_user, then send that to the mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
+					if (cookies) mainWindow.webContents.send('github-new-url', cookies);
+				})
+	
+			// close the githubWindow automatically
 			githubWindow.close();
-			// app.webContents.send('final-url', 'reached final localhost url');
 		}
 	})
-        	
 })
 
 
