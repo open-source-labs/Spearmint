@@ -1,7 +1,7 @@
 
 // The MAIN process: OUR BACKEND // 
 
-const { app, BrowserWindow, ipcMain, dialog, webContents} = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, webContents, session} = require('electron');
 const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
@@ -15,10 +15,10 @@ const { ipcRenderer } = require('electron');
 
 //Dynamic variable to change terminal type based on os
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
-
+let mainWindow;
 // setup electron window 
 function createWindow(params) {
-    const app = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height:1000,
         backgroundColor: "white",
@@ -30,7 +30,7 @@ function createWindow(params) {
             webviewTag: true // Electron recommends against using webview, which is why it is disabled by default - could instead build with BrowserView or iframe
         }
     })
-    app.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
+    mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
 
 
     // PTY PROCESS FOR IN APP TERMINAL
@@ -46,7 +46,7 @@ function createWindow(params) {
     const ptyProcess = np.spawn(shell, [], ptyArgs);
     // with ptyProcess, we want to send incoming data to the channel terminal.incData
     ptyProcess.on('data', (data) => {
-        app.webContents.send('terminal.incData', data);
+        mainWindow.webContents.send('terminal.incData', data);
     });
     // in the main process, at terminal.toTerm channel, when data is received,
     // main process will write to ptyProcess
@@ -72,7 +72,7 @@ if (os.platform() !== 'win32') {
 
 // Add react dev tools to electron app 
 if (isDev) {
-    app.whenReady().then(() => {
+    mainWindow.whenReady().then(() => {
         installExtension(REACT_DEVELOPER_TOOLS, {
             loadExtensionOptions: {
                 allowFileAccess: true,
@@ -173,7 +173,8 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
 	});
 	
 	app.whenReady()
-		.then(createWindow)
+        .then(createWindow)
+		
   
 
 
@@ -183,7 +184,7 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
 	let githubWindow;
 
 
-
+// user has clicked on LOGIN WITH GITHUB
 ipcMain.on('Github-Oauth', (event, url) => {
 
 	console.log('what is sent from ipcRenderer:', url);
@@ -198,33 +199,35 @@ ipcMain.on('Github-Oauth', (event, url) => {
 		});
 		
 	githubWindow.loadURL(url)
-	githubWindow.show()
 
-	githubWindow.webContents.on('did-finish-load', () => {
+
+
+	mainWindow.webContents.on('did-finish-load', () => {
 		console.log('github Window finished initial load')
-		githubWindow.webContents.send('ping', 'Message: Ping!')
+		mainWindow.webContents.send('ping', 'Message: Ping!')
 	})
 
 
 	githubWindow.webContents.on('did-navigate', (event, url) => {
     const finalurl = url
 		if (url.startsWith('http://localhost:3001/auth/github/callback')) {
-			let newURL = url
-			githubWindow.webContents.send('github-new-url', 'yoohoo');			
-			console.log('we are running in')
-
-			console.log('final localhost url is:', url);
+			let newURL = url	
+    		console.log('final localhost url is:', url);
+				session.defaultSession.cookies.get({name: 'dotcom_user'})
+					.then((cookies) => {
+						console.log('session cookies:', cookies)
+						if (cookies) mainWindow.webContents.send('github-new-url', cookies);
+					})
+		
+			githubWindow.close();
 			// app.webContents.send('final-url', 'reached final localhost url');
-			// githubWindow.close();
 		}
 	})
         
 
 	
-	 event.reply('test-channel', 'ping')
 
 })
-
 
 
 ipcMain.on('pong', (event, arg) => {

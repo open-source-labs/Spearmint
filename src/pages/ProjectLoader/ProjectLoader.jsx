@@ -118,8 +118,13 @@ const ProjectLoader = () => {
     console.log('ipcRenderer heard github test channel!!!', string);
   })
 
-  ipcRenderer.on('github-new-url', (event, value) => {
-    console.log('github-new-url channel heard something!!', value);
+  ipcRenderer.on('github-new-url', (event, cookies) => {
+    console.log('github-new-url channel heard something!!', cookies);
+    // console.log('dotcom_user:', dotcom_user);
+    setIsLoggedIn(true);
+    
+    setUsername(cookies[0].value);
+    console.log('document.cookie:', document.cookie)
   })
     
   ipcRenderer.on('ping', (event, arg) => {
