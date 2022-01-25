@@ -187,7 +187,7 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
 // user has clicked on LOGIN WITH GITHUB
 ipcMain.on('Github-Oauth', (event, url) => {
 
-	console.log('what is sent from ipcRenderer:', url);
+	// console.log('what is sent from ipcRenderer:', url);
 	console.log('opening github oauth window!!')
     githubWindow = new BrowserWindow({
 			webPreferences: {
@@ -203,19 +203,17 @@ ipcMain.on('Github-Oauth', (event, url) => {
 
 
 	mainWindow.webContents.on('did-finish-load', () => {
-		console.log('github Window finished initial load')
+		// console.log('github Window finished initial load')
 		mainWindow.webContents.send('ping', 'Message: Ping!')
 	})
 
 
 	githubWindow.webContents.on('did-navigate', (event, url) => {
-    const finalurl = url
 		if (url.startsWith('http://localhost:3001/auth/github/callback')) {
-			let newURL = url	
-    		console.log('final localhost url is:', url);
+    		// console.log('final localhost url is:', url);
 				session.defaultSession.cookies.get({name: 'dotcom_user'})
 					.then((cookies) => {
-						console.log('session cookies:', cookies)
+						// console.log('session cookies:', cookies)
 						if (cookies) mainWindow.webContents.send('github-new-url', cookies);
 					})
 		
@@ -223,29 +221,10 @@ ipcMain.on('Github-Oauth', (event, url) => {
 			// app.webContents.send('final-url', 'reached final localhost url');
 		}
 	})
-        
-
-	
-
+        	
 })
 
 
-ipcMain.on('pong', (event, arg) => {
-	console.log('PONG RECEIVED:', arg)
-})
-
-ipcMain.on('github-new-url', (event, value) => {
-	console.log('github-new-url channel heard something!!', value);
-})
-
-ipcMain.on('test-channel', (event, arg) => {
-	console.log('test channel message received:', arg);
-})
-
-ipcMain.on('Github-login-success', (event, data) => {
-	console.log(data)
-    githubWindow.close()
-})
 
         
 

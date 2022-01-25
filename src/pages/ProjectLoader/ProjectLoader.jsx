@@ -77,7 +77,8 @@ const ProjectLoader = () => {
   };
 
   const handleGithubLogin = () => {
-    console.log('GithubLogin clicked')
+    // console.log('GithubLogin clicked')
+
     // create new window for github login
     fetch('http://localhost:3001/auth/github', {
       method: 'GET',
@@ -87,49 +88,24 @@ const ProjectLoader = () => {
     })
       .then(res => {
         const url = res.url 
-        console.log('1st res:', res.url);
+        // console.log('1st res:', res.url);
 
         // how we trigger the Main Process in electron to show our window
         ipcRenderer.send('Github-Oauth', url);
-
-        // if (url.includes('localhost')) {
-          //   setIsLoggedIn(true);
-          //   setUsername('Github User')
-          //   ipcRenderer.send('Github-login-success', 'github login success');
-          // } 
-          // else if (typeof data === 'string') {
-            //   setMessage(data);
-            // } else setMessage('Login Failed: Unknown');
-           const pleasework = localStorage.getItem('finalURL');
-           console.log('this is pleasework:', pleasework);
     })
       .catch(err=>console.log(err))
   }
         
-  ipcRenderer.on('final-url', (event, string) => {
-    console.log('this is the url string from MAIN PROCESS TO RENDERER PROCESS:', string)
-  })
-
-  ipcRenderer.on('test-channel', (event, string) => {
-    console.log('ipcRenderer heard something in ProjectLoader!!!:', string)
-  })
-
-  ipcRenderer.on('github-test-channel', (e, string) => {
-    console.log('ipcRenderer heard github test channel!!!', string);
-  })
 
   ipcRenderer.on('github-new-url', (event, cookies) => {
-    console.log('github-new-url channel heard something!!', cookies);
+    // console.log('github-new-url channel heard something!!', cookies);
     // console.log('dotcom_user:', dotcom_user);
     setIsLoggedIn(true);
-    
     setUsername(cookies[0].value);
-    console.log('document.cookie:', document.cookie)
   })
     
   ipcRenderer.on('ping', (event, arg) => {
-    console.log('ipcRenderer heard something in ping channel:', arg)
-    
+    // console.log('ipcRenderer heard something in ping channel:', arg)
     ipcRenderer.send('pong', 'Message: Pong!');
   })
 
