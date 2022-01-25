@@ -9,7 +9,6 @@ const os = require('os');
 const server = require('../server/server.js');
 // react developer tools for electron in dev mode 
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
-const { ipcRenderer } = require('electron');
 // global bool to determine if in dev mode or not 
 // const isDev = true; 
 
