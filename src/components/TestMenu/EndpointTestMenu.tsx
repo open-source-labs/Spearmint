@@ -60,8 +60,8 @@ const EndpointTestMenu = () => {
   const handleClickAddDatabase = () => {
     if (endpointTestCase.addDB) {
       dispatchToEndpointTestCase(toggleDB(false));
+      dispatchToEndpointTestCase(updateDBFilePath('', ''));
       dispatchToEndpointTestCase(setFilePath(''));
-      dispatchToEndpointTestCase(updateDBFilePath(''));
     } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
   };
 

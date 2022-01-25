@@ -311,13 +311,14 @@ function useGenerateTest(test, projectFilePath) {
 
     /* ------------------------------------------ ENDPOINT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
-    // Endpoint Import Statements
+    // adds all your import statements at the top to the preview file
     const addEndpointImportStatements = () => {
-      let { serverFilePath, serverFileName, dbFilePath, addDB } = endpointTestCase;
-      createPathToEndFiles(serverFilePath, serverFileName, dbFilePath, addDB);
+      let { serverFilePath, serverFileName, dbFileName, dbFilePath, addDB } = endpointTestCase;
+      createPathToEndFiles(serverFilePath, serverFileName, dbFilePath, dbFileName, addDB);
       testFileCode += '\n';
     };
 
+    // adds all the statements from the test blocks and transforms it into code in the preview file
     const addEndpointTestStatements = () => {
       const { endpointStatements } = endpointTestCase;
       endpointStatements.forEach((statement) => {
@@ -534,12 +535,12 @@ function useGenerateTest(test, projectFilePath) {
     //   }
     // };
 
-    // Endpoint Filepath
-    const createPathToEndFiles = (serverFilePath, serverFileName, dbFilePath, addDB) => {
-     
+    // Endpoint Filepath: finds the endpoint routes in the project file 
+    const createPathToEndFiles = (serverFilePath, serverFileName, dbFileName, dbFilePath, addDB) => {
+      // if you input a server file in the server search input box...
       if (serverFilePath) {
+        // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
-        
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest');
@@ -547,15 +548,13 @@ function useGenerateTest(test, projectFilePath) {
       import "regenerator-runtime/runtime";
       const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
-      if (dbFilePath) {
-        console.log('dbFilePath is:', dbFilePath)
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
-        console.log('filePath is', filePath)
-        filePath = filePath.replace(/\\/g, '/');
-        filePath = filePath.replace(serverFileName, dbFilePath)
-      
-      
 
+      // if you input a db file in the db search input box...
+      if (dbFilePath) {
+        // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
+        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, dbFilePath);
+        filePath = filePath.replace(/\\/g, '/');
+      
         switch (addDB) {
           case 'PostgreSQL':
             testFileCode += `const pgPoolClient = require('../${filePath}');

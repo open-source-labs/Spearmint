@@ -101,10 +101,13 @@ ipcMain.on('Universal.readFile', (e, filePath) => {
 });
 
 ipcMain.on('Universal.path', (e, folderPath, filePath) => {
+    console.log('folderPath:', folderPath)
+    console.log('filePath:', filePath)
     e.returnValue = path.relative(folderPath, filePath, (err) => {
         if (err) throw err;
     });
 }); 
+
 
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
 ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
