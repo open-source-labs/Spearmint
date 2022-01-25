@@ -539,6 +539,7 @@ function useGenerateTest(test, projectFilePath) {
      
       if (serverFilePath) {
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
+        
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
       const supertest = require('supertest');
@@ -547,7 +548,9 @@ function useGenerateTest(test, projectFilePath) {
       const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
       if (dbFilePath) {
+        console.log('dbFilePath is:', dbFilePath)
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
+        console.log('filePath is', filePath)
         filePath = filePath.replace(/\\/g, '/');
         filePath = filePath.replace(serverFileName, dbFilePath)
       
