@@ -2,7 +2,7 @@ const cookieController = {};
 
 // Middleware to initialize a cookie when user logs in
 cookieController.setSSIDCookie = (req, res, next) => {
-  console.log('we are in cookieController!!')
+  // console.log('we are in cookieController!!')
   res.cookie('ssid', JSON.stringify(res.locals.userId).replace(/\"/g, ''));
   return next();
 };
