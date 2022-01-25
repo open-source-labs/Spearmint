@@ -178,7 +178,6 @@ let githubWindow;
 // ipcMain is listening on channel 'Github-Oauth' for an event(user has clicked on github login button)
 // ipbMain receives the url from ProjectLoader.jsx line 94
 ipcMain.on('Github-Oauth', (event, url) => {
-
 	console.log('opening github oauth window!!')
     githubWindow = new BrowserWindow({
 			webPreferences: {
