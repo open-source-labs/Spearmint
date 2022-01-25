@@ -2,9 +2,9 @@
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
 import styles from '../../components/Modals/Modal.module.scss';
+import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
-import Draggable from 'react-draggable';
 
 // may be able to delete toggleReact, etc. from their respective action files
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
@@ -59,6 +59,9 @@ import SecTestCase from '../../components/TestCase/SecTestCase';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
+import { IconContext } from "react-icons";
+import { AiFillCloseSquare } from "react-icons/ai"
+
 
 const TestFile = () => {
   let [{ testCase, isTestModalOpen }, dispatchToGlobal] = useContext(GlobalContext);
@@ -105,74 +108,152 @@ const TestFile = () => {
     },
   };
 
-  const styleOverrides = {
-    overlay: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
-    },
-    content: {
-      bottom: "unset",
-      overflow: "visible",
-      padding: 0,
-      border: "none",
-      borderRadius: 0,
-      position: "static",
-      background: "none",
-      pointerEvents: "none"
-    }
-  };
-
-  const DraggableModal = ({
-    isTestModalOpen,
-    children,
-    onRequestClose,
-    defaultPosition,
-    onDragStop
-  }) => {
-    return (
-      <ReactModal
-        onRequestClose={closeTestModal}
-        isOpen={isTestModalOpen}
-        style={styleOverrides}
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
-      >
-        <Draggable handle=".handle" >
-
-            <React.Fragment>
-              <div className="handle" 
-                style={handle 
-                  {
-                    height: 10px;
-                    background: #ddd;
-                    border-bottom: 5px solid white;
-                    cursor: move;
-                    width: 200%;
-                    margin-left: -50%;
-                  }
-                }/>
-              {children}
-            </React.Fragment>
-
-        </Draggable>
-      </ReactModal>
-    );
-  };
-
   return (
     // landing modal which displays button choices
+    <div>
+      <ReactModal
+        className={styles.modal}
+        isOpen={isTestModalOpen}
+        onRequestClose={closeTestModal}
+        contentLabel='Save?'
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        ariaHideApp={false}
+        style={modalStyles}
+      >
+        
+        <Draggable>
+          <div id={styles.container}>
 
-            
-              <DraggableModal isTestModalOpen>
+            <div id={styles.title}>
+              <p style={{ fontSize: 15 }}>Test</p>
+              <IconContext.Provider value={{size: '1.8em'}}>
+                <AiFillCloseSquare
+                  tabIndex={0}
+                  id={styles.escapeButton} 
+                  onKeyPress={closeTestModal}
+                  onClick={closeTestModal}
+                />  
+              </IconContext.Provider>
+            </div>
+            <div id={styles.body}>
+              <p id={styles.text}>What would you like to test?</p>
+              <span id={styles.newTestButtons}>
+                <button id={styles.save} autoFocus onClick={() => handleToggle('acc')}>
+                  Accessibility
+                </button>
+                <button id={styles.save} onClick={() => handleToggle('endpoint')}>
+                  Endpoint
+                </button>
+                <button id={styles.save} onClick={() => handleToggle('hooks')}>
+                  Hooks
+                </button>
+                <button id={styles.save} onClick={() => handleToggle('puppeteer')}>
+                  Puppeteer
+                </button>
+                <button id={styles.save} onClick={() => handleToggle('react')}>
+                  React
+                </button>
+                <button id={styles.save} onClick={() => handleToggle('redux')}>
+                  Redux
+                </button>
+                <button id={styles.save} onClick={() => handleToggle('sec')}>
+                  Security
+                </button>
+                {/* <button id={styles.save} onClick={() => handleToggle('vue')}>
+                  Vue
+                </button> */}
+              </span>
+            </div>
+          </div>
+        </Draggable>
+      </ReactModal>
+      {/* instantiate context for each test option */}
+      {testCase === 'redux' && (
+        <section>
+          <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
+            <ReduxTestCase />
+          </ReduxTestCaseContext.Provider>
+        </section>
+      )}
 
-                <div id={styles.title}>
+      {testCase === 'react' && (
+        <section>
+          <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+            <ReactTestCase />
+          </MockDataContext.Provider>
+        </section>
+      )}
 
-                  <p style={{ fontSize: 15 }}>Test</p>
+      {testCase === 'endpoint' && (
+        <section>
+          <EndpointTestCaseContext.Provider value={[endpointTestCase, dispatchToEndpointTestCase]}>
+            <EndpointTestCase />
+          </EndpointTestCaseContext.Provider>
+        </section>
+      )}
 
-                </div>
+      {testCase === 'hooks' && (
+        <section>
+          <HooksTestCaseContext.Provider value={[hooksTestCase, dispatchToHooksTestCase]}>
+            <HooksTestCase />
+          </HooksTestCaseContext.Provider>
+        </section>
+      )}
 
-              </DraggableModal>
+      {testCase === 'puppeteer' && (
+        <section>
+          <PuppeteerTestCaseContext.Provider
+            value={[puppeteerTestCase, dispatchToPuppeteerTestCase]}
+          >
+            <PuppeteerTestCase />
+          </PuppeteerTestCaseContext.Provider>
+        </section>
+      )}
+
+      {testCase === 'acc' && (
+        <section>
+          <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
+            <AccTestCase />
+          </AccTestCaseContext.Provider>
+        </section>
+      )}
+      {testCase === 'sec' && (
+        <section>
+          <SecTestCaseContext.Provider value={[secTestCase, dispatchToSecTestCase]}>
+            <SecTestCase />
+          </SecTestCaseContext.Provider>
+        </section>
+      )}
+       {/* {
+        //incomplete functionality: this is wired to go to a react test for now
+        testCase === 'vue' && (
+          <section>
+            <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+              <ReactTestCase />
+            </MockDataContext.Provider>
+          </section>
+        )
+      } */}
+
+      {testCase === '' && (
+        <Fragment>
+          <div id={styles.left}>
+            <br></br>
+            <br></br>
+            <h2>Click on New Test below to get started!</h2>
+            <br></br>
+          </div>
+          <div id={styles.testMenu}>
+            <div id={styles.left}>
+              <button id={styles.newTestBtn} onClick={closeTestModal}>
+                New Test +
+              </button>
+            </div>
+          </div>
+        </Fragment>
+      )}
+    </div>
   );
 };
 

@@ -5,24 +5,32 @@
   position: fixed;
   width: 700px;
   font-family: $openSans;
-  background-color: $mint;
-  border: 8px solid $mint;
-  border-radius: 5px;
-  box-shadow: 0 0 0 1px white inset;
+  background-color: transparent;
+  // border: 8px solid $mint;
+  // border-radius: 5px;
+  // box-shadow: 0 0 0 1px white inset;
   object-fit: cover;
   top: 25%;
   left: 22%;
+}
+
+.modal:focus{
+  outline: none;
+}
+
+.modal2:focus{
+  outline: none;
 }
 
 .modal2 {
   position: fixed;
   width: 700px;
   font-family: $openSans;
-  background-color: white;
+  background-color: transparent;
   opacity: 1;
-  border: 8px solid $mint;
-  border-radius: 5px;
-  box-shadow: 0 0 0 1px white inset;
+  // border: 8px solid $mint;
+  // border-radius: 5px;
+  // box-shadow: 0 0 0 1px white inset;
   object-fit: cover;
 }
 
@@ -130,7 +138,7 @@
     -webkit-appearance: none;
     -moz-appearance: none;
   }
-  button:focus {
+  button:hover {
     outline: 2px solid darkblue;
   }
 }
@@ -232,6 +240,32 @@ pre {
   line-height: 1.45;
   background-color: #0a1f40;
   color: white;
+}
+
+.draggable-div{
+  border-radius: 4px;
+  background: red;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 10px;
+  padding-top: 0px;
+  pointer-events: all;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.handle {
+  height: 10px;
+  background: black;
+  border-bottom: 5px solid white;
+  cursor: move;
+  width: 200%;
+  margin-left: -50%;
+}
+
+#container{
+  background: $mint;
+  border: 8px solid $mint;
+  padding: 10px;
 }
 
 /*animation*/
