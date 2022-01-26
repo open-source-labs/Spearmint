@@ -9,7 +9,7 @@ const { ipcRenderer } = require('electron');
 // const remote = require('@electron/remote/main')
 
 function ProjectLoader() {
-  const [dispatchToGlobal] = useContext(GlobalContext);
+  const [{ idFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -66,7 +66,7 @@ function ProjectLoader() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('this is normal login res.json data', data);
+        // console.log('this is normal login res.json data', data);
         if (data.ssid) {
           setIsLoggedIn(true);
         } else if (typeof data === 'string') {

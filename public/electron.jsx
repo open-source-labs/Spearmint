@@ -1,11 +1,14 @@
 
 // The MAIN process: OUR BACKEND //
 
-const { app, BrowserWindow, ipcMain, dialog, session } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, session, webContents } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
+
+// Gives app access the endpoints in our server.js file
+require('../server/server.js');
 
 // react developer tools for electron in dev mode
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
@@ -21,7 +24,7 @@ function createWindow() {
     width: 1782,
     height: 920,
     backgroundColor: 'white',
-    icon: path.join(__dirname, 'icon.png'),
+    icon: path.join(__dirname, './icon.icns'),
     webPreferences: {
       nodeIntegration: true, // resolves an issue with OpenFolderButton
       worldSafeExecuteJavaScript: true,
@@ -168,9 +171,6 @@ ipcMain.on('OpenFolderButton.dialog', (e) => {
   e.returnValue = dialog.showOpenDialogSync(dialogOptions);
 });
 
-app.whenReady()
-  .then(createWindow);
-
 // GITHUB FUNCTIONALITY
 let githubWindow;
 // ipcMain is listening on channel 'Github-Oauth' for an event from ProjectLoader line 94
@@ -208,3 +208,7 @@ ipcMain.on('Github-Oauth', (_event, url) => {
     }
   });
 });
+
+
+app.whenReady()
+  .then(createWindow);
