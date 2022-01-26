@@ -11,6 +11,23 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
+  "build": {
+    "productName": "spearmint",
+    "mac": {
+      "icon": "./public/icon.png",
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "./build/**/*",
+      "./dist/**/*",
+      "./node_modules/**/*",
+      "./public/**/*",
+      "*.js"
+    ],
+    "directories": {
+      "buildResources": "public"
+    }
+  },
   "keywords": [],
   "author": "team spearmint",
   "license": "ISC",
@@ -69,6 +86,7 @@
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "axe-core": "^4.3.5",
+    "electron": "^13.6.3",
     "electron-rebuild": "^3.2.5",
     "eslint": "^8.7.0",
     "eslint-config-airbnb": "^19.0.4",

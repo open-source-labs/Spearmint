@@ -31,6 +31,11 @@ function createWindow() {
       // could instead build with BrowserView or iframe
     },
   });
+
+  if (process.platform === 'darwin') {
+      app.dock.setIcon(path.join(__dirname, 'icon.png'));
+  }
+
   mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
 
   // PTY PROCESS FOR IN APP TERMINAL
