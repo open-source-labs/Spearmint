@@ -66,16 +66,17 @@
 
 #escapeButton {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 1.25rem;
+  top: 2px;
+  right: 2px;
+  font-size: 1rem;
   z-index: 3;
   transition: 250ms;
+  fill: white;
 
   &:hover {
-    color: red;
+    fill: red;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
   }
 }
@@ -265,7 +266,7 @@ pre {
 #container{
   background: $mint;
   border: 8px solid $mint;
-  padding: 10px;
+  padding: 30px;
 }
 
 /*animation*/
