@@ -598,7 +598,7 @@ function useGenerateTest(test, projectFilePath) {
         }
       }
       else if (type === 'vue'){
-        testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger(${action.eventType});`;
+        testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
       }
     };
 

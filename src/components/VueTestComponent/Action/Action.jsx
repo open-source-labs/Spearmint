@@ -44,6 +44,47 @@ const Action = ({ statement, statementId, describeId, itId }) => {
       <div id={styles.actionHeader}>
         <h3>Action</h3>
       </div>
+      
+      <div id={styles.queryFlexBox}>
+        <div id={styles.querySelector}>
+          <label htmlFor='queryVariant' className={styles.queryLabel}>
+            Query Selector
+          </label>
+          <div id={styles.dropdownFlex}>
+            <select
+              id='queryVariant'
+              value={statement.queryVariant}
+              onChange={(e) => handleChangeActionFields(e, 'queryVariant')}
+            >
+              <option value='' />
+              <option value='find'>find</option>
+              <option value='findComponent'>findComponent</option>
+              <option value='findAll'>findAll</option>
+              <option value='get'>get</option>
+              <option value='getComponent'>getComponent</option>
+            </select>
+            <span id={styles.hastooltip} role='tooltip'>
+              <img src={questionIcon} alt='help' />
+              <span id={styles.tooltip}>
+                <ToolTip toolTipType={statement.queryVariant} />
+              </span>
+            </span>
+            <div id={styles.query}>
+              <label htmlFor='queryValue' className={styles.queryLabel}>
+                Query
+              </label>
+
+              <input
+                type='text'
+                id='queryValue'
+                value={statement.queryValue}
+                placeholder="eg: '[data-test='test-id']'"
+                onChange={(e) => handleChangeActionFields(e, 'queryValue')}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       <div id={styles.eventTypeFlexBox}>
         <div id={styles.eventType}>
           <label htmlFor='eventType'>Event Type</label>
@@ -83,49 +124,6 @@ const Action = ({ statement, statementId, describeId, itId }) => {
             </span>
           ) : null}
         </div>
-      </div>
-      <div id={styles.queryFlexBox}>
-        <div id={styles.querySelector}>
-          <label htmlFor='queryVariant' className={styles.queryLabel}>
-            Query Selector
-          </label>
-          <div id={styles.dropdownFlex}>
-            <select
-              id='queryVariant'
-              value={statement.queryVariant}
-              onChange={(e) => handleChangeActionFields(e, 'queryVariant')}
-            >
-              <option value='' />
-              <option value='find'>find</option>
-              <option value='findComponent'>findComponent</option>
-              <option value='findAll'>findAll</option>
-              <option value='get'>get</option>
-              <option value='getComponent'>getComponent</option>
-            </select>
-            <span id={styles.hastooltip} role='tooltip'>
-              <img src={questionIcon} alt='help' />
-              <span id={styles.tooltip}>
-                <ToolTip toolTipType={statement.queryVariant} />
-              </span>
-            </span>
-            <div id={styles.query}>
-              <label htmlFor='queryValue' className={styles.queryLabel}>
-                Query
-              </label>
-
-              <input
-                type='text'
-                id='queryValue'
-                value={statement.queryValue}
-                onChange={(e) => handleChangeActionFields(e, 'queryValue')}
-              />
-            </div>
-
-           
-            
-          </div>
-        </div>
-        
       </div>
     </div>
   );
