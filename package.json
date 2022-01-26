@@ -11,6 +11,27 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
+  "build": {
+    "appId": "spearmint",
+    "productName": "spearmint",
+    "mac": {
+      "icon": "./public/icon.icns",     
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "icon": "./public/icon.png" 
+    },
+    "files": [
+      "./build/**/*",
+      "./dist/**/*",
+      "./node_modules/**/*",
+      "./public/**/*",       
+      "*.js"
+    ],
+    "directories": {
+      "buildResources": "public" 
+    }
+  },
   "keywords": [],
   "author": "team spearmint",
   "license": "ISC",
@@ -31,6 +52,7 @@
     "cookie-parser": "^1.4.6",
     "css-loader": "^6.2.0",
     "dotenv": "^10.0.0",
+    "electron-builder": "^22.14.5",
     "electron-devtools-installer": "^3.2.0",
     "electron-squirrel-startup": "^1.0.0",
     "express": "^4.17.1",

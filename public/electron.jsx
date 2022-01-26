@@ -11,6 +11,9 @@ const server = require('../server/server.js');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 // global bool to determine if in dev mode or not 
 // const isDev = true; 
+// const nativeImage = require('electron').nativeImage;
+// var image = nativeImage.createFromPath(__dirname + '/public/icon.png')
+// image.setTemplateImage(true);
 
 //Dynamic variable to change terminal type based on os
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
@@ -21,7 +24,8 @@ function createWindow(params) {
         width: 1782,
         height:920,
         backgroundColor: "white",
-        icon: path.join(__dirname, 'icon.png'),
+        icon: path.join(__dirname, '/public/icon.png'),
+        // icon: path.join(__static,'icon.png'),
         webPreferences:{
             nodeIntegration: true, // changed to true from legacy to resolve an issue with OpenFolderButton
             worldSafeExecuteJavaScript: true,
