@@ -98,6 +98,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='' />
               <option value='find'>find</option>
               <option value='findComponent'>findComponent</option>
+              <option value='findAll'>findAll</option>
               <option value='get'>get</option>
               <option value='getComponent'>getComponent</option>
             </select>

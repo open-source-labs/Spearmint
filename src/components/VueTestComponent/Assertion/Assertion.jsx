@@ -34,10 +34,14 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
 
   const needsMatcherValue = (matcherType) => {
     const matchersWithValues = [
-      'toBe', //takes in a HTML element Ex: <span data-testid="descendant"></span>
-      'toEqual', //takes in a string Ex: '<span data-testid="child"></span>'
-      'not.toBe', //takes in a HTML element Ex: <span data-testid="descendant"></span>
-      'not.toEqual', //takes in a string Ex: '<span data-testid="child"></span>'
+      'toBe', 
+      'toEqual',
+      'toHaveLength',
+      'toContain',
+      'not.toBe', 
+      'not.toEqual', 
+      'not.toHaveLength',
+      'not.toContain',
     ];
     return matchersWithValues.includes(matcherType);
   };
@@ -62,20 +66,17 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <option value='' />
               <option value='find'>find</option>
               <option value='findComponent'>findComponent</option>
+              <option value='findAll'>findAll</option>
               <option value='get'>get</option>
               <option value='getComponent'>getComponent</option>
-              {/* <option value='findBy'>findBy</option>
-              <option value='findAllBy'>findAllBy</option> */}
             </select>
             <div id={styles.query}>
-              <label htmlFor='queryValue' className={styles.queryLabel}>
-                Query
-              </label>
               <input
                 type='text'
                 id='queryValue'
                 value={statement.queryValue}
                 onChange={(e) => handleChangeAssertionFields(e, 'queryValue')}
+                placeholder='Query'
               />
             </div>
             <span id={styles.hastooltip} role='tooltip'>
@@ -90,14 +91,9 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
             >
               <option value='' />
               <option value='isVisibile'>isVisible</option>
-              {/* <option value='findAll'>findAll</option> */}
               <option value='exists'>exists</option>
               <option value='html'>html</option>
               <option value='text'>text</option>
-              {/* <option value='DisplayValue'>DisplayValue</option>
-              <option value='Role'>Role</option>
-              <option value='TestId'>TestId</option> */}
-              {/* TextMatch Precision & Normalization will be added */}
             </select>
             <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />

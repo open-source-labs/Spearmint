@@ -591,14 +591,14 @@ function useGenerateTest(test, projectFilePath) {
       if (type === 'react'){
         if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                            ('${action.queryValue}'), { target: { value: ${action.eventValue} } });`;
+                            (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
         } else {
           testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                            ('${action.queryValue}'));`;
+                            (${action.queryValue}));`;
         }
       }
       else if (type === 'vue'){
-        testFileCode += `await wrapper.${action.queryVariant}('${action.queryValue}').trigger('${action.eventType}');`;
+        testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger(${action.eventType});`;
       }
     };
 
@@ -610,7 +610,14 @@ function useGenerateTest(test, projectFilePath) {
           (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
       }
       if(type === 'vue'){
-        testFileCode += `expect(wrapper.${assertion.queryVariant}('${assertion.queryValue}').${assertion.querySelector}()).${assertion.matcherType}('${assertion.matcherValue}');`;
+        if (assertion.querySelector){
+          testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue}).
+            ${assertion.querySelector}()).${assertion.matcherType}(${assertion.matcherValue});`;
+        }
+        else{
+          testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
+            ${assertion.matcherType}(${assertion.matcherValue});`;
+        }
       }
     };
 

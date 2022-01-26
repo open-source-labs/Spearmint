@@ -17,4 +17,10 @@ export const vueTypesList = [
   {
     name: 'toBeUndefined',
   },
+  {
+    name: 'toHaveLength'
+  },
+  {
+    name: 'toContain'
+  },
 ];

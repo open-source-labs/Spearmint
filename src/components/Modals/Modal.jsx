@@ -217,7 +217,6 @@ const Modal = ({
     return null;
   };
 
-  console.log(testType);
   return (
     <ReactModal
       className={styles.modal2}
