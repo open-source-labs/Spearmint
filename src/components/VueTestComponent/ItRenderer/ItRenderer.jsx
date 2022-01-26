@@ -86,7 +86,7 @@ const ItRenderer = ({
               <div className={styles.buttonsContainer}>
                 <button id={id} onClick={addRenderHandleClick} className={styles.reactButton}>
                   <i className='fas fa-plus'></i>
-                  Render
+                  Mount
                 </button>
                 <button id={id} onClick={addActionHandleClick} className={styles.reactButton}>
                   <i className='fas fa-plus'></i>

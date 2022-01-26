@@ -9,6 +9,7 @@ import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer
 
 import { deleteRender, addProp } from '../../../context/actions/vueTestCaseActions';
 import Prop from './Prop';
+const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ statement, statementId, describeId, itId }) => {
   const [{ statements }, dispatchToVueTestCase] = useContext(VueTestCaseContext);
@@ -25,15 +26,13 @@ const Render = ({ statement, statementId, describeId, itId }) => {
     <div id={styles.RenderContainer}>
       <div className={styles.renderHeader}>
         <span className={styles.header}>
-          Rendering: <span style={{ color: 'black' }}>{statements.componentName}</span>
+          Mounting: <span style={{ color: 'black' }}>{statements.componentName}</span>
         </span>
         <button className={styles.addProps} onClick={handleClickAddProp}>
           <i className='fas fa-plus'></i> Add Props
         </button>
-        <i
-          onClick={handleClickDeleteRender}
-          className={cn(styles.deleteRender, 'far fa-window-close')}
-        ></i>
+        <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteRender} />
+
       </div>
       <div className={'props'}>
         {statement.props.length > 0 && (
