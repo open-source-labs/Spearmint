@@ -11,23 +11,6 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
-  "build": {
-    "productName": "spearmint",
-    "mac": {
-      "icon": "./public/icon.png",
-      "category": "public.app-category.utilities"
-    },
-    "files": [
-      "./build/**/*",
-      "./dist/**/*",
-      "./node_modules/**/*",
-      "./public/**/*",
-      "*.js"
-    ],
-    "directories": {
-      "buildResources": "public"
-    }
-  },
   "keywords": [],
   "author": "team spearmint",
   "license": "ISC",
