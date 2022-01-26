@@ -15,7 +15,6 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import Draggable from 'react-draggable';
 
 import { IconContext } from "react-icons";
