@@ -1,14 +1,15 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState} from 'react';
+import { Button, TextField } from '@material-ui/core';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import {setGuest} from '../../context/actions/globalActions'
-import OpenFolder from '../../components/OpenFolder/OpenFolderButton.jsx';
-import { Button, TextField } from '@material-ui/core';
-const { BrowserWindow, ipcRenderer } = require('electron');
+import { setGuest } from '../../context/actions/globalActions';
+import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
+
+const { ipcRenderer } = require('electron');
 // const remote = require('@electron/remote/main')
 
-const ProjectLoader = () => {
-  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
+function ProjectLoader() {
+  const [dispatchToGlobal] = useContext(GlobalContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -18,34 +19,33 @@ const ProjectLoader = () => {
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
-    } else if (url.startsWith('localhost')) {
-      url = 'http://' + url;
-      return url;
-    } else {
-      url = 'https://' + url;
+    } if (url.startsWith('localhost')) {
+      url = `http://${url}`;
       return url;
     }
+    url = `https://${url}`;
+    return url;
   };
 
-  //updates state when user enters username as login input
+  // updates state when user enters username as login input
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
 
-  //updates state when user enters password as login input
+  // updates state when user enters password as login input
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
   // guest login
   const handleGuestLogin = () => {
-    // dispatch to global context 
+    // dispatch to global context
     dispatchToGlobal(setGuest(true));
-    // set logged in to true 
+    // set logged in to true
     setIsLoggedIn(true);
-    // set current username to guest 
-    setUsername('guest'); 
-  }
+    // set current username to guest
+    setUsername('guest');
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ const ProjectLoader = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('this is normal login res.json data', data)
+        console.log('this is normal login res.json data', data);
         if (data.ssid) {
           setIsLoggedIn(true);
         } else if (typeof data === 'string') {
@@ -84,32 +84,25 @@ const ProjectLoader = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     })
-      .then(res => {
-        const url = res.url 
+      .then((res) => {
+        const { url } = res;
         // console.log('1st res:', res.url);
 
         // how we trigger the Main Process in electron to show our window
         ipcRenderer.send('Github-Oauth', url);
-    })
-      .catch(err=>console.log(err))
-  }
-        
+      })
+      .catch((err) => console.log(err));
+  };
 
+  // Listens for event from electron.jsx line 205
   ipcRenderer.on('github-new-url', (event, cookies) => {
     // console.log('github-new-url channel heard something!!', cookies);
     // console.log('dotcom_user:', dotcom_user);
     setIsLoggedIn(true);
     setUsername(cookies[0].value);
-  })
-    
-  ipcRenderer.on('ping', (event, arg) => {
-    // console.log('ipcRenderer heard something in ping channel:', arg)
-    ipcRenderer.send('pong', 'Message: Pong!');
-  })
-
-    // github window will take user to the git url to login...hopefully
+  });
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -141,45 +134,42 @@ const ProjectLoader = () => {
       .catch((err) => console.log(err));
   };
 
-  const onFailure = (response) => console.error(response);
-
   const renderLogin = () => (
     <div className={styles.contentBox}>
       <form onSubmit={handleLogin}>
         <TextField
-          id='username'
-          name='username'
+          id="username"
+          name="username"
           value={username}
           onChange={handleUsernameChange}
-          label='Username'
+          label="Username"
         />
-        {/* <input placeholder="username" name="username" value={username} className="inputField" type="text" onChange={handleUsernameChange} /> */}
         <br />
         <br />
         <TextField
-          id='password'
-          name='password'
+          id="password"
+          name="password"
           value={password}
           onChange={handlePasswordChange}
-          label='Password'
-          type='password'
+          label="Password"
+          type="password"
         />
         <br />
         <br />
         <span>{message}</span>
         <br />
         <br />
-        <Button variant='contained' type='submit' onClick={handleLogin} id={styles.loginBtn}>
+        <Button variant="contained" type="submit" onClick={handleLogin} id={styles.loginBtn}>
           Log In
         </Button>
-        <Button variant='outlined' type='button' onClick={handleSignup} id={styles.loginBtn}>
+        <Button variant="outlined" type="button" onClick={handleSignup} id={styles.loginBtn}>
           Sign up
         </Button>
         <br />
       </form>
-      <Button variant='text' id={styles.gitButton} onClick={handleGuestLogin}>Login as Guest</Button>
-      <br/>
-      <Button variant='text' id={styles.gitButton} onClick={handleGithubLogin}>Login with GitHub</Button>
+      <Button variant="text" id={styles.gitButton} onClick={handleGuestLogin}>Login as Guest</Button>
+      <br />
+      <Button variant="text" id={styles.gitButton} onClick={handleGithubLogin}>Login with GitHub</Button>
     </div>
   );
 
@@ -189,13 +179,13 @@ const ProjectLoader = () => {
         <span id={styles.title}>spearmint</span>
         <svg
           id={styles.leaf}
-          viewBox='0 0 24 24'
-          xmlns='http://www.w3.org/2000/svg'
-          xmlnsXlink='http://www.w3.org/1999/xlink'
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
         >
           <path
-            fill='#ffffff'
-            d='M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z'
+            fill="#ffffff"
+            d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"
           />
         </svg>
         <span id={styles.purpose}>testing, simplified</span>
@@ -208,20 +198,22 @@ const ProjectLoader = () => {
             renderLogin()
           ) : (
             <div className={styles.contentBox}>
-              <span className={styles.text}>Currently logged in as {username}!</span>
+              <span className={styles.text}>
+                Currently logged in as {username}!
+              </span>
               <br />
               <br />
               <br />
               <span className={styles.text}>Select your application:</span>
               <br />
-                <OpenFolder />
-                <br />
-                <br />
-                <br />
-                <Button variant='contained' type='button' onClick={handleLogout} id={styles.loginBtn}>
+              <OpenFolder />
+              <br />
+              <br />
+              <br />
+              <Button variant="contained" type="button" onClick={handleLogout} id={styles.loginBtn}>
                 LOGOUT
-                </Button>
-                <br />
+              </Button>
+              <br />
             </div>
           )}
         </div>
@@ -230,6 +222,6 @@ const ProjectLoader = () => {
       </section>
     </div>
   );
-};
+}
 
 export default ProjectLoader;

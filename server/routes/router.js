@@ -1,19 +1,17 @@
+/* eslint-disable comma-dangle */
 // Import Express to streamline server logic with router
 const express = require('express');
 // Import all relevant controller objects equipped with middleware
+const passport = require('passport');
 const userController = require('../controllers/userController');
 const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 const testStateController = require('../controllers/testStateController');
-const passport = require('passport');
 // const { ipcRenderer } = require('electron');
 // const githubController = require('../controllers/githubController');
 
 // Initialize an express router
 const router = express.Router();
-
-
-
 
 // Set up route for post requests to /signup
 router.post(
@@ -24,8 +22,7 @@ router.post(
   userController.signup,
   // Anonymous middleware to send back valid response
   (req, res) => {
-    res.status(200)
-      .json('Sign Up Successful');
+    res.status(200).json('Sign Up Successful');
   }
 );
 
@@ -83,17 +80,18 @@ router.get(
 );
 
 // Set up route for get requests to github login auth
-router.get('/auth/github',
-  // first authenticate asks users if they will ALLOW or DENY us permission to request their github profile
-  passport.authenticate('github', { scope: [ 'profile' ] }));
+router.get(
+  '/auth/github',
+  // Asks users if they will ALLOW or DENY us permission to request their github profile
+  passport.authenticate('github', { scope: ['profile'] })
+);
 
-  
-
-  // if user does ALLOW, then they are automatically redirected to the callback endpoint
-router.get('/auth/github/callback', 
+// if user does ALLOW, then they are automatically redirected to the callback endpoint
+router.get(
+  '/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
 
-  // if second passport authentication is successful, then these middleware functions are invoked next
+  // if second passport auth is successful, then these middleware functions are invoked next
   userController.githubLogin,
   cookieController.setSSIDCookie,
   sessionController.startSession,
@@ -104,6 +102,6 @@ router.get('/auth/github/callback',
     // we send the ssid back to the front end
     res.status(200).json({ ssid: res.locals.ssid });
   }
-)
+);
 
 module.exports = router;
