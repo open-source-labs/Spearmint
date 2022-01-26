@@ -409,11 +409,8 @@ function useGenerateTest(test, projectFilePath) {
           projectFilePath,
           statement.reducersFilePath
         );
-        console.log('filepath before replace', filePath)
         filePath = filePath.replace(/\\/g, '/');
       }
-
-      console.log('filepath after replace:', filePath)
 
       if (
         !testFileCode.includes(
@@ -543,7 +540,7 @@ function useGenerateTest(test, projectFilePath) {
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
-      const supertest = require('supertest');
+      const supertest = require('supertest')\n;
       import "core-js/stable";
       import "regenerator-runtime/runtime";
       const request = supertest(app)\n`;

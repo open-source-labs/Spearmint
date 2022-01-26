@@ -50,7 +50,6 @@ const EndpointTestMenu = () => {
   };
 
   const fileHandle = () => {
-    console.log('endpointTestCase:', endpointTestCase); 
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
