@@ -2,13 +2,11 @@
 // The MAIN process: OUR BACKEND //
 
 const { app, BrowserWindow, ipcMain, dialog, session, webContents } = require('electron');
+require('dotenv').config({ path: __dirname + '/../.env'})
 const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
-
-// Gives app access the endpoints in our server.js file
-require('../server/server.js');
 
 // react developer tools for electron in dev mode
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
@@ -17,6 +15,15 @@ const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-d
 
 // Dynamic variable to change terminal type based on os
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
+
+// Checks .env local file to see if APP_DEV=true
+const isDev = process.env.APP_DEV ? (process.env.APP_DEV) : false;
+
+// Prevents ADDRESS ALREADY IN USE error when running script npm run start-dev
+if (!isDev || process.env.npm_lifecycle_event !== 'start-dev') {
+  require('../server/server.js');
+}
+
 let mainWindow;
 // setup electron window
 function createWindow() {
@@ -63,33 +70,12 @@ function createWindow() {
   });
 }
 
-// not 100% sure what this is doing
-const isDev = process.env.APP_DEV ? (process.env.APP_DEV.trim() == 'true') : false;
-
-if (isDev) {
-  require('electron-reload')(__dirname, {
-    electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
-  });
-}
-
-//
 if (os.platform() !== 'win32') {
   const fixPath = require('fix-path');
   fixPath();
 }
 
-// Add react dev tools to electron app
-if (isDev) {
-  mainWindow.whenReady().then(() => {
-    installExtension(REACT_DEVELOPER_TOOLS, {
-      loadExtensionOptions: {
-        allowFileAccess: true,
-      },
-    })
-      .then((name) => console.log(`Added Extension:  ${name}`))
-      .catch((err) => console.log('An error occurred: ', err));
-  });
-}
+
 
 /*
 UNIVERSAL IPC CALLS
@@ -216,4 +202,22 @@ ipcMain.on('Github-Oauth', (_event, url) => {
 
 
 app.whenReady()
-  .then(createWindow);
+  .then(createWindow)
+
+  // react dev tools not working so commenting out...
+  // .then(()=> {
+  //   if (isDev) {
+  //     // Add react dev tools to electron app
+  //     mainWindow.whenReady()
+  //       .then(() => {
+  //         installExtension(REACT_DEVELOPER_TOOLS, {
+  //           loadExtensionOptions: {
+  //             allowFileAccess: true,
+  //           },
+  //         })
+  //           .then((name) => console.log(`Added Extension:  ${name}`))
+  //           .catch((err) => console.log('An error occurred: ', err));
+  //       });
+  //   }
+  // })
+
