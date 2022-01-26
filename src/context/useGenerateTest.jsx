@@ -540,10 +540,10 @@ function useGenerateTest(test, projectFilePath) {
         let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
-      const supertest = require('supertest')\n;
-      import "core-js/stable";
-      import "regenerator-runtime/runtime";
-      const request = supertest(app)\n`;
+        const supertest = require('supertest')\n;
+        import "core-js/stable";
+        import "regenerator-runtime/runtime";
+        const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
 
       // if you input a db file in the db search input box...
