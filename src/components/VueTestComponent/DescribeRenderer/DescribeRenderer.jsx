@@ -4,6 +4,8 @@ import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../../context/actions/vueTestCaseActions';
+import { IconContext } from 'react-icons';
+import { AiFillCloseSquare } from 'react-icons/ai';
 
 const DescribeRenderer = ({
   dispatcher,
@@ -16,7 +18,7 @@ const DescribeRenderer = ({
 }) => {
   const deleteDescribeBlockHandleClick = (e) => {
     e.stopPropagation();
-    const describeId = e.target.id;
+    const describeId = e.currentTarget.id;
     dispatcher(deleteDescribeBlock(describeId));
   };
 
@@ -44,13 +46,16 @@ const DescribeRenderer = ({
             Describe Block
           </label>
 
-          <i
-            tabIndex={0}
-            onKeyPress={deleteVueDescribeBlockOnKeyUp}
-            onClick={deleteDescribeBlockHandleClick}
-            id={id}
-            className={cn('far fa-window-close', styles.describeClose)}
-          ></i>
+          <IconContext.Provider 
+            value={{size: '1.8em'}} id={id} >
+            <AiFillCloseSquare
+              tabIndex={0}
+              id={id} 
+              onKeyPress={deleteVueDescribeBlockOnKeyUp}
+              onClick={deleteDescribeBlockHandleClick}
+              className={cn('far fa-window-close', styles.describeClose)}
+            />  
+          </IconContext.Provider>
 
           <input
             id={id}

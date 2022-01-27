@@ -70,10 +70,6 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               </span>
             </span>
             <div id={styles.query}>
-              <label htmlFor='queryValue' className={styles.queryLabel}>
-                Query
-              </label>
-
               <input
                 type='text'
                 id='queryValue'
