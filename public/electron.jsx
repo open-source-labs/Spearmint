@@ -103,6 +103,7 @@ ipcMain.on('Universal.path', (e, folderPath, filePath) => {
   });
 });
 
+
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
 ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
   fs.writeFile(filePath, editedText, (err) => {

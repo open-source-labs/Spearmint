@@ -4,7 +4,7 @@
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
   "main": "public/electron.jsx",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test jest",
     "start": "electron-forge start",
     "start-dev": "concurrently \"electron .\" \"nodemon server/server.js\"",
     "watch": "webpack --config webpack.config.ts --watch",
