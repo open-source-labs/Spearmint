@@ -15,6 +15,10 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import Draggable from 'react-draggable';
+
+import { IconContext } from "react-icons";
+import { AiFillCloseSquare } from "react-icons/ai"
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -95,6 +99,7 @@ const Modal = ({
     dispatchToGlobal(setTabIndex(2));
   };
 
+
   // Warning that tests will not be saved while transitioning between test types
   if (title === 'New Test') {
     return (
@@ -119,10 +124,19 @@ const Modal = ({
           },
         }}
       >
+        <Draggable>
+        <div id={styles.container}>
         <div id={styles.title}>
           <p>{title}</p>
         </div>
-
+        <IconContext.Provider 
+          value={{size: '1.8em'}}>
+        <AiFillCloseSquare
+          id={styles.escapeButton} 
+          onKeyPress={clearAndClose}
+          onClick={clearAndClose}
+        />  
+        </IconContext.Provider> 
         <div id={styles.body}>
           <p id={styles.text}>
             Do you want to start a new test? All unsaved changes
@@ -141,6 +155,8 @@ const Modal = ({
             </button>
           </span>
         </div>
+        </div>
+        </Draggable>
       </ReactModal>
     );
   }
@@ -218,6 +234,7 @@ const Modal = ({
   };
 
   return (
+    
     <ReactModal
       className={styles.modal2}
       isOpen={isModalOpen}
@@ -239,17 +256,28 @@ const Modal = ({
         },
       }}
     >
+      <Draggable>
+      <div id={styles.container}>
       {/* Modal Title */}
-      <div id={styles.title}>
+        <div id={styles.title}>
         <p style={{ fontSize: 20 }}>Run Tests in Terminal</p>
-        <i
+        {/* <p
           tabIndex={0}
           onKeyPress={clearAndClose}
           onClick={clearAndClose}
           id={styles.escapeButton}
           className={cn('far fa-window-close', styles.describeClose)}
-        />
+        >close</p> */}
+        <IconContext.Provider 
+          value={{size: '1.8em'}}>
+        <AiFillCloseSquare
+          id={styles.escapeButton} 
+          onKeyPress={clearAndClose}
+          onClick={clearAndClose}
+        />  
+        </IconContext.Provider> 
       </div>
+      
       {/* Accordion View */}
       <div>
         {/* Configuration Guide */}
@@ -388,7 +416,10 @@ const Modal = ({
           </AccordionDetails>
         </Accordion>
       </div>
+      </div>
+      </Draggable>
     </ReactModal>
+  
   );
 };
 

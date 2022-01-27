@@ -1,10 +1,13 @@
+/* eslint-disable comma-dangle */
 // Import Express to streamline server logic with router
 const express = require('express');
 // Import all relevant controller objects equipped with middleware
+const passport = require('passport');
 const userController = require('../controllers/userController');
 const cookieController = require('../controllers/cookieController');
 const sessionController = require('../controllers/sessionController');
 const testStateController = require('../controllers/testStateController');
+// const { ipcRenderer } = require('electron');
 // const githubController = require('../controllers/githubController');
 
 // Initialize an express router
@@ -19,8 +22,7 @@ router.post(
   userController.signup,
   // Anonymous middleware to send back valid response
   (req, res) => {
-    res.status(200)
-      .json('Sign Up Successful');
+    res.status(200).json('Sign Up Successful');
   }
 );
 
@@ -74,6 +76,31 @@ router.get(
   // Anonymous middleware to send back valid response
   (req, res) => {
     res.status(200).json(res.locals.tests);
+  }
+);
+
+// Set up route for get requests to github login auth
+router.get(
+  '/auth/github',
+  // Asks users if they will ALLOW or DENY us permission to request their github profile
+  passport.authenticate('github', { scope: ['profile'] })
+);
+
+// if user does ALLOW, then they are automatically redirected to the callback endpoint
+router.get(
+  '/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login' }),
+
+  // if second passport auth is successful, then these middleware functions are invoked next
+  userController.githubLogin,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+
+  // Anonymous middleware to send back valid response
+  (req, res) => {
+    console.log('ssid:', res.locals.ssid);
+    // we send the ssid back to the front end
+    res.status(200).json({ ssid: res.locals.ssid });
   }
 );
 

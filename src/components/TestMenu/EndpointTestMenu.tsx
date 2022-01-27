@@ -50,8 +50,6 @@ const EndpointTestMenu = () => {
   };
 
   const fileHandle = () => {
-    console.log('endpointTestCase'); 
-    console.log(endpointTestCase)
     dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
@@ -61,7 +59,8 @@ const EndpointTestMenu = () => {
   const handleClickAddDatabase = () => {
     if (endpointTestCase.addDB) {
       dispatchToEndpointTestCase(toggleDB(false));
-      dispatchToEndpointTestCase(updateDBFilePath(''));
+      dispatchToEndpointTestCase(updateDBFilePath('', ''));
+      dispatchToEndpointTestCase(setFilePath(''));
     } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
   };
 
