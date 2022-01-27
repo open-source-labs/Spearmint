@@ -590,20 +590,38 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
-    const addAction = (action) => {
-      if (action.eventValue) {
-        testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                          ('${action.queryValue}'), { target: { value: ${action.eventValue} } });`;
-      } else {
-        testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                          ('${action.queryValue}'));`;
+    const addAction = (action,  type = 'react') => {
+      if (type === 'react'){
+        if (action.eventValue) {
+          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
+                            (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+        } else {
+          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
+                            (${action.queryValue}));`;
+        }
+      }
+      else if (type === 'vue'){
+        testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
       }
     };
 
     // Assertion Jest Test Code
-    const addAssertion = (assertion) => {
-      testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
+    const addAssertion = (assertion, type = 'react') => {
+
+      if (type === 'react'){
+        testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
           (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
+      }
+      if(type === 'vue'){
+        if (assertion.querySelector){
+          testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue}).
+            ${assertion.querySelector}()).${assertion.matcherType}(${assertion.matcherValue});`;
+        }
+        else{
+          testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
+            ${assertion.matcherType}(${assertion.matcherValue});`;
+        }
+      }
     };
 
     // Middleware Jest Test Code
@@ -1088,6 +1106,90 @@ function useGenerateTest(test, projectFilePath) {
         `;
     };
 
+    // --------------------------------- Vue Test --------------------------------------------------
+
+    const addVueImportStatements = () => {
+      testFileCode += `
+        import { mount } from '@vue/test-utils';
+        \n`;
+    };
+
+
+    const addVueComponentImportStatement = () => {
+      const componentPath = vueTestCase.statements.componentPath;
+      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      filePath = filePath.replace(/\\/g, '/');
+      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.vue?/, '');
+      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
+    };
+
+    const addVueDescribeBlocks = () => {
+      const describeBlocks = vueTestCase.describeBlocks;
+
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        addVueItStatement(id);
+        testFileCode += `}); \n`;
+      });
+    };
+    
+    const addVueItStatement = (describeId) => {
+      const itStatements = vueTestCase.itStatements;
+      itStatements.allIds[describeId].forEach((itId) => {
+        testFileCode += `it('${itStatements.byId[itId].text}', async () => {`;
+        addVueStatements(itId);
+        testFileCode += '})\n';
+      });
+    };
+
+    const addVueStatements = (itId) => {
+      const statements = vueTestCase.statements;
+      const methods = identifyVueMethods(itId);
+      statements.allIds.forEach((id) => {
+        let statement = statements.byId[id];
+        if (statement.itId === itId) {
+          switch (statement.type) {
+            case 'action':
+              return addAction(statement, 'vue');
+            case 'assertion':
+              return addAssertion(statement, 'vue');
+            case 'render':
+              return addVueRender(statement, methods);
+            default:
+              return statement;
+          }
+        }
+      });
+    };
+
+    const identifyVueMethods = (itId) => {
+      const methods = new Set([]);
+      vueTestCase.statements.allIds.forEach((id) => {
+        let statement = vueTestCase.statements.byId[id];
+        if (statement.itId === itId) {
+          if (statement.type === 'action' || statement.type === 'assertion') {
+            methods.add(statement.queryVariant + statement.querySelector);
+          }
+        }
+      });
+      return Array.from(methods).join(', ');
+    };
+
+    const addVueRender = (statement, methods) => {
+      let props = createVueRenderProps(statement.props);
+      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.vue?/, '');
+      // change to VUE files
+      testFileCode += `const wrapper = mount(${formattedComponentName}, {props: {${props}}});`;
+    };
+
+    const createVueRenderProps = (props) => {
+      return props.reduce((acc, prop) => {
+        return acc + `${prop.propKey}='${prop.propValue}',`;
+      }, '');
+    };
+
+    // ------------------------------------ switch statement on test type -------------------------
+
     switch (test) {
       case 'acc':
         var accTestCase = testState;
@@ -1120,6 +1222,22 @@ function useGenerateTest(test, projectFilePath) {
           addReactImportStatements(),
           addMockData(),
           addDescribeBlocks(),
+          (testFileCode = beautify(testFileCode, {
+            brace_style: 'collapse, preserve-inline',
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+
+      case 'vue':
+        var vueTestCase = testState;
+        var mockData = mockDataState;
+        return (
+          addVueComponentImportStatement(),
+          addVueImportStatements(),
+          addMockData(),
+          addVueDescribeBlocks(),
           (testFileCode = beautify(testFileCode, {
             brace_style: 'collapse, preserve-inline',
             indent_size: 2,
