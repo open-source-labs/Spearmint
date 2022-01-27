@@ -457,7 +457,6 @@ function useGenerateTest(test, projectFilePath) {
     // Middleware Filepath
     function createPathToMiddlewares(statement) {
       let filePath = null;
-      console.log(filePath);
       if (statement.middlewaresFilePath) {
         filePath = ipcRenderer.sendSync(
           'Universal.path',
@@ -474,11 +473,9 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-      console.log('createPathtoHooks statement:', statement);
   
 
       if (Array.isArray(hooksTestCase)) {
-        console.log('hooksTestCase:', hooksTestCase)
         const hookImports = hooksTestCase.reduce((str, { hook }) => {
           str += `${hook}, `;
           return str;
@@ -498,7 +495,6 @@ function useGenerateTest(test, projectFilePath) {
         
 
       } else if (typeof hooksTestCase === 'object') {
-        console.log('in hooksTestCase OBJECT:', hooksTestCase)
         const hookImports = hooksTestCase.hooksStatements.reduce((str, { hook }) => {
           str += `${hook}, `;
 
