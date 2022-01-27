@@ -1118,7 +1118,6 @@ function useGenerateTest(test, projectFilePath) {
     const addVueComponentImportStatement = () => {
       const componentPath = vueTestCase.statements.componentPath;
       let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
-      console.log('filePath before replace', filePath)
       filePath = filePath.replace(/\\/g, '/');
       const formattedComponentName = vueTestCase.statements.componentName.replace(/\.vue?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
