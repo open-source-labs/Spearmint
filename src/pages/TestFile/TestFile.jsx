@@ -206,28 +206,6 @@ const TestFile = () => {
                   <span>Security</span>
                   <MdSecurity size={'1.25rem'}/>
                 </Button>
-                
-                {/* <button id={styles.save} onClick={() => handleToggle('endpoint')}>
-                  Endpoint
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('hooks')}>
-                  Hooks
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('puppeteer')}>
-                  Puppeteer
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('react')}>
-                  React
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('redux')}>
-                  Redux
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('sec')}>
-                  Security
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('vue')}>
-                  Vue
-                </button> */}
               </div>
             </div>
           </div>
