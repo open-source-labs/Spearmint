@@ -10,7 +10,10 @@
   --bg-color-upper : #{$mint};
   --bg-color-lower : #{$eggshell};
   --button-text: #{$eggshell};
-  --button-color-lighter: #{$lighter-mint}
+  --button-color-lighter: #{$lighter-mint};
+  --leaf-color: #{$eggshell};
+  --theme-3-color: #{$salmon};
+  --theme-4-color: #{$navy};
 }
 
 #projectLoaderdark{
@@ -118,32 +121,42 @@
 
 #guestBtn {
   width: 100%;
-  background-color: #D96098;
+  background-color: var(--theme-3-color);
   color: var(--bg-color-lower);
 
   span {
     width: 100%;
-    gap: 10px;
   }
 }
 
 #gitBtn {
   width: 100%;
-  background-color: #325288;
+  background-color: var(--theme-4-color);
   color: white;
 
   span {
     width: 100%;
-    gap: 10px;
   }
 }
-
 //TODO MAKE LOGIN BUTTON HOVER
 
-.text {
+#welcomeText {
+  font-family: 'comfortaa';
+  font-size: 1.2rem;
+  color: var(--bg-color-upper)
+}
+
+#userText{
+  color: var(--theme-3-color);
+}
+
+#openFolderSpan{
   font-family: 'comfortaa';
   font-size: 1rem;
-  color: var(--bg-color-upper)
+  color: var(--bg-color-upper);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 

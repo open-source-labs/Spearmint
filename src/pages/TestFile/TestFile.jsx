@@ -68,6 +68,13 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
 import { IconContext } from "react-icons";
 import { AiFillCloseSquare } from "react-icons/ai"
+import { FaUniversalAccess, FaReact } from "react-icons/fa"
+import { IoServer, IoLogoVue } from "react-icons/io5"
+import { GiHook } from "react-icons/gi"
+import { SiPuppeteer, SiRedux } from "react-icons/si"
+import { MdSecurity } from "react-icons/md"
+
+import { Button } from '@material-ui/core';
 
 
 const TestFile = () => {
@@ -111,6 +118,9 @@ const TestFile = () => {
 
   const modalStyles = {
     overlay: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       zIndex: 3,
     },
   };
@@ -131,24 +141,73 @@ const TestFile = () => {
         <Draggable>
           <div id={styles.container}>
 
-            <div id={styles.title}>
-              <p style={{ fontSize: 15 }}>Test</p>
-              <IconContext.Provider value={{size: '1.8em'}}>
-                <AiFillCloseSquare
-                  tabIndex={0}
-                  id={styles.escapeButton} 
-                  onKeyPress={closeTestModal}
-                  onClick={closeTestModal}
-                />  
-              </IconContext.Provider>
-            </div>
+            <AiFillCloseSquare
+              tabIndex={0}
+              id={styles.escapeButton} 
+              onKeyPress={closeTestModal}
+              onClick={closeTestModal}
+            />  
             <div id={styles.body}>
               <p id={styles.text}>What would you like to test?</p>
-              <span id={styles.newTestButtons}>
-                <button id={styles.save} autoFocus onClick={() => handleToggle('acc')}>
-                  Accessibility
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('endpoint')}>
+              <div id={styles.newTestButtons}>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => handleToggle('react')}
+                >
+                  <span>React</span>
+                  <FaReact size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => handleToggle('hooks')}
+                >
+                  <span>Hooks</span>
+                  <GiHook size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => handleToggle('puppeteer')}
+                >
+                  <span>Puppeteer</span>
+                  <SiPuppeteer size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => handleToggle('redux')}
+                >
+                  <span>Redux</span>
+                  <SiRedux size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => handleToggle('vue')}
+                >
+                  <span>Vue</span>
+                  <IoLogoVue size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="contained" 
+                  onClick={() => handleToggle('endpoint')}
+                >
+                  <span>Endpoint</span>
+                  <IoServer size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => handleToggle('acc')}
+                >
+                  <span>Accessibility</span>
+                  <FaUniversalAccess size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={() => handleToggle('sec')}
+                >
+                  <span>Security</span>
+                  <MdSecurity size={'1.25rem'}/>
+                </Button>
+                
+                {/* <button id={styles.save} onClick={() => handleToggle('endpoint')}>
                   Endpoint
                 </button>
                 <button id={styles.save} onClick={() => handleToggle('hooks')}>
@@ -168,8 +227,8 @@ const TestFile = () => {
                 </button>
                 <button id={styles.save} onClick={() => handleToggle('vue')}>
                   Vue
-                </button>
-              </span>
+                </button> */}
+              </div>
             </div>
           </div>
         </Draggable>

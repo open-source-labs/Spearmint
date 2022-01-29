@@ -1,6 +1,15 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
+.modalCustomOverlay {
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(255, 255, 255, 0.75);
+  z-index: 3;
+}
+
 .modal {
   position: fixed;
   width: 700px;
@@ -10,8 +19,6 @@
   // border-radius: 5px;
   // box-shadow: 0 0 0 1px white inset;
   object-fit: cover;
-  top: 25%;
-  left: 22%;
 }
 
 .modal:focus{
@@ -28,41 +35,60 @@
   font-family: $openSans;
   background-color: transparent;
   opacity: 1;
-  // border: 8px solid $mint;
-  // border-radius: 5px;
-  // box-shadow: 0 0 0 1px white inset;
   object-fit: cover;
 }
 
-.modalCustomOverlay {
-  display: grid;
-  position: fixed;
-  inset: 0px;
-  background-color: rgba(255, 255, 255, 0.75);
-  z-index: 3;
-}
-
-.root {
-  width: 100%;
-  max-width: 360;
-  background-color: white;
-}
-
-#title {
+#container{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $mint;
-  margin: 1px;
-  height: 20%;
-  background-color: #fff;
+  max-width: 700px;
+  background: $mint;
+  border: 8px solid $mint;
+  border-radius: 10px;
+  color: white;
+}
+
+#body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  
   p {
-    color: $mint;
-    margin: 10px;
-    font-weight: bold;
-    align-content: center;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
   }
 }
+
+#newTestButtons {
+  display: grid;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  gap: 5px;
+
+  button {
+    background-color: #D96098;
+    color: white;
+
+    span {
+      width: 100%;
+    }
+  }
+}
+
+#chooseTestBtn {
+  background-color: #D96098;
+  color: white;
+
+  span {
+    width: 100%;
+  }
+}
+
+
 
 #escapeButton {
   position: absolute;
@@ -88,90 +114,7 @@
   fill: $mint;
 }
 
-#body {
-  padding: 20px 25px 10px 25px;
 
-  #endpoint {
-    color: black;
-  }
-  #step {
-    color: rgb(255, 255, 255);
-    margin-bottom: 10px;
-    span:hover {
-      color: $mint;
-    }
-
-    li {
-      margin-left: 50px;
-    }
-    li:last-child {
-      margin-bottom: 5px;
-    }
-    li:first-child {
-      margin-top: 4px;
-    }
-  }
-
-  p {
-    color: #fff;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-  input {
-    margin: 10px 0;
-    width: 430px;
-  }
-  button {
-    margin: 5px 10px 5px 0px;
-    font-size: 12px;
-    text-align: center;
-    vertical-align: middle;
-    float: right;
-    width: 100px;
-    height: 1.5rem;
-    color: #fff;
-    background-color: transparent;
-    outline: none;
-    box-shadow: none;
-    cursor: pointer;
-    border: 0.5px solid white;
-    border-radius: 3px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
-  button:hover {
-    outline: 2px solid darkblue;
-  }
-}
-
-#text {
-  margin: 12px;
-  text-align: center;
-}
-
-#save:hover {
-  background-color: rgb(232, 232, 232);
-  color: $mint;
-  border-radius: 3px;
-}
-#save:focus {
-  outline: 1px solid darkblue;
-}
-
-#newTestButtons {
-  display: flex;
-  justify-content: flex-start;
-
-  #feedback {
-    p {
-      font-size: 12px;
-      margin-top: 6px;
-    }
-  }
-}
-#newTestButtons:focus {
-  outline: 1px solid darkblue;
-}
 
 #testMenu {
   padding: 10px;
@@ -263,10 +206,6 @@ pre {
   margin-left: -50%;
 }
 
-#container{
-  background: $mint;
-  border: 8px solid $mint;
-  padding: 30px;
-}
+
 
 /*animation*/

@@ -15,21 +15,21 @@
     "appId": "spearmint",
     "productName": "spearmint",
     "mac": {
-      "icon": "./public/icon.icns",     
+      "icon": "./public/icon.icns",
       "category": "public.app-category.utilities"
     },
     "win": {
-      "icon": "./public/icon.png" 
+      "icon": "./public/icon.png"
     },
     "files": [
       "./build/**/*",
       "./dist/**/*",
       "./node_modules/**/*",
-      "./public/**/*",       
+      "./public/**/*",
       "*.js"
     ],
     "directories": {
-      "buildResources": "public" 
+      "buildResources": "public"
     }
   },
   "keywords": [],

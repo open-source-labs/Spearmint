@@ -19,6 +19,7 @@ import Draggable from 'react-draggable';
 
 import { IconContext } from "react-icons";
 import { AiFillCloseSquare } from "react-icons/ai"
+import { FaFileExcel } from 'react-icons/fa';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -104,58 +105,44 @@ const Modal = ({
   if (title === 'New Test') {
     return (
       <ReactModal
-        className={styles.modal}
+        overlayClassName={styles.modalCustomOverlay}
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        contentLabel='Save?'
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
-        ariaHideApp={false}
-        style={{
-          content: {
-            top: '10%',
-            left: isFileDirectoryOpen ? '22%' : '11%',
-          },
-          overlay: {
-            zIndex: 3,
-            left: isFileDirectoryOpen ? '276px' : '46px',
-            minWidth: isFileDirectoryOpen ? '600px' : '600px',
-            width: isFileDirectoryOpen ? 'calc(59.9% - 276px)' : 'calc(49.9% - 46px)',
-          },
-        }}
       >
-        <Draggable>
-        <div id={styles.container}>
-        <div id={styles.title}>
-          <p>{title}</p>
-        </div>
-        <IconContext.Provider 
-          value={{size: '1.8em'}}>
-        <AiFillCloseSquare
-          id={styles.escapeButton} 
-          onKeyPress={clearAndClose}
-          onClick={clearAndClose}
-        />  
-        </IconContext.Provider> 
-        <div id={styles.body}>
-          <p id={styles.text}>
-            Do you want to start a new test? All unsaved changes
-            <br />
-            will be lost.
-          </p>
-          <span
-            id={styles.newTestButtons}
-            style={{ justifyContent: 'center', alignItems: 'center' }}
-          >
-            <button id={styles.save} onClick={handleNewTest}>
-              {title}
-            </button>
-            <button id={styles.save} onClick={closeModal}>
-              Cancel
-            </button>
-          </span>
-        </div>
-        </div>
+        <Draggable id={styles.testModal}>
+          <div id={styles.container}>
+            <div id={styles.title}>
+              <p>{title}</p>
+            </div>
+            <IconContext.Provider 
+              value={{size: '1.8em'}}>
+            <AiFillCloseSquare
+              id={styles.escapeButton} 
+              onKeyPress={clearAndClose}
+              onClick={clearAndClose}
+            />  
+            </IconContext.Provider> 
+            <div id={styles.body}>
+              <p id={styles.text}>
+                Do you want to start a new test? All unsaved changes
+                <br />
+                will be lost.
+              </p>
+              <span
+                id={styles.newTestButtons}
+                style={{ justifyContent: 'center', alignItems: 'center' }}
+              >
+                <button id={styles.save} onClick={handleNewTest}>
+                  {title}
+                </button>
+                <button id={styles.save} onClick={closeModal}>
+                  Cancel
+                </button>
+              </span>
+            </div>
+          </div>
         </Draggable>
       </ReactModal>
     );
@@ -239,22 +226,10 @@ const Modal = ({
       className={styles.modal2}
       isOpen={isModalOpen}
       onRequestClose={clearAndClose}
-      contentLabel='Save?'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
       overlayClassName={styles.modalCustomOverlay}
       ariaHideApp={false}
-      style={{
-        content: {
-          top: '10%',
-          left: isFileDirectoryOpen ? '22%' : '11%',
-        },
-        overlay: {
-          left: isFileDirectoryOpen ? '276px' : '46px',
-          minWidth: isFileDirectoryOpen ? '600px' : '600px',
-          width: isFileDirectoryOpen ? 'calc(59.9% - 276px)' : 'calc(49.9% - 46px)',
-        },
-      }}
     >
       <Draggable>
       <div id={styles.container}>

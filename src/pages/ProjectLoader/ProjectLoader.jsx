@@ -4,7 +4,6 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest } from '../../context/actions/globalActions';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { IconContext } from 'react-icons';
 import { RiSpyLine, RiGithubFill } from 'react-icons/ri'
 
 const { ipcRenderer } = require('electron');
@@ -219,7 +218,6 @@ function ProjectLoader() {
           xmlnsXlink="http://www.w3.org/1999/xlink"
         >
           <path
-            fill="#ffffff"
             d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"
           />
         </svg>
@@ -232,11 +230,13 @@ function ProjectLoader() {
           renderLogin()
         ) : (
           <div className={styles.contentBox}>
-            <span className={styles.text}>
-              Welcome {username}!
+            <span id={styles.welcomeText}>
+              Welcome <span id={styles.userText}>{username}</span>!
             </span>
-            <span className={styles.text}>Select your application:</span>
-            <OpenFolder />
+            <span id={styles.openFolderSpan}>
+              Select your application
+              <OpenFolder />
+            </span>
             <Button variant="contained" type="button" onClick={handleLogout} id={styles.loginBtn}>
               LOGOUT
             </Button>

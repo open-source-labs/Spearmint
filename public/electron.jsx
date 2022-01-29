@@ -10,6 +10,7 @@ const os = require('os');
 
 // react developer tools for electron in dev mode
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+const { Module } = require('module');
 // global bool to determine if in dev mode or not 
 // const isDev = true; 
 //Dynamic variable to change terminal type based on os

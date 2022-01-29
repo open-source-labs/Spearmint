@@ -32,6 +32,8 @@ const App = () => {
        *
        *
        * We access the value that we gave to the Provider through useContext
+       * 
+       * 01/29 There does not seem to be 'about' page functionality visible
        */
     <div
       id={
