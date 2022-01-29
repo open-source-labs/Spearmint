@@ -1,145 +1,149 @@
 @import '../../assets/stylesheets/fonts.scss';
 @import '../../assets/stylesheets/colors.scss';
 
-#upperPart {
+#projectLoaderlight{
   width: 100%;
-  height: 50vh;
-  background-color: #038181;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  --text-color: #{$eggshell};
+  --bg-color-upper : #{$mint};
+  --bg-color-lower : #{$eggshell};
+  --button-text: #{$eggshell};
+  --button-color-lighter: #{$lighter-mint}
+}
+
+#projectLoaderdark{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  --text-color : #fff;
+  --bg-color-upper: black;
+  --leaf-color: #fff;
+}
+
+//TODO make animations for upper part
+
+#upperPart {
+  flex: 0 0 50vh;
+  padding: 5vh 0;
+  background-color: var(--bg-color-upper);
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 24px;
 }
 
 #title {
   font-size: 4rem;
   text-align: center;
-  vertical-align: bottom;
   font-family: 'comfortaa';
-  color: #fff;
-  padding-top: 30px;
-  margin-top: 30px;
-  flex: 1;
-}
-
-#purpose {
-  font-size: 1rem;
-  text-align: center;
-  font-family: 'comfortaa';
-  color: #fff;
-  flex: 1;
+  color: var(--text-color);
 }
 
 #leaf {
   width: 48px;
   height: 48px;
-  margin-bottom: 38px;
-  margin-left: 5px;
-  color: #fff;
+  fill: var(--leaf-color);
+}
+
+#slogan {
+  font-size: 1rem;
+  text-align: center;
+  font-family: 'comfortaa';
+  color: var(--text-color);
 }
 
 #lowerPart {
   width: 100%;
   height: 50vh;
-  background-color: $light-gray3;
-}
-
-#subText {
-  font-size: 1.2rem;
-  text-align: center;
-  font-family: $oxygen;
-  font-weight: 300;
-  letter-spacing: 1px;
-  color: $mint;
-  padding: 20px;
-}
-
-#appBox {
+  background-color: var(--bg-color-lower);
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  height: 25vh;
+  gap: 5px;
 }
 
 .contentBox {
-  margin: 100px 80px;
-}
-
-#url {
-  margin-top: 10px;
-  padding-left: 1rem;
-  font-size: 12px;
-  width: 250px;
-  height: 25px;
-  color: rgb(128, 128, 128);
-}
-
-#openBtn {
-  margin-top: 10px;
-  padding-left: 1rem;
-  font-size: 12px;
-  text-align: left;
-  width: 250px;
-  color: $dark-gray;
-  outline: none;
-  border: 0.5px solid $light-gray;
-  box-shadow: none;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.number {
-  font-weight: bold;
-  letter-spacing: 1.5px;
-  font-family: $oxygen;
-  color: $mint;
-}
-
-.text {
-  margin-left: 5px;
-  font-weight: 300;
-  font-family: $oxygen;
-  letter-spacing: 1px;
-}
-
-#helpBtn {
-  color: white;
-  background-color: $mint;
-  margin: 15px 4px 4px 4px;
-  height: 40px;
-  width: 110px;
-  opacity: 0.8;
-  font-family: $oxygen;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 0.5px $light-gray solid;
-}
-
-#helpBtn:hover {
-  background-color: white;
-  color: $mint;
-}
-#helpBtn:focus {
-  outline: 1px solid darkblue;
-}
-
-#bottomDiv {
   display: flex;
-  height: 25vh;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 20px;
+  max-width: 225px;
 }
 
-.gitLogin {
-  border: none;
-  background-color: transparent;
-  font-size: 14px;
+#loginForm{
+  flex: 0 1;
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  max-width: 225px;
 }
 
-#gitButton {
-  margin-top: 13px;
-  padding-left: 10px;
+#buttonBox{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 #loginBtn {
-  font-size: 13px;
+  width: 100%;
+  font-size: 0.75rem;
+  background-color: var(--bg-color-upper);
+  color: var(--bg-color-lower);
 }
+
+#signInBtn {
+  width: 100%;
+  font-size: 0.75rem;
+  background-color: var(--button-color-lighter);
+  color: var(--bg-color-lower);
+}
+
+#altButtonsBox{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+#guestBtn {
+  width: 100%;
+  background-color: #D96098;
+  color: var(--bg-color-lower);
+
+  span {
+    width: 100%;
+    gap: 10px;
+  }
+}
+
+#gitBtn {
+  width: 100%;
+  background-color: #325288;
+  color: white;
+
+  span {
+    width: 100%;
+    gap: 10px;
+  }
+}
+
+//TODO MAKE LOGIN BUTTON HOVER
+
+.text {
+  font-family: 'comfortaa';
+  font-size: 1rem;
+  color: var(--bg-color-upper)
+}
+
+

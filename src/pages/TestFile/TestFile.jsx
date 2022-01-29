@@ -232,7 +232,6 @@ const TestFile = () => {
         </section>
       )}
       {
-        //incomplete functionality: this is wired to go to a react test for now
         testCase === 'vue' && (
           <section>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
