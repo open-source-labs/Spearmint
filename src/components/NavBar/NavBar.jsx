@@ -16,6 +16,8 @@ import ExportFileModal from '../Modals/ExportFileModal';
 
 const menuIcon = require('../../assets/images/menu.png');
 const exportIcon = require('../../assets/images/file-export.png');
+import { VscFiles, VscSettingsGear } from "react-icons/vsc"
+import { FaFileExport, FaUserCircle } from "react-icons/fa"
 
 const NavBar = ({ inAboutPage }) => {
   const [{ fileTree, isFileDirectoryOpen }, dispatchToGlobal] =
@@ -36,26 +38,41 @@ const NavBar = ({ inAboutPage }) => {
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
   return (
-    <div id={inAboutPage ? styles.inAboutPage : styles.navBar}>
+    <div id={styles.navBar}>
       {/* File Explorer */}
-      <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
-        <img src={menuIcon} className={styles.icons} alt='fileExplorer' />
-        <span className={styles.tooltip}>Expand File Explorer</span>
+      <div className={styles.btnContainer}>
+        <span onClick={handleToggleFileDirectory} title='Expand file explorer'>
+          <VscFiles size={'1.5rem'}/>
+        </span>
+        <span onClick={openExportModal} title='Export test file'>
+          <FaFileExport size={'1.5rem'}/>
+        </span>
+        <OpenFolder />
+      </div>
+      <div id={styles.spearmintTitle}>
+        spearmint
+      </div>
+      <div id={styles.settingsContainer} className={styles.btnContainer}>
+        <span title='Change user profile'>
+          <FaUserCircle size={'1.5rem'}/>
+        </span>
+        <span title='Change settings'>
+          <VscSettingsGear size={'1.5rem'}/>
+        </span>
+      </div>
+      {/* <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
+        <img src={menuIcon} className={styles.icons} alt='fileExplorer'title='Expand file explorer' />
       </button>
-      {/* Export */}
       <button className={styles.navBtn} onClick={openExportModal}>
         <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
-        <span className={styles.tooltip}>Export</span>
-      </button>
+      </button> */}
       {!inAboutPage && (
         <ExportFileModal
           isExportModalOpen={isExportModalOpen}
           setIsExportModalOpen={setIsExportModalOpen}
         />
       )}
-      {/* Open Folder */}
-      <OpenFolder />
-      {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
+      {/* {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />} */}
     </div>
   );
 };

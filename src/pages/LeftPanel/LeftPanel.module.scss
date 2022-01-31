@@ -3,18 +3,14 @@
 @import '../../assets/stylesheets/colors.scss';
 
 #leftPanel {
-  grid-area: leftPanel;
-  grid-column-start: 2;
-  height: 100vh;
-  padding-bottom: 20px;
-  padding-top: 4px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  flex: 1 1 60%;
+  height: 100%;
+  background-color: red;
   font-family: $raleway;
   justify-content: space-evenly;
-  min-width: 600px; // changed this to make dev easier w/ dev tools open
+  min-width: 500px; // changed this to make dev easier w/ dev tools open
   overflow: auto;
-  border-right: 0.5px dotted $mint;
+  border-radius: 10px;
 
   button {
     text-decoration: none;

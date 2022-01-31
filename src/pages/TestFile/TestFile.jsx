@@ -66,8 +66,7 @@ import VueTestCase from '../../components/TestCase/VueTestCase';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setTestCase, toggleModal } from '../../context/actions/globalActions';
-import { IconContext } from "react-icons";
-import { AiFillCloseSquare } from "react-icons/ai"
+import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaUniversalAccess, FaReact } from "react-icons/fa"
 import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
@@ -136,12 +135,11 @@ const TestFile = () => {
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
-        style={modalStyles}
+        overlayClassName={styles.modalOverlay}
       >
         <Draggable>
           <div id={styles.container}>
-
-            <AiFillCloseSquare
+            <AiOutlineCloseCircle
               tabIndex={0}
               id={styles.escapeButton} 
               onKeyPress={closeTestModal}
@@ -278,13 +276,10 @@ const TestFile = () => {
         )
       }
 
-      {testCase === '' && (
+      {/* {testCase === '' && (
         <Fragment>
           <div id={styles.left}>
-            <br></br>
-            <br></br>
             <h2>Click on New Test below to get started!</h2>
-            <br></br>
           </div>
           <div id={styles.testMenu}>
             <div id={styles.left}>
@@ -294,7 +289,7 @@ const TestFile = () => {
             </div>
           </div>
         </Fragment>
-      )}
+      )} */}
     </div>
   );
 };

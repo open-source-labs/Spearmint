@@ -48,7 +48,7 @@ const OpenFolder = () => {
       dispatchToGlobal(loadProject('load'));
       dispatchToGlobal(setTestCase(''));
       if (!isTestModalOpen) dispatchToGlobal(toggleModal());
-      if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
+      //if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
       // Re-direct terminal directory to user selected directory
       ipcRenderer.send('terminal.toTerm', `cd "${directoryPath}"${execute}`);
     }
@@ -89,7 +89,7 @@ const OpenFolder = () => {
   };
 
   return (
-    <span>
+    <>
       {!isProjectLoaded ? (
         <Button 
           variant="outlined" 
@@ -100,18 +100,21 @@ const OpenFolder = () => {
           <FaFolderOpen size={'1.25rem'}/>
         </Button>
       ) : (
-        <button className={styles.navBtn}>
-          <img
-            src={folderOpenIcon}
-            className={styles.icons}
-            alt='folderOpen'
-            title='open a new folder'
-            onClick={handleOpenFolder}
-          />
-          <span className={styles.tooltip}>Open Folder</span>
-        </button>
+        <span onClick={handleOpenFolder} title='Open new folder'>
+          <FaFolderOpen size={'1.5rem'}/>
+        </span>
+        // <button className={styles.navBtn}>
+        //   <img
+        //     src={folderOpenIcon}
+        //     className={styles.icons}
+        //     alt='folderOpen'
+        //     title='open a new folder'
+        //     onClick={handleOpenFolder}
+        //   />
+        //   <span className={styles.tooltip}>Open Folder</span>
+        // </button>
       )}
-    </span>
+    </>
   );
 };
 

@@ -19,7 +19,6 @@ import Draggable from 'react-draggable';
 
 import { IconContext } from "react-icons";
 import { AiFillCloseSquare } from "react-icons/ai"
-import { FaFileExcel } from 'react-icons/fa';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');

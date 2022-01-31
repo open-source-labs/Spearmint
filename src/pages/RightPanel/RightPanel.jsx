@@ -13,25 +13,28 @@ const RightPanel = () => {
 
   return (
     <div id={styles.rightPanel}>
+      <div id={styles.tabsContainer}>
+        <Tabs 
+          id={styles.tabsBox}
+          value={tabIndex} 
+          onChange={(event, newValue) => dispatchToGlobal(setTabIndex(newValue))} 
+          centered
+        >
+          <Tab value={0} label="Code Editor" />
+          <Tab value={1} label="Browser" />
+          <Tab value={2} label="Test Terminal" />
+        </Tabs>
+      </div>
 
-      <Tabs style={{ marginBottom: 5 }} value={tabIndex} onChange={(event, newValue) => dispatchToGlobal(setTabIndex(newValue))} centered>
-        <Tab value={0} label="Code Editor" />
-        <Tab value={1} label="Browser" />
-        <Tab value={2} label="Test Terminal" />
-      </Tabs>
-
-      {/* Editor Tab */}
-      <div hidden={tabIndex !== 0}>
+      {/* <div className={styles.viewContainer} hidden={tabIndex !== 0}>
         <EditorView />
       </div>
-      {/* Browser Tab */}
-      <div hidden={tabIndex !== 1}>
+      <div className={styles.viewContainer} hidden={tabIndex !== 1}>
         <BrowserView />
       </div>
-      {/* Test Terminal */}
-      <div hidden={tabIndex !== 2} >
+      <div className={styles.viewContainer} hidden={tabIndex !== 2} >
         <TerminalView />
-      </div>
+      </div> */}
     </div>
   );
 };

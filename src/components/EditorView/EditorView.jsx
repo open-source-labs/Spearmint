@@ -56,8 +56,8 @@ const Editor = () => {
   };
 
   return (
-    <div>
-      <div onClick={() => setWasSaved('')}>
+    <div id={styles.codeEditorView}>
+      <div id={styles.codeEditor} onClick={() => setWasSaved('')}>
         <CodeMirror
           value={
             file
@@ -66,12 +66,12 @@ const Editor = () => {
                 : file
               : '// Open a file or click preview to view your code.'
           }
-          height="80vh"
+          height="100%"        
           extensions={[javascript({ jsx: true })]}
           onChange={updatafile}
         />
       </div>
-      <div>
+      <div id={styles.saveBox}>
         <button type="button" id={styles.save} onClick={saveFile}>
           Save Changes
         </button>

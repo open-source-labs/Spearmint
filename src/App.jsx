@@ -5,6 +5,7 @@ import ProjectLoader from './pages/ProjectLoader/ProjectLoader.jsx';
 import NavBar from './components/NavBar/NavBar';
 import LeftPanel from './pages/LeftPanel/LeftPanel';
 import RightPanel from './pages/RightPanel/RightPanel';
+import FileDirectory from './components/FileDirectory/FileDirectory';
 // import About from './pages/About/About';
 
 const App = () => {
@@ -36,32 +37,26 @@ const App = () => {
        * 01/29 There does not seem to be 'about' page functionality visible
        */
     <div
-      id={
-          global.isProjectLoaded === 'about'
-            ? ''
-            : global.isFileDirectoryOpen
-              ? global.isRightPanelOpen
-                ? styles.fileDirectoryOpenRightPanelOpen
-                : styles.fileDirectoryOpenRightPanelClosed
-              : global.isRightPanelOpen
-                ? styles.fileDirectoryClosedRightPanelOpen
-                : styles.fileDirectoryClosedRightPanelClosed
-        }
+      // id={
+      //     global.isProjectLoaded === 'about'
+      //       ? ''
+      //       : global.isFileDirectoryOpen
+      //         ? global.isRightPanelOpen
+      //           ? styles.fileDirectoryOpenRightPanelOpen
+      //           : styles.fileDirectoryOpenRightPanelClosed
+      //         : global.isRightPanelOpen
+      //           ? styles.fileDirectoryClosedRightPanelOpen
+      //           : styles.fileDirectoryClosedRightPanelClosed
+      //   }
+      id={styles.app}
     >
       <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-        {global.isProjectLoaded === 'about' ? (
-          <>
-            <NavBar inAboutPage />
-            <About dispatch={dispatchToGlobal} />
-            {' '}
-          </>
-        ) : (
-          <>
-            <NavBar inAboutPage={false} />
+          <NavBar inAboutPage={false} />
+          <div id={styles.content}>
+            {global.isFileDirectoryOpen && <FileDirectory fileTree={global.fileTree} />}
             <LeftPanel />
-          </>
-        )}
-        {global.isRightPanelOpen ? <RightPanel /> : ''}
+            <RightPanel />
+          </div>
       </GlobalContext.Provider>
     </div>
   );

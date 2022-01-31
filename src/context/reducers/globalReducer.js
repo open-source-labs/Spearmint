@@ -8,7 +8,7 @@ export const globalState = {
   projectUrl: null,
   isProjectLoaded: false,
   fileTree: null,
-  isFileDirectoryOpen: true,
+  isFileDirectoryOpen: false,
   isRightPanelOpen: true,
   rightPanelDisplay: 'browserView',
   isFolderOpen: {},

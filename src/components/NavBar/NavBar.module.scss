@@ -1,26 +1,62 @@
 @import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
 
 #navBar {
-  grid-area: navBar;
+  flex: 0 0 5%;
+  width: 100%;
   background-color: $mint;
-  height: 100vh;
-  width: 48px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  border-radius: 10px;
+  // padding: 10px 0;
+  // margin: 0 10px 0 10px;
 }
+
+// TODO MAKE ICONS NOT IMAGES AND HOVER EFFECTS
+
+.btnContainer{
+  flex: 0 0 auto;
+  margin: 10px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  span{
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    border-top: 2px solid transparent;
+    &:hover{
+      border-bottom: 2px solid $salmon;
+    }
+    svg{
+      path{
+        fill: $eggshell;
+      }
+    }
+  }
+}
+
+#spearmintTitle{
+  flex: 1 0 auto;
+  align-self: center;
+  font-size: 2rem;
+  text-align: center;
+  font-family: 'comfortaa';
+  color: $eggshell;
+}
+
+#settingsContainer{
+  align-self: flex-end;
+}
+
 
 .navBtn {
   padding: 0;
   border: 0;
-  margin-top: 15px;
-  margin-bottom: 40px;
+  // margin-top: 15px;
+  // margin-bottom: 40px;
   cursor: pointer;
   background-color: transparent;
-  :focus {
-    outline: 2px solid darkblue
-  } 
 }
 
 .icons {

@@ -2,19 +2,14 @@
 @import '../../assets/stylesheets/fonts.scss';
 
 #fileDirectory {
-  grid-area: fileDirectory;
-  padding: 0px;
-  width: 200px;
-  height: 100vh;
-  margin-left: 50px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  flex: 0 1 200px;
+  min-width: 150px;
   font-size: 12px;
-  background-color: white;
+  background-color: $lighter-mint;
   overflow: auto;
   border-right: 1px dotted $mint;
   z-index: 1;
+  border-radius: 10px;
 
   ul {
     list-style-type: none;
@@ -34,7 +29,7 @@
     vertical-align: middle;
     font-weight: bold;
     height: 1px;
-    background-color: #f0f8f8;
+    background-color: $navy;
     border-bottom: 0.5px dotted $mint;
   }
 }

@@ -1,13 +1,17 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
-.modalCustomOverlay {
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
-  position: fixed;
-  inset: 0px;
-  background-color: rgba(255, 255, 255, 0.75);
+  align-items: center;
   z-index: 3;
+  background-color: $eggshell-opaque;
 }
 
 .modal {
@@ -122,7 +126,6 @@
   display: flex;
   justify-content: space-between;
   width: 98%;
-  margin-bottom: 10px;
 }
 
 #left {
