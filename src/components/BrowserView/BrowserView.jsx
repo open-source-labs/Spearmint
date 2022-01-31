@@ -123,17 +123,67 @@ const BrowserView = () => {
   };
   
   return (
-    <div id={styles.browswerComponentTopLevelDiv}>
+    <div id={styles.browserComponentTopLevelDiv}>
       <div id={styles.accessLensContainer}>
         <div id={styles.accessLensLabel}>
           Accessibility Lens
         </div>
-        {/* trying to put some sort of flex style or centered style here to center the 3 check boxes...but no avail */}
         <div
           id={styles.accessLensCheckBoxes}
         >
           <FormControlLabel
-            // style={{fontSize:2}}
+            id="Grayscale Checkbox"
+            control={(
+              <Checkbox
+              value="grayscale"
+              checked={checkedBoxes.checkedGrayscale}
+              onChange={handleChangeCheckBox}
+              name="checkedGrayscale"
+              size='small'
+              />
+              )}
+            label="Grayscale"
+          />
+          <FormControlLabel
+            id="contrastCheckbox"
+            control={(
+              <Checkbox
+              value="contrast"
+              checked={checkedBoxes.checkedContrast}
+              onChange={handleChangeCheckBox}
+              name="checkedContrast"
+              size='small'
+              />
+              )}
+            label="Low Contrast"
+          />
+          <FormControlLabel
+            id="Brightness Checkbox"
+            control={(
+              <Checkbox
+              value="filter"
+              checked={checkedBoxes.checkedBrightness}
+              onChange={handleChangeCheckBox}
+              name="checkedBrightness"
+              size='small'
+              />
+              )}
+            label="Light Sensitivity"
+          />
+          <FormControlLabel
+            id="Low Vision Checkbox"
+            control={(
+              <Checkbox
+                value="filter"
+                checked={checkedBoxes.checkedLowVision}
+                onChange={handleChangeCheckBox}
+                name="checkedLowVision"
+                size='small'
+              />
+            )}
+            label="Low Vision "
+          />
+          <FormControlLabel
             id="Disable Mouse Checkbox"
             control={(
               <Checkbox
@@ -145,32 +195,6 @@ const BrowserView = () => {
               />
             )}
             label="Disable Mouse Clicks"
-          />
-          <FormControlLabel
-            id="Grayscale Checkbox"
-            control={(
-              <Checkbox
-                value="grayscale"
-                checked={checkedBoxes.checkedGrayscale}
-                onChange={handleChangeCheckBox}
-                name="checkedGrayscale"
-                size='small'
-              />
-            )}
-            label="Grayscale"
-          />
-          <FormControlLabel
-            id="contrastCheckbox"
-            control={(
-              <Checkbox
-                value="contrast"
-                checked={checkedBoxes.checkedContrast}
-                onChange={handleChangeCheckBox}
-                name="checkedContrast"
-                size='small'
-              />
-            )}
-            label="Low Contrast"
           />
           <FormControlLabel
             id="Mute Audio Checkbox"
@@ -197,32 +221,6 @@ const BrowserView = () => {
               />
             )}
             label="Screen Reader"
-          />
-          <FormControlLabel
-            id="Low Vision Checkbox"
-            control={(
-              <Checkbox
-                value="filter"
-                checked={checkedBoxes.checkedLowVision}
-                onChange={handleChangeCheckBox}
-                name="checkedLowVision"
-                size='small'
-              />
-            )}
-            label="Low Vision "
-          />
-           <FormControlLabel
-            id="Brightness Checkbox"
-            control={(
-              <Checkbox
-                value="filter"
-                checked={checkedBoxes.checkedBrightness}
-                onChange={handleChangeCheckBox}
-                name="checkedBrightness"
-                size='small'
-              />
-            )}
-            label="Light Sensitivity"
           />
         </div>
       </div>

@@ -276,7 +276,7 @@ const TestFile = () => {
         )
       }
 
-      {/* {testCase === '' && (
+      {testCase === '' && (
         <Fragment>
           <div id={styles.left}>
             <h2>Click on New Test below to get started!</h2>
@@ -289,7 +289,7 @@ const TestFile = () => {
             </div>
           </div>
         </Fragment>
-      )} */}
+      )}
     </div>
   );
 };

@@ -8,10 +8,11 @@
 }
 
 #codeEditor{
-  height: 100%;
+  flex: 1 1 95%;
 }
 
 #saveBox{
+  flex: 0 0 5%;
 }
 
 #save {

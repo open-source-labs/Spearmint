@@ -26,7 +26,7 @@ const RightPanel = () => {
         </Tabs>
       </div>
 
-      {/* <div className={styles.viewContainer} hidden={tabIndex !== 0}>
+      <div className={styles.viewContainer} hidden={tabIndex !== 0}>
         <EditorView />
       </div>
       <div className={styles.viewContainer} hidden={tabIndex !== 1}>
@@ -34,7 +34,7 @@ const RightPanel = () => {
       </div>
       <div className={styles.viewContainer} hidden={tabIndex !== 2} >
         <TerminalView />
-      </div> */}
+      </div>
     </div>
   );
 };

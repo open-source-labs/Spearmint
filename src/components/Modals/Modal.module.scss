@@ -25,14 +25,6 @@
   object-fit: cover;
 }
 
-.modal:focus{
-  outline: none;
-}
-
-.modal2:focus{
-  outline: none;
-}
-
 .modal2 {
   position: fixed;
   width: 700px;
@@ -40,6 +32,10 @@
   background-color: transparent;
   opacity: 1;
   object-fit: cover;
+}
+
+.modal:focus{
+  outline: none;
 }
 
 #container{
@@ -66,12 +62,10 @@
 
 #newTestButtons {
   display: grid;
-  display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
-  gap: 5px;
 
   button {
     background-color: #D96098;
@@ -91,8 +85,6 @@
     width: 100%;
   }
 }
-
-
 
 #escapeButton {
   position: absolute;
@@ -117,8 +109,6 @@
   height: 24px;
   fill: $mint;
 }
-
-
 
 #testMenu {
   padding: 10px;
