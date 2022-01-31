@@ -22,15 +22,20 @@
   align-items: center;
   gap: 30px;
   span{
-    padding-bottom: 5px;
-    border-bottom: 2px solid transparent;
-    border-top: 2px solid transparent;
+    // padding-bottom: 5px;
+    // border-bottom: 2px solid transparent;
+    // border-top: 2px solid transparent;
     &:hover{
-      border-bottom: 2px solid $salmon;
+      // border-bottom: 2px solid $salmon;
+      svg{
+        path{
+          fill: $salmon;
+        }
+      }
     }
     svg{
       path{
-        fill: $eggshell;
+        fill: $eggshell; 
       }
     }
   }
@@ -44,11 +49,6 @@
   font-family: 'comfortaa';
   color: $eggshell;
 }
-
-#settingsContainer{
-  align-self: flex-end;
-}
-
 
 .navBtn {
   padding: 0;

@@ -5,7 +5,7 @@
 #leftPanel {
   flex: 1 1 60%;
   height: 100%;
-  background-color: red;
+  background-color: $eggshell;
   font-family: $raleway;
   justify-content: space-evenly;
   min-width: 500px; // changed this to make dev easier w/ dev tools open

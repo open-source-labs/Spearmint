@@ -74,7 +74,7 @@ export const globalReducer = (state, action) => {
 
     case actionTypes.TOGGLE_FOLDER_VIEW:
       const isFolderOpen = { ...state.isFolderOpen };
-      isFolderOpen[action.filePath] = !isFolderOpen[action.filePath];
+      isFolderOpen[action.filePath] = !isFolderOpen[action.filePath] ?? true;
       return {
         ...state,
         isFolderOpen,

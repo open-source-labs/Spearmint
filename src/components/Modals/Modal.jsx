@@ -16,9 +16,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import Draggable from 'react-draggable';
-
-import { IconContext } from "react-icons";
-import { AiFillCloseSquare } from "react-icons/ai"
+import { AiOutlineCloseCircle } from "react-icons/ai"
+import { VscNewFile } from "react-icons/vsc"
+import { Button } from '@material-ui/core';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -104,7 +104,8 @@ const Modal = ({
   if (title === 'New Test') {
     return (
       <ReactModal
-        overlayClassName={styles.modalCustomOverlay}
+        className={styles.modal}
+        overlayClassName={styles.modalOverlay}
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
@@ -112,34 +113,37 @@ const Modal = ({
       >
         <Draggable id={styles.testModal}>
           <div id={styles.container}>
-            <div id={styles.title}>
-              <p>{title}</p>
-            </div>
-            <IconContext.Provider 
-              value={{size: '1.8em'}}>
-            <AiFillCloseSquare
+            <AiOutlineCloseCircle
               id={styles.escapeButton} 
               onKeyPress={clearAndClose}
               onClick={clearAndClose}
-            />  
-            </IconContext.Provider> 
+            />              
             <div id={styles.body}>
               <p id={styles.text}>
                 Do you want to start a new test? All unsaved changes
-                <br />
                 will be lost.
               </p>
-              <span
-                id={styles.newTestButtons}
-                style={{ justifyContent: 'center', alignItems: 'center' }}
-              >
-                <button id={styles.save} onClick={handleNewTest}>
-                  {title}
-                </button>
-                <button id={styles.save} onClick={closeModal}>
-                  Cancel
-                </button>
-              </span>
+              <div id={styles.exportBtns}>
+                <Button 
+                  variant="contained" 
+                  onClick={handleNewTest}
+                  id={styles.saveBtn}
+                >
+                  <span>{title}</span>
+                  <VscNewFile size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={closeModal}
+                  id={styles.cancelBtn}
+                >
+                  <span>Cancel</span>
+                  <AiOutlineCloseCircle size={'1.25rem'}/>
+                </Button>
+              </div>
+              <div id={styles.newTestButtons}>
+
+              </div>
             </div>
           </div>
         </Draggable>
@@ -222,12 +226,12 @@ const Modal = ({
   return (
     
     <ReactModal
-      className={styles.modal2}
+      className={styles.modal}
       isOpen={isModalOpen}
       onRequestClose={clearAndClose}
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
-      overlayClassName={styles.modalCustomOverlay}
+      overlayClassName={styles.modalOverlay}
       ariaHideApp={false}
     >
       <Draggable>
@@ -242,14 +246,12 @@ const Modal = ({
           id={styles.escapeButton}
           className={cn('far fa-window-close', styles.describeClose)}
         >close</p> */}
-        <IconContext.Provider 
-          value={{size: '1.8em'}}>
-        <AiFillCloseSquare
+        <AiOutlineCloseCircle
           id={styles.escapeButton} 
           onKeyPress={clearAndClose}
           onClick={clearAndClose}
         />  
-        </IconContext.Provider> 
+        
       </div>
       
       {/* Accordion View */}

@@ -16,7 +16,7 @@
 
 .modal {
   position: fixed;
-  width: 700px;
+  max-width: 700px;
   font-family: $openSans;
   background-color: transparent;
   // border: 8px solid $mint;
@@ -57,6 +57,10 @@
     color: #fff;
     font-size: 1rem;
     text-align: center;
+  }
+
+  input{
+    color: white;
   }
 }
 
@@ -108,6 +112,27 @@
   width: 24px;
   height: 24px;
   fill: $mint;
+}
+
+#exportBtns{
+  display: flex;
+  gap: 5px;
+  button {
+    color: white;
+    width: 100%;
+
+    span {
+      width: 100%;
+    }
+  }
+}
+
+#cancelBtn{
+  background-color: $lighter-mint;
+}
+
+#saveBtn{
+  background-color: $salmon;
 }
 
 #testMenu {

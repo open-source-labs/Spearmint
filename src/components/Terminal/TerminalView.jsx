@@ -1,41 +1,43 @@
 import React, { useEffect, ChangeEvent } from 'react';
-import { XTerm } from 'xterm-for-react';
-import { TerminalType } from '../../utils/terminalTypes';
-import { FitAddon } from 'xterm-addon-fit';
-
-const { Terminal } = require('xterm');
+import { Terminal } from "xterm";
+import { FitAddon } from "xterm-addon-fit";
+import "./xterm.css";
 const ipc = require('electron').ipcRenderer;
 
 const terminalArgs = {
-  fontSize: 15,
+  convertEol: true,
+  fontSize: 12,
   // Currently rows are hardcoded, next step is to make terminal sizing dynamic.
   fontFamily: 'monospace',
-  theme: {
-    background: '#002a36',
-  },
+  //endererType: "dom",
 };
 
 const term = new Terminal(terminalArgs);
 const fitAddon = new FitAddon();
 
 const TerminalView = () => {
+  
   useEffect(() => {
+    term.setOption("theme", {background: "black", foreground: "white"});
     term.loadAddon(fitAddon);
-    term.open(document.getElementsByClassName('terminal')[0]);
+    term.open(document.getElementById('xterm'));
     fitAddon.fit();
     // when we have input events (e), we would send the data to the main processor
-    term.onData((e: ChangeEvent) => {
+    term.onData((e) => {
       ipc.send('terminal.toTerm', e);
     });
     // when incoming Data comes back to the main process, this ipc renderer
     // will take it and writes it to xterm monitor
-    ipc.on('terminal.incData', (event, data: string) => {
+    ipc.on('terminal.incData', (event, data) => {
       term.write(data);
     });
   }, []);
 
   return (
-  <div className="terminal" style={{ width: '500px', height:"100%" }}/>
+    <div id="terminalContainer">
+
+      <div id="xterm" style={{ height: "900px", width: "100%" }}/>
+    </div>
 
   )
 };

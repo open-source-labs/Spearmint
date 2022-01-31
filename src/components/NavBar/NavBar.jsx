@@ -52,7 +52,7 @@ const NavBar = ({ inAboutPage }) => {
       <div id={styles.spearmintTitle}>
         spearmint
       </div>
-      <div id={styles.settingsContainer} className={styles.btnContainer}>
+      <div className={styles.btnContainer}>
         <span title='Change user profile'>
           <FaUserCircle size={'1.5rem'}/>
         </span>
