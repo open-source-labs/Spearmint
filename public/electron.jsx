@@ -8,6 +8,8 @@ const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
 
+require('electron-reloader')(module);
+
 // react developer tools for electron in dev mode
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 // global bool to determine if in dev mode or not 
@@ -46,6 +48,7 @@ function createWindow() {
   }
 
   mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
+  mainWindow.webContents.openDevTools()
 
   // PTY PROCESS FOR IN APP TERMINAL
   const ptyArgs = {
@@ -97,6 +100,7 @@ ipcMain.on('Universal.readFile', (e, filePath) => {
 });
 
 ipcMain.on('Universal.path', (e, folderPath, filePath) => {
+  console.log('ELECTRON.jsx -100- filePath:', filePath);
   e.returnValue = path.relative(folderPath, filePath, (err) => {
     if (err) throw err;
   });
@@ -118,6 +122,7 @@ ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
 */
 ipcMain.on('ExportFileModal.exists', (e, fileOrFolderPath) => {
   e.returnValue = fs.existsSync(fileOrFolderPath, (err) => {
+    console.log('file exists!')
     if (err) throw err;
   });
 });

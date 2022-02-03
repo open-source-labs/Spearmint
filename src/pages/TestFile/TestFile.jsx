@@ -2,6 +2,9 @@
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
 import styles from '../../components/Modals/Modal.module.scss';
+import useGenerateTest from '../../context/useGenerateTest';
+
+
 import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
@@ -65,13 +68,22 @@ import {
 import VueTestCase from '../../components/TestCase/VueTestCase';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { setTestCase, toggleModal } from '../../context/actions/globalActions';
+
+import {
+    updateFile,
+    setFilePath,
+    toggleRightPanel,
+    setTestCase, 
+    toggleModal,
+    setTabIndex,
+} from '../../context/actions/globalActions';
+
 import { IconContext } from "react-icons";
 import { AiFillCloseSquare } from "react-icons/ai"
 
 
 const TestFile = () => {
-  let [{ testCase, isTestModalOpen }, dispatchToGlobal] = useContext(GlobalContext);
+  let [{ testCase, isTestModalOpen, projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
   const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
@@ -108,6 +120,20 @@ const TestFile = () => {
     dispatchToGlobal(setTestCase(test));
     closeTestModal();
   };
+
+  // const saveTest = () => {
+  //   const currTestCase = testCase
+  //   const testMe = testCase + 'TestCase'
+  //   console.log('currTestCase:', currTestCase)
+  //   console.log('testMe:', testMe)
+  //   const generateTest = useGenerateTest(currTestCase, projectFilePath)
+  //   console.log()
+
+  //   dispatchToGlobal(updateFile(generateTest(testMe)));
+  //   // dispatchToGlobal(toggleRightPanel('codeEditorView'));
+  //   // dispatchToGlobal(setFilePath(''));
+  //   // dispatchToGlobal(setTabIndex(0));
+  // }
 
   const modalStyles = {
     overlay: {
@@ -250,6 +276,7 @@ const TestFile = () => {
             <h2>Click on New Test below to get started!</h2>
             <br></br>
           </div>
+          
           <div id={styles.testMenu}>
             <div id={styles.left}>
               <button id={styles.newTestBtn} onClick={closeTestModal}>
@@ -259,6 +286,14 @@ const TestFile = () => {
           </div>
         </Fragment>
       )}
+      {/* <br></br>
+      <br></br>
+      <br></br>
+      <div id={styles.right}>
+        <button id={styles.rightBtn} onClick={saveTest}>
+        Save Test
+        </button>  
+      </div> */}
     </div>
   );
 };

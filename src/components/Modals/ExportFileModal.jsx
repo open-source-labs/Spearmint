@@ -19,23 +19,23 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
   const [{ projectFilePath, file, validCode }, dispatchToGlobal] = useContext(GlobalContext);
-
+  
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
     setInvalidFileName(false);
   };
-
+  
   /* cancel export file (when false) */
   const closeExportModal = () => {
     setIsExportModalOpen(false);
-
+    
     // reset fileName and invalidFileName
     setInvalidFileName(false);
     setFileName('');
     dispatchToGlobal(toggleExportBool());
     dispatchToGlobal(updateFile(''));
   };
-
+  
   const handleClickSave = () => {
     // file name uniqueness check
     const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;

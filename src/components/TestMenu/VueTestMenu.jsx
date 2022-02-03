@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
@@ -13,10 +13,14 @@ import {
   setValidCode,
   setTestCase,
   toggleModal,
+  toggleExportBool,
   setTabIndex,
 } from '../../context/actions/globalActions';
 import { VueTestCaseContext } from '../../context/reducers/vueTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import ExportFileModal from '../Modals/ExportFileModal';
+const { ipcRenderer } = require('electron')
+
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -28,9 +32,13 @@ const VueTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('vue');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [vueTestCase, dispatchToVueTestCase] = useContext(VueTestCaseContext);
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] =
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, filePath }, dispatchToGlobal] =
     useContext(GlobalContext);
   const generateTest = useGenerateTest('vue', projectFilePath);
+
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [userSavedTest, setUserSavedTest] = useState(false);
+
 
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
@@ -44,12 +52,39 @@ const VueTestMenu = () => {
     dispatchToGlobal(openBrowserDocs(vueUrl));
   };
 
+  // functionality when user clicks Preview
   const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest(vueTestCase, mockData)));
+    const testGeneration = generateTest(vueTestCase, mockData)
+    dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
     dispatchToGlobal(setTabIndex(0));
+    return testGeneration;
   };
+
+
+  // functionality when user clicks Save Test button
+  const saveTest = () => {
+
+    const updatedData = fileHandle()
+
+    // check to see if user has saved test before. If not, then open ExportFileModal
+    if (!userSavedTest) {
+      dispatchToGlobal(toggleExportBool())
+      setIsExportModalOpen(true)
+    }
+    
+    // store the file path of the new saved test file
+    const newFilePath = `${projectFilePath}/__tests__/${fileName}`;
+
+    // if user has already clicked Save Test, rewrite the file with the updated data
+    if (userSavedTest) {
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
+
+    // set userSavedTest state to true once user has clicked Save Test button
+    setUserSavedTest(true);
+  }
 
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
@@ -89,7 +124,14 @@ const VueTestMenu = () => {
           <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
             +Describe Block
           </button>
-        </div>
+          <button id={styles.rightBtn} onClick={saveTest}>
+            Save Test
+          </button>
+        </div>  
+        <ExportFileModal
+          isExportModalOpen={isExportModalOpen}
+          setIsExportModalOpen={setIsExportModalOpen}
+        />
       </div>
     </div>
   );
