@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs, setTabIndex } from '../../context/actions/globalActions';
@@ -11,10 +11,15 @@ import {
   toggleRightPanel,
   setValidCode,
   setTestCase,
+  toggleExportBool,
   toggleModal,
 } from '../../context/actions/globalActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import ExportFileModal from '../Modals/ExportFileModal';
+const { ipcRenderer } = require('electron')
+
+// Was commented out in legacy code
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -25,8 +30,10 @@ const AccTestMenu = () => {
   // initialize hooks
   const { title, isModalOpen, openModal, openScriptModal, closeModal, } = useToggleModal('acc');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('acc', projectFilePath);
+  const [userSavedTest, setUserSavedTest] = useState(false); 
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   // setValidCode to true on load.
   useEffect(() => {
@@ -43,13 +50,40 @@ const AccTestMenu = () => {
     dispatchToGlobal(openBrowserDocs(accUrl));
   };
 
-  // handle change for 'preview' button to generate test
+  // functionality when user clicks Preview
   const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest(accTestCase)));
+    const testGeneration = generateTest(accTestCase)
+    
+    // generates test code using UseGenerateTest.jsx and displays it in the Code Editor View
+    dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
     dispatchToGlobal(setTabIndex(0));
+    return testGeneration;
   };
+
+  // functionality when user clicks Save Test button
+  const saveTest = () => {
+    const updatedData = fileHandle();
+
+     // check to see if user has saved test before. If not, then open ExportFileModal
+    if(!userSavedTest){
+      dispatchToGlobal(toggleExportBool())
+      setIsExportModalOpen(true)
+    }
+
+    // store the file path of the new saved test file
+    const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
+
+    // if user has already clicked Save Test, rewrite the file with the updated data
+    if(userSavedTest){
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
+
+    // set userSavedTest state to true once user has clicked Save Test button
+    setUserSavedTest(true);
+    
+  }
 
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
@@ -91,7 +125,14 @@ const AccTestMenu = () => {
           <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
             +Describe Block
           </button>
+          <button id={styles.rightBtn} onClick={saveTest}>
+            Save Test
+          </button>
         </div>
+        <ExportFileModal
+          isExportModalOpen={isExportModalOpen}
+          setIsExportModalOpen={setIsExportModalOpen}
+        />
       </div>
     </div >
   );

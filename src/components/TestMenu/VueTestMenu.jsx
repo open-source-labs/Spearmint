@@ -21,6 +21,7 @@ import { useToggleModal } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
 
+// Was commented out in legacy code
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -32,7 +33,7 @@ const VueTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('vue');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [vueTestCase, dispatchToVueTestCase] = useContext(VueTestCaseContext);
-  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, filePath }, dispatchToGlobal] =
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
     useContext(GlobalContext);
   const generateTest = useGenerateTest('vue', projectFilePath);
 
@@ -55,6 +56,8 @@ const VueTestMenu = () => {
   // functionality when user clicks Preview
   const fileHandle = () => {
     const testGeneration = generateTest(vueTestCase, mockData)
+
+    // generates test code using UseGenerateTest.jsx and displays it in the Code Editor View
     dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
@@ -65,7 +68,6 @@ const VueTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-
     const updatedData = fileHandle()
 
     // check to see if user has saved test before. If not, then open ExportFileModal

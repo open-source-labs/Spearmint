@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   openBrowserDocs,
@@ -22,6 +22,9 @@ import {
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
+import ExportFileModal from '../Modals/ExportFileModal';
+const { ipcRenderer } = require('electron')
+
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -29,9 +32,13 @@ import { useToggleModal, validateInputs } from './testMenuHooks';
 const EndpointTestMenu = () => {
   const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
 
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [userSavedTest, setUserSavedTest] = useState(false);
+
+
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
 
@@ -49,12 +56,39 @@ const EndpointTestMenu = () => {
     dispatchToGlobal(openBrowserDocs(endpointUrl));
   };
 
+  // functionality when user clicks Preview
   const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
+    const testGeneration = generateTest(endpointTestCase);
+
+    // generates test code using UseGenerateTest.jsx and displays it in the Code Editor View
+    dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
     dispatchToGlobal(setTabIndex(0));
+    return testGeneration;
   };
+
+  // functionality when user clicks Save Test button
+  const saveTest = () => {
+    const valid = validateInputs('endpoint', endpointTestCase);
+    dispatchToGlobal(setValidCode(valid));
+
+    const updatedData = fileHandle();
+    if(!userSavedTest){
+      dispatchToGlobal(toggleExportBool)
+      setIsExportModalOpen(true)
+    }
+    // store the file path of the new saved test file
+    const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
+
+    // if user has already clicked Save Test, rewrite the file with the updated data
+    if(userSavedTest){
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
+
+    // set userSavedTest state to true once user has clicked Save Test button
+    setUserSavedTest(true);
+  }
 
   const handleClickAddDatabase = () => {
     if (endpointTestCase.addDB) {
@@ -109,7 +143,14 @@ const EndpointTestMenu = () => {
           <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
             Configure Database
           </button>
+          <button id={styles.rightBtn} onClick={saveTest}>
+            Save Test
+          </button>
         </div>
+        <ExportFileModal
+          isExportModalOpen={isExportModalOpen}
+          setIsExportModalOpen={setIsExportModalOpen}
+        />
       </div>
     </div>
   );

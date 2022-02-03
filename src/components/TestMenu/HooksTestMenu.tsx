@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   openBrowserDocs,
@@ -17,6 +17,8 @@ import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
+import ExportFileModal from '../Modals/ExportFileModal';
+const { ipcRenderer } = require('electron')
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -27,8 +29,10 @@ const HooksTestMenu = () => {
     HooksTestCaseContext
   );
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('hooks');
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('hooks', projectFilePath);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [userSavedTest, setUserSavedTest] = useState(false);
 
   useEffect(() => {
     dispatchToGlobal(setValidCode(false));
@@ -42,12 +46,39 @@ const HooksTestMenu = () => {
     dispatchToGlobal(openBrowserDocs(hooksUrl));
   };
 
+  // functionality when user clicks Preview
   const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
+    const testGeneration = generateTest({ hooksTestStatement, hooksStatements });
+    
+    // generates test code using UseGenerateTest.jsx and displays it in the Code Editor View
+    dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
     dispatchToGlobal(setTabIndex(0));
+    return testGeneration;
   };
+
+  const saveTest = () => {
+    const valid = validateInputs('hooks', hooksStatements);
+    dispatchToGlobal(setValidCode(valid));
+
+    const updatedData = fileHandle();
+    if(!userSavedTest){
+      dispatchToGlobal(toggleExportBool)
+      setIsExportModalOpen(true)
+    }
+
+    // store the file path of the new saved test file
+    const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
+
+    // if user has already clicked Save Test, rewrite the file with the updated data
+    if(userSavedTest){
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
+
+    // set userSavedTest state to true once user has clicked Save Test button
+    setUserSavedTest(true);
+  }
 
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
@@ -100,7 +131,14 @@ const HooksTestMenu = () => {
           <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
             Hooks
           </button>
+          <button id={styles.rightBtn} onClick={saveTest}>
+            Save Test
+          </button>
         </div>
+        <ExportFileModal
+          isExportModalOpen={isExportModalOpen}
+          setIsExportModalOpen={setIsExportModalOpen}
+        />
       </div>
     </div>
   );
