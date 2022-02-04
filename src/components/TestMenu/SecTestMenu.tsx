@@ -12,9 +12,12 @@ import {
   setValidCode,
   setTestCase,
   toggleModal,
+  toggleExportBool,
 } from '../../context/actions/globalActions';
 import { SecTestCaseContext } from '../../context/reducers/secTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+
+
 
 const SecTestMenu = () => {
   // link to Snyk docs
@@ -24,7 +27,7 @@ const SecTestMenu = () => {
   // 
   const { title, isModalOpen, openModal, openScriptModal, closeModal, } = useToggleModal('sec');
   const [secTestCase, dispatchToSecTestCase] = useContext(SecTestCaseContext);
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, fileName, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   // setValidCode to true on load.
   useEffect(() => {

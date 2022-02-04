@@ -31,9 +31,9 @@ const AccTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal, } = useToggleModal('acc');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
-  const generateTest = useGenerateTest('acc', projectFilePath);
-  const [userSavedTest, setUserSavedTest] = useState(false); 
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [userSavedTest, setUserSavedTest] = useState(false)
+  const generateTest = useGenerateTest('acc', projectFilePath);
 
   // setValidCode to true on load.
   useEffect(() => {
@@ -65,24 +65,21 @@ const AccTestMenu = () => {
   // functionality when user clicks Save Test button
   const saveTest = () => {
     const updatedData = fileHandle();
-
-     // check to see if user has saved test before. If not, then open ExportFileModal
-    if(!userSavedTest){
-      dispatchToGlobal(toggleExportBool())
-      setIsExportModalOpen(true)
-    }
-
+    
     // store the file path of the new saved test file
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
 
-    // if user has already clicked Save Test, rewrite the file with the updated data
-    if(userSavedTest){
-      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+     // check to see if user has saved test before. If not, then open ExportFileModal
+    if(!newFilePath.includes('test.js') || !userSavedTest){
+      dispatchToGlobal(toggleExportBool())
+      setIsExportModalOpen(true)
+      setUserSavedTest(true)
     }
 
-    // set userSavedTest state to true once user has clicked Save Test button
-    setUserSavedTest(true);
-    
+    // if user already has a saved test file, rewrite the file with the updated data
+    if(newFilePath.includes('test.js') && userSavedTest){
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
   }
 
   const openNewTestModal = () => {

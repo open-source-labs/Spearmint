@@ -17,7 +17,7 @@ import {
   setTabIndex,
 } from '../../context/actions/globalActions';
 import { VueTestCaseContext } from '../../context/reducers/vueTestCaseReducer';
-import { useToggleModal } from './testMenuHooks';
+import { useToggleModal, validateInputs } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
 
@@ -36,9 +36,8 @@ const VueTestMenu = () => {
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
     useContext(GlobalContext);
   const generateTest = useGenerateTest('vue', projectFilePath);
-
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-  const [userSavedTest, setUserSavedTest] = useState(false);
+  const [userSavedTest, setUserSavedTest] = useState(false)
 
 
   useEffect(() => {
@@ -68,24 +67,24 @@ const VueTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
+    const valid = validateInputs('vue', vueTestCase);
+    dispatchToGlobal(setValidCode(valid));
+    
+    const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
     const updatedData = fileHandle()
 
     // check to see if user has saved test before. If not, then open ExportFileModal
-    if (!userSavedTest) {
+    if (!newFilePath.includes('test.js') || !userSavedTest) {
       dispatchToGlobal(toggleExportBool())
       setIsExportModalOpen(true)
+      setUserSavedTest(true)
     }
-    
-    // store the file path of the new saved test file
-    const newFilePath = `${projectFilePath}/__tests__/${fileName}`;
 
-    // if user has already clicked Save Test, rewrite the file with the updated data
-    if (userSavedTest) {
+    // if user already has a saved test file, rewrite the file with the updated data
+    if (newFilePath.includes('test.js') && userSavedTest) {
       ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
     }
 
-    // set userSavedTest state to true once user has clicked Save Test button
-    setUserSavedTest(true);
   }
 
   const openNewTestModal = () => {

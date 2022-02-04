@@ -36,8 +36,7 @@ const EndpointTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-  const [userSavedTest, setUserSavedTest] = useState(false);
-
+  const [userSavedTest, setUserSavedTest] = useState(false)
 
   // Endpoint testing docs url
   const endpointUrl = 'https://www.npmjs.com/package/supertest';
@@ -73,21 +72,20 @@ const EndpointTestMenu = () => {
     const valid = validateInputs('endpoint', endpointTestCase);
     dispatchToGlobal(setValidCode(valid));
 
-    const updatedData = fileHandle();
-    if(!userSavedTest){
-      dispatchToGlobal(toggleExportBool)
-      setIsExportModalOpen(true)
-    }
     // store the file path of the new saved test file
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
 
-    // if user has already clicked Save Test, rewrite the file with the updated data
-    if(userSavedTest){
-      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    const updatedData = fileHandle();
+    if(!newFilePath.includes('test.js') || !userSavedTest){
+      dispatchToGlobal(toggleExportBool)
+      setIsExportModalOpen(true)
+      setUserSavedTest(true)
     }
 
-    // set userSavedTest state to true once user has clicked Save Test button
-    setUserSavedTest(true);
+    // if user already has a saved test file, rewrite the file with the updated data
+    if(newFilePath.includes('test.js') && userSavedTest){
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
   }
 
   const handleClickAddDatabase = () => {
