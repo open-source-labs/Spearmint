@@ -25,6 +25,7 @@ import { useToggleModal, validateInputs } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
 
+// imports were declared in previous iterations, but were never used
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 

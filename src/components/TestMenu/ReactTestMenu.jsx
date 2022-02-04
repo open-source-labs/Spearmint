@@ -20,6 +20,8 @@ import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReduce
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron');
+
+// imports were declared in previous iterations, but were never used
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -27,7 +29,6 @@ const ReactTestMenu = () => {
   // React testing docs url
   const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
 
-  // const [isModalOpen, setIsModalOpen] = useState(false);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('react');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [reactTestCase, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
@@ -58,28 +59,28 @@ const ReactTestMenu = () => {
     return testGeneration;
   };
 
-// functionality when user clicks Save Test button
-const saveTest = () => {
-  const valid = validateInputs('react', reactTestCase);
-  dispatchToGlobal(setValidCode(valid));
+  // functionality when user clicks Save Test button
+  const saveTest = () => {
+    const valid = validateInputs('react', reactTestCase);
+    dispatchToGlobal(setValidCode(valid));
 
-  
-  const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
-  const updatedData = fileHandle();
+    
+    const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
+    const updatedData = fileHandle();
 
-  // check to see if user has saved test before. If not, then open ExportFileModal
-  if(!newFilePath.includes('test.js') || !userSavedTest){
-    dispatchToGlobal(toggleExportBool())
-    setIsExportModalOpen(true)
-    setUserSavedTest(true)
+    // check to see if user has saved test before. If not, then open ExportFileModal
+    if(!newFilePath.includes('test.js') || !userSavedTest){
+      dispatchToGlobal(toggleExportBool())
+      setIsExportModalOpen(true)
+      setUserSavedTest(true)
+    }
+
+
+    // if user already has a saved test file, rewrite the file with the updated data
+    if(newFilePath.includes('test.js') && userSavedTest){
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
   }
-
-
-  // if user already has a saved test file, rewrite the file with the updated data
-  if(newFilePath.includes('test.js') && userSavedTest){
-    ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
-  }
-}
 
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());

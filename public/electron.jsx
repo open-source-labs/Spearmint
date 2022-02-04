@@ -8,6 +8,7 @@ const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
 
+// Comment below require out if you don't want app to reload on code changes
 require('electron-reloader')(module);
 
 // react developer tools for electron in dev mode
@@ -100,7 +101,6 @@ ipcMain.on('Universal.readFile', (e, filePath) => {
 });
 
 ipcMain.on('Universal.path', (e, folderPath, filePath) => {
-  console.log('ELECTRON.jsx -100- filePath:', filePath);
   e.returnValue = path.relative(folderPath, filePath, (err) => {
     if (err) throw err;
   });
@@ -122,7 +122,6 @@ ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
 */
 ipcMain.on('ExportFileModal.exists', (e, fileOrFolderPath) => {
   e.returnValue = fs.existsSync(fileOrFolderPath, (err) => {
-    console.log('file exists!')
     if (err) throw err;
   });
 });
@@ -172,7 +171,7 @@ let githubWindow;
 // ipcMain is listening on channel 'Github-Oauth' for an event from ProjectLoader line 94
 // ipbMain receives the url from ProjectLoader.jsx line 94
 ipcMain.on('Github-Oauth', (_event, url) => {
-  console.log('opening github oauth window!!');
+  console.log('opening github oauth window');
   githubWindow = new BrowserWindow({
     webPreferences: {
       nodeIntegration: true,
@@ -189,7 +188,6 @@ ipcMain.on('Github-Oauth', (_event, url) => {
     // if new url matches our final endpoint, then the user has successfully logged in
     // and we grab the github username via cookies
     if (url.startsWith('http://localhost:3001/auth/github/callback')) {
-      // console.log('final localhost url is:', url);
 
       // gets the cookie with the name property of 'dotcom_user'
       session.defaultSession.cookies.get({ name: 'dotcom_user' })
