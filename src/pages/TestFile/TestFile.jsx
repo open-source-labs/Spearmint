@@ -2,8 +2,6 @@
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
 import styles from '../../components/Modals/Modal.module.scss';
-import useGenerateTest from '../../context/useGenerateTest';
-
 
 import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
@@ -120,20 +118,6 @@ const TestFile = () => {
     dispatchToGlobal(setTestCase(test));
     closeTestModal();
   };
-
-  // const saveTest = () => {
-  //   const currTestCase = testCase
-  //   const testMe = testCase + 'TestCase'
-  //   console.log('currTestCase:', currTestCase)
-  //   console.log('testMe:', testMe)
-  //   const generateTest = useGenerateTest(currTestCase, projectFilePath)
-  //   console.log()
-
-  //   dispatchToGlobal(updateFile(generateTest(testMe)));
-  //   // dispatchToGlobal(toggleRightPanel('codeEditorView'));
-  //   // dispatchToGlobal(setFilePath(''));
-  //   // dispatchToGlobal(setTabIndex(0));
-  // }
 
   const modalStyles = {
     overlay: {
@@ -286,14 +270,6 @@ const TestFile = () => {
           </div>
         </Fragment>
       )}
-      {/* <br></br>
-      <br></br>
-      <br></br>
-      <div id={styles.right}>
-        <button id={styles.rightBtn} onClick={saveTest}>
-        Save Test
-        </button>  
-      </div> */}
     </div>
   );
 };
