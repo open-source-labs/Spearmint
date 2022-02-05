@@ -1,11 +1,13 @@
 * {
   box-sizing: border-box;
+  // overflow: hidden;
 }
 
 html,
 body,
 #contents {
   height: 100%;
+  overflow-y: hidden;
 }
 
 html {
