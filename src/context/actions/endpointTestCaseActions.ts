@@ -133,10 +133,11 @@ export const toggleDB = (dbProperty: string | boolean) => {
   };
 };
 
-export const updateDBFilePath = (dbFilePath: string) => {
+export const updateDBFilePath = (dbFilePath: string, dbFileName: string) => {
   return {
     type: actionTypes.UPDATE_DB_FILEPATH,
     dbFilePath,
+    dbFileName
   };
 };
 

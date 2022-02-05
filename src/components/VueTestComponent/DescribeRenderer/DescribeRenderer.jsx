@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from './DescribeRenderer.module.scss';
-import { deleteDescribeBlock, addItstatement } from '../../../context/actions/reactTestCaseActions';
+import { deleteDescribeBlock, addItstatement } from '../../../context/actions/vueTestCaseActions';
 import { IconContext } from 'react-icons';
 import { AiFillCloseSquare } from 'react-icons/ai';
 
@@ -22,7 +22,7 @@ const DescribeRenderer = ({
     dispatcher(deleteDescribeBlock(describeId));
   };
 
-  const deleteReactDescribeBlockOnKeyUp = (e) => {
+  const deleteVueDescribeBlockOnKeyUp = (e) => {
     if (e.charCode === 13) {
       const describeId = e.target.id;
       dispatcher(deleteDescribeBlock(describeId));
@@ -51,11 +51,11 @@ const DescribeRenderer = ({
             <AiFillCloseSquare
               tabIndex={0}
               id={id} 
-              onKeyPress={deleteReactDescribeBlockOnKeyUp}
+              onKeyPress={deleteVueDescribeBlockOnKeyUp}
               onClick={deleteDescribeBlockHandleClick}
               className={cn('far fa-window-close', styles.describeClose)}
             />  
-          </IconContext.Provider> 
+          </IconContext.Provider>
 
           <input
             id={id}

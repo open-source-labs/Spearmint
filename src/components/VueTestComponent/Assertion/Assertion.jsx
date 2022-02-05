@@ -7,47 +7,41 @@
 
 import React, { useContext } from 'react';
 import styles from './Assertion.module.scss';
-import { deleteAssertion, updateAssertion } from '../../../context/actions/reactTestCaseActions';
+import { deleteAssertion, updateAssertion } from '../../../context/actions/vueTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
-  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [, dispatchToVueTestCase] = useContext(VueTestCaseContext);
 
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...statement };
     field === 'isNot'
       ? (updatedAssertion[field] = !updatedAssertion.isNot)
       : (updatedAssertion[field] = e.target.value);
-    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    dispatchToVueTestCase(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = (e) => {
-    dispatchToReactTestCase(deleteAssertion(statementId));
+    dispatchToVueTestCase(deleteAssertion(statementId));
   };
 
   const needsMatcherValue = (matcherType) => {
     const matchersWithValues = [
-      'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
-      'toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
-      'toHaveAttribute', //takes in a string Ex: 'type'
-      'toHaveClass', //takes in a string Ex: 'btn-link'
-      'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
-      'toHaveStyle', //takes in a sting value Ex: 'display: none'
-      'toHaveTextContent', //takes in a string value Ex: 'Content'
-      'not.toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
-      'not.toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
-      'not.toHaveAttribute', //takes in a string Ex: 'type'
-      'not.toHaveClass', //takes in a string Ex: 'btn-link'
-      'not.toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
-      'not.toHaveStyle', //takes in a sting value Ex: 'display: none'
-      'not.toHaveTextContent', //takes in a string value Ex: 'Content'
+      'toBe', 
+      'toEqual',
+      'toHaveLength',
+      'toContain',
+      'not.toBe', 
+      'not.toEqual', 
+      'not.toHaveLength',
+      'not.toContain',
     ];
     return matchersWithValues.includes(matcherType);
   };
@@ -70,13 +64,21 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               onChange={(e) => handleChangeAssertionFields(e, 'queryVariant')}
             >
               <option value='' />
-              <option value='getBy'>getBy</option>
-              <option value='getAllBy'>getAllBy</option>
-              <option value='queryBy'>queryBy</option>
-              <option value='queryAllBy'>queryAllBy</option>
-              <option value='findBy'>findBy</option>
-              <option value='findAllBy'>findAllBy</option>
+              <option value='find'>find</option>
+              <option value='findComponent'>findComponent</option>
+              <option value='findAll'>findAll</option>
+              <option value='get'>get</option>
+              <option value='getComponent'>getComponent</option>
             </select>
+            <div id={styles.query}>
+              <input
+                type='text'
+                id='queryValue'
+                value={statement.queryValue}
+                onChange={(e) => handleChangeAssertionFields(e, 'queryValue')}
+                placeholder='Query'
+              />
+            </div>
             <span id={styles.hastooltip} role='tooltip'>
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
@@ -88,15 +90,10 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               onChange={(e) => handleChangeAssertionFields(e, 'querySelector')}
             >
               <option value='' />
-              <option value='LabelText'>LabelText</option>
-              <option value='PlaceholderText'>PlaceholderText</option>
-              <option value='Text'>Text</option>
-              <option value='AltText'>AltText</option>
-              <option value='Title'>Title</option>
-              <option value='DisplayValue'>DisplayValue</option>
-              <option value='Role'>Role</option>
-              <option value='TestId'>TestId</option>
-              {/* TextMatch Precision & Normalization will be added */}
+              <option value='isVisibile'>isVisible</option>
+              <option value='exists'>exists</option>
+              <option value='html'>html</option>
+              <option value='text'>text</option>
             </select>
             <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
@@ -106,22 +103,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
             </span>
           </div>
         </div>
-        <div id={styles.query}>
-          <label htmlFor='queryValue' className={styles.queryLabel}>
-            Query
-          </label>
-          {/* <AutoCompleteMockData
-            statement={statement}
-            dispatchToTestCase={dispatchToReactTestCase}
-            statementType='assertion'
-          /> */}
-          <input
-            type='text'
-            id='queryValue'
-            value={statement.queryValue}
-            onChange={(e) => handleChangeAssertionFields(e, 'queryValue')}
-          />
-        </div>
+        
       </div>
       <div>
         <div id={styles.matcherFlexBox}>
@@ -143,8 +125,9 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <AutoComplete
                 statement={statement}
                 statementType='assertion'
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={dispatchToVueTestCase}
                 id={styles.matcherAuto}
+                type='vue'
               />
 
               <span id={styles.hastooltip} role='tooltip'>
