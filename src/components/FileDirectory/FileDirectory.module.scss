@@ -5,11 +5,10 @@
   flex: 0 1 200px;
   min-width: 150px;
   font-size: 12px;
-  background-color: $lighter-mint;
+  background-color: $mint;
   overflow: auto;
-  border-right: 1px dotted $mint;
   z-index: 1;
-  border-radius: 10px;
+  border-radius: 5px;
 
   ul {
     list-style-type: none;

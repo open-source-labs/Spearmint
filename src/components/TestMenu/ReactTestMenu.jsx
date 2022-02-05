@@ -17,6 +17,12 @@ import {
 } from '../../context/actions/globalActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import { Button } from '@material-ui/core';
+import { AiFillFileAdd } from 'react-icons/ai'
+import { BsFileEarmarkPlayFill } from 'react-icons/bs'
+import { IoSave } from 'react-icons/io5';
+import { MdOutlineHelp, MdPreview } from 'react-icons/md';
+import TestMenuButtons from './TestMenuButtons';
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -58,42 +64,33 @@ const ReactTestMenu = () => {
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button onClick={openModal} autoFocus>
-            New Test +
-          </button>
-          <button onClick={fileHandle}>Preview</button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType='react' />
-          <GetTests testType='react' /> */}
-          <Modal
-            title={title}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchMockData={dispatchToMockData}
-            dispatchTestCase={dispatchToReactTestCase}
-            createTest={createNewTest}
-          />
-          {/* Just send user to docs on button click */}
-        </div>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={openModal}
+        openDocs={openDocs}
+      />
+      <Modal
+        title={title}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchMockData={dispatchToMockData}
+        dispatchTestCase={dispatchToReactTestCase}
+        createTest={createNewTest}
+      />
+    </>
+      
+      // {/* <div
+      //   id={styles.right}
+      //   style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+      // >
+      //   <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+      //     +Describe Block
+      //   </button>
+      // </div> */}
 
-        <div
-          id={styles.right}
-          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-        >
-          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-            +Describe Block
-          </button>
-        </div>
-      </div>
-    </div>
   );
 };
 

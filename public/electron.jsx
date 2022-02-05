@@ -52,7 +52,7 @@ function createWindow() {
   const ptyArgs = {
     name: 'xterm-color',
     cols: 80,
-    rows: 80,
+    rows: 24,
     cwd: process.env.HOME,
     env: process.env,
   };
@@ -68,6 +68,11 @@ function createWindow() {
   ipcMain.on('terminal.toTerm', (_event, data) => {
     ptyProcess.write(data);
   });
+
+  ipcMain.on('terminal.resize', (event, data)=> {
+    //console.log('resizing pty shell', "data: ", data, "data.cols", data.cols);
+    ptyProcess.resize(data.cols, data.rows);
+  })
 }
 
 if (os.platform() !== 'win32') {

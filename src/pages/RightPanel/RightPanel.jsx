@@ -32,7 +32,7 @@ const RightPanel = () => {
       <div className={styles.viewContainer} hidden={tabIndex !== 1}>
         <BrowserView />
       </div>
-      <div className={styles.viewContainer} hidden={tabIndex !== 2} >
+      <div id='term' className={styles.viewContainer} hidden={tabIndex !== 2} >
         <TerminalView />
       </div>
     </div>

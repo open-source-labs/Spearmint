@@ -17,6 +17,7 @@ import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
+import TestMenuButtons from './TestMenuButtons';
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -66,43 +67,38 @@ const HooksTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
   }
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button type='button' autoFocus onClick={openModal}>
-            New Test +
-          </button>
-          <button id={styles.example} onClick={fileHandle}>
-            Preview
-          </button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType="hooks" />
-          <GetTests testType="hooks" /> */}
-          <Modal
-            // passing methods down as props to be used when Modal is opened
-            title={title}
-            dispatchToMockData={null}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
-            createTest={title === 'New Test' ? createNewHooksTest : null}
-          />
-        </div>
-        <div
-          id={styles.right}
-          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-        >
-          <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
-            Hooks
-          </button>
-        </div>
-      </div>
-    </div>
+
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={openModal}
+        openDocs={openDocs}
+      />
+      <Modal
+        // passing methods down as props to be used when Modal is opened
+        title={title}
+        dispatchToMockData={null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
+        createTest={title === 'New Test' ? createNewHooksTest : null}
+      />
+    </>
+
+    //       {/* <UploadTest testType="hooks" />
+    //       <GetTests testType="hooks" /> */}
+    //     <div
+    //       id={styles.right}
+    //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+    //     >
+    //       <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
+    //         Hooks
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

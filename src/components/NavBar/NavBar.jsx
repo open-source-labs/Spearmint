@@ -10,14 +10,12 @@ import {
   toggleFileDirectory,
   toggleExportBool,
 } from '../../context/actions/globalActions';
-import FileDirectory from '../FileDirectory/FileDirectory';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
 import ExportFileModal from '../Modals/ExportFileModal';
 
-const menuIcon = require('../../assets/images/menu.png');
-const exportIcon = require('../../assets/images/file-export.png');
-import { VscFiles, VscSettingsGear } from "react-icons/vsc"
-import { FaFileExport, FaUserCircle } from "react-icons/fa"
+import { VscSettingsGear } from 'react-icons/vsc'
+import { FaFileExport, FaUserCircle } from 'react-icons/fa'
+import { GoFileSubmodule } from 'react-icons/go'
 
 const NavBar = ({ inAboutPage }) => {
   const [{ fileTree, isFileDirectoryOpen }, dispatchToGlobal] =
@@ -42,7 +40,7 @@ const NavBar = ({ inAboutPage }) => {
       {/* File Explorer */}
       <div className={styles.btnContainer}>
         <span onClick={handleToggleFileDirectory} title='Expand file explorer'>
-          <VscFiles size={'1.5rem'}/>
+          <GoFileSubmodule size={'1.5rem'}/>
         </span>
         <span onClick={openExportModal} title='Export test file'>
           <FaFileExport size={'1.5rem'}/>

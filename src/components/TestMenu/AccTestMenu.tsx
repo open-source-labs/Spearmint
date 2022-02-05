@@ -15,6 +15,7 @@ import {
 } from '../../context/actions/globalActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import TestMenuButtons from './TestMenuButtons';
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -58,42 +59,41 @@ const AccTestMenu = () => {
   if (!file && exportBool) {dispatchToGlobal(updateFile(generateTest(accTestCase)))};
  
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button id={styles.newTestBtn} autoFocus onClick={openModal}>New Test +</button>
-          <button onClick={fileHandle}>Preview</button>
-          <button id={styles.example} onClick={openScriptModal} >
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType="acc" />
-          <GetTests testType="acc" /> */}
-          <Modal
-            title={title}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchToMockData={null}
-            dispatchTestCase={dispatchToAccTestCase}
-            createTest={createNewTest}
-            testType={accTestCase.testType}
-            puppeteerUrl={accTestCase.puppeteerUrl}
-          />
-          {/* Just send user to docs on button click */}
-        </div>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={openModal}
+        openDocs={openDocs}
+      />
+      <Modal
+        title={title}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchToMockData={null}
+        dispatchTestCase={dispatchToAccTestCase}
+        createTest={createNewTest}
+        testType={accTestCase.testType}
+        puppeteerUrl={accTestCase.puppeteerUrl}
+      />
+    </>
+    
+    //       {/* <UploadTest testType="acc" />
+    //       <GetTests testType="acc" /> */}
+          
 
-        <div
-          id={styles.right}
-          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-        >
-          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-            +Describe Block
-          </button>
-        </div>
-      </div>
-    </div >
+
+    //     <div
+    //       id={styles.right}
+    //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+    //     >
+    //       <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+    //         +Describe Block
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div >
   );
 }
 

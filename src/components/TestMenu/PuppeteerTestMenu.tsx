@@ -21,6 +21,7 @@ import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCa
 import { useToggleModal } from './testMenuHooks';
 import UploadTest from '../UploadTest/UploadTest';
 import GetTests from '../GetTests/GetTests';
+import TestMenuButtons from './TestMenuButtons';
 
 const PuppeteerTestMenu = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
@@ -61,43 +62,38 @@ const PuppeteerTestMenu = () => {
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button type='button' autoFocus data-testid='puppeteerNewTestButton' onClick={openModal}>
-            New Test +
-          </button>
-          <button onClick={fileHandle}>Preview</button>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={openModal}
+        openDocs={openDocs}
+      />
+      <Modal
+        // passing methods down as props to be used when Modal is opened
+        title={title}
+        dispatchToMockData={null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchTestCase={dispatchToPuppeteerTestCase}
+        createTest={createNewPuppeteerTest}
+      />
+    </>
+    //       {/* <UploadTest testType="puppeteer" />
+    //       <GetTests testType="puppeteer" /> */}
 
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType="puppeteer" />
-          <GetTests testType="puppeteer" /> */}
-          <Modal
-            // passing methods down as props to be used when Modal is opened
-            title={title}
-            dispatchToMockData={null}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchTestCase={dispatchToPuppeteerTestCase}
-            createTest={createNewPuppeteerTest}
-          />
-        </div>
-        <div id={styles.right}>
-          <button
-            type='button'
-            data-testid='puppeteerPaintTimingButton'
-            onClick={handleAddPuppeteerPaintTiming}
-          >
-            Paint Timing
-          </button>
-        </div>
-      </div>
-    </div>
+    //     <div id={styles.right}>
+    //       <button
+    //         type='button'
+    //         data-testid='puppeteerPaintTimingButton'
+    //         onClick={handleAddPuppeteerPaintTiming}
+    //       >
+    //         Paint Timing
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

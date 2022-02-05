@@ -74,10 +74,7 @@ const ReactTestCase = () => {
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
       <div id={styles.ReactTestCase}>
-        <div id='head'>
-          <ReactTestMenu />
-        </div>
-
+        <ReactTestMenu />
         <div className={styles.header}>
           <div className={styles.renderComponent}>
             <span className={styles.renderLabel}>Enter Component Name:</span>

@@ -24,6 +24,7 @@ import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReduce
 import { useToggleModal } from './testMenuHooks';
 import UploadTest from '../UploadTest/UploadTest';
 import GetTests from '../GetTests/GetTests';
+import TestMenuButtons from './TestMenuButtons';
 
 const ReduxTestMenu = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
@@ -74,55 +75,50 @@ const ReduxTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ reduxTestStatement, reduxStatements })));
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button onClick={openModal} autoFocus >New Test +</button>
-          <button id={styles.preview} onClick={fileHandle}>
-            Preview
-          </button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType='redux' />
-          <GetTests testType='redux' /> */}
-          <Modal
-            // passing methods down as props to be used when Modal is opened
-            title={title}
-            dispatchToMockData={null}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchTestCase={dispatchToReduxTestCase}
-            createTest={createNewReduxTest}
-          />
-          {/* Just send user to docs on button click */}
-        </div>
-        <div
-          id={styles.right}
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-          }}
-        >
-          <button data-testid='reducerButton' onClick={handleAddReducer}>
-            Reducer
-          </button>
-          <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
-            Action Creator
-          </button>
-          <button data-testid='asyncButton' onClick={handleAddAsync}>
-            Async Action Creator
-          </button>
-          <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
-            Middleware
-          </button>
-        </div>
-      </div>
-    </div>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={openModal}
+        openDocs={openDocs}
+      />
+      <Modal
+        // passing methods down as props to be used when Modal is opened
+        title={title}
+        dispatchToMockData={null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchTestCase={dispatchToReduxTestCase}
+        createTest={createNewReduxTest}
+      />
+    </>
+    //       {/* <UploadTest testType='redux' />
+    //       <GetTests testType='redux' /> */}
+         
+    //     <div
+    //       id={styles.right}
+    //       style={{
+    //         display: 'flex',
+    //         flexWrap: 'wrap',
+    //         justifyContent: 'center',
+    //       }}
+    //     >
+    //       <button data-testid='reducerButton' onClick={handleAddReducer}>
+    //         Reducer
+    //       </button>
+    //       <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
+    //         Action Creator
+    //       </button>
+    //       <button data-testid='asyncButton' onClick={handleAddAsync}>
+    //         Async Action Creator
+    //       </button>
+    //       <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
+    //         Middleware
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

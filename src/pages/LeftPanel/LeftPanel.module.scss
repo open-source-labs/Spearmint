@@ -5,19 +5,13 @@
 #leftPanel {
   flex: 1 1 60%;
   height: 100%;
-  background-color: $eggshell;
+  background-color: white;
   font-family: $raleway;
   justify-content: space-evenly;
   min-width: 500px; // changed this to make dev easier w/ dev tools open
   overflow: auto;
-  border-radius: 10px;
-
-  button {
-    text-decoration: none;
-    width: 20%;
-    height: 10px;
-    font-size: 13px;
-  }
+  border-radius: 5px;
+  padding: 10px;
 
   input {
     font-family: $raleway;

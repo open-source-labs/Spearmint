@@ -6,62 +6,24 @@
  * ----------------------------------------
  */
 #testMenu {
-  padding: 10px;
-  text-align: center;
+  flex: 0 0 30px;
   display: flex;
-  justify-content: space-between;
-  width: 98%;
-  margin-bottom: 10px;
-  max-width: 800px;
-  button {
-    margin: 5px;
-    height: 40px;
-    width: 110px;
-    color: $mint;
-    background-color: $light-gray3;
-    opacity: 0.8;
-    font-family: $oxygen;
-    font-size: 14px;
-    border-radius: 5px;
-    border: 0.5px $light-gray solid;
-  }
-
-  
- 
-  button:hover {
-    background-color: white;
-    color: $mint;
-    border-radius: 5px;
-  }
-}
-
-
-#left {
-  float: left;
-  button {
-    color: $mint;
-    background-color: white;
-  }
-
-  button:hover {
-    background-color: $mint;
-    color: white;
-  }
-}
-
-#right {
-  display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  gap: 12px;
+  width: 100%;
   button {
+    background-color: #24A19C;
     color: white;
-    background-color: $mint;
-    margin-right: 4px;
-    margin-bottom: 4px;
-  }
-
-  button:hover {
-    background-color: white;
-    color: $mint;
+    font-size: 0.75rem;
+    border-radius: 5px;
+    padding: 8px;
+    height: 100%;
+    
+    span {
+      width: 100%;
+      // display: flex;
+      // gap: 10px;
+    }
   }
 }

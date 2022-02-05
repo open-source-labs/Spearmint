@@ -22,6 +22,7 @@ import {
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
+import TestMenuButtons from './TestMenuButtons';
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -77,41 +78,37 @@ const EndpointTestMenu = () => {
 
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button onClick={openModal} autoFocus >New Test +</button>
-          <button id={styles.preview} onClick={fileHandle}>
-            Preview
-          </button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType="endpoint test" />
-          <GetTests testType="endpoint test" /> */}
-          <Modal
-            // passing methods down as props to be used when TestModal is opened
-            title={title}
-            dispatchToMockData={null}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
-            createTest={title === 'New Test' ? createNewEndpointTest : null}
-          />
-        </div>
-        <div id={styles.right}>
-          <button data-testid='endPointButton' onClick={handleAddEndpoint}>
-            Endpoint
-          </button>
-          <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
-            Configure Database
-          </button>
-        </div>
-      </div>
-    </div>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={openModal}
+        openDocs={openDocs}
+      />
+      <Modal
+        // passing methods down as props to be used when TestModal is opened
+        title={title}
+        dispatchToMockData={null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
+        createTest={title === 'New Test' ? createNewEndpointTest : null}
+      />
+    </>
+    //       {/* <UploadTest testType="endpoint test" />
+    //       <GetTests testType="endpoint test" /> */}
+
+    //     <div id={styles.right}>
+    //       <button data-testid='endPointButton' onClick={handleAddEndpoint}>
+    //         Endpoint
+    //       </button>
+    //       <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
+    //         Configure Database
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

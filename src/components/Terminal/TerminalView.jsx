@@ -1,7 +1,8 @@
-import React, { useEffect, ChangeEvent } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import "./xterm.css";
+import "./Terminal.css";
 const ipc = require('electron').ipcRenderer;
 
 const terminalArgs = {
@@ -9,19 +10,20 @@ const terminalArgs = {
   fontSize: 12,
   // Currently rows are hardcoded, next step is to make terminal sizing dynamic.
   fontFamily: 'monospace',
-  //endererType: "dom",
+  //rendererType: "dom",
 };
 
 const term = new Terminal(terminalArgs);
 const fitAddon = new FitAddon();
+term.loadAddon(fitAddon);
 
 const TerminalView = () => {
   
-  useEffect(() => {
-    term.setOption("theme", {background: "black", foreground: "white"});
-    term.loadAddon(fitAddon);
-    term.open(document.getElementById('xterm'));
-    fitAddon.fit();
+  useLayoutEffect(() => {
+    //term.setOption("theme", {background: "black", foreground: "white"});
+    const container = document.getElementById('terminalContainer')
+    console.log(container);
+    term.open(document.getElementById('terminalContainer'));
     // when we have input events (e), we would send the data to the main processor
     term.onData((e) => {
       ipc.send('terminal.toTerm', e);
@@ -31,12 +33,37 @@ const TerminalView = () => {
     ipc.on('terminal.incData', (event, data) => {
       term.write(data);
     });
+
+    console.log("in useEffect once before fit", container.offsetWidth, container.offsetHeight)
+    fitAddon.fit();
+    console.log("in useEffect once after fit", container.offsetWidth, container.offsetHeight)
+    //fitAddon.fit();
+    //console.log(fitAddon)
   }, []);
+
+  useLayoutEffect(() => {
+    //fitAddon.fit();
+    console.log('USE-EFFEcT ALWAYS before fitaddon', term.cols, term.rows);
+    const container = document.getElementById('terminalContainer')
+    console.log(container.offsetWidth, container.offsetHeight)
+    fitAddon.fit();
+    console.log('USE-EFFEcT ALWAYS after fitaddon', term.cols, term.rows);
+
+    // tell ptyprocess to resize also 
+    term.onResize((e) => {
+      //console.log('resizing with', term.cols, term.rows);
+      ipc.send('terminal.resize', e, term.cols, term.rows)
+    })
+    
+    //term.resize(Math.floor(container.offsetWidth/7), Math.floor(container.offsetHeight/14))
+    
+  });
+
+
+
 
   return (
     <div id="terminalContainer">
-
-      <div id="xterm" style={{ height: "900px", width: "100%" }}/>
     </div>
 
   )

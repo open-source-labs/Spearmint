@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { addDescribeBlock, createNewTest } from '../../context/actions/vueTestCaseActions';
@@ -17,12 +16,13 @@ import {
 } from '../../context/actions/globalActions';
 import { VueTestCaseContext } from '../../context/reducers/vueTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import TestMenuButtons from './TestMenuButtons';
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
 const VueTestMenu = () => {
   // Vue testing docs url
-  const vueUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
+  const vueUrl = 'https://next.vue-test-utils.vuejs.org/guide/';
 
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('vue');
@@ -58,40 +58,36 @@ const VueTestMenu = () => {
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(vueTestCase, mockData)));
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button onClick={openModal} autoFocus>
-            New Test +
-          </button>
-          <button onClick={fileHandle}>Preview</button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          <Modal
-            title={title}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchMockData={dispatchToMockData}
-            dispatchTestCase={dispatchToVueTestCase}
-            createTest={createNewTest}
-          />
-          {/* Just send user to docs on button click */}
-        </div>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={openModal}
+        openDocs={openDocs}
+      />
+      <Modal
+        title={title}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchMockData={dispatchToMockData}
+        dispatchTestCase={dispatchToVueTestCase}
+        createTest={createNewTest}
+      />
+    </>
+          
+         
 
-        <div
-          id={styles.right}
-          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-        >
-          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-            +Describe Block
-          </button>
-        </div>
-      </div>
-    </div>
+    //     <div
+    //       id={styles.right}
+    //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+    //     >
+    //       <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+    //         +Describe Block
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 
