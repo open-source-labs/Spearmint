@@ -21,25 +21,36 @@
   display: flex;
   align-items: center;
   gap: 30px;
+  
   span{
     // padding-bottom: 5px;
     // border-bottom: 2px solid transparent;
     // border-top: 2px solid transparent;
     &:hover{
       // border-bottom: 2px solid $salmon;
-      svg{
-        path{
+      svg {
+        path {
           fill: $salmon;
         }
       }
     }
-    svg{
-      path{
+    svg {
+      path {
         fill: $eggshell; 
+      }
+    }
+    
+  }
+  #activeEffect {
+    svg {
+      path {
+        fill: $salmon;
       }
     }
   }
 }
+
+
 
 #spearmintTitle{
   flex: 1 0 auto;

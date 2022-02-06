@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import Draggable from 'react-draggable';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { withStyles } from '@material-ui/core/styles';
 import {
   setFilePathMap,
   createFileTree,
@@ -18,6 +19,28 @@ import { Button, TextField, InputAdornment } from '@material-ui/core';
 import styles from './Modal.module.scss';
 
 const { ipcRenderer } = require('electron');
+
+const CssTextField = withStyles({
+  root: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#8f54a0',
+      },
+      '&:hover fieldset': {
+        borderColor: '#fff',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#8f54a0',
+      },
+      '& label.Mui-focused': {
+        color: '#8f54a0',
+      },
+      '& .MuiInput-underline:after': {
+        borderBottomColor: '#8f54a0',
+      },
+    },
+  },
+})(TextField);
 
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName] = useState('');
@@ -142,7 +165,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
               <div id={styles.body}>
                 <p id={styles.text}>Export test file</p>
                 
-                <TextField
+                <CssTextField
                   id="text"
                   name="text"
                   value={fileName}

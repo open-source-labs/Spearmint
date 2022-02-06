@@ -1,6 +1,32 @@
+@import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
+
 * {
   box-sizing: border-box;
   // overflow: hidden;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: none;
+  scrollbar-color: #8f54a0 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #8f54a0;
+  border-radius: 10px;
 }
 
 html,
@@ -15,6 +41,16 @@ html {
   background-color: #FAEEE7;
 }
 
+body{
+  font-family: $comfortaa;
+  font-size: 1rem;
+  letter-spacing: 0.02857em;
+}
+
 a {
   text-decoration: none;
+}
+
+button:hover {
+  box-shadow: inset 0em 0em 0em 10em rgba(0, 0, 0, 0.3);
 }

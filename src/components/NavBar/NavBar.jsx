@@ -39,7 +39,7 @@ const NavBar = ({ inAboutPage }) => {
     <div id={styles.navBar}>
       {/* File Explorer */}
       <div className={styles.btnContainer}>
-        <span onClick={handleToggleFileDirectory} title='Expand file explorer'>
+        <span id={isFileDirectoryOpen && styles.activeEffect} onClick={handleToggleFileDirectory} title='Expand file explorer'>
           <GoFileSubmodule size={'1.5rem'}/>
         </span>
         <span onClick={openExportModal} title='Export test file'>

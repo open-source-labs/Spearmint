@@ -6,6 +6,7 @@ import NavBar from './components/NavBar/NavBar';
 import LeftPanel from './pages/LeftPanel/LeftPanel';
 import RightPanel from './pages/RightPanel/RightPanel';
 import FileDirectory from './components/FileDirectory/FileDirectory';
+import { CSSTransition } from 'react-transition-group';
 // import About from './pages/About/About';
 
 const App = () => {
@@ -53,7 +54,9 @@ const App = () => {
       <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <NavBar inAboutPage={false} />
           <div id={styles.content}>
-            {global.isFileDirectoryOpen && <FileDirectory fileTree={global.fileTree} />}
+            <CSSTransition in={global.isFileDirectoryOpen} timeout={200} classNames="my-node" unmountOnExit appear>
+              <FileDirectory fileTree={global.fileTree} />
+            </CSSTransition>
             <LeftPanel />
             <RightPanel />
           </div>

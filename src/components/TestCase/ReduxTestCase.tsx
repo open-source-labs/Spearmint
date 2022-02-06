@@ -6,6 +6,10 @@ import styles from './TestCase.module.scss';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
 import {
+  addActionCreator,
+  addAsync,
+  addMiddleware,
+  addReducer,
   updateReduxTestStatement,
   updateStatementsOrder,
 } from '../../context/actions/reduxTestCaseActions';
@@ -50,6 +54,22 @@ const ReduxTestCase = () => {
     dispatchToReduxTestCase(updateStatementsOrder(reorderedStatements));
   };
 
+  const handleAddMiddleware = () => {
+    dispatchToReduxTestCase(addMiddleware());
+  };
+
+  const handleAddActionCreator = () => {
+    dispatchToReduxTestCase(addActionCreator());
+  };
+
+  const handleAddAsync = () => {
+    dispatchToReduxTestCase(addAsync());
+  };
+
+  const handleAddReducer = () => {
+    dispatchToReduxTestCase(addReducer());
+  };
+
   return (
     <div>
       <div id='head'>
@@ -65,6 +85,18 @@ const ReduxTestCase = () => {
             value={reduxTestStatement}
             onChange={handleUpdateReduxTestStatement}
           />
+          <button data-testid='reducerButton' onClick={handleAddReducer}>
+            Reducer
+          </button>
+          <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
+            Action Creator
+          </button>
+          <button data-testid='asyncButton' onClick={handleAddAsync}>
+            Async Action Creator
+          </button>
+          <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
+            Middleware
+          </button>
         </section>
       </div>
 

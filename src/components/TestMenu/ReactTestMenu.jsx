@@ -17,11 +17,6 @@ import {
 } from '../../context/actions/globalActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
-import { Button } from '@material-ui/core';
-import { AiFillFileAdd } from 'react-icons/ai'
-import { BsFileEarmarkPlayFill } from 'react-icons/bs'
-import { IoSave } from 'react-icons/io5';
-import { MdOutlineHelp, MdPreview } from 'react-icons/md';
 import TestMenuButtons from './TestMenuButtons';
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';

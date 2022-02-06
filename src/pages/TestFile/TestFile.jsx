@@ -219,11 +219,9 @@ const TestFile = () => {
       )}
 
       {testCase === 'react' && (
-        <section>
-          <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-            <ReactTestCase />
-          </MockDataContext.Provider>
-        </section>
+        <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+          <ReactTestCase />
+        </MockDataContext.Provider>
       )}
 
       {testCase === 'endpoint' && (

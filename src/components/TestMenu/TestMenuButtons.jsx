@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { IconButton } from '@material-ui/core';
-import { AiFillFileAdd } from 'react-icons/ai'
-import { BsFileEarmarkPlayFill } from 'react-icons/bs'
-import { IoSave } from 'react-icons/io5';
-import { MdOutlineHelp, MdPreview } from 'react-icons/md';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import HelpIcon from '@material-ui/icons/Help';
+import SaveIcon from '@material-ui/icons/Save';
+import CachedIcon from '@material-ui/icons/Cached';
 
 const TestMenuButtons = ({
   openModal,
@@ -18,42 +19,41 @@ const TestMenuButtons = ({
       <IconButton 
         variant="outlined" 
         onClick={openModal}
-        title="New Test"
+        title="Open New Test"
       >
         {/* <span>New Test</span> */}
-        <AiFillFileAdd size={'1.25rem'}/>
+        <CachedIcon fontSize="large"/>
       </IconButton>
       <IconButton 
         variant="outlined" 
         onClick={fileHandle}
-        title="Preview"
+        title="Preview File"
       >
         {/* <span>Preview</span> */}
-        <MdPreview size={'1.25rem'}/>
+        <VisibilityIcon fontSize="large"/>
       </IconButton>
       <IconButton 
         variant="outlined" 
         onClick={openScriptModal}
-        title="Run"
+        title="Run File"
       >
         {/* <span>Run</span> */}
-        <BsFileEarmarkPlayFill size={'1.25rem'}/>
+        <PlayArrowIcon fontSize="large"/>
       </IconButton>
       <IconButton 
         variant="outlined" 
         onClick={saveTest}
-        title="Save"
+        title="Save File"
       >
         {/* <span>Save</span> */}
-        <IoSave size={'1.25rem'}/>
+        <SaveIcon fontSize="large"/>
       </IconButton>
       <IconButton 
         variant="outlined" 
         onClick={openDocs}
-        title="Help"
+        title="Need Help?"
       >
-        {/* <span>Help</span> */}
-        <MdOutlineHelp size={'1.25rem'}/>
+        <HelpIcon fontSize="large"/>
       </IconButton>
     </div>
   );

@@ -159,4 +159,48 @@
   gap: 10px;
 }
 
+@keyframes flash {
+  0% {
+    fill: $eggshell;
+  }
+  25% {
+    fill: $salmon;
+  }
+  50% {
+    fill: $navy;
+  }
+  75% {
+    fill: $salmon;
+  }
+  100% {
+    fill: $eggshell;
+  }
+}
 
+.dancingLeaf  {
+  offset-distance: 0;
+  display: inline-block; //none; //inline-block;
+  text-align: center;
+  
+  
+  offset-path: path('M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z');
+  animation: pathy 3200ms infinite linear;
+  position: relative;
+  left: -72px;
+  top: -24px;
+}
+ .leafFill {
+  animation: flash 5s ease-in-out infinite;
+}
+
+@keyframes pathy {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+#container {
+  width: 100px;
+  height: 100px;
+  
+}

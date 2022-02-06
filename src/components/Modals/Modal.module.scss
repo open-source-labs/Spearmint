@@ -62,6 +62,9 @@
   input{
     color: white;
   }
+  label{
+    color: white;
+  }
 }
 
 #newTestButtons {
@@ -72,7 +75,7 @@
   grid-row-gap: 10px;
 
   button {
-    background-color: #D96098;
+    background-color: $salmon;
     color: white;
 
     span {
@@ -82,7 +85,7 @@
 }
 
 #chooseTestBtn {
-  background-color: #D96098;
+  background-color: $salmon;
   color: white;
 
   span {
@@ -142,6 +145,8 @@
   justify-content: space-between;
   width: 98%;
 }
+
+
 
 #left {
   float: left;

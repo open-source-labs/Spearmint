@@ -3,6 +3,7 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
+  addHookUpdates,
   updateHooksTestStatement,
   updateStatementsOrder,
 } from '../../context/actions/hooksTestCaseActions';
@@ -26,7 +27,7 @@ const HooksTestCase = () => {
     return result;
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = (result: any) => {
     if (!result.destination) {
       return;
     }
@@ -39,6 +40,10 @@ const HooksTestCase = () => {
       result.destination.index
     );
     dispatchToHooksTestCase(updateStatementsOrder(reorderedStatements));
+  };
+
+  const handleAddHookUpdates = () => {
+    dispatchToHooksTestCase(addHookUpdates());
   };
   return (
     <>
@@ -60,7 +65,7 @@ const HooksTestCase = () => {
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided) => (
+          {(provided: any) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <HooksTestStatements />
               {provided.placeholder}
@@ -68,6 +73,9 @@ const HooksTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
+            Hooks
+          </button>
     </>
   );
 };
