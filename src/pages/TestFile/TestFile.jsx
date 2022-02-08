@@ -1,7 +1,10 @@
 /* eslint-disable linebreak-style */
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
-import styles from '../../components/Modals/Modal.module.scss';
+let styles = {};
+import modalStyles from '../../components/Modals/Modal.module.scss';
+import testStyles from './TestFile.module.scss'
+Object.assign(styles, modalStyles, testStyles)
 import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
@@ -74,6 +77,7 @@ import { SiPuppeteer, SiRedux } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
 
 import { Button } from '@material-ui/core';
+import TestCard from './TestCard';
 
 
 const TestFile = () => {
@@ -115,6 +119,10 @@ const TestFile = () => {
     closeTestModal();
   };
 
+  const chooseTest = (test) => {
+    dispatchToGlobal(setTestCase(test));
+  };
+
   const modalStyles = {
     overlay: {
       display: 'flex',
@@ -123,6 +131,50 @@ const TestFile = () => {
       zIndex: 3,
     },
   };
+
+  const testMappings = {
+    'react': [<FaReact size={'1.25rem'}/>, 'React', 
+              'Test React with rendering, actions, and assertions found in the React Testing Library'],
+    'hooks': [<GiHook size={'1.25rem'}/>, 'Hooks', 
+              'Make assertions to test your React hooks with available hook parameters and callback functions'],
+    'puppeteer': [<SiPuppeteer size={'1.25rem'}/>, 'Puppeteer',
+                  'Use the puppeteer node library to conduct headless browser testing on the Chrome Browser'],
+    'redux': [<SiRedux size={'1.25rem'}/>, 'Redux', 
+              'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
+    'vue': [<IoLogoVue size={'1.25rem'}/>, 'Vue',
+            'Newly added vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
+    'endpoint': [<IoServer size={'1.25rem'}/>, 'Endpoint',
+                  'Make sure your HTTP routes are getting the correct response by testing your server with Supertest'],
+    'acc': [<FaUniversalAccess size={'1.25rem'}/>, 'Accessibility',
+            'Maintain a good accessibility score by testing the various attributes of your website'],
+    'sec': [<MdSecurity size={'1.25rem'}/>, 'Security',
+            'Evaluate security vulnerabilities using Synk'],
+  }
+
+  const allButtons = (Object.keys(testMappings)).map((elem, idx) => {
+    return (
+      <Button 
+        variant="outlined" 
+        onClick={() => handleToggle(elem)}
+        key={idx}
+      >
+        <span>{testMappings[elem][1]}</span>
+        {testMappings[elem][0]}
+      </Button>
+    );
+  })
+
+  const allCards = (Object.keys(testMappings)).map((elem, idx) => {
+    return (
+      <TestCard 
+        icon={testMappings[elem][0]}
+        type={testMappings[elem][1]}
+        description={testMappings[elem][2]}
+        onClick={() => chooseTest(elem)}
+        key={idx}
+      />
+    );
+  })
 
   return (
     // landing modal which displays button choices
@@ -139,6 +191,7 @@ const TestFile = () => {
       >
         <Draggable>
           <div id={styles.container}>
+            
             <AiOutlineCloseCircle
               tabIndex={0}
               id={styles.escapeButton} 
@@ -148,62 +201,7 @@ const TestFile = () => {
             <div id={styles.body}>
               <p id={styles.text}>What would you like to test?</p>
               <div id={styles.newTestButtons}>
-                <Button 
-                  variant="outlined" 
-                  onClick={() => handleToggle('react')}
-                >
-                  <span>React</span>
-                  <FaReact size={'1.25rem'}/>
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  onClick={() => handleToggle('hooks')}
-                >
-                  <span>Hooks</span>
-                  <GiHook size={'1.25rem'}/>
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  onClick={() => handleToggle('puppeteer')}
-                >
-                  <span>Puppeteer</span>
-                  <SiPuppeteer size={'1.25rem'}/>
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  onClick={() => handleToggle('redux')}
-                >
-                  <span>Redux</span>
-                  <SiRedux size={'1.25rem'}/>
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  onClick={() => handleToggle('vue')}
-                >
-                  <span>Vue</span>
-                  <IoLogoVue size={'1.25rem'}/>
-                </Button>
-                <Button 
-                  variant="contained" 
-                  onClick={() => handleToggle('endpoint')}
-                >
-                  <span>Endpoint</span>
-                  <IoServer size={'1.25rem'}/>
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  onClick={() => handleToggle('acc')}
-                >
-                  <span>Accessibility</span>
-                  <FaUniversalAccess size={'1.25rem'}/>
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  onClick={() => handleToggle('sec')}
-                >
-                  <span>Security</span>
-                  <MdSecurity size={'1.25rem'}/>
-                </Button>
+              {allButtons}
               </div>
             </div>
           </div>
@@ -276,14 +274,10 @@ const TestFile = () => {
 
       {testCase === '' && (
         <Fragment>
-          <div id={styles.left}>
-            <h2>Click on New Test below to get started!</h2>
-          </div>
-          <div id={styles.testMenu}>
-            <div id={styles.left}>
-              <button id={styles.newTestBtn} onClick={closeTestModal}>
-                New Test +
-              </button>
+          <div id={styles.testFileContainer}>
+            <p id={styles.chooseTest}>CHOOSE A TEST BELOW</p>
+            <div id={styles.testCardsContainer}>
+              {allCards}
             </div>
           </div>
         </Fragment>

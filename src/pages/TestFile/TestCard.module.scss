@@ -1,0 +1,63 @@
+@import './../../assets/stylesheets/fonts.scss';
+@import './../../assets/stylesheets/colors.scss';
+
+.testCard {
+  display: flex;
+  background-color: $mint;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  max-height: 300px;
+  cursor: pointer;
+}
+
+.iconLeft {
+  padding: 10px;
+  flex: 1 1 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    height: 60%;
+    width: 60%;
+    color: white;
+    max-width: 80px;
+    max-height: 80px;
+  }
+}
+
+.contentCard {
+  display: flex;
+  flex: 1 1 70%;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background-color: white;
+}
+
+.cardTitle {
+  color: $salmon;
+  flex: 1 1 30%;
+  display: flex;
+  font-size: 2rem;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid aliceblue;
+  width: 100%;
+}
+
+.cardDesc {
+  color: black;
+  flex: 1 1 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0 10%;
+  font-size: 1.25rem;
+}
+
+
