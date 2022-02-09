@@ -6,7 +6,7 @@
 // make dragable
 
 import React, { useContext } from 'react';
-import styles from './Assertion.module.scss';
+import styles from '../../ReactTestComponent/Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/actions/vueTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';

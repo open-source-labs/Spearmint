@@ -72,15 +72,19 @@ function createWindow() {
   ipcMain.on('terminal.resize', (event, data)=> {
     //console.log('resizing pty shell', "data: ", data, "data.cols", data.cols);
     ptyProcess.resize(data.cols, data.rows);
-  })
+  });
+
+  mainWindow.webContents
+  .executeJavaScript('localStorage.getItem("theme");', true)
+  .then(result => {
+    mainWindow.webContents.send('theme', result);
+  });
 }
 
 if (os.platform() !== 'win32') {
   const fixPath = require('fix-path');
   fixPath();
 }
-
-
 
 /*
 UNIVERSAL IPC CALLS

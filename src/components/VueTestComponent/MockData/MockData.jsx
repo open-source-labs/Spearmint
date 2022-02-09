@@ -6,9 +6,8 @@
  */
 
 import React from 'react';
-import styles from './MockData.module.scss';
+import styles from '../../ReactTestComponent/MockData/MockData.module.scss';
 import {
-  deleteMockData,
   addMockDataKey,
   updateMockDataName,
 } from '../../../context/actions/mockDataActions';

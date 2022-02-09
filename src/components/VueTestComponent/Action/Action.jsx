@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import styles from '../Action/Action.module.scss';
+import styles from '../../ReactTestComponent/Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/actions/vueTestCaseActions';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';

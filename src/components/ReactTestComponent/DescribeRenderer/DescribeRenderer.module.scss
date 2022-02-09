@@ -3,79 +3,54 @@
 @import '../../../pages/LeftPanel/LeftPanel.module.scss';
 
 #describeBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   position: relative;
   background-color: white;
   border-radius: 3px;
-  padding: 1rem;
-  margin-top: 10px;
   box-shadow: 1px 1px 5px gray;
   display: flex;
   flex-direction: column;
+  border-radius: 4px;
   z-index: 3;
-  margin-top: 1rem;
 
-  .describeClose {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    font-size: 1.25rem;
-    z-index: 3;
-    transition: 250ms;
+  --describe-bg: #{$lighter-mint};
+}
 
-    &:hover {
-      color: red;
-      cursor: pointer;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-  }
+.describeClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  z-index: 20;
+  transition: 250ms;
+  color: white;
 
-  .separator {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 65px;
-    background-color: #02c3c33f;
-    border-bottom: 2px solid gray;
-    opacity: 100%;
-    z-index: 0;
-  }
-
-  .describeLabel {
+  &:hover {
+    color: red;
+    cursor: pointer;
+    font-size: 1.75rem;
     font-weight: bold;
-    font-size: 0.9rem;
-    z-index: 3;
-    font-family: $oxygen;
   }
+}
 
-  .describeInput {
-    border: none;
-    background-color: rgba(0, 0, 0, 0);
-    margin-top: 0.3rem;
-    font-size: 0.9rem;
-    z-index: 3;
-  }
+.describeInputContainer {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--describe-bg);
+}
 
-  .buttonContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    margin-top: 1rem;
+.addIt {
+  height: auto;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: $mint;
 
-    .addIt {
-      height: auto;
-      color: white;
-      padding: 0.5rem;
-      border-radius: 5px;
-      background-color: $mint;
-
-      &:hover {
-        background-color: white;
-        color: $mint;
-      }
-    }
+  &:hover {
+    background-color: white;
+    color: $mint;
   }
 }
 

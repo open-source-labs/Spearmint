@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import VueTestStatements from '../../TestCase/VueTestStatements';
-import CustomInput from '../CustomInput/CustomInput';
 import {
   addRender,
   addAction,
@@ -10,7 +9,9 @@ import {
   deleteItStatement,
 } from '../../../context/actions/vueTestCaseActions';
 import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
-import styles from './ItRenderer.module.scss';
+import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
+import { TextField } from '@material-ui/core';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const ItRenderer = ({
   type,
@@ -59,22 +60,28 @@ const ItRenderer = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <i
+          <AiOutlineCloseCircle
             tabIndex={0}
+            id={id} 
             onKeyPress={deleteVueItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}
-            id={id}
             className={cn(styles.itClose, 'far fa-window-close')}
-          ></i>
-          <CustomInput
-            key={`input-${id}-${i}`}
-            id={id}
-            label={'The component should...'}
-            placeholder={'Button component renders correctly...'}
-            value={itStatements.byId[id].text}
-            handleChange={handleChangeItStatementText}
           />
-          <hr />
+          <div id={styles.itInputContainer}>
+            <TextField
+              key={`input-${id}-${i}`}
+              id={id}
+              className={styles.describeInput}
+              name='describe-label'
+              type='text'
+              placeholder="Enter unit test name..."
+              value={itStatements.byId[id].text}
+              onChange={handleChangeItStatementText}
+              fullWidth
+              variant="filled"
+              size='small'
+            />
+          </div>
           <VueTestStatements
             key={`statement-${id}-${i}`}
             statements={statements}

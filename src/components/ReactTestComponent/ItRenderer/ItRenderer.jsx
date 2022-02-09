@@ -11,6 +11,8 @@ import {
 } from '../../../context/actions/reactTestCaseActions';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import styles from './ItRenderer.module.scss';
+import { TextField } from '@material-ui/core';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 const ItRenderer = ({
   type,
@@ -59,22 +61,37 @@ const ItRenderer = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <i
+          <AiOutlineCloseCircle
             tabIndex={0}
+            id={id} 
             onKeyPress={deleteReactItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}
-            id={id}
             className={cn(styles.itClose, 'far fa-window-close')}
-          ></i>
-          <CustomInput
+          />
+          {/* <CustomInput
             key={`input-${id}-${i}`}
             id={id}
             label={'The component should...'}
             placeholder={'Button component renders correctly...'}
             value={itStatements.byId[id].text}
             handleChange={handleChangeItStatementText}
-          />
-          <hr />
+          /> */}
+          <div id={styles.itInputContainer}>
+            <TextField
+              key={`input-${id}-${i}`}
+              id={id}
+              className={styles.describeInput}
+              name='describe-label'
+              type='text'
+              placeholder="Enter unit test name..."
+              value={itStatements.byId[id].text}
+              onChange={handleChangeItStatementText}
+              fullWidth
+              variant="filled"
+              size='small'
+            />
+          </div>
+          
           <ReactTestStatements
             key={`statement-${id}-${i}`}
             statements={statements}

@@ -42,7 +42,7 @@ const Modal = ({
   const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
@@ -105,7 +105,7 @@ const Modal = ({
     return (
       <ReactModal
         className={styles.modal}
-        overlayClassName={styles.modalOverlay}
+        overlayClassName={styles[`modalOverlay${theme}`]}
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         shouldCloseOnOverlayClick={true}
@@ -140,9 +140,6 @@ const Modal = ({
                   <span>Cancel</span>
                   <AiOutlineCloseCircle size={'1.25rem'}/>
                 </Button>
-              </div>
-              <div id={styles.newTestButtons}>
-
               </div>
             </div>
           </div>
@@ -231,11 +228,11 @@ const Modal = ({
       onRequestClose={clearAndClose}
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
-      overlayClassName={styles.modalOverlay}
+      overlayClassName={styles[`modalOverlay${theme}`]}
       ariaHideApp={false}
     >
       <Draggable>
-      <div id={styles.container}>
+      <div id={styles.containerRun}>
       {/* Modal Title */}
         <div id={styles.title}>
         <p style={{ fontSize: 20 }}>Run Tests in Terminal</p>

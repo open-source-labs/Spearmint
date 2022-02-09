@@ -8,6 +8,7 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
+  addDescribeBlock
 } from '../../context/actions/vueTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -21,6 +22,7 @@ import {
   vueTestCaseState,
   vueTestCaseReducer,
 } from '../../context/reducers/vueTestCaseReducer';
+import { Button } from '@material-ui/core';
 
 const VueTestCase = () => {
   const [vueTestCase, dispatchToVueTestCase] = useReducer(
@@ -46,6 +48,10 @@ const VueTestCase = () => {
     const text = e.target.value;
     const itId = e.target.id;
     dispatchToVueTestCase(updateItStatementText(text, itId));
+  };
+
+  const handleAddDescribeBlock = (e) => {
+    dispatchToVueTestCase(addDescribeBlock());
   };
 
   const reorder = (list, startIndex, endIndex) => {
@@ -74,13 +80,9 @@ const VueTestCase = () => {
   return (
     <VueTestCaseContext.Provider value={[vueTestCase, dispatchToVueTestCase]}>
       <div id={styles.ReactTestCase}>
-        <div id='head'>
-          <VueTestMenu />
-        </div>
-
+        <VueTestMenu />
         <div className={styles.header}>
-          <div className={styles.renderComponent}>
-            <span className={styles.renderLabel}>Enter Component Name:</span>
+          <div className={styles.searchInput}>
             <SearchInput
               vueTestCase
               dispatch={dispatchToVueTestCase}
@@ -89,10 +91,10 @@ const VueTestCase = () => {
               options={Object.keys(filePathMap)}
             />
           </div>
-          <button type='button' className={styles.mockBtn} onClick={handleAddMockData}>
-            <i className={cn(styles.addIcon, 'fas fa-plus')} />
-            Mock Data
-          </button>
+        </div>
+          {/* <Button variant="outlined" onClick={handleAddMockData} size='medium'>
+            Add Mock Data
+          </Button>
         </div>
         
         {mockData
@@ -110,7 +112,7 @@ const VueTestCase = () => {
                 })}
               </section>
             )
-          : null}
+          : null} */}
 
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId='droppableReactDescribe' type='describe'>
@@ -130,6 +132,9 @@ const VueTestCase = () => {
             )}
           </Droppable>
         </DragDropContext>
+        <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+            Add Describe Block
+        </Button>
       </div>
     </VueTestCaseContext.Provider>
   );

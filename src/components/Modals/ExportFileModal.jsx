@@ -43,9 +43,9 @@ const CssTextField = withStyles({
 })(TextField);
 
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
-  const [fileName, setFileName] = useState('');
+  const [fileName, setFileName ] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
-  const [{ projectFilePath, file, validCode }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ projectFilePath, file, validCode, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
@@ -136,14 +136,8 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     return fileArray;
   };
 
-  const modalStyles = {
-    overlay: {
-      zIndex: 3,
-    },
-  };
-
   return (
-    <div>
+    <div id={styles[theme]}>
       <ReactModal
         className={styles.modal}
         isOpen={isExportModalOpen}
@@ -152,7 +146,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
-        overlayClassName={styles.modalOverlay}
+        overlayClassName={styles[`modalOverlay${theme}`]}
       >
         <Draggable>
           <div id={styles.container}>

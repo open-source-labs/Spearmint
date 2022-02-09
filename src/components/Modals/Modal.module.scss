@@ -1,7 +1,7 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
-.modalOverlay {
+.modalOverlaylight {
   position: fixed;
   top: 0;
   left: 0;
@@ -10,8 +10,31 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3;
+  z-index: 10000;
   background-color: $eggshell-opaque;
+  --container-bg: #{$mint};
+  --container-border: #{$darkslategrey};
+  --accordion-bg: #{$mint3};
+  --accordion-details-bg: #{$mint2};
+  --accordion-color: black;
+}
+
+.modalOverlaydark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  background-color: $chromegray-opaque;
+  --container-bg: #{$darkslategrey};
+  --container-border: #{$mint};
+  --accordion-bg: #{$chromegray};
+  --accordion-details-bg: #{$chromegray-light};
+  --accordion-color: white;
 }
 
 .modal {
@@ -22,14 +45,14 @@
   object-fit: cover;
 }
 
-.modal2 {
-  position: fixed;
-  width: 700px;
-  font-family: $openSans;
-  background-color: transparent;
-  opacity: 1;
-  object-fit: cover;
-}
+// .modal2 {
+//   position: fixed;
+//   width: 700px;
+//   font-family: $openSans;
+//   background-color: transparent;
+//   opacity: 1;
+//   object-fit: cover;
+// }
 
 .modal:focus{
   outline: none;
@@ -38,10 +61,20 @@
 #container{
   display: flex;
   max-width: 700px;
-  background: $mint;
-  border: 8px solid $mint;
+  background: var(--container-bg);
+  border: 8px solid var(--container-border);
   border-radius: 10px;
   color: white;
+}
+
+#containerRun{
+  display: flex;
+  max-width: 700px;
+  background: var(--container-bg);
+  border: 8px solid var(--container-border);
+  border-radius: 10px;
+  color: white;
+  padding: 5px;
 }
 
 #body {
@@ -49,6 +82,7 @@
   flex-direction: column;
   gap: 20px;
   padding: 24px;
+  border-radius: 5px;
   
   p {
     color: #fff;
@@ -161,16 +195,17 @@
 }
 
 #accordionSummary {
-  background-color: $mint2;
+  background-color: var(--accordion-bg);
+  color: var(--accordion-color);
 }
 
 #accordionDetails {
-  background-color: 'white';
+  background-color: var(--accordion-details-bg);
+  color: var(--accordion-color);
   opacity: 1;
 }
 
 #accordionDiv {
-  // background-color: $mint;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -181,6 +216,8 @@
 }
 
 #configGuide {
+  background-color: var(--accordion-details-bg);
+  color: var(--accordion-color);
   display: flex;
   flex: 1;
   flex-direction: column;

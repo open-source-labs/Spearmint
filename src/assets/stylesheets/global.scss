@@ -9,10 +9,10 @@
 
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
-* {
-  scrollbar-width: none;
-  scrollbar-color: #8f54a0 #ffffff;
-}
+// * {
+//   scrollbar-width: none;
+//   scrollbar-color: #8f54a0 #ffffff;
+// }
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
@@ -21,7 +21,7 @@
 }
 
 *::-webkit-scrollbar-track {
-  background: #ffffff;
+  background: black;
   border-radius: 10px;
 }
 
@@ -31,10 +31,12 @@
 }
 
 html,
-body,
-#contents {
+body{
   height: 100%;
-  overflow-y: hidden;
+}
+
+#contents {
+  overflow-y: overlay;
 }
 
 html {

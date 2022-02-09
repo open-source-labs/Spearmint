@@ -10,71 +10,74 @@
   @include box-styling;
   font-family: $raleway;
   letter-spacing: 0.5px;
+  background-color: $light-gray2;
 
-  .renderHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+  --bg-color : #{$light-gray2};
+}
 
-    .header {
-      font-size: 0.9rem;
-      font-weight: bold;
-      color: $mint;
+.renderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-      .componentName {
-        font-family: 'Lucida Console', monospace;
-      }
-    }
+.header {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: $mint;
 
-    .addPropBtn {
-      font-size: 1rem;
-      cursor: pointer;
-      position: absolute;
-      top: 5px;
-      right: 5px;
-
-      &:hover {
-        color: green;
-      }
-    }
-    .addProps {
-      height: auto;
-      font-size: 0.85rem;
-      background-color: rgba(0, 0, 0, 0);
-      border: none;
-      min-width: 150px;
-      border-radius: 3px;
-      font-family: $oxygen;
-      text-align: center;
-      transition: 150ms;
-
-      &:hover {
-        font-size: 0.9rem;
-      }
-    }
-
-    .deleteRender {
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      transition: 250ms;
-
-      &:hover {
-        cursor: pointer;
-        color: red;
-        font-size: 1rem;
-        font-weight: bold;
-      }
-    }
+  .componentName {
+    font-family: 'Lucida Console', monospace;
   }
+}
 
-  #renderProp {
-    font-size: 13px;
-    margin-bottom: 0;
-    padding: 6px 0;
-    display: flex;
-    width: 60%;
-    justify-content: space-between;
+.addPropBtn {
+  font-size: 1rem;
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+
+  &:hover {
+    color: green;
   }
+}
+
+.addProps {
+  height: auto;
+  font-size: 0.85rem;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  min-width: 150px;
+  border-radius: 3px;
+  font-family: $oxygen;
+  text-align: center;
+  transition: 150ms;
+
+  &:hover {
+    font-size: 0.9rem;
+  }
+}
+
+.deleteRender {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  transition: 250ms;
+
+  &:hover {
+    cursor: pointer;
+    color: red;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+}
+
+#renderProp {
+  font-size: 13px;
+  margin-bottom: 0;
+  padding: 6px 0;
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
 }

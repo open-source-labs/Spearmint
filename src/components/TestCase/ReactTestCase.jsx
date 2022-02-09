@@ -132,9 +132,9 @@ const ReactTestCase = () => {
               )}
             </Droppable>
           </DragDropContext>
-          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-            +Describe Block
-          </button>
+          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+            Add Describe Block
+          </Button>
         </div>
       </div>
     </ReactTestCaseContext.Provider>

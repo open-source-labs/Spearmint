@@ -15,6 +15,7 @@ const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   const changeTheme = () => {
+    localStorage.setItem("theme", global.theme === 'light' ? 'dark' : 'light');
     dispatchToGlobal(toggleTheme());
   };
 
@@ -24,7 +25,7 @@ const App = () => {
         {/* pass global state and dispatch function as prop to context provider for child components */}
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <div id={styles.toggle}>
-            <Switch defaultChecked onChange={changeTheme}/>
+            <Switch checked={global.theme === 'light' ? true : false} onChange={changeTheme}/>
           </div>
           <ProjectLoader/>
         </GlobalContext.Provider>

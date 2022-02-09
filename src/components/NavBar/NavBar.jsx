@@ -36,6 +36,7 @@ const NavBar = ({ inAboutPage }) => {
   };
 
   const changeTheme = () => {
+    localStorage.setItem("theme", global.theme === 'light' ? 'dark' : 'light');
     dispatchToGlobal(toggleTheme());
   };
   /*
@@ -45,7 +46,7 @@ const NavBar = ({ inAboutPage }) => {
     <div id={styles[`navBar${theme}`]}>
       {/* File Explorer */}
       <div className={styles.btnContainer}>
-        <span id={isFileDirectoryOpen && styles.activeEffect} onClick={handleToggleFileDirectory} title='Expand file explorer'>
+        <span id={isFileDirectoryOpen ? styles.activeEffect : ''} onClick={handleToggleFileDirectory} title='Expand file explorer'>
           <GoFileSubmodule size={'1.5rem'}/>
         </span>
         <span onClick={openExportModal} title='Export test file'>

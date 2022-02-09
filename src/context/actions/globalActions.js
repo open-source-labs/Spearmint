@@ -26,6 +26,7 @@ export const actionTypes = {
   SET_GUEST: 'SET_GUEST',
 
   TOGGLE_THEME: 'TOGGLE_THEME',
+  SET_THEME: 'SET_THEME',
 };
 
 export const setProjectUrl = (url) => ({
@@ -131,4 +132,9 @@ export const setGuest = (guestState) => ({
 
 export const toggleTheme = () => ({
   type: actionTypes.TOGGLE_THEME,
+});
+
+export const setTheme = (theme) => ({
+  type: actionTypes.SET_THEME,
+  theme,
 });

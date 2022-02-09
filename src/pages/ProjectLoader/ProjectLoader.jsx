@@ -2,7 +2,7 @@ import React, { useContext, useState} from 'react';
 import { Button, Switch, TextField } from '@material-ui/core';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { setGuest } from '../../context/actions/globalActions';
+import { setGuest, setTheme } from '../../context/actions/globalActions';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
 import { RiSpyLine, RiGithubFill } from 'react-icons/ri'
 
@@ -99,12 +99,19 @@ function ProjectLoader() {
       .catch((err) => console.log(err));
   };
 
+  const setUserTheme = (theme) => {
+    dispatchToGlobal(setTheme(theme));
+    console.log(theme);
+  }
+
   // Listens for event from electron.jsx line 205
   ipcRenderer.on('github-new-url', (event, cookies) => {
-    // console.log('github-new-url channel heard something!!', cookies);
-    // console.log('dotcom_user:', dotcom_user);
     setIsLoggedIn(true);
     setUsername(cookies[0].value);
+  });
+
+  ipcRenderer.on('theme', (event, theme) => {
+    setUserTheme(theme);
   });
 
   const handleSignup = (e) => {

@@ -81,7 +81,7 @@ import TestCard from './TestCard';
 
 
 const TestFile = () => {
-  let [{ testCase, isTestModalOpen }, dispatchToGlobal] = useContext(GlobalContext);
+  let [{ testCase, isTestModalOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
   const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
@@ -187,7 +187,7 @@ const TestFile = () => {
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
-        overlayClassName={styles.modalOverlay}
+        overlayClassName={styles[`modalOverlay${theme}`]}
       >
         <Draggable>
           <div id={styles.container}>

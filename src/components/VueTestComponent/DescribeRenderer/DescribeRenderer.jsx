@@ -1,11 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
-import styles from './DescribeRenderer.module.scss';
+import styles from '../../ReactTestComponent/DescribeRenderer/DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../../context/actions/vueTestCaseActions';
-import { IconContext } from 'react-icons';
-import { AiFillCloseSquare } from 'react-icons/ai';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { Button, TextField } from '@material-ui/core';
 
 const DescribeRenderer = ({
   dispatcher,
@@ -29,7 +29,7 @@ const DescribeRenderer = ({
     }
   };
   const addItStatementHandleClick = (e) => {
-    const describeId = e.target.id;
+    const describeId = e.currentTarget.id;
     dispatcher(addItstatement(describeId));
   };
 
@@ -42,31 +42,27 @@ const DescribeRenderer = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <label htmlFor='describe-label' className={styles.describeLabel}>
-            Describe Block
-          </label>
 
-          <IconContext.Provider 
-            value={{size: '1.8em'}} id={id} >
-            <AiFillCloseSquare
-              tabIndex={0}
-              id={id} 
-              onKeyPress={deleteVueDescribeBlockOnKeyUp}
-              onClick={deleteDescribeBlockHandleClick}
-              className={cn('far fa-window-close', styles.describeClose)}
-            />  
-          </IconContext.Provider>
+          <AiOutlineCloseCircle
+            tabIndex={0}
+            id={id} 
+            onKeyPress={deleteVueDescribeBlockOnKeyUp}
+            onClick={deleteDescribeBlockHandleClick}
+            className={cn('far fa-window-close', styles.describeClose)}
+          /> 
 
-          <input
-            id={id}
-            className={styles.describeInput}
-            name='describe-label'
-            type='text'
-            placeholder={'The component has basic functionality'}
-            value={describeBlocks.byId['describe0']?.text}
-            onChange={handleChangeDescribeText}
-          />
-          <div className={styles.separator}></div>
+          <div className={styles.describeInputContainer}>
+            <TextField 
+              id={id}
+              className={styles.describeInput}
+              name='describe-label'
+              type='text'
+              placeholder="Describe name of test"
+              value={describeBlocks.byId['describe0']?.text}
+              onChange={handleChangeDescribeText}
+              fullWidth
+            />
+          </div>
 
           <Droppable droppableId={'droppableReactIt' + id} type={id}>
             {(innerProvided) => (
@@ -83,11 +79,9 @@ const DescribeRenderer = ({
               </div>
             )}
           </Droppable>
-          <div className={styles.buttonContainer}>
-            <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
-              +It Statement
-            </button>
-          </div>
+          <Button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
+            Add It Statement
+          </Button>
         </div>
       )}
     </Draggable>
