@@ -2,18 +2,16 @@
 @import '../../assets/stylesheets/colors.scss';
 
 #projectLoaderlight{
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  --text-color: #{$eggshell};
+  --text-color: black;
   --bg-color-upper : #{$mint};
   --bg-color-lower : #{$eggshell};
   --button-text: #{$eggshell};
   --button-color-lighter: #{$lighter-mint};
-  --leaf-color: #{$eggshell};
-  --theme-3-color: #{$salmon};
-  --theme-4-color: #{$navy};
 }
 
 #projectLoaderdark{
@@ -21,12 +19,12 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  --text-color : #fff;
-  --bg-color-upper: black;
-  --leaf-color: #fff;
+  --text-color: #{$eggshell};
+  --bg-color-upper : #{$darkslategrey};
+  --bg-color-lower : #{$chromegray};
+  --button-text: #{$lighttext};
+  --button-color-lighter: #{$lighter-mint};
 }
-
-//TODO make animations for upper part
 
 #upperPart {
   flex: 0 0 50vh;
@@ -43,21 +41,23 @@
   font-size: 4rem;
   text-align: center;
   font-family: 'comfortaa';
-  color: var(--text-color);
+  color: $eggshell;
 }
 
 #leaf {
   width: 48px;
   height: 48px;
-  fill: var(--leaf-color);
+  fill: $eggshell;
 }
 
 #slogan {
   font-size: 1rem;
   text-align: center;
   font-family: 'comfortaa';
-  color: var(--text-color);
+  color: $eggshell;
 }
+
+////////////////////////////////////////////////////////////
 
 #lowerPart {
   width: 100%;
@@ -95,20 +95,21 @@
   display: flex;
   justify-content: center;
   gap: 10px;
+  
 }
 
 #loginBtn {
   width: 100%;
   font-size: 0.75rem;
-  background-color: var(--bg-color-upper);
-  color: var(--bg-color-lower);
+  background-color: $mint;
+  color: $eggshell;
 }
 
 #signInBtn {
   width: 100%;
   font-size: 0.75rem;
-  background-color: var(--button-color-lighter);
-  color: var(--bg-color-lower);
+  background-color: $lighter-mint;
+  color: $eggshell;
 }
 
 #altButtonsBox{
@@ -121,8 +122,8 @@
 
 #guestBtn {
   width: 100%;
-  background-color: var(--theme-3-color);
-  color: var(--bg-color-lower);
+  background-color: $salmon;
+  color: $eggshell;
 
   span {
     width: 100%;
@@ -131,29 +132,30 @@
 
 #gitBtn {
   width: 100%;
-  background-color: var(--theme-4-color);
-  color: white;
+  background-color: $navy;
+  color: $eggshell;
 
   span {
     width: 100%;
   }
 }
-//TODO MAKE LOGIN BUTTON HOVER
+
+/////////////////////////////////////////////////////////
 
 #welcomeText {
   font-family: 'comfortaa';
   font-size: 1.2rem;
-  color: var(--bg-color-upper)
+  color: var(--text-color)
 }
 
 #userText{
-  color: var(--theme-3-color);
+  color: $salmon;
 }
 
 #openFolderSpan{
   font-family: 'comfortaa';
   font-size: 1rem;
-  color: var(--bg-color-upper);
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -179,17 +181,16 @@
 
 .dancingLeaf  {
   offset-distance: 0;
-  display: inline-block; //none; //inline-block;
+  display: inline-block; 
   text-align: center;
-  
-  
   offset-path: path('M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z');
   animation: pathy 3200ms infinite linear;
   position: relative;
   left: -72px;
   top: -24px;
 }
- .leafFill {
+
+.leafFill {
   animation: flash 5s ease-in-out infinite;
 }
 
@@ -202,5 +203,4 @@
 #container {
   width: 100px;
   height: 100px;
-  
 }

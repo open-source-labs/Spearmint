@@ -2,7 +2,7 @@
 @import '../../assets/stylesheets/fonts.scss';
 @import '../../assets/stylesheets/colors.scss';
 
-#leftPanel {
+#leftPanellight {
   flex: 1 1 60%;
   height: 100%;
   background-color: white;
@@ -12,16 +12,24 @@
   overflow: auto;
   border-radius: 5px;
   padding: 10px;
+  --choose-test-color: #{$salmon};
+}
 
-  h3 {
-    color: $mint;
-    font-size: 14px;
-    padding: 0.3em 0.5em;
-  }
+#leftPaneldark {
+  flex: 1 1 60%;
+  height: 100%;
+  background-color: $chromegray;
+  font-family: $raleway;
+  justify-content: space-evenly;
+  min-width: 500px; // changed this to make dev easier w/ dev tools open
+  overflow: auto;
+  border-radius: 5px;
+  padding: 10px;
+  --choose-test-color: #{$mint};
 }
 
 @mixin box-styling {
-  background-color: white;
+  background-color: black;
   padding: 10px 10px 22px 15px;
   margin: 10px 18px 0 8px;
   border: 1px solid transparent;

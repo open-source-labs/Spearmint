@@ -1,14 +1,16 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
-#codeEditorView{
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
+// #codeEditorView{
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+// }
 
 #codeEditor{
-  flex: 1 1 95%;
+  * {
+    transition: color 0.0s !important;
+  }
 }
 
 #saveBox{

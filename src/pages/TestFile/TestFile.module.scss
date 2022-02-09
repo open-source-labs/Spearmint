@@ -5,17 +5,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
   width: 100%;
   height: 100%;
-  padding: 5% 2%;
+  padding: 3% 2% 5% 2%;
 }
 
 #chooseTest{
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  font-family: $comfortaa;
-  color: $mint;
+  font-family: $raleway;
+  color: var(--choose-test-color);
 }
 
 #testCardsContainer {
@@ -27,13 +27,4 @@
   justify-items: center;
   height: 100%;
   width: 100%;
-
-  button {
-    background-color: $salmon;
-    color: white;
-
-    span {
-      width: 100%;
-    }
-  }
 }

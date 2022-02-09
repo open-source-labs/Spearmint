@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from './TestCard.module.scss'
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const TestCard = ({icon, type, description, onClick}) => {
 
+  const [{ theme }] = useContext(
+    GlobalContext
+  );
+
   return (
-    <div className={styles.testCard} onClick={onClick}>
+    <div className={styles[`testCard${theme}`]} onClick={onClick}>
       <div className={styles.iconLeft}>
         {icon}
       </div>

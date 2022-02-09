@@ -1,22 +1,31 @@
 import React, { useReducer } from 'react';
 import styles from './App.module.scss';
 import { GlobalContext, globalState, globalReducer } from './context/reducers/globalReducer';
+import { toggleTheme } from './context/actions/globalActions';
 import ProjectLoader from './pages/ProjectLoader/ProjectLoader.jsx';
 import NavBar from './components/NavBar/NavBar';
 import LeftPanel from './pages/LeftPanel/LeftPanel';
 import RightPanel from './pages/RightPanel/RightPanel';
 import FileDirectory from './components/FileDirectory/FileDirectory';
 import { CSSTransition } from 'react-transition-group';
+import { Switch } from '@material-ui/core';
 // import About from './pages/About/About';
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
+
+  const changeTheme = () => {
+    dispatchToGlobal(toggleTheme());
+  };
 
   if (!global.isProjectLoaded) {
     return (
       <div>
         {/* pass global state and dispatch function as prop to context provider for child components */}
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
+          <div id={styles.toggle}>
+            <Switch defaultChecked onChange={changeTheme}/>
+          </div>
           <ProjectLoader/>
         </GlobalContext.Provider>
       </div>
@@ -53,7 +62,7 @@ const App = () => {
     >
       <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <NavBar inAboutPage={false} />
-          <div id={styles.content}>
+          <div id={styles[`content${global.theme}`]}>
             <CSSTransition in={global.isFileDirectoryOpen} timeout={200} classNames="my-node" unmountOnExit appear>
               <FileDirectory fileTree={global.fileTree} />
             </CSSTransition>

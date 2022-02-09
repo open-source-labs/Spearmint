@@ -1,7 +1,8 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
-#browserComponentTopLevelDiv{
+#browserComponentTopLevelDivlight{
+  margin-top: 1px;
   display: flex;
   flex-direction: column;
   * {
@@ -9,28 +10,48 @@
     font-family: 'comfortaa';
   }
   height: 100%;
+
+  --label-color: #{$mint};
+  --box-bg: #{$mint2};
+  --box-color: black;
+}
+
+#browserComponentTopLevelDivdark{
+  margin-top: 1px;
+  display: flex;
+  flex-direction: column;
+  * {
+    font-size: 0.75rem;
+    font-family: 'comfortaa';
+  }
+  height: 100%;
+  --label-color: #{$darkslategrey};
+  --box-bg: #{$chromegray};
+  --box-color: #{$eggshell};
 }
 
 #accessLensContainer{
-  flex: 0 1 120px;
   display: flex;
   flex-direction: column;
-  min-width: 100%;
+  width: 100%;
   justify-content: center;
 }
 
 #accessLensLabel {
   display: flex;
   justify-content: center;
-  background-color: $mint;
-  color: white;
+  align-items: center;
+  background-color: var(--label-color);
+  color: $eggshell;
   font-size: 1rem;
   height: auto;
   width: 100%;
-  border: $mint;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border: transparent;
   border-style: solid;
+  padding: 5px 10px;
+  * {
+    flex: 1;
+  }
 }
 
 #accessLensCheckBoxes{
@@ -38,19 +59,34 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  background-color: $mint2;
-  border: $mint2;
+  background-color: var(--box-bg);
+  //border: $mint2;
+  border: transparent;
   border-width: .05em;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
   border-style: solid;
+  *{
+    transition: color 0.0s !important;
+    color: var(--box-color);
+  }
+}
+
+#browserBar {
+  width: 100%;
+  padding: 5px;
+  background-color: $chromegray;
 }
 
 #browserAddress {
   width: 100%;
   padding: 8px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  background-color: $chromegray-light;
+  color: white;
+  border: transparent;
+  border-radius: 5px;
+
+  &::placeholder {
+    color: $eggshell-opaque;
+  }
 }
 
 #browserView {

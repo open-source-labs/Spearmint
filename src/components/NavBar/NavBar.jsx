@@ -9,6 +9,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   toggleFileDirectory,
   toggleExportBool,
+  toggleTheme,
 } from '../../context/actions/globalActions';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
 import ExportFileModal from '../Modals/ExportFileModal';
@@ -16,9 +17,10 @@ import ExportFileModal from '../Modals/ExportFileModal';
 import { VscSettingsGear } from 'react-icons/vsc'
 import { FaFileExport, FaUserCircle } from 'react-icons/fa'
 import { GoFileSubmodule } from 'react-icons/go'
+import { Switch } from '@material-ui/core';
 
 const NavBar = ({ inAboutPage }) => {
-  const [{ fileTree, isFileDirectoryOpen }, dispatchToGlobal] =
+  const [{ fileTree, isFileDirectoryOpen, theme }, dispatchToGlobal] =
     useContext(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
@@ -32,11 +34,15 @@ const NavBar = ({ inAboutPage }) => {
     dispatchToGlobal(toggleExportBool());
     setIsExportModalOpen(true);
   };
+
+  const changeTheme = () => {
+    dispatchToGlobal(toggleTheme());
+  };
   /*
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
   return (
-    <div id={styles.navBar}>
+    <div id={styles[`navBar${theme}`]}>
       {/* File Explorer */}
       <div className={styles.btnContainer}>
         <span id={isFileDirectoryOpen && styles.activeEffect} onClick={handleToggleFileDirectory} title='Expand file explorer'>
@@ -57,20 +63,16 @@ const NavBar = ({ inAboutPage }) => {
         <span title='Change settings'>
           <VscSettingsGear size={'1.5rem'}/>
         </span>
+        <span title='Change theme'>
+          <Switch defaultChecked onChange={changeTheme}/>
+        </span>
       </div>
-      {/* <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
-        <img src={menuIcon} className={styles.icons} alt='fileExplorer'title='Expand file explorer' />
-      </button>
-      <button className={styles.navBtn} onClick={openExportModal}>
-        <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
-      </button> */}
       {!inAboutPage && (
         <ExportFileModal
           isExportModalOpen={isExportModalOpen}
           setIsExportModalOpen={setIsExportModalOpen}
         />
       )}
-      {/* {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />} */}
     </div>
   );
 };

@@ -10,7 +10,7 @@ import { InvertColors } from '@material-ui/icons';
 // import { ScreenReader } from '@capacitor/screen-reader';
 
 const BrowserView = () => {
-  const [{ url }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ url, theme }, dispatchToGlobal] = useContext(GlobalContext);
   // Track checked button state
 
   const [checkedBoxes, setCheckBox] = useState({
@@ -123,7 +123,7 @@ const BrowserView = () => {
   };
   
   return (
-    <div id={styles.browserComponentTopLevelDiv}>
+    <div id={styles[`browserComponentTopLevelDiv${theme}`]}>
       <div id={styles.accessLensContainer}>
         <div id={styles.accessLensLabel}>
           Accessibility Lens
@@ -225,12 +225,14 @@ const BrowserView = () => {
         </div>
       </div>
       {/* Search bar */}
-      <input
-        id={styles.browserAddress}
-        placeholder="Enter a new URL (localhost:3000)"
-        type="text"
-        onKeyDown={handleChangeUrl}
-      />
+      <div id={styles.browserBar} >
+        <input
+          id={styles.browserAddress}
+          placeholder="Enter a new URL (localhost:3000)"
+          type="text"
+          onKeyDown={handleChangeUrl}
+        />
+      </div>
       <webview
         id={styles.browserView}
         src={url}

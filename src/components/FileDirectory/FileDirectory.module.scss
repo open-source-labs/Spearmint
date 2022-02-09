@@ -5,8 +5,9 @@
   
   flex: 0 1 200px;
   min-width: 150px;
+  //max-height: 90vh;
   font-size: 12px;
-  background-color: $mint;
+  background-color: var(--fileDir-bg);
   overflow: auto;
   z-index: 1;
   border-radius: 5px;
@@ -16,6 +17,10 @@
     list-style-type: none;
     padding-left: 10px;
     text-align: left;
+
+    *{
+      transition: none !important;
+    }
   }
   li {
     text-align: left;
@@ -75,16 +80,25 @@
   text-align: left;
   vertical-align: middle;
   width: 100%;
+  padding: 3px 0 3px 3px;
+  border-radius: 2px;
+  transition: none !important;
 }
 
 #dirButton:hover {
-  background-color: #f0f8f8;
-  color: $mint;
+  background-color: var(--dir-button-bg);
+  color: var(--dir-button-color);
 }
 
 #dirButtonHilighted {
+  transition: none !important;
   text-align: left;
-  background-color: #f0f8f8;
+  font-family: $oxygen;
+  background-color: var(--dir-button-bg);
   border: none;
+  color: var(--dir-button-color);
+  box-shadow: inset 0em 0em 0em 10em rgba(0, 0, 0, 0.3);
+  padding: 3px 0 3px 3px;
+  border-radius: 2px;
   width: 100%;
 }

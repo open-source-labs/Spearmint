@@ -1,5 +1,5 @@
 import React, { useContext, useState} from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Switch, TextField } from '@material-ui/core';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest } from '../../context/actions/globalActions';
@@ -10,24 +10,13 @@ const { ipcRenderer } = require('electron');
 // const remote = require('@electron/remote/main')
 
 function ProjectLoader() {
-  const [{ idFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ idFileDirectoryOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
-
-  const addHttps = (url) => {
-    if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
-      return url;
-    } if (url.startsWith('localhost')) {
-      url = `http://${url}`;
-      return url;
-    }
-    url = `https://${url}`;
-    return url;
-  };
 
   // updates state when user enters username as login input
   const handleUsernameChange = (e) => {
@@ -54,7 +43,7 @@ function ProjectLoader() {
 
     if (username.length < 4 && password.length < 4) {
       setError(true);
-      setMessage('Username and Password must be longer than 4 characters');
+      setMessage('Fields must be longer than 4 characters');
       return;
     }
     else if (username.length < 4){
@@ -208,7 +197,7 @@ function ProjectLoader() {
   );
 
   return (
-    <div id={styles.projectLoaderlight}>
+    <div id={styles[`projectLoader${theme}`]}>
       <section id={styles.upperPart}>
         <h1 id={styles.title}>spearmint</h1>
         <div id='container'>
@@ -241,7 +230,7 @@ function ProjectLoader() {
               Select your application
               <OpenFolder />
             </span>
-            <Button variant="contained" type="button" onClick={handleLogout} id={styles.loginBtn}>
+            <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
               LOGOUT
             </Button>
           </div>

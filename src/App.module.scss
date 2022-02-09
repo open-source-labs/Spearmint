@@ -47,16 +47,32 @@
   padding: 5px 10px;
 }
 
-#content{
+#contentlight{
   flex: 1 1 100%;
   display: flex;
-  //margin: 10px 0;
   padding-top: 3px;
   width: 100%;
-  //height: 100%;
   max-height: 100vh;
-  gap: 10px;
+  gap: 3px;
   transition: 0.4s ease-in;
+  --fileDir-bg: #{$mint};
+  --explorer-bg: #{$salmon};
+  --dir-button-bg: #{mint};
+  --dir-button-color: #{$eggshell};
+}
+
+#contentdark{
+  flex: 1 1 100%;
+  display: flex;
+  padding-top: 3px;
+  width: 100%;
+  max-height: 100vh;
+  gap: 3px;
+  transition: 0.4s ease-in;
+  --fileDir-bg: #{$darkslategrey};
+  --explorer-bg: #{$navy};
+  --dir-button-bg: #{$mint};
+  --dir-button-color: #{$eggshell};
 }
 
 .my-node-enter {
@@ -72,4 +88,11 @@
 .my-node-exit-active {
   opacity: 0;
   transition: opacity 600ms;
+}
+
+#toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 3000;
 }

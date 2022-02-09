@@ -23,9 +23,9 @@ export const globalState = {
   fileName: '',
   filePath: '',
   validCode: true,
-  // added new state for tab index
   tabIndex: 0,
-  isGuest: false
+  isGuest: false,
+  theme: 'light',
 };
 
 export const globalReducer = (state, action) => {
@@ -39,12 +39,14 @@ export const globalReducer = (state, action) => {
         url,
         projectUrl: url,
       };
+
     case actionTypes.LOAD_PROJECT:
       const isProjectLoaded = action.load;
       return {
         ...state,
         isProjectLoaded,
       };
+
     case actionTypes.CREATE_FILE_TREE:
       const fileTree = action.fileTree;
       return {
@@ -57,6 +59,7 @@ export const globalReducer = (state, action) => {
         ...state,
         isFileDirectoryOpen: !state.isFileDirectoryOpen,
       };
+
     case actionTypes.CLOSE_RIGHT_PANEL:
       const projUrl = state.projectUrl;
       return {
@@ -64,6 +67,7 @@ export const globalReducer = (state, action) => {
         isRightPanelOpen: false,
         url: projUrl,
       };
+
     case actionTypes.TOGGLE_RIGHT_PANEL:
       const rightPanelDisplay = action.display;
       return {
@@ -79,6 +83,7 @@ export const globalReducer = (state, action) => {
         ...state,
         isFolderOpen,
       };
+
     case actionTypes.HIGHLIGHT_FILE:
       const isFileHighlighted = action.fileName;
       const fileName = action.fileName;
@@ -87,12 +92,14 @@ export const globalReducer = (state, action) => {
         isFileHighlighted,
         fileName,
       };
+
     case actionTypes.SET_PROJECT_FILE_PATH:
       const projectFilePath = action.projectFilePath;
       return {
         ...state,
         projectFilePath,
       };
+
     case actionTypes.SET_FILE_PATH_MAP:
       const filePathMap = action.filePathMap;
       return {
@@ -100,7 +107,6 @@ export const globalReducer = (state, action) => {
         filePathMap,
       };
 
-    //added
     case actionTypes.SET_TEST_CASE:
       const testCase = action.testCase;
       return {
@@ -120,6 +126,7 @@ export const globalReducer = (state, action) => {
         ...state,
         file,
       };
+
     case actionTypes.OPEN_BROWSER_DOCS:
       const docsUrl = action.docsUrl;
       return {
@@ -128,6 +135,7 @@ export const globalReducer = (state, action) => {
         isRightPanelOpen: true,
         tabIndex: 1,
       };
+
     case actionTypes.RESET_TO_PROJECT_URL:
       // formerly NEW_TEST_CLOSE_BROWSER_DOCS
       const urlReset = state.projectUrl;
@@ -136,17 +144,20 @@ export const globalReducer = (state, action) => {
         url: urlReset,
         projectUrl: urlReset,
       };
+
     case actionTypes.TOGGLE_EXPORT_BOOL:
       return {
         ...state,
         exportBool: !state.exportBool,
       };
+
     case actionTypes.SET_FILE_PATH:
       const filePath = action.filePath;
       return {
         ...state,
         filePath,
       };
+
     case actionTypes.SET_VALID_CODE:
       const validCode = action.validCode;
       return {
@@ -173,6 +184,14 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         isGuest: guest,
+      };
+
+    case actionTypes.TOGGLE_THEME:
+      let newTheme = state.theme === 'light' ? 'dark' : 'light';
+
+      return {
+        ...state,
+        theme: newTheme,
       };
 
     default:

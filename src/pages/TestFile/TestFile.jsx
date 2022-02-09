@@ -275,7 +275,7 @@ const TestFile = () => {
       {testCase === '' && (
         <Fragment>
           <div id={styles.testFileContainer}>
-            <p id={styles.chooseTest}>CHOOSE A TEST BELOW</p>
+            <p id={styles.chooseTest}>CHOOSE A TEST</p>
             <div id={styles.testCardsContainer}>
               {allCards}
             </div>

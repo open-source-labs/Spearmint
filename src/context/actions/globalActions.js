@@ -23,7 +23,9 @@ export const actionTypes = {
 
   UPLOAD_TEST: 'UPLOAD_TEST',
 
-  SET_GUEST: 'SET_GUEST'
+  SET_GUEST: 'SET_GUEST',
+
+  TOGGLE_THEME: 'TOGGLE_THEME',
 };
 
 export const setProjectUrl = (url) => ({
@@ -125,4 +127,8 @@ export const uploadTest = (testState) => ({
 export const setGuest = (guestState) => ({
   type: actionTypes.SET_GUEST,
   guestState,
+});
+
+export const toggleTheme = () => ({
+  type: actionTypes.TOGGLE_THEME,
 });
