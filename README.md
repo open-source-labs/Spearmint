@@ -3,7 +3,7 @@
 Spearmint helps developers easily create functional Accessibility/Endpoint/Puppeteer/React/Hooks/Redux/Vue/Security tests without writing any code. It dynamically converts user inputs into executable Jest test code by using DOM query selectors provided by @testing-library.
 
 # Installation 
-Please download spearmint from our [website](https://www.spearmintjs.com/). Available for Mac OS and Windows with WSL.
+Please download spearmint from our [website](https://www.spearmintjs.com/). Available for Mac OS and Windows.
 
 
 # How to use in development mode
@@ -68,19 +68,19 @@ Users can now test their application for vulnerabilities including: SQL Injectio
 
 # New features with version 0.9.0
 
--Testing capability for Vue.js
+* Testing capability for Vue.js
 
--Github Oauth login 
+* Github Oauth login 
 
--Modernized and upgraded user interface with dark mode option
+* Modernized and upgraded user interface with dark mode option
 
--Better user experience with draggable modals and exit buttons
+* Better user experience with draggable modals and exit buttons
 
--Save test functionality for easier modification of tests
+* Save test functionality for easier modification of tests
 
--Cross-platform functionality (Mac OS w/ M1 chip, Mac OS w/ Intel chip, Linux/Unix)
+* Cross-platform functionality (Mac OS w/ M1 chip, Mac OS w/ Intel chip, Linux/Unix)
 
--Ample bug fixes
+* Ample bug fixes
 
 <br>
 
@@ -106,15 +106,6 @@ Users can now test their application for vulnerabilities including: SQL Injectio
 
 <br>
 
-
-# Snyk Setup  
-
-
-### Authenticate Snyk 
-![](/public/snyk-auth-testdep.gif)
-
-### Enable Snyk code
-![](/public/snyk-enable.gif)
 
 # The Spearmint Team
 <hr>
