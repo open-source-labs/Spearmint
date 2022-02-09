@@ -95,20 +95,18 @@ const EndpointTestMenu = () => {
         dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
         createTest={title === 'New Test' ? createNewEndpointTest : null}
       />
-    </>
-    //       {/* <UploadTest testType="endpoint test" />
-    //       <GetTests testType="endpoint test" /> */}
+          {/* <UploadTest testType="endpoint test" />
+          <GetTests testType="endpoint test" /> */}
 
-    //     <div id={styles.right}>
-    //       <button data-testid='endPointButton' onClick={handleAddEndpoint}>
-    //         Endpoint
-    //       </button>
-    //       <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
-    //         Configure Database
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
+        <div id={styles.right}>
+          <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
+            Configure Database
+          </button>
+          <button data-testid='endPointButton' onClick={handleAddEndpoint}>
+            Endpoint
+          </button>
+        </div>
+    </>
   );
 };
 
