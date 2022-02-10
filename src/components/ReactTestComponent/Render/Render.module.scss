@@ -28,7 +28,7 @@
   --bg-color : #{$chromegray-less-light};
   --render-color: white;
   --component-color: #{$mint};
-  
+  --text-color: white;
 }
 
 .renderHeader {
@@ -118,4 +118,10 @@
   display: flex;
   width: 60%;
   justify-content: space-between;
+
+
+  label {
+    color: var(--text-color);
+  }
+  
 }

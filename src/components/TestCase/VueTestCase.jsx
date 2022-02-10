@@ -89,6 +89,7 @@ const VueTestCase = () => {
               action={updateRenderComponent}
               filePathMap={filePathMap}
               options={Object.keys(filePathMap)}
+              label="Search Component"
             />
           </div>
         </div>
@@ -133,9 +134,11 @@ const VueTestCase = () => {
             )}
           </Droppable>
         </DragDropContext>
-        <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+        <div id={styles.addDescribeButton}>
+          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
             Add Describe Block
-        </Button>
+          </Button>
+        </div>
       </div>
     </VueTestCaseContext.Provider>
   );

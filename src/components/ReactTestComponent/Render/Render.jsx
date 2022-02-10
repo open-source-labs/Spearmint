@@ -41,10 +41,10 @@ const Render = ({ statement, statementId, describeId, itId }) => {
         {statement.props.length > 0 && (
           <div>
             <div id={styles.renderProp}>
-              <label htmlFor='prop-key' id={styles.propKeyLabel}>
+              <label htmlFor='prop-key'>
                 Prop key
               </label>
-              <label htmlFor='prop-value' id={styles.propValLabel}>
+              <label htmlFor='prop-value' >
                 Prop value
               </label>
             </div>
@@ -58,6 +58,7 @@ const Render = ({ statement, statementId, describeId, itId }) => {
                   propKey={prop.propKey}
                   propValue={prop.propValue}
                   dispatchToTestCase={dispatchToReactTestCase}
+                  theme={theme}
                 />
               );
             })}
