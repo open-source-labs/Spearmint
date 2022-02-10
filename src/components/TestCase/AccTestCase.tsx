@@ -94,7 +94,7 @@ const AccTestCase = () => {
             key="acc-droppable-context"
             type="describe"
           >
-            {(provided) => (
+            {(provided:any) => (
               <div
                 ref={provided.innerRef}
                 {...provided.droppableProps}
