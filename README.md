@@ -90,19 +90,19 @@ Users can now test their application for vulnerabilities including: SQL Injectio
 ![](/public/demos/guest-login.gif)
 
 ### Signup + login 
-![](/public/demos/signup-login.gif)
+![](/public/demos/pwlogin.gif)
 
 ### Github Oauth login
-
+![](/public/demos/oauth.gif)
 
 ### Vue Test
-![](/public/demos/snyk-auth-testdep.gif)
+![](/public/demos/vuetest.gif)
 
 ### Dark Mode + Upgraded UI/UX
-![](/public/demos/snyk-fixdep.gif)
+![](/public/demos/darkMode.gif)
 
 ### Save Test Functionality
-![](/public/demos/snyk-auth-testdep.gif)
+![](/public/demos/saveTest.gif)
 
 ### Run a security test 
 ![](/public/demos/snyk-auth-testdep.gif)
