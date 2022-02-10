@@ -55,18 +55,16 @@ const HooksTestCase = () => {
         <HooksTestMenu />
       </div>
       <div id={styles[`testMockSection${theme}`]}>
-        <section id={styles.testCaseHeader}>
-          <div className={styles.header}>
-            <div className={styles.searchInput} style={{ width: '80%' }}>
-          <InputTextField
-            size='small'
-            variant='outlined'
-            placeholder='+Describe Block'
-            type='text'
-            onChange={handleUpdateHooksTestStatement}/>
-            </div>
+        <div className={styles.header}>
+          <div className={styles.searchInput} style={{marginLeft: '16px'}}>
+        <InputTextField
+          size='small'
+          variant='outlined'
+          placeholder='+Describe Block'
+          type='text'
+          onChange={handleUpdateHooksTestStatement}/>
           </div>
-        </section>
+        </div>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>

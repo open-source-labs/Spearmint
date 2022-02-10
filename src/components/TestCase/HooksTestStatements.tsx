@@ -5,7 +5,7 @@ import { HooksStatements } from '../../utils/hooksTypes';
 import importOptionsSwitch from './importOptions';
 import SearchInput from '../SearchInput/SearchInput';
 import { updateHooksFilePath } from '../../context/actions/hooksTestCaseActions';
-import styles from '../SearchInput/SearchInput.scss';
+import styles from '../../components/TestCase/TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 
@@ -17,9 +17,7 @@ const HooksTestStatements = () => {
   let hImports = null;
   if (isHooksOn) {
     hImports = (
-      <div className={styles[`HooksTestCase${theme}`]}>
-        <div className={styles.flexContainer}>
-          <div style={{ width: '80%'}}>
+      <div id={styles[`testCaseHeader${theme}`]}>
             <SearchInput
               label={'Import Hooks From'}
               type={null}
@@ -31,8 +29,6 @@ const HooksTestStatements = () => {
               action={null}
               filePathMap={filePathMap}
             />
-          </div>
-        </div>
       </div>
     );
   }
