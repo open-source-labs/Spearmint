@@ -11,6 +11,8 @@ const terminalArgs = {
   // Currently rows are hardcoded, next step is to make terminal sizing dynamic.
   fontFamily: 'monospace',
   //rendererType: "dom",
+  rows: 60,
+  cols: 100,
 };
 
 const term = new Terminal(terminalArgs);
