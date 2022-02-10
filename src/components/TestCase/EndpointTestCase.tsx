@@ -8,6 +8,7 @@ import {
   updateStatementsOrder,
   toggleDB,
   updateDBFilePath,
+  addEndpoint,
 } from '../../context/actions/endpointTestCaseActions';
 import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
@@ -20,6 +21,10 @@ const EndpointTestCase = () => {
     EndpointTestCaseContext
   );
   const [{ filePathMap }] = useContext<any>(GlobalContext);
+  
+  const handleAddEndpoint = () => {
+    dispatchToEndpointTestCase(addEndpoint());
+  };
 
   const questionIcon = require('../../assets/images/help-circle.png');
 
@@ -122,6 +127,9 @@ const EndpointTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <button data-testid='endPointButton' onClick={handleAddEndpoint}>
+            Endpoint
+      </button>
     </div>
   );
 };

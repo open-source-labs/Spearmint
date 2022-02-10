@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   openBrowserDocs,
@@ -7,6 +7,7 @@ import {
   updateFile,
   setValidCode,
   setTestCase,
+  toggleExportBool,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
@@ -18,10 +19,16 @@ import {
 } from '../../context/actions/puppeteerTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
-import { useToggleModal } from './testMenuHooks';
 import UploadTest from '../UploadTest/UploadTest';
 import GetTests from '../GetTests/GetTests';
 import TestMenuButtons from './TestMenuButtons';
+import { useToggleModal, validateInputs } from './testMenuHooks';
+import ExportFileModal from '../Modals/ExportFileModal';
+const { ipcRenderer } = require('electron')
+
+// imports were declared in previous iterations, but were never used
+// import UploadTest from '../UploadTest/UploadTest';
+// import GetTests from '../GetTests/GetTests';
 
 const PuppeteerTestMenu = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
@@ -30,8 +37,10 @@ const PuppeteerTestMenu = () => {
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal(
     'puppeteer'
   );
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('puppeteer', projectFilePath);
+  const [userSavedTest, setUserSavedTest] = useState(false);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
@@ -49,11 +58,36 @@ const PuppeteerTestMenu = () => {
   };
 
   const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
+    const testGeneration = generateTest({ puppeteerStatements });
+    dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
-    dispatchToGlobal(setTabIndex(0))
+    dispatchToGlobal(setTabIndex(0));
+    return testGeneration;
   };
+
+  // functionality when user clicks Save Test button
+  const saveTest = () => {
+    const valid = validateInputs('puppeteer', puppeteerStatements);
+    dispatchToGlobal(setValidCode(valid));
+
+    
+    const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
+    const updatedData = fileHandle();
+
+    // check to see if user has saved test before. If not, then open ExportFileModal
+    if(!newFilePath.includes('test.js') || !userSavedTest){
+      dispatchToGlobal(toggleExportBool())
+      setIsExportModalOpen(true)
+      setUserSavedTest(true)
+    }
+
+
+    // if user already has a saved test file, rewrite the file with the updated data
+    if(newFilePath.includes('test.js') && userSavedTest){
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
+  }
 
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
@@ -67,7 +101,7 @@ const PuppeteerTestMenu = () => {
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
-        saveTest={openModal}
+        saveTest={saveTest}
         openDocs={openDocs}
       />
       <Modal
@@ -79,19 +113,19 @@ const PuppeteerTestMenu = () => {
         dispatchTestCase={dispatchToPuppeteerTestCase}
         createTest={createNewPuppeteerTest}
       />
+      <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+      />
     </>
     //       {/* <UploadTest testType="puppeteer" />
     //       <GetTests testType="puppeteer" /> */}
-
-    //     <div id={styles.right}>
-    //       <button
-    //         type='button'
-    //         data-testid='puppeteerPaintTimingButton'
-    //         onClick={handleAddPuppeteerPaintTiming}
-    //       >
-    //         Paint Timing
-    //       </button>
-    //     </div>
+ 
+    //   </div>
+    //   <div id={styles.right}>
+    //     <button id={styles.rightBtn} onClick={saveTest}>
+    //       Save Test
+    //     </button>
     //   </div>
     // </div>
   );

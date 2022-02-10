@@ -51,18 +51,18 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     setFileName(e.target.value);
     setInvalidFileName(false);
   };
-
+  
   /* cancel export file (when false) */
   const closeExportModal = () => {
     setIsExportModalOpen(false);
-
+    
     // reset fileName and invalidFileName
     setInvalidFileName(false);
     setFileName('');
     dispatchToGlobal(toggleExportBool());
     dispatchToGlobal(updateFile(''));
   };
-
+  
   const handleClickSave = () => {
     // file name uniqueness check
     const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;

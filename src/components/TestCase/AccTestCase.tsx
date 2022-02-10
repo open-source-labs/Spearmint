@@ -11,6 +11,7 @@ import {
   updateFilePath,
   updateTestType,
   createPuppeteerUrl,
+  addDescribeBlock,
 } from '../../context/actions/accTestCaseActions';
 import {
   AccTestCaseContext,
@@ -49,6 +50,11 @@ const AccTestCase = () => {
     const reorderedStatements = reorder(list, result.source.index, result.destination.index);
 
     dispatchToAccTestCase(func(reorderedStatements, result.type));
+  };
+
+   // handle change to add a Describe Block
+   const handleAddDescribeBlock = () => {
+    dispatchToAccTestCase(addDescribeBlock());
   };
 
   return (
@@ -106,9 +112,13 @@ const AccTestCase = () => {
                 />
                 {provided.placeholder}
               </div>
+
             )}
           </Droppable>
         </DragDropContext>
+        <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+            +Describe Block
+        </button>
       </section>
     </div>
   );

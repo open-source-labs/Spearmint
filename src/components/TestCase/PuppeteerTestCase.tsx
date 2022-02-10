@@ -3,13 +3,18 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
-import { updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
+import { addPuppeteerPaintTiming, updateStatementsOrder } from '../../context/actions/puppeteerTestCaseActions';
 import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 
 //additions fo previously ExportFileModal functionality
 import styles from './TestCase.module.scss';
+import { Button } from '@material-ui/core';
 
 const PuppeteerTestCase = () => {
+  const handleAddPuppeteerPaintTiming = () => {
+    dispatchToPuppeteerTestCase(addPuppeteerPaintTiming());
+  };
+  
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
@@ -60,6 +65,13 @@ const PuppeteerTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <Button
+          type='button'
+          data-testid='puppeteerPaintTimingButton'
+          onClick={handleAddPuppeteerPaintTiming}
+        >
+          Paint Timing
+        </Button>
     </div>
   );
 };

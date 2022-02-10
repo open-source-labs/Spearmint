@@ -4,7 +4,6 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { createNewSecTest } from '../../context/actions/secTestCaseActions';
 import Modal from '../Modals/Modal';
-import useGenerateTest from '../../context/useGenerateTest.jsx';
 import {
   updateFile,
   setFilePath,
@@ -12,6 +11,7 @@ import {
   setValidCode,
   setTestCase,
   toggleModal,
+  toggleExportBool,
 } from '../../context/actions/globalActions';
 import { SecTestCaseContext } from '../../context/reducers/secTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
@@ -21,10 +21,10 @@ const SecTestMenu = () => {
   const snykURL = 'https://docs.snyk.io/'
 
   /* initialize hooks */
-  // 
+  
   const { title, isModalOpen, openModal, openScriptModal, closeModal, } = useToggleModal('sec');
   const [secTestCase, dispatchToSecTestCase] = useContext(SecTestCaseContext);
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, fileName, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
 
   // setValidCode to true on load.
   useEffect(() => {

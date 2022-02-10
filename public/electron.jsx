@@ -8,6 +8,9 @@ const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
 
+// Comment below require out if you don't want app to reload on code changes
+// require('electron-reloader')(module);
+
 // react developer tools for electron in dev mode
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const { Module } = require('module');
@@ -47,6 +50,7 @@ function createWindow() {
   }
 
   mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
+  mainWindow.webContents.openDevTools()
 
   // PTY PROCESS FOR IN APP TERMINAL
   const ptyArgs = {
@@ -177,7 +181,6 @@ let githubWindow;
 // ipcMain is listening on channel 'Github-Oauth' for an event from ProjectLoader line 94
 // ipbMain receives the url from ProjectLoader.jsx line 94
 ipcMain.on('Github-Oauth', (_event, url) => {
-  console.log('opening github oauth window!!');
   githubWindow = new BrowserWindow({
     webPreferences: {
       nodeIntegration: true,
@@ -194,7 +197,6 @@ ipcMain.on('Github-Oauth', (_event, url) => {
     // if new url matches our final endpoint, then the user has successfully logged in
     // and we grab the github username via cookies
     if (url.startsWith('http://localhost:3001/auth/github/callback')) {
-      // console.log('final localhost url is:', url);
 
       // gets the cookie with the name property of 'dotcom_user'
       session.defaultSession.cookies.get({ name: 'dotcom_user' })

@@ -75,7 +75,7 @@ const HooksTestCase = () => {
       </DragDropContext>
       <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
             Hooks
-          </button>
+      </button>
     </>
   );
 };

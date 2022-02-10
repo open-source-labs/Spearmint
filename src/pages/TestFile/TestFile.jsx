@@ -5,6 +5,8 @@ let styles = {};
 import modalStyles from '../../components/Modals/Modal.module.scss';
 import testStyles from './TestFile.module.scss'
 Object.assign(styles, modalStyles, testStyles)
+// import styles from '../../components/Modals/Modal.module.scss';
+
 import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
@@ -68,7 +70,6 @@ import {
 import VueTestCase from '../../components/TestCase/VueTestCase';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { setTestCase, toggleModal } from '../../context/actions/globalActions';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaUniversalAccess, FaReact } from "react-icons/fa"
 import { IoServer, IoLogoVue } from "react-icons/io5"
@@ -78,10 +79,21 @@ import { MdSecurity } from "react-icons/md"
 
 import { Button } from '@material-ui/core';
 import TestCard from './TestCard';
+import {
+    updateFile,
+    setFilePath,
+    toggleRightPanel,
+    setTestCase, 
+    toggleModal,
+    setTabIndex,
+} from '../../context/actions/globalActions';
+
+import { IconContext } from "react-icons";
+import { AiFillCloseSquare } from "react-icons/ai"
 
 
 const TestFile = () => {
-  let [{ testCase, isTestModalOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
+  let [{ testCase, isTestModalOpen, projectFilePath, file, exportBool, theme }, dispatchToGlobal] = useContext(GlobalContext);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
   const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
@@ -273,14 +285,14 @@ const TestFile = () => {
       }
 
       {testCase === '' && (
-        <Fragment>
-          <div id={styles.testFileContainer}>
-            <p id={styles.chooseTest}>CHOOSE A TEST</p>
-            <div id={styles.testCardsContainer}>
-              {allCards}
+          <Fragment>
+            <div id={styles.testFileContainer}>
+              <p id={styles.chooseTest}>CHOOSE A TEST</p>
+              <div id={styles.testCardsContainer}>
+                {allCards}
+              </div>
             </div>
-          </div>
-        </Fragment>
+          </Fragment>
       )}
     </div>
   );
