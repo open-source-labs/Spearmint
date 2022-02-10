@@ -99,10 +99,10 @@ Users can now test their application for vulnerabilities including: SQL Injectio
 ![](/public/demos/vuetest.gif)
 
 ### Dark Mode + Upgraded UI/UX
-![](/public/demos/darkMode.gif)
+![](/public/darkMode.gif)
 
 ### Save Test Functionality
-![](/public/demos/saveTest.gif)
+![](/public/saveTest.gif)
 
 ### Run a security test 
 ![](/public/demos/snyk-auth-testdep.gif)
