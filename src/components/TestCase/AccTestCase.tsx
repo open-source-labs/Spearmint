@@ -24,9 +24,11 @@ import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
 import PuppeteerUrl from '../AccTestComponent/PuppeteerUrl/PuppeteerUrl';
 import SearchInput from '../SearchInput/SearchInput';
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
+import { Button } from '@material-ui/core';
 
 const AccTestCase = () => {
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
+  const [{theme}] = useContext(GlobalContext);
 
   const { describeBlocks, itStatements, testType } = accTestCase;
 
@@ -63,7 +65,7 @@ const AccTestCase = () => {
         <AccTestMenu />
       </div>
 
-      <section id={styles.testCaseHeader}>
+      <section id={styles[`testCaseHeader${theme}`]}>
         <div id={styles.accTestDiv}>
           <AccTestTypes
             dispatch={dispatchToAccTestCase}
@@ -75,13 +77,13 @@ const AccTestCase = () => {
             <PuppeteerUrl dispatch={dispatchToAccTestCase} action={createPuppeteerUrl} />
           ) : (
             <div>
-              <label htmlFor="fileImport">Import File From</label>
               <div id={styles.labelInput} style={{ width: '80%' }}>
                 <SearchInput
                   options={Object.keys(filePathMap)}
                   dispatch={dispatchToAccTestCase}
                   action={updateFilePath}
                   filePathMap={filePathMap}
+                  label="Import File From"
                 />
               </div>
             </div>
@@ -109,6 +111,7 @@ const AccTestCase = () => {
                   updateDescribeStandardTag={updateDescribeStandardTag}
                   updateItCatTag={updateItCatTag}
                   type="acc"
+                  theme={theme}
                 />
                 {provided.placeholder}
               </div>
@@ -116,9 +119,9 @@ const AccTestCase = () => {
             )}
           </Droppable>
         </DragDropContext>
-        <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-            +Describe Block
-        </button>
+        <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+            Add Describe Block
+        </Button>
       </section>
     </div>
   );

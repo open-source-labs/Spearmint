@@ -15,6 +15,7 @@ const DescribeRenderer = ({
   updateDescribeStandardTag,
   updateItCatTag,
   type,
+  theme
 }) => {
   const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
