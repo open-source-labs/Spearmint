@@ -136,6 +136,13 @@ div {
   }
 }
 
+.flex1{
+  width: 40%;
+}
+.flex2{
+  width: 40%;
+}
+
 .header {
   flex: 0 0 40px;
   display: flex;
@@ -170,6 +177,7 @@ div {
 #labelInput {
   width: 100%;
   margin-right: 7%;
+  // color: white;
   input {
     margin-top: 6px;
     width: 100%;
