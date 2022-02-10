@@ -43,11 +43,11 @@ Note: Windows users may also have to run Spearmint in admin mode
 
 2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React and Vue; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, and endpoint test statements. Spearmint can save test templates for future use for logged in user (not guests). 
 
-![](/public/generateTest.png)
+![](/public/dropdown.png)
 
-3.  Spearmint will then convert user input to dynamically generate a test file. You can click the export icon on the nav bar to automatically save the test file in the **\_\_tests\_\_** folder, or you can save the current test by clicking on the save test button at the top of the page to save the test file in the **\_\_tests\_\_** folder for future modifications.
+3.  Spearmint will then convert user input to dynamically generate a test file. You can click the export icon on the nav bar to automatically save the test file in the **\_\_tests\_\_** folder to run test or to modify in the future.
 
-(picture for save test button & export icon)
+![](/public/saveTest.png)
 
 
 4.  Lastly click **Run Test** button and follow the guide on the popup and click what type of test you would like to perform.
@@ -64,7 +64,7 @@ Users can now test their application for vulnerabilities including: SQL Injectio
 
 7. The latest version of Spearmint adopted testing capability for Vue.js. The [Vue Test Utils](https://vue-test-utils.vuejs.org/) library has been utilized to test your Vue.js application. 
 
-(vue testing picture here)
+![](/public/vueTest.png)
 
 # New features with version 0.9.0
 
