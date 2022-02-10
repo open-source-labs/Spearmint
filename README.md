@@ -39,7 +39,7 @@ Note: Windows users may also have to run Spearmint in admin mode
 
 1.  On the initial screen, a user is prompt to login, sign up (via OAuth or standard sign-up/login), or login as a guest. Once logged in, choose your file and load your application to start creating tests.
 
-![](/public/mainPage.png)
+![](/public/mainPage.gif)
 
 2.  Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React and Vue; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, and endpoint test statements. Spearmint can save test templates for future use for logged in user (not guests). 
 
