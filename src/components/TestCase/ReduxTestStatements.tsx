@@ -15,6 +15,7 @@ import {
 } from '../../context/actions/reduxTestCaseActions';
 import '../SearchInput/SearchInput.scss';
 import importOptionsSwitch from './importOptions';
+import styles from './TestCase.module.scss';
 
 const ReduxTestStatements = () => {
   /* destructing from the reducer */
@@ -32,40 +33,13 @@ const ReduxTestStatements = () => {
   // different search imports are conditionally generated
   if (isActionCreatorOn) {
     aCImports = (
+      // <div className='flex-container'>
       <div className='flex-container'>
-        {/* <div className={styles.searchInput}> */}
-        <SearchInput
-          label={'Import Action Types From'}
-          type={'action-creator'}
-          reactTestCase={null}
-          updateTypesFilePath={updateTypesFilePath}
-          updateActionsFilePath={null}
-          options={Object.keys(filePathMap)}
-          dispatch={dispatchToReduxTestCase}
-          action={null}
-          filePathMap={filePathMap}
-        />
-        <SearchInput
-          label={'Import Actions From'}
-          type={'action-creator'}
-          reactTestCase={null}
-          updateTypesFilePath={null}
-          updateActionsFilePath={updateActionsFilePath}
-          options={Object.keys(filePathMap)}
-          dispatch={dispatchToReduxTestCase}
-          action={null}
-          filePathMap={filePathMap}
-        />
-      </div>
-    );
-  }
-  if (isAsyncOn) {
-    if (!isActionCreatorOn) {
-      asyncImports = (
-        <div className='flex-container'>
+        <div className={styles.flex1}>
           <SearchInput
+            // className={styles.flex2}
             label={'Import Action Types From'}
-            type={'async'}
+            type={'action-creator'}
             reactTestCase={null}
             updateTypesFilePath={updateTypesFilePath}
             updateActionsFilePath={null}
@@ -74,9 +48,11 @@ const ReduxTestStatements = () => {
             action={null}
             filePathMap={filePathMap}
           />
+        </div>
+        <div className={styles.flex1}>
           <SearchInput
-            label={'Import Action Types From'}
-            type={'async'}
+            label={'Import Actions From'}
+            type={'action-creator'}
             reactTestCase={null}
             updateTypesFilePath={null}
             updateActionsFilePath={updateActionsFilePath}
@@ -86,40 +62,80 @@ const ReduxTestStatements = () => {
             filePathMap={filePathMap}
           />
         </div>
+      </div>
+    );
+  }
+  if (isAsyncOn) {
+    if (!isActionCreatorOn) {
+      asyncImports = (
+        <div className='flex-container'>
+          <div className={styles.flex1}>
+            <SearchInput
+              label={'Import Action Types From'}
+              type={'async'}
+              reactTestCase={null}
+              updateTypesFilePath={updateTypesFilePath}
+              updateActionsFilePath={null}
+              options={Object.keys(filePathMap)}
+              dispatch={dispatchToReduxTestCase}
+              action={null}
+              filePathMap={filePathMap}
+            />
+          </div>
+          <br></br>
+          <div className={styles.flex1}>
+            <SearchInput
+              label={'Import Action Types From'}
+              type={'async'}
+              reactTestCase={null}
+              updateTypesFilePath={null}
+              updateActionsFilePath={updateActionsFilePath}
+              options={Object.keys(filePathMap)}
+              dispatch={dispatchToReduxTestCase}
+              action={null}
+              filePathMap={filePathMap}
+            />
+          </div>
+        </div>
       );
     }
   }
   if (isMiddleWareOn) {
     mImports = (
       <div className='flex-container'>
-        <SearchInput
-          label={'Import Middleware From'}
-          type={null}
-          reactTestCase={null}
-          updateTypesFilePath={null}
-          updateActionsFilePath={updateMiddlewaresFilePath}
-          options={Object.keys(filePathMap)}
-          dispatch={dispatchToReduxTestCase}
-          action={null}
-          filePathMap={filePathMap}
-        />
+        <div className={styles.flex2}>
+          <SearchInput
+            label={'Import Middleware From'}
+            type={null}
+            reactTestCase={null}
+            updateTypesFilePath={null}
+            updateActionsFilePath={updateMiddlewaresFilePath}
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToReduxTestCase}
+            action={null}
+            filePathMap={filePathMap}
+          />
+        </div>  
       </div>
     );
   }
   if (isReducerOn) {
     reducerImports = (
       <div className='flex-container'>
-        <SearchInput
-          label={'Import Reducer From'}
-          type={null}
-          reactTestCase={null}
-          updateTypesFilePath={null}
-          updateActionsFilePath={null}
-          options={Object.keys(filePathMap)}
-          dispatch={dispatchToReduxTestCase}
-          action={updateReducersFilePath}
-          filePathMap={filePathMap}
-        />
+        <div className={styles.flex1}>
+            <SearchInput
+            label={'Import Reducer From'}
+            type={null}
+            reactTestCase={null}
+            updateTypesFilePath={null}
+            updateActionsFilePath={null}
+            options={Object.keys(filePathMap)}
+            dispatch={dispatchToReduxTestCase}
+            action={updateReducersFilePath}
+            filePathMap={filePathMap}
+          />
+        </div>
+        <div className={styles.flex1}>
         {!isActionCreatorOn && !isAsyncOn ? (
           <SearchInput
             label={'Import Action Types From'}
@@ -132,8 +148,9 @@ const ReduxTestStatements = () => {
             action={null}
             filePathMap={filePathMap}
           />
-        ) : null}
-      </div>
+          ) : null}
+        </div>
+      </div>  
     );
   }
   // the conditionally generated imports are rendered along with
