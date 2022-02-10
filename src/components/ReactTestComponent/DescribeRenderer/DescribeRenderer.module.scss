@@ -2,7 +2,7 @@
 @import '../../../assets/stylesheets/colors.scss';
 @import '../../../pages/LeftPanel/LeftPanel.module.scss';
 
-#describeBlock {
+#describeBlocklight {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -16,6 +16,22 @@
   z-index: 3;
 
   --describe-bg: #{$lighter-mint};
+}
+
+#describeBlockdark {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  background-color: $chromegray-less-light;
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px gray;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  z-index: 3;
+
+  --describe-bg: #{$salmon};
 }
 
 .describeClose {
@@ -39,10 +55,15 @@
   width: 100%;
   padding: 10px;
   background-color: var(--describe-bg);
+  border-radius: 4px;
+
+  input {
+    color: white;
+  }
 }
 
 .addIt {
-  height: auto;
+  //height: auto;
   color: white;
   padding: 0.5rem;
   border-radius: 5px;

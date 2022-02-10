@@ -20,6 +20,7 @@ const ItRenderer = ({
   describeId,
   statements,
   handleChangeItStatementText,
+  theme,
 }) => {
   const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
 
@@ -56,7 +57,7 @@ const ItRenderer = ({
     >
       {(provided) => (
         <div
-          id={styles.ItRenderer}
+          id={styles[`ItRenderer${theme}`]}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

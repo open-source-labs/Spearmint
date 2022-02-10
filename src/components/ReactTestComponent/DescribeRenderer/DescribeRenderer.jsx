@@ -15,6 +15,7 @@ const DescribeRenderer = ({
   handleChangeDescribeText,
   handleChangeItStatementText,
   type,
+  theme,
 }) => {
   const deleteDescribeBlockHandleClick = (e) => {
     e.stopPropagation();
@@ -37,7 +38,7 @@ const DescribeRenderer = ({
     <Draggable key={id} draggableId={id} index={i} type='describe'>
       {(provided) => (
         <div
-          id={styles.describeBlock}
+          id={styles[`describeBlock${theme}`]}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
@@ -86,6 +87,7 @@ const DescribeRenderer = ({
                   statements={statements}
                   describeId={id}
                   handleChangeItStatementText={handleChangeItStatementText}
+                  theme={theme}
                 />
                 {innerProvided.placeholder}
               </div>

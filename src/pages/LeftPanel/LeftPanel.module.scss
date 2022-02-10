@@ -11,7 +11,7 @@
   min-width: 500px; // changed this to make dev easier w/ dev tools open
   overflow: auto;
   border-radius: 5px;
-  padding: 10px;
+  padding: 8px 14px;
   --choose-test-color: #{$salmon};
 }
 
@@ -24,7 +24,7 @@
   min-width: 500px; // changed this to make dev easier w/ dev tools open
   overflow: auto;
   border-radius: 5px;
-  padding: 10px;
+  padding: 8px 14px;
   --choose-test-color: #{$mint};
 }
 

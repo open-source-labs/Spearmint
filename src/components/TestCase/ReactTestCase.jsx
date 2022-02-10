@@ -126,6 +126,7 @@ const ReactTestCase = () => {
                     handleChangeDescribeText={handleChangeDescribeText}
                     handleChangeItStatementText={handleChangeItStatementText}
                     type='react'
+                    theme={theme}
                   />
                   {provided.placeholder}
                 </div>

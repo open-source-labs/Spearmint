@@ -9,6 +9,8 @@ import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseRed
 
 import { deleteRender, addProp } from '../../../context/actions/reactTestCaseActions';
 import Prop from './Prop';
+import { Button } from '@material-ui/core';
+const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ statement, statementId, describeId, itId }) => {
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
@@ -27,13 +29,10 @@ const Render = ({ statement, statementId, describeId, itId }) => {
         <span className={styles.header}>
           Rendering: <span style={{ color: 'black' }}>{statements.componentName}</span>
         </span>
-        <button className={styles.addProps} onClick={handleClickAddProp}>
+        <Button className={styles.addProps} onClick={handleClickAddProp}>
           <i className='fas fa-plus'></i> Add Props
-        </button>
-        <i
-          onClick={handleClickDeleteRender}
-          className={cn(styles.deleteRender, 'far fa-window-close')}
-        ></i>
+        </Button>
+        <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteRender} />
       </div>
       <div className={'props'}>
         {statement.props.length > 0 && (
