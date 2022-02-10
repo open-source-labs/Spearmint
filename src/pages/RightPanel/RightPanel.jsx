@@ -62,7 +62,7 @@ const RightPanel = () => {
       <div className={styles.viewContainer} hidden={tabIndex !== 1}>
         <BrowserView />
       </div>
-      <div id='term' className={styles.viewContainer} hidden={tabIndex !== 2} >
+      <div className={styles.viewContainer} hidden={tabIndex !== 2}>
         <TerminalView />
       </div>
     </div>

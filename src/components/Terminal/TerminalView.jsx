@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import "./xterm.css";
@@ -11,6 +11,8 @@ const terminalArgs = {
   // Currently rows are hardcoded, next step is to make terminal sizing dynamic.
   fontFamily: 'monospace',
   //rendererType: "dom",
+  rows: 60,
+  cols: 100,
 };
 
 const term = new Terminal(terminalArgs);
@@ -18,12 +20,20 @@ const fitAddon = new FitAddon();
 term.loadAddon(fitAddon);
 
 const TerminalView = () => {
-  
-  useLayoutEffect(() => {
-    //term.setOption("theme", {background: "black", foreground: "white"});
-    const container = document.getElementById('terminalContainer')
+
+  const elem = useRef()
+  const [isElemVisible, setIElemVisible] = useState(false)
+
+  useEffect(() => {
+    console.log('here')
+    if (isElemVisible) {
+      // Assuming UI has updated:
+      elem.current.getBoundingClientRect() // do something with this object
+      console.log('visible')
+      const container = document.getElementById('base-element')
+
     console.log(container);
-    term.open(document.getElementById('terminalContainer'));
+    term.open(document.getElementById('base-element'));
     // when we have input events (e), we would send the data to the main processor
     term.onData((e) => {
       ipc.send('terminal.toTerm', e);
@@ -34,20 +44,24 @@ const TerminalView = () => {
       term.write(data);
     });
 
-    console.log("in useEffect once before fit", container.offsetWidth, container.offsetHeight)
+    //console.log("in useEffect once before fit", container.offsetWidth, container.offsetHeight)
     fitAddon.fit();
-    console.log("in useEffect once after fit", container.offsetWidth, container.offsetHeight)
-    //fitAddon.fit();
-    //console.log(fitAddon)
+    //console.log("in useEffect once after fit", container.offsetWidth, container.offsetHeight)
+    }
+ 
+   }, [isElemVisible])
+  
+  useLayoutEffect(() => {
+    //term.setOption("theme", {background: "black", foreground: "white"});
+    console.log(isElemVisible)
   }, []);
 
   useLayoutEffect(() => {
-    //fitAddon.fit();
     console.log('USE-EFFEcT ALWAYS before fitaddon', term.cols, term.rows);
     const container = document.getElementById('terminalContainer')
-    console.log(container.offsetWidth, container.offsetHeight)
+    //console.log(container.offsetWidth, container.offsetHeight)
     fitAddon.fit();
-    console.log('USE-EFFEcT ALWAYS after fitaddon', term.cols, term.rows);
+    //console.log('USE-EFFEcT ALWAYS after fitaddon', term.cols, term.rows);
 
     // tell ptyprocess to resize also 
     term.onResize((e) => {
@@ -63,9 +77,11 @@ const TerminalView = () => {
 
 
   return (
-    <div id="terminalContainer">
-    </div>
-
+    <div id="base-element">
+    { isElemVisible && (
+      <div id="element" ref={elem}></div>
+    )}
+   </div>
   )
 };
 
