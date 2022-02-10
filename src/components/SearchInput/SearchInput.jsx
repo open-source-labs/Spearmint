@@ -116,7 +116,7 @@ const SearchInput = ({
     renderInput={(params) => (
       <InputTextField
         {...params}
-        label="Search Component"
+        label={label}
         variant="outlined"
         size="small"
         InputProps={{

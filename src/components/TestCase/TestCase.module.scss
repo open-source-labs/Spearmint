@@ -20,9 +20,16 @@ div {
   margin: 15px 25px 15px 15px;
 }
 
-#testMockSection {
+#testMockSectionlight {
   margin-bottom: 50px;
+  --input-color: black;
 }
+#testMockSectiondark {
+  margin-bottom: 50px;
+  --input-color: white;
+}
+
+
 
 #paintTimingBtn {
   padding: 10px;
