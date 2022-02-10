@@ -9,6 +9,7 @@ import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 //additions fo previously ExportFileModal functionality
 import styles from './TestCase.module.scss';
 import { Button } from '@material-ui/core';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const PuppeteerTestCase = () => {
   const handleAddPuppeteerPaintTiming = () => {
@@ -17,8 +18,9 @@ const PuppeteerTestCase = () => {
   
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
-  );
-
+    );
+    
+  const [{theme}] = useContext(GlobalContext);
   const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -66,7 +68,10 @@ const PuppeteerTestCase = () => {
         </Droppable>
       </DragDropContext>
       <Button
+          id={styles[`PaintTime${theme}`]}
           type='button'
+          variant='outlined'
+          size='medium'
           data-testid='puppeteerPaintTimingButton'
           onClick={handleAddPuppeteerPaintTiming}
         >

@@ -24,7 +24,9 @@ div {
   margin-bottom: 50px;
 }
 
-#partTiming {
+#paintTimingBtn {
+  padding: 10px;
+  margin-top: 10px;
   background-color: $light-gray2;
 }
 
@@ -69,6 +71,26 @@ div {
   height: 100%;
 
   --input-color: white;
+}
+
+#PaintTimelight {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+  background-color: white;
+  color: black;
+  --input-color: black;
+  --text-color: black;
+}
+
+#PaintTimedark {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+  background-color: $salmon;
+  color: white;
+  --input-color: white;
+  --text-color: white;
 }
 
 .header {
