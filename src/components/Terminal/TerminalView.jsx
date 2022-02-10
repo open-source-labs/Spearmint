@@ -20,20 +20,12 @@ const fitAddon = new FitAddon();
 term.loadAddon(fitAddon);
 
 const TerminalView = () => {
-
-  const elem = useRef()
-  const [isElemVisible, setIElemVisible] = useState(false)
-
-  useEffect(() => {
-    console.log('here')
-    if (isElemVisible) {
-      // Assuming UI has updated:
-      elem.current.getBoundingClientRect() // do something with this object
-      console.log('visible')
-      const container = document.getElementById('base-element')
+  
+  useLayoutEffect(() => {
+    const container = document.getElementById('terminalContainer')
 
     console.log(container);
-    term.open(document.getElementById('base-element'));
+    term.open(document.getElementById('terminalContainer'));
     // when we have input events (e), we would send the data to the main processor
     term.onData((e) => {
       ipc.send('terminal.toTerm', e);
@@ -47,13 +39,6 @@ const TerminalView = () => {
     //console.log("in useEffect once before fit", container.offsetWidth, container.offsetHeight)
     fitAddon.fit();
     //console.log("in useEffect once after fit", container.offsetWidth, container.offsetHeight)
-    }
- 
-   }, [isElemVisible])
-  
-  useLayoutEffect(() => {
-    //term.setOption("theme", {background: "black", foreground: "white"});
-    console.log(isElemVisible)
   }, []);
 
   useLayoutEffect(() => {
@@ -77,10 +62,7 @@ const TerminalView = () => {
 
 
   return (
-    <div id="base-element">
-    { isElemVisible && (
-      <div id="element" ref={elem}></div>
-    )}
+    <div id="terminalContainer">
    </div>
   )
 };
