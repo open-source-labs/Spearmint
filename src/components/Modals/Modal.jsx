@@ -18,7 +18,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import Draggable from 'react-draggable';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { VscNewFile } from "react-icons/vsc"
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
+import InputTextField from '../InputTextField';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -70,6 +71,11 @@ const Modal = ({
     const fileName = document.getElementById('inputFileName').value;
     setFileName(fileName);
   };
+
+  const changeFileName = (e) => {
+    const fileName = e.currentTarget.value;
+    setFileName(fileName);
+  }
 
   const jestTest = () => {
     if (title === 'vue'){
@@ -282,19 +288,19 @@ const Modal = ({
                         <code>{script.cd}</code>
                       </div>
                     </pre>
-                    <span id={styles.newTestButtons}>
-                      <button
-                        id={styles.save}
+                    <span id={styles.runTestButtons}>
+                      <Button id={styles.save}
                         className='changeDirectory'
                         onClick={changeDirectory}
+                        size="small"
                       >
                         Change Directory
-                      </button>
-                      <div id={styles.feedback}>
-                        {btnFeedback.changedDir === false ? null : (
-                          <p>Directory has been changed to root directory.</p>
-                        )}
-                      </div>
+                      </Button>
+
+                      {btnFeedback.changedDir === false ? null : (
+                        <p>Directory has been changed to root directory.</p>
+                      )}
+
                     </span>
                   </div>
                 </AccordionDetails>
@@ -315,11 +321,13 @@ const Modal = ({
                         <code>{script.install}</code>
                       </div>
                     </pre>
-                    <span id={styles.newTestButtons}>
-                      <button id={styles.save} onClick={installDependencies}>
+                    <span id={styles.runTestButtons}>
+                      <Button id={styles.save}
+                        onClick={installDependencies}
+                        size="small"
+                      >
                         Install
-                      </button>
-                      <div id={styles.feedback}></div>
+                      </Button>
                     </span>
                   </div>
                 </AccordionDetails>
@@ -342,12 +350,7 @@ const Modal = ({
           <AccordionDetails id={styles.accordionDetails}>
             {/* Select test to run */}
             <div id={styles.accordionDiv}>
-              <input id='inputFileName' placeholder='example.js' />
-              <span id={styles.newTestButtons}>
-                <button id={styles.save} onClick={submitFileName}>
-                  Submit
-                </button>
-              </span>
+              <InputTextField id='inputFileName' placeholder='example.test.js' variant='outlined' onChange={changeFileName}/>
             </div>
           </AccordionDetails>
         </Accordion>
@@ -363,7 +366,6 @@ const Modal = ({
           <AccordionDetails id={styles.accordionDetails}>
             {/* Select test to run */}
             <div id={styles.accordionDiv}>
-              {/* To do: make button toggle on/off */}
               <pre>
                 <div className='code-wrapper'>
                   <code>
@@ -374,16 +376,16 @@ const Modal = ({
                   </code>
                 </div>
               </pre>
-              <span id={styles.newTestButtons}>
-                <button id={styles.save} onClick={jestTest}>
+              <span id={styles.runTestButtons}>
+                <Button id={styles.save} onClick={jestTest}>
                   Jest Test
-                </button>
-                <button id={styles.save} onClick={verboseTest}>
+                </Button>
+                <Button id={styles.save} onClick={verboseTest}>
                   Verbose Test
-                </button>
-                <button id={styles.save} onClick={coverageTest}>
+                </Button>
+                <Button id={styles.save} onClick={coverageTest}>
                   Coverage Test
-                </button>
+                </Button>
               </span>
             </div>
           </AccordionDetails>

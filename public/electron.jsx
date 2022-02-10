@@ -81,7 +81,7 @@ function createWindow() {
   mainWindow.webContents
   .executeJavaScript('localStorage.getItem("theme");', true)
   .then(result => {
-    mainWindow.webContents.send('theme', result);
+    mainWindow.webContents.send('theme', result ?? 'light');
   });
 }
 

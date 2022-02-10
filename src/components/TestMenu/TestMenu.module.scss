@@ -5,25 +5,61 @@
  * animation slide-in-elliptic-top-fwd
  * ----------------------------------------
  */
-#testMenu {
-  flex: 0 0 48px;
+#testMenulight {
+
+  * {
+    transition: color 0.0s !important;
+  }
+
+  flex: 0 0 42px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
   width: 100%;
+
   button {
     color: $mint;
     height: 100%;
 
     &:hover {
       color: white;
-      background-color: $darkslategrey;
+      background-color: $chromegray-opaque;
     }
 
     svg {
-      font-size: 36px;
+      font-size: 32px;
+    }
+  }
+
+}
+
+#testMenudark {
+
+  * {
+    transition: color 0.0s !important;
+  }
+
+  flex: 0 0 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+
+  button {
+    color: $eggshell;
+    height: 100%;
+
+    &:hover {
+      color: white;
+      background-color: $eggshell-opaque;
     }
 
+    svg {
+      font-size: 32px;
+    }
   }
+  
 }
+

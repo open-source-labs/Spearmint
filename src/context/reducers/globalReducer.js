@@ -25,7 +25,7 @@ export const globalState = {
   validCode: true,
   tabIndex: 0,
   isGuest: false,
-  theme: window.localStorage.theme,
+  theme: window.localStorage.theme ?? 'light',
 };
 
 export const globalReducer = (state, action) => {

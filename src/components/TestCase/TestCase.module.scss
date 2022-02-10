@@ -53,26 +53,57 @@ div {
   }
 }
 
-#ReactTestCase {
+#ReactTestCaselight {
   display: flex;
   flex-direction: column;
   gap: 10px;
   height: 100%;
-  
-  .header {
-    flex: 0 0 40px;
-    display: flex;
 
-    .searchInput{
-      flex: 1 1 40px;
-      div {
-        max-width: 250px;
+  --input-color: black;
+}
+
+#ReactTestCasedark {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+
+  --input-color: white;
+}
+
+.header {
+  flex: 0 0 40px;
+  display: flex;
+
+  .searchInput {
+    flex: 1 1 40px;
+    svg {
+      color: var(--input-color);
+    }
+    div {
+      max-width: 250px;
+
+    }
+
+    input {
+      border-color: var(--input-color);
+      color: var(--input-color);
+
+      &::placeholder {
+        color: var(--input-color);
       }
     }
 
-    button {
-      font-size: 0.75rem;
+    label {
+      color: var(--input-color);
     }
+
+  }
+
+  button {
+    font-size: 0.75rem;
+    color: var(--input-color);
+    border-color: var(--input-color);
   }
 }
 

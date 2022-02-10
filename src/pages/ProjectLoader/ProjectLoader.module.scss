@@ -12,6 +12,7 @@
   --bg-color-lower : #{$eggshell};
   --button-text: #{$eggshell};
   --button-color-lighter: #{$lighter-mint};
+  --input-color: black;
 }
 
 #projectLoaderdark{
@@ -24,6 +25,7 @@
   --bg-color-lower : #{$chromegray};
   --button-text: #{$lighttext};
   --button-color-lighter: #{$lighter-mint};
+  --input-color: #{$eggshell};
 }
 
 #upperPart {
@@ -88,6 +90,14 @@
   align-items: center;
   gap: 20px;
   max-width: 225px;
+
+  input {
+    color: var(--input-color);
+  }
+
+  label {
+    color: var(--input-color);
+  }
 }
 
 #buttonBox{

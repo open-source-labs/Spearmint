@@ -62,7 +62,7 @@
   display: flex;
   max-width: 700px;
   background: var(--container-bg);
-  border: 8px solid var(--container-border);
+  border: 8px solid var(--container-bg);
   border-radius: 10px;
   color: white;
 }
@@ -71,7 +71,7 @@
   display: flex;
   max-width: 700px;
   background: var(--container-bg);
-  border: 8px solid var(--container-border);
+  border: 8px solid var(--container-bg);
   border-radius: 10px;
   color: white;
   padding: 5px;
@@ -104,6 +104,20 @@
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
+
+  button {
+    background-color: $salmon;
+    color: white;
+
+    span {
+      width: 100%;
+    }
+  }
+}
+
+#runTestButtons {
+  display: flex;
+  gap: 10px;
 
   button {
     background-color: $salmon;
@@ -233,6 +247,13 @@
   display: flex;
   flex: 1;
   flex-direction: column;
+  input{
+    color: var(--accordion-color);
+  }
+
+  input::placeholder {
+    color: var(--accordion-color);
+  }
 }
 
 #endPointGuide {

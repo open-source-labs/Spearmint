@@ -9,6 +9,7 @@
   justify-content: space-between;
   border-radius: 5px;
   --icon-fill: #{$salmon};
+  transition: transform 0.5s ease;
 }
 
 #navBardark {
@@ -19,6 +20,7 @@
   justify-content: space-between;
   border-radius: 5px;
   --icon-fill: #{$mint};
+  transition: transform 0.5s ease;
 }
 
 .btnContainer{
@@ -91,11 +93,3 @@
   visibility: visible;
   margin-left: 5px;
 }
-
-// #inAboutPage {
-//   @extend #navBar;
-//   float: left;
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-// }

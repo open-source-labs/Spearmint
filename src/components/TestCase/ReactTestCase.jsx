@@ -32,7 +32,7 @@ const ReactTestCase = () => {
 
   const { describeBlocks, itStatements, statements } = reactTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [{ filePathMap }] = useContext(GlobalContext);
+  const [{ filePathMap, theme }] = useContext(GlobalContext);
 
   const handleAddMockData = () => {
     dispatchToMockData(createMockData());
@@ -79,7 +79,7 @@ const ReactTestCase = () => {
 
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
-      <div id={styles.ReactTestCase}>
+      <div id={styles[`ReactTestCase${theme}`]}>
         <ReactTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './SearchInput.scss';
 import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
+import InputTextField from '../InputTextField';
 
 const SearchInput = ({
   dispatch,
@@ -113,7 +114,7 @@ const SearchInput = ({
     value={userInput}
     onChange={handleClick}
     renderInput={(params) => (
-      <TextField
+      <InputTextField
         {...params}
         label="Search Component"
         variant="outlined"
