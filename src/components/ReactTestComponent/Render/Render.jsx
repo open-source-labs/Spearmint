@@ -10,10 +10,13 @@ import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseRed
 import { deleteRender, addProp } from '../../../context/actions/reactTestCaseActions';
 import Prop from './Prop';
 import { Button } from '@material-ui/core';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { AiOutlineClose } from 'react-icons/ai';
 const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ statement, statementId, describeId, itId }) => {
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{theme}] = useContext(GlobalContext)
 
   const handleClickAddProp = () => {
     dispatchToReactTestCase(addProp(statementId));
@@ -24,15 +27,15 @@ const Render = ({ statement, statementId, describeId, itId }) => {
   };
 
   return (
-    <div id={styles.RenderContainer}>
+    <div id={styles[`RenderContainer${theme}`]}>
       <div className={styles.renderHeader}>
         <span className={styles.header}>
-          Rendering: <span style={{ color: 'black' }}>{statements.componentName}</span>
+          Rendering: <span id={styles.componentName}>{statements.componentName}</span>
         </span>
-        <Button className={styles.addProps} onClick={handleClickAddProp}>
-          <i className='fas fa-plus'></i> Add Props
+        <Button onClick={handleClickAddProp} variant='outlined'>
+          Add Props
         </Button>
-        <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteRender} />
+        <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteRender} />
       </div>
       <div className={'props'}>
         {statement.props.length > 0 && (

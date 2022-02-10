@@ -11,8 +11,8 @@ import {
 } from '../../../context/actions/reactTestCaseActions';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import styles from './ItRenderer.module.scss';
-import { TextField } from '@material-ui/core';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { Button, TextField } from '@material-ui/core';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const ItRenderer = ({
   type,
@@ -25,27 +25,27 @@ const ItRenderer = ({
   const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
 
   const addRenderHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToReactTestCase(addRender(describeId, itId));
   };
 
   const deleteItStatementHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToReactTestCase(deleteItStatement(describeId, itId));
   };
 
   const deleteReactItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {
-      const itId = e.target.id;
+      const itId = e.currentTarget.id;
       dispatchToReactTestCase(deleteItStatement(describeId, itId));
     }
   }
   const addActionHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToReactTestCase(addAction(describeId, itId));
   };
   const addAssertionHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToReactTestCase(addAssertion(describeId, itId));
   };
 
@@ -62,7 +62,7 @@ const ItRenderer = ({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <AiOutlineCloseCircle
+          <AiOutlineClose
             tabIndex={0}
             id={id} 
             onKeyPress={deleteReactItStatementOnKeyUp}
@@ -102,18 +102,15 @@ const ItRenderer = ({
           <div>
             {type === 'react' && (
               <div className={styles.buttonsContainer}>
-                <button id={id} onClick={addRenderHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Render
-                </button>
-                <button id={id} onClick={addActionHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Action
-                </button>
-                <button id={id} onClick={addAssertionHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Assertion
-                </button>
+                <Button id={id} onClick={addRenderHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Render
+                </Button>
+                <Button id={id} onClick={addActionHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Action
+                </Button>
+                <Button id={id} onClick={addAssertionHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Assertion
+                </Button>
               </div>
             )}
           </div>

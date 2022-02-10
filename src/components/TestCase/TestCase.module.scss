@@ -61,6 +61,8 @@ div {
   gap: 10px;
   height: 100%;
   --input-color: black;
+  --describe-button-color: #{$mint};
+  --describe-button-bg: #{$mint};
 }
 
 #ReactTestCasedark {
@@ -69,6 +71,8 @@ div {
   gap: 10px;
   height: 100%;
   --input-color: white;
+  --describe-button-color: #{$eggshell};
+  --describe-button-bg: #{$salmon};
 }
 
 #PaintTimelight {
@@ -157,6 +161,18 @@ div {
     font-size: 0.75rem;
     color: var(--input-color);
     border-color: var(--input-color);
+  }
+}
+
+#addDescribeButton {
+  button {
+    color: var(--describe-button-color);
+    background-color: var(--describe-button-bg)
+
+    &:hover {
+      color: white;
+      background-color: var(--describe-button-bg);
+    }
   }
 }
 

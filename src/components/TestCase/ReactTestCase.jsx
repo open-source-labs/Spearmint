@@ -89,7 +89,7 @@ const ReactTestCase = () => {
               action={updateRenderComponent}
               filePathMap={filePathMap}
               options={Object.keys(filePathMap)}
-              label={'Search Component'}
+              label='Search Component'
             />
           </div>
           <Button variant="outlined" onClick={handleAddMockData} size='medium'>
@@ -133,9 +133,11 @@ const ReactTestCase = () => {
               )}
             </Droppable>
           </DragDropContext>
-          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-            Add Describe Block
-          </Button>
+          <div id={styles.addDescribeButton}>
+            <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+              Add Describe Block
+            </Button>
+          </div>
         </div>
       </div>
     </ReactTestCaseContext.Provider>

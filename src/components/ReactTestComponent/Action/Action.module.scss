@@ -2,15 +2,30 @@
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../pages/LeftPanel/LeftPanel.module.scss';
 
-#action {
-  @include box-styling;
+#actionlight {
   font-family: $raleway;
-  letter-spacing: 0.5px;
   background-color: $light-gray2;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 14px 10px;
+  border-radius: 2px;
+
+  --text-color: black;
+}
+
+#actiondark {
+  font-family: $raleway;
+  background-color: $chromegray-less-light;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 14px 10px;
+  border-radius: 2px;
+
+  --text-color: white;
 }
 
 #close {
   float: right;
+  z-index: 20;
+  cursor:pointer;
 }
 
 #actionHeader {
@@ -18,6 +33,7 @@
   justify-content: flex-start;
   display: flex;
   align-items: center;
+  
   img {
     width: 20px;
     height: 20px;
@@ -27,6 +43,7 @@
   h3 {
     margin: 0;
     padding: 0;
+    color: var(--text-color);
   }
 }
 
@@ -38,22 +55,26 @@
 
 #queryFlexBox {
   display: flex;
+  gap: 10px;
   align-items: center;
   width: 100%;
+  color: var(--text-color)
 }
 
 #eventTypeFlexBox {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin: 15px 0;
 }
 
 #eventType {
   width: 50%;
-  margin-right: 7%;
+  color: var(--text-color);
   input {
     margin-top: 6px;
+    padding: 5px;
     width: 100%;
+    border-radius: 2px;
   }
 }
 
@@ -76,16 +97,16 @@
 }
 
 #querySelector {
-  margin-right: 9%;
   select {
     font-family: $raleway;
     width: 100%;
     height: 25px;
     margin: 0 3px 0 0;
+    padding: 3px;
     background-color: white;
     border: 1px solid $light-gray;
+    border-radius: 2px;
     font-size: 12px;
-    letter-spacing: 0.5px;
     color: $dark-gray;
   }
 }
@@ -93,12 +114,17 @@
 #dropdownFlex {
   display: flex;
   align-items: center;
-  width: 111%;
+  gap: 10px;
 }
 
 #query {
   input {
     width: 100%;
+    min-width: 150px;
+    height: 25px;
+    border: 1px solid $light-gray;
+    border-radius: 2px;
+    font-size: 12px;
   }
 }
 

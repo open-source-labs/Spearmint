@@ -9,10 +9,14 @@ import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer
 
 import { deleteRender, addProp } from '../../../context/actions/vueTestCaseActions';
 import Prop from './Prop';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { AiOutlineClose } from 'react-icons/ai';
+import { Button } from '@material-ui/core';
 const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ statement, statementId, describeId, itId }) => {
   const [{ statements }, dispatchToVueTestCase] = useContext(VueTestCaseContext);
+  const [{theme}] = useContext(GlobalContext)
 
   const handleClickAddProp = () => {
     dispatchToVueTestCase(addProp(statementId));
@@ -23,15 +27,15 @@ const Render = ({ statement, statementId, describeId, itId }) => {
   };
 
   return (
-    <div id={styles.RenderContainer}>
+    <div id={styles[`RenderContainer${theme}`]}>
       <div className={styles.renderHeader}>
         <span className={styles.header}>
           Mounting: <span style={{ color: 'black' }}>{statements.componentName}</span>
         </span>
-        <button className={styles.addProps} onClick={handleClickAddProp}>
+        <Button className={styles.addProps} onClick={handleClickAddProp}>
           <i className='fas fa-plus'></i> Add Props
-        </button>
-        <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteRender} />
+        </Button>
+        <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteRender} />
 
       </div>
       <div className={'props'}>

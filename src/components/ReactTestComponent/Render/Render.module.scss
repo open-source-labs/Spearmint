@@ -2,29 +2,66 @@
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../pages/LeftPanel/LeftPanel.module.scss';
 
-#RenderContainer {
+#RenderContainerlight {
   position: relative;
-  height: auto;
-  border: 1px solid black;
-  padding: 1rem;
-  @include box-styling;
   font-family: $raleway;
-  letter-spacing: 0.5px;
   background-color: $light-gray2;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 14px 10px;
+  border-radius: 2px;
 
   --bg-color : #{$light-gray2};
+  --render-color: #{$mint};
+  --component-color: black;
+  --text-color: black;
+
+}
+
+#RenderContainerdark {
+  position: relative;
+  font-family: $raleway;
+  background-color: $chromegray-less-light;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 14px 10px;
+  border-radius: 2px;
+
+  --bg-color : #{$chromegray-less-light};
+  --render-color: white;
+  --component-color: #{$mint};
+  
 }
 
 .renderHeader {
   display: flex;
+  flex: 1;
   justify-content: space-between;
   align-items: center;
+  background-color: transparent;
+
+  input {
+    border-color: var(--input-color);
+    color: var(--render-color);
+  }
+
+  label {
+    color: var(--render-color);
+  }
+
+  button {
+    font-size: 0.75rem;
+    color: var(--render-color);
+    border-color: var(--render-color);
+  }
+}
+
+#componentName{
+  color: var(--component-color);
 }
 
 .header {
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
-  color: $mint;
+  color: var(--render-color);
 
   .componentName {
     font-family: 'Lucida Console', monospace;
@@ -43,6 +80,11 @@
   }
 }
 
+#close {
+  z-index: 20;
+  cursor:pointer;
+}
+
 .addProps {
   height: auto;
   font-size: 0.85rem;
@@ -53,10 +95,6 @@
   font-family: $oxygen;
   text-align: center;
   transition: 150ms;
-
-  &:hover {
-    font-size: 0.9rem;
-  }
 }
 
 .deleteRender {

@@ -126,6 +126,7 @@ const VueTestCase = () => {
                   handleChangeDescribeText={handleChangeDescribeText}
                   handleChangeItStatementText={handleChangeItStatementText}
                   type='vue'
+                  theme={theme}
                 />
                 {provided.placeholder}
               </div>

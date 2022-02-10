@@ -10,8 +10,8 @@ import {
 } from '../../../context/actions/vueTestCaseActions';
 import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
 import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
-import { TextField } from '@material-ui/core';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { Button, TextField } from '@material-ui/core';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const ItRenderer = ({
   type,
@@ -19,31 +19,32 @@ const ItRenderer = ({
   describeId,
   statements,
   handleChangeItStatementText,
+  theme,
 }) => {
   const [, dispatchToVueTestCase] = useContext(VueTestCaseContext);
 
   const addRenderHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToVueTestCase(addRender(describeId, itId));
   };
 
   const deleteItStatementHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToVueTestCase(deleteItStatement(describeId, itId));
   };
 
   const deleteVueItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {
-      const itId = e.target.id;
+      const itId = e.currentTarget.id;
       dispatchToVueTestCase(deleteItStatement(describeId, itId));
     }
   }
   const addActionHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToVueTestCase(addAction(describeId, itId));
   };
   const addAssertionHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToVueTestCase(addAssertion(describeId, itId));
   };
 
@@ -55,12 +56,12 @@ const ItRenderer = ({
     >
       {(provided) => (
         <div
-          id={styles.ItRenderer}
+          id={styles[`ItRenderer${theme}`]}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <AiOutlineCloseCircle
+          <AiOutlineClose
             tabIndex={0}
             id={id} 
             onKeyPress={deleteVueItStatementOnKeyUp}
@@ -91,18 +92,15 @@ const ItRenderer = ({
           <div>
             {type === 'vue' && (
               <div className={styles.buttonsContainer}>
-                <button id={id} onClick={addRenderHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Mount
-                </button>
-                <button id={id} onClick={addActionHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Action
-                </button>
-                <button id={id} onClick={addAssertionHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Assertion
-                </button>
+                <Button id={id} onClick={addRenderHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Render
+                </Button>
+                <Button id={id} onClick={addActionHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Action
+                </Button>
+                <Button id={id} onClick={addAssertionHandleClick} className={styles.reactButton} variant="outlined">
+                Add Assertion
+              </Button>
               </div>
             )}
           </div>

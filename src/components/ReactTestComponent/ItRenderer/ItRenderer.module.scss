@@ -12,12 +12,14 @@
   animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
   margin: 0 10px;
   gap: 10px;
+  padding: 18px 10px;
 
   svg{
     color: black;
   }
 
   --exit-button-color: black;
+  --input-color: black;
 }
 
 #ItRendererdark {
@@ -31,12 +33,15 @@
   animation: swing-in-top-fwd 0.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
   margin: 0 10px;
   gap: 10px;
+  padding: 18px 10px;
 
   svg{
     color: white;
+    
   }
 
   --placeholder-color: white;
+  --input-color: white;
 }
 
 .itClose {
@@ -57,7 +62,7 @@
 }
 
 #itInputContainer {
-  padding: 14px 10px;
+  
   background-color: transparent;
 
   input {
@@ -74,6 +79,12 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  button {
+    font-size: 0.75rem;
+    color: var(--input-color);
+    border-color: var(--input-color);
+  }
 }
 
 .reactButton {
@@ -88,13 +99,6 @@
   transition: 150ms;
   color: $mint;
 
-  &:hover {
-    font-size: 1.1rem;
-  }
-
-  i {
-    margin-right: 0.5rem;
-  }
 }
 /*animation for it block*/
 @-webkit-keyframes swing-in-top-fwd {

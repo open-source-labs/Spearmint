@@ -14,8 +14,13 @@
   flex-direction: column;
   border-radius: 4px;
   z-index: 3;
+  button {
+    margin: 2px;
+    color: black;
+  }
 
   --describe-bg: #{$lighter-mint};
+  --button-color: black;
 }
 
 #describeBlockdark {
@@ -30,8 +35,13 @@
   flex-direction: column;
   border-radius: 4px;
   z-index: 3;
+  button {
+    margin: 2px;
+    color: white;
+  }
 
   --describe-bg: #{$salmon};
+  --button-color: white;
 }
 
 .describeClose {
@@ -60,14 +70,17 @@
   input {
     color: white;
   }
+
+  
 }
 
 .addIt {
-  //height: auto;
   color: white;
   padding: 0.5rem;
   border-radius: 5px;
   background-color: $mint;
+
+  
 
   &:hover {
     background-color: white;
