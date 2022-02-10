@@ -1,4 +1,4 @@
-![](https://lh5.googleusercontent.com/5Gr2dZXHJdmIiASsPw9put-6mR20e4g1gOk-af4krREaJ7NqkZnqXLD5QgiotfNHYhGRh387HSqdhjRwxdwOvQzg9ChhfIrZz0FdxVu6gktBtG-sy1MX6Xq36Gmrzu_6G_K7LDQZ)
+![](/public/spearmintbg.jpg)
 
 Spearmint helps developers easily create functional Accessibility/Endpoint/Puppeteer/React/Hooks/Redux/Vue/Security tests without writing any code. It dynamically converts user inputs into executable Jest test code by using DOM query selectors provided by @testing-library.
 
