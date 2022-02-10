@@ -68,7 +68,7 @@ div {
   gap: 10px;
   height: 100%;
   --input-color: black;
-  --describe-button-color: #{$mint};
+  --describe-button-color: white;
   --describe-button-bg: #{$mint};
 }
 
@@ -174,10 +174,10 @@ div {
 #addDescribeButton {
   button {
     color: var(--describe-button-color);
-    background-color: var(--describe-button-bg)
+    background-color: var(--describe-button-bg);
 
     &:hover {
-      color: white;
+      color: var(--describe-button-color);
       background-color: var(--describe-button-bg);
     }
   }
