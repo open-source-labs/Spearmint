@@ -9,11 +9,15 @@ import {
 } from '../../context/actions/hooksTestCaseActions';
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
+import { Button } from '@material-ui/core';
 import { HooksStatements } from '../../utils/hooksTypes';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import InputTextField from '../InputTextField';
 
 const HooksTestCase = () => {
+  
   const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
-
+  const [{theme}] = useContext<any>(GlobalContext);
 
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,17 +54,18 @@ const HooksTestCase = () => {
       <div id='head'>
         <HooksTestMenu />
       </div>
-      <div id={styles.testMockSection}>
+      <div id={styles[`testMockSection${theme}`]}>
         <section id={styles.testCaseHeader}>
-          +Describe Block
-          <br />
-          <br />
-          <input
-            
+          <div className={styles.header}>
+            <div className={styles.searchInput} style={{ width: '80%' }}>
+          <InputTextField
+            size='small'
+            variant='outlined'
+            placeholder='+Describe Block'
             type='text'
-            id={styles.testStatement}
-            onChange={handleUpdateHooksTestStatement}
-          />
+            onChange={handleUpdateHooksTestStatement}/>
+            </div>
+          </div>
         </section>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -73,9 +78,16 @@ const HooksTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
-            Hooks
-      </button>
+      <div id={styles[`PaintTime${theme}`]}>
+        <Button 
+          className='hookUpdatesButton' 
+          type='button' 
+          variant='outlined'
+          size='medium'
+          onClick={handleAddHookUpdates}>
+          Hooks
+        </Button>
+      </div>
     </>
   );
 };

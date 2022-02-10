@@ -10,11 +10,14 @@ import {
 } from '../../../context/actions/hooksTestCaseActions';
 import HooksAssertion from '../HooksAssertion';
 import HooksCallback from '../HooksCallback';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { Button } from '@material-ui/core';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const HookUpdates = ({ hookUpdates, index }) => {
+  const [ { theme } ] = useContext(GlobalContext)
   const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
 
   const handleChangeHookUpdatesFields = (e, field) => {
@@ -47,8 +50,8 @@ const HookUpdates = ({ hookUpdates, index }) => {
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
+          id={styles[`hooksmodal${theme}`]}
           {...provided.dragHandleProps}
-          id={styles.hookUpdates}
         >
           <img
             src={closeIcon}
@@ -116,14 +119,14 @@ const HookUpdates = ({ hookUpdates, index }) => {
             return <HooksAssertion assertion={assertion} index={index} id={i} key={'k' + i} />;
           })}
           <div className={styles.buttonsContainer} id={styles.stateFlexBox}>
-            <button onClick={addAssertionHandleClick} className={styles.assertionButton}>
+            <Button onClick={addAssertionHandleClick} className={styles.assertionButton} variant='outlined'>
               <i className='fas fa-plus'></i>
               Assertion
-            </button>
-            <button onClick={addCallbackHandleClick} className={styles.assertionButton}>
+            </Button>
+            <Button onClick={addCallbackHandleClick} className={styles.assertionButton} variant='outlined'>
               <i className='fas fa-plus'></i>
               Callback
-            </button>
+            </Button>
           </div>
         </div>
       )}

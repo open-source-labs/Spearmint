@@ -42,8 +42,47 @@ ul.react-test-options li.option-active {
   color: #00b4cc;
 }
 
-.flex-container {
-  // align-items: center;
+.HooksTestCaselight {
+  gap: 10px;
+  --input-color: black;
+  --describe-button-color: white;
+  --describe-button-bg: #{$mint};
+}
+
+.HooksTestCasedark {
+  gap: 10px;
+  --input-color: white;
+  --describe-button-color: #{$eggshell};
+  --describe-button-bg: #{$salmon};
+}
+
+.flexContainer {
+// align-items: center;
+  flex: 0 0 40px;
+  display: flex;
+  svg {
+    color: var(--input-color);
+  }
+  div {
+    max-width: 250px;
+  }
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
+  button {
+    font-size: 0.75rem;
+    color: var(--input-color);
+    border-color: var(--input-color);
+  }
+
 }
 
 .flex-item {
