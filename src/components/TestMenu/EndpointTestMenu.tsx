@@ -24,6 +24,7 @@ import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCase
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
+import { Button } from '@material-ui/core';
 const { ipcRenderer } = require('electron')
 
 // imports were declared in previous iterations, but were never used
@@ -33,8 +34,7 @@ const { ipcRenderer } = require('electron')
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
   const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
-
-  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -131,10 +131,14 @@ const EndpointTestMenu = () => {
           {/* <UploadTest testType="endpoint test" />
           <GetTests testType="endpoint test" /> */}
 
-        <div id={styles.right}>
-          <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
+        <div id={styles[`testMenu${theme}`]}>
+          <Button 
+            variant='outlined'
+            data-testid='endPointButton' 
+            size='medium'
+            onClick={handleClickAddDatabase}>
             Configure Database
-          </button>
+          </Button>
         </div>
     </>
   );

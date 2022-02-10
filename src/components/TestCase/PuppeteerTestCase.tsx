@@ -20,7 +20,7 @@ const PuppeteerTestCase = () => {
     PuppeteerTestCaseContext
     );
     
-  const [{theme}] = useContext(GlobalContext);
+  const [{theme}] = useContext<any>(GlobalContext);
   const testDescription = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -67,16 +67,16 @@ const PuppeteerTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <Button
-          id={styles[`PaintTime${theme}`]}
-          type='button'
-          variant='outlined'
-          size='medium'
-          data-testid='puppeteerPaintTimingButton'
-          onClick={handleAddPuppeteerPaintTiming}
-        >
-          Paint Timing
-        </Button>
+      <div id={styles[`PaintTime${theme}`]}>
+        <Button
+            type='button'
+            variant='outlined'
+            size='medium'
+            data-testid='puppeteerPaintTimingButton'
+            onClick={handleAddPuppeteerPaintTiming}>
+            Paint Timing
+          </Button>
+      </div>
     </div>
   );
 };

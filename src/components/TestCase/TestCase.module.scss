@@ -60,7 +60,6 @@ div {
   flex-direction: column;
   gap: 10px;
   height: 100%;
-
   --input-color: black;
 }
 
@@ -69,7 +68,6 @@ div {
   flex-direction: column;
   gap: 10px;
   height: 100%;
-
   --input-color: white;
 }
 
@@ -77,26 +75,63 @@ div {
   padding: 10px;
   margin-top: 10px;
   gap: 10px;
-  background-color: white;
-  color: black;
-  --input-color: black;
-  --text-color: black;
+  button {
+    color: $mint;
+
+    &:hover {
+      color: white;
+      background-color: $chromegray-opaque;
+    }
+  }
 }
 
 #PaintTimedark {
   padding: 10px;
   margin-top: 10px;
   gap: 10px;
-  background-color: $salmon;
-  color: white;
-  --input-color: white;
-  --text-color: white;
+  button {
+    color: $eggshell;
+    background-color: $salmon;
+
+    &:hover {
+      color: white;
+      background-color: $salmon-darker;
+    }
+  }
+}
+
+#Endpointlight {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+  button {
+    color: $mint;
+
+    &:hover {
+      color: white;
+      background-color: $chromegray-opaque;
+    }
+  }
+}
+
+#Endpointdark {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+  button {
+    color: $eggshell;
+    background-color: $salmon;
+
+    &:hover {
+      color: white;
+      background-color: $salmon-darker;
+    }
+  }
 }
 
 .header {
   flex: 0 0 40px;
   display: flex;
-
   .searchInput {
     flex: 1 1 40px;
     svg {
@@ -104,9 +139,7 @@ div {
     }
     div {
       max-width: 250px;
-
     }
-
     input {
       border-color: var(--input-color);
       color: var(--input-color);
@@ -115,11 +148,9 @@ div {
         color: var(--input-color);
       }
     }
-
     label {
       color: var(--input-color);
     }
-
   }
 
   button {
@@ -136,8 +167,20 @@ div {
     margin-top: 6px;
     width: 100%;
     max-width: 500px;
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
   }
+
+  label {
+    color: var(--input-color);
+  }
+
   position: relative;
+  color: var(--input-color);
 }
 
 #hastooltip {
