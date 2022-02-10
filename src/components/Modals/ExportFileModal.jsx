@@ -91,15 +91,12 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     ipcRenderer.sendSync('ExportFileModal.fileCreate', filePath, file);
 
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
-    console.log(folderPath)
     displayTestFile(folderPath);
   };
 
   const displayTestFile = (testFolderFilePath) => {
     const filePath = `${testFolderFilePath}/${fileName}.test.js`;
     const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
-    console.log('filename', fileName, filePath);
-
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(setFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
