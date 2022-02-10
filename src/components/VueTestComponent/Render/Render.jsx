@@ -30,10 +30,10 @@ const Render = ({ statement, statementId, describeId, itId }) => {
     <div id={styles[`RenderContainer${theme}`]}>
       <div className={styles.renderHeader}>
         <span className={styles.header}>
-          Mounting: <span style={{ color: 'black' }}>{statements.componentName}</span>
+          Mounting: <span id={styles.componentName}>{statements.componentName}</span>
         </span>
         <Button className={styles.addProps} onClick={handleClickAddProp}>
-          <i className='fas fa-plus'></i> Add Props
+          Add Props
         </Button>
         <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteRender} />
 
