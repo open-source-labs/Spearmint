@@ -20,7 +20,7 @@ import styles from './TestCase.module.scss';
 const ReduxTestStatements = () => {
   /* destructing from the reducer */
   const [{ reduxStatements }, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
-  const [{ filePathMap }] = useContext<any>(GlobalContext);
+  const [{ filePathMap, theme }] = useContext<any>(GlobalContext);
 
   const { isReducerOn, isMiddleWareOn, isActionCreatorOn, isAsyncOn } = importOptionsSwitch(
     reduxStatements
@@ -35,7 +35,7 @@ const ReduxTestStatements = () => {
     aCImports = (
       // <div className='flex-container'>
       <div className='flex-container'>
-        <div className={styles.flex1}>
+        <div className={styles[`flex1${theme}`]}>
           <SearchInput
             // className={styles.flex2}
             label={'Import Action Types From'}
@@ -47,9 +47,10 @@ const ReduxTestStatements = () => {
             dispatch={dispatchToReduxTestCase}
             action={null}
             filePathMap={filePathMap}
+            fullWidth
           />
         </div>
-        <div className={styles.flex1}>
+        <div className={styles[`flex1${theme}`]}>
           <SearchInput
             label={'Import Actions From'}
             type={'action-creator'}
@@ -60,6 +61,7 @@ const ReduxTestStatements = () => {
             dispatch={dispatchToReduxTestCase}
             action={null}
             filePathMap={filePathMap}
+            fullWidth
           />
         </div>
       </div>
@@ -69,7 +71,7 @@ const ReduxTestStatements = () => {
     if (!isActionCreatorOn) {
       asyncImports = (
         <div className='flex-container'>
-          <div className={styles.flex1}>
+          <div className={styles[`flex1${theme}`]}>
             <SearchInput
               label={'Import Action Types From'}
               type={'async'}
@@ -83,7 +85,7 @@ const ReduxTestStatements = () => {
             />
           </div>
           <br></br>
-          <div className={styles.flex1}>
+          <div className={styles[`flex1${theme}`]}>
             <SearchInput
               label={'Import Action Types From'}
               type={'async'}
@@ -103,7 +105,7 @@ const ReduxTestStatements = () => {
   if (isMiddleWareOn) {
     mImports = (
       <div className='flex-container'>
-        <div className={styles.flex2}>
+        <div className={styles[`flex1${theme}`]}>
           <SearchInput
             label={'Import Middleware From'}
             type={null}
@@ -122,7 +124,7 @@ const ReduxTestStatements = () => {
   if (isReducerOn) {
     reducerImports = (
       <div className='flex-container'>
-        <div className={styles.flex1}>
+        <div className={styles[`flex1${theme}`]}>
             <SearchInput
             label={'Import Reducer From'}
             type={null}
@@ -135,7 +137,7 @@ const ReduxTestStatements = () => {
             filePathMap={filePathMap}
           />
         </div>
-        <div className={styles.flex1}>
+        <div className={styles[`flex1${theme}`]}>
         {!isActionCreatorOn && !isAsyncOn ? (
           <SearchInput
             label={'Import Action Types From'}

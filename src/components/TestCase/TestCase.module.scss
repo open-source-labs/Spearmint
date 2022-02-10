@@ -16,8 +16,64 @@ div {
   z-index: 9999;
 }
 
-#testCaseHeader {
+#testCaseHeaderlight {
   margin: 15px 25px 15px 15px;
+
+  max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  button {
+    font-size: 0.75rem;
+    color: black;
+    border-color: black;
+  }
+
+  --input-color: black;
+
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
+}
+
+#testCaseHeaderdark {
+  margin: 15px 25px 15px 15px;
+
+  max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  --input-color: white;
+
+  button {
+    font-size: 0.75rem;
+    color: white;
+    border-color: white;
+  }
+
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
 }
 
 #testMockSectionlight {
@@ -28,8 +84,6 @@ div {
   margin-bottom: 50px;
   --input-color: white;
 }
-
-
 
 #paintTimingBtn {
   padding: 10px;
@@ -140,11 +194,55 @@ div {
   }
 }
 
-.flex1{
-  width: 40%;
+.flex-container {
+  display: flex;
+  margin-bottom: 5px;
 }
-.flex2{
+
+.flex1light{
   width: 40%;
+  display: flex;
+  margin: 5px 0px 5px 15px;
+  --input-color: black;
+
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
+
+  div {
+    flex: 1;
+  }
+}
+
+.flex1dark{
+  width: 40%;
+  display: flex;
+  margin: 5px 0px 5px 15px;
+  --input-color: white;
+
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
+
+  div {
+    flex: 1;
+  }
 }
 
 .header {

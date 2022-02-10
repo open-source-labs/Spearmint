@@ -16,6 +16,9 @@ import {
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { ReduxStatements } from '../../utils/reduxTypes';
+import { Button, TextField } from '@material-ui/core';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import InputTextField from '../InputTextField';
 
 const ReduxTestCase = () => {
   interface Ref {
@@ -26,7 +29,7 @@ const ReduxTestCase = () => {
     ReduxTestCaseContext
   );
 
-
+  const [{theme}] = useContext(GlobalContext);
 
   const handleUpdateReduxTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));
@@ -76,27 +79,28 @@ const ReduxTestCase = () => {
         <ReduxTestMenu />
       </div>
       <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Describe Block</label>
-          <input
-
+        <section id={styles[`testCaseHeader${theme}`]}>
+          <InputTextField
             type='text'
             id={styles.testStatement}
             value={reduxTestStatement}
             onChange={handleUpdateReduxTestStatement}
+            variant="outlined"
+            label="Describe Block"
+            size='medium'
           />
-          <button data-testid='reducerButton' onClick={handleAddReducer}>
+          <Button data-testid='reducerButton' onClick={handleAddReducer} variant="outlined">
             Reducer
-          </button>
-          <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
+          </Button>
+          <Button data-testid='actionCreatorButton' onClick={handleAddActionCreator} variant="outlined">
             Action Creator
-          </button>
-          <button data-testid='asyncButton' onClick={handleAddAsync}>
+          </Button>
+          <Button data-testid='asyncButton' onClick={handleAddAsync} variant="outlined">
             Async Action Creator
-          </button>
-          <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
+          </Button>
+          <Button data-testid='middlewareButton' onClick={handleAddMiddleware} variant="outlined">
             Middleware
-          </button>
+          </Button>
         </section>
       </div>
 
