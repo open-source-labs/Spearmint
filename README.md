@@ -92,16 +92,19 @@ Users can now test their application for vulnerabilities including: SQL Injectio
 ### Signup + login 
 ![](/public/demos/signup-login.gif)
 
-### Snyk auth + dependency test
+### Github Oauth login
+
+
+### Vue Test
 ![](/public/demos/snyk-auth-testdep.gif)
 
-### Snyk fix dependencies
+### Dark Mode + Upgraded UI/UX
 ![](/public/demos/snyk-fixdep.gif)
 
-### Generate endpoint test
+### Save Test Functionality
 ![](/public/demos/snyk-auth-testdep.gif)
 
-### Run a specific test 
+### Run a security test 
 ![](/public/demos/snyk-auth-testdep.gif)
 
 <br>
@@ -157,6 +160,7 @@ Users can now test their application for vulnerabilities including: SQL Injectio
 # If You Want To Contribute: 
 The following is a list of features + improvements for future open-source developers that the Spearmint team has either started or would like to see implemented. Or, if you have additional new ideas, feel free to implement those as well! 
 - GraphQL test generation 
-- Array iterated testing in React testing(findAll, queryAll, etc.)
+- Containerization with Docker
+- Exporting test files in TypeScript
 - Additional security testing functionality 
 - Dry refactoring of codebase
