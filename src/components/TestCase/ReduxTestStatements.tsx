@@ -33,6 +33,7 @@ const ReduxTestStatements = () => {
   if (isActionCreatorOn) {
     aCImports = (
       <div className='flex-container'>
+        {/* <div className={styles.searchInput}> */}
         <SearchInput
           label={'Import Action Types From'}
           type={'action-creator'}
