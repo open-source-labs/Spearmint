@@ -2,10 +2,44 @@
 @import '../../assets/stylesheets/fonts.scss';
 @import '../../pages/LeftPanel/LeftPanel.module.scss';
 
-#modal {
+#endpointmodallight {
   @include box-styling;
   font-family: $raleway;
   letter-spacing: 0.5px;
+  background-color: $light-gray2;
+  --text-color: black;
+  --assertion-color: #24A19C;
+  --hover-color: #808080;
+}
+
+#endpointmodaldark {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+  background-color: $chromegray-less-light;
+  color: white;
+  --text-color: white;
+  --assertion-color: white;
+  --hover-color: #8f54a0;
+}
+
+#addheadermodallight {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+  background-color: $light-gray2;
+  --text-color: black;
+  --assertion-color: #24A19C;
+}
+
+#addheadermodaldark {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+  background-color: $chromegray-lighter;
+  color: white;
+  --text-color: white;
+  --assertion-color: white;
 }
 
 #close {
@@ -17,6 +51,7 @@
   justify-content: flex-start;
   display: flex;
   align-items: center;
+  color: var(--text-color);
   img {
     width: 20px;
     height: 20px;
@@ -48,6 +83,12 @@
   align-items: center;
   margin-bottom: 15px;
   justify-content: space-between;
+  color: var(--text-color);
+}
+
+#headerLabel {
+  background-color: var(--text-color);
+  color: var(--text-color);
 }
 
 #groupFlexboxAssertion {
@@ -179,10 +220,11 @@ hr {
   font-family: $oxygen;
   text-align: center;
   transition: 150ms;
-  color: $mint;
+  color: var(--assertion-color);
 
   &:hover {
     font-size: 1.05rem;
+    background-color: var(--hover-color);
   }
   i {
     margin-right: 0.5rem;

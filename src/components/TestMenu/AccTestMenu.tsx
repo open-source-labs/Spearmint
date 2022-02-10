@@ -16,6 +16,7 @@ import {
 } from '../../context/actions/globalActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
 
@@ -40,10 +41,6 @@ const AccTestMenu = () => {
     dispatchToGlobal(setValidCode(true));
   }, []);
 
-  // handle change to add a Describe Block
-  const handleAddDescribeBlock = () => {
-    dispatchToAccTestCase(addDescribeBlock());
-  };
 
   // handle change to open accessibility URL docs on right panel
   const openDocs = () => {
@@ -89,50 +86,34 @@ const AccTestMenu = () => {
   if (!file && exportBool) {dispatchToGlobal(updateFile(generateTest(accTestCase)))};
  
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button id={styles.newTestBtn} autoFocus onClick={openModal}>New Test +</button>
-          <button onClick={fileHandle}>Preview</button>
-          <button id={styles.example} onClick={openScriptModal} >
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType="acc" />
-          <GetTests testType="acc" /> */}
-          <Modal
-            title={title}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchToMockData={null}
-            dispatchTestCase={dispatchToAccTestCase}
-            createTest={createNewTest}
-            testType={accTestCase.testType}
-            puppeteerUrl={accTestCase.puppeteerUrl}
-          />
-          {/* Just send user to docs on button click */}
-        </div>
-
-        <div
-          id={styles.right}
-          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-        >
-          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-            +Describe Block
-          </button>
-          <button id={styles.rightBtn} onClick={saveTest}>
-            Save Test
-          </button>
-        </div>
-        <ExportFileModal
-          isExportModalOpen={isExportModalOpen}
-          setIsExportModalOpen={setIsExportModalOpen}
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={saveTest}
+        openDocs={openDocs}
+      />
+      <Modal
+        title={title}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchToMockData={null}
+        dispatchTestCase={dispatchToAccTestCase}
+        createTest={createNewTest}
+        testType={accTestCase.testType}
+        puppeteerUrl={accTestCase.puppeteerUrl}
+      />
+      <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
         />
-      </div>
-    </div >
-  );
+    
+           {/* <UploadTest testType="acc" />
+         <GetTests testType="acc" /> */}
+   
+    </>
+    );
 }
 
 export default AccTestMenu;

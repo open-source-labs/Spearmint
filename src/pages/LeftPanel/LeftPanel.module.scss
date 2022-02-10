@@ -2,42 +2,34 @@
 @import '../../assets/stylesheets/fonts.scss';
 @import '../../assets/stylesheets/colors.scss';
 
-#leftPanel {
-  grid-area: leftPanel;
-  grid-column-start: 2;
-  height: 100vh;
-  padding-bottom: 20px;
-  padding-top: 4px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+#leftPanellight {
+  flex: 1 1 60%;
+  height: 100%;
+  background-color: white;
   font-family: $raleway;
   justify-content: space-evenly;
-  min-width: 600px; // changed this to make dev easier w/ dev tools open
+  min-width: 500px; // changed this to make dev easier w/ dev tools open
   overflow: auto;
-  border-right: 0.5px dotted $mint;
+  border-radius: 5px;
+  padding: 8px 14px;
+  --choose-test-color: #{$salmon};
+}
 
-  button {
-    text-decoration: none;
-    width: 20%;
-    height: 10px;
-    font-size: 13px;
-  }
-
-  input {
-    font-family: $raleway;
-    font-size: 12px;
-    padding: 4px;
-  }
-
-  h3 {
-    color: $mint;
-    font-size: 14px;
-    padding: 0.3em 0.5em;
-  }
+#leftPaneldark {
+  flex: 1 1 60%;
+  height: 100%;
+  background-color: $chromegray;
+  font-family: $raleway;
+  justify-content: space-evenly;
+  min-width: 500px; // changed this to make dev easier w/ dev tools open
+  overflow: auto;
+  border-radius: 5px;
+  padding: 8px 14px;
+  --choose-test-color: #{$mint};
 }
 
 @mixin box-styling {
-  background-color: white;
+  background-color: black;
   padding: 10px 10px 22px 15px;
   margin: 10px 18px 0 8px;
   border: 1px solid transparent;

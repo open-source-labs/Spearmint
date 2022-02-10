@@ -1,145 +1,222 @@
 @import '../../assets/stylesheets/fonts.scss';
 @import '../../assets/stylesheets/colors.scss';
 
-#upperPart {
+#projectLoaderlight{
+  position: relative;
   width: 100%;
-  height: 50vh;
-  background-color: #038181;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  --text-color: black;
+  --bg-color-upper : #{$mint};
+  --bg-color-lower : #{$eggshell};
+  --button-text: #{$eggshell};
+  --button-color-lighter: #{$lighter-mint};
+  --input-color: black;
+}
+
+#projectLoaderdark{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  --text-color: #{$eggshell};
+  --bg-color-upper : #{$darkslategrey};
+  --bg-color-lower : #{$chromegray};
+  --button-text: #{$lighttext};
+  --button-color-lighter: #{$lighter-mint};
+  --input-color: #{$eggshell};
+}
+
+#upperPart {
+  flex: 0 0 50vh;
+  padding: 5vh 0;
+  background-color: var(--bg-color-upper);
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 24px;
 }
 
 #title {
   font-size: 4rem;
   text-align: center;
-  vertical-align: bottom;
   font-family: 'comfortaa';
-  color: #fff;
-  padding-top: 30px;
-  margin-top: 30px;
-  flex: 1;
-}
-
-#purpose {
-  font-size: 1rem;
-  text-align: center;
-  font-family: 'comfortaa';
-  color: #fff;
-  flex: 1;
+  color: $eggshell;
 }
 
 #leaf {
   width: 48px;
   height: 48px;
-  margin-bottom: 38px;
-  margin-left: 5px;
-  color: #fff;
+  fill: $eggshell;
 }
+
+#slogan {
+  font-size: 1rem;
+  text-align: center;
+  font-family: 'comfortaa';
+  color: $eggshell;
+}
+
+////////////////////////////////////////////////////////////
 
 #lowerPart {
   width: 100%;
   height: 50vh;
-  background-color: $light-gray3;
-}
-
-#subText {
-  font-size: 1.2rem;
-  text-align: center;
-  font-family: $oxygen;
-  font-weight: 300;
-  letter-spacing: 1px;
-  color: $mint;
-  padding: 20px;
-}
-
-#appBox {
+  background-color: var(--bg-color-lower);
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  height: 25vh;
+  gap: 5px;
 }
 
 .contentBox {
-  margin: 100px 80px;
-}
-
-#url {
-  margin-top: 10px;
-  padding-left: 1rem;
-  font-size: 12px;
-  width: 250px;
-  height: 25px;
-  color: rgb(128, 128, 128);
-}
-
-#openBtn {
-  margin-top: 10px;
-  padding-left: 1rem;
-  font-size: 12px;
-  text-align: left;
-  width: 250px;
-  color: $dark-gray;
-  outline: none;
-  border: 0.5px solid $light-gray;
-  box-shadow: none;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-.number {
-  font-weight: bold;
-  letter-spacing: 1.5px;
-  font-family: $oxygen;
-  color: $mint;
-}
-
-.text {
-  margin-left: 5px;
-  font-weight: 300;
-  font-family: $oxygen;
-  letter-spacing: 1px;
-}
-
-#helpBtn {
-  color: white;
-  background-color: $mint;
-  margin: 15px 4px 4px 4px;
-  height: 40px;
-  width: 110px;
-  opacity: 0.8;
-  font-family: $oxygen;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 0.5px $light-gray solid;
-}
-
-#helpBtn:hover {
-  background-color: white;
-  color: $mint;
-}
-#helpBtn:focus {
-  outline: 1px solid darkblue;
-}
-
-#bottomDiv {
   display: flex;
-  height: 25vh;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 20px;
+  max-width: 225px;
 }
 
-.gitLogin {
-  border: none;
-  background-color: transparent;
-  font-size: 14px;
+#loginForm{
+  flex: 0 1;
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  max-width: 225px;
+
+  input {
+    color: var(--input-color);
+  }
+
+  label {
+    color: var(--input-color);
+  }
 }
 
-#gitButton {
-  margin-top: 13px;
-  padding-left: 10px;
+#buttonBox{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  
 }
 
 #loginBtn {
-  font-size: 13px;
+  width: 100%;
+  font-size: 0.75rem;
+  background-color: $mint;
+  color: $eggshell;
+}
+
+#signInBtn {
+  width: 100%;
+  font-size: 0.75rem;
+  background-color: $lighter-mint;
+  color: $eggshell;
+}
+
+#altButtonsBox{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+#guestBtn {
+  width: 100%;
+  background-color: $salmon;
+  color: $eggshell;
+
+  span {
+    width: 100%;
+  }
+}
+
+#gitBtn {
+  width: 100%;
+  background-color: $navy;
+  color: $eggshell;
+
+  span {
+    width: 100%;
+  }
+}
+
+/////////////////////////////////////////////////////////
+
+#welcomeText {
+  font-family: 'comfortaa';
+  font-size: 1.2rem;
+  color: var(--text-color)
+}
+
+#userText{
+  color: $salmon;
+}
+
+#openFolderSpan{
+  font-family: 'comfortaa';
+  font-size: 1rem;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@keyframes flash {
+  0% {
+    fill: $eggshell;
+  }
+  25% {
+    fill: $salmon;
+  }
+  50% {
+    fill: $navy;
+  }
+  75% {
+    fill: $salmon;
+  }
+  100% {
+    fill: $eggshell;
+  }
+}
+
+/* Credit to Dan Wilson for motion-path animation
+
+https://codepen.io/danwilson/pen/rMMYLp
+
+*/
+
+.dancingLeaf  {
+  offset-distance: 0;
+  display: inline-block; 
+  text-align: center;
+  offset-path: path('M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z');
+  animation: pathy 3200ms infinite linear;
+  position: relative;
+  left: -72px;
+  top: -24px;
+}
+
+.leafFill {
+  animation: flash 5s ease-in-out infinite;
+}
+
+@keyframes pathy {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+#container {
+  width: 100px;
+  height: 100px;
 }

@@ -8,6 +8,7 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
+  addDescribeBlock
 } from '../../context/actions/reactTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -21,6 +22,7 @@ import {
   reactTestCaseState,
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
+import { Button } from '@material-ui/core';
 
 const ReactTestCase = () => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
@@ -30,7 +32,7 @@ const ReactTestCase = () => {
 
   const { describeBlocks, itStatements, statements } = reactTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [{ filePathMap }] = useContext(GlobalContext);
+  const [{ filePathMap, theme }] = useContext(GlobalContext);
 
   const handleAddMockData = () => {
     dispatchToMockData(createMockData());
@@ -71,28 +73,28 @@ const ReactTestCase = () => {
     dispatchToReactTestCase(func(reorderedStatements, result.type));
   };
 
+  const handleAddDescribeBlock = (e) => {
+    dispatchToReactTestCase(addDescribeBlock());
+  };
+
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
-      <div id={styles.ReactTestCase}>
-        <div id='head'>
-          <ReactTestMenu />
-        </div>
-
+      <div id={styles[`ReactTestCase${theme}`]}>
+        <ReactTestMenu />
         <div className={styles.header}>
-          <div className={styles.renderComponent}>
-            <span className={styles.renderLabel}>Enter Component Name:</span>
+          <div className={styles.searchInput}>
             <SearchInput
               reactTestCase
               dispatch={dispatchToReactTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
               options={Object.keys(filePathMap)}
+              label='Search Component'
             />
           </div>
-          <button type='button' className={styles.mockBtn} onClick={handleAddMockData}>
-            <i className={cn(styles.addIcon, 'fas fa-plus')} />
-            Mock Data
-          </button>
+          <Button variant="outlined" onClick={handleAddMockData} size='medium'>
+            Add Mock Data
+          </Button>
         </div>
         
         {mockData
@@ -111,25 +113,33 @@ const ReactTestCase = () => {
               </section>
             )
           : null}
-
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='droppableReactDescribe' type='describe'>
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                <DecribeRenderer
-                  dispatcher={dispatchToReactTestCase}
-                  describeBlocks={describeBlocks}
-                  itStatements={itStatements}
-                  statements={statements}
-                  handleChangeDescribeText={handleChangeDescribeText}
-                  handleChangeItStatementText={handleChangeItStatementText}
-                  type='react'
-                />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <div id={styles.describeContainer}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId='droppableReactDescribe' type='describe'>
+              {(provided) => (
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <DecribeRenderer
+                    dispatcher={dispatchToReactTestCase}
+                    describeBlocks={describeBlocks}
+                    itStatements={itStatements}
+                    statements={statements}
+                    handleChangeDescribeText={handleChangeDescribeText}
+                    handleChangeItStatementText={handleChangeItStatementText}
+                    type='react'
+                    theme={theme}
+                  />
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          
+        </div>
+        <div id={styles.addDescribeButton}>
+          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+            Add Describe Block
+          </Button>
+        </div>
       </div>
     </ReactTestCaseContext.Provider>
   );

@@ -22,7 +22,9 @@ import {
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
+import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
+import { Button } from '@material-ui/core';
 const { ipcRenderer } = require('electron')
 
 // imports were declared in previous iterations, but were never used
@@ -32,8 +34,7 @@ const { ipcRenderer } = require('electron')
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
   const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
-
-  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -47,10 +48,6 @@ const EndpointTestMenu = () => {
     //   ? dispatchToGlobal(setValidCode(true))
     dispatchToGlobal(setValidCode(false));
   }, []);
-
-  const handleAddEndpoint = () => {
-    dispatchToEndpointTestCase(addEndpoint());
-  };
 
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(endpointUrl));
@@ -110,48 +107,40 @@ const EndpointTestMenu = () => {
 
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button onClick={openModal} autoFocus >New Test +</button>
-          <button id={styles.preview} onClick={fileHandle}>
-            Preview
-          </button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={saveTest}
+        openDocs={openDocs}
+      />
+      <Modal
+        // passing methods down as props to be used when TestModal is opened
+        title={title}
+        dispatchToMockData={null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
+        createTest={title === 'New Test' ? createNewEndpointTest : null}
+      />
+      <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+      />
           {/* <UploadTest testType="endpoint test" />
           <GetTests testType="endpoint test" /> */}
-          <Modal
-            // passing methods down as props to be used when TestModal is opened
-            title={title}
-            dispatchToMockData={null}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
-            createTest={title === 'New Test' ? createNewEndpointTest : null}
-          />
-        </div>
-        <div id={styles.right}>
-          <button data-testid='endPointButton' onClick={handleAddEndpoint}>
-            Endpoint
-          </button>
-          <button data-testid='endPointButton' onClick={handleClickAddDatabase}>
+
+        <div id={styles[`testMenu${theme}`]}>
+          <Button 
+            variant='outlined'
+            data-testid='endPointButton' 
+            size='medium'
+            onClick={handleClickAddDatabase}>
             Configure Database
-          </button>
-          <button id={styles.rightBtn} onClick={saveTest}>
-            Save Test
-          </button>
+          </Button>
         </div>
-        <ExportFileModal
-          isExportModalOpen={isExportModalOpen}
-          setIsExportModalOpen={setIsExportModalOpen}
-        />
-      </div>
-    </div>
+    </>
   );
 };
 

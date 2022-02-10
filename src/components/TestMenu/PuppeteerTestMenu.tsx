@@ -19,6 +19,9 @@ import {
 } from '../../context/actions/puppeteerTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
+import UploadTest from '../UploadTest/UploadTest';
+import GetTests from '../GetTests/GetTests';
+import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
@@ -93,50 +96,38 @@ const PuppeteerTestMenu = () => {
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button type='button' autoFocus data-testid='puppeteerNewTestButton' onClick={openModal}>
-            New Test +
-          </button>
-          <button onClick={fileHandle}>Preview</button>
-
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType="puppeteer" />
-          <GetTests testType="puppeteer" /> */}
-          <Modal
-            // passing methods down as props to be used when Modal is opened
-            title={title}
-            dispatchToMockData={null}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchTestCase={dispatchToPuppeteerTestCase}
-            createTest={createNewPuppeteerTest}
-          />
-        </div>
-        <div id={styles.right}>
-          <button
-            type='button'
-            data-testid='puppeteerPaintTimingButton'
-            onClick={handleAddPuppeteerPaintTiming}
-          >
-            Paint Timing
-          </button>
-          <button id={styles.rightBtn} onClick={saveTest}>
-            Save Test
-          </button>
-        </div>
-        <ExportFileModal
-          isExportModalOpen={isExportModalOpen}
-          setIsExportModalOpen={setIsExportModalOpen}
-        />
-      </div>
-    </div>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={saveTest}
+        openDocs={openDocs}
+      />
+      <Modal
+        // passing methods down as props to be used when Modal is opened
+        title={title}
+        dispatchToMockData={null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchTestCase={dispatchToPuppeteerTestCase}
+        createTest={createNewPuppeteerTest}
+      />
+      <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+      />
+    </>
+    //       {/* <UploadTest testType="puppeteer" />
+    //       <GetTests testType="puppeteer" /> */}
+ 
+    //   </div>
+    //   <div id={styles.right}>
+    //     <button id={styles.rightBtn} onClick={saveTest}>
+    //       Save Test
+    //     </button>
+    //   </div>
+    // </div>
   );
 };
 

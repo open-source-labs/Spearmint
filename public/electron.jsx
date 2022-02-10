@@ -9,10 +9,11 @@ const np = require('node-pty');
 const os = require('os');
 
 // Comment below require out if you don't want app to reload on code changes
-require('electron-reloader')(module);
+// require('electron-reloader')(module);
 
 // react developer tools for electron in dev mode
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+const { Module } = require('module');
 // global bool to determine if in dev mode or not 
 // const isDev = true; 
 //Dynamic variable to change terminal type based on os
@@ -55,7 +56,7 @@ function createWindow() {
   const ptyArgs = {
     name: 'xterm-color',
     cols: 80,
-    rows: 80,
+    rows: 24,
     cwd: process.env.HOME,
     env: process.env,
   };
@@ -71,14 +72,23 @@ function createWindow() {
   ipcMain.on('terminal.toTerm', (_event, data) => {
     ptyProcess.write(data);
   });
+
+  ipcMain.on('terminal.resize', (event, data)=> {
+    //console.log('resizing pty shell', "data: ", data, "data.cols", data.cols);
+    ptyProcess.resize(data.cols, data.rows);
+  });
+
+  mainWindow.webContents
+  .executeJavaScript('localStorage.getItem("theme");', true)
+  .then(result => {
+    mainWindow.webContents.send('theme', result ?? 'light');
+  });
 }
 
 if (os.platform() !== 'win32') {
   const fixPath = require('fix-path');
   fixPath();
 }
-
-
 
 /*
 UNIVERSAL IPC CALLS

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import './SearchInput.scss';
+import { Autocomplete } from '@material-ui/lab';
+import { TextField } from '@material-ui/core';
+import InputTextField from '../InputTextField';
 
 const SearchInput = ({
   dispatch,
@@ -37,7 +40,7 @@ const SearchInput = ({
     setShowOptions(false);
     setUserInput(e.currentTarget.innerText);
 
-    const selectedOption = e.target.type;
+    const selectedOption = e.currentTarget.innerText;
     const filePath = filePathMap[selectedOption] || '';
 
     // updateTypesFilePath and updateActionsFilePath are only not-null if used within Redux
@@ -106,23 +109,23 @@ const SearchInput = ({
   }
 
   return (
-    <div className='flex-item'>
-      <label htmlFor='typesFile'>{label}</label>
-      <div className='search-container'>
-        <div className='search'>
-          <input
-            
-            type='text'
-            className='search-box'
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            value={userInput}
-            placeholder='File Name'
-          />
-        </div>
-        {optionList}
-      </div>
-    </div>
+  <Autocomplete
+    options={options}
+    value={userInput}
+    onChange={handleClick}
+    renderInput={(params) => (
+      <InputTextField
+        {...params}
+        label={label}
+        variant="outlined"
+        size="small"
+        InputProps={{
+          ...params.InputProps,
+          type: 'search',
+        }}
+      />
+    )}
+  />
   );
 };
 

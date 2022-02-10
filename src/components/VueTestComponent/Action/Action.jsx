@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
-import styles from '../Action/Action.module.scss';
+import styles from '../../ReactTestComponent/Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/actions/vueTestCaseActions';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/reducers/mockDataReducer';
 import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
@@ -14,6 +16,7 @@ const closeIcon = require('../../../assets/images/close.png');
 const Action = ({ statement, statementId, describeId, itId }) => {
   const [{ mockData }] = useContext(MockDataContext);
   const [, dispatchToVueTestCase] = useContext(VueTestCaseContext);
+  const [{theme}] = useContext(GlobalContext)
 
   const handleChangeActionFields = (e, field) => {
     let updatedAction = { ...statement };
@@ -39,8 +42,8 @@ const Action = ({ statement, statementId, describeId, itId }) => {
   };
 
   return (
-    <div id={styles.action}>
-      <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAction} />
+    <div id={styles[`action${theme}`]}>
+      <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteAction} />
       <div id={styles.actionHeader}>
         <h3>Action</h3>
       </div>
@@ -63,12 +66,12 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='get'>get</option>
               <option value='getComponent'>getComponent</option>
             </select>
-            <span id={styles.hastooltip} role='tooltip'>
+            {/* <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
-            </span>
+            </span> */}
             <div id={styles.query}>
               <input
                 type='text'

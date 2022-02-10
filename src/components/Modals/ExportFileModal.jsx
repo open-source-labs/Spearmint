@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import Draggable from 'react-draggable';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { withStyles } from '@material-ui/core/styles';
 import {
   setFilePathMap,
   createFileTree,
@@ -9,17 +10,45 @@ import {
   highlightFile,
   toggleExportBool,
   updateFile,
+  toggleFileDirectory,
+  setFileDirectory,
+  setFolderView,
 } from '../../context/actions/globalActions';
+import { AiOutlineCloseCircle } from "react-icons/ai"
+import { FaFileExport } from "react-icons/fa"
+import { Button, TextField, InputAdornment } from '@material-ui/core';
 
 import styles from './Modal.module.scss';
 
 const { ipcRenderer } = require('electron');
 
+const CssTextField = withStyles({
+  root: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: '#fff',
+      },
+      '&:hover fieldset': {
+        borderColor: '#fff',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: '#8f54a0',
+      },
+      '& label.Mui-focused': {
+        color: '#8f54a0',
+      },
+      '& .MuiInput-underline:after': {
+        borderBottomColor: '#8f54a0',
+      },
+    },
+  },
+})(TextField);
+
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
-  const [fileName, setFileName] = useState('');
+  const [fileName, setFileName ] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
-  const [{ projectFilePath, file, validCode }, dispatchToGlobal] = useContext(GlobalContext);
-  
+  const [{ projectFilePath, file, validCode, theme }, dispatchToGlobal] = useContext(GlobalContext);
+
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
     setInvalidFileName(false);
@@ -47,6 +76,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     exportTestFile();
     closeExportModal();
     dispatchToGlobal(updateFile(''));
+    
   };
 
   // /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
@@ -67,10 +97,11 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const displayTestFile = (testFolderFilePath) => {
     const filePath = `${testFolderFilePath}/${fileName}.test.js`;
     const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
-
     dispatchToGlobal(updateFile(fileContent));
-    dispatchToGlobal(toggleFolderView(testFolderFilePath));
+    dispatchToGlobal(setFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
+    // dispatchToGlobal(toggleFileDirectory(true));
+    dispatchToGlobal(setFileDirectory(true));
   };
 
   const filePathMap = {};
@@ -108,14 +139,8 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     return fileArray;
   };
 
-  const modalStyles = {
-    overlay: {
-      zIndex: 3,
-    },
-  };
-
   return (
-    <div>
+    <div id={styles[theme]}>
       <ReactModal
         className={styles.modal}
         isOpen={isExportModalOpen}
@@ -124,28 +149,51 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
-        style={modalStyles}
+        overlayClassName={styles[`modalOverlay${theme}`]}
       >
         <Draggable>
           <div id={styles.container}>
-            
-            <div id={styles.title}>
-              <p>Convert to Javascript Code</p>
-              <svg id={styles.close} onClick={closeExportModal}>
-                <path d='M19,3H16.3H7.7H5A2,2 0 0,0 3,5V7.7V16.4V19A2,2 0 0,0 5,21H7.7H16.4H19A2,2 0 0,0 21,19V16.3V7.7V5A2,2 0 0,0 19,3M15.6,17L12,13.4L8.4,17L7,15.6L10.6,12L7,8.4L8.4,7L12,10.6L15.6,7L17,8.4L13.4,12L17,15.6L15.6,17Z' />
-              </svg>
-            </div>
+            <AiOutlineCloseCircle
+              id={styles.escapeButton} 
+              onKeyPress={closeExportModal}
+              onClick={closeExportModal}
+            /> 
             {validCode ? (
               <div id={styles.body}>
-                <p>File Name</p>
-                <input type='text' value={fileName} onChange={handleChangeFileName} />
-                {invalidFileName && <p>A file with the name '{fileName}' already exists.</p>}
-                <button id={styles.save} onClick={closeExportModal}>
-                  Cancel
-                </button>
-                <button id={styles.save} onClick={handleClickSave}>
-                  Save
-                </button>
+                <p id={styles.text}>Export test file</p>
+                
+                <CssTextField
+                  id="text"
+                  name="text"
+                  value={fileName}
+                  onChange={handleChangeFileName}
+                  label="Filename"
+                  variant="outlined"
+                  size="small"
+                  error={invalidFileName}
+                  helperText={invalidFileName && `A file with the name ${fileName} already exists.`}
+                  InputProps={{
+                    endAdornment: <InputAdornment position="end">.test.js</InputAdornment>,
+                  }}
+                />
+                <div id={styles.exportBtns}>
+                  <Button 
+                    variant="contained" 
+                    onClick={handleClickSave}
+                    id={styles.saveBtn}
+                  >
+                    <span>Save</span>
+                    <FaFileExport size={'1.25rem'}/>
+                  </Button>
+                  <Button 
+                    variant="outlined" 
+                    onClick={closeExportModal}
+                    id={styles.cancelBtn}
+                  >
+                    <span>Cancel</span>
+                    <AiOutlineCloseCircle size={'1.25rem'}/>
+                  </Button>
+                </div>
               </div>
             ) : (
               <div id={styles.body}>

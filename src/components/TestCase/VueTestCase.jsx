@@ -8,6 +8,7 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
+  addDescribeBlock
 } from '../../context/actions/vueTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -21,6 +22,7 @@ import {
   vueTestCaseState,
   vueTestCaseReducer,
 } from '../../context/reducers/vueTestCaseReducer';
+import { Button } from '@material-ui/core';
 
 const VueTestCase = () => {
   const [vueTestCase, dispatchToVueTestCase] = useReducer(
@@ -30,7 +32,7 @@ const VueTestCase = () => {
 
   const { describeBlocks, itStatements, statements } = vueTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [{ filePathMap }] = useContext(GlobalContext);
+  const [{ filePathMap, theme }] = useContext(GlobalContext);
 
   const handleAddMockData = () => {
     dispatchToMockData(createMockData());
@@ -46,6 +48,10 @@ const VueTestCase = () => {
     const text = e.target.value;
     const itId = e.target.id;
     dispatchToVueTestCase(updateItStatementText(text, itId));
+  };
+
+  const handleAddDescribeBlock = (e) => {
+    dispatchToVueTestCase(addDescribeBlock());
   };
 
   const reorder = (list, startIndex, endIndex) => {
@@ -73,26 +79,23 @@ const VueTestCase = () => {
 
   return (
     <VueTestCaseContext.Provider value={[vueTestCase, dispatchToVueTestCase]}>
-      <div id={styles.ReactTestCase}>
-        <div id='head'>
-          <VueTestMenu />
-        </div>
-
+      <div id={styles[`ReactTestCase${theme}`]}>
+        <VueTestMenu />
         <div className={styles.header}>
-          <div className={styles.renderComponent}>
-            <span className={styles.renderLabel}>Enter Component Name:</span>
+          <div className={styles.searchInput}>
             <SearchInput
               vueTestCase
               dispatch={dispatchToVueTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
               options={Object.keys(filePathMap)}
+              label="Search Component"
             />
           </div>
-          <button type='button' className={styles.mockBtn} onClick={handleAddMockData}>
-            <i className={cn(styles.addIcon, 'fas fa-plus')} />
-            Mock Data
-          </button>
+        </div>
+          {/* <Button variant="outlined" onClick={handleAddMockData} size='medium'>
+            Add Mock Data
+          </Button>
         </div>
         
         {mockData
@@ -110,7 +113,7 @@ const VueTestCase = () => {
                 })}
               </section>
             )
-          : null}
+          : null} */}
 
         <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId='droppableReactDescribe' type='describe'>
@@ -124,12 +127,18 @@ const VueTestCase = () => {
                   handleChangeDescribeText={handleChangeDescribeText}
                   handleChangeItStatementText={handleChangeItStatementText}
                   type='vue'
+                  theme={theme}
                 />
                 {provided.placeholder}
               </div>
             )}
           </Droppable>
         </DragDropContext>
+        <div id={styles.addDescribeButton}>
+          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+            Add Describe Block
+          </Button>
+        </div>
       </div>
     </VueTestCaseContext.Provider>
   );

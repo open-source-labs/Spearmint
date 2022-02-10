@@ -1,7 +1,11 @@
 /* eslint-disable linebreak-style */
 import React, { useContext, useReducer, Fragment } from 'react';
 import ReactModal from 'react-modal';
-import styles from '../../components/Modals/Modal.module.scss';
+let styles = {};
+import modalStyles from '../../components/Modals/Modal.module.scss';
+import testStyles from './TestFile.module.scss'
+Object.assign(styles, modalStyles, testStyles)
+// import styles from '../../components/Modals/Modal.module.scss';
 
 import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
@@ -66,7 +70,15 @@ import {
 import VueTestCase from '../../components/TestCase/VueTestCase';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { AiOutlineCloseCircle } from "react-icons/ai"
+import { FaUniversalAccess, FaReact } from "react-icons/fa"
+import { IoServer, IoLogoVue } from "react-icons/io5"
+import { GiHook } from "react-icons/gi"
+import { SiPuppeteer, SiRedux } from "react-icons/si"
+import { MdSecurity } from "react-icons/md"
 
+import { Button } from '@material-ui/core';
+import TestCard from './TestCard';
 import {
     updateFile,
     setFilePath,
@@ -81,7 +93,7 @@ import { AiFillCloseSquare } from "react-icons/ai"
 
 
 const TestFile = () => {
-  let [{ testCase, isTestModalOpen, projectFilePath, file, exportBool }, dispatchToGlobal] = useContext(GlobalContext);
+  let [{ testCase, isTestModalOpen, projectFilePath, file, exportBool, theme }, dispatchToGlobal] = useContext(GlobalContext);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
   const [endpointTestCase, dispatchToEndpointTestCase] = useReducer(
@@ -119,11 +131,62 @@ const TestFile = () => {
     closeTestModal();
   };
 
+  const chooseTest = (test) => {
+    dispatchToGlobal(setTestCase(test));
+  };
+
   const modalStyles = {
     overlay: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       zIndex: 3,
     },
   };
+
+  const testMappings = {
+    'react': [<FaReact size={'1.25rem'}/>, 'React', 
+              'Test React with rendering, actions, and assertions found in the React Testing Library'],
+    'hooks': [<GiHook size={'1.25rem'}/>, 'Hooks', 
+              'Make assertions to test your React hooks with available hook parameters and callback functions'],
+    'puppeteer': [<SiPuppeteer size={'1.25rem'}/>, 'Puppeteer',
+                  'Use the puppeteer node library to conduct headless browser testing on the Chrome Browser'],
+    'redux': [<SiRedux size={'1.25rem'}/>, 'Redux', 
+              'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
+    'vue': [<IoLogoVue size={'1.25rem'}/>, 'Vue',
+            'Newly added vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
+    'endpoint': [<IoServer size={'1.25rem'}/>, 'Endpoint',
+                  'Make sure your HTTP routes are getting the correct response by testing your server with Supertest'],
+    'acc': [<FaUniversalAccess size={'1.25rem'}/>, 'Accessibility',
+            'Maintain a good accessibility score by testing the various attributes of your website'],
+    'sec': [<MdSecurity size={'1.25rem'}/>, 'Security',
+            'Evaluate security vulnerabilities using Synk'],
+  }
+
+  const allButtons = (Object.keys(testMappings)).map((elem, idx) => {
+    return (
+      <Button 
+        variant="outlined" 
+        onClick={() => handleToggle(elem)}
+        key={idx}
+      >
+        <span>{testMappings[elem][1]}</span>
+        {testMappings[elem][0]}
+      </Button>
+    );
+  })
+
+  const allCards = (Object.keys(testMappings)).map((elem, idx) => {
+    return (
+      <TestCard 
+        icon={testMappings[elem][0]}
+        type={testMappings[elem][1]}
+        description={testMappings[elem][2]}
+        onClick={() => chooseTest(elem)}
+        key={idx}
+      />
+    );
+  })
 
   return (
     // landing modal which displays button choices
@@ -136,50 +199,22 @@ const TestFile = () => {
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         ariaHideApp={false}
-        style={modalStyles}
+        overlayClassName={styles[`modalOverlay${theme}`]}
       >
         <Draggable>
           <div id={styles.container}>
-
-            <div id={styles.title}>
-              <p style={{ fontSize: 15 }}>Test</p>
-              <IconContext.Provider value={{size: '1.8em'}}>
-                <AiFillCloseSquare
-                  tabIndex={0}
-                  id={styles.escapeButton} 
-                  onKeyPress={closeTestModal}
-                  onClick={closeTestModal}
-                />  
-              </IconContext.Provider>
-            </div>
+            
+            <AiOutlineCloseCircle
+              tabIndex={0}
+              id={styles.escapeButton} 
+              onKeyPress={closeTestModal}
+              onClick={closeTestModal}
+            />  
             <div id={styles.body}>
               <p id={styles.text}>What would you like to test?</p>
-              <span id={styles.newTestButtons}>
-                <button id={styles.save} autoFocus onClick={() => handleToggle('acc')}>
-                  Accessibility
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('endpoint')}>
-                  Endpoint
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('hooks')}>
-                  Hooks
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('puppeteer')}>
-                  Puppeteer
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('react')}>
-                  React
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('redux')}>
-                  Redux
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('sec')}>
-                  Security
-                </button>
-                <button id={styles.save} onClick={() => handleToggle('vue')}>
-                  Vue
-                </button>
-              </span>
+              <div id={styles.newTestButtons}>
+              {allButtons}
+              </div>
             </div>
           </div>
         </Draggable>
@@ -194,11 +229,9 @@ const TestFile = () => {
       )}
 
       {testCase === 'react' && (
-        <section>
-          <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-            <ReactTestCase />
-          </MockDataContext.Provider>
-        </section>
+        <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+          <ReactTestCase />
+        </MockDataContext.Provider>
       )}
 
       {testCase === 'endpoint' && (
@@ -242,7 +275,6 @@ const TestFile = () => {
         </section>
       )}
       {
-        //incomplete functionality: this is wired to go to a react test for now
         testCase === 'vue' && (
           <section>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
@@ -253,22 +285,14 @@ const TestFile = () => {
       }
 
       {testCase === '' && (
-        <Fragment>
-          <div id={styles.left}>
-            <br></br>
-            <br></br>
-            <h2>Click on New Test below to get started!</h2>
-            <br></br>
-          </div>
-          
-          <div id={styles.testMenu}>
-            <div id={styles.left}>
-              <button id={styles.newTestBtn} onClick={closeTestModal}>
-                New Test +
-              </button>
+          <Fragment>
+            <div id={styles.testFileContainer}>
+              <p id={styles.chooseTest}>CHOOSE A TEST</p>
+              <div id={styles.testCardsContainer}>
+                {allCards}
+              </div>
             </div>
-          </div>
-        </Fragment>
+          </Fragment>
       )}
     </div>
   );

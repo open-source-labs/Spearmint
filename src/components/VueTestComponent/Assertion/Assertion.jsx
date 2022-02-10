@@ -3,22 +3,23 @@
  * same layout as action.jsx
  *  - but for only the last assertion card?
  */
-// make dragable
-
 import React, { useContext } from 'react';
-import styles from './Assertion.module.scss';
+import styles from '../../ReactTestComponent/Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/actions/vueTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
   const [, dispatchToVueTestCase] = useContext(VueTestCaseContext);
+  const [{theme}] = useContext(GlobalContext)
 
   const handleChangeAssertionFields = (e, field) => {
     let updatedAssertion = { ...statement };
@@ -47,8 +48,8 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
   };
 
   return (
-    <section id={styles.assertion} data-testid='assertionCard'>
-      <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDelete} />
+    <section id={styles[`assertion${theme}`]} data-testid='assertionCard'>
+      <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDelete} />
       <div id={styles.assertionHeader}>
         <h3>Assertion</h3>
       </div>
@@ -79,11 +80,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
                 placeholder='Query'
               />
             </div>
-            <span id={styles.hastooltip} role='tooltip'>
+            {/* <span id={styles.hastooltip} role='tooltip'>
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
-            </span>
+            </span> */}
             <select
               id='querySelector'
               value={statement.querySelector}
@@ -95,12 +96,12 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <option value='html'>html</option>
               <option value='text'>text</option>
             </select>
-            <span id={styles.hastooltip} role='tooltip'>
+            {/* <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.querySelector} />
               </span>
-            </span>
+            </span> */}
           </div>
         </div>
         
@@ -130,12 +131,12 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
                 type='vue'
               />
 
-              <span id={styles.hastooltip} role='tooltip'>
+              {/* <span id={styles.hastooltip} role='tooltip'>
                 <img src={questionIcon} alt='help' />
                 <span id={styles.tooltip}>
                   <ToolTipMatcher toolTipType={statement.matcherType} />
                 </span>
-              </span>
+              </span> */}
             </div>
           </div>
           {needsMatcherValue(statement.matcherType) && (

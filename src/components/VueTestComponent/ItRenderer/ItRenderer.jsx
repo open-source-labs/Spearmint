@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import VueTestStatements from '../../TestCase/VueTestStatements';
-import CustomInput from '../CustomInput/CustomInput';
 import {
   addRender,
   addAction,
@@ -10,7 +9,9 @@ import {
   deleteItStatement,
 } from '../../../context/actions/vueTestCaseActions';
 import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
-import styles from './ItRenderer.module.scss';
+import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
+import { Button, TextField } from '@material-ui/core';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const ItRenderer = ({
   type,
@@ -18,31 +19,32 @@ const ItRenderer = ({
   describeId,
   statements,
   handleChangeItStatementText,
+  theme,
 }) => {
   const [, dispatchToVueTestCase] = useContext(VueTestCaseContext);
 
   const addRenderHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToVueTestCase(addRender(describeId, itId));
   };
 
   const deleteItStatementHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToVueTestCase(deleteItStatement(describeId, itId));
   };
 
   const deleteVueItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {
-      const itId = e.target.id;
+      const itId = e.currentTarget.id;
       dispatchToVueTestCase(deleteItStatement(describeId, itId));
     }
   }
   const addActionHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToVueTestCase(addAction(describeId, itId));
   };
   const addAssertionHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToVueTestCase(addAssertion(describeId, itId));
   };
 
@@ -54,27 +56,33 @@ const ItRenderer = ({
     >
       {(provided) => (
         <div
-          id={styles.ItRenderer}
+          id={styles[`ItRenderer${theme}`]}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <i
+          <AiOutlineClose
             tabIndex={0}
+            id={id} 
             onKeyPress={deleteVueItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}
-            id={id}
             className={cn(styles.itClose, 'far fa-window-close')}
-          ></i>
-          <CustomInput
-            key={`input-${id}-${i}`}
-            id={id}
-            label={'The component should...'}
-            placeholder={'Button component renders correctly...'}
-            value={itStatements.byId[id].text}
-            handleChange={handleChangeItStatementText}
           />
-          <hr />
+          <div id={styles.itInputContainer}>
+            <TextField
+              key={`input-${id}-${i}`}
+              id={id}
+              className={styles.describeInput}
+              name='describe-label'
+              type='text'
+              placeholder="Enter unit test name..."
+              value={itStatements.byId[id].text}
+              onChange={handleChangeItStatementText}
+              fullWidth
+              variant="filled"
+              size='small'
+            />
+          </div>
           <VueTestStatements
             key={`statement-${id}-${i}`}
             statements={statements}
@@ -84,18 +92,15 @@ const ItRenderer = ({
           <div>
             {type === 'vue' && (
               <div className={styles.buttonsContainer}>
-                <button id={id} onClick={addRenderHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Mount
-                </button>
-                <button id={id} onClick={addActionHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Action
-                </button>
-                <button id={id} onClick={addAssertionHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Assertion
-                </button>
+                <Button id={id} onClick={addRenderHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Render
+                </Button>
+                <Button id={id} onClick={addActionHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Action
+                </Button>
+                <Button id={id} onClick={addAssertionHandleClick} className={styles.reactButton} variant="outlined">
+                Add Assertion
+              </Button>
               </div>
             )}
           </div>

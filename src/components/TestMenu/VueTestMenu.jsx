@@ -17,6 +17,7 @@ import {
   setTabIndex,
 } from '../../context/actions/globalActions';
 import { VueTestCaseContext } from '../../context/reducers/vueTestCaseReducer';
+import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
@@ -27,7 +28,7 @@ const { ipcRenderer } = require('electron')
 
 const VueTestMenu = () => {
   // Vue testing docs url
-  const vueUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
+  const vueUrl = 'https://next.vue-test-utils.vuejs.org/guide/';
 
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('vue');
@@ -94,47 +95,44 @@ const VueTestMenu = () => {
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(vueTestCase, mockData)));
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button onClick={openModal} autoFocus>
-            New Test +
-          </button>
-          <button onClick={fileHandle}>Preview</button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          <Modal
-            title={title}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchMockData={dispatchToMockData}
-            dispatchTestCase={dispatchToVueTestCase}
-            createTest={createNewTest}
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={saveTest}
+        openDocs={openDocs}
+      />
+      <Modal
+        title={title}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchMockData={dispatchToMockData}
+        dispatchTestCase={dispatchToVueTestCase}
+        createTest={createNewTest}
+      />
+          <ExportFileModal
+            isExportModalOpen={isExportModalOpen}
+            setIsExportModalOpen={setIsExportModalOpen}
           />
-          {/* Just send user to docs on button click */}
-        </div>
+    </>
+          
+         
 
-        <div
-          id={styles.right}
-          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-        >
-          <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-            +Describe Block
-          </button>
-          <button id={styles.rightBtn} onClick={saveTest}>
-            Save Test
-          </button>
-        </div>  
-        <ExportFileModal
-          isExportModalOpen={isExportModalOpen}
-          setIsExportModalOpen={setIsExportModalOpen}
-        />
-      </div>
-    </div>
+
+    //     <div
+    //       id={styles.right}
+    //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
+    //     >
+    //       <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
+    //         +Describe Block
+    //       </button>
+    //       <button id={styles.rightBtn} onClick={saveTest}>
+    //         Save Test
+    //       </button>
+    //     </div>  
+    //   </div>
+    // </div>
   );
 };
 

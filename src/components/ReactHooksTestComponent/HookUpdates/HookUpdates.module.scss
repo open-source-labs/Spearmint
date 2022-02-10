@@ -8,6 +8,35 @@
   letter-spacing: 0.5px;
 }
 
+#hooksmodallight {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+  background-color: $light-gray2;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  box-shadow: gray 0px 3px 8px;
+  --text-color: black;
+  --assertion-color: #24A19C;
+  --hover-color: #808080;
+  --input-color: black;
+}
+
+#hooksmodaldark {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+  background-color: $chromegray-less-light;
+  box-shadow: rgb(16 14 14) 0px 3px 8px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  color: white;
+  --text-color: white;
+  --assertion-color: white;
+  --hover-color: #8f54a0;
+  --input-color: white;
+}
+
 #close {
   float: right;
 }
@@ -78,6 +107,13 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+
+  button {
+    font-size: 0.75rem;
+    color: var(--input-color);
+    border-color: var(--input-color);
+  }
+  
 }
 
 .assertionButton {
@@ -92,9 +128,6 @@
   transition: 150ms;
   color: $mint;
 
-  &:hover {
-    font-size: 1.05rem;
-  }
   i {
     margin-right: 0.5rem;
   }

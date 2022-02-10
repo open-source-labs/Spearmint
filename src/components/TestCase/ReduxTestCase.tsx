@@ -6,12 +6,19 @@ import styles from './TestCase.module.scss';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 
 import {
+  addActionCreator,
+  addAsync,
+  addMiddleware,
+  addReducer,
   updateReduxTestStatement,
   updateStatementsOrder,
 } from '../../context/actions/reduxTestCaseActions';
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { ReduxStatements } from '../../utils/reduxTypes';
+import { Button, TextField } from '@material-ui/core';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import InputTextField from '../InputTextField';
 
 const ReduxTestCase = () => {
   interface Ref {
@@ -22,7 +29,7 @@ const ReduxTestCase = () => {
     ReduxTestCaseContext
   );
 
-
+  const [{theme}] = useContext(GlobalContext);
 
   const handleUpdateReduxTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));
@@ -50,21 +57,50 @@ const ReduxTestCase = () => {
     dispatchToReduxTestCase(updateStatementsOrder(reorderedStatements));
   };
 
+  const handleAddMiddleware = () => {
+    dispatchToReduxTestCase(addMiddleware());
+  };
+
+  const handleAddActionCreator = () => {
+    dispatchToReduxTestCase(addActionCreator());
+  };
+
+  const handleAddAsync = () => {
+    dispatchToReduxTestCase(addAsync());
+  };
+
+  const handleAddReducer = () => {
+    dispatchToReduxTestCase(addReducer());
+  };
+
   return (
     <div>
       <div id='head'>
         <ReduxTestMenu />
       </div>
       <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          <label htmlFor='test-statement'>Describe Block</label>
-          <input
-
+        <section id={styles[`testCaseHeader${theme}`]}>
+          <InputTextField
             type='text'
             id={styles.testStatement}
             value={reduxTestStatement}
             onChange={handleUpdateReduxTestStatement}
+            variant="outlined"
+            label="Describe Block"
+            size='medium'
           />
+          <Button data-testid='reducerButton' onClick={handleAddReducer} variant="outlined">
+            Reducer
+          </Button>
+          <Button data-testid='actionCreatorButton' onClick={handleAddActionCreator} variant="outlined">
+            Action Creator
+          </Button>
+          <Button data-testid='asyncButton' onClick={handleAddAsync} variant="outlined">
+            Async Action Creator
+          </Button>
+          <Button data-testid='middlewareButton' onClick={handleAddMiddleware} variant="outlined">
+            Middleware
+          </Button>
         </section>
       </div>
 

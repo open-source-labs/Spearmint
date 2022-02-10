@@ -23,6 +23,9 @@ import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
+import UploadTest from '../UploadTest/UploadTest';
+import GetTests from '../GetTests/GetTests';
+import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
 
@@ -106,62 +109,71 @@ const ReduxTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ reduxTestStatement, reduxStatements })));
 
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button onClick={openModal} autoFocus >New Test +</button>
-          <button id={styles.preview} onClick={fileHandle}>
-            Preview
-          </button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType='redux' />
-          <GetTests testType='redux' /> */}
-          <Modal
-            // passing methods down as props to be used when Modal is opened
-            title={title}
-            dispatchToMockData={null}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchTestCase={dispatchToReduxTestCase}
-            createTest={createNewReduxTest}
-          />
-          {/* Just send user to docs on button click */}
-        </div>
-        <div
-          id={styles.right}
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-          }}
-        >
-          <button data-testid='reducerButton' onClick={handleAddReducer}>
-            Reducer
-          </button>
-          <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
-            Action Creator
-          </button>
-          <button data-testid='asyncButton' onClick={handleAddAsync}>
-            Async Action Creator
-          </button>
-          <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
-            Middleware
-          </button>
-          <button id={styles.rightBtn} onClick={saveTest}>
-            Save Test
-          </button>
-        </div>
-        <ExportFileModal
-          isExportModalOpen={isExportModalOpen}
-          setIsExportModalOpen={setIsExportModalOpen}
-        />
-      </div>
-    </div>
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={saveTest}
+        openDocs={openDocs}
+      />
+      <Modal
+        // passing methods down as props to be used when Modal is opened
+        title={title}
+        dispatchToMockData={null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchTestCase={dispatchToReduxTestCase}
+        createTest={createNewReduxTest}
+      />
+      <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+      />
+    </>
+    //       {/* <UploadTest testType='redux' />
+    //       <GetTests testType='redux' /> */}
+    // <div id='test'>
+    //   <div id={styles.testMenu}>
+    //     <div id={styles.left}>
+    //       <button onClick={openModal} autoFocus >New Test +</button>
+    //       <button id={styles.preview} onClick={fileHandle}>
+    //         Preview
+    //       </button>
+    //       <button id={styles.example} onClick={openScriptModal}>
+    //         Run Test
+    //       </button>
+    //       <button id={styles.example} onClick={openDocs}>
+    //         Need Help?
+    //       </button>
+
+    //     </div>
+    //     <div
+    //       id={styles.right}
+    //       style={{
+    //         display: 'flex',
+    //         flexWrap: 'wrap',
+    //         justifyContent: 'center',
+    //       }}
+    //     >
+    //       <button data-testid='reducerButton' onClick={handleAddReducer}>
+    //         Reducer
+    //       </button>
+    //       <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
+    //         Action Creator
+    //       </button>
+    //       <button data-testid='asyncButton' onClick={handleAddAsync}>
+    //         Async Action Creator
+    //       </button>
+    //       <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
+    //         Middleware
+    //       </button>
+    //       <button id={styles.rightBtn} onClick={saveTest}>
+    //         Save Test
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 

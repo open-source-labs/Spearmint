@@ -2,10 +2,20 @@
 @import '../../../assets/stylesheets/fonts.scss';
 @import '../../../pages/LeftPanel/LeftPanel.module.scss';
 
-#modal {
+#modallight {
   @include box-styling;
   font-family: $raleway;
   letter-spacing: 0.5px;
+  background-color: $light-gray2;
+  --text-color: black;
+}
+
+#modaldark {
+  @include box-styling;
+  font-family: $raleway;
+  letter-spacing: 0.5px;
+  background-color: $chromegray-less-light;
+  --text-color: white;
 }
 
 #close {
@@ -17,6 +27,7 @@
   justify-content: flex-start;
   display: flex;
   align-items: center;
+  color: var(--text-color);
   img {
     width: 20px;
     height: 20px;
@@ -38,6 +49,7 @@
   align-items: center;
   margin-bottom: 15px;
   justify-content: space-between;
+  color: var(--text-color);
 }
 
 #inputFlexBox {

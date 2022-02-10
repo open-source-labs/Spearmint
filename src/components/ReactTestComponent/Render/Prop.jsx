@@ -9,7 +9,7 @@ import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
-const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase }) => {
+const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase, theme }) => {
   const handleClickDeleteProp = (e) => {
     e.stopPropagation();
     dispatchToTestCase(deleteProp(statementId, propId));
@@ -26,7 +26,7 @@ const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase }) =
   };
 
   return (
-    <div id={styles.renderPropsFlexBox}>
+    <div id={styles[`renderPropsFlexBox${theme}`]}>
       <input type='text' id='propKey' value={propKey} onChange={handleChangeUpdatePropKey} />
       <input
         type='text'

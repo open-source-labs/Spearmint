@@ -18,6 +18,8 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 const { ipcRenderer } = require('electron');
 const os = require('os');
 const folderOpenIcon = require('../../assets/images/folder-open.png');
+import { FaFolderOpen } from 'react-icons/fa'
+import { Button } from '@material-ui/core';
 
 // Change execute command based on os platform
 let execute = '\n';
@@ -46,7 +48,7 @@ const OpenFolder = () => {
       dispatchToGlobal(loadProject('load'));
       dispatchToGlobal(setTestCase(''));
       if (!isTestModalOpen) dispatchToGlobal(toggleModal());
-      if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
+      //if (!isFileDirectoryOpen) dispatchToGlobal(toggleFileDirectory());
       // Re-direct terminal directory to user selected directory
       ipcRenderer.send('terminal.toTerm', `cd "${directoryPath}"${execute}`);
     }
@@ -57,7 +59,6 @@ const OpenFolder = () => {
     const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx', 'vue'];
     const fileType = file.fileName.split('.')[1];
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
-      // const componentName = file.fileName.split('.')[0];
       filePathMap[file.fileName] = file.filePath;
     }
   };
@@ -88,25 +89,32 @@ const OpenFolder = () => {
   };
 
   return (
-    // <h1> hello world </h1>
-    <span>
+    <>
       {!isProjectLoaded ? (
-        <button id={styles.openBtn} onClick={handleOpenFolder}>
-          Open Folder
-        </button>
+        <Button 
+          variant="outlined" 
+          id={styles.openBtn} 
+          onClick={handleOpenFolder}
+        >
+          <span>Open Folder</span>
+          <FaFolderOpen size={'1.25rem'}/>
+        </Button>
       ) : (
-        <button className={styles.navBtn}>
-          <img
-            src={folderOpenIcon}
-            className={styles.icons}
-            alt='folderOpen'
-            title='open a new folder'
-            onClick={handleOpenFolder}
-          />
-          <span className={styles.tooltip}>Open Folder</span>
-        </button>
+        <span onClick={handleOpenFolder} title='Open new folder'>
+          <FaFolderOpen size={'1.5rem'}/>
+        </span>
+        // <button className={styles.navBtn}>
+        //   <img
+        //     src={folderOpenIcon}
+        //     className={styles.icons}
+        //     alt='folderOpen'
+        //     title='open a new folder'
+        //     onClick={handleOpenFolder}
+        //   />
+        //   <span className={styles.tooltip}>Open Folder</span>
+        // </button>
       )}
-    </span>
+    </>
   );
 };
 

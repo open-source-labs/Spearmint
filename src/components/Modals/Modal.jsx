@@ -16,9 +16,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import Draggable from 'react-draggable';
-
-import { IconContext } from "react-icons";
-import { AiFillCloseSquare } from "react-icons/ai"
+import { AiOutlineCloseCircle } from "react-icons/ai"
+import { VscNewFile } from "react-icons/vsc"
+import { Button, TextField } from '@material-ui/core';
+import InputTextField from '../InputTextField';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -42,7 +43,7 @@ const Modal = ({
   const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
@@ -70,6 +71,11 @@ const Modal = ({
     const fileName = document.getElementById('inputFileName').value;
     setFileName(fileName);
   };
+
+  const changeFileName = (e) => {
+    const fileName = e.currentTarget.value;
+    setFileName(fileName);
+  }
 
   const jestTest = () => {
     if (title === 'vue'){
@@ -105,57 +111,44 @@ const Modal = ({
     return (
       <ReactModal
         className={styles.modal}
+        overlayClassName={styles[`modalOverlay${theme}`]}
         isOpen={isModalOpen}
         onRequestClose={closeModal}
-        contentLabel='Save?'
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
-        ariaHideApp={false}
-        style={{
-          content: {
-            top: '10%',
-            left: isFileDirectoryOpen ? '22%' : '11%',
-          },
-          overlay: {
-            zIndex: 3,
-            left: isFileDirectoryOpen ? '276px' : '46px',
-            minWidth: isFileDirectoryOpen ? '600px' : '600px',
-            width: isFileDirectoryOpen ? 'calc(59.9% - 276px)' : 'calc(49.9% - 46px)',
-          },
-        }}
       >
-        <Draggable>
-        <div id={styles.container}>
-        <div id={styles.title}>
-          <p>{title}</p>
-        </div>
-        <IconContext.Provider 
-          value={{size: '1.8em'}}>
-        <AiFillCloseSquare
-          id={styles.escapeButton} 
-          onKeyPress={clearAndClose}
-          onClick={clearAndClose}
-        />  
-        </IconContext.Provider> 
-        <div id={styles.body}>
-          <p id={styles.text}>
-            Do you want to start a new test? All unsaved changes
-            <br />
-            will be lost.
-          </p>
-          <span
-            id={styles.newTestButtons}
-            style={{ justifyContent: 'center', alignItems: 'center' }}
-          >
-            <button id={styles.save} onClick={handleNewTest}>
-              {title}
-            </button>
-            <button id={styles.save} onClick={closeModal}>
-              Cancel
-            </button>
-          </span>
-        </div>
-        </div>
+        <Draggable id={styles.testModal}>
+          <div id={styles.container}>
+            <AiOutlineCloseCircle
+              id={styles.escapeButton} 
+              onKeyPress={clearAndClose}
+              onClick={clearAndClose}
+            />              
+            <div id={styles.body}>
+              <p id={styles.text}>
+                Do you want to start a new test? All unsaved changes
+                will be lost.
+              </p>
+              <div id={styles.exportBtns}>
+                <Button 
+                  variant="contained" 
+                  onClick={handleNewTest}
+                  id={styles.saveBtn}
+                >
+                  <span>{title}</span>
+                  <VscNewFile size={'1.25rem'}/>
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={closeModal}
+                  id={styles.cancelBtn}
+                >
+                  <span>Cancel</span>
+                  <AiOutlineCloseCircle size={'1.25rem'}/>
+                </Button>
+              </div>
+            </div>
+          </div>
         </Draggable>
       </ReactModal>
     );
@@ -236,28 +229,16 @@ const Modal = ({
   return (
     
     <ReactModal
-      className={styles.modal2}
+      className={styles.modal}
       isOpen={isModalOpen}
       onRequestClose={clearAndClose}
-      contentLabel='Save?'
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
-      overlayClassName={styles.modalCustomOverlay}
+      overlayClassName={styles[`modalOverlay${theme}`]}
       ariaHideApp={false}
-      style={{
-        content: {
-          top: '10%',
-          left: isFileDirectoryOpen ? '22%' : '11%',
-        },
-        overlay: {
-          left: isFileDirectoryOpen ? '276px' : '46px',
-          minWidth: isFileDirectoryOpen ? '600px' : '600px',
-          width: isFileDirectoryOpen ? 'calc(59.9% - 276px)' : 'calc(49.9% - 46px)',
-        },
-      }}
     >
       <Draggable>
-      <div id={styles.container}>
+      <div id={styles.containerRun}>
       {/* Modal Title */}
         <div id={styles.title}>
         <p style={{ fontSize: 20 }}>Run Tests in Terminal</p>
@@ -268,14 +249,12 @@ const Modal = ({
           id={styles.escapeButton}
           className={cn('far fa-window-close', styles.describeClose)}
         >close</p> */}
-        <IconContext.Provider 
-          value={{size: '1.8em'}}>
-        <AiFillCloseSquare
+        <AiOutlineCloseCircle
           id={styles.escapeButton} 
           onKeyPress={clearAndClose}
           onClick={clearAndClose}
         />  
-        </IconContext.Provider> 
+        
       </div>
       
       {/* Accordion View */}
@@ -309,19 +288,19 @@ const Modal = ({
                         <code>{script.cd}</code>
                       </div>
                     </pre>
-                    <span id={styles.newTestButtons}>
-                      <button
-                        id={styles.save}
+                    <span id={styles.runTestButtons}>
+                      <Button id={styles.save}
                         className='changeDirectory'
                         onClick={changeDirectory}
+                        size="small"
                       >
                         Change Directory
-                      </button>
-                      <div id={styles.feedback}>
-                        {btnFeedback.changedDir === false ? null : (
-                          <p>Directory has been changed to root directory.</p>
-                        )}
-                      </div>
+                      </Button>
+
+                      {btnFeedback.changedDir === false ? null : (
+                        <p>Directory has been changed to root directory.</p>
+                      )}
+
                     </span>
                   </div>
                 </AccordionDetails>
@@ -342,11 +321,13 @@ const Modal = ({
                         <code>{script.install}</code>
                       </div>
                     </pre>
-                    <span id={styles.newTestButtons}>
-                      <button id={styles.save} onClick={installDependencies}>
+                    <span id={styles.runTestButtons}>
+                      <Button id={styles.save}
+                        onClick={installDependencies}
+                        size="small"
+                      >
                         Install
-                      </button>
-                      <div id={styles.feedback}></div>
+                      </Button>
                     </span>
                   </div>
                 </AccordionDetails>
@@ -369,12 +350,7 @@ const Modal = ({
           <AccordionDetails id={styles.accordionDetails}>
             {/* Select test to run */}
             <div id={styles.accordionDiv}>
-              <input id='inputFileName' placeholder='example.js' />
-              <span id={styles.newTestButtons}>
-                <button id={styles.save} onClick={submitFileName}>
-                  Submit
-                </button>
-              </span>
+              <InputTextField id='inputFileName' placeholder='example.test.js' variant='outlined' onChange={changeFileName}/>
             </div>
           </AccordionDetails>
         </Accordion>
@@ -390,7 +366,6 @@ const Modal = ({
           <AccordionDetails id={styles.accordionDetails}>
             {/* Select test to run */}
             <div id={styles.accordionDiv}>
-              {/* To do: make button toggle on/off */}
               <pre>
                 <div className='code-wrapper'>
                   <code>
@@ -401,16 +376,16 @@ const Modal = ({
                   </code>
                 </div>
               </pre>
-              <span id={styles.newTestButtons}>
-                <button id={styles.save} onClick={jestTest}>
+              <span id={styles.runTestButtons}>
+                <Button id={styles.save} onClick={jestTest}>
                   Jest Test
-                </button>
-                <button id={styles.save} onClick={verboseTest}>
+                </Button>
+                <Button id={styles.save} onClick={verboseTest}>
                   Verbose Test
-                </button>
-                <button id={styles.save} onClick={coverageTest}>
+                </Button>
+                <Button id={styles.save} onClick={coverageTest}>
                   Coverage Test
-                </button>
+                </Button>
               </span>
             </div>
           </AccordionDetails>
