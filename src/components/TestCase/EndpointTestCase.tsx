@@ -62,16 +62,17 @@ const EndpointTestCase = () => {
       <div id='head'>
         <EndpointTestMenu />
       </div>
-      <div id={styles[`testMockSection${theme}`]}>
+      <div id={styles.testMockSection}>
         <section id={styles.testCaseHeader}>
+          <label htmlFor='endpointServer'>Import Server From</label>
           <div className={styles.header}>
-            <div className={styles.searchInput} style={{ width: '80%' }}>
+            <div className={styles.searchInput}>
               <SearchInput
                 label='Import Server From'
                 options={Object.keys(filePathMap)}
+                filePathMap={filePathMap}
                 dispatch={dispatchToEndpointTestCase}
                 action={updateServerFilePath}
-                filePathMap={filePathMap}
                 //these are passed in to bypass typescript error for now...
                 reactTestCase={null}
                 updateTypesFilePath={null}
@@ -84,6 +85,7 @@ const EndpointTestCase = () => {
           {addDB && (
             <>
               <div>
+                <label htmlFor='endpointDB'>Import Database From</label>{' '}
                 <span id={styles.hastooltip} role='tooltip'>
                   <img src={questionIcon} alt='help' />
                   <span id={styles.tooltip}>
@@ -91,22 +93,18 @@ const EndpointTestCase = () => {
                     here. See "Run Test" above for more information.
                   </span>
                 </span>
-                <section id={styles.testCaseHeader}></section>
-                <div className={styles.header}>
-                  <div id={styles.searchInput} style={{ width: '80%' }}>
-                    <SearchInput
-                      label='Import Database From'
-                      options={Object.keys(filePathMap)}
-                      dispatch={dispatchToEndpointTestCase}
-                      action={updateDBFilePath}
-                      filePathMap={filePathMap}
-                      //these are passed in to bypass typescript error for now...
-                      reactTestCase={null}
-                      updateTypesFilePath={null}
-                      updateActionsFilePath={null}
-                      type={null}
-                    />
-                  </div>
+                <div id={styles.labelInput} style={{ width: '80%' }}>
+                  <SearchInput
+                    options={Object.keys(filePathMap)}
+                    dispatch={dispatchToEndpointTestCase}
+                    action={updateDBFilePath}
+                    filePathMap={filePathMap}
+                    //these are passed in to bypass typescript error for now...
+                    reactTestCase={null}
+                    updateTypesFilePath={null}
+                    updateActionsFilePath={null}
+                    type={null}
+                  />
                 </div>
               </div>
               <div id={styles.dropdownWrapper} style={{ marginTop: '15px' }}>
