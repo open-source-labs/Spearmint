@@ -36,9 +36,10 @@ const NavBar = ({ inAboutPage }) => {
   };
 
   const changeTheme = () => {
-    localStorage.setItem("theme", global.theme === 'light' ? 'dark' : 'light');
+    localStorage.setItem("theme", theme === 'light' ? 'dark' : 'light');
     dispatchToGlobal(toggleTheme());
   };
+
   /*
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
@@ -65,7 +66,7 @@ const NavBar = ({ inAboutPage }) => {
           <VscSettingsGear size={'1.5rem'}/>
         </span>
         <span title='Change theme'>
-          <Switch defaultChecked onChange={changeTheme}/>
+          <Switch checked={theme === 'light' ? true : false} onChange={changeTheme}/>
         </span>
       </div>
       {!inAboutPage && (

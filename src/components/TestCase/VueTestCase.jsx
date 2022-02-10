@@ -32,7 +32,7 @@ const VueTestCase = () => {
 
   const { describeBlocks, itStatements, statements } = vueTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [{ filePathMap }] = useContext(GlobalContext);
+  const [{ filePathMap, theme }] = useContext(GlobalContext);
 
   const handleAddMockData = () => {
     dispatchToMockData(createMockData());
@@ -79,7 +79,7 @@ const VueTestCase = () => {
 
   return (
     <VueTestCaseContext.Provider value={[vueTestCase, dispatchToVueTestCase]}>
-      <div id={styles.ReactTestCase}>
+      <div id={styles[`ReactTestCase${theme}`]}>
         <VueTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>

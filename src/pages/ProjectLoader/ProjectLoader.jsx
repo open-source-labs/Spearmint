@@ -5,6 +5,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest, setTheme } from '../../context/actions/globalActions';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
 import { RiSpyLine, RiGithubFill } from 'react-icons/ri'
+import InputTextField from '../../components/InputTextField';
 
 const { ipcRenderer } = require('electron');
 // const remote = require('@electron/remote/main')
@@ -159,7 +160,7 @@ function ProjectLoader() {
   const renderLogin = () => (
     <div className={styles.contentBox}>
       <form id={styles.loginForm} onSubmit={handleLogin}>
-        <TextField
+        <InputTextField
           id="username"
           name="username"
           value={username}
@@ -169,7 +170,7 @@ function ProjectLoader() {
           size="small"
           error={error}
         />
-        <TextField
+        <InputTextField
           id="password"
           name="password"
           value={password}
