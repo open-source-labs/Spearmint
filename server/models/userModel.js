@@ -18,4 +18,17 @@ const userSchema = new Schema({
   password: { type: String, require: true },
 });
 
-module.exports = mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema);
+
+const githubSchema = new Schema({
+  // Save username and password of user
+  githubId: { type: String, require: true, unique: true },
+  username: { type: String, require: true },
+});
+
+const GithubUser = mongoose.model('githubUser', githubSchema);
+
+module.exports = {
+  User,
+  GithubUser
+}

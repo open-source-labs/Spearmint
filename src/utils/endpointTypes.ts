@@ -10,6 +10,7 @@ export interface EndpointTestCaseState {
   serverFileName: string;
   endpointStatements: EndpointObj[];
   dbFilePath: string;
+  dbFileName: string;
   addDB: boolean | string;
 }
 
@@ -24,6 +25,8 @@ export interface Action {
   assertion?: Assertion;
   db?: string | boolean;
   dbFilePath?: string;
+  dbFileName?: string;
+  testState?: object;
 }
 
 type EndpointKeyValues = number | string | boolean | Assertion[] | Header[];

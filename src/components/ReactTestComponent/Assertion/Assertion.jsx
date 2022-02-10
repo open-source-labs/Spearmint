@@ -115,6 +115,12 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
             dispatchToTestCase={dispatchToReactTestCase}
             statementType='assertion'
           /> */}
+          <input
+            type='text'
+            id='queryValue'
+            value={statement.queryValue}
+            onChange={(e) => handleChangeAssertionFields(e, 'queryValue')}
+          />
         </div>
       </div>
       <div>

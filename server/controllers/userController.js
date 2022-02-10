@@ -1,4 +1,4 @@
-const User = require('../models/userModel');
+const { User } = require('../models/userModel');
 const bcrypt = require('bcrypt');
 
 const userController = {};
@@ -71,5 +71,16 @@ userController.getUsers = (req, res, next) => {
   });
 };
 
+userController.githubLogin = (req, res, next) => {
+  // console.log('this is req.user', typeof req.user._id);
+
+  // Successful authentication, redirect home.
+  console.log('github authentication successful!');
+
+  // store user._id in res.locals
+  res.locals.userId = req.user._id;
+
+  return next();
+};
 
 module.exports = userController;
