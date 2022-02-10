@@ -62,9 +62,8 @@ const EndpointTestCase = () => {
       <div id='head'>
         <EndpointTestMenu />
       </div>
-      <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          <label htmlFor='endpointServer'>Import Server From</label>
+      <div id={styles[`testMockSection${theme}`]}>
+        <section id={styles[`testCaseHeader${theme}`]}>
           <div className={styles.header}>
             <div className={styles.searchInput}>
               <SearchInput
@@ -81,7 +80,6 @@ const EndpointTestCase = () => {
               />
             </div>
           </div>
-          <br></br>
           {addDB && (
             <>
               <div>
