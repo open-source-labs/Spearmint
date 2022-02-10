@@ -11,6 +11,8 @@ import {
 } from '../../../context/actions/reactTestCaseActions';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import styles from './ItRenderer.module.scss';
+import { Button, TextField } from '@material-ui/core';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const ItRenderer = ({
   type,
@@ -18,31 +20,32 @@ const ItRenderer = ({
   describeId,
   statements,
   handleChangeItStatementText,
+  theme,
 }) => {
   const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
 
   const addRenderHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToReactTestCase(addRender(describeId, itId));
   };
 
   const deleteItStatementHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToReactTestCase(deleteItStatement(describeId, itId));
   };
 
   const deleteReactItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {
-      const itId = e.target.id;
+      const itId = e.currentTarget.id;
       dispatchToReactTestCase(deleteItStatement(describeId, itId));
     }
   }
   const addActionHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToReactTestCase(addAction(describeId, itId));
   };
   const addAssertionHandleClick = (e) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToReactTestCase(addAssertion(describeId, itId));
   };
 
@@ -54,27 +57,42 @@ const ItRenderer = ({
     >
       {(provided) => (
         <div
-          id={styles.ItRenderer}
+          id={styles[`ItRenderer${theme}`]}
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <i
+          <AiOutlineClose
             tabIndex={0}
+            id={id} 
             onKeyPress={deleteReactItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}
-            id={id}
             className={cn(styles.itClose, 'far fa-window-close')}
-          ></i>
-          <CustomInput
+          />
+          {/* <CustomInput
             key={`input-${id}-${i}`}
             id={id}
             label={'The component should...'}
             placeholder={'Button component renders correctly...'}
             value={itStatements.byId[id].text}
             handleChange={handleChangeItStatementText}
-          />
-          <hr />
+          /> */}
+          <div id={styles.itInputContainer}>
+            <TextField
+              key={`input-${id}-${i}`}
+              id={id}
+              className={styles.describeInput}
+              name='describe-label'
+              type='text'
+              placeholder="Enter unit test name..."
+              value={itStatements.byId[id].text}
+              onChange={handleChangeItStatementText}
+              fullWidth
+              variant="filled"
+              size='small'
+            />
+          </div>
+          
           <ReactTestStatements
             key={`statement-${id}-${i}`}
             statements={statements}
@@ -84,18 +102,15 @@ const ItRenderer = ({
           <div>
             {type === 'react' && (
               <div className={styles.buttonsContainer}>
-                <button id={id} onClick={addRenderHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Render
-                </button>
-                <button id={id} onClick={addActionHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Action
-                </button>
-                <button id={id} onClick={addAssertionHandleClick} className={styles.reactButton}>
-                  <i className='fas fa-plus'></i>
-                  Assertion
-                </button>
+                <Button id={id} onClick={addRenderHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Render
+                </Button>
+                <Button id={id} onClick={addActionHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Action
+                </Button>
+                <Button id={id} onClick={addAssertionHandleClick} className={styles.reactButton} variant="outlined">
+                  Add Assertion
+                </Button>
               </div>
             )}
           </div>

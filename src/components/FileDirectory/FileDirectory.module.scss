@@ -2,71 +2,103 @@
 @import '../../assets/stylesheets/fonts.scss';
 
 #fileDirectory {
-  grid-area: fileDirectory;
-  padding: 0px;
-  width: 200px;
-  height: 100vh;
-  margin-left: 50px;
-  position: absolute;
-  top: 0;
-  left: 0;
+  
+  flex: 0 1 200px;
+  min-width: 150px;
+  //max-height: 90vh;
   font-size: 12px;
-  background-color: white;
+  background-color: var(--fileDir-bg);
   overflow: auto;
-  border-right: 1px dotted $mint;
   z-index: 1;
+  border-radius: 5px;
+  //overflow: scroll;
 
   ul {
     list-style-type: none;
-    margin-left: 15px;
+    padding-left: 10px;
     text-align: left;
+
+    *{
+      transition: none !important;
+    }
   }
   li {
-    margin-top: 3px;
     text-align: left;
+    padding: 3px;
   }
+  button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+
+    svg {
+      flex: 0 0 16px;
+    }
+
+    span {
+      flex: 1;
+    }
+    
+  }
+
   #explorer {
-    margin: 0;
-    padding: 10%;
-    color: $mint;
+    position: sticky;
+    top: 0;
+    padding: 10px;
+    color: $eggshell;
     font-family: $oxygen;
-    letter-spacing: 1px;
-    vertical-align: middle;
-    font-weight: bold;
-    height: 1px;
-    background-color: #f0f8f8;
-    border-bottom: 0.5px dotted $mint;
+    font-weight: 600;
+    background-color: $salmon;
   }
 }
+
+#fileTreeContainer{
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
 #file {
   width: 18px;
   height: 18px;
   margin-right: 6px;
   float: left;
 }
+
 #folder {
-  margin-right: 6px;
+  padding-right: 6px;
 }
+
 #dirButton {
   text-decoration: none;
-  color: $dark-gray;
+  color: $eggshell;
   background-color: transparent;
   border: none;
   font-family: $oxygen;
   text-align: left;
   vertical-align: middle;
-  width: 97%;
+  width: 100%;
+  padding: 3px 0 3px 3px;
+  border-radius: 2px;
+  transition: none !important;
 }
 
 #dirButton:hover {
-  background-color: #f0f8f8;
-  border-radius: 3px;
+  background-color: var(--dir-button-bg);
+  color: var(--dir-button-color);
 }
 
 #dirButtonHilighted {
+  transition: none !important;
   text-align: left;
-  background-color: #f0f8f8;
+  font-family: $oxygen;
+  background-color: var(--dir-button-bg);
   border: none;
-  border-radius: 3px;
-  width: 97%;
+  color: var(--dir-button-color);
+  box-shadow: inset 0em 0em 0em 10em rgba(0, 0, 0, 0.3);
+  padding: 3px 0 3px 3px;
+  border-radius: 2px;
+  width: 100%;
 }

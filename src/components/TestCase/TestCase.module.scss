@@ -16,12 +16,79 @@ div {
   z-index: 9999;
 }
 
-#testCaseHeader {
+#testCaseHeaderlight {
   margin: 15px 25px 15px 15px;
+
+  max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  button {
+    font-size: 0.75rem;
+    color: black;
+    border-color: black;
+  }
+
+  --input-color: black;
+
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
 }
 
-#testMockSection {
+#testCaseHeaderdark {
+  margin: 15px 25px 15px 15px;
+
+  max-width: 500px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  --input-color: white;
+
+  button {
+    font-size: 0.75rem;
+    color: white;
+    border-color: white;
+  }
+
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
+}
+
+#testMockSectionlight {
   margin-bottom: 50px;
+  --input-color: black;
+}
+#testMockSectiondark {
+  margin-bottom: 50px;
+  --input-color: white;
+}
+
+#paintTimingBtn {
+  padding: 10px;
+  margin-top: 10px;
+  background-color: $light-gray2;
 }
 
 #testStatement {
@@ -49,52 +116,174 @@ div {
   }
 }
 
-#ReactTestCase {
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    padding: 1rem;
+#ReactTestCaselight {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  --input-color: black;
+  --describe-button-color: white;
+  --describe-button-bg: #{$mint};
+}
 
-    .renderComponent {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+#ReactTestCasedark {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  --input-color: white;
+  --describe-button-color: #{$eggshell};
+  --describe-button-bg: #{$salmon};
+}
 
-      .renderLabel {
-        font-family: $oxygen;
-        font-size: 0.9rem;
-        margin-right: 0.5rem;
-      }
+#PaintTimelight {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+  button {
+    color: $mint;
 
-      .renderInput {
-        display: block;
-        margin-top: 0.5rem;
-        width: 300px;
-        border: none;
-        border-bottom: 1px solid $mint;
+    &:hover {
+      color: white;
+      background-color: $chromegray-opaque;
+    }
+  }
+}
+
+#PaintTimedark {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+  button {
+    color: $eggshell;
+    background-color: $salmon;
+
+    &:hover {
+      color: white;
+      background-color: $salmon-darker;
+    }
+  }
+}
+
+#Endpointlight {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+  button {
+    color: $mint;
+
+    &:hover {
+      color: white;
+      background-color: $chromegray-opaque;
+    }
+  }
+}
+
+#Endpointdark {
+  padding: 10px;
+  margin-top: 10px;
+  gap: 10px;
+  button {
+    color: $eggshell;
+    background-color: $salmon;
+
+    &:hover {
+      color: white;
+      background-color: $salmon-darker;
+    }
+  }
+}
+
+.flex-container {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.flex1light{
+  width: 40%;
+  display: flex;
+  margin: 5px 0px 5px 15px;
+  --input-color: black;
+
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
+
+  div {
+    flex: 1;
+  }
+}
+
+.flex1dark{
+  width: 40%;
+  display: flex;
+  margin: 5px 0px 5px 15px;
+  --input-color: white;
+
+  input {
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
+  }
+  label {
+    color: var(--input-color);
+  }
+
+  div {
+    flex: 1;
+  }
+}
+
+.header {
+  flex: 0 0 40px;
+  display: flex;
+  .searchInput {
+    flex: 1 1 40px;
+    svg {
+      color: var(--input-color);
+    }
+    div {
+      max-width: 250px;
+    }
+    input {
+      border-color: var(--input-color);
+      color: var(--input-color);
+
+      &::placeholder {
+        color: var(--input-color);
       }
     }
-
-    .mockBtn {
-      height: auto;
-      font-size: 0.85rem;
-      background-color: rgba(0, 0, 0, 0);
-      border: none;
-      min-width: 150px;
-      border-radius: 3px;
-      font-family: $oxygen;
-      text-align: center;
-      transition: 150ms;
-
-      &:hover {
-        font-size: 0.9rem;
-      }
+    label {
+      color: var(--input-color);
     }
+  }
 
-    .addIcon {
-      margin-right: 0.25rem;
+  button {
+    font-size: 0.75rem;
+    color: var(--input-color);
+    border-color: var(--input-color);
+  }
+}
+
+#addDescribeButton {
+  button {
+    color: var(--describe-button-color);
+    background-color: var(--describe-button-bg);
+
+    &:hover {
+      color: var(--describe-button-color);
+      background-color: var(--describe-button-bg);
     }
   }
 }
@@ -102,12 +291,25 @@ div {
 #labelInput {
   width: 100%;
   margin-right: 7%;
+  // color: white;
   input {
     margin-top: 6px;
     width: 100%;
     max-width: 500px;
+    border-color: var(--input-color);
+    color: var(--input-color);
+
+    &::placeholder {
+      color: var(--input-color);
+    }
   }
+
+  label {
+    color: var(--input-color);
+  }
+
   position: relative;
+  color: var(--input-color);
 }
 
 #hastooltip {
@@ -170,4 +372,28 @@ div {
   font-family: $oxygen;
   text-align: justify;
   line-height: 1.3;
+}
+
+#secInfolight {
+  font-size: 14px !important;
+  font-family: $oxygen;
+  text-align: justify;
+  line-height: 1.3;
+  --text-color: black;
+}
+
+#secInfodark {
+  font-size: 14px !important;
+  font-family: $oxygen;
+  text-align: justify;
+  line-height: 1.3;
+  --text-color: white;
+}
+
+#SecTestCaselight{
+  color: black
+}
+
+#SecTestCasedark{
+  color: white;
 }

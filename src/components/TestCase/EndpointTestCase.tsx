@@ -8,18 +8,24 @@ import {
   updateStatementsOrder,
   toggleDB,
   updateDBFilePath,
+  addEndpoint,
 } from '../../context/actions/endpointTestCaseActions';
 import EndpointTestMenu from '../TestMenu/EndpointTestMenu';
 import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
 import SearchInput from '../SearchInput/SearchInput';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+import { Button } from '@material-ui/core';
 
 const EndpointTestCase = () => {
   let [{ endpointStatements, addDB }, dispatchToEndpointTestCase] = useContext(
     EndpointTestCaseContext
   );
-  const [{ filePathMap }] = useContext<any>(GlobalContext);
+  const [{ filePathMap, theme }] = useContext<any>(GlobalContext);
+  
+  const handleAddEndpoint = () => {
+    dispatchToEndpointTestCase(addEndpoint());
+  };
 
   const questionIcon = require('../../assets/images/help-circle.png');
 
@@ -56,23 +62,24 @@ const EndpointTestCase = () => {
       <div id='head'>
         <EndpointTestMenu />
       </div>
-      <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          <label htmlFor='endpointServer'>Import Server From</label>
-          <div id={styles.labelInput} style={{ width: '80%' }}>
-            <SearchInput
-              options={Object.keys(filePathMap)}
-              dispatch={dispatchToEndpointTestCase}
-              action={updateServerFilePath}
-              filePathMap={filePathMap}
-              //these are passed in to bypass typescript error for now...
-              reactTestCase={null}
-              updateTypesFilePath={null}
-              updateActionsFilePath={null}
-              type={null}
-            />
+      <div id={styles[`testMockSection${theme}`]}>
+        <section id={styles[`testCaseHeader${theme}`]}>
+          <div className={styles.header}>
+            <div className={styles.searchInput}>
+              <SearchInput
+                label='Import Server From'
+                options={Object.keys(filePathMap)}
+                filePathMap={filePathMap}
+                dispatch={dispatchToEndpointTestCase}
+                action={updateServerFilePath}
+                //these are passed in to bypass typescript error for now...
+                reactTestCase={null}
+                updateTypesFilePath={null}
+                updateActionsFilePath={null}
+                type={null}
+              />
+            </div>
           </div>
-          <br></br>
           {addDB && (
             <>
               <div>
@@ -122,6 +129,15 @@ const EndpointTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <div id={styles[`Endpoint${theme}`]}>
+          <Button 
+            variant='outlined'
+            data-testid='endPointButton' 
+            size='medium'
+            onClick={handleAddEndpoint}>
+            Endpoint
+          </Button>
+        </div>
     </div>
   );
 };

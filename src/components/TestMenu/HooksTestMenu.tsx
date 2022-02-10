@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   openBrowserDocs,
@@ -17,6 +17,11 @@ import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
+import TestMenuButtons from './TestMenuButtons';
+import ExportFileModal from '../Modals/ExportFileModal';
+const { ipcRenderer } = require('electron')
+
+// imports were declared in previous iterations, but were never used
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
@@ -27,8 +32,10 @@ const HooksTestMenu = () => {
     HooksTestCaseContext
   );
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('hooks');
-  const [{ projectFilePath, file, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
+  const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('hooks', projectFilePath);
+  const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [userSavedTest, setUserSavedTest] = useState(false)
 
   useEffect(() => {
     dispatchToGlobal(setValidCode(false));
@@ -42,12 +49,42 @@ const HooksTestMenu = () => {
     dispatchToGlobal(openBrowserDocs(hooksUrl));
   };
 
+  // functionality when user clicks Preview
   const fileHandle = () => {
-    dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
+    const testGeneration = generateTest({ hooksTestStatement, hooksStatements });
+    
+    // generates test code using UseGenerateTest.jsx and displays it in the Code Editor View
+    dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
     dispatchToGlobal(setTabIndex(0));
+    return testGeneration;
   };
+
+  // functionality when user clicks Save Test button
+  const saveTest = () => {
+    const valid = validateInputs('hooks', hooksStatements);
+    dispatchToGlobal(setValidCode(valid));
+
+    
+    const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
+    const updatedData = fileHandle();
+
+    // check to see if user has saved test before. If not, then open ExportFileModal
+    if(!newFilePath.includes('test.js') || !userSavedTest){
+      dispatchToGlobal(toggleExportBool())
+      setIsExportModalOpen(true)
+      setUserSavedTest(true)
+    }
+
+
+    // if user already has a saved test file, rewrite the file with the updated data
+    if(newFilePath.includes('test.js') && userSavedTest){
+      ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
+    }
+
+  
+  }
 
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
@@ -66,43 +103,33 @@ const HooksTestMenu = () => {
     dispatchToGlobal(updateFile(generateTest({ hooksTestStatement, hooksStatements })));
   }
   return (
-    <div id='test'>
-      <div id={styles.testMenu}>
-        <div id={styles.left}>
-          <button type='button' autoFocus onClick={openModal}>
-            New Test +
-          </button>
-          <button id={styles.example} onClick={fileHandle}>
-            Preview
-          </button>
-          <button id={styles.example} onClick={openScriptModal}>
-            Run Test
-          </button>
-          <button id={styles.example} onClick={openDocs}>
-            Need Help?
-          </button>
-          {/* <UploadTest testType="hooks" />
-          <GetTests testType="hooks" /> */}
-          <Modal
-            // passing methods down as props to be used when Modal is opened
-            title={title}
-            dispatchToMockData={null}
-            isModalOpen={isModalOpen}
-            closeModal={closeModal}
-            dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
-            createTest={title === 'New Test' ? createNewHooksTest : null}
-          />
-        </div>
-        <div
-          id={styles.right}
-          style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-        >
-          <button className='hookUpdatesButton' type='button' onClick={handleAddHookUpdates}>
-            Hooks
-          </button>
-        </div>
-      </div>
-    </div>
+
+    <>
+      <TestMenuButtons 
+        openModal={openModal}
+        fileHandle={fileHandle}
+        openScriptModal={openScriptModal}
+        saveTest={saveTest}
+        openDocs={openDocs}
+      />
+      <Modal
+        // passing methods down as props to be used when Modal is opened
+        title={title}
+        dispatchToMockData={null}
+        isModalOpen={isModalOpen}
+        closeModal={closeModal}
+        dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
+        createTest={title === 'New Test' ? createNewHooksTest : null}
+      />
+      <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+        />
+
+        {/* <UploadTest testType="hooks" />
+        <GetTests testType="hooks" /> */}
+
+    </>
   );
 };
 

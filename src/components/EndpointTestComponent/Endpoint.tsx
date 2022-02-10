@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
@@ -15,6 +15,7 @@ import {
   updatePost,
   addAssertion,
 } from '../../context/actions/endpointTestCaseActions';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
@@ -26,6 +27,7 @@ interface EndpointProps {
 }
 
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps) => {
+  const [ {theme} ] = useContext<any>(GlobalContext)
   const handleChangeEndpointFields = ({ target }: EventTarget, field: string) => {
     let updatedEndpoint = { ...endpoint };
 
@@ -72,7 +74,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            id={styles.modal}
+            id={styles[`endpointmodal${theme}`]}
           >
             <img
               src={closeIcon}
@@ -103,7 +105,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                     />
                   </div>{' '}
                   <button
-                    id={styles.addProps}
+                    id={styles.assertionButton}
                     style={{ marginTop: '9px' }}
                     onClick={handleClickAddHeader}
                   >
@@ -170,14 +172,14 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
               </div>
             )}
             {endpoint.headers.length > 0 && (
-              <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
+              <div id={styles[`addheadermodal${theme}`]} style={{ margin: '10px 0 0 0' }}>
                 <div className={'props'}>
                   <div>
                     <div id={style.renderProp} style={{ width: '56.5%', paddingBottom: '3px' }}>
-                      <label htmlFor='Header' id={style.propKeyLabel}>
+                      <label htmlFor='Header' id={style.headerLabel}>
                         Header
                       </label>
-                      <label htmlFor='Value' id={style.propValLabel}>
+                      <label htmlFor='Value' id={style.headerLabel}>
                         Value
                       </label>
                     </div>

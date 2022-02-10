@@ -18,24 +18,14 @@
 }
 
 #openBtn {
-  margin-top: 10px;
-  padding-left: 1rem;
-  font-size: 12px;
-  text-align: left;
-  width: 250px;
-  height: 1.5rem;
-  color: $dark-gray;
-  box-shadow: none;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  :focus {
-    outline: 2px solid darkblue;
-  } 
-}
+  width: 100%;
+  background-color: $salmon;
+  color: $eggshell;
 
-#openBtn:focus{
-  outline: 2px solid darkblue
+  span {
+    width: 100%;
+    gap: 10px;
+  }
 }
 
 .tooltip {

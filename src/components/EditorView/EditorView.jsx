@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
+//import { oneDark } from '@codemirror/theme-one-dark';
 import { javascript } from '@codemirror/lang-javascript';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
@@ -9,7 +10,7 @@ const { ipcRenderer } = require('electron');
 
 
 const Editor = () => {
-  const [{ file, filePath }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ file, filePath, theme }, dispatchToGlobal] = useContext(GlobalContext);
   const [wasSaved, setWasSaved] = useState('');
   let editedText = '';
 
@@ -56,28 +57,27 @@ const Editor = () => {
   };
 
   return (
-    <div>
-      <div onClick={() => setWasSaved('')}>
-        <CodeMirror
-          value={
-            file
-              ? extensionChecker[fileType]
-                ? '//Please select a valid file type'
-                : file
-              : '// Open a file or click preview to view your code.'
-          }
-          height="80vh"
-          extensions={[javascript({ jsx: true })]}
-          onChange={updatafile}
-        />
-      </div>
-      <div>
-        <button type="button" id={styles.save} onClick={saveFile}>
-          Save Changes
-        </button>
-        <span id={styles.span}>{wasSaved}</span>
-      </div>
+    <div id={styles.codeEditor} onClick={() => setWasSaved('')}>
+      <CodeMirror
+        value={
+          file
+            ? extensionChecker[fileType]
+              ? '//Please select a valid file type'
+              : file
+            : '// Open a file or click preview to view your code.'
+        }
+        height="100%"        
+        extensions={[javascript({ jsx: true })]}
+        onChange={updatafile}
+        theme={theme}
+      />
     </div>
+      // {/* <div id={styles.saveBox}>
+      //   <button type="button" id={styles.save} onClick={saveFile}>
+      //     Save Changes
+      //   </button>
+      //   <span id={styles.span}>{wasSaved}</span>
+      // </div> */}
   );
 };
 

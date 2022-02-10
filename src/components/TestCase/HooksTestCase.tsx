@@ -3,16 +3,21 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
+  addHookUpdates,
   updateHooksTestStatement,
   updateStatementsOrder,
 } from '../../context/actions/hooksTestCaseActions';
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
+import { Button } from '@material-ui/core';
 import { HooksStatements } from '../../utils/hooksTypes';
+import { GlobalContext } from '../../context/reducers/globalReducer';
+import InputTextField from '../InputTextField';
 
 const HooksTestCase = () => {
+  
   const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
-
+  const [{theme}] = useContext<any>(GlobalContext);
 
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +31,7 @@ const HooksTestCase = () => {
     return result;
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = (result: any) => {
     if (!result.destination) {
       return;
     }
@@ -40,27 +45,30 @@ const HooksTestCase = () => {
     );
     dispatchToHooksTestCase(updateStatementsOrder(reorderedStatements));
   };
+
+  const handleAddHookUpdates = () => {
+    dispatchToHooksTestCase(addHookUpdates());
+  };
   return (
     <>
       <div id='head'>
         <HooksTestMenu />
       </div>
-      <div id={styles.testMockSection}>
-        <section id={styles.testCaseHeader}>
-          +Describe Block
-          <br />
-          <br />
-          <input
-            
-            type='text'
-            id={styles.testStatement}
-            onChange={handleUpdateHooksTestStatement}
-          />
-        </section>
+      <div id={styles[`testMockSection${theme}`]}>
+        <div className={styles.header}>
+          <div className={styles.searchInput} style={{marginLeft: '16px'}}>
+        <InputTextField
+          size='small'
+          variant='outlined'
+          placeholder='+Describe Block'
+          type='text'
+          onChange={handleUpdateHooksTestStatement}/>
+          </div>
+        </div>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided) => (
+          {(provided: any) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <HooksTestStatements />
               {provided.placeholder}
@@ -68,6 +76,16 @@ const HooksTestCase = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <div id={styles[`PaintTime${theme}`]}>
+        <Button 
+          className='hookUpdatesButton' 
+          type='button' 
+          variant='outlined'
+          size='medium'
+          onClick={handleAddHookUpdates}>
+          Hooks
+        </Button>
+      </div>
     </>
   );
 };
