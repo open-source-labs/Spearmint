@@ -27,6 +27,8 @@ export const actionTypes = {
 
   TOGGLE_THEME: 'TOGGLE_THEME',
   SET_THEME: 'SET_THEME',
+  SET_FILE_DIRECTORY: 'SET_FILE_DIRECTORY',
+  SET_FOLDER_VIEW: 'SET_FOLDER_VIEW',
 };
 
 export const setProjectUrl = (url) => ({
@@ -137,4 +139,14 @@ export const toggleTheme = () => ({
 export const setTheme = (theme) => ({
   type: actionTypes.SET_THEME,
   theme,
+});
+
+export const setFileDirectory = (fileDirectoryOpen) => ({
+  type: actionTypes.SET_FILE_DIRECTORY,
+  fileDirectoryOpen,
+});
+
+export const setFolderView = (filePath) => ({
+  type: actionTypes.SET_FOLDER_VIEW,
+  filePath,
 });

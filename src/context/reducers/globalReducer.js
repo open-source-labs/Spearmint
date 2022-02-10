@@ -60,6 +60,13 @@ export const globalReducer = (state, action) => {
         isFileDirectoryOpen: !state.isFileDirectoryOpen,
       };
 
+    case actionTypes.SET_FILE_DIRECTORY:
+      const fileDirectoryOpen = action.fileDirectoryOpen;
+      return {
+        ...state,
+        isFileDirectoryOpen: fileDirectoryOpen,
+      };
+
     case actionTypes.CLOSE_RIGHT_PANEL:
       const projUrl = state.projectUrl;
       return {
@@ -77,8 +84,16 @@ export const globalReducer = (state, action) => {
       };
 
     case actionTypes.TOGGLE_FOLDER_VIEW:
-      const isFolderOpen = { ...state.isFolderOpen };
+      let isFolderOpen = { ...state.isFolderOpen };
       isFolderOpen[action.filePath] = !isFolderOpen[action.filePath] ?? true;
+      return {
+        ...state,
+        isFolderOpen,
+      };
+
+    case actionTypes.SET_FOLDER_VIEW:
+      isFolderOpen = { ...state.isFolderOpen };
+      isFolderOpen[action.filePath] = true;
       return {
         ...state,
         isFolderOpen,

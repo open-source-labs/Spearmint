@@ -11,6 +11,8 @@ import {
   toggleExportBool,
   updateFile,
   toggleFileDirectory,
+  setFileDirectory,
+  setFolderView,
 } from '../../context/actions/globalActions';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaFileExport } from "react-icons/fa"
@@ -74,6 +76,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     exportTestFile();
     closeExportModal();
     dispatchToGlobal(updateFile(''));
+    
   };
 
   // /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
@@ -88,17 +91,20 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     ipcRenderer.sendSync('ExportFileModal.fileCreate', filePath, file);
 
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
+    console.log(folderPath)
     displayTestFile(folderPath);
   };
 
   const displayTestFile = (testFolderFilePath) => {
     const filePath = `${testFolderFilePath}/${fileName}.test.js`;
     const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
+    console.log('filename', fileName, filePath);
 
     dispatchToGlobal(updateFile(fileContent));
-    dispatchToGlobal(toggleFolderView(testFolderFilePath));
+    dispatchToGlobal(setFolderView(testFolderFilePath));
     dispatchToGlobal(highlightFile(`${fileName}.test.js`));
-    dispatchToGlobal(toggleFileDirectory(true));
+    // dispatchToGlobal(toggleFileDirectory(true));
+    dispatchToGlobal(setFileDirectory(true));
   };
 
   const filePathMap = {};
