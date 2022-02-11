@@ -7,12 +7,10 @@
 
 .input {
   width: 185px;
-  padding: '10px 20px';
   font-family: $oxygen;
   font-weight: 300;
   font-size: 12;
-  letter-spacing: 0.5px;
-  border: '1px solid #aaa';
+  color: black;
 }
 
 .inputFocused {
@@ -49,6 +47,9 @@
   list-style-type: none;
   height: 200px;
   overflow-y: scroll;
+
+  color: black;
+
 }
 
 .suggestion {

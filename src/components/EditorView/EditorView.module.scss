@@ -1,8 +1,23 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
+// #codeEditorView{
+//   display: flex;
+//   flex-direction: column;
+//   height: 100%;
+// }
+
+#codeEditor{
+  * {
+    transition: color 0.0s !important;
+  }
+}
+
+#saveBox{
+  flex: 0 0 5%;
+}
+
 #save {
-  margin: 5px;
   height: 40px;
   width: 110px;
   color: $mint;
@@ -12,7 +27,6 @@
   font-size: 14px;
   border-radius: 5px;
   border: 0.5px $light-gray solid;
-  position: relative;
 }
 
 #save:hover {

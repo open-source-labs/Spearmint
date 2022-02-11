@@ -12,7 +12,7 @@ const os = require('os');
 
 const SecTestCase = () => {
 
-  const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen , theme}, dispatchToGlobal] = useContext(GlobalContext)
 
   // Change execute command based on os platform
   let execute = '\n';
@@ -50,12 +50,12 @@ const SecTestCase = () => {
   }
 
   return (
-    <div id={styles.SecTestCase}>
+    <div>
       <div id="head">
         <SecTestMenu />
       </div>
 
-      <section>
+      <section id={styles[`SecTestCase${theme}`]}>
         <div id={styles.secInfo}>
           <p>
             Spearmint leverages Snyk testing in order to evaluate security vulnerabilities.
@@ -70,19 +70,19 @@ const SecTestCase = () => {
         <br />
         <br />
         <br />
-        <Button variant='outlined' type='button' id={styles.secTestBtn} onClick={dependencyTest}>
+        <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
           Test Dependencies
         </Button>
         <br />
         <br />
-        <Button variant='outlined' type='button' id={styles.secTestBtn} onClick={snykWizard}>
+        <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
           Fix Dependencies
         </Button>
         <br />
         <br />
         <br />
         <br />
-        <p id={styles.secInfo}>
+        <p >
           To utilize Snyk's application-wide testing tool, Snyk Code must be enabled.
           <br />
           The below button will send you to Snyk's website to update your settings.
@@ -93,7 +93,7 @@ const SecTestCase = () => {
         </Button>
         <br />
         <br />
-        <Button variant='outlined' type='button' id={styles.secTestBtn} onClick={applicationTest}>
+        <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
           Test Application
         </Button>
         <br />

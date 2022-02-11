@@ -6,6 +6,8 @@ import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/reducers/mockDataReducer';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { AiOutlineClose } from 'react-icons/ai';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
@@ -14,6 +16,7 @@ const closeIcon = require('../../../assets/images/close.png');
 const Action = ({ statement, statementId, describeId, itId }) => {
   const [{ mockData }] = useContext(MockDataContext);
   const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{theme}] = useContext(GlobalContext)
 
   const handleChangeActionFields = (e, field) => {
     let updatedAction = { ...statement };
@@ -39,8 +42,8 @@ const Action = ({ statement, statementId, describeId, itId }) => {
   };
 
   return (
-    <div id={styles.action}>
-      <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAction} />
+    <div id={styles[`action${theme}`]}>
+      <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteAction} />
       <div id={styles.actionHeader}>
         <h3>Action</h3>
       </div>
@@ -103,12 +106,12 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='findBy'>findBy</option>
               <option value='findAllBy'>findAllBy</option>
             </select>
-            <span id={styles.hastooltip} role='tooltip'>
+            {/* <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
-            </span>
+            </span> */}
 
             <select
               id='querySelector'
@@ -126,13 +129,14 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='TestId'>TestId</option>
               {/* TextMatch Precision & Normalization will be added */}
             </select>
-            <span id={styles.hastooltip} role='tooltip'>
+            {/* <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.querySelector} />
               </span>
-            </span>
+            </span> */}
           </div>
+          
         </div>
         <div id={styles.query}>
           <label htmlFor='queryValue' className={styles.queryLabel}>

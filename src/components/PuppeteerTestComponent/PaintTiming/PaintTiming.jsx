@@ -8,11 +8,13 @@ import {
 import { PuppeteerTestCaseContext } from '../../../context/reducers/puppeteerTestCaseReducer';
 import ToolTip from '../../ToolTip/ToolTip';
 import PuppeteerBrowserSetting from '../PuppeteerBrowerSetting/PuppeteerBrowserSetting';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
 const PaintTiming = ({ paintTiming, index }) => {
+  const [ {theme} ] = useContext(GlobalContext)
   const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
 
   const handleChangePaintTimingFields = (e, field) => {
@@ -29,7 +31,7 @@ const PaintTiming = ({ paintTiming, index }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          id={styles.modal}
+          id={styles[`modal${theme}`]}
         >
           <img
             src={closeIcon}

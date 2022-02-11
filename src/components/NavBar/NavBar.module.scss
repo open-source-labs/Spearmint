@@ -1,26 +1,74 @@
 @import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
 
-#navBar {
-  grid-area: navBar;
+#navBarlight {
+  width: 100%;
   background-color: $mint;
-  height: 100vh;
-  width: 48px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  border-radius: 5px;
+  --icon-fill: #{$salmon};
+  transition: transform 0.5s ease;
+}
+
+#navBardark {
+  width: 100%;
+  background-color: $darkslategrey;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  --icon-fill: #{$mint};
+  transition: transform 0.5s ease;
+}
+
+.btnContainer{
+  flex: 0 0 auto;
+  margin: 10px 30px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  
+  span{
+    cursor: pointer;
+    &:hover{
+      svg {
+        path {
+          fill: var(--icon-fill);
+        }
+      }
+    }
+    svg {
+      path {
+        fill: $eggshell; 
+      }
+    }
+    
+  }
+  #activeEffect {
+    svg {
+      path {
+        fill: var(--icon-fill);
+      }
+    }
+  }
+}
+
+#spearmintTitle{
+  flex: 1 0 auto;
+  align-self: center;
+  font-size: 2rem;
+  text-align: center;
+  font-family: 'comfortaa';
+  color: $eggshell;
 }
 
 .navBtn {
   padding: 0;
   border: 0;
-  margin-top: 15px;
-  margin-bottom: 40px;
   cursor: pointer;
   background-color: transparent;
-  :focus {
-    outline: 2px solid darkblue
-  } 
 }
 
 .icons {
@@ -44,12 +92,4 @@
 .navBtn:hover .tooltip {
   visibility: visible;
   margin-left: 5px;
-}
-
-#inAboutPage {
-  @extend #navBar;
-  float: left;
-  position: fixed;
-  top: 0;
-  left: 0;
 }

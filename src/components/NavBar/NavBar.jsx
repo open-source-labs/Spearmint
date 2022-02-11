@@ -9,16 +9,18 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import {
   toggleFileDirectory,
   toggleExportBool,
+  toggleTheme,
 } from '../../context/actions/globalActions';
-import FileDirectory from '../FileDirectory/FileDirectory';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
 import ExportFileModal from '../Modals/ExportFileModal';
 
-const menuIcon = require('../../assets/images/menu.png');
-const exportIcon = require('../../assets/images/file-export.png');
+import { VscSettingsGear } from 'react-icons/vsc'
+import { FaFileExport, FaUserCircle } from 'react-icons/fa'
+import { GoFileSubmodule } from 'react-icons/go'
+import { Switch } from '@material-ui/core';
 
 const NavBar = ({ inAboutPage }) => {
-  const [{ fileTree, isFileDirectoryOpen }, dispatchToGlobal] =
+  const [{ fileTree, isFileDirectoryOpen, theme }, dispatchToGlobal] =
     useContext(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
 
@@ -32,30 +34,47 @@ const NavBar = ({ inAboutPage }) => {
     dispatchToGlobal(toggleExportBool());
     setIsExportModalOpen(true);
   };
+
+  const changeTheme = () => {
+    localStorage.setItem("theme", theme === 'light' ? 'dark' : 'light');
+    dispatchToGlobal(toggleTheme());
+  };
+
   /*
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
   return (
-    <div id={inAboutPage ? styles.inAboutPage : styles.navBar}>
+    <div id={styles[`navBar${theme}`]}>
       {/* File Explorer */}
-      <button className={styles.navBtn} onClick={handleToggleFileDirectory}>
-        <img src={menuIcon} className={styles.icons} alt='fileExplorer' />
-        <span className={styles.tooltip}>Expand File Explorer</span>
-      </button>
-      {/* Export */}
-      <button className={styles.navBtn} onClick={openExportModal}>
-        <img src={exportIcon} className={styles.icons} alt='export' title='Export a test file' />
-        <span className={styles.tooltip}>Export</span>
-      </button>
+      <div className={styles.btnContainer}>
+        <span id={isFileDirectoryOpen ? styles.activeEffect : ''} onClick={handleToggleFileDirectory} title='Expand file explorer'>
+          <GoFileSubmodule size={'1.5rem'}/>
+        </span>
+        <span onClick={openExportModal} title='Export test file'>
+          <FaFileExport size={'1.5rem'}/>
+        </span>
+        <OpenFolder />
+      </div>
+      <div id={styles.spearmintTitle}>
+        spearmint
+      </div>
+      <div className={styles.btnContainer}>
+        <span title='Change user profile'>
+          <FaUserCircle size={'1.5rem'}/>
+        </span>
+        <span title='Change settings'>
+          <VscSettingsGear size={'1.5rem'}/>
+        </span>
+        <span title='Change theme'>
+          <Switch checked={theme === 'light' ? true : false} onChange={changeTheme}/>
+        </span>
+      </div>
       {!inAboutPage && (
         <ExportFileModal
           isExportModalOpen={isExportModalOpen}
           setIsExportModalOpen={setIsExportModalOpen}
         />
       )}
-      {/* Open Folder */}
-      <OpenFolder />
-      {isFileDirectoryOpen && <FileDirectory fileTree={fileTree} />}
     </div>
   );
 };

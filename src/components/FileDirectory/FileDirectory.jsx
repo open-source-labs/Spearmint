@@ -9,6 +9,15 @@ import {
   setFilePath,
   setTabIndex,
 } from '../../context/actions/globalActions';
+import { MdImage } from 'react-icons/md';
+import { AiFillHtml5 } from 'react-icons/ai';
+import { DiCss3 } from 'react-icons/di'
+import { IoLogoJavascript, IoLogoVue } from 'react-icons/io5';
+import { VscJson } from 'react-icons/vsc';
+import { FaReact, FaSass } from 'react-icons/fa';
+import { SiTypescript, SiJest } from 'react-icons/si';
+import { RiFileCodeFill } from 'react-icons/ri';
+import { HiFolder, HiFolderOpen } from 'react-icons/hi'
 
 const { ipcRenderer } = require('electron');
 
@@ -22,26 +31,31 @@ const FileDirectory = ({ fileTree }) => {
   const projectName = projectFilePath.substring(idx + 1);
 
   const ICON_MAP = {
-    '.html': 'https://img.icons8.com/small/16/000000/html.png',
-    '.json': 'https://img.icons8.com/small/16/000000/json.png',
-    '.js': 'https://img.icons8.com/small/16/000000/js.png',
-    '.css': 'https://img.icons8.com/small/16/000000/css.png',
-    '.md': 'https://img.icons8.com/small/16/000000/txt.png',
-    img: 'https://img.icons8.com/small/16/000000/image-file.png',
-    etc: 'https://img.icons8.com/small/16/000000/code-file.png',
-    folder: 'https://img.icons8.com/small/16/000000/folder-invoices.png',
+    '.html': <AiFillHtml5 size={'1rem'}/>,
+    '.json': <VscJson size={'1rem'}/>,
+    '.js': <IoLogoJavascript size={'1rem'}/>,
+    '.css': <DiCss3 size={'1rem'}/>,
+    '.jsx': <FaReact size={'1rem'}/>,
+    '.tsx': <FaReact size={'1rem'}/>,
+    '.ts': <SiTypescript size={'1rem'}/>,
+    'vue': <IoLogoVue size={'1rem'}/>,
+    'scss': <FaSass size={'1rem'}/>,
+    'sass': <FaSass size={'1rem'}/>,
   };
 
   const differImg = (file) => {
     const imageTypes = ['.psd', '.ai', '.png', '.gif', '.svg', '.jpg', '.ps', '.eps', '.tif'];
+    if (file.includes('.test')){
+      return <SiJest size={'1rem'}/>;
+    }
     let idx = file.lastIndexOf('.');
     let fileType = file.substring(idx);
     if (imageTypes.includes(fileType)) {
-      return <img id={styles.file} src={ICON_MAP['img']} alt='img' />;
+      return <MdImage size={'1rem'}/>;
     } else if (ICON_MAP[fileType]) {
-      return <img id={styles.file} src={ICON_MAP[fileType]} alt={fileType} />;
+      return ICON_MAP[fileType];
     } else {
-      return <img id={styles.file} src={ICON_MAP.etc} alt='file' />;
+      return <RiFileCodeFill size={'1rem'}/>;
     }
   };
 
@@ -74,11 +88,10 @@ const FileDirectory = ({ fileTree }) => {
                   id={styles.dirButton}
                   onClick={() => handleClickToggleFolderView(file.filePath)}
                 >
-                  <img id={styles.folder} src={ICON_MAP.folder} alt='folder' />
-                  {file.fileName}
+                  {isFolderOpen[file.filePath] ? <HiFolderOpen size={'1rem'}/> : <HiFolder size={'1rem'}/>}
+                  <span>{file.fileName}</span>
                 </button>
               </li>
-              {/* {file.files.length && */}
               {isFolderOpen[file.filePath] && convertToHTML(file.files, fileImg)}
             </ul>
           );
@@ -111,8 +124,10 @@ const FileDirectory = ({ fileTree }) => {
   return (
     <>
       <div id={styles.fileDirectory}>
-        <div id={styles.explorer}>{projectName}</div>
-        {fileTree && convertToHTML(fileTree)}
+        <div id={styles.explorer}>{projectName.toUpperCase()}</div>
+        <div id={styles.fileTreeContainer}>
+          {fileTree && convertToHTML(fileTree)}
+        </div>
       </div>
     </>
   );

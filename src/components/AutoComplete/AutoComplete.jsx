@@ -4,8 +4,9 @@ import styles from './AutoComplete.module.scss';
 import { updateAction, updateAssertion } from '../../context/actions/reactTestCaseActions';
 import { eventTypesList } from '../ReactTestComponent/Action/eventTypesList';
 import { matcherTypesList } from '../ReactTestComponent/Assertion/matcherTypesList';
+import { vueTypesList } from '../VueTestComponent/Assertion/matcherTypesList'
 
-const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
+const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 'react' }) => {
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
 
@@ -33,22 +34,39 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase }) => {
 
     onChange: handleChangeValue,
   };
-
+  
   const getSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    if (statementType === 'action') {
-      return inputLength === 0
-        ? []
-        : eventTypesList.filter(
-            (eventType) => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
-          );
-    } else {
-      return inputLength === 0
-        ? []
-        : matcherTypesList.filter(
-            (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
-          );
+    if(type === 'react'){
+      if (statementType === 'action') {
+        return inputLength === 0
+          ? []
+          : eventTypesList.filter(
+              (eventType) => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
+            );
+      } else {
+        return inputLength === 0
+          ? []
+          : matcherTypesList.filter(
+              (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
+            );
+      }
+    }
+    else if (type === 'vue'){
+      if (statementType === 'action') {
+        return inputLength === 0
+          ? []
+          : eventTypesList.filter(
+              (eventType) => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
+            );
+      } else {
+        return inputLength === 0
+          ? []
+          : vueTypesList.filter(
+              (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
+            );
+      }
     }
   };
 

@@ -1,73 +1,156 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
-.modal {
+.modalOverlaylight {
   position: fixed;
-  width: 700px;
-  font-family: $openSans;
-  background-color: $mint;
-  border: 8px solid $mint;
-  border-radius: 5px;
-  box-shadow: 0 0 0 1px white inset;
-  object-fit: cover;
-  top: 25%;
-  left: 22%;
-}
-
-.modal2 {
-  position: fixed;
-  width: 700px;
-  font-family: $openSans;
-  background-color: white;
-  opacity: 1;
-  border: 8px solid $mint;
-  border-radius: 5px;
-  box-shadow: 0 0 0 1px white inset;
-  object-fit: cover;
-}
-
-.modalCustomOverlay {
-  display: grid;
-  position: fixed;
-  inset: 0px;
-  background-color: rgba(255, 255, 255, 0.75);
-  z-index: 3;
-}
-
-.root {
-  width: 100%;
-  max-width: 360;
-  background-color: white;
-}
-
-#title {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $mint;
-  margin: 1px;
-  height: 20%;
-  background-color: #fff;
+  z-index: 10000;
+  background-color: $eggshell-opaque;
+  --container-bg: #{$mint};
+  --container-border: #{$darkslategrey};
+  --accordion-bg: #{$mint3};
+  --accordion-details-bg: #{$mint2};
+  --accordion-color: black;
+}
+
+.modalOverlaydark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  background-color: $chromegray-opaque;
+  --container-bg: #{$darkslategrey};
+  --container-border: #{$mint};
+  --accordion-bg: #{$chromegray};
+  --accordion-details-bg: #{$chromegray-light};
+  --accordion-color: white;
+}
+
+.modal {
+  position: fixed;
+  max-width: 700px;
+  font-family: $openSans;
+  background-color: transparent;
+  object-fit: cover;
+}
+
+// .modal2 {
+//   position: fixed;
+//   width: 700px;
+//   font-family: $openSans;
+//   background-color: transparent;
+//   opacity: 1;
+//   object-fit: cover;
+// }
+
+.modal:focus{
+  outline: none;
+}
+
+#container{
+  display: flex;
+  max-width: 700px;
+  background: var(--container-bg);
+  border: 8px solid var(--container-bg);
+  border-radius: 10px;
+  color: white;
+}
+
+#containerRun{
+  display: flex;
+  max-width: 700px;
+  background: var(--container-bg);
+  border: 8px solid var(--container-bg);
+  border-radius: 10px;
+  color: white;
+  padding: 5px;
+}
+
+#body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 5px;
+  
   p {
-    color: $mint;
-    margin: 10px;
-    font-weight: bold;
-    align-content: center;
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  input{
+    color: white;
+  }
+  label{
+    color: white;
+  }
+}
+
+#newTestButtons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+
+  button {
+    background-color: $salmon;
+    color: white;
+
+    span {
+      width: 100%;
+    }
+  }
+}
+
+#runTestButtons {
+  display: flex;
+  gap: 10px;
+
+  button {
+    background-color: $salmon;
+    color: white;
+
+    span {
+      width: 100%;
+    }
+  }
+}
+
+#chooseTestBtn {
+  background-color: $salmon;
+  color: white;
+
+  span {
+    width: 100%;
   }
 }
 
 #escapeButton {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 1.25rem;
+  top: 2px;
+  right: 2px;
+  font-size: 1rem;
   z-index: 3;
   transition: 250ms;
+  fill: white;
 
   &:hover {
-    color: red;
+    fill: red;
     cursor: pointer;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
   }
 }
@@ -79,98 +162,30 @@
   fill: $mint;
 }
 
-#body {
-  padding: 20px 25px 10px 25px;
-
-  #endpoint {
-    color: black;
-  }
-  #step {
-    color: rgb(255, 255, 255);
-    margin-bottom: 10px;
-    span:hover {
-      color: $mint;
-    }
-
-    li {
-      margin-left: 50px;
-    }
-    li:last-child {
-      margin-bottom: 5px;
-    }
-    li:first-child {
-      margin-top: 4px;
-    }
-  }
-
-  p {
-    color: #fff;
-    font-size: 14px;
-    line-height: 1.5;
-  }
-  input {
-    margin: 10px 0;
-    width: 430px;
-  }
-  button {
-    margin: 5px 10px 5px 0px;
-    font-size: 12px;
-    text-align: center;
-    vertical-align: middle;
-    float: right;
-    width: 100px;
-    height: 1.5rem;
-    color: #fff;
-    background-color: transparent;
-    outline: none;
-    box-shadow: none;
-    cursor: pointer;
-    border: 0.5px solid white;
-    border-radius: 3px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-  }
-  button:focus {
-    outline: 2px solid darkblue;
-  }
-}
-
-#text {
-  margin: 12px;
-  text-align: center;
-}
-
-#save:hover {
-  background-color: rgb(232, 232, 232);
-  color: $mint;
-  border-radius: 3px;
-}
-#save:focus {
-  outline: 1px solid darkblue;
-}
-
-#newTestButtons {
+#exportBtns{
   display: flex;
-  justify-content: flex-start;
+  gap: 5px;
+  button {
+    color: white;
+    width: 100%;
 
-  #feedback {
-    p {
-      font-size: 12px;
-      margin-top: 6px;
+    span {
+      width: 100%;
     }
   }
 }
-#newTestButtons:focus {
-  outline: 1px solid darkblue;
+
+#cancelBtn{
+  background-color: $lighter-mint;
+}
+
+#saveBtn{
+  background-color: $salmon;
 }
 
 #testMenu {
-  padding: 10px;
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
-  width: 98%;
-  margin-bottom: 10px;
+  display: grid;
+  width: 100%;
 }
 
 #left {
@@ -193,20 +208,52 @@
   }
 }
 
+#right {
+  display: flex;
+  flex-direction: column;
+  #rightBtn {
+  height: 40px;
+  width: 110px;
+  opacity: 0.8;
+  font-family: $oxygen;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 0.5px $light-gray solid;
+
+  color: white;
+  background-color: $mint;
+  // margin-right: 4px;
+  // margin-bottom: 4px;
+  }
+
+  #rightBtn:hover {
+    background-color: white;
+    color: $mint;
+  }
+}
+
 #accordionSummary {
-  background-color: $mint2;
+  background-color: var(--accordion-bg);
+  color: var(--accordion-color);
 }
 
 #accordionDetails {
-  background-color: 'white';
+  background-color: var(--accordion-details-bg);
+  color: var(--accordion-color);
   opacity: 1;
 }
 
 #accordionDiv {
-  // background-color: $mint;
   display: flex;
   flex: 1;
   flex-direction: column;
+  input{
+    color: var(--accordion-color);
+  }
+
+  input::placeholder {
+    color: var(--accordion-color);
+  }
 }
 
 #endPointGuide {
@@ -214,6 +261,8 @@
 }
 
 #configGuide {
+  background-color: var(--accordion-details-bg);
+  color: var(--accordion-color);
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -234,4 +283,22 @@ pre {
   color: white;
 }
 
-/*animation*/
+.draggable-div{
+  border-radius: 4px;
+  background: red;
+  border: 1px solid rgb(204, 204, 204);
+  padding: 10px;
+  padding-top: 0px;
+  pointer-events: all;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.handle {
+  height: 10px;
+  background: black;
+  border-bottom: 5px solid white;
+  cursor: move;
+  width: 200%;
+  margin-left: -50%;
+}

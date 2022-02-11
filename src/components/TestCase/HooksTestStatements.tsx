@@ -5,29 +5,30 @@ import { HooksStatements } from '../../utils/hooksTypes';
 import importOptionsSwitch from './importOptions';
 import SearchInput from '../SearchInput/SearchInput';
 import { updateHooksFilePath } from '../../context/actions/hooksTestCaseActions';
-import '../SearchInput/SearchInput.scss';
+import styles from '../../components/TestCase/TestCase.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
+
 
 const HooksTestStatements = () => {
   const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
   const { isHooksOn } = importOptionsSwitch(hooksStatements);
-  const [{ filePathMap }] = useContext<any>(GlobalContext);
+  const [{ filePathMap, theme }] = useContext<any>(GlobalContext);
 
   let hImports = null;
   if (isHooksOn) {
     hImports = (
-      <div className='flex-container'>
-        <SearchInput
-          label={'Import Hooks From'}
-          type={null}
-          reactTestCase={null}
-          updateTypesFilePath={null}
-          updateActionsFilePath={updateHooksFilePath}
-          options={Object.keys(filePathMap)}
-          dispatch={dispatchToHooksTestCase}
-          action={null}
-          filePathMap={filePathMap}
-        />
+      <div id={styles[`testCaseHeader${theme}`]}>
+            <SearchInput
+              label={'Import Hooks From'}
+              type={null}
+              reactTestCase={null}
+              updateTypesFilePath={null}
+              updateActionsFilePath={updateHooksFilePath}
+              options={Object.keys(filePathMap)}
+              dispatch={dispatchToHooksTestCase}
+              action={null}
+              filePathMap={filePathMap}
+            />
       </div>
     );
   }

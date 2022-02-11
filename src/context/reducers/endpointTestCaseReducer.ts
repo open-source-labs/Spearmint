@@ -39,6 +39,7 @@ export const endpointTestCaseState: EndpointTestCaseState = {
   serverFilePath: '',
   serverFileName: '',
   dbFilePath: '',
+  dbFileName: '',
   addDB: false,
   endpointStatements: [{ ...newEndpoint, headers: [], assertions: [{ ...newAssertion }] }],
 };
@@ -198,9 +199,11 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
         addDB: action.db,
       };
     case actionTypes.UPDATE_DB_FILEPATH:
+      const { dbFilePath, dbFileName } = action;
       return {
         ...state,
-        dbFilePath: action.dbFilePath,
+        dbFilePath,
+        dbFileName
       };
     case actionTypes.REPLACE_TEST: {
       const { testState } = action;

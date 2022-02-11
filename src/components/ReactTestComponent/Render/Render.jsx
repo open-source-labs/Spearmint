@@ -9,9 +9,14 @@ import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseRed
 
 import { deleteRender, addProp } from '../../../context/actions/reactTestCaseActions';
 import Prop from './Prop';
+import { Button } from '@material-ui/core';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { AiOutlineClose } from 'react-icons/ai';
+const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ statement, statementId, describeId, itId }) => {
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{theme}] = useContext(GlobalContext)
 
   const handleClickAddProp = () => {
     dispatchToReactTestCase(addProp(statementId));
@@ -22,27 +27,24 @@ const Render = ({ statement, statementId, describeId, itId }) => {
   };
 
   return (
-    <div id={styles.RenderContainer}>
+    <div id={styles[`RenderContainer${theme}`]}>
       <div className={styles.renderHeader}>
         <span className={styles.header}>
-          Rendering: <span style={{ color: 'black' }}>{statements.componentName}</span>
+          Rendering: <span id={styles.componentName}>{statements.componentName}</span>
         </span>
-        <button className={styles.addProps} onClick={handleClickAddProp}>
-          <i className='fas fa-plus'></i> Add Props
-        </button>
-        <i
-          onClick={handleClickDeleteRender}
-          className={cn(styles.deleteRender, 'far fa-window-close')}
-        ></i>
+        <Button onClick={handleClickAddProp} variant='outlined'>
+          Add Props
+        </Button>
+        <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteRender} />
       </div>
       <div className={'props'}>
         {statement.props.length > 0 && (
           <div>
             <div id={styles.renderProp}>
-              <label htmlFor='prop-key' id={styles.propKeyLabel}>
+              <label htmlFor='prop-key'>
                 Prop key
               </label>
-              <label htmlFor='prop-value' id={styles.propValLabel}>
+              <label htmlFor='prop-value' >
                 Prop value
               </label>
             </div>
@@ -56,6 +58,7 @@ const Render = ({ statement, statementId, describeId, itId }) => {
                   propKey={prop.propKey}
                   propValue={prop.propValue}
                   dispatchToTestCase={dispatchToReactTestCase}
+                  theme={theme}
                 />
               );
             })}

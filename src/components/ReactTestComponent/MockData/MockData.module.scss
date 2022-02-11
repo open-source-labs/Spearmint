@@ -5,6 +5,8 @@
 #mockData {
   @include box-styling;
   padding: 5px 10px 10px 8px;
+  background-color: $light-gray2;
+  
   hr {
     border: 1px solid $light-gray;
     margin-top: 0;

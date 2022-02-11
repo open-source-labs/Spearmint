@@ -15,19 +15,19 @@
 //both open 
 #fileDirectoryOpenRightPanelOpen {
   display: grid;
-  grid-template-columns: 280px auto 40%;
+  grid-template-columns: 280px auto 30%;
   grid-template-rows: 100vh;
   grid-template-areas: 'navBar leftPanel rightPanel';
-  background-color: $light-gray3;
+  background-color: $eggshell;
 }
 
 //file directory is closed but right panel is open
 #fileDirectoryClosedRightPanelOpen {
   display: grid;
-  grid-template-columns: 48px auto 50%;
+  grid-template-columns: 48px auto 30%;
   grid-template-rows: 100vh;
   grid-template-areas: 'navBar leftPanel rightPanel';
-  background-color: $light-gray3;
+  background-color: $eggshell;
 }
 
 //both closed
@@ -39,4 +39,60 @@
   background-color: $light-gray3;
 }
 
+#app{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 5px;
+}
 
+#contentlight{
+  flex: 1 1 100%;
+  display: flex;
+  padding-top: 3px;
+  width: 100%;
+  max-height: 100vh;
+  gap: 3px;
+  transition: 0.4s ease-in;
+  --fileDir-bg: #{$mint};
+  --explorer-bg: #{$salmon};
+  --dir-button-bg: #{mint};
+  --dir-button-color: #{$eggshell};
+}
+
+#contentdark{
+  flex: 1 1 100%;
+  display: flex;
+  padding-top: 3px;
+  width: 100%;
+  max-height: 100vh;
+  gap: 3px;
+  transition: 0.4s ease-in;
+  --fileDir-bg: #{$darkslategrey};
+  --explorer-bg: #{$navy};
+  --dir-button-bg: #{$mint};
+  --dir-button-color: #{$eggshell};
+}
+
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 600ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 600ms;
+}
+
+#toggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 3000;
+}
