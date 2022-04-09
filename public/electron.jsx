@@ -44,14 +44,23 @@ function createWindow() {
       // could instead build with BrowserView or iframe
     },
   });
-
+   //////////////////////////////////////////////////
+  //boiler plate for macOS. Add closing functionality
+  //////////////////////////////////////////////////
   if (process.platform === 'darwin') {
       app.dock.setIcon(path.join(__dirname, 'icon.png'));
   }
 
+  // potential window-close-app-terminate behavior -dk
+  // app.on('window-all-closed', () => {
+  //   if (process.platform !== 'darwin') app.quit()
+  // });
+
   mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
   mainWindow.webContents.openDevTools()
-
+  //////////////////////////////////////////////////
+  //Creates terminal, specifies dimensions based on columns and rows
+  //////////////////////////////////////////////////
   // PTY PROCESS FOR IN APP TERMINAL
   const ptyArgs = {
     name: 'xterm-color',
@@ -78,6 +87,9 @@ function createWindow() {
     ptyProcess.resize(data.cols, data.rows);
   });
 
+////////////////////////////////////////
+  //dark mode light mode 
+////////////////////////////////////////
   mainWindow.webContents
   .executeJavaScript('localStorage.getItem("theme");', true)
   .then(result => {
@@ -85,13 +97,17 @@ function createWindow() {
   });
 }
 
+///////////////////////////////////////
+//for os users to have path
+///////////////////////////////////////
+
 if (os.platform() !== 'win32') {
   const fixPath = require('fix-path');
   fixPath();
 }
 
 /*
-UNIVERSAL IPC CALLS
+r IPC CALLS
 (The following IPC calls are made from various components in the codebase)
 */
 ipcMain.on('Universal.stat', (e, filePath) => {
@@ -215,6 +231,10 @@ ipcMain.on('Github-Oauth', (_event, url) => {
 
 app.whenReady()
   .then(createWindow)
+
+  // .then( app.on('activate', () => {
+  //   if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  // }) )
 
   // react dev tools not working so commenting out...
   // .then(()=> {

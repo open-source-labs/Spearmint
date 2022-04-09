@@ -2,7 +2,7 @@ require('dotenv').config({ path: __dirname + '/./../../.env' });
 // Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 
-const MONGO_URI = `mongodb+srv://ericgpark:${process.env.MONGO_PW}@spearmint.j5ikp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const MONGO_URI = `mongodb+srv://ctpcheng:aaabbbccc123@cluster0.tcvug.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
