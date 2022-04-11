@@ -1,9 +1,10 @@
-// import React from 'react';
-// import Action from '../SvelteTestComponent/Action/Action';
-// import Assertion from '../SvelteTestComponent/Assertion/Assertion';
-// import Render from '../SvelteTestComponent/Render/Render';
+import React from 'react';
+import Action from '../SvelteTestComponent/Action/Action';
+import Assertion from '../SvelteTestComponent/Assertion/Assertion';
+import Render from '../SvelteTestComponent/Render/Render';
 
-const VueTestStatements = ({ statements, itId, describeId }) => {
+const SvelteTestStatements = ({ statements, itId, describeId }) => {
+
   // filter out ids not belonging to the correct describe block and itStatement
   const filterStatements = statements.allIds.filter((id) => {
     return statements.byId[id].describeId === describeId && statements.byId[id].itId === itId;
@@ -47,4 +48,5 @@ const VueTestStatements = ({ statements, itId, describeId }) => {
   });
 };
 
-// export default SvelteTestStatements;
+
+export default SvelteTestStatements;

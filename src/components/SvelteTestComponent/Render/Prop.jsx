@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import styles from './Prop.module.scss';
+import styles from  '../../ReactTestComponent/Render/Prop.module.scss';
 import { deleteProp, updateProp } from '../../../context/actions/svelteTestCaseActions';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 

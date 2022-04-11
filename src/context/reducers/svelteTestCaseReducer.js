@@ -130,7 +130,9 @@ const deleteChildren = (object, deletionId, lookup, it) => {
 
 /* ------------------------- Svelte Test Case Reducer ------------------------ */
 
-export const svelteTestCaseReducer = (state, action) => {
+
+export const SvelteTestCaseReducer = (state, action) => {
+
   Object.freeze(state);
 
   let describeBlocks;
