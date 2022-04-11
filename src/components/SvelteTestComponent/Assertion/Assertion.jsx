@@ -4,13 +4,13 @@
  *  - but for only the last assertion card?
  */
 import React, { useContext } from 'react';
-import styles from './Assertion.module.scss';
-import { deleteAssertion, updateAssertion } from '../../../context/actions/svelteTestCaseActions';
+import styles from '../../ReactTestComponent/Assertion/Assertion.module.scss';
+import { deleteAssertion, updateAssertion } from '../../../context/actions/reactTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
-import { SvelteTestCaseContext } from '../../../context/reducers/svelteTestCaseReducer';
+import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -18,7 +18,7 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
-  const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
+  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeAssertionFields = (e, field) => {
@@ -26,11 +26,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
     field === 'isNot'
       ? (updatedAssertion[field] = !updatedAssertion.isNot)
       : (updatedAssertion[field] = e.target.value);
-    dispatchToSvelteTestCase(updateAssertion(updatedAssertion));
+    dispatchToReactTestCase(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = (e) => {
-    dispatchToSvelteTestCase(deleteAssertion(statementId));
+    dispatchToReactTestCase(deleteAssertion(statementId));
   };
 
   const needsMatcherValue = (matcherType) => {
@@ -71,17 +71,12 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               onChange={(e) => handleChangeAssertionFields(e, 'queryVariant')}
             >
               <option value='' />
-              <option value='find'>find</option>
-              <option value='findComponent'>findComponent</option>
-              <option value='findAll'>findAll</option>
-              <option value='findBy'>findBy</option>
-              <option value='findAllBy'>findAllBy</option>
-              <option value='get'>get</option>
               <option value='getBy'>getBy</option>
               <option value='getAllBy'>getAllBy</option>
-              <option value='getComponent'>getComponent</option>
               <option value='queryBy'>queryBy</option>
               <option value='queryAllBy'>queryAllBy</option>
+              <option value='findBy'>findBy</option>
+              <option value='findAllBy'>findAllBy</option>
             </select>
             {/* <span id={styles.hastooltip} role='tooltip'>
               <span id={styles.tooltip}>
@@ -149,7 +144,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <AutoComplete
                 statement={statement}
                 statementType='assertion'
-                dispatchToTestCase={dispatchToSvelteTestCase}
+                dispatchToTestCase={dispatchToReactTestCase}
                 id={styles.matcherAuto}
               />
 

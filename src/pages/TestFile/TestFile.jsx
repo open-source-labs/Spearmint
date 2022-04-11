@@ -69,12 +69,19 @@ import {
 } from '../../context/reducers/vueTestCaseReducer';
 import VueTestCase from '../../components/TestCase/VueTestCase';
 
+import {
+  SvelteTestCaseContext,
+  SvelteTestCaseState,
+  SvelteTestCaseReducer
+} from '../../context/reducers/svelteTestCaseReducer';
+import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaUniversalAccess, FaReact } from "react-icons/fa"
 import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
-import { SiPuppeteer, SiRedux } from "react-icons/si"
+import { SiPuppeteer, SiRedux, SiSvelte } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
 
 import { Button } from '@material-ui/core';
@@ -121,6 +128,10 @@ const TestFile = () => {
     secTestCaseReducer,
     secTestCaseState
   );
+  const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
+    SvelteTestCaseReducer,
+    SvelteTestCaseState
+  )
 
   const closeTestModal = () => {
     dispatchToGlobal(toggleModal());
@@ -157,12 +168,12 @@ const TestFile = () => {
             'Vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
     'endpoint': [<IoServer size={'1.25rem'}/>, 'Endpoint',
                   'Make sure your HTTP routes are getting the correct response by testing your server with Supertest'],
-    'acc': [<FaUniversalAccess size={'1.25rem'}/>, 'Accessibility',
-            'Maintain a good accessibility score by testing the various attributes of your website'],
+    // 'acc': [<FaUniversalAccess size={'1.25rem'}/>, 'Accessibility',
+    //         'Maintain a good accessibility score by testing the various attributes of your website'],
     'sec': [<MdSecurity size={'1.25rem'}/>, 'Security',
             'Evaluate security vulnerabilities using Synk'],
-    // 'svelte': [<SiSvelte size={'1.25rem'}/>, 'Svelte',
-    //         'Newly added Svelte testing' ],
+    'svelte': [<SiSvelte size={'1.25rem'}/>, 'Svelte',
+            'Newly added Svelte testing' ],
   }
 
   const allButtons = (Object.keys(testMappings)).map((elem, idx) => {
@@ -262,13 +273,13 @@ const TestFile = () => {
         </section>
       )}
 
-      {testCase === 'acc' && (
+      {/* {testCase === 'acc' && (
         <section>
           <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
             <AccTestCase />
           </AccTestCaseContext.Provider>
         </section>
-      )}
+      )} */}
       {testCase === 'sec' && (
         <section>
           <SecTestCaseContext.Provider value={[secTestCase, dispatchToSecTestCase]}>
@@ -285,13 +296,13 @@ const TestFile = () => {
           </section>
         )
       }
-      {/* {testCase === 'svelte' && (
+      {testCase === 'svelte' && (
         <section>
-          <SvelteTestCaseContext.Provider value={[svelteTestCase, dispatchToSvelteTestCase]}>
-            <SecTestCase />
-          </SvelteTestCaseContext.Provider>
+          <MockDataCaseContext.Provider value={[mockData, dispatchToSvelteTestCase]}>
+            <SvelteTestCase />
+          </MockDataCaseContext.Provider >
         </section>
-      )} */}
+      )}
 
       {testCase === '' && (
           <Fragment>
