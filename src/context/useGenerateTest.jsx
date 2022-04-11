@@ -603,6 +603,15 @@ function useGenerateTest(test, projectFilePath) {
       else if (type === 'vue'){
         testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
       }
+      else if (type === 'svelte') {
+        if (action.eventValue) {
+          testFileCode += `await userEvent.${action.eventType}(screen.${action.querySelector}
+                            (${action.queryValue}), "${action.eventValue}");`;
+        } else {
+          testFileCode += `await userEvent.${action.eventType}(screen.${action.querySelector}
+                            (${action.queryValue}));`;
+        }
+      }
     };
 
     // Assertion Jest Test Code
@@ -621,6 +630,10 @@ function useGenerateTest(test, projectFilePath) {
           testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
             ${assertion.matcherType}(${assertion.matcherValue});`;
         }
+      }
+      if (type === 'svelte'){
+        testFileCode += `expect(screen.${assertion.querySelector}
+          (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
       }
     };
 
@@ -1188,6 +1201,93 @@ function useGenerateTest(test, projectFilePath) {
       }, '');
     };
 
+    //-----------------------------------------Svelte Test---------------------------------------------------------------
+     // Svelte Import Statements
+     const addSvelteImportStatements = () => {
+      testFileCode += `
+        import { render, screen, waitFor } from '@testing-library/svelte'; 
+        import userEvent from '@testing-library/user-event'; 
+        import { setupServer } from 'msw/node';
+        import { rest } from 'msw';
+        \n`;
+    };
+
+    const addSvelteComponentImportStatement = () => {
+      const componentPath = svelteTestCase.statements.componentPath;
+      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      filePath = filePath.replace(/\\/g, '/');
+      const formattedComponentName = svelteTestCase.statements.componentName.replace(/\.svelte?/, '');
+      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
+    };
+
+
+    const addSvelteDescribeBlocks = () => {
+      const describeBlocks = svelteTestCase.describeBlocks;
+
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        addSvelteItStatement(id);
+        testFileCode += `}); \n`;
+      });
+    };
+    
+        
+    const addSvelteItStatement = (describeId) => {
+      const itStatements = svelteTestCase.itStatements;
+      itStatements.allIds[describeId].forEach((itId) => {
+        testFileCode += `it('${itStatements.byId[itId].text}', async () => {`;
+        addSvelteStatements(itId);
+        testFileCode += '})\n';
+      });
+    };
+
+    const addSvelteStatements = (itId) => {
+      const statements = svelteTestCase.statements;
+      const methods = identifySvelteMethods(itId);
+      statements.allIds.forEach((id) => {
+        let statement = statements.byId[id];
+        if (statement.itId === itId) {
+          switch (statement.type) {
+            case 'action':
+              return addAction(statement, 'svelte');
+            case 'assertion':
+              return addAssertion(statement, 'svelte');
+            case 'render':
+              return addSvelteRender(statement, methods);
+            default:
+              return statement;
+          }
+        }
+      });
+    };
+
+    const identifySvelteMethods = (itId) => {
+      const methods = new Set([]);
+      svelteTestCase.statements.allIds.forEach((id) => {
+        let statement = svelteTestCase.statements.byId[id];
+        if (statement.itId === itId) {
+          if (statement.type === 'action' || statement.type === 'assertion') {
+            methods.add(statement.queryVariant + statement.querySelector);
+          }
+        }
+      });
+      return Array.from(methods).join(', ');
+    };
+
+    const addSvelteRender = (statement, methods) => {
+      let props = createSvelteRenderProps(statement.props);
+      const formattedComponentName = svelteTestCase.statements.componentName.replace(/\.svelte?/, '');
+      // change to Svelte files ** NEED CORRECT FORMATTING **
+      testFileCode += `render(${formattedComponentName});`;
+    };
+
+    const createSvelteRenderProps = (props) => {
+      return props.reduce((acc, prop) => {
+        return acc + `${prop.propKey}='${prop.propValue}',`;
+      }, '');
+    };
+
+
     // ------------------------------------ switch statement on test type -------------------------
 
     switch (test) {
@@ -1245,6 +1345,23 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+      //---------------------------------------------------Svelte switch statement---------------------------------------------
+      case 'svelte':
+        var svelteTestCase = testState;
+        var mockData = mockDataState;
+        return (
+          addSvelteComponentImportStatement(),
+          addSvelteImportStatements(),
+          addMockData(),
+          addSvelteDescribeBlocks(),
+          (testFileCode = beautify(testFileCode, {
+            brace_style: 'collapse, preserve-inline',
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+        
       case 'redux':
         var reduxTestCase = testState;
         return (

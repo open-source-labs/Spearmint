@@ -2,11 +2,7 @@ require('dotenv').config({ path: __dirname + '/./../../.env' });
 // Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 
-<<<<<<< HEAD
-const MONGO_URI = `mongodb+srv://ctpcheng:aaabbbccc123@cluster0.tcvug.mongodb.net/myFirstDatabase?retryWrites=true&w=majority` ;
-=======
 const MONGO_URI = `mongodb+srv://ctpcheng:aaabbbccc123@cluster0.tcvug.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
->>>>>>> 5ee09b2b68339306ec23c157e756a20fcfb0c996
 
 mongoose
   .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

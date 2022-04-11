@@ -101,6 +101,11 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
         cd: `cd ${projectFilePath}`,
         install: 'vue add unit-jest',
       };
+    case 'svelte':
+      return {
+        cd: `cd ${projectFilePath}`,
+        install: 'npm i -D @testing-library/svelte @testing-library/user-event @testing-library/jest-dom @babel/preset-env svelte-jester jest msw babel-jest'
+      }
     default:
       return '';
     // code block
