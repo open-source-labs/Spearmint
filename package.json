@@ -9,7 +9,8 @@
     "start-dev": "concurrently \"electron .\" \"nodemon server/server.js\"",
     "watch": "webpack --config webpack.config.ts --watch",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "dev": "npm run watch & npm run start-dev"
   },
   "build": {
     "appId": "spearmint",
@@ -47,6 +48,7 @@
     "@uiw/react-codemirror": "^4.2.4",
     "babel-loader": "^8.2.2",
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "classnames": "^2.3.1",
     "codemirror": "^5.64.0",
     "concurrently": "^6.4.0",
