@@ -154,13 +154,15 @@ const TestFile = () => {
     'redux': [<SiRedux size={'1.25rem'}/>, 'Redux', 
               'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
     'vue': [<IoLogoVue size={'1.25rem'}/>, 'Vue',
-            'Newly added vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
+            'Vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
     'endpoint': [<IoServer size={'1.25rem'}/>, 'Endpoint',
                   'Make sure your HTTP routes are getting the correct response by testing your server with Supertest'],
     'acc': [<FaUniversalAccess size={'1.25rem'}/>, 'Accessibility',
             'Maintain a good accessibility score by testing the various attributes of your website'],
     'sec': [<MdSecurity size={'1.25rem'}/>, 'Security',
             'Evaluate security vulnerabilities using Synk'],
+    // 'svelte': [<SiSvelte size={'1.25rem'}/>, 'Svelte',
+    //         'Newly added Svelte testing' ],
   }
 
   const allButtons = (Object.keys(testMappings)).map((elem, idx) => {
@@ -283,6 +285,13 @@ const TestFile = () => {
           </section>
         )
       }
+      {/* {testCase === 'svelte' && (
+        <section>
+          <SvelteTestCaseContext.Provider value={[svelteTestCase, dispatchToSvelteTestCase]}>
+            <SecTestCase />
+          </SvelteTestCaseContext.Provider>
+        </section>
+      )} */}
 
       {testCase === '' && (
           <Fragment>
