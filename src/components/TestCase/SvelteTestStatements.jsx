@@ -4,6 +4,7 @@ import Assertion from '../SvelteTestComponent/Assertion/Assertion';
 import Render from '../SvelteTestComponent/Render/Render';
 
 const SvelteTestStatements = ({ statements, itId, describeId }) => {
+
   // filter out ids not belonging to the correct describe block and itStatement
   const filterStatements = statements.allIds.filter((id) => {
     return statements.byId[id].describeId === describeId && statements.byId[id].itId === itId;
@@ -46,5 +47,6 @@ const SvelteTestStatements = ({ statements, itId, describeId }) => {
     }
   });
 };
+
 
 export default SvelteTestStatements;

@@ -172,6 +172,7 @@ const TestFile = () => {
     //         'Maintain a good accessibility score by testing the various attributes of your website'],
     'sec': [<MdSecurity size={'1.25rem'}/>, 'Security',
             'Evaluate security vulnerabilities using Synk'],
+
     'svelte': [<SiSvelte size={'1.25rem'}/>, 'Svelte',
             'Newly added Svelte testing' ],
   }
@@ -296,6 +297,7 @@ const TestFile = () => {
           </section>
         )
       }
+
       {testCase === 'svelte' && (
         <section>
           <MockDataCaseContext.Provider value={[mockData, dispatchToSvelteTestCase]}>
