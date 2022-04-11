@@ -9,7 +9,8 @@
     "start-dev": "concurrently \"electron .\" \"nodemon server/server.js\"",
     "watch": "webpack --config webpack.config.ts --watch",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "dev": "npm run watch & npm run start-dev"
   },
   "build": {
     "appId": "spearmint",
