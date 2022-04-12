@@ -52,6 +52,7 @@ const HooksTestCase = () => {
   return (
     <>
       <div id='head'>
+      <h2>Hooks Testing</h2>
         <HooksTestMenu />
       </div>
       <div id={styles[`testMockSection${theme}`]}>

@@ -5,12 +5,12 @@
  */
 import React, { useContext } from 'react';
 import styles from './Assertion.module.scss';
-import { deleteAssertion, updateAssertion } from '../../../context/actions/svelteTestCaseActions';
+import { deleteAssertion, updateAssertion } from '../../../context/actions/reactTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
-import { SvelteTestCaseContext } from '../../../context/reducers/svelteTestCaseReducer';
+import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -18,7 +18,7 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
-  const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
+  const [, dispatchToReactCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeAssertionFields = (e, field) => {
@@ -26,11 +26,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
     field === 'isNot'
       ? (updatedAssertion[field] = !updatedAssertion.isNot)
       : (updatedAssertion[field] = e.target.value);
-    dispatchToSvelteTestCase(updateAssertion(updatedAssertion));
+    dispatchToReactTestCase(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = (e) => {
-    dispatchToSvelteTestCase(deleteAssertion(statementId));
+    dispatchToReactTestCase(deleteAssertion(statementId));
   };
 
   const needsMatcherValue = (matcherType) => {
@@ -149,7 +149,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <AutoComplete
                 statement={statement}
                 statementType='assertion'
-                dispatchToTestCase={dispatchToSvelteTestCase}
+                dispatchToTestCase={dispatchToReactTestCase}
                 id={styles.matcherAuto}
               />
 

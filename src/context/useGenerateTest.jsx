@@ -605,7 +605,7 @@ function useGenerateTest(test, projectFilePath) {
       }
       else if (type === 'svelte') {
         if (action.eventValue) {
-          testFileCode += `await userEvent.${action.eventType}(screen.${action.querySelector}
+          testFileCode += `await userEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
                             (${action.queryValue}), "${action.eventValue}");`;
         } else {
           testFileCode += `await userEvent.${action.eventType}(screen.${action.querySelector}
@@ -632,7 +632,7 @@ function useGenerateTest(test, projectFilePath) {
         }
       }
       if (type === 'svelte'){
-        testFileCode += `expect(screen.${assertion.querySelector}
+        testFileCode += `expect(screen.${assertion.queryVariant + assertion.querySelector}
           (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
       }
     };

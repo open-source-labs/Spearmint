@@ -52,6 +52,7 @@ const SecTestCase = () => {
   return (
     <div>
       <div id="head">
+      <h2>Security Testing</h2>
         <SecTestMenu />
       </div>
 

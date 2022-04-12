@@ -54,6 +54,7 @@ const PuppeteerTestCase = () => {
   return (
     <div>
       <div id='head'>
+      <h2>Puppeteer Testing</h2>
         <PuppeteerTestMenu />
       </div>
       <div id={styles.testMockSection}></div>

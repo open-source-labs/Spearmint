@@ -5,6 +5,7 @@ import { updateAction, updateAssertion } from '../../context/actions/reactTestCa
 import { eventTypesList } from '../ReactTestComponent/Action/eventTypesList';
 import { matcherTypesList } from '../ReactTestComponent/Assertion/matcherTypesList';
 import { vueTypesList } from '../VueTestComponent/Assertion/matcherTypesList'
+import {svelteTypesList} from '../SvelteTestComponent/Assertion/matcherTypesList'
 
 const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 'react' }) => {
   let updatedAction = { ...statement };
@@ -54,6 +55,21 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 're
       }
     }
     else if (type === 'vue'){
+      if (statementType === 'action') {
+        return inputLength === 0
+          ? []
+          : eventTypesList.filter(
+              (eventType) => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
+            );
+      } else {
+        return inputLength === 0
+          ? []
+          : vueTypesList.filter(
+              (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
+            );
+      }
+    }
+    else if (type === 'svelte'){
       if (statementType === 'action') {
         return inputLength === 0
           ? []
