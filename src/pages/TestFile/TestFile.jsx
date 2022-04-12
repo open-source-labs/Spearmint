@@ -300,7 +300,7 @@ const TestFile = () => {
 
       {testCase === 'svelte' && (
         <section>
-          <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+          <MockDataContext.Provider value={[mockData, dispatchToSvelteTestCase]}>
             <SvelteTestCase />
           </MockDataContext.Provider >
         </section>
