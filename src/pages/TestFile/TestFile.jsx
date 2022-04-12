@@ -128,10 +128,10 @@ const TestFile = () => {
     secTestCaseReducer,
     secTestCaseState
   );
-  const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
-    SvelteTestCaseReducer,
-    SvelteTestCaseState
-  )
+  // const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
+  //   SvelteTestCaseReducer,
+  //   SvelteTestCaseState
+  // )
 
   const closeTestModal = () => {
     dispatchToGlobal(toggleModal());
@@ -300,9 +300,9 @@ const TestFile = () => {
 
       {testCase === 'svelte' && (
         <section>
-          <MockDataCaseContext.Provider value={[mockData, dispatchToSvelteTestCase]}>
+          <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
             <SvelteTestCase />
-          </MockDataCaseContext.Provider >
+          </MockDataContext.Provider >
         </section>
       )}
 

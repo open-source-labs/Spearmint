@@ -32,7 +32,7 @@ const SvelteTestMenu = () => {
 
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('svelte');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [svelteTestCase, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
+  const [SvelteTestCase, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
     useContext(GlobalContext);
   const generateTest = useGenerateTest('svelte', projectFilePath);
@@ -52,7 +52,7 @@ const SvelteTestMenu = () => {
   };
 
   const fileHandle = () => {
-    const testGeneration = generateTest(svelteTestCase, mockData);
+    const testGeneration = generateTest(SvelteTestCase, mockData);
     dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
@@ -62,7 +62,7 @@ const SvelteTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    const valid = validateInputs('svelte', svelteTestCase);
+    const valid = validateInputs('svelte', SvelteTestCase);
     dispatchToGlobal(setValidCode(valid));
 
     

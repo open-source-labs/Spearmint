@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
+import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
 import { Draggable } from 'react-beautiful-dnd';
 import SvelteTestStatements from '../../TestCase/SvelteTestStatements';
 import CustomInput from '../CustomInput/CustomInput';
@@ -10,7 +11,6 @@ import {
   deleteItStatement,
 } from '../../../context/actions/svelteTestCaseActions';
 import { SvelteTestCaseContext } from '../../../context/reducers/svelteTestCaseReducer';
-import '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
 import { Button, TextField } from '@material-ui/core';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -22,6 +22,8 @@ const SvelteItRenderer = ({
   handleChangeItStatementText,
   theme,
 }) => {
+  console.log('styles: ', styles);
+  console.log('type of styles: ', typeof styles);
   const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
 
   const addRenderHandleClick = (e) => {
