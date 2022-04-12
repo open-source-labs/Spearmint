@@ -25,12 +25,12 @@ import {
 import { Button } from '@material-ui/core';
 
 const SvelteTestCase = () => {
-  const [svelteTestCase, dispatchToSvelteTestCase] = useReducer(
-    svelteTestCaseReducer,
-    svelteTestCaseState
+  const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
+    SvelteTestCaseReducer,
+    SvelteTestCaseState
   );
 
-  const { describeBlocks, itStatements, statements } = svelteTestCase;
+  const { describeBlocks, itStatements, statements } = SvelteTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, theme }] = useContext(GlobalContext);
 
@@ -78,13 +78,13 @@ const SvelteTestCase = () => {
   };
 
   return (
-    <SvelteTestCaseContext.Provider value={[svelteTestCase, dispatchToSvelteTestCase]}>
+    <SvelteTestCaseContext.Provider value={[SvelteTestCase, dispatchToSvelteTestCase]}>
       <div id={styles[`SvelteTestCase${theme}`]}>
         <SvelteTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
             <SearchInput
-              svelteTestCase
+              SvelteTestCase
               dispatch={dispatchToSvelteTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
