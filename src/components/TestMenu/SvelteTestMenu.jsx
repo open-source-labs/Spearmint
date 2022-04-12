@@ -87,7 +87,7 @@ const SvelteTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
-  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(svelteTestCase, mockData)));
+  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(SvelteTestCase, mockData)));
 
   return (
     <>

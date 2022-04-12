@@ -75,7 +75,8 @@ const ReduxTestCase = () => {
 
   return (
     <div>
-      <div id='head'>
+        <div id='head'>
+        <h2>Redux Testing</h2>
         <ReduxTestMenu />
       </div>
       <div id={styles.testMockSection}>

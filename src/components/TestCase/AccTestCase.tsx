@@ -62,6 +62,7 @@ const AccTestCase = () => {
   return (
     <div id={styles.AccTestCase}>
       <div id="head">
+      <h2>Acc Testing</h2>
         <AccTestMenu />
       </div>
 

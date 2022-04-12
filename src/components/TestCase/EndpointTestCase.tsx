@@ -60,6 +60,7 @@ const EndpointTestCase = () => {
   return (
     <div>
       <div id='head'>
+        <h2>Endpoint Testing</h2>
         <EndpointTestMenu />
       </div>
       <div id={styles[`testMockSection${theme}`]}>

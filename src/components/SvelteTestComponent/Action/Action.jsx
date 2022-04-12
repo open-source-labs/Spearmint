@@ -15,7 +15,7 @@ const closeIcon = require('../../../assets/images/close.png');
 // Action box in middle panel (testCase.jsx)
 const Action = ({ statement, statementId, describeId, itId }) => {
   const [{ mockData }] = useContext(MockDataContext);
-  const [ dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext); 
+  const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext); 
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeActionFields = (e, field) => {
