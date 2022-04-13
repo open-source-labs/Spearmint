@@ -80,7 +80,7 @@ const ReactTestCase = () => {
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
-      <h2>React Testing</h2>
+      <h2 id={styles[`testName${theme}`]}>React Testing</h2>
         <ReactTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
