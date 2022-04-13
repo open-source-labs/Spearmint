@@ -80,7 +80,7 @@ const SvelteTestCase = () => {
   return (
     <SvelteTestCaseContext.Provider value={[SvelteTestCase, dispatchToSvelteTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
-        <h2>Svelte Testing</h2>
+        <h2 id={styles[`testName${theme}`]}>Svelte Testing</h2>
         <SvelteTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>

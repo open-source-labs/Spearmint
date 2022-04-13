@@ -1,3 +1,4 @@
+//This feature is not being implemented anymore, feel free to try to incorporate it again
 import React, { useState, useEffect, useContext } from 'react';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { accReplaceTest } from '../../context/actions/accTestCaseActions';
@@ -13,6 +14,8 @@ import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReduce
 import { reduxReplaceTest } from '../../context/actions/reduxTestCaseActions';
 import { SecTestCaseContext } from '../../context/reducers/secTestCaseReducer';
 import { secReplaceTest } from '../../context/actions/secTestCaseActions';
+import { SvelteTestCaseContext } from '../../context/reducers/svelteTestCaseReducer';
+import { svelteReplaceTest } from '../../context/actions/svelteTestCaseActions';
 
 import ReactModal from 'react-modal';
 import Draggable from 'react-draggable';
@@ -20,6 +23,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import styles from './Modal.module.scss';
+import { SvelteTestCaseContext } from '../../context/reducers/svelteTestCaseReducer';
 
 const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }) => {
   const [tests, setTests] = useState([]);
@@ -29,7 +33,8 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
   const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
   const [, dispatchToReactData] = useContext(ReactTestCaseContext);
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
-  const [, dispatchToSecTestCase] = useContext(SecTestCaseContext)
+  const [, dispatchToSecTestCase] = useContext(SecTestCaseContext);
+  const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
 
   useEffect(() => {
     let isMounted = true;
@@ -74,7 +79,9 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
         dispatchToPuppeteerTestCase(puppeteerReplaceTest(tests[i].testState));
         break;
       case 'sec':
-        dispatchToSecTestCase(secReplaceTest(tests[i].testState))
+        dispatchToSecTestCase(secReplaceTest(tests[i].testState));
+      case 'svelte':
+        dispatchToSvelteTestCase(svelteReplaceTest(tests[i].testState));
       default:
         console.log('Incorrect input');
         break;

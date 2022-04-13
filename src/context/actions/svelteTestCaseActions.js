@@ -195,7 +195,7 @@ export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
 
-export const reactReplaceTest = (testState) => ({
+export const svelteReplaceTest = (testState) => ({
   type: actionTypes.REPLACE_TEST,
   testState,
 });

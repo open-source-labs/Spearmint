@@ -80,7 +80,7 @@ const VueTestCase = () => {
   return (
     <VueTestCaseContext.Provider value={[vueTestCase, dispatchToVueTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
-      <h2>Vue Testing</h2>
+      <h2 id={styles[`testName${theme}`]}>Vue Testing</h2>
         <VueTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>

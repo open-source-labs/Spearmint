@@ -26,9 +26,13 @@ import SearchInput from '../SearchInput/SearchInput';
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 import { Button } from '@material-ui/core';
 
+interface Context {
+  theme: string | null
+}
+
 const AccTestCase = () => {
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
-  const [{theme}] = useContext(GlobalContext);
+  const { theme }: Context = useContext(GlobalContext);
 
   const { describeBlocks, itStatements, testType } = accTestCase;
 
@@ -62,7 +66,7 @@ const AccTestCase = () => {
   return (
     <div id={styles.AccTestCase}>
       <div id="head">
-      <h2>Acc Testing</h2>
+      <h2 id={`testName${theme}`}>Acc Testing</h2>
         <AccTestMenu />
       </div>
 

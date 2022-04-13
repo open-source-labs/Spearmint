@@ -155,26 +155,28 @@ const TestFile = () => {
     },
   };
 
+  const cardSize = '1.1rem';
+
   const testMappings = {
-    'react': [<FaReact size={'1.25rem'}/>, 'React', 
+    'react': [<FaReact size={cardSize}/>, 'React', 
               'Test React with rendering, actions, and assertions found in the React Testing Library'],
-    'hooks': [<GiHook size={'1.25rem'}/>, 'Hooks', 
-              'Make assertions to test your React hooks with available hook parameters and callback functions'],
-    'puppeteer': [<SiPuppeteer size={'1.25rem'}/>, 'Puppeteer',
-                  'Use the puppeteer node library to conduct headless browser testing on the Chrome Browser'],
-    'redux': [<SiRedux size={'1.25rem'}/>, 'Redux', 
+    'redux': [<SiRedux size={cardSize}/>, 'Redux', 
               'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
-    'vue': [<IoLogoVue size={'1.25rem'}/>, 'Vue',
-            'Vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
-    'endpoint': [<IoServer size={'1.25rem'}/>, 'Endpoint',
-                  'Make sure your HTTP routes are getting the correct response by testing your server with Supertest'],
-    // 'acc': [<FaUniversalAccess size={'1.25rem'}/>, 'Accessibility',
-    //         'Maintain a good accessibility score by testing the various attributes of your website'],
-    'sec': [<MdSecurity size={'1.25rem'}/>, 'Security',
+    'svelte': [<SiSvelte size={cardSize}/>, 'Svelte',
+               'Newly added Svelte testing' ],
+    'hooks': [<GiHook size={cardSize}/>, 'Hooks', 
+              'Make assertions to test your React hooks with available hook parameters and callback functions'],
+    'vue': [<IoLogoVue size={cardSize}/>, 'Vue',
+              'Vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
+    'puppeteer': [<SiPuppeteer size={cardSize}/>, 'Puppeteer',
+              'Use the puppeteer node library to conduct headless browser testing on the Chrome Browser'],
+    'endpoint': [<IoServer size={cardSize}/>, 'Endpoint',
+               'Make sure your HTTP routes are getting the correct response by testing your server with Supertest'],
+    'acc': [<FaUniversalAccess size={cardSize}/>, 'Accessibility',
+            'Maintain a good accessibility score by testing the various attributes of your website'],
+    'sec': [<MdSecurity size={cardSize}/>, 'Security',
             'Evaluate security vulnerabilities using Synk'],
 
-    'svelte': [<SiSvelte size={'1.25rem'}/>, 'Svelte',
-            'Newly added Svelte testing' ],
   }
 
   const allButtons = (Object.keys(testMappings)).map((elem, idx) => {
@@ -274,13 +276,14 @@ const TestFile = () => {
         </section>
       )}
 
-      {/* {testCase === 'acc' && (
+
+      {testCase === 'acc' && (
         <section>
           <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
             <AccTestCase />
           </AccTestCaseContext.Provider>
         </section>
-      )} */}
+      )}
       {testCase === 'sec' && (
         <section>
           <SecTestCaseContext.Provider value={[secTestCase, dispatchToSecTestCase]}>
