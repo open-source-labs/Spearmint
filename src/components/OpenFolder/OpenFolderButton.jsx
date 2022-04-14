@@ -22,13 +22,14 @@ import { FaFolderOpen } from 'react-icons/fa'
 import { Button } from '@material-ui/core';
 
 // Change execute command based on os platform
+ 
 let execute = '\n';
 if (os.platform() === 'win32') {
   execute = '\r';
 }
 
 const OpenFolder = () => {
-  const [{ isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
+  const [{ testCase, isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
     GlobalContext,
   );
 
@@ -54,13 +55,30 @@ const OpenFolder = () => {
     }
   };
 
+  
   const filePathMap = {};
   const populateFilePathMap = (file) => {
+    console.log(testCase);
     const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx', 'vue', 'svelte'];
+    // const vueFileTypes = ['vue']
+    // const svelteFileTypes = ['svelte']
     const fileType = file.fileName.split('.')[1];
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
       filePathMap[file.fileName] = file.filePath;
     }
+    // if (testCase === 'react') {
+    //   if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
+    //     filePathMap[file.fileName] = file.filePath;
+    //   }
+    // } else if (testCase === 'vue') {
+    //   if (vueFileTypes.includes(fileType) || fileType === 'html') {
+    //     filePathMap[file.fileName] = file.filePath;
+    //   }
+    // } else if (testCase === 'svelte') {
+    //   if (svelteFileTypes.includes(fileType) || fileType === 'html') {
+    //     filePathMap[file.fileName] = file.filePath;
+    //   }
+    // }
   };
 
   const generateFileTreeObject = (directoryPath) => {

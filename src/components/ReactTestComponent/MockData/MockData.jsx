@@ -5,7 +5,7 @@
  *  - the labels in the card (name, key, type)
  */
 
-import React from 'react';
+import React, {useContext, useReducer } from 'react';
 import styles from './MockData.module.scss';
 import {
   deleteMockData,
@@ -13,11 +13,13 @@ import {
   updateMockDataName,
 } from '../../../context/actions/mockDataActions';
 import MockDataFieldKey from './MockDataKey';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
 
 const plusIcon = require('../../../assets/images/plus.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
+  const [{theme}] = useContext(GlobalContext);
   const handleClickAdd = (e, id) => {
     e.stopPropagation();
     dispatchToMockData(addMockDataKey(id));
@@ -45,7 +47,7 @@ const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
   ));
 
   return (
-    <div id={styles.mockData}>
+    <div id={styles[`mockData${theme}`]}>
       <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDelete} />
       <div id={styles.mockDataHeader}>
         <label htmlFor='mock-data-name'>Name </label>

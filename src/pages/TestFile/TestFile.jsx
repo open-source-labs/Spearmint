@@ -128,6 +128,7 @@ const TestFile = () => {
     secTestCaseReducer,
     secTestCaseState
   );
+
   // const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
   //   SvelteTestCaseReducer,
   //   SvelteTestCaseState
@@ -235,6 +236,7 @@ const TestFile = () => {
           </div>
         </Draggable>
       </ReactModal>
+      
       {/* instantiate context for each test option */}
       {testCase === 'redux' && (
         <section>
