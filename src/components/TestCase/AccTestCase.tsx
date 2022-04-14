@@ -32,7 +32,7 @@ interface Context {
 
 const AccTestCase = () => {
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
-  const { theme }: Context = useContext(GlobalContext);
+  const { theme } = useContext<Context>(GlobalContext);
 
   const { describeBlocks, itStatements, testType } = accTestCase;
 

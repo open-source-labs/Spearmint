@@ -22,8 +22,6 @@ const SvelteItRenderer = ({
   handleChangeItStatementText,
   theme,
 }) => {
-  console.log('styles: ', styles);
-  console.log('type of styles: ', typeof styles);
   const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
 
   const addRenderHandleClick = (e) => {
