@@ -134,6 +134,17 @@ const TestFile = () => {
   //   SvelteTestCaseState
   // )
 
+  const filterFileType = (files, acceptedFileTypes) => {
+    // files is an array of the keys in filePathMap
+    const output = [];
+    for (let file of files) {
+      const splitName =  file.split('.');
+      const fileType = splitName[splitName.length - 1];
+      if(acceptedFileTypes.includes(fileType)) output.push(file);
+    }
+    return output;
+  }
+
   const closeTestModal = () => {
     dispatchToGlobal(toggleModal());
   };
@@ -241,14 +252,14 @@ const TestFile = () => {
       {testCase === 'redux' && (
         <section>
           <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-            <ReduxTestCase />
+            <ReduxTestCase/>
           </ReduxTestCaseContext.Provider>
         </section>
       )}
 
       {testCase === 'react' && (
         <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-          <ReactTestCase />
+          <ReactTestCase filterFileType = {filterFileType}/>
         </MockDataContext.Provider>
       )}
 
@@ -297,7 +308,7 @@ const TestFile = () => {
         testCase === 'vue' && (
           <section>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-              <VueTestCase />
+              <VueTestCase filterFileType = {filterFileType} />
             </MockDataContext.Provider>
           </section>
         )
@@ -306,7 +317,7 @@ const TestFile = () => {
       {testCase === 'svelte' && (
         <section>
           <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-            <SvelteTestCase />
+            <SvelteTestCase filterFileType = {filterFileType} />
           </MockDataContext.Provider >
         </section>
       )}

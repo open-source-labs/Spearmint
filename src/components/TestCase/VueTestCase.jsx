@@ -24,7 +24,7 @@ import {
 } from '../../context/reducers/vueTestCaseReducer';
 import { Button } from '@material-ui/core';
 
-const VueTestCase = () => {
+const VueTestCase = (props) => {
   const [vueTestCase, dispatchToVueTestCase] = useReducer(
     vueTestCaseReducer,
     vueTestCaseState
@@ -89,7 +89,7 @@ const VueTestCase = () => {
               dispatch={dispatchToVueTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
-              options={Object.keys(filePathMap)}
+              options={props.filterFileType(Object.keys(filePathMap), ['vue'])}
               label="Search Component"
             />
           </div>

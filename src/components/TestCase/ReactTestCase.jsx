@@ -24,7 +24,7 @@ import {
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@material-ui/core';
 
-const ReactTestCase = () => {
+const ReactTestCase = (props) => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
     reactTestCaseReducer,
     reactTestCaseState
@@ -89,7 +89,7 @@ const ReactTestCase = () => {
               dispatch={dispatchToReactTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
-              options={Object.keys(filePathMap)}
+              options={props.filterFileType(Object.keys(filePathMap), ['js', 'jsx', 'ts', 'tsx'])}
               label='Search Component'
             />
           </div>

@@ -79,7 +79,7 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 're
       } else {
         return inputLength === 0
           ? []
-          : vueTypesList.filter(
+          : svelteTypesList.filter(
               (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
             );
       }
