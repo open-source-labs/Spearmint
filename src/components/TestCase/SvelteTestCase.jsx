@@ -24,7 +24,7 @@ import {
 } from '../../context/reducers/svelteTestCaseReducer';
 import { Button } from '@material-ui/core';
 
-const SvelteTestCase = () => {
+const SvelteTestCase = (props) => {
   const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
     SvelteTestCaseReducer,
     SvelteTestCaseState
@@ -89,7 +89,7 @@ const SvelteTestCase = () => {
               dispatch={dispatchToSvelteTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
-              options={Object.keys(filePathMap)}
+              options={props.filterFileType(Object.keys(filePathMap), ['svelte'])}
               label='Search Component'
             />
           </div>

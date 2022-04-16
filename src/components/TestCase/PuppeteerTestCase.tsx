@@ -12,6 +12,7 @@ import { Button } from '@material-ui/core';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const PuppeteerTestCase = () => {
+  type DropResult = typeof DropResult;
   const handleAddPuppeteerPaintTiming = () => {
     dispatchToPuppeteerTestCase(addPuppeteerPaintTiming());
   };

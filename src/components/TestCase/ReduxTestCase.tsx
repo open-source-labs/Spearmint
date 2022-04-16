@@ -22,14 +22,15 @@ import InputTextField from '../InputTextField';
 
 const ReduxTestCase = () => {
   interface Ref {
-    current: any;
+    theme: null | string;
   }
+  type DropResult = typeof DropResult;
 
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
     ReduxTestCaseContext
   );
 
-  const [{theme}] = useContext(GlobalContext);
+  const [{theme}]: Array<Ref> = useContext(GlobalContext);
 
   const handleUpdateReduxTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatchToReduxTestCase(updateReduxTestStatement(e.target.value));

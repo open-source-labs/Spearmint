@@ -59,12 +59,13 @@ const NavBar = ({ inAboutPage }) => {
         spearmint
       </div>
       <div className={styles.btnContainer}>
-        <span title='Change user profile'>
+        {/* removing icons because they do not serve any purpose in current code base */}
+        {/* <span title='Change user profile'>
           <FaUserCircle size={'1.5rem'}/>
         </span>
         <span title='Change settings'>
           <VscSettingsGear size={'1.5rem'}/>
-        </span>
+        </span> */}
         <span title='Change theme'>
           <Switch checked={theme === 'light' ? true : false} onChange={changeTheme}/>
         </span>

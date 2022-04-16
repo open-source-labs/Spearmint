@@ -47,4 +47,7 @@ export const svelteTypesList = [
   {
     name: 'toHaveFormValues',
   },
+  {
+    name: 'toBe',
+  }
 ];

@@ -11,8 +11,13 @@ const ipc = require('electron').ipcRenderer;
 const os = require('os');
 
 const SecTestCase = () => {
-
-  const [{ isFileDirectoryOpen , theme}, dispatchToGlobal] = useContext(GlobalContext)
+  interface Ref {
+    isFileDirectoryOpen?: null | Boolean;
+    theme?: string | null;
+    dispatchToGlobal?: Function;
+  };
+  
+  const [{ isFileDirectoryOpen , theme}, dispatchToGlobal]: [Ref, Function] = useContext(GlobalContext);
 
   // Change execute command based on os platform
   let execute = '\n';
