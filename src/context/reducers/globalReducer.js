@@ -1,6 +1,5 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/globalActions';
-
 export const GlobalContext = createContext([]); // originally createContext(null)
 
 export const globalState = {

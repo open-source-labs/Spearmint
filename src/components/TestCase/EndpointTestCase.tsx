@@ -1,5 +1,5 @@
 import React, { useContext, ChangeEvent } from 'react';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
@@ -18,10 +18,12 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { Button } from '@material-ui/core';
 
 const EndpointTestCase = () => {
+  type DropResult = typeof DropResult;
+  type DroppableProvided = typeof DroppableProvided
   let [{ endpointStatements, addDB }, dispatchToEndpointTestCase] = useContext(
     EndpointTestCaseContext
   );
-  const [{ filePathMap, theme }] = useContext<any>(GlobalContext);
+  const [{ filePathMap, theme }] = useContext(GlobalContext);
   
   const handleAddEndpoint = () => {
     dispatchToEndpointTestCase(addEndpoint());
@@ -103,6 +105,7 @@ const EndpointTestCase = () => {
                     updateTypesFilePath={null}
                     updateActionsFilePath={null}
                     type={null}
+                    label={null}
                   />
                 </div>
               </div>
@@ -122,7 +125,7 @@ const EndpointTestCase = () => {
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided) => (
+          {(provided :DroppableProvided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <EndpointTestStatements />
               {provided.placeholder}

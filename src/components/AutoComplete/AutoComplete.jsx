@@ -1,11 +1,10 @@
 import React from 'react';
 import AutoSuggest from 'react-autosuggest';
 import styles from './AutoComplete.module.scss';
-import { updateAction, updateAssertion } from '../../context/actions/reactTestCaseActions';
-import { eventTypesList } from '../ReactTestComponent/Action/eventTypesList';
-import { matcherTypesList } from '../ReactTestComponent/Assertion/matcherTypesList';
-import { vueTypesList } from '../VueTestComponent/Assertion/matcherTypesList'
-import {svelteTypesList} from '../SvelteTestComponent/Assertion/matcherTypesList'
+import { updateAction, updateAssertion } from '../../context/actions/frontendFrameworkTestCaseActions';
+import { eventTypesList } from '../TypesList/eventTypesList';
+import { matcherTypesList} from '../TypesList/matcherTypesList';
+
 
 const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 'react' }) => {
   let updatedAction = { ...statement };
@@ -64,7 +63,7 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 're
       } else {
         return inputLength === 0
           ? []
-          : vueTypesList.filter(
+          : matcherTypesList.filter(
               (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
             );
       }
@@ -79,7 +78,7 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 're
       } else {
         return inputLength === 0
           ? []
-          : svelteTypesList.filter(
+          : matcherTypesList.filter(
               (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
             );
       }

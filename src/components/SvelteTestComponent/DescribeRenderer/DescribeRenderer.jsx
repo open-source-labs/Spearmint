@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from '../../ReactTestComponent/DescribeRenderer/DescribeRenderer.module.scss';
-import { deleteDescribeBlock, addItstatement } from '../../../context/actions/svelteTestCaseActions';
+import { deleteDescribeBlock, addItstatement } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { Button, TextField } from '@material-ui/core';
 

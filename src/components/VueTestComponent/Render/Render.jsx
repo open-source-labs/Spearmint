@@ -7,7 +7,7 @@ import cn from 'classnames';
 import styles from '../../ReactTestComponent/Render/Render.module.scss';
 import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
 
-import { deleteRender, addProp } from '../../../context/actions/vueTestCaseActions';
+import { deleteRender, addProp } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import Prop from './Prop';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
