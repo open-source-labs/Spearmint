@@ -5,7 +5,7 @@
  */
 import React, { useContext } from 'react';
 import styles from '../../ReactTestComponent/Assertion/Assertion.module.scss';
-import { deleteAssertion,  } from '../../../context/actions/vueTestCaseActions';
+import { deleteAssertion,  } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';

@@ -9,7 +9,7 @@ import {
   updateDescribeOrder,
   updateItStatementOrder,
   addDescribeBlock
-} from '../../context/actions/vueTestCaseActions';
+} from '../../context/actions/frontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
