@@ -242,8 +242,6 @@ ipcMain.on('Facebook-Oauth', (_event, url) => {
     // },
   });
 
-  console.log('in electron')
-
   facebookWindow.loadURL(url);
 
   // When url changes, this event will be emitted, and have reference to the new url
