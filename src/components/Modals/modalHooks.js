@@ -89,7 +89,7 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
       return {
         endPointGuide: endPointGuide,
         cd: `cd ${projectFilePath}`,
-        install: 'npm i -D jest supertest regenerator-runtime',
+        install: 'npm i -D jest supertest regenerator-runtime core-js',
       };
     case 'puppeteer':
       return {
