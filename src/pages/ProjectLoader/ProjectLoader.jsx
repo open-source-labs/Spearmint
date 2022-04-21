@@ -4,7 +4,7 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest, setTheme } from '../../context/actions/globalActions';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { RiSpyLine, RiGithubFill } from 'react-icons/ri'
+import { RiSpyLine, RiGithubFill, RiFacebookFill } from 'react-icons/ri'
 import InputTextField from '../../components/InputTextField';
 
 const { ipcRenderer } = require('electron');
@@ -100,6 +100,24 @@ function ProjectLoader() {
       .catch((err) => console.log(err));
   };
 
+  const handleFacebookLogin = () => {
+    // create new window for github login
+    fetch('http://localhost:3001/oauth2/redirect/facebook', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        const { url } = res;
+        console.log('handleFaceBookLogin function')
+        // how we trigger the Main Process in electron to show our window
+        ipcRenderer.send('Facebook-Oauth', url);
+      })
+      .catch((err) => console.log(err));
+  };
+
+
   const setUserTheme = (theme) => {
     dispatchToGlobal(setTheme(theme));
     console.log(theme);
@@ -107,6 +125,11 @@ function ProjectLoader() {
 
   // Listens for event from electron.jsx line 205
   ipcRenderer.on('github-new-url', (event, cookies) => {
+    setIsLoggedIn(true);
+    setUsername(cookies[0].value);
+  });
+
+  ipcRenderer.on('facebook-new-url', (event, cookies) => {
     setIsLoggedIn(true);
     setUsername(cookies[0].value);
   });
@@ -198,6 +221,10 @@ function ProjectLoader() {
           <Button variant="outlined" id={styles.gitBtn} onClick={handleGithubLogin}>
             <span>Login with GitHub</span>
             <RiGithubFill size={'1.25rem'}/>
+          </Button>
+          <Button variant="outlined" id={styles.gitBtn} onClick={handleFacebookLogin}>
+            <span>Login with Facebook</span>
+            <RiFacebookFill size={'1.25rem'}/>
           </Button>
         </div>
       </form>
