@@ -8,7 +8,7 @@ import {
   addAction,
   addAssertion,
   deleteItStatement,
-} from '../../../context/actions/reactTestCaseActions';
+} from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import styles from './ItRenderer.module.scss';
 import { Button, TextField } from '@material-ui/core';

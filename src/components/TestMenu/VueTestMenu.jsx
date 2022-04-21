@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import { addDescribeBlock, createNewTest } from '../../context/actions/vueTestCaseActions';
+import { addDescribeBlock, createNewTest } from '../../context/actions/frontendFrameworkTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';

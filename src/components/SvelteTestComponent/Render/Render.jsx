@@ -7,7 +7,7 @@ import cn from 'classnames';
 import styles from '../../ReactTestComponent/Render/Render.module.scss';
 import { SvelteTestCaseContext } from '../../../context/reducers/svelteTestCaseReducer';
 
-import { deleteRender, addProp } from '../../../context/actions/svelteTestCaseActions';
+import { deleteRender, addProp } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import Prop from './Prop';
 import { Button } from '@material-ui/core';
 import { GlobalContext } from '../../../context/reducers/globalReducer';

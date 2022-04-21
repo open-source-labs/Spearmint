@@ -31,17 +31,17 @@ export const actionTypes = {
   SET_FOLDER_VIEW: 'SET_FOLDER_VIEW',
 };
 
-export const setProjectUrl = (url) => ({
+export const setProjectUrl = (url: string) => ({
   type: actionTypes.SET_PROJECT_URL,
   url,
 });
 
-export const loadProject = (load) => ({
+export const loadProject = (load: string) => ({
   type: actionTypes.LOAD_PROJECT,
   load,
 });
 
-export const createFileTree = (fileTree) => ({
+export const createFileTree = (fileTree: string) => ({
   type: actionTypes.CREATE_FILE_TREE,
   fileTree,
 });
@@ -54,33 +54,33 @@ export const closeRightPanel = () => ({
   type: actionTypes.CLOSE_RIGHT_PANEL,
 });
 
-export const toggleRightPanel = (display) => ({
+export const toggleRightPanel = (display: string) => ({
   type: actionTypes.TOGGLE_RIGHT_PANEL,
   display,
 });
 
-export const toggleFolderView = (filePath) => ({
+export const toggleFolderView = (filePath: string) => ({
   type: actionTypes.TOGGLE_FOLDER_VIEW,
   filePath,
 });
 
-export const highlightFile = (fileName) => ({
+export const highlightFile = (fileName: string) => ({
   type: actionTypes.HIGHLIGHT_FILE,
   fileName,
 });
 
-export const setProjectFilePath = (projectFilePath) => ({
+export const setProjectFilePath = (projectFilePath: string) => ({
   type: actionTypes.SET_PROJECT_FILE_PATH,
   projectFilePath,
 });
 
-export const setFilePathMap = (filePathMap) => ({
+export const setFilePathMap = (filePathMap: string) => ({
   type: actionTypes.SET_FILE_PATH_MAP,
   filePathMap,
 });
 
 //added
-export const setTestCase = (testCase) => ({
+export const setTestCase = (testCase: string) => ({
   type: actionTypes.SET_TEST_CASE,
   testCase,
 });
@@ -89,12 +89,12 @@ export const toggleModal = () => ({
   type: actionTypes.TOGGLE_MODAL,
 });
 
-export const updateFile = (testString) => ({
+export const updateFile = (testString: string) => ({
   type: actionTypes.UPDATE_FILE,
   testString,
 });
 
-export const openBrowserDocs = (docsUrl) => ({
+export const openBrowserDocs = (docsUrl: string) => ({
   type: actionTypes.OPEN_BROWSER_DOCS,
   docsUrl,
 });
@@ -107,27 +107,27 @@ export const toggleExportBool = () => ({
   type: actionTypes.TOGGLE_EXPORT_BOOL,
 });
 
-export const setFilePath = (filePath) => ({
+export const setFilePath = (filePath: string) => ({
   type: actionTypes.SET_FILE_PATH,
   filePath,
 });
 
-export const setValidCode = (validCode) => ({
+export const setValidCode = (validCode: string) => ({
   type: actionTypes.SET_VALID_CODE,
   validCode,
 });
 
-export const setTabIndex = (tabIndex) => ({
+export const setTabIndex = (tabIndex: string) => ({
   type: actionTypes.SET_TAB_INDEX,
   tabIndex,
 });
 
-export const uploadTest = (testState) => ({
+export const uploadTest = (testState: object) => ({
   type: actionTypes.UPLOAD_TEST,
   testState,
 });
 
-export const setGuest = (guestState) => ({
+export const setGuest = (guestState: string) => ({
   type: actionTypes.SET_GUEST,
   guestState,
 });
@@ -136,17 +136,17 @@ export const toggleTheme = () => ({
   type: actionTypes.TOGGLE_THEME,
 });
 
-export const setTheme = (theme) => ({
+export const setTheme = (theme: string) => ({
   type: actionTypes.SET_THEME,
   theme,
 });
 
-export const setFileDirectory = (fileDirectoryOpen) => ({
+export const setFileDirectory = (fileDirectoryOpen: string) => ({
   type: actionTypes.SET_FILE_DIRECTORY,
   fileDirectoryOpen,
 });
 
-export const setFolderView = (filePath) => ({
+export const setFolderView = (filePath: string) => ({
   type: actionTypes.SET_FOLDER_VIEW,
   filePath,
 });

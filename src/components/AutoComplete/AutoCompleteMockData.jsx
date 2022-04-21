@@ -5,7 +5,7 @@ import {
   updateAction,
   updateAssertion,
   updateProp,
-} from '../../context/actions/reactTestCaseActions';
+} from '../../context/actions/frontendFrameworkTestCaseActions';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 
 const AutoCompleteMockData = ({

@@ -9,7 +9,7 @@ import {
   addAction,
   addAssertion,
   deleteItStatement,
-} from '../../../context/actions/svelteTestCaseActions';
+} from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { SvelteTestCaseContext } from '../../../context/reducers/svelteTestCaseReducer';
 import { Button, TextField } from '@material-ui/core';
 import { AiOutlineClose } from 'react-icons/ai';

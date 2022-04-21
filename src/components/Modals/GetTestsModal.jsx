@@ -9,13 +9,13 @@ import { hooksReplaceTest } from '../../context/actions/hooksTestCaseActions';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import { puppeteerReplaceTest } from '../../context/actions/puppeteerTestCaseActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
-import { reactReplaceTest } from '../../context/actions/reactTestCaseActions';
+import { reactReplaceTest } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { reduxReplaceTest } from '../../context/actions/reduxTestCaseActions';
 import { SecTestCaseContext } from '../../context/reducers/secTestCaseReducer';
 import { secReplaceTest } from '../../context/actions/secTestCaseActions';
 import { SvelteTestCaseContext } from '../../context/reducers/svelteTestCaseReducer';
-import { svelteReplaceTest } from '../../context/actions/svelteTestCaseActions';
+import { svelteReplaceTest } from '../../context/actions/frontendFrameworkTestCaseActions';
 
 import ReactModal from 'react-modal';
 import Draggable from 'react-draggable';

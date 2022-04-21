@@ -5,7 +5,7 @@
  */
 import React, { useContext } from 'react';
 import styles from './Assertion.module.scss';
-import { deleteAssertion, updateAssertion } from '../../../context/actions/reactTestCaseActions';
+import { deleteAssertion, updateAssertion } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
@@ -18,7 +18,7 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
-  const [, dispatchToReactCase] = useContext(ReactTestCaseContext);
+  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeAssertionFields = (e, field) => {
