@@ -36,7 +36,6 @@ const OpenFolder = () => {
   const handleOpenFolder = () => {
     // opens finder (or equivalent), prompts user to select file directory
     const directory = ipcRenderer.sendSync('OpenFolderButton.dialog');
-
     if (directory && directory[0]) {
       let directoryPath = directory[0];
       // replace backslashes for Windows OS
@@ -66,7 +65,8 @@ const OpenFolder = () => {
     }
 
   };
-
+  
+//generates current file tree for current nesting level if there are more directories inside the directory recursively call each other. at the end return file to the mapping. 
   const generateFileTreeObject = (directoryPath) => {
     const filePaths = ipcRenderer.sendSync('Universal.readDir', directoryPath);
     const fileArray = filePaths.map((fileName) => {
