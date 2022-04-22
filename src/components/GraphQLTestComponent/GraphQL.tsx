@@ -1,90 +1,94 @@
 import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import styles from './Endpoint.module.scss';
+import styles from './GraphQL.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
-import EndpointAssertion from './EndpointAssertion';
-import { Assertion, EndpointObj, Header, Action, EventTarget } from '../../utils/endpointTypes';
+import GraphQLAssertion from './GraphQLAssertion';
+import { Assertion, GraphQLObj, Header, Action, EventTarget } from '../../utils/graphQLTypes';
 
 import {
-  deleteEndpoint,
-  updateEndpoint,
+  deleteGraphQL,
+  updateGraphQL,
   addHeader,
   deleteHeader,
   togglePost,
   updatePost,
   addAssertion,
-} from '../../context/actions/endpointTestCaseActions';
+} from '../../context/actions/graphQLTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 const closeIcon = require('../../assets/images/close.png');
 const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
-interface EndpointProps {
-  endpoint: EndpointObj;
+interface GraphQLProps {
+  graphQL: GraphQLObj;
   index: number;
-  dispatchToEndpointTestCase: (action: Action) => void;
+  dispatchToGraphQLTestCase: (action: Action) => void;
 }
 
-const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps) => {
+const GraphQL = ({ graphQL, index, dispatchToGraphQLTestCase }: GraphQLProps) => {
   const [ {theme} ] = useContext<any>(GlobalContext)
-  const handleChangeEndpointFields = ({ target }: EventTarget, field: string) => {
-    let updatedEndpoint = { ...endpoint };
+  const handleChangeGraphQLFields = ({ target }: EventTarget, field: string) => {
+    let updatedGraphQL = { ...graphQL};
 
     field === 'headerName' || field === 'headerValue'
-      ? (updatedEndpoint.headers[Number(target.id)][field] = target.value)
-      : (updatedEndpoint[field] = target.value);
-    dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
+      ? (updatedGraphQL.headers[Number(target.id)][field] = target.value)
+      : (updatedGraphQL[field] = target.value);
+    dispatchToGraphQLTestCase(updateGraphQL(updatedGraphQL));
 
-    if (target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
-    else if (target.type === 'select-one' && endpoint.post)
-      dispatchToEndpointTestCase(togglePost(index));
+    if (target.value === 'post') dispatchToGraphQLTestCase(togglePost(index));
+    else if (target.type === 'select-one' && graphQL.post)
+      dispatchToGraphQLTestCase(togglePost(index));
   };
 
-  const handleClickDeleteEndpoint = () => {
+  const handleClickDeleteGraphQL = () => {
     // delete endpoint returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
-    dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
+    dispatchToGraphQLTestCase(deleteGraphQL(graphQL.id));
   };
 
   const handleClickAddHeader = () => {
-    dispatchToEndpointTestCase(addHeader(index));
+    dispatchToGraphQLTestCase(addHeader(index));
   };
 
   const handleClickDeleteHeader = (i: number) => {
-    dispatchToEndpointTestCase(deleteHeader(index, i));
+    dispatchToGraphQLTestCase(deleteHeader(index, i));
   };
 
   const updatePostData = ({ target }: EventTarget) => {
-    dispatchToEndpointTestCase(updatePost(target.value, index));
+    dispatchToGraphQLTestCase(updatePost(target.value, index));
     target.style.height = 'inherit';
     target.style.height = `${Math.max(Math.min(target.scrollHeight, 200), 102)}px`;
   };
 
   const addAssertionHandleClick = () => {
-    dispatchToEndpointTestCase(addAssertion(index));
+    dispatchToGraphQLTestCase(addAssertion(index));
   };
 
 
 
   return (
     <div style={{ maxWidth: '650px' }}>
-      <Draggable draggableId={endpoint.id.toString()} index={index}>
+      <Draggable draggableId={graphQL.id.toString()} index={index}>
         {(provided) => (
+          
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            id={styles[`endpointmodal${theme}`]}
+            id={styles[`graphQLmodal${theme}`]}
           >
+            <p>
+              {typeof provided}
+            </p> 
             <img
               src={closeIcon}
               id={styles.close}
               alt='close'
-              onClick={handleClickDeleteEndpoint}
+              onClick={handleClickDeleteGraphQL}
             />
             <div id={styles.header}>
               <img src={dragIcon} alt='drag' />
-              <h3>Endpoint</h3>
+              <h3>GraphQL</h3>
             </div>
             <div id={styles.groupFlexbox}>
               <div id={styles.serverInput} style={{ width: '100%' }}>
@@ -100,8 +104,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                       
                       type='text'
                       id={styles.testStatement}
-                      value={endpoint.testName}
-                      onChange={(e) => handleChangeEndpointFields(e, 'testName')}
+                      value={graphQL.testName}
+                      onChange={(e) => handleChangeGraphQLFields(e, 'testName')}
                     />
                   </div>{' '}
                   <button
@@ -120,8 +124,8 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                 <div id={styles.dropdownFlex}>
                   <select
                     id='method'
-                    value={endpoint.method}
-                    onChange={(e) => handleChangeEndpointFields(e, 'method')}
+                    value={graphQL.method}
+                    onChange={(e) => handleChangeGraphQLFields(e, 'method')}
                   >
                     <option value='' />
                     <option value='get'>get</option>
@@ -138,23 +142,23 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                   <input
                     type='text'
                     name='route'
-                    value={endpoint.route}
+                    value={graphQL.route}
                     placeholder='eg. /route'
-                    onChange={(e) => handleChangeEndpointFields(e, 'route')}
+                    onChange={(e) => handleChangeGraphQLFields(e, 'route')}
                   />
                 </div>
               </div>
             </div>{' '}
-            {endpoint.assertions.map((assertion: Assertion, i: number) => {
-              return <EndpointAssertion assertion={assertion} index={index} id={i} />;
+            {graphQL.assertions.map((assertion: Assertion, i: number) => {
+              return <GraphQLAssertion assertion={assertion} index={index} id={i} />;
             })}{' '}
-            {endpoint.post && (
+            {graphQL.post && (
               <div id={style.RenderContainer} style={{ margin: '10px 0 0 0' }}>
                 <label htmlFor='Header' id={styles.labelInputPost}>
                   Data To Send
                 </label>
                 <textarea
-                  value={endpoint.postData}
+                  value={graphQL.postData}
                   onChange={(e) => updatePostData(e)}
                   style={{
                     display: 'block',
@@ -171,7 +175,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                 />
               </div>
             )}
-            {endpoint.headers.length > 0 && (
+            {graphQL.headers.length > 0 && (
               <div id={styles[`addheadermodal${theme}`]} style={{ margin: '10px 0 0 0' }}>
                 <div className={'props'}>
                   <div>
@@ -184,19 +188,19 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                       </label>
                     </div>
                     <hr />
-                    {endpoint.headers.map((header: Header, i) => {
+                    {graphQL.headers.map((header: Header, i) => {
                       return (
                         <div id={styled.renderPropsFlexBox}>
                           <input
                             type='text'
-                            id={`${i}`}
-                            onChange={(e) => handleChangeEndpointFields(e, 'headerName')}
+                            id={i.toString()}
+                            onChange={(e) => handleChangeGraphQLFields(e, 'headerName')}
                             value={header.headerName}
                           />
                           <input
                             type='text'
-                            id={`${i}`}
-                            onChange={(e) => handleChangeEndpointFields(e, 'headerValue')}
+                            id={i.toString()}
+                            onChange={(e) => handleChangeGraphQLFields(e, 'headerValue')}
                             value={header.headerValue}
                           />
                           <img
@@ -228,4 +232,4 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
   );
 };
 
-export default Endpoint;
+export default GraphQL;

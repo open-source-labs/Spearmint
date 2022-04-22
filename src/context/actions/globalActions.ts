@@ -112,12 +112,12 @@ export const setFilePath = (filePath: string) => ({
   filePath,
 });
 
-export const setValidCode = (validCode: string) => ({
+export const setValidCode = (validCode: boolean) => ({ // (4/22 1100) david: previously string
   type: actionTypes.SET_VALID_CODE,
   validCode,
 });
 
-export const setTabIndex = (tabIndex: string) => ({
+export const setTabIndex = (tabIndex: number) => ({ // (4/22 1100) david: previously string
   type: actionTypes.SET_TAB_INDEX,
   tabIndex,
 });
