@@ -57,7 +57,6 @@ const OpenFolder = () => {
   
   const filePathMap = {};
   const populateFilePathMap = (file) => {
-    console.log(testCase);
     const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx', 'vue', 'svelte'];
     const fileType = file.fileName.split('.')[1];
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {

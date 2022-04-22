@@ -76,12 +76,19 @@ import {
 } from '../../context/reducers/svelteTestCaseReducer';
 import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
 
+import {
+  GraphQLTestCaseContext,
+  graphQLTestCaseState,
+  graphQLTestCaseReducer
+} from '../../context/reducers/graphQLTestCaseReducer';
+import GraphQLTestCase from '../../components/TestCase/GraphQLTestCase';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaUniversalAccess, FaReact } from "react-icons/fa"
 import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
-import { SiPuppeteer, SiRedux, SiSvelte } from "react-icons/si"
+import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
 
 import { Button } from '@material-ui/core';
@@ -128,6 +135,11 @@ const TestFile = () => {
     secTestCaseReducer,
     secTestCaseState
   );
+  const [graphQLTestCase, dispatchToGraphQLTestCase] = useReducer(
+    graphQLTestCaseReducer,
+    graphQLTestCaseState
+  );
+
 
   // const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
   //   SvelteTestCaseReducer,
@@ -188,6 +200,8 @@ const TestFile = () => {
             'Maintain a good accessibility score by testing the various attributes of your website'],
     'sec': [<MdSecurity size={cardSize}/>, 'Security',
             'Evaluate security vulnerabilities using Synk'],
+    'graphQL': [<SiGraphql size={cardSize}/>, 'GraphQL',
+            'Testing GraphQL'],
 
   }
 
@@ -322,6 +336,13 @@ const TestFile = () => {
         </section>
       )}
 
+      {testCase === 'graphQL' && (
+        <section>
+          <GraphQLTestCaseContext.Provider value={[graphQLTestCase, dispatchToGraphQLTestCase]}>
+            <GraphQLTestCase filterFileType = {filterFileType} />
+          </GraphQLTestCaseContext.Provider>
+        </section>
+      )}
       {testCase === '' && (
           <Fragment>
             <div id={styles.testFileContainer}>
