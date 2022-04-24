@@ -537,11 +537,10 @@ function useGenerateTest(test, projectFilePath) {
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
         const supertest = require('supertest')\n;
-        import "core-js/stable";
-        import "regenerator-runtime/runtime";
         const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
-
+      // import "core-js/stable";
+      // import "regenerator-runtime/runtime";
       // if you input a db file in the db search input box...
       if (dbFilePath) {
         // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
@@ -550,16 +549,16 @@ function useGenerateTest(test, projectFilePath) {
       
         switch (addDB) {
           case 'PostgreSQL':
-            testFileCode += `const pgPoolClient = require('../${filePath}');
-            \n afterAll( async () => { await pgPoolClient.end(); \n});`;
-            break;
+            // testFileCode += `const pgPoolClient = require('../${filePath}');
+            // \n afterAll( async () => { await pgPoolClient.end(); \n});`;
+            // break;
           case 'MongoDB':
-            testFileCode += `const client = require('../${filePath}');
-            \n afterAll( async () => { await client.close(); \n});`;
-            break;
+            // testFileCode += `const client = require('../${filePath}');
+            // \n afterAll( async () => { await client.close(); \n});`;
+            // break;
           case 'Mongoose':
-            testFileCode += `const mongoose = require('../${filePath}');
-            \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+            // testFileCode += `const mongoose = require('../${filePath}');
+            // \n afterAll( async () => { await mongoose.connection.close(); \n});`;
             break;
           default:
             return;
@@ -766,9 +765,9 @@ function useGenerateTest(test, projectFilePath) {
     };
     /* ------------------Context needs to be integrated with Hooks as business logic------------------- */
     const addEndpoint = (statement) => {
-      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}');`;
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
       testFileCode += statement.postData
-        ? `.send( ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
+        ? `.send( ${statement.postData.trim()})\n`
         : statement.headers.length
         ? `.set({`
         : '';
