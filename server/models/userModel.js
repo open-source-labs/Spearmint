@@ -38,8 +38,18 @@ const facebookSchema = new Schema({
 
 const FacebookUser = mongoose.model('facebookUser', facebookSchema);
 
+const googleSchema = new Schema({
+  // Save username and password of user
+  googleId: { type: String, require: true, unique: true },
+  username: { type: String, require: true },
+});
+
+const GoogleUser = mongoose.model('googleUser', googleSchema);
+
+
 module.exports = {
   User,
   GithubUser,
-  FacebookUser
+  FacebookUser,
+  GoogleUser
 }
