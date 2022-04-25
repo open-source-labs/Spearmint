@@ -4,7 +4,7 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest, setTheme } from '../../context/actions/globalActions';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { RiSpyLine, RiGithubFill, RiFacebookFill } from 'react-icons/ri'
+import { RiSpyLine, RiGithubFill, RiFacebookFill, RiGoogleFill } from 'react-icons/ri'
 import InputTextField from '../../components/InputTextField';
 
 const { ipcRenderer } = require('electron');
@@ -117,6 +117,24 @@ function ProjectLoader() {
       .catch((err) => console.log(err));
   };
 
+  const handleGoogleLogin = () => {
+    // create new window for github login
+    fetch('http://localhost:3001/auth/google', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => {
+        const { url } = res;
+        console.log('handleGoogleLogin function')
+        // how we trigger the Main Process in electron to show our window
+        ipcRenderer.send('Google-Oauth', url);
+      })
+      .catch((err) => console.log(err));
+  };
+
+
 
   const setUserTheme = (theme) => {
     dispatchToGlobal(setTheme(theme));
@@ -130,6 +148,11 @@ function ProjectLoader() {
   });
 
   ipcRenderer.on('facebook-new-url', (event, cookies) => {
+    setIsLoggedIn(true);
+    setUsername(cookies[0].value);
+  });
+
+  ipcRenderer.on('google-new-url', (event, cookies) => {
     setIsLoggedIn(true);
     setUsername(cookies[0].value);
   });
@@ -225,6 +248,10 @@ function ProjectLoader() {
           <Button variant="outlined" id={styles.gitBtn} onClick={handleFacebookLogin}>
             <span>Login with Facebook</span>
             <RiFacebookFill size={'1.25rem'}/>
+          </Button>
+          <Button variant="outlined" id={styles.gitBtn} onClick={handleGoogleLogin}>
+            <span>Login with Google</span>
+            <RiGoogleFill size={'1.25rem'}/>
           </Button>
         </div>
       </form>

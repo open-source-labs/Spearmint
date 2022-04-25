@@ -230,7 +230,7 @@ ipcMain.on('Github-Oauth', (_event, url) => {
 
 // Facebook FUNCTIONALITY
 let facebookWindow;
-// ipcMain is listening on channel 'Github-Oauth' for an event from ProjectLoader line 94
+// ipcMain is listening on channel 'Facebook-Oauth' for an event from ProjectLoader line 94
 // ipbMain receives the url from ProjectLoader.jsx line 94
 ipcMain.on('Facebook-Oauth', (_event, url) => {
   facebookWindow = new BrowserWindow({
@@ -247,7 +247,7 @@ ipcMain.on('Facebook-Oauth', (_event, url) => {
   // When url changes, this event will be emitted, and have reference to the new url
   facebookWindow.webContents.on('did-navigate', (_event, url) => {
     // if new url matches our final endpoint, then the user has successfully logged in
-    // and we grab the github username via cookies
+    // and we grab the facebook username via cookies
     if (url.startsWith('http://localhost:3001/oauth2/redirect/facebook')) {
 
       // gets the cookie with the name property of 'dotcom_user'
@@ -258,13 +258,48 @@ ipcMain.on('Facebook-Oauth', (_event, url) => {
           if (cookies) mainWindow.webContents.send('facebook-new-url', cookies);
         });
 
-      // close the githubWindow automatically
+      // close the facebookWindow automatically
       facebookWindow.close();
     }
   });
 });
 
 
+// Google FUNCTIONALITY
+let googleWindow;
+// ipcMain is listening on channel 'Google-Oauth2' for an event from ProjectLoader line 94
+// ipbMain receives the url from ProjectLoader.jsx line 94
+ipcMain.on('Google-Oauth', (_event, url) => {
+  googleWindow = new BrowserWindow({
+    // webPreferences: {
+    //   nodeIntegration: true,
+    //   worldSafeExecuteJavaScript: true,
+    //   contextIsolation: false,
+    //   webviewTag: true,
+    },
+  );
+
+  googleWindow.loadURL(url);
+
+  // When url changes, this event will be emitted, and have reference to the new url
+  googleWindow.webContents.on('did-navigate', (_event, url) => {
+    // if new url matches our final endpoint, then the user has successfully logged in
+    // and we grab the google username via cookies
+    if (url.startsWith('http://localhost:3001/auth/google/callback')) {
+
+      // gets the cookie with the name property of 'dotcom_user'
+      session.defaultSession.cookies.get({ name: 'dotcom_user' })
+        .then((cookies) => {
+          // if we get cookies with the key of dotcom_user, 
+          // then send to mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
+          if (cookies) mainWindow.webContents.send('google-new-url', cookies);
+        });
+
+      // close the googleWindow automatically
+      googleWindow.close();
+    }
+  });
+});
 
 app.whenReady()
   .then(createWindow)

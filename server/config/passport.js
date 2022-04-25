@@ -1,8 +1,9 @@
 const GitHubStrategy = require('passport-github2').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 // var FacebookStrategy = require('passport-facebook')
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
-const { User, GithubUser, FacebookUser } = require('../models/userModel.js');
+const { User, GithubUser, FacebookUser, GoogleUser } = require('../models/userModel.js');
 
 module.exports = function (passport) {
   passport.use(
@@ -52,7 +53,7 @@ module.exports = function (passport) {
 
       (accessToken, refreshToken, profile, done) => {
         console.log('this is our accessToken:', accessToken);
-        // we are checking if the github profile is in our monogDB
+        // we are checking if the facebook profile is in our monogDB
         FacebookUser.findOne({ facebookId: profile.id }, (err, result) => {
           if (result) {
             // already have this user
@@ -63,6 +64,42 @@ module.exports = function (passport) {
             // if not, create user in our db
             new FacebookUser({
               facebookId: profile.id,
+            })
+              .save()
+              .then((newUser) => {
+                console.log('created new user: ', newUser);
+                //   res.locals.userId = newUser._id
+                done(null, newUser);
+              });
+          } else if (err) {
+            console.log(err);
+          }
+        });
+      }
+    )
+  );
+
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: '783732985723-dfvjj0bro5mbc1u1ouo4e90ue0hjndcg.apps.googleusercontent.com',
+        clientSecret: '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',
+        callbackURL: 'http://localhost:3001/auth/google/callback',
+      },
+
+      (accessToken, refreshToken, profile, done) => {
+        console.log('this is our accessToken:', accessToken);
+        // we are checking if the google profile is in our monogDB
+        GoogleUser.findOne({ googleId: profile.id }, (err, result) => {
+          if (result) {
+            // already have this user
+            console.log('user is: ', result);
+            // res.locals.userId = result._id
+            done(null, result);
+          } else if (!result) {
+            // if not, create user in our db
+            new GoogleUser({
+              googleId: profile.id,
             })
               .save()
               .then((newUser) => {
