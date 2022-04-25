@@ -91,6 +91,23 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
         cd: `cd ${projectFilePath}`,
         install: 'npm i -D jest supertest regenerator-runtime core-js',
       };
+      case 'graphQL':
+        const graphQLGuide = {
+          1: `1. Please follow these steps to configure your files correctly. The tests will not run properly if you skip these steps.`,
+          2: `2. Your server file MUST export your server object.`,
+          3: `3. Comment out or remove the appropriate lines of code where the call to the server's listen method takes place.`,
+          4: `4. If you are testing a route that involves querying a database, you must import the file where your database instance is created.`,
+          5: `5. In that file, you must export your database instance object.`,
+          '5a': `5a. PostgreSQL: Pool, Client, or pg object.`,
+          '5b': `5b. MongoDB: MongoClient instance.`,
+          '5c': `5c. Mongoose: mongoose instance.`,
+        };
+        return {
+          graphQLGuide: graphQLGuide,
+          cd: `cd ${projectFilePath}`,
+          install: 'npm i -D jest supertest regenerator-runtime core-js',
+        };
+              
     case 'puppeteer':
       return {
         cd: `cd ${projectFilePath}`,

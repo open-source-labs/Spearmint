@@ -186,6 +186,40 @@ const Modal = ({
     return null;
   };
 
+
+  // GraphQLGuide component definition, conditionally rendered
+  const GraphQLGuide = () => {
+    // graphQL guide only exists when user is in endpoint testing
+    if (script.graphQLGuide) {
+      const array = [];
+      for (let step in script.graphQLGuide) {
+        array.push(
+          <div id={styles.graphQLGuide}>
+            {script.graphQLGuide[step]}
+            {'\n'}
+          </div>
+        );
+      }
+      // return accordion element
+      return (
+        <Accordion hidden={false}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls='panel1a-content'
+            id='panel1a-header'
+            id={styles.accordionSummary}
+          >
+            GraphQL Testing Configuration Guide
+          </AccordionSummary>
+          <AccordionDetails id={styles.configGuide}>{array}</AccordionDetails>
+        </Accordion>
+      );
+    }
+    // return anything to not render accordion
+    return null;
+  };
+
+
   // ReactDependencies component definition, conditionally rendered
   const ReactDependencies = () => {
     if (title === 'hooks' || title === 'react') {
@@ -295,6 +329,7 @@ const Modal = ({
       <div>
         {/* Configuration Guide */}
         <EndPointGuide />
+        <GraphQLGuide />
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
