@@ -67,7 +67,7 @@ const GraphQLTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    const valid = validateInputs('endpoint', graphQLTestCase);
+    const valid = validateInputs('graphQL', graphQLTestCase);
     dispatchToGlobal(setValidCode(valid));
 
     // store the file path of the new saved test file
@@ -99,7 +99,7 @@ const GraphQLTestMenu = () => {
   };
 
   if (exportBool) {
-    const valid = validateInputs('endpoint', graphQLTestCase);
+    const valid = validateInputs('graphQL', graphQLTestCase);
     dispatchToGlobal(setValidCode(valid));
     dispatchToGlobal(toggleExportBool());
     if (valid && !file) dispatchToGlobal(updateFile(generateTest(graphQLTestCase)));
@@ -134,7 +134,7 @@ const GraphQLTestMenu = () => {
         <div id={styles[`testMenu${theme}`]}>
           <Button 
             variant='outlined'
-            data-testid='endPointButton' 
+            data-testid='graphQLButton' 
             size='medium'
             onClick={handleClickAddDatabase}>
             Configure Database

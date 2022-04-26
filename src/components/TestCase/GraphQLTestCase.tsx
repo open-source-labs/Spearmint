@@ -23,7 +23,6 @@ const GraphQLTestCase = () => {
   let [graphQLstate, dispatchToGraphQLTestCase] = useContext(
     GraphQLTestCaseContext
   );
-  console.log(graphQLstate); // -> undefined
   let { graphQLStatements, addDB } = graphQLstate;
   const [{ filePathMap, theme }] = useContext(GlobalContext);
   
