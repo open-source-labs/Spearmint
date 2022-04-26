@@ -120,8 +120,8 @@ router.get(
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   // if second passport auth is successful, then these middleware functions are invoked next
   userController.facebookLogin,
-  // cookieController.setSSIDCookie,
-  // sessionController.startSession,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
 
   // Anonymous middleware to send back valid response
   (req, res) => {
@@ -140,8 +140,8 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   // if second passport auth is successful, then these middleware functions are invoked next
   userController.googleLogin,
-  // cookieController.setSSIDCookie,
-  // sessionController.startSession,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
 
   // Anonymous middleware to send back valid response
   (req, res) => {
