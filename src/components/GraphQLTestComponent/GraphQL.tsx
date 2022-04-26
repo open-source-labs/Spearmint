@@ -36,7 +36,15 @@ const GraphQL = ({ graphQL, index, dispatchToGraphQLTestCase }: GraphQLProps) =>
       : (updatedGraphQL[field] = target.value);
     dispatchToGraphQLTestCase(updateGraphQL(updatedGraphQL));
 
-    if (target.value === 'post') dispatchToGraphQLTestCase(togglePost(index));
+    if (target.value === 'query') dispatchToGraphQLTestCase(togglePost(index));
+    else if (target.type === 'select-one' && graphQL.post)
+      dispatchToGraphQLTestCase(togglePost(index));
+
+    if (target.value === 'mutation') dispatchToGraphQLTestCase(togglePost(index));
+    else if (target.type === 'select-one' && graphQL.post)
+      dispatchToGraphQLTestCase(togglePost(index));
+
+    if (target.value === 'subscription') dispatchToGraphQLTestCase(togglePost(index));
     else if (target.type === 'select-one' && graphQL.post)
       dispatchToGraphQLTestCase(togglePost(index));
   };
@@ -120,7 +128,7 @@ const GraphQL = ({ graphQL, index, dispatchToGraphQLTestCase }: GraphQLProps) =>
             </div>
             <div id={styles.groupFlexbox}>
               <div id={styles.dropdownWrapper}>
-                <label htmlFor='method'>Method</label>
+                <label htmlFor='method'>Query, Subscription, or Mutation</label>
                 <div id={styles.dropdownFlex}>
                   <select
                     id='method'
@@ -128,10 +136,9 @@ const GraphQL = ({ graphQL, index, dispatchToGraphQLTestCase }: GraphQLProps) =>
                     onChange={(e) => handleChangeGraphQLFields(e, 'method')}
                   >
                     <option value='' />
-                    <option value='get'>get</option>
-                    <option value='post'>post</option>
-                    <option value='put'>put</option>
-                    <option value='delete'>delete</option>
+                    <option value='query'>Query</option>
+                    <option value='mutation'>Mutation</option>
+                    <option value='subscription'>Subscription</option>
                   </select>
                 </div>
               </div>
@@ -171,7 +178,7 @@ const GraphQL = ({ graphQL, index, dispatchToGraphQLTestCase }: GraphQLProps) =>
                     overflowX: 'hidden',
                     padding: '10px',
                   }}
-                  placeholder={'Insert JSON data here... {  }'}
+                  placeholder={'Insert query string here... {  }'}
                 />
               </div>
             )}

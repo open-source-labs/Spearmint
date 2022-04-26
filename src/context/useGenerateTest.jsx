@@ -849,11 +849,11 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '});';
       testFileCode += '\n';
     };
-
+    //statement.method
     const addGraphQL = (statement) => {
-      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.post('${statement.route}')`;
       testFileCode += statement.postData
-        ? `.send( ${statement.postData.trim()})\n`
+        ? `.send( { "query": "${statement.method} ${statement.postData.trim()}" })\n`
         : statement.headers.length
         ? `.set({`
         : '';
@@ -1493,17 +1493,17 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-        case 'graphQL':
-          var graphQLTestCase = testState;
-          return (
-            addGraphQLImportStatements(),
-            addGraphQLTestStatements(),
-            (testFileCode = beautify(testFileCode, {
-              indent_size: 2,
-              space_in_empty_paren: true,
-              e4x: true,
-            }))
-          );
+      case 'graphQL':
+        var graphQLTestCase = testState;
+        return (
+          addGraphQLImportStatements(),
+          addGraphQLTestStatements(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
 
       default:
         return 'not a test';
