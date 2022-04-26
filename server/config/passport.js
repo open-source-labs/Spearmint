@@ -58,6 +58,7 @@ module.exports = function (passport) {
           if (result) {
             // already have this user
             console.log('user is: ', result);
+            console.log('facebook profile id was: ', profile.id);
             // res.locals.userId = result._id
             done(null, result);
           } else if (!result) {

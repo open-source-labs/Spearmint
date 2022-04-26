@@ -148,6 +148,7 @@ function ProjectLoader() {
   });
 
   ipcRenderer.on('facebook-new-url', (event, cookies) => {
+    console.log(cookies);
     setIsLoggedIn(true);
     setUsername(cookies[0].value);
   });

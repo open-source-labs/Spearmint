@@ -251,12 +251,15 @@ ipcMain.on('Facebook-Oauth', (_event, url) => {
     if (url.startsWith('http://localhost:3001/oauth2/redirect/facebook')) {
 
       // gets the cookie with the name property of 'dotcom_user'
-      session.defaultSession.cookies.get({ name: 'dotcom_user' })
-        .then((cookies) => {
-          // if we get cookies with the key of dotcom_user, 
-          // then send to mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
-          if (cookies) mainWindow.webContents.send('facebook-new-url', cookies);
-        });
+      session.defaultSession.cookies.get({ domain: '.facebook.com', name: 'c_user' }).then((cookies) => {
+        if (cookies) console.log('Cookies from Facebook: \n', cookies), mainWindow.webContents.send('facebook-new-url', cookies);
+      });
+      // session.defaultSession.cookies.get({ name: 'dotcom_user' })
+      //   .then((cookies) => {
+      //     // if we get cookies with the key of dotcom_user, 
+      //     // then send to mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
+      //     if (cookies) mainWindow.webContents.send('facebook-new-url', cookies);
+      //   });
 
       // close the facebookWindow automatically
       facebookWindow.close();
