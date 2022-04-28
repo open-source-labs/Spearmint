@@ -1,4 +1,4 @@
-![](/public/spearmint.png)
+![](/public/spearmint_crop.png)
 
 Spearmint helps developers easily create functional Accessibility/Endpoint/GraphQL/Puppeteer/React/Hooks/Redux/Svelte/Vue/Security tests without writing any code. It dynamically converts user inputs into executable Jest test code by using DOM query selectors provided by @testing-library.
 
