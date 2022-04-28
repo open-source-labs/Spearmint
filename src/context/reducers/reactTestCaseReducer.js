@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { actionTypes } from '../actions/reactTestCaseActions';
+import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
 
 export const ReactTestCaseContext = createContext([]);
 

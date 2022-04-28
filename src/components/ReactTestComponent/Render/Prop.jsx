@@ -4,7 +4,7 @@
 
 import React from 'react';
 import styles from './Prop.module.scss';
-import { deleteProp, updateProp } from '../../../context/actions/reactTestCaseActions';
+import { deleteProp, updateProp } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');

@@ -22,20 +22,20 @@ import { FaFolderOpen } from 'react-icons/fa'
 import { Button } from '@material-ui/core';
 
 // Change execute command based on os platform
+ 
 let execute = '\n';
 if (os.platform() === 'win32') {
   execute = '\r';
 }
 
 const OpenFolder = () => {
-  const [{ isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
+  const [{ testCase, isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
     GlobalContext,
   );
 
   const handleOpenFolder = () => {
     // opens finder (or equivalent), prompts user to select file directory
     const directory = ipcRenderer.sendSync('OpenFolderButton.dialog');
-
     if (directory && directory[0]) {
       let directoryPath = directory[0];
       // replace backslashes for Windows OS
@@ -54,15 +54,18 @@ const OpenFolder = () => {
     }
   };
 
+  
   const filePathMap = {};
   const populateFilePathMap = (file) => {
-    const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx', 'vue'];
+    const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx', 'vue', 'svelte'];
     const fileType = file.fileName.split('.')[1];
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
       filePathMap[file.fileName] = file.filePath;
     }
-  };
 
+  };
+  
+//generates current file tree for current nesting level if there are more directories inside the directory recursively call each other. at the end return file to the mapping. 
   const generateFileTreeObject = (directoryPath) => {
     const filePaths = ipcRenderer.sendSync('Universal.readDir', directoryPath);
     const fileArray = filePaths.map((fileName) => {

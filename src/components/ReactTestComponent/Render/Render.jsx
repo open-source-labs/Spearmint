@@ -7,7 +7,7 @@ import cn from 'classnames';
 import styles from './Render.module.scss';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 
-import { deleteRender, addProp } from '../../../context/actions/reactTestCaseActions';
+import { deleteRender, addProp } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import Prop from './Prop';
 import { Button } from '@material-ui/core';
 import { GlobalContext } from '../../../context/reducers/globalReducer';

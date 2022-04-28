@@ -1,6 +1,6 @@
 {
   "name": "spearmint",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
   "main": "public/electron.jsx",
   "scripts": {
@@ -9,7 +9,8 @@
     "start-dev": "concurrently \"electron .\" \"nodemon server/server.js\"",
     "watch": "webpack --config webpack.config.ts --watch",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "dev": "npm run watch & npm run start-dev"
   },
   "build": {
     "appId": "spearmint",
@@ -47,11 +48,13 @@
     "@uiw/react-codemirror": "^4.2.4",
     "babel-loader": "^8.2.2",
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "classnames": "^2.3.1",
     "codemirror": "^5.64.0",
     "concurrently": "^6.4.0",
     "cookie-parser": "^1.4.6",
     "css-loader": "^6.2.0",
+    "depcheck": "^1.4.3",
     "dotenv": "^10.0.0",
     "electron-devtools-installer": "^3.2.0",
     "electron-reload": "^2.0.0-alpha.1",
@@ -63,7 +66,9 @@
     "node-fetch": "^3.2.0",
     "node-pty": "^0.10.1",
     "passport": "^0.5.2",
+    "passport-facebook": "^3.0.0",
     "passport-github2": "^0.1.12",
+    "passport-google-oauth20": "^2.0.0",
     "react": "^17.0.2",
     "react-autosuggest": "^10.1.0",
     "react-beautiful-dnd": "^13.1.0",
@@ -95,7 +100,7 @@
     "@typescript-eslint/parser": "^5.10.1",
     "axe-core": "^4.3.5",
     "electron": "^13.6.3",
-    "electron-rebuild": "^3.2.5",
+    "electron-rebuild": "^3.2.7",
     "electron-reloader": "^1.2.1",
     "eslint": "^8.7.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -130,7 +135,11 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "options": {
+              "maintainer": "Myles Tsutsui"
+            }
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",

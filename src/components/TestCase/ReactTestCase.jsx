@@ -9,7 +9,7 @@ import {
   updateDescribeOrder,
   updateItStatementOrder,
   addDescribeBlock
-} from '../../context/actions/reactTestCaseActions';
+} from '../../context/actions/frontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -24,7 +24,7 @@ import {
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@material-ui/core';
 
-const ReactTestCase = () => {
+const ReactTestCase = (props) => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
     reactTestCaseReducer,
     reactTestCaseState
@@ -80,6 +80,7 @@ const ReactTestCase = () => {
   return (
     <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
+      <h2 id={styles[`testName${theme}`]}>React Testing</h2>
         <ReactTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
@@ -88,7 +89,7 @@ const ReactTestCase = () => {
               dispatch={dispatchToReactTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
-              options={Object.keys(filePathMap)}
+              options={props.filterFileType(Object.keys(filePathMap), ['js', 'jsx', 'ts', 'tsx'])}
               label='Search Component'
             />
           </div>

@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { actionTypes } from '../actions/vueTestCaseActions';
+import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
 
 export const VueTestCaseContext = createContext([]);
 

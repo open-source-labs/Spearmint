@@ -44,14 +44,23 @@ function createWindow() {
       // could instead build with BrowserView or iframe
     },
   });
-
+   //////////////////////////////////////////////////
+  //boiler plate for macOS. Add closing functionality
+  //////////////////////////////////////////////////
   if (process.platform === 'darwin') {
       app.dock.setIcon(path.join(__dirname, 'icon.png'));
   }
 
-  mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
-  mainWindow.webContents.openDevTools()
+  // potential window-close-app-terminate behavior -dk
+  // app.on('window-all-closed', () => {
+  //   if (process.platform !== 'darwin') app.quit()
+  // });
 
+  mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
+  // mainWindow.webContents.openDevTools()
+  //////////////////////////////////////////////////
+  //Creates terminal, specifies dimensions based on columns and rows
+  //////////////////////////////////////////////////
   // PTY PROCESS FOR IN APP TERMINAL
   const ptyArgs = {
     name: 'xterm-color',
@@ -78,6 +87,9 @@ function createWindow() {
     ptyProcess.resize(data.cols, data.rows);
   });
 
+////////////////////////////////////////
+  //dark mode light mode 
+////////////////////////////////////////
   mainWindow.webContents
   .executeJavaScript('localStorage.getItem("theme");', true)
   .then(result => {
@@ -85,13 +97,17 @@ function createWindow() {
   });
 }
 
+///////////////////////////////////////
+//for os users to have path
+///////////////////////////////////////
+
 if (os.platform() !== 'win32') {
   const fixPath = require('fix-path');
   fixPath();
 }
 
 /*
-UNIVERSAL IPC CALLS
+r IPC CALLS
 (The following IPC calls are made from various components in the codebase)
 */
 ipcMain.on('Universal.stat', (e, filePath) => {
@@ -212,9 +228,88 @@ ipcMain.on('Github-Oauth', (_event, url) => {
   });
 });
 
+// Facebook FUNCTIONALITY
+let facebookWindow;
+// ipcMain is listening on channel 'Facebook-Oauth' for an event from ProjectLoader line 94
+// ipbMain receives the url from ProjectLoader.jsx line 94
+ipcMain.on('Facebook-Oauth', (_event, url) => {
+  facebookWindow = new BrowserWindow({
+    // webPreferences: {
+    //   nodeIntegration: true,
+    //   worldSafeExecuteJavaScript: true,
+    //   contextIsolation: false,
+    //   webviewTag: true,
+    // },
+  });
+
+  facebookWindow.loadURL(url);
+
+  // When url changes, this event will be emitted, and have reference to the new url
+  facebookWindow.webContents.on('did-navigate', (_event, url) => {
+    // if new url matches our final endpoint, then the user has successfully logged in
+    // and we grab the facebook username via cookies
+    if (url.startsWith('http://localhost:3001/oauth2/redirect/facebook')) {
+
+      // gets the cookie with the name property of 'dotcom_user'
+      session.defaultSession.cookies.get({ domain: '.facebook.com', name: 'c_user' }).then((cookies) => {
+        if (cookies) console.log('Cookies from Facebook: \n', cookies), mainWindow.webContents.send('facebook-new-url', cookies);
+      });
+      // session.defaultSession.cookies.get({ name: 'dotcom_user' })
+      //   .then((cookies) => {
+      //     // if we get cookies with the key of dotcom_user, 
+      //     // then send to mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
+      //     if (cookies) mainWindow.webContents.send('facebook-new-url', cookies);
+      //   });
+
+      // close the facebookWindow automatically
+      facebookWindow.close();
+    }
+  });
+});
+
+
+// Google FUNCTIONALITY
+let googleWindow;
+// ipcMain is listening on channel 'Google-Oauth2' for an event from ProjectLoader line 94
+// ipbMain receives the url from ProjectLoader.jsx line 94
+ipcMain.on('Google-Oauth', (_event, url) => {
+  googleWindow = new BrowserWindow({
+    // webPreferences: {
+    //   nodeIntegration: true,
+    //   worldSafeExecuteJavaScript: true,
+    //   contextIsolation: false,
+    //   webviewTag: true,
+    },
+  );
+
+  googleWindow.loadURL(url);
+
+  // When url changes, this event will be emitted, and have reference to the new url
+  googleWindow.webContents.on('did-navigate', (_event, url) => {
+    // if new url matches our final endpoint, then the user has successfully logged in
+    // and we grab the google username via cookies
+    if (url.startsWith('http://localhost:3001/auth/google/callback')) {
+
+      // gets the cookie with the name property of 'dotcom_user'
+      session.defaultSession.cookies.get({ name: 'dotcom_user' })
+        .then((cookies) => {
+          // if we get cookies with the key of dotcom_user, 
+          // then send to mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
+          if (cookies) mainWindow.webContents.send('google-new-url', cookies);
+        });
+
+      // close the googleWindow automatically
+      googleWindow.close();
+    }
+  });
+});
 
 app.whenReady()
   .then(createWindow)
+
+  // .then( app.on('activate', () => {
+  //   if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  // }) )
 
   // react dev tools not working so commenting out...
   // .then(()=> {

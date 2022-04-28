@@ -7,6 +7,12 @@
   display: block;
 }
 
+// h2 {
+//   text-align: center;
+//   color: white;
+//   font-size: 30px;
+// }
+
 div {
   font-size: 12px;
   vertical-align: middle;
@@ -14,6 +20,18 @@ div {
 #head {
   position: fixed;
   z-index: 9999;
+}
+
+#testNamelight {
+  text-align: center;
+  color: $mint;
+  font-size: 30px;
+}
+#testNamedark {
+  text-align: center;
+  color: white;
+  font-size: 30px
+
 }
 
 #testCaseHeaderlight {
@@ -24,6 +42,12 @@ div {
   display: flex;
   flex-direction: column;
   gap: 5px;
+
+  h2 {
+    text-align: center;
+    color: black;
+    font-size: 30px;
+  }
 
   button {
     font-size: 0.75rem;
@@ -56,6 +80,12 @@ div {
   gap: 5px;
 
   --input-color: white;
+
+  h2 {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+  }
 
   button {
     font-size: 0.75rem;
@@ -397,3 +427,5 @@ div {
 #SecTestCasedark{
   color: white;
 }
+
+

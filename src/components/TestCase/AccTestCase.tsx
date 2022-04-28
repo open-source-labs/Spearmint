@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { Ref, useContext } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import {
@@ -26,10 +26,15 @@ import SearchInput from '../SearchInput/SearchInput';
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 import { Button } from '@material-ui/core';
 
-const AccTestCase = () => {
-  const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
-  const [{theme}] = useContext(GlobalContext);
 
+const AccTestCase = () => {
+  interface Ref {
+    theme: null | string
+  }
+  type DropResult = typeof DropResult;
+
+  const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
+  const [{ theme }] : Array<Ref> = useContext(GlobalContext);
   const { describeBlocks, itStatements, testType } = accTestCase;
 
   const [{ filePathMap }] = useContext<any>(GlobalContext);
@@ -62,6 +67,7 @@ const AccTestCase = () => {
   return (
     <div id={styles.AccTestCase}>
       <div id="head">
+      <h2 id={`testName${theme}`}>Acc Testing</h2>
         <AccTestMenu />
       </div>
 
@@ -70,7 +76,7 @@ const AccTestCase = () => {
           <AccTestTypes
             dispatch={dispatchToAccTestCase}
             action={updateTestType}
-            currType={testType}
+            currTypes={testType}
           />
 
           {testType === 'puppeteer' ? (

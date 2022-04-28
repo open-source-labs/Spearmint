@@ -69,12 +69,26 @@ import {
 } from '../../context/reducers/vueTestCaseReducer';
 import VueTestCase from '../../components/TestCase/VueTestCase';
 
+import {
+  SvelteTestCaseContext,
+  SvelteTestCaseState,
+  SvelteTestCaseReducer
+} from '../../context/reducers/svelteTestCaseReducer';
+import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
+
+import {
+  GraphQLTestCaseContext,
+  graphQLTestCaseState,
+  graphQLTestCaseReducer
+} from '../../context/reducers/graphQLTestCaseReducer';
+import GraphQLTestCase from '../../components/TestCase/GraphQLTestCase';
+
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaUniversalAccess, FaReact } from "react-icons/fa"
 import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
-import { SiPuppeteer, SiRedux } from "react-icons/si"
+import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
 
 import { Button } from '@material-ui/core';
@@ -121,6 +135,27 @@ const TestFile = () => {
     secTestCaseReducer,
     secTestCaseState
   );
+  const [graphQLTestCase, dispatchToGraphQLTestCase] = useReducer(
+    graphQLTestCaseReducer,
+    graphQLTestCaseState
+  );
+
+
+  // const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
+  //   SvelteTestCaseReducer,
+  //   SvelteTestCaseState
+  // )
+
+  const filterFileType = (files, acceptedFileTypes) => {
+    // files is an array of the keys in filePathMap
+    const output = [];
+    for (let file of files) {
+      const splitName =  file.split('.');
+      const fileType = splitName[splitName.length - 1];
+      if(acceptedFileTypes.includes(fileType)) output.push(file);
+    }
+    return output;
+  }
 
   const closeTestModal = () => {
     dispatchToGlobal(toggleModal());
@@ -144,23 +179,30 @@ const TestFile = () => {
     },
   };
 
+  const cardSize = '1.1rem';
+
   const testMappings = {
-    'react': [<FaReact size={'1.25rem'}/>, 'React', 
+    'react': [<FaReact size={cardSize}/>, 'React', 
               'Test React with rendering, actions, and assertions found in the React Testing Library'],
-    'hooks': [<GiHook size={'1.25rem'}/>, 'Hooks', 
-              'Make assertions to test your React hooks with available hook parameters and callback functions'],
-    'puppeteer': [<SiPuppeteer size={'1.25rem'}/>, 'Puppeteer',
-                  'Use the puppeteer node library to conduct headless browser testing on the Chrome Browser'],
-    'redux': [<SiRedux size={'1.25rem'}/>, 'Redux', 
+    'redux': [<SiRedux size={cardSize}/>, 'Redux', 
               'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
-    'vue': [<IoLogoVue size={'1.25rem'}/>, 'Vue',
-            'Newly added vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
-    'endpoint': [<IoServer size={'1.25rem'}/>, 'Endpoint',
-                  'Make sure your HTTP routes are getting the correct response by testing your server with Supertest'],
-    'acc': [<FaUniversalAccess size={'1.25rem'}/>, 'Accessibility',
+    'svelte': [<SiSvelte size={cardSize}/>, 'Svelte',
+               'Newly added Svelte testing' ],
+    'hooks': [<GiHook size={cardSize}/>, 'Hooks', 
+              'Make assertions to test your React hooks with available hook parameters and callback functions'],
+    'vue': [<IoLogoVue size={cardSize}/>, 'Vue',
+              'Vue tests allow for testing mounted Vue instances and single page components with Vue Test Utils'],
+    'puppeteer': [<SiPuppeteer size={cardSize}/>, 'Puppeteer',
+              'Use the puppeteer node library to conduct headless browser testing on the Chrome Browser'],
+    'endpoint': [<IoServer size={cardSize}/>, 'Endpoint',
+               'Make sure your HTTP routes are getting the correct response by testing your server with Supertest'],
+    'acc': [<FaUniversalAccess size={cardSize}/>, 'Accessibility',
             'Maintain a good accessibility score by testing the various attributes of your website'],
-    'sec': [<MdSecurity size={'1.25rem'}/>, 'Security',
+    'sec': [<MdSecurity size={cardSize}/>, 'Security',
             'Evaluate security vulnerabilities using Synk'],
+    'graphQL': [<SiGraphql size={cardSize}/>, 'GraphQL',
+            'Testing GraphQL'],
+
   }
 
   const allButtons = (Object.keys(testMappings)).map((elem, idx) => {
@@ -219,18 +261,19 @@ const TestFile = () => {
           </div>
         </Draggable>
       </ReactModal>
+      
       {/* instantiate context for each test option */}
       {testCase === 'redux' && (
         <section>
           <ReduxTestCaseContext.Provider value={[reduxTestCase, dispatchToReduxTestCase]}>
-            <ReduxTestCase />
+            <ReduxTestCase/>
           </ReduxTestCaseContext.Provider>
         </section>
       )}
 
       {testCase === 'react' && (
         <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-          <ReactTestCase />
+          <ReactTestCase filterFileType = {filterFileType}/>
         </MockDataContext.Provider>
       )}
 
@@ -260,6 +303,7 @@ const TestFile = () => {
         </section>
       )}
 
+
       {testCase === 'acc' && (
         <section>
           <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
@@ -278,12 +322,27 @@ const TestFile = () => {
         testCase === 'vue' && (
           <section>
             <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-              <VueTestCase />
+              <VueTestCase filterFileType = {filterFileType} />
             </MockDataContext.Provider>
           </section>
         )
       }
 
+      {testCase === 'svelte' && (
+        <section>
+          <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+            <SvelteTestCase filterFileType = {filterFileType} />
+          </MockDataContext.Provider >
+        </section>
+      )}
+
+      {testCase === 'graphQL' && (
+        <section>
+          <GraphQLTestCaseContext.Provider value={[graphQLTestCase, dispatchToGraphQLTestCase]}>
+            <GraphQLTestCase filterFileType = {filterFileType} />
+          </GraphQLTestCaseContext.Provider>
+        </section>
+      )}
       {testCase === '' && (
           <Fragment>
             <div id={styles.testFileContainer}>
