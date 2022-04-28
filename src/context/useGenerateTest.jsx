@@ -318,6 +318,7 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '\n';
     };
 
+    
     // adds all the statements from the test blocks and transforms it into code in the preview file
     const addEndpointTestStatements = () => {
       const { endpointStatements } = endpointTestCase;
@@ -325,15 +326,34 @@ function useGenerateTest(test, projectFilePath) {
         switch (statement.type) {
           case 'endpoint':
             return addEndpoint(statement);
-          default:
-            return statement;
-        }
-      });
-    };
-
-    /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
-
-    /* getLargestContentfulPaint()
+            default:
+              return statement;
+            }
+          });
+        };
+        
+        
+        // adds all your import statements at the top to the preview file
+        const addGraphQLImportStatements = () => {
+          let { serverFilePath, serverFileName, dbFileName, dbFilePath, addDB } = graphQLTestCase;
+          createPathToGraphQLFiles(serverFilePath, serverFileName, dbFilePath, dbFileName, addDB);
+          testFileCode += '\n';
+        };
+        // adds all the statements from the test blocks and transforms it into code in the preview file
+        const addGraphQLTestStatements = () => {
+          const { graphQLStatements } = graphQLTestCase;
+          graphQLStatements.forEach((statement) => {
+            switch (statement.type) {
+              case 'graphQL':
+                return addGraphQL(statement);
+              default:
+                return statement;
+            }
+          });
+        };
+        /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
+        
+        /* getLargestContentfulPaint()
         - creating a new PerformanceObserver object which will call the callback function when observed performance events happen
         - setting observer() method to observe the LCP performance entries
      */
@@ -537,11 +557,10 @@ function useGenerateTest(test, projectFilePath) {
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
         const supertest = require('supertest')\n;
-        import "core-js/stable";
-        import "regenerator-runtime/runtime";
         const request = supertest(app)\n`;
       } else testFileCode = 'Please Select A Server!';
-
+      // import "core-js/stable";
+      // import "regenerator-runtime/runtime";
       // if you input a db file in the db search input box...
       if (dbFilePath) {
         // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
@@ -550,22 +569,61 @@ function useGenerateTest(test, projectFilePath) {
       
         switch (addDB) {
           case 'PostgreSQL':
-            testFileCode += `const pgPoolClient = require('../${filePath}');
-            \n afterAll( async () => { await pgPoolClient.end(); \n});`;
-            break;
+            // testFileCode += `const pgPoolClient = require('../${filePath}');
+            // \n afterAll( async () => { await pgPoolClient.end(); \n});`;
+            // break;
           case 'MongoDB':
-            testFileCode += `const client = require('../${filePath}');
-            \n afterAll( async () => { await client.close(); \n});`;
-            break;
+            // testFileCode += `const client = require('../${filePath}');
+            // \n afterAll( async () => { await client.close(); \n});`;
+            // break;
           case 'Mongoose':
-            testFileCode += `const mongoose = require('../${filePath}');
-            \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+            // testFileCode += `const mongoose = require('../${filePath}');
+            // \n afterAll( async () => { await mongoose.connection.close(); \n});`;
             break;
           default:
             return;
         }
       }
     };
+
+        // GraphQLpoint Filepath: finds the endpoint routes in the project file 
+        const createPathToGraphQLFiles = (serverFilePath, serverFileName, dbFileName, dbFilePath, addDB) => {
+          // if you input a server file in the server search input box...
+          if (serverFilePath) {
+            // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
+            let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
+            filePath = filePath.replace(/\\/g, '/');
+            testFileCode = `const app = require('../${filePath}');
+            const supertest = require('supertest')\n;
+            const request = supertest(app)\n`;
+          } else testFileCode = 'Please Select A Server!';
+          // import "core-js/stable";
+          // import "regenerator-runtime/runtime";
+          // if you input a db file in the db search input box...
+          if (dbFilePath) {
+            // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
+            let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, dbFilePath);
+            filePath = filePath.replace(/\\/g, '/');
+          
+            switch (addDB) {
+              case 'PostgreSQL':
+                // testFileCode += `const pgPoolClient = require('../${filePath}');
+                // \n afterAll( async () => { await pgPoolClient.end(); \n});`;
+                // break;
+              case 'MongoDB':
+                // testFileCode += `const client = require('../${filePath}');
+                // \n afterAll( async () => { await client.close(); \n});`;
+                // break;
+              case 'Mongoose':
+                // testFileCode += `const mongoose = require('../${filePath}');
+                // \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+                break;
+              default:
+                return;
+            }
+          }
+        };
+    
 
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
 
@@ -603,6 +661,15 @@ function useGenerateTest(test, projectFilePath) {
       else if (type === 'vue'){
         testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
       }
+      else if (type === 'svelte') {
+        if (action.eventValue) {
+          testFileCode += `await userEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
+                            (${action.queryValue}), "${action.eventValue}");`;
+        } else {
+          testFileCode += `await userEvent.${action.eventType}(screen.${action.querySelector}
+                            (${action.queryValue}));`;
+        }
+      }
     };
 
     // Assertion Jest Test Code
@@ -621,6 +688,10 @@ function useGenerateTest(test, projectFilePath) {
           testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
             ${assertion.matcherType}(${assertion.matcherValue});`;
         }
+      }
+      if (type === 'svelte'){
+        testFileCode += `expect(screen.${assertion.queryVariant + assertion.querySelector}
+          (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
       }
     };
 
@@ -753,9 +824,36 @@ function useGenerateTest(test, projectFilePath) {
     };
     /* ------------------Context needs to be integrated with Hooks as business logic------------------- */
     const addEndpoint = (statement) => {
-      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}');`;
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
       testFileCode += statement.postData
-        ? `.send( ${statement.postData.trim()})\n.set({'Content-Type': 'application/json',`
+        ? `.send( ${statement.postData.trim()})\n`
+        : statement.headers.length
+        ? `.set({`
+        : '';
+
+      statement.headers.forEach(({ headerName, headerValue }, index) => {
+        testFileCode +=
+          headerName.length > 0 && headerValue.length > 0
+            ? `'${headerName}': '${headerValue}',`
+            : '';
+      });
+      testFileCode += statement.headers.length ? '}); \n' : '';
+      statement.assertions.forEach(({ matcher, expectedResponse, not, value }) => {
+        matcher = matcher
+          .replace(/\(([^)]+)\)/, '')
+          .split(' ')
+          .join('');
+        testFileCode += `\n expect(response.${expectedResponse.toLowerCase()})`;
+        testFileCode += not ? `.not.${matcher}(${value});` : `.${matcher}(${value});`;
+      });
+      testFileCode += '});';
+      testFileCode += '\n';
+    };
+    //statement.method
+    const addGraphQL = (statement) => {
+      testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.post('${statement.route}')`;
+      testFileCode += statement.postData
+        ? `.send( { "query": "${statement.method} ${statement.postData.trim()}" })\n`
         : statement.headers.length
         ? `.set({`
         : '';
@@ -1188,6 +1286,93 @@ function useGenerateTest(test, projectFilePath) {
       }, '');
     };
 
+    //-----------------------------------------Svelte Test---------------------------------------------------------------
+     // Svelte Import Statements
+     const addSvelteImportStatements = () => {
+      testFileCode += `
+        import { render, screen, waitFor } from '@testing-library/svelte'; 
+        import userEvent from '@testing-library/user-event'; 
+        import { setupServer } from 'msw/node';
+        import { rest } from 'msw';
+        \n`;
+    };
+
+    const addSvelteComponentImportStatement = () => {
+      const componentPath = svelteTestCase.statements.componentPath;
+      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      filePath = filePath.replace(/\\/g, '/');
+      const formattedComponentName = svelteTestCase.statements.componentName.replace(/\.svelte?/, '');
+      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
+    };
+
+
+    const addSvelteDescribeBlocks = () => {
+      const describeBlocks = svelteTestCase.describeBlocks;
+
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        addSvelteItStatement(id);
+        testFileCode += `}); \n`;
+      });
+    };
+    
+        
+    const addSvelteItStatement = (describeId) => {
+      const itStatements = svelteTestCase.itStatements;
+      itStatements.allIds[describeId].forEach((itId) => {
+        testFileCode += `it('${itStatements.byId[itId].text}', async () => {`;
+        addSvelteStatements(itId);
+        testFileCode += '})\n';
+      });
+    };
+
+    const addSvelteStatements = (itId) => {
+      const statements = svelteTestCase.statements;
+      const methods = identifySvelteMethods(itId);
+      statements.allIds.forEach((id) => {
+        let statement = statements.byId[id];
+        if (statement.itId === itId) {
+          switch (statement.type) {
+            case 'action':
+              return addAction(statement, 'svelte');
+            case 'assertion':
+              return addAssertion(statement, 'svelte');
+            case 'render':
+              return addSvelteRender(statement, methods);
+            default:
+              return statement;
+          }
+        }
+      });
+    };
+
+    const identifySvelteMethods = (itId) => {
+      const methods = new Set([]);
+      svelteTestCase.statements.allIds.forEach((id) => {
+        let statement = svelteTestCase.statements.byId[id];
+        if (statement.itId === itId) {
+          if (statement.type === 'action' || statement.type === 'assertion') {
+            methods.add(statement.queryVariant + statement.querySelector);
+          }
+        }
+      });
+      return Array.from(methods).join(', ');
+    };
+
+    const addSvelteRender = (statement, methods) => {
+      let props = createSvelteRenderProps(statement.props);
+      const formattedComponentName = svelteTestCase.statements.componentName.replace(/\.svelte?/, '');
+      // change to Svelte files ** NEED CORRECT FORMATTING **
+      testFileCode += `render(${formattedComponentName});`;
+    };
+
+    const createSvelteRenderProps = (props) => {
+      return props.reduce((acc, prop) => {
+        return acc + `${prop.propKey}='${prop.propValue}',`;
+      }, '');
+    };
+
+
     // ------------------------------------ switch statement on test type -------------------------
 
     switch (test) {
@@ -1245,6 +1430,23 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+      //---------------------------------------------------Svelte switch statement---------------------------------------------
+      case 'svelte':
+        var svelteTestCase = testState;
+        var mockData = mockDataState;
+        return (
+          addSvelteComponentImportStatement(),
+          addSvelteImportStatements(),
+          addMockData(),
+          addSvelteDescribeBlocks(),
+          (testFileCode = beautify(testFileCode, {
+            brace_style: 'collapse, preserve-inline',
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+        
       case 'redux':
         var reduxTestCase = testState;
         return (
@@ -1285,6 +1487,17 @@ function useGenerateTest(test, projectFilePath) {
         return (
           addPuppeteerImportStatements(),
           addPuppeteerTestStatements(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+      case 'graphQL':
+        var graphQLTestCase = testState;
+        return (
+          addGraphQLImportStatements(),
+          addGraphQLTestStatements(),
           (testFileCode = beautify(testFileCode, {
             indent_size: 2,
             space_in_empty_paren: true,

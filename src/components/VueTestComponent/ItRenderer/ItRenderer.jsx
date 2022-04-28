@@ -7,7 +7,7 @@ import {
   addAction,
   addAssertion,
   deleteItStatement,
-} from '../../../context/actions/vueTestCaseActions';
+} from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
 import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
 import { Button, TextField } from '@material-ui/core';

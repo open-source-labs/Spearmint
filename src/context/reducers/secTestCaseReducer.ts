@@ -2,6 +2,12 @@ import { createContext } from 'react';
 import { SecTestCaseState, Action } from '../../utils/secTypes';
 import { actionTypes } from '../actions/secTestCaseActions';
 
+interface secContext {
+  isFileDirectoryOpen: null | boolean;
+  theme: null | string;
+  dispatchToGlobal:(n: number) => void
+};
+
 export const SecTestCaseContext: any = createContext([]);
 
 /* ------------------------- Security Test Case State ------------------------ */

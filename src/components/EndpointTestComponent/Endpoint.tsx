@@ -189,13 +189,13 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
                         <div id={styled.renderPropsFlexBox}>
                           <input
                             type='text'
-                            id={i}
+                            id={`${i}`}
                             onChange={(e) => handleChangeEndpointFields(e, 'headerName')}
                             value={header.headerName}
                           />
                           <input
                             type='text'
-                            id={i}
+                            id={`${i}`}
                             onChange={(e) => handleChangeEndpointFields(e, 'headerValue')}
                             value={header.headerValue}
                           />

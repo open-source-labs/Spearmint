@@ -5,7 +5,7 @@
  */
 import React, { useContext } from 'react';
 import styles from './Assertion.module.scss';
-import { deleteAssertion, updateAssertion } from '../../../context/actions/reactTestCaseActions';
+import { deleteAssertion, updateAssertion } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
@@ -71,12 +71,17 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               onChange={(e) => handleChangeAssertionFields(e, 'queryVariant')}
             >
               <option value='' />
-              <option value='getBy'>getBy</option>
-              <option value='getAllBy'>getAllBy</option>
-              <option value='queryBy'>queryBy</option>
-              <option value='queryAllBy'>queryAllBy</option>
+              <option value='find'>find</option>
+              <option value='findComponent'>findComponent</option>
+              <option value='findAll'>findAll</option>
               <option value='findBy'>findBy</option>
               <option value='findAllBy'>findAllBy</option>
+              <option value='get'>get</option>
+              <option value='getBy'>getBy</option>
+              <option value='getAllBy'>getAllBy</option>
+              <option value='getComponent'>getComponent</option>
+              <option value='queryBy'>queryBy</option>
+              <option value='queryAllBy'>queryAllBy</option>
             </select>
             {/* <span id={styles.hastooltip} role='tooltip'>
               <span id={styles.tooltip}>

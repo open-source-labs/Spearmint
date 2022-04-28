@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styles from '../Action/Action.module.scss';
-import { deleteAction, updateAction } from '../../../context/actions/reactTestCaseActions';
+import { deleteAction, updateAction } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../../ToolTip/ToolTip';

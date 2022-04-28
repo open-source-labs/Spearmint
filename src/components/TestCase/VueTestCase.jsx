@@ -9,7 +9,7 @@ import {
   updateDescribeOrder,
   updateItStatementOrder,
   addDescribeBlock
-} from '../../context/actions/vueTestCaseActions';
+} from '../../context/actions/frontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -24,7 +24,7 @@ import {
 } from '../../context/reducers/vueTestCaseReducer';
 import { Button } from '@material-ui/core';
 
-const VueTestCase = () => {
+const VueTestCase = (props) => {
   const [vueTestCase, dispatchToVueTestCase] = useReducer(
     vueTestCaseReducer,
     vueTestCaseState
@@ -80,6 +80,7 @@ const VueTestCase = () => {
   return (
     <VueTestCaseContext.Provider value={[vueTestCase, dispatchToVueTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
+      <h2 id={styles[`testName${theme}`]}>Vue Testing</h2>
         <VueTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
@@ -88,7 +89,7 @@ const VueTestCase = () => {
               dispatch={dispatchToVueTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
-              options={Object.keys(filePathMap)}
+              options={props.filterFileType(Object.keys(filePathMap), ['vue'])}
               label="Search Component"
             />
           </div>

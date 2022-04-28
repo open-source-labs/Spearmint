@@ -104,4 +104,52 @@ router.get(
   }
 );
 
+// Set up route for get requests to github login auth
+// router.get(
+//   '/login/facebook',
+//   // Asks users if they will ALLOW or DENY us permission to request their github profile
+//   passport.authenticate('facebook', { scope: ['email'] })
+// );
+
+router.get('/login/facebook', passport.authenticate('facebook'));
+
+
+// if user does ALLOW, then they are automatically redirected to the callback endpoint
+router.get(
+  '/oauth2/redirect/facebook',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  // if second passport auth is successful, then these middleware functions are invoked next
+  userController.facebookLogin,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+
+  // Anonymous middleware to send back valid response
+  (req, res) => {
+    console.log('ssid:', res.locals.ssid);
+    // we send the ssid back to the front end
+    res.status(200).json({ ssid: res.locals.ssid });
+  }
+);
+
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+
+// if user does ALLOW, then they are automatically redirected to the callback endpoint
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  // if second passport auth is successful, then these middleware functions are invoked next
+  userController.googleLogin,
+  cookieController.setSSIDCookie,
+  sessionController.startSession,
+
+  // Anonymous middleware to send back valid response
+  (req, res) => {
+    console.log('ssid:', res.locals.ssid);
+    // we send the ssid back to the front end
+    res.status(200).json({ ssid: res.locals.ssid });
+  }
+);
+
+
 module.exports = router;
