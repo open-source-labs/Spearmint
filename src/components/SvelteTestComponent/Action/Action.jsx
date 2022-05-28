@@ -137,23 +137,20 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='TestId'>TestId</option>
               {/* TextMatch Precision & Normalization will be added */}
             </select>
-            
-            <div id={styles.query}>
-               <label htmlFor='queryValue' className={styles.queryLabel}>
-                      Query
-               </label>
-               <input
-                type='text'
-                id='queryValue'
-                value={statement.queryValue}
-                placeholder="eg: '[data-test='test-id']'"
-                onChange={(e) => handleChangeActionFields(e, 'queryValue')}
-               />
-            </div>
-
           </div>
         </div>
-
+        <div id={styles.query}>
+          <label htmlFor='queryValue' className={styles.queryLabel}>
+                Query
+          </label>
+          <input
+          type='text'
+          id='queryValue'
+          value={statement.queryValue}
+          placeholder="eg: '[data-test='test-id']'"
+          onChange={(e) => handleChangeActionFields(e, 'queryValue')}
+          />
+        </div>
 
 
       </div>
