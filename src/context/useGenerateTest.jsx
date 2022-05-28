@@ -1615,6 +1615,21 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
       // add solid switch statement **************************************
+      case 'solid':
+        var solidTestCase = testState;
+        var mockData = mockDataState;
+        return (
+          addSolidComponentImportStatement(),
+          addSolidImportStatements(),
+          addMockData(),
+          addSolidDescribeBlock(),
+          (testFileCode = beautify(testFileCode, {
+            brace_style: 'collapse, preserve-inline',
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
       default:
         return 'not a test';
     }

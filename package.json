@@ -10,7 +10,8 @@
     "watch": "webpack --config webpack.config.ts --watch",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "dev": "npm run watch & npm run start-dev"
+    "dev": "npm run watch & npm run start-dev",
+    "rebuild": "electron-rebuild -f -w node-pty"
   },
   "build": {
     "appId": "spearmint",
