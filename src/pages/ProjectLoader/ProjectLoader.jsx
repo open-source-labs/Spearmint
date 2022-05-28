@@ -234,7 +234,7 @@ function ProjectLoader() {
             Log In
           </Button>
           <Button variant="outlined" type="button" onClick={handleSignup} id={styles.signInBtn}>
-            Sign up
+            Sign up DEBUGGG
           </Button>
         </div>
         <div id={styles.altButtonsBox}>

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
-import styles from '../Action/Action.module.scss';
+import styles from '../../ReactTestComponent/Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/reducers/mockDataReducer';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { SolidTestCaseContext } from '../../../context/reducers/solidTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -15,17 +15,17 @@ const closeIcon = require('../../../assets/images/close.png');
 // Action box in middle panel (testCase.jsx)
 const Action = ({ statement, statementId, describeId, itId }) => {
   const [{ mockData }] = useContext(MockDataContext);
-  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [, dispatchTosolidTestCase] = useContext(SolidTestCaseContext); 
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeActionFields = (e, field) => {
     let updatedAction = { ...statement };
     updatedAction[field] = e.target.value;
-    dispatchToReactTestCase(updateAction(updatedAction));
+    dispatchTosolidTestCase(updateAction(updatedAction));
   };
 
   const handleClickDeleteAction = (e) => {
-    dispatchToReactTestCase(deleteAction(statement.id));
+    dispatchTosolidTestCase(deleteAction(statement.id));
   };
   //conditional rendering for events with values
   const needsEventValue = (eventType) => {
@@ -47,6 +47,9 @@ const Action = ({ statement, statementId, describeId, itId }) => {
       <div id={styles.actionHeader}>
         <h3>Action</h3>
       </div>
+      
+      {/* event input in action component */}
+
       <div id={styles.eventTypeFlexBox}>
         <div id={styles.eventType}>
           <label htmlFor='eventType'>Event Type</label>
@@ -70,7 +73,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <label htmlFor='eventValue'> Value </label>
               <AutoCompleteMockData
                 statement={statement}
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={dispatchTosolidTestCase}
                 statementType='action'
                 // id={styles2.autoCompleteMockData}
               />
@@ -87,6 +90,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
           ) : null}
         </div>
       </div>
+      
       <div id={styles.queryFlexBox}>
         <div id={styles.querySelector}>
           <label htmlFor='queryVariant' className={styles.queryLabel}>
@@ -99,12 +103,17 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               onChange={(e) => handleChangeActionFields(e, 'queryVariant')}
             >
               <option value='' />
-              <option value='getBy'>getBy</option>
-              <option value='getAllBy'>getAllBy</option>
-              <option value='queryBy'>queryBy</option>
-              <option value='queryAllBy'>queryAllBy</option>
+              <option value='find'>find</option>
+              <option value='findComponent'>findComponent</option>
+              <option value='findAll'>findAll</option>
               <option value='findBy'>findBy</option>
               <option value='findAllBy'>findAllBy</option>
+              <option value='get'>get</option>
+              <option value='getBy'>getBy</option>
+              <option value='getAllBy'>getAllBy</option>
+              <option value='getComponent'>getComponent</option>
+              <option value='queryBy'>queryBy</option>
+              <option value='queryAllBy'>queryAllBy</option>
             </select>
             {/* <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
@@ -112,7 +121,6 @@ const Action = ({ statement, statementId, describeId, itId }) => {
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
             </span> */}
-
             <select
               id='querySelector'
               value={statement.querySelector}
@@ -129,29 +137,24 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='TestId'>TestId</option>
               {/* TextMatch Precision & Normalization will be added */}
             </select>
-            {/* <span id={styles.hastooltip} role='tooltip'>
-              <img src={questionIcon} alt='help' />
-              <span id={styles.tooltip}>
-                <ToolTip toolTipType={statement.querySelector} />
-              </span>
-            </span> */}
-            <div id={styles.query}>
-              <label htmlFor='queryValue' className={styles.queryLabel}>
-                Query
-              </label>
-
-              <input
-                type='text'
-                id='queryValue'
-                value={statement.queryValue}
-                onChange={(e) => handleChangeActionFields(e, 'queryValue')}
-              />
-            </div>
           </div>
-          
         </div>
-        
+        <div id={styles.query}>
+          <label htmlFor='queryValue' className={styles.queryLabel}>
+                Query
+          </label>
+          <input
+          type='text'
+          id='queryValue'
+          value={statement.queryValue}
+          placeholder="eg: '[data-test='test-id']'"
+          onChange={(e) => handleChangeActionFields(e, 'queryValue')}>
+          </input>
+        </div>
+
+
       </div>
+      
     </div>
   );
 };
