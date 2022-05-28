@@ -23,7 +23,7 @@ const DescribeRenderer = ({
     dispatcher(deleteDescribeBlock(describeId));
   };
 
-  const deleteSvelteDescribeBlockOnKeyUp = (e) => {
+  const deleteSolidDescribeBlockOnKeyUp = (e) => {
     if (e.charCode === 13) {
       const describeId = e.target.id;
       dispatcher(deleteDescribeBlock(describeId));
@@ -50,7 +50,7 @@ const DescribeRenderer = ({
           <AiOutlineCloseCircle
             tabIndex={0}
             id={id} 
-            onKeyPress={deleteSvelteDescribeBlockOnKeyUp}
+            onKeyPress={deleteSolidDescribeBlockOnKeyUp}
             onClick={deleteDescribeBlockHandleClick}
             className={cn('far fa-window-close', styles.describeClose)}
           />  
@@ -77,7 +77,7 @@ const DescribeRenderer = ({
             />
           </div>
 
-          <Droppable droppableId={'droppableSvelteIt' + id} type={id}>
+          <Droppable droppableId={'droppableSolidIt' + id} type={id}>
             {(innerProvided) => (
               <div ref={innerProvided.innerRef} {...innerProvided.droppableProps}>
                 <ItRenderer

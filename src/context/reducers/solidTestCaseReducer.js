@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
 
-export const ReactTestCaseContext = createContext([]);
+export const SolidTestCaseContext = createContext([]);
 
-export const reactTestCaseState = {
+export const SolidTestCaseState = {
   modalOpen: false,
 
   describeId: 1,
@@ -128,9 +128,11 @@ const deleteChildren = (object, deletionId, lookup, it) => {
   return allIdCopy;
 };
 
-/* ------------------------- React Test Case Reducer ------------------------ */
+/* ------------------------- Solid Test Case Reducer ------------------------ */
 
-export const reactTestCaseReducer = (state, action) => {
+
+export const SolidTestCaseReducer = (state, action) => {
+
   Object.freeze(state);
 
   let describeBlocks;
@@ -383,6 +385,7 @@ export const reactTestCaseReducer = (state, action) => {
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
       let updatedStatementId = state.statementId;
+
       return {
         ...state,
         statementId: ++updatedStatementId,

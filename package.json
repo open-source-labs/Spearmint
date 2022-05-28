@@ -10,7 +10,8 @@
     "watch": "webpack --config webpack.config.ts --watch",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "dev": "npm run watch & npm run start-dev"
+    "dev": "npm run watch & npm run start-dev",
+    "rebuild": "electron-rebuild -f -w node-pty"
   },
   "build": {
     "appId": "spearmint",
@@ -45,7 +46,7 @@
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
-    "@uiw/react-codemirror": "^4.2.4",
+    "@uiw/react-codemirror": "^4.7.0",
     "babel-loader": "^8.2.2",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
