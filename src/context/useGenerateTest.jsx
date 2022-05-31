@@ -7,7 +7,107 @@ const beautify = require('js-beautify');
 function useGenerateTest(test, projectFilePath) {
   return (testState, mockDataState) => {
     let testFileCode = '';
+    
+    /* ------------------------------------------ SOLID IMPORT + TEST STATEMENTS ------------------------------------------ */
+    // Solid Component Import Statement for render card
+    const addSolidComponentImportStatement = () => {
+      const componentPath = solidTestCase.statements.componentPath;
+      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      filePath = filePath.replace(/\\/g, '/');
+      const formattedComponentName = solidTestCase.statements.componentName.replace(/\.jsx?/, '');
+      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
+    };
+    
+    
+    // Solid Import Statements
+    const addSolidImportStatements = () => {
+      testFileCode += `
+        import { createSignal, createEffect } from "solid-js"; 
+        import '@testing-library/jest-dom';
+        import { screen, render, fireEvent, cleanup } from 'solid-testing-library';
+        import { build, fake } from 'test-data-bot';
+        \n`;
+        // need to import solid-js?
+        // import { render } from "solid-js/web";
+        // import { createSignal } from "solid-js";
+    }
+    
+    
+    
+    // Solid add describe block
+    const addSolidDescribeBlock = () => {
+      const describeBlocks = solidTestCase.describeBlocks;
 
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        addSolidItStatement(id);
+        testFileCode += '}); \n';
+      });
+    }
+    // Solid add it statement 
+    const addSolidItStatement = (describeId) => {
+      const itStatements = solidTestCase.itStatements;
+      itStatements.allIds[describeId].forEach((itId) => {
+        testFileCode += `it('${itStatements.byId[itId].text}', () => {\n`;
+        addSolidStatements(itId);
+        // Solid add cleanup() at the end of describe block***********************************
+        if (testFileCode.includes('render(() =>')) testFileCode += 'cleanup();';
+        testFileCode += '});\n';
+      });
+    };
+
+
+    // Solid add statement card (action/assertion/render)
+    const addSolidStatements = (itId) => {
+      const statements = solidTestCase.statements;
+      // const methods = identifySolidMethods(itId);
+      statements.allIds.forEach((id) => {
+        let statement = statements.byId[id];
+        if (statement.itId === itId) {
+          switch (statement.type) {
+            case 'action':
+              return addAction(statement, 'solid');
+            case 'assertion':
+              return addAssertion(statement, 'solid');
+            case 'render':
+              return addSolidRender(statement);
+            default:
+              return statement;
+          }
+        }
+      });
+    };
+
+    // Solid identify methods
+    // const identifySolidMethods = (itId) => {
+    //   const methods = new Set([]);
+    //   solidTestCase.statements.allIds.forEach((id) => {
+    //     let statement = solidTestCase.statements.byId[id];
+    //     if (statement.itId === itId) {
+    //       if (statement.type === 'action' || statement.type === 'assertion') {
+    //         methods.add(statement.queryVariant + statement.querySelector);
+    //       }
+    //     }
+    //   });
+    //   return Array.from(methods).join(',');
+    // };
+
+    // Solid generate testing for rendering component
+    const addSolidRender = (statement) => {
+      let props = createSolidRenderProps(statement.props);
+      const formattedComponentName = solidTestCase.statements.componentName.replace(/\.jsx?/, '');
+      // check this line later to make sure solid syntax is accurate
+      testFileCode += `render(() => <${formattedComponentName} ${props}/>);`;
+    };
+   
+    // createSolidRenderProps ***************** are all createXXXRenderProps function the same?
+    const createSolidRenderProps = (props) => {
+      return props.reduce((acc, prop) => {
+        return acc + `${prop.propKey}={${prop.propValue}}`;
+      }, '');
+    };
+    
+    
     /* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // React Import Statements
@@ -648,13 +748,23 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
-    const addAction = (action,  type = 'react') => {
+    const addAction = (action,  type = 'react') => { 
       if (type === 'react'){
         if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
                             (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
         } else {
           testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
+                            (${action.queryValue}));`;
+        }
+      }
+      // else if (type === 'solid')***************************************
+      else if (type === 'solid') {
+        if (action.eventValue) {
+          testFileCode += `fireEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
+                            (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+        } else {
+          testFileCode += `fireEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
                             (${action.queryValue}));`;
         }
       }
@@ -674,7 +784,11 @@ function useGenerateTest(test, projectFilePath) {
 
     // Assertion Jest Test Code
     const addAssertion = (assertion, type = 'react') => {
-
+      // if (type === 'solid') *********************************************
+      if (type === 'solid'){
+        testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
+          (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
+      }
       if (type === 'react'){
         testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
           (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
@@ -1504,11 +1618,28 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-
+      // add solid switch statement **************************************
+      case 'solid':
+        var solidTestCase = testState;
+        var mockData = mockDataState;
+        return (
+          addSolidComponentImportStatement(),
+          addSolidImportStatements(),
+          addMockData(),
+          addSolidDescribeBlock(),
+          (testFileCode = beautify(testFileCode, {
+            brace_style: 'collapse, preserve-inline',
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
       default:
         return 'not a test';
     }
   };
+
+  
 }
 
 export default useGenerateTest;
