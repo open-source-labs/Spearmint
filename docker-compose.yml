@@ -1,27 +1,11 @@
-# version: '3'
-version: '3.0'
+version: "3"
+
 services:
-  frontend:
-    # container_name: frontend
-    # image: frontend
-    container_name: 'frontend'
-    image: 'frontend'
-    security_opt:
-      - seccomp=profile.json #Override the default labeling scheme for each container
+  app:
+    image: my-app:latest
+    build: .
     environment:
-      - DISPLAY=host.docker.internal:0
-    stdin_open: true #for keeping the containers open for interactive control
-    ports: 
-      - "3000:3000" #should probably fix, think we have only backend port which is 3001?
-    networks:
-      - spearmint
-  backend:
-    container_name: backend
-    image: backend
-    ports:
-      - "3001:3001"
-    networks:
-      - spearmint
-networks:
-  spearmint:
-    driver: bridge #specifies a logging driver for the service’s containers
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    network_mode: host
