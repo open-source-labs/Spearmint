@@ -9,6 +9,16 @@ function useGenerateTest(test, projectFilePath) {
     let testFileCode = '';
     
     /* ------------------------------------------ SOLID IMPORT + TEST STATEMENTS ------------------------------------------ */
+    // Solid Component Import Statement for render card
+    const addSolidComponentImportStatement = () => {
+      const componentPath = solidTestCase.statements.componentPath;
+      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      filePath = filePath.replace(/\\/g, '/');
+      const formattedComponentName = solidTestCase.statements.componentName.replace(/\.jsx?/, '');
+      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
+    };
+    
+    
     // Solid Import Statements
     const addSolidImportStatements = () => {
       testFileCode += `
@@ -22,14 +32,7 @@ function useGenerateTest(test, projectFilePath) {
         // import { createSignal } from "solid-js";
     }
     
-    // Solid Component Import Statement for render card
-    const addSolidComponentImportStatement = () => {
-      const componentPath = solidTestCase.statements.componentPath;
-      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
-      filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName = solidTestCase.statements.componentName.replace(/\.jsx?/, '');
-      testFileCode =+ `import ${formattedComponentName} from '../${filePath}';`;
-    };
+    
     
     // Solid add describe block
     const addSolidDescribeBlock = () => {
@@ -38,17 +41,18 @@ function useGenerateTest(test, projectFilePath) {
       describeBlocks.allIds.forEach((id) => {
         testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
         addSolidItStatement(id);
-        // Solid add cleanup() at the end of describe block***********************************
-        testFileCode += `cleanup()\n}); \n`;
+        testFileCode += '}); \n';
       });
     }
     // Solid add it statement 
     const addSolidItStatement = (describeId) => {
       const itStatements = solidTestCase.itStatements;
       itStatements.allIds[describeId].forEach((itId) => {
-        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
+        testFileCode += `it('${itStatements.byId[itId].text}', () => {\n`;
         addSolidStatements(itId);
-        testFileCode += '})\n';
+        // Solid add cleanup() at the end of describe block***********************************
+        if (testFileCode.includes('render(() =>')) testFileCode += 'cleanup();';
+        testFileCode += '});\n';
       });
     };
 
@@ -56,7 +60,7 @@ function useGenerateTest(test, projectFilePath) {
     // Solid add statement card (action/assertion/render)
     const addSolidStatements = (itId) => {
       const statements = solidTestCase.statements;
-      const methods = identifySolidMethods(itId);
+      // const methods = identifySolidMethods(itId);
       statements.allIds.forEach((id) => {
         let statement = statements.byId[id];
         if (statement.itId === itId) {
@@ -66,7 +70,7 @@ function useGenerateTest(test, projectFilePath) {
             case 'assertion':
               return addAssertion(statement, 'solid');
             case 'render':
-              return addSolidRender(statement, methods);
+              return addSolidRender(statement);
             default:
               return statement;
           }
@@ -75,25 +79,25 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     // Solid identify methods
-    const identifySolidMethods = (itId) => {
-      const methods = new Set([]);
-      solidTestCase.statements.allIds.forEach((id) => {
-        let statement = solidTestCase.statements.byId[id];
-        if (statement.itId === itId) {
-          if (statement.type === 'action' || statement.type === 'assertion') {
-            methods.add(statement.queryVariant + statement.querySelector);
-          }
-        }
-      });
-      return Array.from(methods).join(',');
-    };
+    // const identifySolidMethods = (itId) => {
+    //   const methods = new Set([]);
+    //   solidTestCase.statements.allIds.forEach((id) => {
+    //     let statement = solidTestCase.statements.byId[id];
+    //     if (statement.itId === itId) {
+    //       if (statement.type === 'action' || statement.type === 'assertion') {
+    //         methods.add(statement.queryVariant + statement.querySelector);
+    //       }
+    //     }
+    //   });
+    //   return Array.from(methods).join(',');
+    // };
 
     // Solid generate testing for rendering component
-    const addSolidRender = (statement, methods) => {
+    const addSolidRender = (statement) => {
       let props = createSolidRenderProps(statement.props);
       const formattedComponentName = solidTestCase.statements.componentName.replace(/\.jsx?/, '');
       // check this line later to make sure solid syntax is accurate
-      testFileCode += `const {${methods}} = render(() => <${formattedComponentName} ${props}/>);`;
+      testFileCode += `render(() => <${formattedComponentName} ${props}/>);`;
     };
    
     // createSolidRenderProps ***************** are all createXXXRenderProps function the same?
@@ -744,7 +748,7 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
-    const addAction = (action,  type = 'react') => { // why type defualt react******************************
+    const addAction = (action,  type = 'react') => { 
       if (type === 'react'){
         if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
@@ -757,10 +761,10 @@ function useGenerateTest(test, projectFilePath) {
       // else if (type === 'solid')***************************************
       else if (type === 'solid') {
         if (action.eventValue) {
-          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
+          testFileCode += `fireEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
                             (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
         } else {
-          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
+          testFileCode += `fireEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
                             (${action.queryValue}));`;
         }
       }

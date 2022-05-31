@@ -42,7 +42,7 @@
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@capacitor/screen-reader": "^1.0.6",
-    "@codemirror/lang-javascript": "^0.19.3",
+    "@codemirror/lang-javascript": "^0.20.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
@@ -116,7 +116,7 @@
     "regenerator-runtime": "^0.13.9",
     "ts-node": "^10.2.0",
     "typescript": "^4.3.5",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.9.0"
   },
   "config": {
     "forge": {
