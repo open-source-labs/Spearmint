@@ -79,7 +79,7 @@ const SolidTestCase = (props) => {
   return (
     <SolidTestCaseContext.Provider value={[SolidTestCase, dispatchToSolidTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
-        <h2 id={styles[`testName${theme}`]}>SOOO this is supposed to be for sOLid but it's svlete LOL</h2>
+        <h2 id={styles[`testName${theme}`]}>Solid Testing</h2>
         <SolidTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>

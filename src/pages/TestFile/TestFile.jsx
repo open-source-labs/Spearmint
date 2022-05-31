@@ -365,7 +365,6 @@ const TestFile = () => {
 
       {testCase === 'solid' && (
         <section>
-          hihi this is solid!
           <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
             <SolidTestCase filterFileType = {filterFileType} />
           </MockDataContext.Provider >
