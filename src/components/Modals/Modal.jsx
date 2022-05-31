@@ -256,6 +256,40 @@ const Modal = ({
           </AccordionDetails>
         </Accordion>
       );
+    } else if (title === 'solid') {
+      return (
+        <Accordion hidden={false}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls='panel1a-content'
+            id='panel1a-header'
+            id={styles.accordionSummary}
+          >
+            3. Important Solid Babel Configuration
+          </AccordionSummary>
+          <AccordionDetails id={styles.configGuide}>
+            <div id={styles.accordionDiv}>
+              <div> Ensure that your project contains the following file: </div>
+              <pre>
+                <div className='code-wrapper'>
+                  <code>babel.config.js</code>
+                </div>
+              </pre>
+            </div>
+            <div>
+              and includes the following code:
+              <br />
+            </div>
+            <pre>
+              <div className='code-wrapper'>
+                <code>
+                  {`module.exports = {"presets": ["@babel/preset-env","babel-preset-solid", "@babel/preset-typescript"]}`}
+                </code>
+              </div>
+            </pre>
+          </AccordionDetails>
+        </Accordion>
+      );
     } else if (title === 'svelte') {
       return (
         <Accordion hidden={false}>

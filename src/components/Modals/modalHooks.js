@@ -38,6 +38,11 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
   const [{ projectFilePath }] = useContext(GlobalContext);
   switch (test) {
+    case 'solid': 
+      return {
+        cd: `cd ${projectFilePath}`,
+        install: 'npm i --save-dev jest solid-jest \nnpm i @babel/preset-env babel-preset-solid \n',
+      }
     case 'acc':
       if (testType === 'html') {
         return {
