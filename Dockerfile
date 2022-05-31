@@ -39,12 +39,12 @@ RUN chown root /spearmint/node_modules/electron/dist/chrome-sandbox
 RUN chmod 4755 /spearmint/node_modules/electron/dist/chrome-sandbox
 USER spearmint
 #commands to try to run using XQuartz 
-RUN apt-get update && apt-get install -y firefox
-CMD ["/usr/bin/firefox"]
+# RUN apt-get update && apt-get install -y firefox
+# CMD ["/usr/bin/firefox"]
 
 # ADD start.sh /
 # RUN chmod +x /start.sh
 
 # CMD ["/start.sh"]
 
-#CMD ["npm","start"]
+CMD npm run start
