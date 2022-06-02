@@ -786,7 +786,7 @@ function useGenerateTest(test, projectFilePath) {
     const addAssertion = (assertion, type = 'react') => {
       // if (type === 'solid') *********************************************
       if (type === 'solid'){
-        testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
+        testFileCode += `expect(screen.${assertion.queryVariant + assertion.querySelector}
           (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
       }
       if (type === 'react'){
