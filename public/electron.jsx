@@ -7,6 +7,18 @@ const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
+console.log(os.platform());
+
+// app.commandLine.appendSwitch('--headless');
+// app.commandLine.appendSwitch('--no-sandbox');
+// from selenium import webdriver
+// chromeOptions = webdriver.ChromeOptions()
+// chromeOptions.add_argument("--headless")
+// chromeOptions.add_argument("--no-sandbox")
+// //chromeOptions.add_argument("--disable-gpu")
+// driver = webdriver.Chrome(chrome_options=chromeOptions)
+// driver.get(url)
+// (python) so maybe not work 
 
 // Comment below require out if you don't want app to reload on code changes
 // require('electron-reloader')(module);
@@ -57,11 +69,7 @@ function createWindow() {
   // });
 
   mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
-<<<<<<< HEAD
   mainWindow.webContents.openDevTools()
-=======
-  mainWindow.webContents.openDevTools() //***** uncomment this for final pr
->>>>>>> dev
   //////////////////////////////////////////////////
   //Creates terminal, specifies dimensions based on columns and rows
   //////////////////////////////////////////////////
