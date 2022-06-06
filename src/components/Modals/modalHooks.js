@@ -41,7 +41,7 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
     case 'solid': 
       return {
         cd: `cd ${projectFilePath}`,
-        install: 'npm i --save-dev jest solid-jest \nnpm i @babel/preset-env babel-preset-solid \n',
+        install: 'npm i --save-dev jest solid-jest \nnpm i @babel/preset-env babel-preset-solid \nnpm i --save-dev test-data-bot \nnpm i --save-dev @testing-library/jest-dom \nnpm i --save-dev jest-environment-jsdom \nnpm i --save-dev solid-testing-library'
       }
     case 'acc':
       if (testType === 'html') {
