@@ -30,7 +30,7 @@ const Render = ({ statement, statementId, describeId, itId }) => {
     <div id={styles[`RenderContainer${theme}`]}>
       <div className={styles.renderHeader}>
         <span className={styles.header}>
-          Rendering: <span id={styles.componentName}>{statements.componentName}</span>
+          Rendering <span id={styles.componentName}>{statements.componentName}</span>
         </span>
         <Button onClick={handleClickAddProp} variant='outlined'>
           Add Props
