@@ -8,8 +8,8 @@
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 14px 10px;
   border-radius: 2px;
-
   --text-color: black;
+  --action-color: #{$mint};
 }
 
 #actiondark {
@@ -44,6 +44,16 @@
     margin: 0;
     padding: 0;
     color: var(--text-color);
+  }
+}
+
+.header {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--action-color);
+
+  .componentName {
+    font-family: 'Lucida Console', monospace;
   }
 }
 
