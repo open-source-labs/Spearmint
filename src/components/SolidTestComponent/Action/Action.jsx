@@ -148,7 +148,6 @@ const Action = ({ statement, statementId, describeId, itId }) => {
           type='text'
           id='queryValue'
           value={statement.queryValue}
-          placeholder="eg: '[data-test='test-id']'"
           onChange={(e) => handleChangeActionFields(e, 'queryValue')}>
           </input>
         </div>
