@@ -329,7 +329,6 @@ const Modal = ({
   };
 
   return (
-    
     <ReactModal
       className={styles.modal}
       isOpen={isModalOpen}
@@ -339,7 +338,7 @@ const Modal = ({
       overlayClassName={styles[`modalOverlay${theme}`]}
       ariaHideApp={false}
     >
-      <Draggable>
+      {/* <Draggable> */}
       <div id={styles.containerRun}>
       {/* Modal Title */}
         <div id={styles.title}>
@@ -495,9 +494,8 @@ const Modal = ({
         </Accordion>
       </div>
       </div>
-      </Draggable>
+      {/* </Draggable> */}
     </ReactModal>
-  
   );
 };
 

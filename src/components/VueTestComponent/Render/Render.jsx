@@ -30,7 +30,7 @@ const Render = ({ statement, statementId, describeId, itId }) => {
     <div id={styles[`RenderContainer${theme}`]}>
       <div className={styles.renderHeader}>
         <span className={styles.header}>
-          Mounting: <span id={styles.componentName}>{statements.componentName}</span>
+          Mounting <span id={styles.componentName}>{statements.componentName}</span>
         </span>
         <Button className={styles.addProps} onClick={handleClickAddProp}>
           Add Props

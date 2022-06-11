@@ -67,7 +67,7 @@ const AccTestCase = () => {
   return (
     <div id={styles.AccTestCase}>
       <div id="head">
-      <h2 id={`testName${theme}`}>Acc Testing</h2>
+      <h2 id={styles[`testName${theme}`]}>Accessibility Testing</h2>
         <AccTestMenu />
       </div>
 
@@ -82,8 +82,8 @@ const AccTestCase = () => {
           {testType === 'puppeteer' ? (
             <PuppeteerUrl dispatch={dispatchToAccTestCase} action={createPuppeteerUrl} />
           ) : (
-            <div>
-              <div id={styles.labelInput} style={{ width: '80%' }}>
+            // <div style={{'alignSelf': 'right'}}>
+              <div id={styles.labelInput} style={{'width': '50%', 'alignSelf': 'right', 'margin': '0'}}>
                 <SearchInput
                   options={Object.keys(filePathMap)}
                   dispatch={dispatchToAccTestCase}
@@ -92,10 +92,10 @@ const AccTestCase = () => {
                   label="Import File From"
                 />
               </div>
-            </div>
+            // </div>
           )}
         </div>
-
+        <div id={styles.describeContainer}>
         <DragDropContext onDragEnd={onDragEnd} key={`acc-dnd-context`}>
           <Droppable
             droppableId="droppableAccDescribe"
@@ -125,7 +125,8 @@ const AccTestCase = () => {
             )}
           </Droppable>
         </DragDropContext>
-        <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+        </div>
+        <Button style={{'width': '50vw'}} data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
             Add Describe Block
         </Button>
       </section>

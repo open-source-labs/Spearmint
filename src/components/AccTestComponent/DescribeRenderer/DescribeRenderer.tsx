@@ -97,11 +97,12 @@ const DescribeRenderer = ({
             </Droppable>
 
             <div className={styles.buttonContainer}>
+            <div>
               <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
-                +It Statement
+                Add It Statement
               </button>
             </div>
-
+            </div>
           </div>
         </div>
       )}
