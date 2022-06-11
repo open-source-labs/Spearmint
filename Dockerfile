@@ -20,7 +20,7 @@ COPY package.json .
 
 # RUN npm run install-once
 # # RUN npm install
-# RUN rm -rf node_modules
+RUN rm -rf node_modules
 # remove node modules from the file and only leave dependencies to be installed later 
 # RUN npm install -g npm@latest
 # USER node 

@@ -2,10 +2,14 @@ version: "3"
 
 services:
   app:
-    image: spearmint:latest
-    build: .
+    image: spearmint
     environment:
-      - DISPLAY=0
-    volumes:
-      - /tmp/.X11-unix:/tmp/.X11-unix
-    network_mode: host
+      - DISPLAY= 172.17.0.1:0.0
+    command: npm run docker
+    # volumes:
+    #   - /tmp/.X11-unix:/tmp/.X11-unix
+  #   depends_on:
+  #     - mongo
+  # mongo:
+  #   image: mongo:latest
+  #   container_name: mongodb
