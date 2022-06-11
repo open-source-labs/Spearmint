@@ -8,7 +8,7 @@
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 14px 10px;
   border-radius: 2px;
-
+  --assertion-color: #{$mint};
   --text-color: black;
 }
 
@@ -46,6 +46,17 @@
     color: var(--text-color);
   }
 }
+
+.header {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--assertion-color);
+
+  .componentName {
+    font-family: 'Lucida Console', monospace;
+  }
+}
+
 .queryLabel {
   margin-bottom: 5px;
   display: block;
@@ -53,6 +64,7 @@
 }
 
 #queryFlexBox {
+  margin: 15px 0;
   display: flex;
   gap: 10px;
   align-items: center;
