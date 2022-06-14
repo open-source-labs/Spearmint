@@ -3,6 +3,7 @@
 @import '../../../pages/LeftPanel/LeftPanel.module.scss';
 
 #describeBlock {
+  min-width: 50vw;
   position: relative;
   background-color: white;
   border-radius: 3px;
@@ -44,7 +45,7 @@
 
   .describeLabel {
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 1rem;
     z-index: 3;
     font-family: $oxygen;
   }
@@ -72,6 +73,7 @@
       padding: 0.5rem;
       border-radius: 5px;
       background-color: $mint;
+      border: none;
 
       &:hover {
         background-color: white;

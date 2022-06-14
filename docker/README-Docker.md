@@ -1,2 +1,0 @@
-# About 
-A previous Spearmint team attempted to containerize the Spearmint application. As of version 0.8.0, these files do not work. However, we wanted to preserve them in case future open-source contributers would like to attempt to re-contanerize the application. 
