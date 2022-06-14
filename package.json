@@ -1,6 +1,6 @@
 {
   "name": "spearmint",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
   "main": "public/electron.jsx",
   "scripts": {
