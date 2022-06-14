@@ -18,7 +18,7 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
-  const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
+  const [{ statements }, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeAssertionFields = (e, field) => {
@@ -56,9 +56,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
   return (
     <section id={styles[`assertion${theme}`]} data-testid='assertionCard'>
       <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDelete} />
-      <div id={styles.assertionHeader}>
-        <h3>Assertion</h3>
-      </div>
+      <div className={styles.actionHeader}>
+          <span className={styles.header}>
+            Assertion <span id={styles.componentName}>{statements.componentName}</span>
+          </span>
+        </div>
       <div id={styles.queryFlexBox}>
         <div id={styles.querySelector}>
           <label htmlFor='queryVariant' className={styles.queryLabel}>

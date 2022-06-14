@@ -1,6 +1,6 @@
 {
   "name": "spearmint",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
   "main": "public/electron.jsx",
   "scripts": {
@@ -10,7 +10,9 @@
     "watch": "webpack --config webpack.config.ts --watch",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "dev": "npm run watch & npm run start-dev"
+    "dev": "npm run watch & npm run start-dev",
+    "rebuild": "electron-rebuild -f -w node-pty",
+    "docker": "electron . --no-sandbox"
   },
   "build": {
     "appId": "spearmint",
@@ -41,16 +43,15 @@
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@capacitor/screen-reader": "^1.0.6",
-    "@codemirror/lang-javascript": "^0.19.3",
+    "@codemirror/lang-javascript": "^6.0.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
-    "@uiw/react-codemirror": "^4.2.4",
+    "@uiw/react-codemirror": "^4.8.1",
     "babel-loader": "^8.2.2",
-    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "classnames": "^2.3.1",
-    "codemirror": "^5.64.0",
+    "codemirror": "^6.0.0",
     "concurrently": "^6.4.0",
     "cookie-parser": "^1.4.6",
     "css-loader": "^6.2.0",
@@ -115,7 +116,7 @@
     "regenerator-runtime": "^0.13.9",
     "ts-node": "^10.2.0",
     "typescript": "^4.3.5",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.9.0"
   },
   "config": {
     "forge": {

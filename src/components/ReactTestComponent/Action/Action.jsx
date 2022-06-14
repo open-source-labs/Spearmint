@@ -15,7 +15,7 @@ const closeIcon = require('../../../assets/images/close.png');
 // Action box in middle panel (testCase.jsx)
 const Action = ({ statement, statementId, describeId, itId }) => {
   const [{ mockData }] = useContext(MockDataContext);
-  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeActionFields = (e, field) => {
@@ -44,9 +44,9 @@ const Action = ({ statement, statementId, describeId, itId }) => {
   return (
     <div id={styles[`action${theme}`]}>
       <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteAction} />
-      <div id={styles.actionHeader}>
-        <h3>Action</h3>
-      </div>
+        <span className={styles.header}>
+          Action <span id={styles.componentName}>{statements.componentName}</span>
+        </span>
       <div id={styles.eventTypeFlexBox}>
         <div id={styles.eventType}>
           <label htmlFor='eventType'>Event Type</label>
@@ -135,21 +135,22 @@ const Action = ({ statement, statementId, describeId, itId }) => {
                 <ToolTip toolTipType={statement.querySelector} />
               </span>
             </span> */}
+            <div id={styles.query}>
+              <label htmlFor='queryValue' className={styles.queryLabel}>
+                Query
+              </label>
+
+              <input
+                type='text'
+                id='queryValue'
+                value={statement.queryValue}
+                onChange={(e) => handleChangeActionFields(e, 'queryValue')}
+              />
+            </div>
           </div>
           
         </div>
-        <div id={styles.query}>
-          <label htmlFor='queryValue' className={styles.queryLabel}>
-            Query
-          </label>
-
-          <input
-            type='text'
-            id='queryValue'
-            value={statement.queryValue}
-            onChange={(e) => handleChangeActionFields(e, 'queryValue')}
-          />
-        </div>
+        
       </div>
     </div>
   );
