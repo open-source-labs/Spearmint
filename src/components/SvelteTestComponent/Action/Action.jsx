@@ -15,7 +15,7 @@ const closeIcon = require('../../../assets/images/close.png');
 // Action box in middle panel (testCase.jsx)
 const Action = ({ statement, statementId, describeId, itId }) => {
   const [{ mockData }] = useContext(MockDataContext);
-  const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext); 
+  const [{ statements }, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext); 
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeActionFields = (e, field) => {
@@ -44,9 +44,11 @@ const Action = ({ statement, statementId, describeId, itId }) => {
   return (
     <div id={styles[`action${theme}`]}>
       <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteAction} />
-      <div id={styles.actionHeader}>
-        <h3>Action</h3>
-      </div>
+        <div className={styles.actionHeader}>
+          <span className={styles.header}>
+            Action <span id={styles.componentName}>{statements.componentName}</span>
+          </span>
+        </div>
       
       {/* event input in action component */}
 
@@ -137,23 +139,20 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='TestId'>TestId</option>
               {/* TextMatch Precision & Normalization will be added */}
             </select>
-            
-            <div id={styles.query}>
-               <label htmlFor='queryValue' className={styles.queryLabel}>
-                      Query
-               </label>
-               <input
-                type='text'
-                id='queryValue'
-                value={statement.queryValue}
-                placeholder="eg: '[data-test='test-id']'"
-                onChange={(e) => handleChangeActionFields(e, 'queryValue')}
-               />
-            </div>
-
           </div>
         </div>
-
+        <div id={styles.query}>
+          <label htmlFor='queryValue' className={styles.queryLabel}>
+                Query
+          </label>
+          <input
+          type='text'
+          id='queryValue'
+          value={statement.queryValue}
+          placeholder="eg: '[data-test='test-id']'"
+          onChange={(e) => handleChangeActionFields(e, 'queryValue')}
+          />
+        </div>
 
 
       </div>

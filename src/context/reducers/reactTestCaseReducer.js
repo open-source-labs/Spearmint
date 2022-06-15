@@ -383,7 +383,6 @@ export const reactTestCaseReducer = (state, action) => {
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
       let updatedStatementId = state.statementId;
-
       return {
         ...state,
         statementId: ++updatedStatementId,

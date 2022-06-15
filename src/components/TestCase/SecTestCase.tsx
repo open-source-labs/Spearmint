@@ -60,8 +60,11 @@ const SecTestCase = () => {
       <h2 id={styles[`testName${theme}`]}>Security Testing</h2>
         <SecTestMenu />
       </div>
-
-      <section id={styles[`SecTestCase${theme}`]}>
+      <br />
+        <br />
+        <br />
+        <br />
+      <section style={{'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center', 'alignItems': 'center'}} id={styles[`SecTestCase${theme}`]}>
         <div id={styles.secInfo}>
           <p>
             Spearmint leverages Snyk testing in order to evaluate security vulnerabilities.
@@ -73,7 +76,6 @@ const SecTestCase = () => {
         <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
           Authenticate Snyk
         </Button>
-        <br />
         <br />
         <br />
         <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
@@ -88,11 +90,13 @@ const SecTestCase = () => {
         <br />
         <br />
         <br />
-        <p >
-          To utilize Snyk's application-wide testing tool, Snyk Code must be enabled.
-          <br />
-          The below button will send you to Snyk's website to update your settings.
-        </p>
+        <div id={styles.secInfo}>
+          <p >
+            To utilize Snyk's application-wide testing tool, Snyk Code must be enabled.
+            <br />
+            The below button will send you to Snyk's website to update your settings.
+          </p>
+        </div>
         <br />
         <Button variant='contained' type='button' id={styles.secTestBtn} onClick={enableSnykCode}>
           Enable Snyk Code

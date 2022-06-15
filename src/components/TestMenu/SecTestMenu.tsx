@@ -3,6 +3,7 @@ import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { createNewSecTest } from '../../context/actions/secTestCaseActions';
+import TestMenuButtons from './TestMenuButtons';
 import Modal from '../Modals/Modal';
 import {
   updateFile,
@@ -43,10 +44,17 @@ const SecTestMenu = () => {
     <div id='test'>
       <div id={styles.testMenu}>
         <div id={styles.left}>
-          <button id={styles.newTestBtn} autoFocus onClick={openModal}>New Test +</button>
+          {/* <button id={styles.newTestBtn} autoFocus onClick={openModal}>New Test +</button>
           <button id={styles.example} onClick={openDocs}>
             Need Help?
-          </button>
+          </button> */}
+          <TestMenuButtons 
+            openModal={openModal}
+            fileHandle={null}
+            openScriptModal={null}
+            saveTest={null}
+            openDocs={openDocs}
+          />
           {/* set a few of these properties to null since they are required to be present but accept any data type... just for testing*/}
           <Modal
             title={title}

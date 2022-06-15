@@ -59,7 +59,7 @@ const DescribeRenderer = ({
               name='describe-label'
               type='text'
               placeholder="Describe name of test"
-              value={describeBlocks.byId['describe0']?.text}
+              value={describeBlocks.byId['describe'+i]?.text}
               onChange={handleChangeDescribeText}
               fullWidth
             />
