@@ -12,14 +12,40 @@
     "make": "electron-forge make",
     "dev": "npm run watch & npm run start-dev",
     "rebuild": "electron-rebuild -f -w node-pty",
-    "docker": "electron . --no-sandbox"
+    "docker": "electron . --no-sandbox",
+    "mac:installer": "electron-builder --mac",
+    "win:installer": "electron-builder --win",
+    "linux:installer": "electron-builder --linux"
   },
   "build": {
     "appId": "spearmint",
     "productName": "spearmint",
     "mac": {
       "icon": "./public/icon.icns",
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "target": "dmg",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "background": null,
+      "backgroundColor": "#ffffff",
+      "window": {
+        "width": "400",
+        "height": "300"
+      },
+      "contents": [
+        {
+          "x": 100,
+          "y": 100
+        },
+        {
+          "x": 300,
+          "y": 100,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
     "win": {
       "icon": "./public/icon.png"
@@ -29,10 +55,14 @@
       "./dist/**/*",
       "./node_modules/**/*",
       "./public/**/*",
-      "*.js"
+      "*.js",
+      "./src/**/*",
+      "package.json",
+      ".env"
     ],
     "directories": {
-      "buildResources": "public"
+      "buildResources": "public",
+      "app": "."
     }
   },
   "keywords": [],
@@ -101,6 +131,7 @@
     "@typescript-eslint/parser": "^5.10.1",
     "axe-core": "^4.3.5",
     "electron": "^13.6.3",
+    "electron-builder": "^23.0.3",
     "electron-rebuild": "^3.2.7",
     "electron-reloader": "^1.2.1",
     "eslint": "^8.7.0",
