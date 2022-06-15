@@ -55,17 +55,20 @@
 ## Running the image 
 After running the mongo on port 27017 and running the x server with display number of 0, follow the steps below. 
 
-1. Pull the docker image by running the following command
+1. Build the docker image by running the following command
 
-    `docker pull spearmintoslabs/spearmint:0.11.0`
+    `docker build -t [image name] .`
 
 2. Run the docker image by using the following command: 
 
-    `docker run -e DISPLAY='host.docker.internal:0.0' -it -v [directory of project to be tested]:/[directory to create volume] spearmintoslabs/spearmint:0.11.0`
+    `docker run -e DISPLAY='host.docker.internal:0.0' -it -v [directory of project to be tested]:/[directory to create volume] [image name]`
 
-    -`-e DISPLAY='host.docker.internal:0.0'`: Set environment variable ‘display’ to host.docker.internal:0.0 
-    -`-it`: Run container as interactive
-    -`-v`: Creates a volume and mounts the testing application into the container. (ex: `-v [testing files]:[created volume]`)
+    - `-e DISPLAY='host.docker.internal:0.0'`: Set environment variable ‘display’ to host.docker.internal:0.0 
+
+    - `-it`: Run container as interactive
+
+    - `-v`: Creates a volume and mounts the testing application into the container. (ex: `-v [testing files]:[created volume]`)
+
     *Please note that once the spearmint container is running, you can only access the folders that you mounted here.
 
 *Please note that the image uses root user, as shown in the Dockerfile.
