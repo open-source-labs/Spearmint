@@ -131,14 +131,14 @@
         {
           "name": "@electron-forge/maker-zip",
           "platforms": [
-            "darwin"
+            "darwin", "linux", "win32"
           ]
         },
         {
           "name": "@electron-forge/maker-deb",
           "config": {
             "options": {
-              "maintainer": "Myles Tsutsui"
+              "maintainer": "spearmint"
             }
           }
         },
