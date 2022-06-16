@@ -51,6 +51,15 @@
     "win": {
       "icon": "./public/icon.png"
     },
+    "linux": {
+      "icon": "./public/icon.png",
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ],
+      "category": "Development"
+    },
     "files": [
       "./build/**/*",
       "./dist/**/*",
@@ -68,7 +77,12 @@
     }
   },
   "keywords": [],
-  "author": "team spearmint",
+  "author": {
+    "name": "team spearmint",
+    "url": "https://www.spearmintjs.com/",
+    "email": "oslabsspearmint@gmail.com"
+
+  },
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.15.0",
