@@ -28,6 +28,7 @@
       "gatekeeperAssess": false
     },
     "dmg": {
+      "sign": false,
       "background": null,
       "backgroundColor": "#ffffff",
       "window": {
@@ -55,6 +56,7 @@
       "./dist/**/*",
       "./node_modules/**/*",
       "./public/**/*",
+      "./server/**/*",
       "*.js",
       "./src/**/*",
       "package.json",
