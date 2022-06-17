@@ -100,7 +100,7 @@
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
     "axe-core": "^4.3.5",
-    "electron": "^13.6.3",
+    "electron": "^15.5.5",
     "electron-rebuild": "^3.2.7",
     "electron-reloader": "^1.2.1",
     "eslint": "^8.7.0",
