@@ -21,9 +21,16 @@
     "appId": "spearmint",
     "productName": "spearmint",
     "mac": {
+      "mergeASARs": "false",
       "icon": "./public/icon.icns",
       "category": "public.app-category.utilities",
-      "target": "dmg",
+      "target": {
+        "target": "default",
+        "arch": [
+          "x64",
+          "universal"
+        ]
+      },
       "hardenedRuntime": true,
       "gatekeeperAssess": false
     },
