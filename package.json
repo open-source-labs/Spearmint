@@ -12,31 +12,84 @@
     "make": "electron-forge make",
     "dev": "npm run watch & npm run start-dev",
     "rebuild": "electron-rebuild -f -w node-pty",
-    "docker": "electron . --no-sandbox"
+    "docker": "electron . --no-sandbox",
+    "mac:installer": "electron-builder --mac",
+    "win:installer": "electron-builder --win",
+    "linux:installer": "electron-builder --linux"
   },
   "build": {
     "appId": "spearmint",
     "productName": "spearmint",
     "mac": {
+      "mergeASARs": "false",
       "icon": "./public/icon.icns",
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "target": {
+        "target": "default",
+        "arch": [
+          "x64",
+          "universal"
+        ]
+      },
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "sign": false,
+      "background": null,
+      "backgroundColor": "#ffffff",
+      "window": {
+        "width": "400",
+        "height": "300"
+      },
+      "contents": [
+        {
+          "x": 100,
+          "y": 100
+        },
+        {
+          "x": 300,
+          "y": 100,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
     "win": {
       "icon": "./public/icon.png"
+    },
+    "linux": {
+      "icon": "./public/icon.png",
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ],
+      "category": "Development"
     },
     "files": [
       "./build/**/*",
       "./dist/**/*",
       "./node_modules/**/*",
       "./public/**/*",
-      "*.js"
+      "./server/**/*",
+      "*.js",
+      "./src/**/*",
+      "package.json",
+      ".env"
     ],
     "directories": {
-      "buildResources": "public"
+      "buildResources": "public",
+      "app": "."
     }
   },
   "keywords": [],
-  "author": "team spearmint",
+  "author": {
+    "name": "team spearmint",
+    "url": "https://www.spearmintjs.com/",
+    "email": "oslabsspearmint@gmail.com"
+
+  },
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.15.0",
@@ -101,6 +154,7 @@
     "@typescript-eslint/parser": "^5.10.1",
     "axe-core": "^4.3.5",
     "electron": "^13.6.3",
+    "electron-builder": "^23.0.3",
     "electron-rebuild": "^3.2.7",
     "electron-reloader": "^1.2.1",
     "eslint": "^8.7.0",
