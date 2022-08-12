@@ -7,7 +7,7 @@ const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
-os.platform();
+console.log(os.platform());
 
 // app.commandLine.appendSwitch('--headless');
 // app.commandLine.appendSwitch('--no-sandbox');
