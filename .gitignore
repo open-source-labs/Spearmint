@@ -109,3 +109,5 @@ dist
 /build
 .DS_Store
 .dccache
+
+.env

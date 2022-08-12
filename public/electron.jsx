@@ -7,7 +7,7 @@ const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
-console.log(os.platform());
+os.platform();
 
 // app.commandLine.appendSwitch('--headless');
 // app.commandLine.appendSwitch('--no-sandbox');
@@ -81,7 +81,7 @@ function createWindow() {
     cwd: process.env.HOME,
     env: process.env,
   };
-  console.log('process.env.HOME: ', process.env.HOME);
+  // console.log('process.env.HOME: ', process.env.HOME);
 
   const ptyProcess = np.spawn(shell, [], ptyArgs);
   // with ptyProcess, we want to send incoming data to the channel terminal.incData
