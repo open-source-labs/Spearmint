@@ -103,6 +103,7 @@ import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
 import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
+import { SiNextdotjs } from 'react-icons/si';
 
 import { Button } from '@material-ui/core';
 import TestCard from './TestCard';
@@ -197,6 +198,8 @@ const TestFile = () => {
   const testMappings = {
     'react': [<FaReact size={cardSize}/>, 'React', 
               'Test React with rendering, actions, and assertions found in the React Testing Library'],
+    'next.js': [<SiNextdotjs size={cardSize}/>, 'Next.js', 
+              'Test Next.js front-end using the React Testing Library, or API routes on the back-end'],          
     'redux': [<SiRedux size={cardSize}/>, 'Redux', 
               'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
     'svelte': [<SiSvelte size={cardSize}/>, 'Svelte',
