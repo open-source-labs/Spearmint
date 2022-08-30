@@ -129,6 +129,13 @@ const TestFile = () => {
     endpointTestCaseState
   );
 
+  //pandaWhale
+  const [nextjsTestCase, dispatchTonextjsTestCase] = useReducer(
+    nextjsTestCaseReducer,
+    nextjsTestCaseState
+  );
+  //pandaWhale
+
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
     reduxTestCaseReducer,
     reduxTestCaseState
@@ -153,7 +160,6 @@ const TestFile = () => {
     graphQLTestCaseReducer,
     graphQLTestCaseState
   );
-
 
   // const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
   //   SvelteTestCaseReducer,
@@ -298,6 +304,14 @@ const TestFile = () => {
           <ReactTestCase filterFileType = {filterFileType}/>
         </MockDataContext.Provider>
       )}
+
+      //pandaWhale
+      {testCase === 'nextjs' && (
+        <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+          <NextJSTestCase filterFileType = {filterFileType}/>
+        </MockDataContext.Provider>
+      )}
+      //pandaWhale
 
       {testCase === 'endpoint' && (
         <section>
