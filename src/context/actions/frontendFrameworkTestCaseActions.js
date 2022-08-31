@@ -199,10 +199,12 @@ export const reactReplaceTest = (testState) => ({
   type: actionTypes.REPLACE_TEST,
   testState,
 });
+
 export const svelteReplaceTest = (testState) => ({
   type: actionTypes.REPLACE_TEST,
   testState,
 });
+
 export const vueReplaceTest = (testState) => ({
   type: actionTypes.REPLACE_TEST,
   testState,

@@ -26,16 +26,16 @@ const { ipcRenderer } = require('electron');
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
-const ReactTestMenu = () => {
-  // React testing docs url
-  const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
+const NextJSTestMenu = () => {
+  // NextJS testing docs url
+  const nextjsUrl = 'https://nextjs.org/docs/testing';
 
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('react');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('nextjs');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [reactTestCase, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [nextjsTestCase, dispatchToNextJSTestCase] = useContext(NextJSTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
     useContext(GlobalContext);
-  const generateTest = useGenerateTest('react', projectFilePath);
+  const generateTest = useGenerateTest('nextjs', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
 
@@ -44,7 +44,7 @@ const ReactTestMenu = () => {
   }, []);
 
   const handleAddDescribeBlock = (e) => {
-    dispatchToReactTestCase(addDescribeBlock());
+    dispatchToNextJSTestCase(addDescribeBlock());
   };
 
   const openDocs = () => {
@@ -52,7 +52,7 @@ const ReactTestMenu = () => {
   };
 
   const fileHandle = () => {
-    const testGeneration = generateTest(reactTestCase, mockData);
+    const testGeneration = generateTest(nextjsTestCase, mockData);
     dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
@@ -62,7 +62,7 @@ const ReactTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    const valid = validateInputs('react', reactTestCase);
+    const valid = validateInputs('nextjs', nextjsTestCase);
     dispatchToGlobal(setValidCode(valid));
 
     
@@ -87,7 +87,7 @@ const ReactTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
-  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
+  if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(nextjsTestCase, mockData)));
 
   return (
     <>
@@ -103,7 +103,7 @@ const ReactTestMenu = () => {
         isModalOpen={isModalOpen}
         closeModal={closeModal}
         dispatchMockData={dispatchToMockData}
-        dispatchTestCase={dispatchToReactTestCase}
+        dispatchTestCase={dispatchToNextJSTestCase}
         createTest={createNewTest}
       />
       <ExportFileModal
@@ -129,4 +129,4 @@ const ReactTestMenu = () => {
   );
 };
 
-export default ReactTestMenu;
+export default NextJSTestMenu;

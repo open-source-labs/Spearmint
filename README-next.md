@@ -2,15 +2,15 @@ src
   _tests__
     [ ] Next.test.js: 
   components
-    [ ] NextTestComponent
+    [x] NextTestComponent
     TestMenu
-      [ ] NextTestMenu
+      [EC] NextTestMenu (needs to be reviewed)
       TestCase
         [ ] NextTestCase
         [ ] NextTestStatements
   context
     actions
-      [ ] nextActions (there isn't one for React, why?)
+      [x] frontendFrameworks (there isn't one for React, why?)
     reducers
       [ ] NextTestCaseReducer
     [ ] useGenerateTest (add section for Next)
