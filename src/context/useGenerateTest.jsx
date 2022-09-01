@@ -102,7 +102,7 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += `render(() => <${formattedComponentName} ${props}/>);`;
     };
 
-    // createSolidRenderProps ***************** are all createXXXRenderProps function the same?
+    // createSolidRenderProps 
     const createSolidRenderProps = (props) => {
       return props.reduce((acc, prop) => {
         return acc + `${prop.propKey}={${prop.propValue}}`;
@@ -199,6 +199,99 @@ function useGenerateTest(test, projectFilePath) {
 
     // Render Props Jest Test Code
     const createRenderProps = (props) => {
+      return props.reduce((acc, prop) => {
+        return acc + `${prop.propKey}={${prop.propValue}}`;
+      }, '');
+    };
+
+    /* ------------------------------------------ NEXTJS IMPORT + TEST STATEMENTS ------------------------------------------ */
+
+    // NextJS Import Statements
+    const addNextJSImportStatements = () => {
+      testFileCode += `
+        import React from 'react';
+        import { render, fireEvent } from '@testing-library/react'; 
+        import { build, fake } from 'test-data-bot'; 
+        import '@testing-library/jest-dom/extend-expect'
+        \n`;
+    };
+
+    // NextJS Component Import Statement (Render Card)
+    const addNextJSComponentImportStatement = () => {
+      const componentPath = nextjsTestCase.statements.componentPath;
+      let filePath = ipcRenderer.sendSync(
+        'Universal.path',
+        projectFilePath,
+        componentPath
+      );
+      filePath = filePath.replace(/\\/g, '/');
+      const formattedComponentName =
+        nextjsTestCase.statements.componentName.replace(/\.jsx?/, '');
+      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
+    };
+
+    const addNextJSDescribeBlocks = () => {
+      const describeBlocks = nextjsTestCase.describeBlocks;
+      describeBlocks.allIds.forEach((id) => {
+        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
+        addNextJSItStatement(id);
+        testFileCode += `}); \n`;
+      });
+    };
+
+    // NextJS It Statements
+    const addNextJSItStatement = (describeId) => {
+      const itStatements = nextjsTestCase.itStatements;
+      itStatements.allIds[describeId].forEach((itId) => {
+        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
+        addNextJSStatements(itId);
+        testFileCode += '})\n';
+      });
+    };
+
+    const addNextJSStatements = (itId) => {
+      const statements = nextjsTestCase.statements;
+      const methods = identifyMethods(itId);
+      statements.allIds.forEach((id) => {
+        let statement = statements.byId[id];
+        if (statement.itId === itId) {
+          switch (statement.type) {
+            case 'action':
+              return addAction(statement);
+            case 'assertion':
+              return addAssertion(statement);
+            case 'render':
+              return addRender(statement, methods);
+            default:
+              return statement;
+          }
+        }
+      });
+    };
+
+    const identifyNextJSMethods = (itId) => {
+      const methods = new Set([]);
+      nextjsTestCase.statements.allIds.forEach((id) => {
+        let statement = nextjsTestCase.statements.byId[id];
+        if (statement.itId === itId) {
+          if (statement.type === 'action' || statement.type === 'assertion') {
+            methods.add(statement.queryVariant + statement.querySelector);
+          }
+        }
+      });
+      return Array.from(methods).join(', ');
+    };
+
+    // Render Jest Test Code
+    const addNextJSRender = (statement, methods) => {
+      let props = createRenderProps(statement.props);
+      const formattedComponentName =
+        nextjsTestCase.statements.componentName.replace(/\.jsx?/, '');
+      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
+    };
+
+    // Render Props Jest Test Code
+    const createNextJSRenderProps = (props) => {
       return props.reduce((acc, prop) => {
         return acc + `${prop.propKey}={${prop.propValue}}`;
       }, '');
@@ -855,42 +948,50 @@ function useGenerateTest(test, projectFilePath) {
           testFileCode += `fireEvent.${action.eventType}(${
             action.queryVariant + action.querySelector
           }
-                            (${action.queryValue}), { target: { value: ${
-            action.eventValue
-          } } });`;
+          (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
         } else {
+          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector
+          }
+          (${action.queryValue}));`;
+        }
+      }
+      else if (type === 'nextjs') {
+        if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(${
             action.queryVariant + action.querySelector
           }
-                            (${action.queryValue}));`;
+          (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+        } else {
+          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector
+          }
+          (${action.queryValue}));`;
         }
       }
-      // else if (type === 'solid')***************************************
       else if (type === 'solid') {
         if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(screen.${
             action.queryVariant + action.querySelector
           }
-                            (${action.queryValue}), { target: { value: ${
-            action.eventValue
-          } } });`;
+          (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
         } else {
           testFileCode += `fireEvent.${action.eventType}(screen.${
             action.queryVariant + action.querySelector
           }
-                            (${action.queryValue}));`;
+          (${action.queryValue}));`;
         }
-      } else if (type === 'vue') {
+      } 
+      else if (type === 'vue') {
         testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
-      } else if (type === 'svelte') {
+      } 
+      else if (type === 'svelte') {
         if (action.eventValue) {
           testFileCode += `await userEvent.${action.eventType}(screen.${
             action.queryVariant + action.querySelector
           }
-                            (${action.queryValue}), "${action.eventValue}");`;
+          (${action.queryValue}), "${action.eventValue}");`;
         } else {
           testFileCode += `await userEvent.${action.eventType}(screen.${action.querySelector}
-                            (${action.queryValue}));`;
+          (${action.queryValue}));`;
         }
       }
     };
@@ -907,6 +1008,14 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
       if (type === 'react') {
+        testFileCode += `expect(${
+          assertion.queryVariant + assertion.querySelector
+        }
+          (${assertion.queryValue})).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
+      }
+      if (type === 'nextjs') {
         testFileCode += `expect(${
           assertion.queryVariant + assertion.querySelector
         }
@@ -1645,6 +1754,8 @@ function useGenerateTest(test, projectFilePath) {
     // ------------------------------------ switch statement on test type -------------------------
 
     switch (test) {
+
+      //---------------------------------------------------Accessbility switch statement---------------------------------------------
       case 'acc':
         var accTestCase = testState;
         if (accTestCase.testType === 'puppeteer') {
@@ -1668,6 +1779,7 @@ function useGenerateTest(test, projectFilePath) {
           );
         }
 
+      //---------------------------------------------------React switch statement---------------------------------------------  
       case 'react':
         var reactTestCase = testState;
         var mockData = mockDataState;
@@ -1683,8 +1795,26 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+        
+      //---------------------------------------------------NextJS switch statement---------------------------------------------
+        case 'nextjs':
+          var nextjsTestCase = testState;
+          var mockData = mockDataState;
+          return (
+            addComponentImportStatement(),
+            addNextJSImportStatements(),
+            addMockData(),
+            addDescribeBlocks(),
+            (testFileCode = beautify(testFileCode, {
+              brace_style: 'collapse, preserve-inline',
+              indent_size: 2,
+              space_in_empty_paren: true,
+              e4x: true,
+            }))
+          );  
 
-      case 'vue':
+      //---------------------------------------------------Vue switch statement---------------------------------------------
+          case 'vue':
         var vueTestCase = testState;
         var mockData = mockDataState;
         return (
@@ -1716,6 +1846,7 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
 
+        //---------------------------------------------------Redux switch statement---------------------------------------------
       case 'redux':
         var reduxTestCase = testState;
         return (
@@ -1728,6 +1859,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
+        //---------------------------------------------------Hooks switch statement---------------------------------------------
       case 'hooks':
         var hooksTestCase = testState;
         return (
@@ -1739,6 +1872,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
+        //---------------------------------------------------Endpoint switch statement---------------------------------------------
       // case was "endpoint test" but that is not the case being dispatched by the frontend
       case 'endpoint':
         var endpointTestCase = testState;
@@ -1751,6 +1886,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
+        //---------------------------------------------------Puppeteer switch statement---------------------------------------------
       case 'puppeteer':
         var puppeteerTestCase = testState;
         return (
@@ -1762,6 +1899,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
+        //---------------------------------------------------graphQL switch statement---------------------------------------------
       case 'graphQL':
         var graphQLTestCase = testState;
         return (
@@ -1773,7 +1912,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-      // add solid switch statement **************************************
+
+      //---------------------------------------------------Solid switch statement---------------------------------------------
       case 'solid':
         var solidTestCase = testState;
         var mockData = mockDataState;

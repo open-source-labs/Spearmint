@@ -11,6 +11,8 @@ import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
 
+import NextJSTestCase from '../../components/TestCase/NextJSTestCase';
+
 // may be able to delete toggleReact, etc. from their respective action files
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
 
@@ -69,14 +71,15 @@ import {
 } from '../../context/reducers/vueTestCaseReducer';
 import VueTestCase from '../../components/TestCase/VueTestCase';
 
-import {
-  SvelteTestCaseContext,
-  SvelteTestCaseState,
-  SvelteTestCaseReducer
-} from '../../context/reducers/svelteTestCaseReducer';
+// Marked for deletion
+// import {
+//   SvelteTestCaseContext,
+//   SvelteTestCaseState,
+//   SvelteTestCaseReducer
+// } from '../../context/reducers/svelteTestCaseReducer';
 import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
 
-
+// Marked for deletion
 // import {
 //   SvelteTestCaseContext,
 //   SvelteTestCaseState,
@@ -129,12 +132,12 @@ const TestFile = () => {
     endpointTestCaseState
   );
 
-  // //pandaWhale
+    // marked for deletion
   // const [nextjsTestCase, dispatchTonextjsTestCase] = useReducer(
   //   nextjsTestCaseReducer,
   //   nextjsTestCaseState
   // );
-  // //pandaWhale
+
 
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
     reduxTestCaseReducer,
@@ -305,13 +308,11 @@ const TestFile = () => {
         </MockDataContext.Provider>
       )}
 
-      //pandaWhale
       {testCase === 'nextjs' && (
         <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
           <NextJSTestCase filterFileType = {filterFileType}/>
         </MockDataContext.Provider>
       )}
-      //pandaWhale
 
       {testCase === 'endpoint' && (
         <section>

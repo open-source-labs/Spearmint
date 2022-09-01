@@ -16,7 +16,7 @@ import {
   toggleExportBool,
   setTabIndex,
 } from '../../context/actions/globalActions';
-import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
+import { NextJSTestCaseContext } from '../../context/reducers/nextjsTestCaseReducer';
 import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
@@ -48,7 +48,7 @@ const NextJSTestMenu = () => {
   };
 
   const openDocs = () => {
-    dispatchToGlobal(openBrowserDocs(reactUrl));
+    dispatchToGlobal(openBrowserDocs(nextjsUrl));
   };
 
   const fileHandle = () => {

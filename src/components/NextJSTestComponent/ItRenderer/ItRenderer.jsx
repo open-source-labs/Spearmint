@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
-import ReactTestStatements from '../../TestCase/ReactTestStatements';
+import NextJSTestStatements from '../../TestCase/NextJSTestStatements';
 import CustomInput from '../CustomInput/CustomInput';
 import {
   addRender,
@@ -9,7 +9,7 @@ import {
   addAssertion,
   deleteItStatement,
 } from '../../../context/actions/frontendFrameworkTestCaseActions';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { NextJSTestCaseContext } from '../../../context/reducers/nextjsTestCaseReducer';
 import styles from './ItRenderer.module.scss';
 import { Button, TextField } from '@material-ui/core';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -22,31 +22,31 @@ const ItRenderer = ({
   handleChangeItStatementText,
   theme,
 }) => {
-  const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [, dispatchToNextJSTestCase] = useContext(NextJSTestCaseContext);
 
   const addRenderHandleClick = (e) => {
     const itId = e.currentTarget.id;
-    dispatchToReactTestCase(addRender(describeId, itId));
+    dispatchToNextJSTestCase(addRender(describeId, itId));
   };
 
   const deleteItStatementHandleClick = (e) => {
     const itId = e.currentTarget.id;
-    dispatchToReactTestCase(deleteItStatement(describeId, itId));
+    dispatchToNextJSTestCase(deleteItStatement(describeId, itId));
   };
 
-  const deleteReactItStatementOnKeyUp = (e) => {
+  const deleToReactItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {
       const itId = e.currentTarget.id;
-      dispatchToReactTestCase(deleteItStatement(describeId, itId));
+      dispatchToNextJSTestCase(deleteItStatement(describeId, itId));
     }
   }
   const addActionHandleClick = (e) => {
     const itId = e.currentTarget.id;
-    dispatchToReactTestCase(addAction(describeId, itId));
+    dispatchToNextJSTestCase(addAction(describeId, itId));
   };
   const addAssertionHandleClick = (e) => {
     const itId = e.currentTarget.id;
-    dispatchToReactTestCase(addAssertion(describeId, itId));
+    dispatchToNextJSTestCase(addAssertion(describeId, itId));
   };
 
   return itStatements.allIds[describeId].map((id, i) => (
@@ -93,14 +93,14 @@ const ItRenderer = ({
             />
           </div>
           
-          <ReactTestStatements
+          <NextJSTestStatements
             key={`statement-${id}-${i}`}
             statements={statements}
             itId={id}
             describeId={describeId}
           />
           <div>
-            {type === 'react' && (
+            {type === 'nextjs' && (
               <div className={styles.buttonsContainer}>
                 <Button id={id} onClick={addRenderHandleClick} className={styles.reactButton} variant="outlined">
                   Add Render
