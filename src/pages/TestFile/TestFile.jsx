@@ -129,13 +129,6 @@ const TestFile = () => {
     endpointTestCaseState
   );
 
-  //pandaWhale
-  const [nextjsTestCase, dispatchTonextjsTestCase] = useReducer(
-    nextjsTestCaseReducer,
-    nextjsTestCaseState
-  );
-  //pandaWhale
-
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
     reduxTestCaseReducer,
     reduxTestCaseState

@@ -69,7 +69,6 @@ After running the mongo on port 27017 and running the x server with display numb
 
     - `-v`: Creates a volume and mounts the testing application into the container. (ex: `-v [testing files]:[created volume]`)
 
-    *Please note that once the spearmint container is running, you can only access the folders that you mounted here.
-
+    *Please note that once the spearmint container is running, you can only access the folders that you mounted here.`  qGHP\
 *Please note that the image uses root user, as shown in the Dockerfile.
     
