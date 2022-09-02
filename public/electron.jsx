@@ -21,7 +21,7 @@ console.log(os.platform());
 // (python) so maybe not work 
 
 // Comment below require out if you don't want app to reload on code changes
-// require('electron-reloader')(module);
+require('electron-reloader')(module);
 
 // react developer tools for electron in dev mode
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
@@ -69,7 +69,8 @@ function createWindow() {
   // });
 
   mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
-  // mainWindow.webContents.openDevTools()
+  // uncomment line below to view dev tools
+  mainWindow.webContents.openDevTools()
   //////////////////////////////////////////////////
   //Creates terminal, specifies dimensions based on columns and rows
   //////////////////////////////////////////////////
