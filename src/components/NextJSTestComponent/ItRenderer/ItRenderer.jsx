@@ -34,7 +34,7 @@ const ItRenderer = ({
     dispatchToNextJSTestCase(deleteItStatement(describeId, itId));
   };
 
-  const deleToReactItStatementOnKeyUp = (e) => {
+  const deleteNextJSItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {
       const itId = e.currentTarget.id;
       dispatchToNextJSTestCase(deleteItStatement(describeId, itId));
@@ -65,7 +65,7 @@ const ItRenderer = ({
           <AiOutlineClose
             tabIndex={0}
             id={id} 
-            onKeyPress={deleteReactItStatementOnKeyUp}
+            onKeyPress={deleteNextJSItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}
             className={cn(styles.itClose, 'far fa-window-close')}
           />

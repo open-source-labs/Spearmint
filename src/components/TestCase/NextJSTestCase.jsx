@@ -18,7 +18,7 @@ import NextJSTestMenu from '../TestMenu/NextJSTestMenu';
 import MockData from '../NextJSTestComponent/MockData/MockData';
 import DecribeRenderer from '../NextJSTestComponent/DescribeRenderer/DescribeRenderer';
 import {
-  nextjsTestCaseContext,
+  NextJSTestCaseContext,
   nextjsTestCaseState,
   nextjsTestCaseReducer,
 } from '../../context/reducers/nextjsTestCaseReducer';
@@ -29,7 +29,7 @@ const NextJSTestCase = (props) => {
     nextjsTestCaseReducer,
     nextjsTestCaseState
   );
-
+  
   const { describeBlocks, itStatements, statements } = nextjsTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, theme }] = useContext(GlobalContext);
@@ -79,8 +79,8 @@ const NextJSTestCase = (props) => {
 
   return (
     <NextJSTestCaseContext.Provider value={[nextjsTestCase, dispatchToNextJSTestCase]}>
-      <div id={styles[`NextJSTestCase${theme}`]}>
-      <h2 id={styles[`testName${theme}`]}>Next JS Testing</h2>
+      <div id={styles[`ReactTestCase${theme}`]}>
+        <h2 id={styles[`testName${theme}`]}>Next JS Testing</h2>
         <NextJSTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>

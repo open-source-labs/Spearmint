@@ -3,7 +3,7 @@ import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
 
 export const NextJSTestCaseContext = createContext([]);
 
-export const NextJSTestCaseState = {
+export const nextjsTestCaseState = {
   modalOpen: false,
 
   describeId: 1,

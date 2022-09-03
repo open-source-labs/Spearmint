@@ -207,7 +207,7 @@ const TestFile = () => {
   const testMappings = {
     'react': [<FaReact size={cardSize}/>, 'React', 
               'Test React with rendering, actions, and assertions found in the React Testing Library'],
-    'next.js': [<SiNextdotjs size={cardSize}/>, 'Next.js', 
+    'nextjs': [<SiNextdotjs size={cardSize}/>, 'Next.js', 
               'Test Next.js front-end using the React Testing Library, or API routes on the back-end'],          
     'redux': [<SiRedux size={cardSize}/>, 'Redux', 
               'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
