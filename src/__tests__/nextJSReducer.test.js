@@ -1,6 +1,6 @@
-import { reactTestCaseReducer, reactTestCaseState } from '../context/reducers/reactTestCaseReducer';
+import { nextjsTestCaseReducer, nextjsTestCaseState } from '../context/reducers/nextjsTestCaseReducer';
 
-describe('React Reducer', () => {
+describe('NextJS Reducer', () => {
   let initialState = {};
 
   beforeEach(() => {
@@ -78,17 +78,17 @@ describe('React Reducer', () => {
   });
 
   it('should return the initial state', () => {
-    expect(reactTestCaseReducer(initialState, {})).toEqual(initialState);
+    expect(nextjsTestCaseReducer(initialState, {})).toEqual(initialState);
   });
 
   it('should handle TOGGLE_REACT', () => {
-    expect(reactTestCaseReducer(initialState, { type: 'TOGGLE_REACT' })).toEqual({
+    expect(nextjsTestCaseReducer(initialState, { type: 'TOGGLE_REACT' })).toEqual({
       ...initialState,
     });
   });
 
   it('should handle ADD_DESCRIBE_BLOCK', () => {
-    expect(reactTestCaseReducer(initialState, { type: 'ADD_DESCRIBE_BLOCK' })).toEqual({
+    expect(nextjsTestCaseReducer(initialState, { type: 'ADD_DESCRIBE_BLOCK' })).toEqual({
       ...initialState,
       describeId: 2,
       describeBlocks: {
@@ -110,7 +110,7 @@ describe('React Reducer', () => {
       describeId: 'describe0',
       text: 'update describe text',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       describeBlocks: {
         ...initialState.describeBlocks,
@@ -129,7 +129,7 @@ describe('React Reducer', () => {
       type: 'DELETE_DESCRIBE_BLOCK',
       describeId: 'describe0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       describeBlocks: {
         byId: {},
@@ -152,7 +152,7 @@ describe('React Reducer', () => {
       type: 'ADD_ITSTATEMENT',
       describeId: 'describe0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       itId: 2,
       itStatements: {
@@ -175,7 +175,7 @@ describe('React Reducer', () => {
       itId: 'it0',
       text: 'update itStatement text',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       itStatements: {
         ...initialState.itStatements,
@@ -195,7 +195,7 @@ describe('React Reducer', () => {
       type: 'DELETE_ITSTATEMENT',
       itId: 'it0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       itStatements: {
         byId: {},
@@ -216,7 +216,7 @@ describe('React Reducer', () => {
       describeId: 'describe0',
       itId: 'it0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statementId: 4,
       statements: {
@@ -252,7 +252,7 @@ describe('React Reducer', () => {
       queryValue: 'button',
       suggestions: [],
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statements: {
         ...initialState.statements,
@@ -280,7 +280,7 @@ describe('React Reducer', () => {
       type: 'DELETE_ACTION',
       statementId: 'statement1',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statementId: 3,
       statements: {
@@ -326,7 +326,7 @@ describe('React Reducer', () => {
       describeId: 'describe0',
       itId: 'it0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statementId: 4,
       statements: {
@@ -364,7 +364,7 @@ describe('React Reducer', () => {
       matcherValue: 'click me',
       suggestions: [],
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statements: {
         ...initialState.statements,
@@ -393,7 +393,7 @@ describe('React Reducer', () => {
       type: 'DELETE_ASSERTION',
       statementId: 'statement2',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statementId: 3,
       statements: {
@@ -438,7 +438,7 @@ describe('React Reducer', () => {
       describeId: 'describe0',
       itId: 'it0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statementId: 4,
       statements: {
@@ -465,7 +465,7 @@ describe('React Reducer', () => {
       filePath:
         '/Users/charliemaloney/code/codesmith/projects/production-project/spearmint/src/components/Action/Action.jsx',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statements: {
         ...initialState.statements,
@@ -481,7 +481,7 @@ describe('React Reducer', () => {
       type: 'DELETE_RENDER',
       statementId: 'statement0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       statementId: 3,
       statements: {
@@ -523,7 +523,7 @@ describe('React Reducer', () => {
       type: 'ADD_PROP',
       statementId: 'statement0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       propId: 2,
       statements: {
@@ -558,7 +558,7 @@ describe('React Reducer', () => {
       propKey: 'name',
       propValue: 'bob',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       propId: 1,
       statements: {
@@ -590,7 +590,7 @@ describe('React Reducer', () => {
       id: 'prop0',
       statementId: 'statement0',
     };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       propId: 1,
       statements: {
@@ -611,7 +611,7 @@ describe('React Reducer', () => {
 
   it('should handle CREATE_NEW_TEST', () => {
     const action = { type: 'CREATE_NEW_TEST' };
-    expect(reactTestCaseReducer(initialState, action)).toEqual({
+    expect(nextjsTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
       describeBlocks: {
         byId: {},

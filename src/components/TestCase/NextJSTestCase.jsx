@@ -14,23 +14,23 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import { createMockData } from '../../context/actions/mockDataActions';
-import ReactTestMenu from '../TestMenu/ReactTestMenu';
-import MockData from '../ReactTestComponent/MockData/MockData';
-import DecribeRenderer from '../ReactTestComponent/DescribeRenderer/DescribeRenderer';
+import NextJSTestMenu from '../TestMenu/NextJSTestMenu';
+import MockData from '../NextJSTestComponent/MockData/MockData';
+import DecribeRenderer from '../NextJSTestComponent/DescribeRenderer/DescribeRenderer';
 import {
-  ReactTestCaseContext,
-  reactTestCaseState,
-  reactTestCaseReducer,
-} from '../../context/reducers/reactTestCaseReducer';
+  NextJSTestCaseContext,
+  nextjsTestCaseState,
+  nextjsTestCaseReducer,
+} from '../../context/reducers/nextjsTestCaseReducer';
 import { Button } from '@material-ui/core';
 
-const ReactTestCase = (props) => {
-  const [reactTestCase, dispatchToReactTestCase] = useReducer(
-    reactTestCaseReducer,
-    reactTestCaseState
+const NextJSTestCase = (props) => {
+  const [nextjsTestCase, dispatchToNextJSTestCase] = useReducer(
+    nextjsTestCaseReducer,
+    nextjsTestCaseState
   );
-
-  const { describeBlocks, itStatements, statements } = reactTestCase;
+  
+  const { describeBlocks, itStatements, statements } = nextjsTestCase;
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, theme }] = useContext(GlobalContext);
 
@@ -41,13 +41,13 @@ const ReactTestCase = (props) => {
   const handleChangeDescribeText = (e) => {
     const text = e.target.value;
     const describeId = e.target.id;
-    dispatchToReactTestCase(updateDescribeText(text, describeId));
+    dispatchToNextJSTestCase(updateDescribeText(text, describeId));
   };
 
   const handleChangeItStatementText = (e) => {
     const text = e.target.value;
     const itId = e.target.id;
-    dispatchToReactTestCase(updateItStatementText(text, itId));
+    dispatchToNextJSTestCase(updateItStatementText(text, itId));
   };
 
   const reorder = (list, startIndex, endIndex) => {
@@ -70,23 +70,23 @@ const ReactTestCase = (props) => {
       : updateItStatementOrder;
 
     const reorderedStatements = reorder(list, result.source.index, result.destination.index);
-    dispatchToReactTestCase(func(reorderedStatements, result.type));
+    dispatchToNextJSTestCase(func(reorderedStatements, result.type));
   };
 
   const handleAddDescribeBlock = (e) => {
-    dispatchToReactTestCase(addDescribeBlock());
+    dispatchToNextJSTestCase(addDescribeBlock());
   };
 
   return (
-    <ReactTestCaseContext.Provider value={[reactTestCase, dispatchToReactTestCase]}>
+    <NextJSTestCaseContext.Provider value={[nextjsTestCase, dispatchToNextJSTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
-      <h2 id={styles[`testName${theme}`]}>React Testing</h2>
-        <ReactTestMenu />
+        <h2 id={styles[`testName${theme}`]}>Next JS Testing</h2>
+        <NextJSTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
             <SearchInput
-              reactTestCase
-              dispatch={dispatchToReactTestCase}
+              nextjsTestCase
+              dispatch={dispatchToNextJSTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
               options={props.filterFileType(Object.keys(filePathMap), ['js', 'jsx', 'ts', 'tsx'])}
@@ -120,13 +120,13 @@ const ReactTestCase = (props) => {
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
                   <DecribeRenderer
-                    dispatcher={dispatchToReactTestCase}
+                    dispatcher={dispatchToNextJSTestCase}
                     describeBlocks={describeBlocks}
                     itStatements={itStatements}
                     statements={statements}
                     handleChangeDescribeText={handleChangeDescribeText}
                     handleChangeItStatementText={handleChangeItStatementText}
-                    type='react'
+                    type='nextjs'
                     theme={theme}
                   />
                   {provided.placeholder}
@@ -142,8 +142,8 @@ const ReactTestCase = (props) => {
           </Button>
         </div>
       </div>
-    </ReactTestCaseContext.Provider>
+    </NextJSTestCaseContext.Provider>
   );
 };
 
-export default ReactTestCase;
+export default NextJSTestCase;

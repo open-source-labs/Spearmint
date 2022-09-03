@@ -5,7 +5,7 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
 import styles from './Render.module.scss';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { NextJSTestCaseContext } from '../../../context/reducers/nextjsTestCaseReducer';
 
 import { deleteRender, addProp } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import Prop from './Prop';
@@ -15,15 +15,15 @@ import { AiOutlineClose } from 'react-icons/ai';
 const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ statement, statementId, describeId, itId }) => {
-  const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{ statements }, dispatchToNextJSTestCase] = useContext(NextJSTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleClickAddProp = () => {
-    dispatchToReactTestCase(addProp(statementId));
+    dispatchToNextJSTestCase(addProp(statementId));
   };
 
   const handleClickDeleteRender = () => {
-    dispatchToReactTestCase(deleteRender(statementId));
+    dispatchToNextJSTestCase(deleteRender(statementId));
   };
 
   return (
@@ -57,7 +57,7 @@ const Render = ({ statement, statementId, describeId, itId }) => {
                   propId={prop.id}
                   propKey={prop.propKey}
                   propValue={prop.propValue}
-                  dispatchToTestCase={dispatchToReactTestCase}
+                  dispatchToTestCase={dispatchToNextJSTestCase}
                   theme={theme}
                 />
               );
