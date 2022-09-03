@@ -104,6 +104,7 @@ router.get(
   }
 );
 
+// Did something get updated with oauth? Is this code functional or should we delete it?
 // Set up route for get requests to github login auth
 // router.get(
 //   '/login/facebook',

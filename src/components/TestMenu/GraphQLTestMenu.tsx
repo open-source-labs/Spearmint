@@ -131,7 +131,7 @@ const GraphQLTestMenu = () => {
           {/* <UploadTest testType="endpoint test" />
           <GetTests testType="endpoint test" /> */}
 
-        <div id={styles[`testMenu${theme}`]}>
+        <div id={styles[`dbConfig${theme}`]}>
           <Button 
             variant='outlined'
             data-testid='graphQLButton' 

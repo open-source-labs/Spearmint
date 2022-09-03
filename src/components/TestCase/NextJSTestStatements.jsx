@@ -1,9 +1,9 @@
 import React from 'react';
-import Action from '../ReactTestComponent/Action/Action';
-import Assertion from '../ReactTestComponent/Assertion/Assertion';
-import Render from '../ReactTestComponent/Render/Render';
+import Action from '../NextJSTestComponent/Action/Action';
+import Assertion from '../NextJSTestComponent/Assertion/Assertion';
+import Render from '../NextJSTestComponent/Render/Render';
 
-const ReactTestStatements = ({ statements, itId, describeId }) => {
+const NextJSTestStatements = ({ statements, itId, describeId }) => {
   // filter out ids not belonging to the correct describe block and itStatement
   const filterStatements = statements.allIds.filter((id) => {
     return statements.byId[id].describeId === describeId && statements.byId[id].itId === itId;
@@ -47,4 +47,4 @@ const ReactTestStatements = ({ statements, itId, describeId }) => {
   });
 };
 
-export default ReactTestStatements;
+export default NextJSTestStatements;

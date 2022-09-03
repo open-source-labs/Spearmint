@@ -4,6 +4,7 @@ const cookieController = {};
 cookieController.setSSIDCookie = (req, res, next) => {
   // console.log('we are in cookieController!!')
   // eslint-disable-next-line no-useless-escape
+  //removing double quotes with Regex?
   res.cookie('ssid', JSON.stringify(res.locals.userId).replace(/\"/g, ''));
   return next();
 };

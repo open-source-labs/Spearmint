@@ -11,6 +11,8 @@ import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
 
+import NextJSTestCase from '../../components/TestCase/NextJSTestCase';
+
 // may be able to delete toggleReact, etc. from their respective action files
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
 
@@ -69,14 +71,15 @@ import {
 } from '../../context/reducers/vueTestCaseReducer';
 import VueTestCase from '../../components/TestCase/VueTestCase';
 
-import {
-  SvelteTestCaseContext,
-  SvelteTestCaseState,
-  SvelteTestCaseReducer
-} from '../../context/reducers/svelteTestCaseReducer';
+// Marked for deletion
+// import {
+//   SvelteTestCaseContext,
+//   SvelteTestCaseState,
+//   SvelteTestCaseReducer
+// } from '../../context/reducers/svelteTestCaseReducer';
 import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
 
-
+// Marked for deletion
 // import {
 //   SvelteTestCaseContext,
 //   SvelteTestCaseState,
@@ -128,6 +131,12 @@ const TestFile = () => {
     endpointTestCaseReducer,
     endpointTestCaseState
   );
+
+    // marked for deletion
+  // const [nextjsTestCase, dispatchTonextjsTestCase] = useReducer(
+  //   nextjsTestCaseReducer,
+  //   nextjsTestCaseState
+  // );
 
 
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
@@ -198,7 +207,7 @@ const TestFile = () => {
   const testMappings = {
     'react': [<FaReact size={cardSize}/>, 'React', 
               'Test React with rendering, actions, and assertions found in the React Testing Library'],
-    'next.js': [<SiNextdotjs size={cardSize}/>, 'Next.js', 
+    'nextjs': [<SiNextdotjs size={cardSize}/>, 'Next.js', 
               'Test Next.js front-end using the React Testing Library, or API routes on the back-end'],          
     'redux': [<SiRedux size={cardSize}/>, 'Redux', 
               'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
@@ -299,13 +308,11 @@ const TestFile = () => {
         </MockDataContext.Provider>
       )}
 
-      //pandaWhale
       {testCase === 'nextjs' && (
         <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
           <NextJSTestCase filterFileType = {filterFileType}/>
         </MockDataContext.Provider>
       )}
-      //pandaWhale
 
       {testCase === 'endpoint' && (
         <section>

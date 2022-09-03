@@ -69,7 +69,6 @@ function createWindow() {
   // });
 
   mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
-  // uncomment line below to view dev tools
   mainWindow.webContents.openDevTools()
   //////////////////////////////////////////////////
   //Creates terminal, specifies dimensions based on columns and rows
@@ -82,7 +81,7 @@ function createWindow() {
     cwd: process.env.HOME,
     env: process.env,
   };
-  console.log('process.env.HOME: ', process.env.HOME);
+  // console.log('process.env.HOME: ', process.env.HOME);
 
   const ptyProcess = np.spawn(shell, [], ptyArgs);
   // with ptyProcess, we want to send incoming data to the channel terminal.incData
