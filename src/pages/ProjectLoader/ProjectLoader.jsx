@@ -100,23 +100,6 @@ function ProjectLoader() {
       .catch((err) => console.log(err));
   };
 
-  const handleFacebookLogin = () => {
-    // create new window for github login
-    fetch('http://localhost:3001/oauth2/redirect/facebook', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        const { url } = res;
-        console.log('handleFaceBookLogin function')
-        // how we trigger the Main Process in electron to show our window
-        ipcRenderer.send('Facebook-Oauth', url);
-      })
-      .catch((err) => console.log(err));
-  };
-
   const handleGoogleLogin = () => {
     // create new window for github login
     fetch('http://localhost:3001/auth/google', {
@@ -245,10 +228,6 @@ function ProjectLoader() {
           <Button variant="outlined" id={styles.gitBtn} onClick={handleGithubLogin}>
             <span>Login with GitHub</span>
             <RiGithubFill size={'1.25rem'}/>
-          </Button>
-          <Button variant="outlined" id={styles.gitBtn} onClick={handleFacebookLogin}>
-            <span>Login with Facebook</span>
-            <RiFacebookFill size={'1.25rem'}/>
           </Button>
           <Button variant="outlined" id={styles.gitBtn} onClick={handleGoogleLogin}>
             <span>Login with Google</span>

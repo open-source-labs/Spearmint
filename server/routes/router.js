@@ -112,17 +112,6 @@ router.get(
 //   passport.authenticate('facebook', { scope: ['email'] })
 // );
 
-router.get('/login/facebook', passport.authenticate('facebook'));
-
-
-// if user does ALLOW, then they are automatically redirected to the callback endpoint
-router.get(
-  '/oauth2/redirect/facebook',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  // if second passport auth is successful, then these middleware functions are invoked next
-  userController.facebookLogin,
-  cookieController.setSSIDCookie,
-  sessionController.startSession,
 
   // Anonymous middleware to send back valid response
   (req, res) => {

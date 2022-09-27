@@ -83,18 +83,6 @@ userController.githubLogin = (req, res, next) => {
   return next();
 };
 
-userController.facebookLogin = (req, res, next) => {
-  // console.log('this is req.user', typeof req.user._id);
-
-  // Successful authentication, redirect home.
-  console.log('facebook authentication successful!');
-
-  // store user._id in res.locals
-  res.locals.userId = req.user._id;
-
-  return next();
-};
-
 userController.googleLogin = (req, res, next) => {
   // console.log('this is req.user', typeof req.user._id);
 
