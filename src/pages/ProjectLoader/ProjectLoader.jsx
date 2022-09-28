@@ -130,12 +130,6 @@ function ProjectLoader() {
     setUsername(cookies[0].value);
   });
 
-  ipcRenderer.on('facebook-new-url', (event, cookies) => {
-    console.log(cookies);
-    setIsLoggedIn(true);
-    setUsername(cookies[0].value);
-  });
-
   ipcRenderer.on('google-new-url', (event, cookies) => {
     setIsLoggedIn(true);
     setUsername(cookies[0].value);
