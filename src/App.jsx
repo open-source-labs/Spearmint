@@ -9,6 +9,8 @@ import RightPanel from './pages/RightPanel/RightPanel';
 import FileDirectory from './components/FileDirectory/FileDirectory';
 import { CSSTransition } from 'react-transition-group';
 import { Switch } from '@material-ui/core';
+import sun from '../public/sun.png'
+import moon from '../public/moon.png'
 // import About from './pages/About/About';
 
 const App = () => {
@@ -25,7 +27,9 @@ const App = () => {
         {/* pass global state and dispatch function as prop to context provider for child components */}
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <div id={styles.toggle}>
+            <img src={moon} />
             <Switch checked={global.theme === 'light' ? true : false} onChange={changeTheme}/>
+            <img src={sun} />
           </div>
           <ProjectLoader/>
         </GlobalContext.Provider>

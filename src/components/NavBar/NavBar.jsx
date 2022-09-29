@@ -19,6 +19,8 @@ import { VscSettingsGear } from 'react-icons/vsc'
 import { FaFileExport, FaUserCircle } from 'react-icons/fa'
 import { GoFileSubmodule } from 'react-icons/go'
 import { Switch } from '@material-ui/core';
+import sun from '../../../public/sun.png'
+import moon from '../../../public/moon.png'
 
 // make sure to import in the dispatcher to the global state variable, isProjectLoaded
 const NavBar = ({ inAboutPage }) => {
@@ -82,7 +84,9 @@ const NavBar = ({ inAboutPage }) => {
           LOGOUT
         </Button>
         <span title='Change theme'>
+          <img src={moon} />
           <Switch checked={theme === 'light' ? true : false} onChange={changeTheme}/>
+          <img src={sun} />
         </span>
       </div>
       {!inAboutPage && (
