@@ -10,7 +10,7 @@ import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { NextJSTestCaseContext } from '../../../context/reducers/nextjsTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -18,7 +18,7 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
-  const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{ statements }, dispatchToNextJSTestCase] = useContext(NextJSTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeAssertionFields = (e, field) => {
@@ -26,11 +26,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
     field === 'isNot'
       ? (updatedAssertion[field] = !updatedAssertion.isNot)
       : (updatedAssertion[field] = e.target.value);
-    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    dispatchToNextJSTestCase(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = (e) => {
-    dispatchToReactTestCase(deleteAssertion(statementId));
+    dispatchToNextJSTestCase(deleteAssertion(statementId));
   };
 
   const needsMatcherValue = (matcherType) => {
@@ -42,61 +42,6 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
       'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
       'toHaveStyle', //takes in a sting value Ex: 'display: none'
       'toHaveTextContent', //takes in a string value Ex: 'Content'
-      'toBe', //
-      'toHaveBeenCalledTimes',
-      'toHaveBeenCalledWith',
-      'toHaveBeenLastCalledWith',
-      'toHaveBeenNthCalledWith',
-      'toHaveReturnedTimes',
-      'toHaveReturnedWith',
-      'toHaveLastReturnedWith',
-      'toHaveNthReturnedWith',
-      'toHaveLength',
-      'toHaveProperty',
-      'toBeCloseTo',
-      'not.toBeCloseTo',
-      'toBeGreaterThan',
-      'toBeGreaterThanOrEqual',
-      'toBeLessThan',
-      'toBeLessThanOrEqual',
-      'toBeInstanceOf',
-      'toContain',
-      'toContainEqual',
-      'toEqual',
-      'toMatch',
-      'toMatchObject',
-      'toMatchSnapshot',
-      'toMatchInLineSnapshot',
-      'toStrictEqual',
-      'toThrow',
-      'toThrowErrorMatchingSnapshot',
-      'toThrowErrorMatchingInLineSnapshot',
-      'not.toBeInstanceOf',
-      'not.toContain',
-      'not.toEqual',
-      'not.toContainEqual',
-      'not.toMatch',
-      'not.toMatchObject',
-      'not.toMatchSnapshot',
-      'not.toMatchInLineSnapshot',
-      'not.toStrictEqual',
-      'not.toThrow',
-      'not.toThrowErrorMatchingSnapshot',
-      'not.toThrowErrorMatchingInLineSnapshot',
-      'not.toBeLessThan',
-      'not.toBeLessThanOrEqual',
-      'not.toBeGreaterThanOrEqual',
-      'not.toBeGreaterThan',
-      'not.toHaveProperty',
-      'not.toHaveLength',
-      'not.toHaveNthReturnedWith',
-      'not.toHaveReturnedWith',
-      'not.toBe', //
-      'not.toHaveBeenCalledTimes',
-      'not.toHaveBeenCalledWith',
-      'not.toHaveBeenLastCalledWith',
-      'not.toHaveBeenNthCalledWith',
-      'not.toHaveReturnedTimes',
       'not.toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
       'not.toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
       'not.toHaveAttribute', //takes in a string Ex: 'type'
@@ -175,7 +120,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
           </label>
           {/* <AutoCompleteMockData
             statement={statement}
-            dispatchToTestCase={dispatchToReactTestCase}
+            dispatchToTestCase={dispatchToNextJSTestCase}
             statementType='assertion'
           /> */}
           <input
@@ -206,7 +151,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <AutoComplete
                 statement={statement}
                 statementType='assertion'
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={dispatchToNextJSTestCase}
                 id={styles.matcherAuto}
               />
 
