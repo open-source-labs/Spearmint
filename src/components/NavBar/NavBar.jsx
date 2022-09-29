@@ -18,7 +18,7 @@ import Modal from '../Modals/Modal';
 import { VscSettingsGear } from 'react-icons/vsc'
 import { FaFileExport, FaUserCircle } from 'react-icons/fa'
 import { GoFileSubmodule } from 'react-icons/go'
-import { ImArrowLeft } from "react-icons/im"
+import { ImHome3 } from "react-icons/im"
 import { Switch } from '@material-ui/core';
 import { useToggleModal } from '../TestMenu/testMenuHooks';
 import { setTestCase } from '../../context/actions/globalActions';
@@ -76,8 +76,8 @@ const NavBar = ({ inAboutPage }) => {
     <div id={styles[`navBar${theme}`]}>
       {/* File Explorer */}
       <div className={styles.btnContainer}>
-        <span onClick={openModal} title='Go back'>
-          <ImArrowLeft size={'1.5rem'}/>
+        <span onClick={openModal} title='Home'>
+          <ImHome3 size={'1.5rem'}/>
         </span>
         <span id={isFileDirectoryOpen ? styles.activeEffect : ''} onClick={handleToggleFileDirectory} title='Expand file explorer'>
           <GoFileSubmodule size={'1.5rem'}/>
