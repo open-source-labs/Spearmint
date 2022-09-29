@@ -47,4 +47,112 @@ export const matcherTypesList = [
   {
     name: 'toHaveFormValues',
   },
+  {
+    name: 'toBe',
+  },
+  {
+    name: 'toHaveBeenCalled',
+  },
+  {
+    name: 'toHaveBeenCalledTimes',
+  },
+  {
+    name: 'toHaveBeenCalledWith',
+  },
+  {
+    name: 'toHaveBeenLastCalledWith',
+  },
+  {
+    name: 'toHaveNthCalledWith',
+  },
+  {
+    name: 'toHaveReturned',
+  },
+  {
+    name: 'toHaveReturnedTimes',
+  },
+  {
+    name: 'toHaveReturnedWith',
+  },
+  {
+    name: 'toHaveLastReturnedWith',
+  },
+  {
+    name: 'toHaveNthReturnedWith',
+  },
+  {
+    name: 'toHaveLength',
+  },
+  {
+    name: 'toHaveProperty',
+  },
+  {
+    name: 'toBeCloseTo',
+  },
+  {
+    name: 'toBeDefined',
+  },
+  {
+    name: 'toBeFalsy',
+  },
+  {
+    name: 'toBeGreaterThan',
+  },
+  {
+    name: 'toBeGreaterThanOrEqual',
+  },
+  {
+    name: 'toBeLessThanOrEqual',
+  },
+  {
+    name: 'toBeLessThan',
+  },
+  {
+    name: 'toBeInstanceOf',
+  },
+  {
+    name: 'toBeNull',
+  },
+  {
+    name: 'toBeTruthy',
+  },
+  {
+    name: 'toBeUndefined',
+  },
+  {
+    name: 'toBeNaN',
+  },
+  {
+    name: 'toContain',
+  },
+  {
+    name: 'toContainEqual',
+  },
+  {
+    name: 'toEqual',
+  },
+  {
+    name: 'toMatch',
+  },
+  {
+    name: 'toMatchObject',
+  },
+  {
+    name: 'toMatchSnapshot',
+  },
+  {
+    name: 'toMatchInLineSnapshot',
+  },
+  {
+    name: 'toStrictEqual',
+  },
+  {
+    name: 'toThrow',
+  },
+  {
+    name: 'toThrowErrorMatchingSnapshot',
+  },
+  {
+    name: 'toThrowErrorMatchingInLineSnapshot',
+  },
 ];
