@@ -24,7 +24,7 @@ const TerminalView = () => {
   useLayoutEffect(() => {
     const container = document.getElementById('terminalContainer')
 
-    console.log(container);
+    // console.log(container);
     term.open(document.getElementById('terminalContainer'));
     // when we have input events (e), we would send the data to the main processor
     term.onData((e) => {
@@ -42,7 +42,7 @@ const TerminalView = () => {
   }, []);
 
   useLayoutEffect(() => {
-    console.log('USE-EFFEcT ALWAYS before fitaddon', term.cols, term.rows);
+    // console.log('USE-EFFEcT ALWAYS before fitaddon', term.cols, term.rows);
     const container = document.getElementById('terminalContainer')
     //console.log(container.offsetWidth, container.offsetHeight)
     fitAddon.fit();
