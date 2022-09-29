@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
 
-export const ReactTestCaseContext = createContext([]);
+export const NextJSTestCaseContext = createContext([]);
 
-export const reactTestCaseState = {
+export const nextjsTestCaseState = {
   modalOpen: false,
 
   describeId: 1,
@@ -128,9 +128,9 @@ const deleteChildren = (object, deletionId, lookup, it) => {
   return allIdCopy;
 };
 
-/* ------------------------- React Test Case Reducer ------------------------ */
+/* ------------------------- NextJS Test Case Reducer ------------------------ */
 
-export const reactTestCaseReducer = (state, action) => {
+export const nextjsTestCaseReducer = (state, action) => {
   Object.freeze(state);
 
   let describeBlocks;

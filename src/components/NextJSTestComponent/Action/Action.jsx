@@ -5,7 +5,7 @@ import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/reducers/mockDataReducer';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { NextJSTestCaseContext } from '../../../context/reducers/nextjsTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -15,17 +15,17 @@ const closeIcon = require('../../../assets/images/close.png');
 // Action box in middle panel (testCase.jsx)
 const Action = ({ statement, statementId, describeId, itId }) => {
   const [{ mockData }] = useContext(MockDataContext);
-  const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{ statements }, dispatchToNextJSTestCase] = useContext(NextJSTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeActionFields = (e, field) => {
     let updatedAction = { ...statement };
     updatedAction[field] = e.target.value;
-    dispatchToReactTestCase(updateAction(updatedAction));
+    dispatchToNextJSTestCase(updateAction(updatedAction));
   };
 
   const handleClickDeleteAction = (e) => {
-    dispatchToReactTestCase(deleteAction(statement.id));
+    dispatchToNextJSTestCase(deleteAction(statement.id));
   };
   //conditional rendering for events with values
   const needsEventValue = (eventType) => {
@@ -53,7 +53,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
           {/* <AutoComplete
             statement={statement}
             statementType='action'
-            dispatchToTestCase={dispatchToReactTestCase}
+            dispatchToTestCase={dispatchToNextJSTestCase}
             id={styles.autoComplete}
           /> */}
           <input
@@ -70,7 +70,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <label htmlFor='eventValue'> Value </label>
               <AutoCompleteMockData
                 statement={statement}
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={dispatchToNextJSTestCase}
                 statementType='action'
                 // id={styles2.autoCompleteMockData}
               />

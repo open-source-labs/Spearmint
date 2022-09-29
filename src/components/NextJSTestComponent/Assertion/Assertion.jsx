@@ -10,7 +10,7 @@ import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { NextJSTestCaseContext } from '../../../context/reducers/nextjsTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -18,7 +18,7 @@ const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
-  const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{ statements }, dispatchToNextJSTestCase] = useContext(NextJSTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
   const handleChangeAssertionFields = (e, field) => {
@@ -26,11 +26,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
     field === 'isNot'
       ? (updatedAssertion[field] = !updatedAssertion.isNot)
       : (updatedAssertion[field] = e.target.value);
-    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    dispatchToNextJSTestCase(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = (e) => {
-    dispatchToReactTestCase(deleteAssertion(statementId));
+    dispatchToNextJSTestCase(deleteAssertion(statementId));
   };
 
   const needsMatcherValue = (matcherType) => {
@@ -120,7 +120,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
           </label>
           {/* <AutoCompleteMockData
             statement={statement}
-            dispatchToTestCase={dispatchToReactTestCase}
+            dispatchToTestCase={dispatchToNextJSTestCase}
             statementType='assertion'
           /> */}
           <input
@@ -151,7 +151,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <AutoComplete
                 statement={statement}
                 statementType='assertion'
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={dispatchToNextJSTestCase}
                 id={styles.matcherAuto}
               />
 
