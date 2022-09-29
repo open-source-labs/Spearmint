@@ -11,6 +11,8 @@ import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
 
+import NextJSTestCase from '../../components/TestCase/NextJSTestCase';
+
 // may be able to delete toggleReact, etc. from their respective action files
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
 
@@ -69,14 +71,15 @@ import {
 } from '../../context/reducers/vueTestCaseReducer';
 import VueTestCase from '../../components/TestCase/VueTestCase';
 
-import {
-  SvelteTestCaseContext,
-  SvelteTestCaseState,
-  SvelteTestCaseReducer
-} from '../../context/reducers/svelteTestCaseReducer';
+// Marked for deletion
+// import {
+//   SvelteTestCaseContext,
+//   SvelteTestCaseState,
+//   SvelteTestCaseReducer
+// } from '../../context/reducers/svelteTestCaseReducer';
 import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
 
-
+// Marked for deletion
 // import {
 //   SvelteTestCaseContext,
 //   SvelteTestCaseState,
@@ -103,6 +106,7 @@ import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
 import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
+import { SiNextdotjs } from 'react-icons/si';
 
 import { Button } from '@material-ui/core';
 import TestCard from './TestCard';
@@ -128,6 +132,13 @@ const TestFile = () => {
     endpointTestCaseState
   );
 
+    // marked for deletion
+  // const [nextjsTestCase, dispatchTonextjsTestCase] = useReducer(
+  //   nextjsTestCaseReducer,
+  //   nextjsTestCaseState
+  // );
+
+
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
     reduxTestCaseReducer,
     reduxTestCaseState
@@ -152,7 +163,6 @@ const TestFile = () => {
     graphQLTestCaseReducer,
     graphQLTestCaseState
   );
-
 
   // const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(
   //   SvelteTestCaseReducer,
@@ -197,6 +207,8 @@ const TestFile = () => {
   const testMappings = {
     'react': [<FaReact size={cardSize}/>, 'React', 
               'Test React with rendering, actions, and assertions found in the React Testing Library'],
+    'nextjs': [<SiNextdotjs size={cardSize}/>, 'Next.js', 
+              'Test Next.js front-end using the React Testing Library, or API routes on the back-end'],          
     'redux': [<SiRedux size={cardSize}/>, 'Redux', 
               'Test the pure functions of your Redux reducers, asynchronous and synchronous action creators, and the middleware logic'],
     'svelte': [<SiSvelte size={cardSize}/>, 'Svelte',
@@ -293,6 +305,12 @@ const TestFile = () => {
       {testCase === 'react' && (
         <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
           <ReactTestCase filterFileType = {filterFileType}/>
+        </MockDataContext.Provider>
+      )}
+
+      {testCase === 'nextjs' && (
+        <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
+          <NextJSTestCase filterFileType = {filterFileType}/>
         </MockDataContext.Provider>
       )}
 
