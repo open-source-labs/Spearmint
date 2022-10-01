@@ -53,10 +53,10 @@ const RightPanel = () => {
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
         >
-          <StyledTab  value={0} label="Code Editor" />
-          <StyledTab  value={1} label="Browser" />
-          <StyledTab  value={2} label="Test Terminal" />
-          <StyledTab  value={3} label='User Guide' />
+          <StyledTab  value={0} label="Code Editor" style={{ minWidth:'25%' }}/>
+          <StyledTab  value={1} label="Browser" style={{ minWidth:'25%' }}/>
+          <StyledTab  value={2} label="Test Terminal" style={{ minWidth:'25%' }}/>
+          <StyledTab  value={3} label='User Guide' style={{ minWidth:'25%' }}/>
         </StyledTabs>
       </div>
 
