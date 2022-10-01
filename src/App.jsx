@@ -1,6 +1,10 @@
 import React, { useReducer } from 'react';
 import styles from './App.module.scss';
-import { GlobalContext, globalState, globalReducer } from './context/reducers/globalReducer';
+import {
+  GlobalContext,
+  globalState,
+  globalReducer,
+} from './context/reducers/globalReducer';
 import { toggleTheme } from './context/actions/globalActions';
 import ProjectLoader from './pages/ProjectLoader/ProjectLoader.jsx';
 import NavBar from './components/NavBar/NavBar';
@@ -9,15 +13,14 @@ import RightPanel from './pages/RightPanel/RightPanel';
 import FileDirectory from './components/FileDirectory/FileDirectory';
 import { CSSTransition } from 'react-transition-group';
 import { Switch } from '@material-ui/core';
-import sun from '../public/sun.png'
-import moon from '../public/moon.png'
+import { BiSun, BiMoon } from 'react-icons/bi';
 // import About from './pages/About/About';
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   const changeTheme = () => {
-    localStorage.setItem("theme", global.theme === 'light' ? 'dark' : 'light');
+    localStorage.setItem('theme', global.theme === 'light' ? 'dark' : 'light');
     dispatchToGlobal(toggleTheme());
   };
 
@@ -27,31 +30,43 @@ const App = () => {
         {/* pass global state and dispatch function as prop to context provider for child components */}
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
           <div id={styles.toggle}>
-            <img src={moon} />
-            <Switch checked={global.theme === 'light' ? true : false} onChange={changeTheme}/>
-            <img src={sun} />
+            <div id={styles.icon}>
+              <span title="Dark Mode">
+                <BiMoon size={'1.5rem'} />
+              </span>
+              <span title="Change theme">
+                <Switch
+                  checked={global.theme === 'light' ? true : false}
+                  onChange={changeTheme}
+                />
+              </span>
+              <span title="Light Mode">
+                <BiSun size={'1.5rem'} />
+              </span>
+            </div>
           </div>
-          <ProjectLoader/>
+          <ProjectLoader />
         </GlobalContext.Provider>
       </div>
     );
   }
   return (
-  /**
-       * Wrap the components that we want to share the unique states with.
-       * You can only provide one value to a Provider.
-       *  - In order to avoid creating separate Contexts, wrap multiples in an array (ex: testCase and dispatchToTestCase).
-       *
-       *
-       * NOTE: This concept is similar to Redux and how it provides the store to your top-level component and all of its children.
-       * We just have to create separate providers for each reducer because we don’t have a global store ala Redux.
-       *
-       *
-       * We access the value that we gave to the Provider through useContext
-       * 
-       * 01/29 There does not seem to be 'about' page functionality visible
-       */
+    /**
+     * Wrap the components that we want to share the unique states with.
+     * You can only provide one value to a Provider.
+     *  - In order to avoid creating separate Contexts, wrap multiples in an array (ex: testCase and dispatchToTestCase).
+     *
+     *
+     * NOTE: This concept is similar to Redux and how it provides the store to your top-level component and all of its children.
+     * We just have to create separate providers for each reducer because we don’t have a global store ala Redux.
+     *
+     *
+     * We access the value that we gave to the Provider through useContext
+     *
+     * 01/29 There does not seem to be 'about' page functionality visible
+     */
     <div
+      //This could/should be deleted:
       // id={
       //     global.isProjectLoaded === 'about'
       //       ? ''
@@ -66,14 +81,20 @@ const App = () => {
       id={styles.app}
     >
       <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          <NavBar inAboutPage={false} />
-          <div id={styles[`content${global.theme}`]}>
-            <CSSTransition in={global.isFileDirectoryOpen} timeout={200} classNames="my-node" unmountOnExit appear>
-              <FileDirectory fileTree={global.fileTree} />
-            </CSSTransition>
-            <LeftPanel />
-            <RightPanel />
-          </div>
+        <NavBar inAboutPage={false} />
+        <div id={styles[`content${global.theme}`]}>
+          <CSSTransition
+            in={global.isFileDirectoryOpen}
+            timeout={200}
+            classNames="my-node"
+            unmountOnExit
+            appear
+          >
+            <FileDirectory fileTree={global.fileTree} />
+          </CSSTransition>
+          <LeftPanel />
+          <RightPanel />
+        </div>
       </GlobalContext.Provider>
     </div>
   );

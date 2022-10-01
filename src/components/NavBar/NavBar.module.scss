@@ -59,6 +59,36 @@
   }
 }
 
+.modBtnContainer{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+
+  span{
+    cursor: pointer;
+    &:hover{
+      svg {
+        path {
+          fill: var(--icon-fill);
+        }
+      }
+    }
+    svg {
+      path {
+        fill: $eggshell; 
+      }
+    }
+    
+  }
+  #activeEffect {
+    svg {
+      path {
+        fill: var(--icon-fill);
+      }
+    }
+  }
+}
+
 #spearmintTitle{
   flex: 1 0 auto;
   align-self: center;
