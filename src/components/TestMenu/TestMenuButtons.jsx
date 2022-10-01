@@ -9,6 +9,7 @@ import CachedIcon from '@material-ui/icons/Cached';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const TestMenuButtons = ({
+  resetTests,
   openModal,
   fileHandle,
   openScriptModal,
@@ -22,8 +23,8 @@ const TestMenuButtons = ({
     <div id={styles[`testMenu${theme}`]}>
       <IconButton 
         variant="outlined" 
-        onClick={openModal}
-        title="Open New Test"
+        onClick={resetTests}
+        title="New Test"
       >
         <CachedIcon fontSize="large"/>
       </IconButton>
