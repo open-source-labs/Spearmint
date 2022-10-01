@@ -70,6 +70,10 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
   let endpointStatements: Array<any> = [...state.endpointStatements];
 
   switch (action.type) {
+    case actionTypes.RESET_TESTS: {
+      return {...endpointTestCaseState, 
+              endpointStatements: [{...newEndpoint, headers:[], assertions: [{...newAssertion}]}]};
+    };
     case actionTypes.ADD_ENDPOINT:
       if (endpointStatements.length === 0) {
         return {
