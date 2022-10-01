@@ -132,12 +132,6 @@ const TestFile = () => {
     endpointTestCaseState
   );
 
-    // marked for deletion
-  // const [nextjsTestCase, dispatchTonextjsTestCase] = useReducer(
-  //   nextjsTestCaseReducer,
-  //   nextjsTestCaseState
-  // );
-
 
   const [reduxTestCase, dispatchToReduxTestCase] = useReducer(
     reduxTestCaseReducer,
