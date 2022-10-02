@@ -4,7 +4,7 @@ import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest, setTheme } from '../../context/actions/globalActions';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { RiSpyLine, RiGithubFill, RiFacebookFill, RiGoogleFill } from 'react-icons/ri'
+import { RiSpyLine, RiGithubFill, RiGoogleFill } from 'react-icons/ri'
 import InputTextField from '../../components/InputTextField';
 
 const { ipcRenderer } = require('electron');
@@ -58,7 +58,7 @@ function ProjectLoader() {
       return;
     }
 
-    handleLogout();
+    // handleLogout();
     fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
@@ -193,12 +193,16 @@ function ProjectLoader() {
       .then((res) => res.json())
       .then((data) => {
         setMessage(data);
-      })
+      }).then(setIsLoggedIn(true))
       .catch((err) => console.log(err));
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setError(false);
+    setMessage('');
+    setUsername('');
+    setPassword('');
     fetch('http://localhost:3001/logout')
       .then((res) => res.json())
       .catch((err) => console.log(err));
