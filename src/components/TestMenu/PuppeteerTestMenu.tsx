@@ -16,6 +16,7 @@ import Modal from '../Modals/Modal';
 import {
   addPuppeteerPaintTiming,
   createNewPuppeteerTest,
+  deletePuppeteerTest,
 } from '../../context/actions/puppeteerTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
@@ -93,11 +94,18 @@ const PuppeteerTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    //dispatchToPuppeteerTestCase(resetTests());
+    dispatchToPuppeteerTestCase(deletePuppeteerTest(0));
+    dispatchToPuppeteerTestCase(createNewPuppeteerTest());
+
+  }
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
 
   return (
     <>
-      <TestMenuButtons 
+      <TestMenuButtons
+        resetTests={handleResetTests} 
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
