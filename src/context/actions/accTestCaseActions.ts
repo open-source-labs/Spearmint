@@ -22,6 +22,7 @@ export const actionTypes = {
   CREATE_PUPPETEER_URL: 'CREATE_PUPPETEER_URL',
 
   REPLACE_TEST: 'REPLACE_TEST',
+  RESET_TESTS: 'RESET_TESTS',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -113,3 +114,7 @@ export const accReplaceTest = (testState: object) => ({
   type: actionTypes.REPLACE_TEST,
   testState,
 });
+
+export const resetTests = () => ({
+  type: actionTypes.RESET_TESTS
+})
