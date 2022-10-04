@@ -3,41 +3,42 @@
 @import 'assets/stylesheets/fonts';
 @import 'assets/stylesheets/colors';
 
-//file directory is open but right panel is closed
-#fileDirectoryOpenRightPanelClosed {
-  display: grid;
-  grid-template-columns: 280px auto;
-  grid-template-rows: 100vh;
-  grid-template-areas: 'navBar leftPanel';
-  background-color: $light-gray3;
-}
+//Unnecessary/Not Used:
+// //file directory is open but right panel is closed
+// #fileDirectoryOpenRightPanelClosed {
+//   display: grid;
+//   grid-template-columns: 280px auto;
+//   grid-template-rows: 100vh;
+//   grid-template-areas: 'navBar leftPanel';
+//   background-color: $light-gray3;
+// }
 
-//both open 
-#fileDirectoryOpenRightPanelOpen {
-  display: grid;
-  grid-template-columns: 280px auto 30%;
-  grid-template-rows: 100vh;
-  grid-template-areas: 'navBar leftPanel rightPanel';
-  background-color: $eggshell;
-}
+// //both open 
+// #fileDirectoryOpenRightPanelOpen {
+//   display: grid;
+//   grid-template-columns: 280px auto 30%;
+//   grid-template-rows: 100vh;
+//   grid-template-areas: 'navBar leftPanel rightPanel';
+//   background-color: $eggshell;
+// }
 
-//file directory is closed but right panel is open
-#fileDirectoryClosedRightPanelOpen {
-  display: grid;
-  grid-template-columns: 48px auto 30%;
-  grid-template-rows: 100vh;
-  grid-template-areas: 'navBar leftPanel rightPanel';
-  background-color: $eggshell;
-}
+// //file directory is closed but right panel is open
+// #fileDirectoryClosedRightPanelOpen {
+//   display: grid;
+//   grid-template-columns: 48px auto 30%;
+//   grid-template-rows: 100vh;
+//   grid-template-areas: 'navBar leftPanel rightPanel';
+//   background-color: $eggshell;
+// }
 
-//both closed
-#fileDirectoryClosedRightPanelClosed {
-  display: grid;
-  grid-template-columns: 48px auto;
-  grid-template-rows: 100vh;
-  grid-template-areas: 'navBar leftPanel';
-  background-color: $light-gray3;
-}
+// //both closed
+// #fileDirectoryClosedRightPanelClosed {
+//   display: grid;
+//   grid-template-columns: 48px auto;
+//   grid-template-rows: 100vh;
+//   grid-template-areas: 'navBar leftPanel';
+//   background-color: $light-gray3;
+// }
 
 #app{
   width: 100%;
@@ -95,4 +96,34 @@
   top: 10px;
   right: 10px;
   z-index: 3000;
+}
+
+#icon {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+
+  span{
+    cursor: pointer;
+    &:hover{
+      svg {
+        path {
+          fill: var(--icon-fill);
+        }
+      }
+    }
+    svg {
+      path {
+        fill: $eggshell; 
+      }
+    }
+    
+  }
+  #activeEffect {
+    svg {
+      path {
+        fill: var(--icon-fill);
+      }
+    }
+  }
 }
