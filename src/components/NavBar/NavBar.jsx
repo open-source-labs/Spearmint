@@ -16,8 +16,9 @@ import OpenFolder from '../OpenFolder/OpenFolderButton';
 import ExportFileModal from '../Modals/ExportFileModal';
 import Modal from '../Modals/Modal';
 import { VscSettingsGear } from 'react-icons/vsc'
-import { FaFileExport, FaUserCircle } from 'react-icons/fa'
-import { GoFileSubmodule } from 'react-icons/go'
+import { FaFileExport, FaUserCircle } from 'react-icons/fa';
+import { BiSun, BiMoon } from 'react-icons/bi';
+import { GoFileSubmodule } from 'react-icons/go';
 import { ImHome3 } from "react-icons/im"
 import { Switch } from '@material-ui/core';
 import { useToggleModal } from '../TestMenu/testMenuHooks';
@@ -101,9 +102,17 @@ const NavBar = ({ inAboutPage }) => {
         <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
           LOGOUT
         </Button>
-        <span title='Change theme'>
-          <Switch checked={theme === 'light' ? true : false} onChange={changeTheme}/>
-        </span>
+        <div className={styles.modBtnContainer}>
+            <span title='Dark Mode'>
+              <BiMoon size={'1.5rem'} />
+            </span>
+            <span title='Change theme'>
+              <Switch checked={theme === 'light' ? true : false} onChange={changeTheme}/>
+            </span>
+            <span title='Light Mode'>
+              <BiSun size={'1.5rem'} />
+            </span>
+        </div>
       </div>
       <div>
         <Modal
