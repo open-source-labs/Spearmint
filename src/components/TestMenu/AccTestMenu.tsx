@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs, setTabIndex } from '../../context/actions/globalActions';
-import { addDescribeBlock, createNewTest } from '../../context/actions/accTestCaseActions';
+import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/accTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import {
@@ -83,11 +83,15 @@ const AccTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToAccTestCase(resetTests());
+  }
   if (!file && exportBool) {dispatchToGlobal(updateFile(generateTest(accTestCase)))};
  
   return (
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}

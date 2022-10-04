@@ -96,6 +96,11 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
   let hooksStatements = [...state.hooksStatements];
 
   switch (action.type) {
+    
+    case 'RESET_TESTS': {
+      return hooksTestCaseState;
+    }
+  
     case 'UPDATE_HOOKS_TEST_STATEMENT': {
       return {
         ...state,

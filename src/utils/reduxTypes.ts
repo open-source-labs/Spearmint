@@ -23,6 +23,7 @@ export const actionTypes = {
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
   REPLACE_TEST: 'REPLACE_TEST',
+  RESET_TESTS: 'RESET_TESTS'
 };
 
 interface ToggleReduxAction {
@@ -127,6 +128,11 @@ interface UpdateMiddlewaresFilePathAction {
 
 interface CreateNewReduxTestAction {
   type: typeof actionTypes.CREATE_NEW_REDUX_TEST;
+  payload?: null;
+}
+
+interface ResetTestAction {
+  type: typeof actionTypes.RESET_TESTS;
   payload?: null;
 }
 
@@ -306,3 +312,4 @@ export type ReduxActionTypes =
   | UpdateReducerFilePathAction
   | UpdateMiddlewaresFilePathAction
   | CreateNewReduxTestAction
+  | ResetTestAction

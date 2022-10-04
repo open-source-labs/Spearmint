@@ -49,6 +49,7 @@ const SecTestMenu = () => {
             Need Help?
           </button> */}
           <TestMenuButtons 
+            resetTests={openModal}
             openModal={openModal}
             fileHandle={null}
             openScriptModal={null}

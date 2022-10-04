@@ -32,6 +32,7 @@ export const actionTypes = {
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
   REPLACE_TEST: 'REPLACE_TEST',
+  RESET_TESTS: 'RESET_TESTS'
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -214,3 +215,7 @@ export const vueReplaceTest = (testState) => ({
   type: actionTypes.REPLACE_TEST,
   testState,
 });
+
+export const resetTests = () => ({
+  type: actionTypes.RESET_TESTS
+})

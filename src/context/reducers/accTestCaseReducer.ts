@@ -70,6 +70,7 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
   }
 
   switch (action.type) {
+    case actionTypes.RESET_TESTS: return accTestCaseState;
     case actionTypes.ADD_DESCRIBE_BLOCK: {
       let updatedDescribeId = state.describeId;
       const describeId = `describe${state.describeId}`;

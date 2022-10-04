@@ -12,7 +12,7 @@ import {
   setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
-import { addHookUpdates, createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
+import { addHookUpdates, createNewHooksTest, resetTests } from '../../context/actions/hooksTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
@@ -90,6 +90,10 @@ const HooksTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToHooksTestCase(resetTests());
+  };
+
   if (exportBool) {
     const valid = validateInputs('hooks', hooksStatements);
     dispatchToGlobal(setValidCode(valid));
@@ -106,6 +110,7 @@ const HooksTestMenu = () => {
 
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
