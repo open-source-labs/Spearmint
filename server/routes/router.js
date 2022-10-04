@@ -22,7 +22,7 @@ router.post(
   userController.signup,
   // Anonymous middleware to send back valid response
   (req, res) => {
-    res.status(200).json('Sign Up Successful');
+    res.sendStatus(200)
   }
 );
 

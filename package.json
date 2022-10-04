@@ -119,7 +119,6 @@
     "node-fetch": "^3.2.0",
     "node-pty": "^0.10.1",
     "passport": "^0.5.2",
-    "passport-facebook": "^3.0.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
     "react": "^17.0.2",
@@ -138,8 +137,7 @@
     "webpack": "^5.50.0",
     "webpack-cli": "^4.7.2",
     "xterm": "^4.15.0",
-    "xterm-addon-fit": "^0.5.0",
-    "xterm-for-react": "^1.0.4"
+    "xterm-addon-fit": "^0.5.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.15.0",
