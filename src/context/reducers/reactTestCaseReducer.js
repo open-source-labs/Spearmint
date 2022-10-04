@@ -144,6 +144,9 @@ export const reactTestCaseReducer = (state, action) => {
   }
 
   switch (action.type) {
+    case actionTypes.RESET_TESTS: {
+      return reactTestCaseState;
+      };
     case actionTypes.ADD_DESCRIBE_BLOCK: {
       let updatedDescribeId = state.describeId;
       const describeId = `describe${state.describeId}`;

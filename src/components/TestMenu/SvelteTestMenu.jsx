@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import { addDescribeBlock, createNewTest } from '../../context/actions/frontendFrameworkTestCaseActions';
+import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/frontendFrameworkTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -20,6 +20,7 @@ import { SvelteTestCaseContext } from '../../context/reducers/svelteTestCaseRedu
 import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
+import { clearMockData } from '../../context/actions/mockDataActions';
 const { ipcRenderer } = require('electron');
 
 // imports were declared in previous iterations, but were never used
@@ -87,11 +88,17 @@ const SvelteTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToSvelteTestCase(resetTests());
+    dispatchToMockData(clearMockData());
+  }
+
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(SvelteTestCase, mockData)));
 
   return (
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}

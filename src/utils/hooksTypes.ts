@@ -47,7 +47,8 @@ export type HooksAction =
         | 'CREATE_NEW_HOOKS_TEST'
         | 'OPEN_INFO_MODAL'
         | 'CLOSE_INFO_MODAL'
-        | 'REPLACE_TEST';
+        | 'REPLACE_TEST'
+        | 'RESET_TESTS';
     }
   | { type: 'UPDATE_HOOKS_TEST_STATEMENT'; hooksTestStatement: string }
   | { type: 'DELETE_CONTEXT' | 'DELETE_HOOK_UPDATES' | 'TOGGLE_TYPEOF' | 'ADD_CALLBACKFUNC'; id: number }

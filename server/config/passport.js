@@ -1,9 +1,7 @@
 const GitHubStrategy = require('passport-github2').Strategy;
-const FacebookStrategy = require('passport-facebook').Strategy;
-// var FacebookStrategy = require('passport-facebook')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passport = require('passport');
-const { User, GithubUser, FacebookUser, GoogleUser } = require('../models/userModel.js');
+const { User, GithubUser, GoogleUser } = require('../models/userModel.js');
 
 module.exports = function (passport) {
   passport.use(
@@ -28,43 +26,6 @@ module.exports = function (passport) {
             new GithubUser({
               githubId: profile.id,
               username: profile.displayName,
-            })
-              .save()
-              .then((newUser) => {
-                console.log('created new user: ', newUser);
-                //   res.locals.userId = newUser._id
-                done(null, newUser);
-              });
-          } else if (err) {
-            console.log(err);
-          }
-        });
-      }
-    )
-  );
-
-  passport.use(
-    new FacebookStrategy(
-      {
-        clientID: '3128695707446412',
-        clientSecret: 'a1603893d7e61e618237e8bcad03ac68',
-        callbackURL: 'http://localhost:3001/oauth2/redirect/facebook',
-      },
-
-      (accessToken, refreshToken, profile, done) => {
-        console.log('this is our accessToken:', accessToken);
-        // we are checking if the facebook profile is in our monogDB
-        FacebookUser.findOne({ facebookId: profile.id }, (err, result) => {
-          if (result) {
-            // already have this user
-            console.log('user is: ', result);
-            console.log('facebook profile id was: ', profile.id);
-            // res.locals.userId = result._id
-            done(null, result);
-          } else if (!result) {
-            // if not, create user in our db
-            new FacebookUser({
-              facebookId: profile.id,
             })
               .save()
               .then((newUser) => {

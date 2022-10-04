@@ -17,6 +17,7 @@ import {
   addActionCreator,
   addMiddleware,
   createNewReduxTest,
+  resetTests
 } from '../../context/actions/reduxTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
@@ -100,10 +101,13 @@ const ReduxTestMenu = () => {
     }
   }
 
-
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
+
+  const handleResetTests = () => {
+    dispatchToReduxTestCase(resetTests())
+  } 
 
   if (!file && exportBool)
     dispatchToGlobal(updateFile(generateTest({ reduxTestStatement, reduxStatements })));
@@ -111,6 +115,7 @@ const ReduxTestMenu = () => {
   return (
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}

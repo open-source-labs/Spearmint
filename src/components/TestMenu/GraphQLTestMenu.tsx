@@ -18,6 +18,7 @@ import {
   createNewGraphQLTest,
   toggleDB,
   updateDBFilePath,
+  resetTests,
 } from '../../context/actions/graphQLTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { GraphQLTestCaseContext } from '../../context/reducers/graphQLTestCaseReducer';
@@ -98,6 +99,9 @@ const GraphQLTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToGraphQLTestCase(resetTests());
+  }
   if (exportBool) {
     const valid = validateInputs('graphQL', graphQLTestCase);
     dispatchToGlobal(setValidCode(valid));
@@ -108,7 +112,8 @@ const GraphQLTestMenu = () => {
 
   return (
     <>
-      <TestMenuButtons 
+      <TestMenuButtons
+        resetTests={handleResetTests} 
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}

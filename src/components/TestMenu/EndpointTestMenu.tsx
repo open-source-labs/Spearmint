@@ -18,6 +18,7 @@ import {
   createNewEndpointTest,
   toggleDB,
   updateDBFilePath,
+  resetTests
 } from '../../context/actions/endpointTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
@@ -98,6 +99,10 @@ const EndpointTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToEndpointTestCase(resetTests());
+  }
+  
   if (exportBool) {
     const valid = validateInputs('endpoint', endpointTestCase);
     dispatchToGlobal(setValidCode(valid));
@@ -109,6 +114,7 @@ const EndpointTestMenu = () => {
   return (
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
