@@ -1,8 +1,12 @@
 import React, { useState, useContext } from 'react';
 import styles from './UserGuideView.module.scss';
 import Instructions from './Instructions';
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const { ipcRenderer } = require('electron');
+
+// TO DO TUESDAY
+// find way to pass test type and test/title to pass to Instructions
 
 const UserGuideView = () => {
 // which props or hooks need to be passed in, in order to :
@@ -18,7 +22,14 @@ const UserGuideView = () => {
       <p>Check here for instructions and video tutorials.</p>
       <br/>
       <br/>
-      <Instructions/>
+      <Instructions
+      title={title}
+      dispatchToMockData={null}
+      dispatchTestCase={dispatchToAccTestCase}
+      createTest={createNewTest}
+      testType={accTestCase.testType}
+      puppeteerUrl={accTestCase.puppeteerUrl}
+      />
     </div>
   );
 }

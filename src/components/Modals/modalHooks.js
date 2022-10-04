@@ -36,6 +36,7 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 }
 
 export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
+  console.log('test', test, 'testType', testType);
   const [{ projectFilePath }] = useContext(GlobalContext);
   switch (test) {
     case 'solid': 
@@ -65,7 +66,7 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
       return 'error';
     case 'react':
       return {
-        cd: `cd ${projectFilePath}`,
+        cd: `TEST cd ${projectFilePath}`,
         install: `npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest`,
       };
     case 'redux':

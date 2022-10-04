@@ -13,7 +13,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import Draggable from 'react-draggable';
-import { VscNewFile } from "react-icons/vsc"
+import { VscNewFile } from "react-icons/vsc";
 import { Button, TextField } from '@material-ui/core';
 import InputTextField from '../InputTextField';
 
@@ -47,12 +47,14 @@ const Instructions = ({
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
+    console.log(script.cd);
   };
 
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}${execute}`);
     setBtnFeedback({ ...btnFeedback, installed: true });
     dispatchToGlobal(setTabIndex(2));
+    console.log(script.install);
   };
 
   const submitFileName = () => {
