@@ -47,14 +47,12 @@ const Instructions = ({
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
-    console.log('testCase ->', testCase);
   };
 
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}${execute}`);
     setBtnFeedback({ ...btnFeedback, installed: true });
     dispatchToGlobal(setTabIndex(2));
-    console.log(script.install);
   };
 
   const submitFileName = () => {

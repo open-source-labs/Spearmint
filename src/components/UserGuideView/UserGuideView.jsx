@@ -12,7 +12,6 @@ const UserGuideView = () => {
   // TO DO 
 // conditionally change background color depending on light/dark mode
 const [{ theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
-console.log('theme', theme);
 
   return (
     <div id={styles[`userGuide${theme}`]}>

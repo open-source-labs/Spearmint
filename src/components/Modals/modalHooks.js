@@ -36,7 +36,6 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 }
 
 export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
-  console.log('test', test, 'testType', testType);
   const [{ projectFilePath }] = useContext(GlobalContext);
   switch (test) {
     case 'solid': 
