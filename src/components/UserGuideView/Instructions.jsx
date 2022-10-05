@@ -36,7 +36,7 @@ const Instructions = ({
   const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{ isFileDirectoryOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen, theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
 
   // Change execute command based on os platform
   let execute = '\n';
@@ -47,7 +47,7 @@ const Instructions = ({
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
-    console.log(script.cd);
+    console.log('testCase ->', testCase);
   };
 
   const installDependencies = () => {

@@ -66,7 +66,7 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
       return 'error';
     case 'react':
       return {
-        cd: `TEST cd ${projectFilePath}`,
+        cd: `cd ${projectFilePath}`,
         install: `npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest`,
       };
     case 'redux':
