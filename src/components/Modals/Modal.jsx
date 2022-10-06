@@ -4,6 +4,7 @@
  */
 
 // NOTES FOR THURSDAY: figure out how to export test files from instructions accordion, finish styling
+// do we need the specify file name in the instructions? does it even work? there's no save button, where does that go??
 
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
