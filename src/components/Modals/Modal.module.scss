@@ -117,6 +117,24 @@
 
 #runTestButtons {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+
+  button {
+    background-color: $salmon;
+    color: white;
+
+    span {
+      width: 100%;
+    }
+  }
+}
+
+#exportFileButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   gap: 10px;
 
   button {

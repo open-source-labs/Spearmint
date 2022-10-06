@@ -2,6 +2,7 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
+
 #userGuide{
   * {
     transition: color 0.0s !important;
@@ -9,34 +10,16 @@
 }
 
 #userGuidelight {
-  // position: fixed;
-  // top: 0;
-  // left: 0;
-  // right: 0;
-  // bottom: 0;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // z-index: 10000;
-  background-color: #{$eggshell-opaque};
+  background-color: white !important;
   --container-bg: #{$mint};
-  --container-border: #{$darkslategrey};
-  --accordion-bg: #{$mint3};
-  --accordion-details-bg: #{$mint2};
+  --container-border: #{$eggshell-opaque};
+  --accordion-bg: #24A19C;
+  --accordion-details-bg: white;
   --accordion-color: black;
 }
 
 #userGuidedark {
-  // position: fixed;
-  // top: 0;
-  // left: 0;
-  // right: 0;
-  // bottom: 0;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-  // z-index: 10000;
-  background-color: #{$chromegray-opaque};
+  background-color: #{$chromegray-opaque} !important;
   --container-bg: #{$darkslategrey};
   --container-border: #{$mint};
   --accordion-bg: #{$chromegray};
