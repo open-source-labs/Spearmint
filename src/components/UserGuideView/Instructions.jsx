@@ -11,11 +11,8 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { GlobalContext } from '../../context/reducers/globalReducer';
-import Draggable from 'react-draggable';
-import { VscNewFile } from "react-icons/vsc";
-import { Button, TextField } from '@material-ui/core';
-import InputTextField from '../InputTextField';
+import { GlobalContext } from '../../context/reducers/globalReducer';;
+import { Button } from '@material-ui/core';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -28,15 +25,15 @@ const Instructions = ({
   testType = null,
   puppeteerUrl = 'sample.io',
 }) => {
-  const { handleNewTest } = useNewTest(
-    dispatchToMockData,
-    dispatchTestCase,
-    createTest,
-  );
-  const [fileName, setFileName] = useState('');
+  // const { handleNewTest } = useNewTest(
+  //   dispatchToMockData,
+  //   dispatchTestCase,
+  //   createTest,
+  // );
+  // const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{ isFileDirectoryOpen, theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
+  // const [{ isFileDirectoryOpen, theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
 
   // Change execute command based on os platform
   let execute = '\n';

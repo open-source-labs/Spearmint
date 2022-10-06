@@ -14,13 +14,12 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import cn from 'classnames';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import Draggable from 'react-draggable';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { VscNewFile } from "react-icons/vsc"
-import { Button, TextField } from '@material-ui/core';
-import InputTextField from '../InputTextField';
+import { Button } from '@material-ui/core';
+
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
