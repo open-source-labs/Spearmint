@@ -2,6 +2,15 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
+.instructions{
+  font-family: $openSans;
+}
+
+#instructionsDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 #userGuide{
   * {
@@ -20,6 +29,7 @@
 
 #userGuidedark {
   background-color: #{$chromegray-opaque} !important;
+  color: white;
   --container-bg: #{$darkslategrey};
   --container-border: #{$mint};
   --accordion-bg: #{$chromegray};

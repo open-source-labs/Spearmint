@@ -14,9 +14,15 @@ const UserGuideView = () => {
 const [{ theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
 
   return (
-    <div id={styles[`userGuide${theme}`]}>
-      <h1>User Guide</h1>
-      <p>Check here for instructions and video tutorials.</p>
+    <div 
+      id={styles[`userGuide${theme}`]}
+      className={styles.instructions}
+      >
+      <div id={styles.instructionsDiv}>
+        <br />
+        <br />
+        <p>CONDITIONALLY RENDERED VIDEO WILL GO HERE</p>
+      </div>
       <br/>
       <br/>
       <Instructions

@@ -40,10 +40,9 @@ const StyledTab = withStyles((theme) => ({
 }))((props) => <Tab {...props} />);
 
 const RightPanel = () => {
-  const [{ rightPanelDisplay, url, tabIndex }, dispatchToGlobal] = useContext(GlobalContext);
-
+  const [{ rightPanelDisplay, url, tabIndex, theme }, dispatchToGlobal] = useContext(GlobalContext);
   return (
-    <div id={styles.rightPanel}>
+    <div id={styles[`rightPanel${theme}`]}>
       <div id={styles.tabsContainer}>
         <StyledTabs 
           id={styles.tabsBox}

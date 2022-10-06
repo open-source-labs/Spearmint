@@ -3,8 +3,6 @@
  * which render on the top Test Menu component.
  */
 
-// NOTES FOR THURSDAY: figure out how to export test files from instructions accordion, finish styling
-// do we need the specify file name in the instructions? does it even work? there's no save button, where does that go??
 
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
@@ -46,15 +44,8 @@ const Modal = ({
   const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{ isFileDirectoryOpen, theme, toggleExportBool }, dispatchToGlobal] = useContext(GlobalContext);
-  // should I simulate the model being open (e.g. true)?
-  // const [isExportModalOpen, setIsExportModalOpen] = useState(false);
+  const [{ isFileDirectoryOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
-  const openExportModal = () => {
-    console.log('in open export function');
-    dispatchToGlobal(toggleExportBool());
-    // setIsExportModalOpen(true);
-  };
 
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
@@ -135,10 +126,6 @@ const Modal = ({
             <div id={styles.accordionDiv}>
               <p>Please make sure you export your test file prior to running your tests. You can find the export button on the main page in the top left corner.</p>
               <br />
-              <div id={styles.exportFileButtons}>
-                <Button id={styles.save} onClick={openExportModal}>Export Test File</Button>
-              </div>
-              
             </div>
           </AccordionDetails>
         </Accordion>

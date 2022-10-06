@@ -320,23 +320,6 @@ const Instructions = ({
             </div>
           </AccordionDetails>
         </Accordion>
-        {/* Specify File to test */}
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            // id="panel1a-header"
-            id={styles.accordionSummary}
-          >
-            Specify file to test (optional)
-          </AccordionSummary>
-          <AccordionDetails id={styles.accordionDetails}>
-            {/* Select test to run */}
-            <div id={styles.accordionDiv}>
-              <InputTextField id='inputFileName' placeholder='example.test.js' variant='outlined' onChange={changeFileName}/>
-            </div>
-          </AccordionDetails>
-        </Accordion>
       </div>
   );
 };
