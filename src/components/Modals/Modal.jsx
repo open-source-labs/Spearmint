@@ -3,6 +3,7 @@
  * which render on the top Test Menu component.
  */
 
+
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './Modal.module.scss';
@@ -45,6 +46,7 @@ const Modal = ({
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
   const [{ isFileDirectoryOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
+
   const clearAndClose = () => {
     setBtnFeedback({ ...btnFeedback, changedDir: false, installed: false });
     closeModal();
@@ -54,27 +56,6 @@ const Modal = ({
   let execute = '\n';
   if (os.platform() === 'win32') {
     execute = '\r';
-  }
-
-  const changeDirectory = () => {
-    ipc.send('terminal.toTerm', `${script.cd}${execute}`);
-    setBtnFeedback({ ...btnFeedback, changedDir: true });
-  };
-
-  const installDependencies = () => {
-    ipc.send('terminal.toTerm', `${script.install}${execute}`);
-    setBtnFeedback({ ...btnFeedback, installed: true });
-    dispatchToGlobal(setTabIndex(2));
-  };
-
-  const submitFileName = () => {
-    const fileName = document.getElementById('inputFileName').value;
-    setFileName(fileName);
-  };
-
-  const changeFileName = (e) => {
-    const fileName = e.currentTarget.value;
-    setFileName(fileName);
   }
 
   const jestTest = () => {
@@ -106,228 +87,6 @@ const Modal = ({
   };
 
 
-  // Warning that tests will not be saved while transitioning between test types
-  if (title === 'New Test') {
-    return (
-      <ReactModal
-        className={styles.modal}
-        overlayClassName={styles[`modalOverlay${theme}`]}
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
-      >
-        <Draggable id={styles.testModal}>
-          <div id={styles.container}>
-            <AiOutlineCloseCircle
-              id={styles.escapeButton} 
-              onKeyPress={clearAndClose}
-              onClick={clearAndClose}
-            />              
-            <div id={styles.body}>
-              <p id={styles.text}>
-                Do you want to start a new test? All unsaved changes
-                will be lost.
-              </p>
-              <div id={styles.exportBtns}>
-                <Button 
-                  variant="contained" 
-                  onClick={handleNewTest}
-                  id={styles.saveBtn}
-                >
-                  <span>{title}</span>
-                  <VscNewFile size={'1.25rem'}/>
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  onClick={closeModal}
-                  id={styles.cancelBtn}
-                >
-                  <span>Cancel</span>
-                  <AiOutlineCloseCircle size={'1.25rem'}/>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Draggable>
-      </ReactModal>
-    );
-  }
-
-  // EndPointGuide component definition, conditionally rendered
-  const EndPointGuide = () => {
-    // endpoint guide only exists when user is in endpoint testing
-    if (script.endPointGuide) {
-      const array = [];
-      for (let step in script.endPointGuide) {
-        array.push(
-          <div id={styles.endPointGuide}>
-            {script.endPointGuide[step]}
-            {'\n'}
-          </div>
-        );
-      }
-      // return accordion element
-      return (
-        <Accordion hidden={false}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'
-            id={styles.accordionSummary}
-          >
-            Endpoint Testing Configuration Guide
-          </AccordionSummary>
-          <AccordionDetails id={styles.configGuide}>{array}</AccordionDetails>
-        </Accordion>
-      );
-    }
-    // return anything to not render accordion
-    return null;
-  };
-
-
-  // GraphQLGuide component definition, conditionally rendered
-  const GraphQLGuide = () => {
-    // graphQL guide only exists when user is in endpoint testing
-    if (script.graphQLGuide) {
-      const array = [];
-      for (let step in script.graphQLGuide) {
-        array.push(
-          <div id={styles.graphQLGuide}>
-            {script.graphQLGuide[step]}
-            {'\n'}
-          </div>
-        );
-      }
-      // return accordion element
-      return (
-        <Accordion hidden={false}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'
-            id={styles.accordionSummary}
-          >
-            GraphQL Testing Configuration Guide
-          </AccordionSummary>
-          <AccordionDetails id={styles.configGuide}>{array}</AccordionDetails>
-        </Accordion>
-      );
-    }
-    // return anything to not render accordion
-    return null;
-  };
-
-
-  // ReactDependencies component definition, conditionally rendered
-  const ReactDependencies = () => {
-    if (title === 'hooks' || title === 'react') {
-      return (
-        <Accordion hidden={false}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'
-            id={styles.accordionSummary}
-          >
-            3. Important React Babel Configuration
-          </AccordionSummary>
-          <AccordionDetails id={styles.configGuide}>
-            <div id={styles.accordionDiv}>
-              <div> Ensure that your project contains the following file: </div>
-              <pre>
-                <div className='code-wrapper'>
-                  <code>babel.config.js</code>
-                </div>
-              </pre>
-            </div>
-            <div>
-              and includes the following code:
-              <br />
-            </div>
-            <pre>
-              <div className='code-wrapper'>
-                <code>
-                  {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`}
-                </code>
-              </div>
-            </pre>
-          </AccordionDetails>
-        </Accordion>
-      );
-    } else if (title === 'solid') {
-      return (
-        <Accordion hidden={false}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'
-            id={styles.accordionSummary}
-          >
-            3. Important Solid Babel Configuration
-          </AccordionSummary>
-          <AccordionDetails id={styles.configGuide}>
-            <div id={styles.accordionDiv}>
-              <div> Ensure that your project contains the following file: </div>
-              <pre>
-                <div className='code-wrapper'>
-                  <code>babel.config.js</code>
-                </div>
-              </pre>
-            </div>
-            <div>
-              and includes the following code:
-              <br />
-            </div>
-            <pre>
-              <div className='code-wrapper'>
-                <code>
-                  {`module.exports = {"presets": ["@babel/preset-env","babel-preset-solid", "@babel/preset-typescript"]}`}
-                </code>
-              </div>
-            </pre>
-          </AccordionDetails>
-        </Accordion>
-      );
-    } else if (title === 'svelte') {
-      return (
-        <Accordion hidden={false}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'
-            id={styles.accordionSummary}
-          >
-            3. Important Svelte Babel Configuration
-          </AccordionSummary>
-          <AccordionDetails id={styles.configGuide}>
-            <div id={styles.accordionDiv}>
-              <div> Ensure that your project contains the following file: </div>
-              <pre>
-                <div className='code-wrapper'>
-                  <code>babel.config.js</code>
-                </div>
-              </pre>
-            </div>
-            <div>
-              and includes the following code:
-              <br />
-            </div>
-            <pre>
-              <div className='code-wrapper'>
-                <code>
-                  {`module.exports = {presets: [['@babel/preset-env', { targets: { node: "current" } }]]}`}
-                </code>
-              </div>
-            </pre>
-          </AccordionDetails>
-        </Accordion>
-      );
-    }
-    return null;
-  };
-
   return (
     <ReactModal
       className={styles.modal}
@@ -343,13 +102,6 @@ const Modal = ({
       {/* Modal Title */}
         <div id={styles.title}>
         <p style={{ fontSize: 20 }}>Run Tests in Terminal</p>
-        {/* <p
-          tabIndex={0}
-          onKeyPress={clearAndClose}
-          onClick={clearAndClose}
-          id={styles.escapeButton}
-          className={cn('far fa-window-close', styles.describeClose)}
-        >close</p> */}
         <AiOutlineCloseCircle
           id={styles.escapeButton} 
           onKeyPress={clearAndClose}
@@ -360,99 +112,20 @@ const Modal = ({
       
       {/* Accordion View */}
       <div>
-        {/* Configuration Guide */}
-        <EndPointGuide />
-        <GraphQLGuide />
+        {/* Export Instructions */}
+        <br />
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'
+            aria-controls="panel1a-content"
             id={styles.accordionSummary}
           >
-            Configuration Guide
+            Export Test File 
           </AccordionSummary>
           <AccordionDetails id={styles.accordionDetails}>
-            <div style={{ width: '100%' }}>
-              {/* Change Directory */}
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls='panel1a-content'
-                  id={styles.accordionSummary}
-                >
-                  1. Set terminal to root directory.
-                </AccordionSummary>
-                <AccordionDetails id={styles.accordionDetails}>
-                  <div id={styles.accordionDiv}>
-                    <pre>
-                      <div className='code-wrapper'>
-                        <code>{script.cd}</code>
-                      </div>
-                    </pre>
-                    <span id={styles.runTestButtons}>
-                      <Button id={styles.save}
-                        className='changeDirectory'
-                        onClick={changeDirectory}
-                        size="small"
-                      >
-                        Change Directory
-                      </Button>
-
-                      {btnFeedback.changedDir === false ? null : (
-                        <p>Directory has been changed to root directory.</p>
-                      )}
-
-                    </span>
-                  </div>
-                </AccordionDetails>
-              </Accordion>
-              {/* Install Dependencies */}
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls='panel1a-content'
-                  id={styles.accordionSummary}
-                >
-                  2. Install dependencies.
-                </AccordionSummary>
-                <AccordionDetails id={styles.accordionDetails}>
-                  <div id={styles.accordionDiv}>
-                    <pre>
-                      <div className='code-wrapper' id={styles.codeWrapper}>
-                        <code>{script.install}</code>
-                      </div>
-                    </pre>
-                    <span id={styles.runTestButtons}>
-                      <Button id={styles.save}
-                        onClick={installDependencies}
-                        size="small"
-                      >
-                        Install
-                      </Button>
-                    </span>
-                  </div>
-                </AccordionDetails>
-              </Accordion>
-              {/* Create config file only if title is react or hook */}
-              <ReactDependencies />
-            </div>
-          </AccordionDetails>
-        </Accordion>
-        {/* Specify File to test */}
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            // id="panel1a-header"
-            id={styles.accordionSummary}
-          >
-            Specify file to test (optional)
-          </AccordionSummary>
-          <AccordionDetails id={styles.accordionDetails}>
-            {/* Select test to run */}
             <div id={styles.accordionDiv}>
-              <InputTextField id='inputFileName' placeholder='example.test.js' variant='outlined' onChange={changeFileName}/>
+              <p>Please make sure you export your test file prior to running your tests. You can find the export button on the main page in the top left corner.</p>
+              <br />
             </div>
           </AccordionDetails>
         </Accordion>

@@ -110,7 +110,6 @@ function ProjectLoader() {
     })
       .then((res) => {
         const { url } = res;
-        console.log('handleGoogleLogin function')
         // how we trigger the Main Process in electron to show our window
         ipcRenderer.send('Google-Oauth', url);
       })
@@ -121,7 +120,6 @@ function ProjectLoader() {
 
   const setUserTheme = (theme) => {
     dispatchToGlobal(setTheme(theme));
-    console.log(theme);
   }
 
   // Listens for event from electron.jsx line 205
