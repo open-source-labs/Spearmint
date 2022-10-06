@@ -86,6 +86,54 @@ const Modal = ({
     dispatchToGlobal(setTabIndex(2));
   };
 
+// Home Button functionality  
+// Warning that tests will not be saved while transitioning between test types
+if (title === 'New Test') {
+  return (
+    <ReactModal
+      className={styles.modal}
+      overlayClassName={styles[`modalOverlay${theme}`]}
+      isOpen={isModalOpen}
+      onRequestClose={closeModal}
+      shouldCloseOnOverlayClick={true}
+      shouldCloseOnEsc={true}
+    >
+      <Draggable id={styles.testModal}>
+        <div id={styles.container}>
+          <AiOutlineCloseCircle
+            id={styles.escapeButton} 
+            onKeyPress={clearAndClose}
+            onClick={clearAndClose}
+          />              
+          <div id={styles.body}>
+            <p id={styles.text}>
+              Do you want to start a new test? All unsaved changes
+              will be lost.
+            </p>
+            <div id={styles.exportBtns}>
+              <Button 
+                variant="contained" 
+                onClick={handleNewTest}
+                id={styles.saveBtn}
+              >
+                <span>{title}</span>
+                <VscNewFile size={'1.25rem'}/>
+              </Button>
+              <Button 
+                variant="outlined" 
+                onClick={closeModal}
+                id={styles.cancelBtn}
+              >
+                <span>Cancel</span>
+                <AiOutlineCloseCircle size={'1.25rem'}/>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </Draggable>
+    </ReactModal>
+  );
+}
 
   return (
     <ReactModal
