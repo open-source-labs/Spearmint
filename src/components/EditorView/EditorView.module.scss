@@ -1,12 +1,6 @@
 @import '../../assets/stylesheets/colors.scss';
 @import '../../assets/stylesheets/fonts.scss';
 
-// #codeEditorView{
-//   display: flex;
-//   flex-direction: column;
-//   height: 100%;
-// }
-
 #codeEditor{
   * {
     transition: color 0.0s !important;
@@ -17,13 +11,13 @@
   flex: 0 0 5%;
 }
 
-#save {
-  height: 40px;
-  width: 110px;
-  color: $mint;
-  background-color: white;
-  opacity: 0.8;
-  font-family: $oxygen;
+#btn {
+  height: 38px;
+  width: 100% !important;
+  color: white;
+  background-color: #{$salmon};
+  font-family: $raleway;
+  font-weight: bold;
   font-size: 14px;
   border-radius: 5px;
   border: 0.5px $light-gray solid;
@@ -40,5 +34,5 @@
     'Apple Color Emoji', 'Segoe UI Emoji';
   line-height: 1.5;
   position: relative;
-  color: rgb(90, 90, 90);
+  color:white;
 }
