@@ -9,6 +9,7 @@
   padding: 14px 10px;
   border-radius: 2px;
   --assertion-color: #{$mint};
+  --component-color: black;
   --text-color: black;
 }
 
@@ -20,6 +21,8 @@
   border-radius: 2px;
 
   --text-color: white;
+  --component-color: #{$mint};
+  --assertion-color: white;
 }
 
 #close {
@@ -51,10 +54,10 @@
   font-size: 1rem;
   font-weight: bold;
   color: var(--assertion-color);
+}
 
-  .componentName {
-    font-family: 'Lucida Console', monospace;
-  }
+#componentName {
+  color: var(--component-color);
 }
 
 .queryLabel {
@@ -113,6 +116,7 @@
 }
 
 #tooltip {
+  color: $chromegray-less-light;
   min-width: 15em;
   padding: 0.5em 0.75em;
   box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
