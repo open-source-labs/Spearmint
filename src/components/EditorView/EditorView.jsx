@@ -8,31 +8,26 @@ import styles from './EditorView.module.scss';
 
 const { ipcRenderer } = require('electron');
 
+// this file is using codemirror to display the code editor
+// also saves changes when they are manually typed into the editor
 
 const Editor = () => {
   const [{ file, filePath, theme }, dispatchToGlobal] = useContext(GlobalContext);
   const [wasSaved, setWasSaved] = useState('');
+  const [buttonText, setButtonText] = useState('Save Changes');
   let editedText = '';
 
-  // const options = {
-  //   selectOnLineNumbers: true,
-  //   wordWrap: 'wordWrapColumn',
-  //   wordWrapColumn: 90,
-  //   autoIndent: true,
-  //   colorDecorators: true,
-  //   wrappingIndent: 'indent',
-  //   automaticLayout: true,
-  //   codeLens: true,
-  //   // Added specific fontfamily and fontsize to address Windows curson misalignment issue
-  //   fontFamily: 'courier new',
-  //   fontSize: 12,
-  // };
 
-  // const editorDidMount = () => {
-  //   editor.setTheme('light-dark');
-  // };
+  // to change then reset the text of a button after a click
+  function handleClick(){
+    setButtonText('Saved!')
+    setTimeout(function (){
+      setButtonText('Save Changes')
+    }, 1500)
+  }
 
-  const updatafile = (newValue, e) => {
+  const updateAfile = (newValue, e) => {
+    console.log(newValue);
     editedText = newValue;
     if (wasSaved.length) setWasSaved('');
   };
@@ -49,6 +44,7 @@ const Editor = () => {
     }
   };
 
+// docs --> https://www.npmjs.com/package/@uiw/react-codemirror
   const fileType = filePath.split('.')[1];
   const extensionChecker = {
     png: 1,
@@ -56,7 +52,9 @@ const Editor = () => {
     gif: 1,
   };
 
+
   return (
+    <div>
     <div id={styles.codeEditor} onClick={() => setWasSaved('')}>
       <CodeMirror
         value={
@@ -66,18 +64,22 @@ const Editor = () => {
               : file
             : '// Open a file or click preview to view your code.'
         }
-        height="100%"        
+        height="95%"        
         extensions={[javascript({ jsx: true })]}
-        onChange={updatafile}
+        onChange={updateAfile}
         theme={theme}
       />
     </div>
-      // {/* <div id={styles.saveBox}>
-      //   <button type="button" id={styles.save} onClick={saveFile}>
-      //     Save Changes
-      //   </button>
-      //   <span id={styles.span}>{wasSaved}</span>
-      // </div> */}
+      <div>
+      <button type="button" id={styles.btn} onClick={() => {
+          saveFile();
+          handleClick();
+          }}>
+        {buttonText}
+      </button>
+      <span id={styles.span}>{wasSaved}</span>
+    </div>
+    </div>
   );
 };
 
