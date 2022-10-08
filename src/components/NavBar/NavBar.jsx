@@ -40,7 +40,7 @@ const NavBar = ({ inAboutPage }) => {
     reactTestCaseReducer,
     reactTestCaseState
   );
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('New Test');
+  const { title, isModalOpen, openModal, openScriptModal, setIsModalOpen } = useToggleModal('New Test');
   
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   // we might have to export the context from ProjectLoader.jsx and then userContext(LoginContext) here to read in and set isLoggedIn from the login component
@@ -118,7 +118,7 @@ const NavBar = ({ inAboutPage }) => {
         <Modal
         title={title}
         isModalOpen={isModalOpen}
-        closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchMockData={dispatchToMockData}
         dispatchTestCase={dispatchToReactTestCase}
         createTest={createNewTest}
