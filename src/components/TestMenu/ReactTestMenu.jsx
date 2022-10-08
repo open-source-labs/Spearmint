@@ -31,7 +31,7 @@ const ReactTestMenu = () => {
   // React testing docs url
   const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
 
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('react');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('react');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [reactTestCase, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
@@ -107,6 +107,7 @@ const ReactTestMenu = () => {
       <Modal
         title={title}
         isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
         closeModal={closeModal}
         dispatchMockData={dispatchToMockData}
         dispatchTestCase={dispatchToReactTestCase}
