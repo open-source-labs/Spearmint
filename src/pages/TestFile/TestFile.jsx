@@ -258,7 +258,7 @@ const TestFile = () => {
   return (
     // landing modal which displays button choices
     <div>
-      <ReactModal
+      {/* <ReactModal
         className={styles.modal}
         isOpen={isTestModalOpen}
         onRequestClose={closeTestModal}
@@ -285,7 +285,7 @@ const TestFile = () => {
             </div>
           </div>
         </Draggable>
-      </ReactModal>
+      </ReactModal> */}
       
       {/* instantiate context for each test option */}
       {testCase === 'redux' && (
