@@ -25,12 +25,12 @@ const Instructions = ({
   testType = null,
   puppeteerUrl = 'sample.io',
 }) => {
-  // const { handleNewTest } = useNewTest(
-  //   dispatchToMockData,
-  //   dispatchTestCase,
-  //   createTest,
-  // );
-  // const [fileName, setFileName] = useState('');
+  const { handleNewTest } = useNewTest(
+    dispatchToMockData,
+    dispatchTestCase,
+    createTest,
+  );
+  const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
   // const [{ isFileDirectoryOpen, theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);

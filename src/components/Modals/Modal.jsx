@@ -7,7 +7,7 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import styles from './Modal.module.scss';
-import { useNewTest, useGenerateScript } from './modalHooks';
+import { useNewTest } from './modalHooks';
 import { 
   setTabIndex,
   setFilePathMap,
@@ -30,7 +30,6 @@ import { VscNewFile } from "react-icons/vsc"
 import { Button, TextField, InputAdornment } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { FaFileExport } from "react-icons/fa";
-import { useToggleModal } from '../TestMenu/ReactTestMenu';
 
 // const ipc = require('electron').ipcRenderer;
 const { ipcRenderer } = require('electron');
@@ -68,10 +67,22 @@ const Modal = ({
   testType = null,
   puppeteerUrl = 'sample.io'
 }) => {
+  // /* cancel export file (when false) */
+  const closeModal = () => {
+    setIsModalOpen(false); 
+    
+    // reset fileName and invalidFileName
+    setInvalidFileName(false);
+    setFileName('');
+    dispatchToGlobal(toggleExportBool());
+    dispatchToGlobal(updateFile(''));
+  };
+
   const { handleNewTest } = useNewTest(
     dispatchToMockData,
     dispatchTestCase,
-    createTest
+    createTest,
+    closeModal
   );
   const [fileName, setFileName] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
@@ -82,17 +93,6 @@ const Modal = ({
   const handleChangeFileName = (e) => {
     setFileName(e.target.value);
     setInvalidFileName(false);
-  };
-
-  // /* cancel export file (when false) */
-  const closeModal = () => {
-    setIsModalOpen(false); 
-    
-    // reset fileName and invalidFileName
-    setInvalidFileName(false);
-    setFileName('');
-    dispatchToGlobal(toggleExportBool());
-    dispatchToGlobal(updateFile(''));
   };
 
   const handleClickSave = () => {

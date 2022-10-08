@@ -38,7 +38,7 @@ const ReactTestMenu = () => {
     useContext(GlobalContext);
   const generateTest = useGenerateTest('react', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-  const [userSavedTest, setUserSavedTest] = useState(false)
+  const [userSavedTest, setUserSavedTest] = useState(false);
 
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
