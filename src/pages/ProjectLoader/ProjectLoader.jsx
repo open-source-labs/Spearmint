@@ -167,10 +167,13 @@ function ProjectLoader() {
         password,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data);
-      }).then(setIsLoggedIn(true))
+      .then((res) => {
+        if (res.status === 200) setIsLoggedIn(true);
+        if (res.status === 400) {
+          setError(true);
+          setMessage('Username already exists. Please pick another one.')
+        };
+      })
       .catch((err) => console.log(err));
   };
 
