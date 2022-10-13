@@ -106,10 +106,11 @@ const NextJSTestMenu = () => {
         dispatchTestCase={dispatchToNextJSTestCase}
         createTest={createNewTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
       
 

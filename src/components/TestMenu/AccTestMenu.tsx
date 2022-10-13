@@ -61,7 +61,7 @@ const AccTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    const updatedData = fileHandle();
+    const updatedData = fileHandle();9
     
     // store the file path of the new saved test file
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
@@ -108,10 +108,11 @@ const AccTestMenu = () => {
         testType={accTestCase.testType}
         puppeteerUrl={accTestCase.puppeteerUrl}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-        />
+        /> */}
     
            {/* <UploadTest testType="acc" />
          <GetTests testType="acc" /> */}

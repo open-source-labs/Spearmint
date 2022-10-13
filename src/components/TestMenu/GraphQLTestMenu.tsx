@@ -129,10 +129,11 @@ const GraphQLTestMenu = () => {
         dispatchTestCase={title === 'New Test' ? dispatchToGraphQLTestCase : null}
         createTest={title === 'New Test' ? createNewGraphQLTest : null}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
           {/* <UploadTest testType="endpoint test" />
           <GetTests testType="endpoint test" /> */}
 

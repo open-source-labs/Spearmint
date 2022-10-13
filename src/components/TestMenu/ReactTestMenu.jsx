@@ -63,20 +63,20 @@ const ReactTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
+    console.log('in saveTest in ReactTestMenu')
     const valid = validateInputs('react', reactTestCase);
     dispatchToGlobal(setValidCode(valid));
-
+    console.log('valid', valid)
     
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
     const updatedData = fileHandle();
-
+    console.log('newFilePath', newFilePath)
     // check to see if user has saved test before. If not, then open ExportFileModal
     if(!newFilePath.includes('test.js') || !userSavedTest){
       dispatchToGlobal(toggleExportBool())
       setIsExportModalOpen(true)
       setUserSavedTest(true)
     }
-
 
     // if user already has a saved test file, rewrite the file with the updated data
     if(newFilePath.includes('test.js') && userSavedTest){
@@ -113,13 +113,14 @@ const ReactTestMenu = () => {
         dispatchTestCase={dispatchToReactTestCase}
         createTest={createNewTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
       
-
+      // can this be deleted?
     //     <div
     //       id={styles.right}
     //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}

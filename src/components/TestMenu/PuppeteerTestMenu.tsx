@@ -121,10 +121,11 @@ const PuppeteerTestMenu = () => {
         dispatchTestCase={dispatchToPuppeteerTestCase}
         createTest={createNewPuppeteerTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
     //       {/* <UploadTest testType="puppeteer" />
     //       <GetTests testType="puppeteer" /> */}

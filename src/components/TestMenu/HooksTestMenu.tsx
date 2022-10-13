@@ -126,10 +126,11 @@ const HooksTestMenu = () => {
         dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
         createTest={title === 'New Test' ? createNewHooksTest : null}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-        />
+        /> */}
 
         {/* <UploadTest testType="hooks" />
         <GetTests testType="hooks" /> */}

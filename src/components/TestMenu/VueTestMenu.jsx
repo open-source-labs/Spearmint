@@ -116,10 +116,11 @@ const VueTestMenu = () => {
         dispatchTestCase={dispatchToVueTestCase}
         createTest={createNewTest}
       />
-          <ExportFileModal
-            isExportModalOpen={isExportModalOpen}
-            setIsExportModalOpen={setIsExportModalOpen}
-          />
+      {/* marked for deletion */}
+      {/* <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+      /> */}
     </>
           
          

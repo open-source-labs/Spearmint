@@ -113,10 +113,11 @@ const SvelteTestMenu = () => {
         dispatchTestCase={dispatchToSvelteTestCase}
         createTest={createNewTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
       
 

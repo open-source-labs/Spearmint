@@ -131,10 +131,11 @@ const ReduxTestMenu = () => {
         dispatchTestCase={dispatchToReduxTestCase}
         createTest={createNewReduxTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
     //       {/* <UploadTest testType='redux' />
     //       <GetTests testType='redux' /> */}
