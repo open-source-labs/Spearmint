@@ -25,7 +25,7 @@ export function useToggleModal(test) {
   };
 
   return {
-    title, isModalOpen, openModal, openScriptModal, closeModal
+    title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen
   };
 }
 

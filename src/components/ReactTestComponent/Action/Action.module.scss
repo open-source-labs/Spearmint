@@ -10,6 +10,7 @@
   border-radius: 2px;
   --text-color: black;
   --action-color: #{$mint};
+  --component-color: black;
 }
 
 #actiondark {
@@ -20,6 +21,8 @@
   border-radius: 2px;
 
   --text-color: white;
+  --component-color: #{$mint};
+  --action-color: white;
 }
 
 #close {
@@ -51,10 +54,10 @@
   font-size: 1rem;
   font-weight: bold;
   color: var(--action-color);
+}
 
-  .componentName {
-    font-family: 'Lucida Console', monospace;
-  }
+#componentName {
+  color: var(--component-color);
 }
 
 .queryLabel {
