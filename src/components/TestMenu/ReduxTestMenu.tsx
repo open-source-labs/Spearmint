@@ -40,6 +40,7 @@ const ReduxTestMenu = () => {
     ReduxTestCaseContext
   );
   const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('redux');
+  console.log('closeModal', closeModal);
   const [{ projectFilePath, file, fileName, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)

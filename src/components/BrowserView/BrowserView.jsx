@@ -58,7 +58,6 @@ const BrowserView = () => {
 
   // Updates checkboxes states
   const handleChangeCheckBox = (e) => {
-    // console.log(e.target.name);
     switch (e.target.name) {
       case 'checkedMouse':
         setCheckBox({ ...checkedBoxes, checkedMouse: !checkedBoxes.checkedMouse });

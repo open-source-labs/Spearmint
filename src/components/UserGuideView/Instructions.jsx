@@ -33,7 +33,7 @@ const Instructions = ({
   const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  // const [{ isFileDirectoryOpen, theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ isFileDirectoryOpen, theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
 
   // Change execute command based on os platform
   let execute = '\n';

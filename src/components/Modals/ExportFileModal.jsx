@@ -45,8 +45,6 @@ const CssTextField = withStyles({
 })(TextField);
 
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
-
-  console.log('why are we in ExportFileModal');
   const [fileName, setFileName ] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
   const [{ projectFilePath, file, validCode, theme }, dispatchToGlobal] = useContext(GlobalContext);

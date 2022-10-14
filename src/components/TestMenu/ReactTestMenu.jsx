@@ -63,14 +63,11 @@ const ReactTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    console.log('in saveTest in ReactTestMenu')
     const valid = validateInputs('react', reactTestCase);
     dispatchToGlobal(setValidCode(valid));
-    console.log('valid', valid)
     
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
     const updatedData = fileHandle();
-    console.log('newFilePath', newFilePath)
     // check to see if user has saved test before. If not, then open ExportFileModal
     if(!newFilePath.includes('test.js') || !userSavedTest){
       dispatchToGlobal(toggleExportBool())
@@ -105,6 +102,7 @@ const ReactTestMenu = () => {
         openDocs={openDocs}
       />
       <Modal
+        ariaHideApp={false}
         title={title}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
