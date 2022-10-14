@@ -99,9 +99,10 @@ const NavBar = ({ inAboutPage }) => {
         <span title='Change settings'>
           <VscSettingsGear size={'1.5rem'}/>
         </span> */}
-        <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
+        {/* <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
           LOGOUT
-        </Button>
+        </Button> */}
+      </div>
         <div className={styles.modBtnContainer}>
             <span title='Dark Mode'>
               <BiMoon size={'1.5rem'} />
@@ -113,7 +114,6 @@ const NavBar = ({ inAboutPage }) => {
               <BiSun size={'1.5rem'} />
             </span>
         </div>
-      </div>
       <div>
         <Modal
         title={title}

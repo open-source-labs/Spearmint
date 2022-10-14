@@ -15,7 +15,7 @@ function ProjectLoader() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
 
@@ -264,16 +264,16 @@ function ProjectLoader() {
           renderLogin()
         ) : (
           <div className={styles.contentBox}>
-            <span id={styles.welcomeText}>
+            {/* <span id={styles.welcomeText}>
               Welcome <span id={styles.userText}>{username}</span>!
-            </span>
+            </span> */}
             <span id={styles.openFolderSpan}>
-              Select your application
+              Select your application:
               <OpenFolder />
             </span>
-            <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
+            {/* <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
               LOGOUT
-            </Button>
+            </Button> */}
           </div>
         )}
       </section>

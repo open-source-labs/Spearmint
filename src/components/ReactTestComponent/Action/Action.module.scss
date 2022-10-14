@@ -158,7 +158,8 @@
 #tooltip {
   min-width: 10em;
   padding: 0.5em 0.75em;
-
+  color: $dark-gray;
+  font-size: 12px;
   box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
   @include tooltip;
 }
