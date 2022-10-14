@@ -20,6 +20,9 @@
   padding: 14px 10px;
   border-radius: 2px;
 
+  --bg-color : #{$chromegray-less-light};
+  --action-color: white;
+  --component-color: #{$mint};
   --text-color: white;
   --component-color: #{$mint};
   --action-color: white;
@@ -48,6 +51,10 @@
     padding: 0;
     color: var(--text-color);
   }
+}
+
+#componentName{
+  color: var(--component-color);
 }
 
 .header {
@@ -132,8 +139,10 @@
 }
 
 #query {
+  display: flex;
+  align-items: center;
   input {
-    width: 100%;
+    width: 200px;
     min-width: 150px;
     height: 25px;
     border: 1px solid $light-gray;
