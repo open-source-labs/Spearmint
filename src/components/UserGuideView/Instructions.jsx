@@ -22,7 +22,7 @@ const Instructions = ({
   dispatchToMockData,
   dispatchTestCase,
   createTest,
-  testType = null,
+  testType = null, //does this have to be null?
   puppeteerUrl = 'sample.io',
 }) => {
   const { handleNewTest } = useNewTest(
@@ -61,7 +61,7 @@ const Instructions = ({
     const fileName = e.currentTarget.value;
     setFileName(fileName);
   }
-   
+
   // EndPointGuide component definition, conditionally rendered
   const EndPointGuide = () => {
     // endpoint guide only exists when user is in endpoint testing

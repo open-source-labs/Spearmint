@@ -36,7 +36,6 @@ const AccTestCase = () => {
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
   const [{ theme }] : Array<Ref> = useContext(GlobalContext);
   const { describeBlocks, itStatements, testType } = accTestCase;
-
   const [{ filePathMap }] = useContext<any>(GlobalContext);
 
   const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
@@ -74,7 +73,7 @@ const AccTestCase = () => {
       <section id={styles[`testCaseHeader${theme}`]}>
         <div id={styles.accTestDiv}>
           <AccTestTypes
-            dispatch={dispatchToAccTestCase}
+            dispatchToAccTestCase={dispatchToAccTestCase}
             action={updateTestType}
             currTypes={testType}
           />
