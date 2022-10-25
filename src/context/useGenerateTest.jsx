@@ -204,99 +204,6 @@ function useGenerateTest(test, projectFilePath) {
       }, '');
     };
 
-    /* ------------------------------------------ NEXTJS IMPORT + TEST STATEMENTS ------------------------------------------ */
-
-    // NextJS Import Statements
-    const addNextJSImportStatements = () => {
-      testFileCode += `
-        import React from 'react';
-        import { render, fireEvent } from '@testing-library/react'; 
-        import { build, fake } from 'test-data-bot'; 
-        import '@testing-library/jest-dom/extend-expect'
-        \n`;
-    };
-
-    // NextJS Component Import Statement (Render Card)
-    const addNextJSComponentImportStatement = () => {
-      const componentPath = nextjsTestCase.statements.componentPath;
-      let filePath = ipcRenderer.sendSync(
-        'Universal.path',
-        projectFilePath,
-        componentPath
-      );
-      filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName =
-        nextjsTestCase.statements.componentName.replace(/\.jsx?/, '');
-      testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
-    };
-
-    const addNextJSDescribeBlocks = () => {
-      const describeBlocks = nextjsTestCase.describeBlocks;
-      describeBlocks.allIds.forEach((id) => {
-        testFileCode += `describe('${describeBlocks.byId[id].text}', () => {`;
-        addNextJSItStatement(id);
-        testFileCode += `}); \n`;
-      });
-    };
-
-    // NextJS It Statements
-    const addNextJSItStatement = (describeId) => {
-      const itStatements = nextjsTestCase.itStatements;
-      itStatements.allIds[describeId].forEach((itId) => {
-        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
-        addNextJSStatements(itId);
-        testFileCode += '})\n';
-      });
-    };
-
-    const addNextJSStatements = (itId) => {
-      const statements = nextjsTestCase.statements;
-      const methods = identifyMethods(itId);
-      statements.allIds.forEach((id) => {
-        let statement = statements.byId[id];
-        if (statement.itId === itId) {
-          switch (statement.type) {
-            case 'action':
-              return addAction(statement);
-            case 'assertion':
-              return addAssertion(statement);
-            case 'render':
-              return addRender(statement, methods);
-            default:
-              return statement;
-          }
-        }
-      });
-    };
-
-    const identifyNextJSMethods = (itId) => {
-      const methods = new Set([]);
-      nextjsTestCase.statements.allIds.forEach((id) => {
-        let statement = nextjsTestCase.statements.byId[id];
-        if (statement.itId === itId) {
-          if (statement.type === 'action' || statement.type === 'assertion') {
-            methods.add(statement.queryVariant + statement.querySelector);
-          }
-        }
-      });
-      return Array.from(methods).join(', ');
-    };
-
-    // Render Jest Test Code
-    const addNextJSRender = (statement, methods) => {
-      let props = createRenderProps(statement.props);
-      const formattedComponentName =
-        nextjsTestCase.statements.componentName.replace(/\.jsx?/, '');
-      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
-    };
-
-    // Render Props Jest Test Code
-    const createNextJSRenderProps = (props) => {
-      return props.reduce((acc, prop) => {
-        return acc + `${prop.propKey}={${prop.propValue}}`;
-      }, '');
-    };
-
     /* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
 
     // Redux Import Statements
@@ -955,18 +862,6 @@ function useGenerateTest(test, projectFilePath) {
           (${action.queryValue}));`;
         }
       }
-      else if (type === 'nextjs') {
-        if (action.eventValue) {
-          testFileCode += `fireEvent.${action.eventType}(${
-            action.queryVariant + action.querySelector
-          }
-          (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
-        } else {
-          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector
-          }
-          (${action.queryValue}));`;
-        }
-      }
       else if (type === 'solid') {
         if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(screen.${
@@ -1008,14 +903,6 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
       if (type === 'react') {
-        testFileCode += `expect(${
-          assertion.queryVariant + assertion.querySelector
-        }
-          (${assertion.queryValue})).${assertion.matcherType}(${
-          assertion.matcherValue
-        });`;
-      }
-      if (type === 'nextjs') {
         testFileCode += `expect(${
           assertion.queryVariant + assertion.querySelector
         }
@@ -1796,23 +1683,6 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
         
-      //---------------------------------------------------NextJS switch statement---------------------------------------------
-        case 'nextjs':
-          var nextjsTestCase = testState;
-          var mockData = mockDataState;
-          return (
-            addComponentImportStatement(),
-            addNextJSImportStatements(),
-            addMockData(),
-            addDescribeBlocks(),
-            (testFileCode = beautify(testFileCode, {
-              brace_style: 'collapse, preserve-inline',
-              indent_size: 2,
-              space_in_empty_paren: true,
-              e4x: true,
-            }))
-          );  
-
       //---------------------------------------------------Vue switch statement---------------------------------------------
           case 'vue':
         var vueTestCase = testState;
