@@ -31,7 +31,7 @@ const HooksTestMenu = () => {
   const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
     HooksTestCaseContext
   );
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('hooks');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('hooks');
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('hooks', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -123,6 +123,7 @@ const HooksTestMenu = () => {
         dispatchToMockData={null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
         createTest={title === 'New Test' ? createNewHooksTest : null}
       />

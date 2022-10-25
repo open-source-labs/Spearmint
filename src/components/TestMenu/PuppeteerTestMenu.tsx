@@ -35,7 +35,7 @@ const PuppeteerTestMenu = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal(
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal(
     'puppeteer'
   );
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
@@ -118,6 +118,7 @@ const PuppeteerTestMenu = () => {
         dispatchToMockData={null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchTestCase={dispatchToPuppeteerTestCase}
         createTest={createNewPuppeteerTest}
       />

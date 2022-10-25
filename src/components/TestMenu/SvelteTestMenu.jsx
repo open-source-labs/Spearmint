@@ -31,7 +31,7 @@ const SvelteTestMenu = () => {
   // svelte testing docs url
   const svelteUrl = 'https://testing-library.com/docs/svelte-testing-library/intro/';
 
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('svelte');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('svelte');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [SvelteTestCase, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
@@ -109,6 +109,7 @@ const SvelteTestMenu = () => {
         title={title}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchMockData={dispatchToMockData}
         dispatchTestCase={dispatchToSvelteTestCase}
         createTest={createNewTest}

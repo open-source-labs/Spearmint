@@ -31,7 +31,7 @@ const SolidTestMenu = () => {
   // solid testing docs url
   const solidUrl = 'https://testing-library.com/docs/solid-testing-library/intro/';
 
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('solid');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('solid');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [SolidTestCase, dispatchToSolidTestCase] = useContext(SolidTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
@@ -109,6 +109,7 @@ const SolidTestMenu = () => {
         title={title}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchMockData={dispatchToMockData}
         dispatchTestCase={dispatchToSolidTestCase}
         createTest={createNewTest}
