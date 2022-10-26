@@ -70,6 +70,13 @@ import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
 
 import SolidTestCase from '../../components/TestCase/SolidTestCase';
 
+import {
+  DenoTestCaseContext,
+  denoTestCaseState, 
+  denoTestCaseReducer
+} from '../../context/reducers/denoTestCaseReducer';
+import DenoTestCase from '../../components/TestCase/DenoTestCase'
+
 
 
 
@@ -138,6 +145,11 @@ const TestFile = () => {
   const [graphQLTestCase, dispatchToGraphQLTestCase] = useReducer(
     graphQLTestCaseReducer,
     graphQLTestCaseState
+  );
+
+  const [denoTestCase, dispatchToDenoTestCase] = useReducer(
+    denoTestCaseReducer,
+    denoTestCaseState
   );
 
   const filterFileType = (files, acceptedFileTypes) => {
@@ -338,6 +350,14 @@ const TestFile = () => {
           <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
             <SolidTestCase filterFileType = {filterFileType} />
           </MockDataContext.Provider >
+        </section>
+      )}
+
+      {testCase === 'deno' && (
+        <section>
+          <DenoTestCaseContext.Provider value={[denoTestCase, dispatchToDenoTestCase]}>
+            <DenoTestCase filterFileType = {filterFileType} />
+          </DenoTestCaseContext.Provider>
         </section>
       )}
 

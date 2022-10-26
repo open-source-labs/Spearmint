@@ -1091,6 +1091,41 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '\n';
     };
     //statement.method
+
+    // JASMINE EDIT
+    const addDenoEndpoint = (statement) => {
+      testFileCode += `\n Deno.test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
+      testFileCode += statement.postData
+        ? `.send( ${statement.postData.trim()})\n`
+        : statement.headers.length
+        ? `.set({`
+        : '';
+
+      statement.headers.forEach(({ headerName, headerValue }, index) => {
+        testFileCode +=
+          headerName.length > 0 && headerValue.length > 0
+            ? `'${headerName}': '${headerValue}',`
+            : '';
+      });
+      testFileCode += statement.headers.length ? '}); \n' : '';
+      statement.assertions.forEach(
+        ({ matcher, expectedResponse, not, value }) => {
+          matcher = matcher
+            .replace(/\(([^)]+)\)/, '')
+            .split(' ')
+            .join('');
+            // we have not assigned the variable assertion but should be like "assertEquals(expectedResponse, optionalArg)"
+          testFileCode += `\n assert${assertion}(${expectedResponse.toLowerCase()}, ${optionalArg})`;
+          testFileCode += not
+            ? `.not.${matcher}(${value});`
+            : `.${matcher}(${value});`;
+        }
+      );
+      testFileCode += '});';
+      testFileCode += '\n';
+    };
+    // JASMINE EDIT
+
     const addGraphQL = (statement) => {
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.post('${statement.route}')`;
       testFileCode += statement.postData

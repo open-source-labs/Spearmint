@@ -19,9 +19,9 @@ import {
   toggleDB,
   updateDBFilePath,
   resetTests
-} from '../../context/actions/endpointTestCaseActions';
+} from '../../context/actions/denoTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
-import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
+import { DenoTestCaseContext } from '../../context/reducers/denoTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
@@ -32,17 +32,16 @@ const { ipcRenderer } = require('electron')
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
-// child component of EndPointTest menu. has NewTest and Endpoint buttons
-const EndpointTestMenu = () => {
-  const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+// child component of DenoTest menu. has NewTest and Endpoint buttons
+const DenoTestMenu = () => {
+  const [denoTestCase, dispatchToDenoTestCase] = useContext<any>(DenoTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('endpoint');
   const generateTest = useGenerateTest('endpoint', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
-
-  // Endpoint testing docs url
-  const endpointUrl = 'https://www.npmjs.com/package/supertest';
+  // Deno testing docs url
+  const denoUrl = 'https://deno.land/';
 
   useEffect(() => {
     // validateInputs('endpoint', endpointTestCase)
@@ -56,7 +55,7 @@ const EndpointTestMenu = () => {
 
   // functionality when user clicks Preview
   const fileHandle = () => {
-    const testGeneration = generateTest(endpointTestCase);
+    const testGeneration = generateTest(denoTestCase);
 
     // generates test code using UseGenerateTest.jsx and displays it in the Code Editor View
     dispatchToGlobal(updateFile(testGeneration));
@@ -68,7 +67,7 @@ const EndpointTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    const valid = validateInputs('endpoint', endpointTestCase);
+    const valid = validateInputs('endpoint', denoTestCase);
     dispatchToGlobal(setValidCode(valid));
 
     // store the file path of the new saved test file
@@ -151,4 +150,4 @@ const EndpointTestMenu = () => {
   );
 };
 
-export default EndpointTestMenu;
+export default DenoTestMenu;
