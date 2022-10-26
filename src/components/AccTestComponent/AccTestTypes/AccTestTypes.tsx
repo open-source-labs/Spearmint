@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import styles from './AccTestTypes.module.scss';
-
-//older version
-// const AccTestTypes = ({ dispatch, action, currTypes }) => {
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     dispatch(action(e.target.value));
-//   }
+import {updateTestType} from '../../../context/actions/accTestCaseActions';
+import { accTestCaseState, accTestCaseReducer } from '../../../context/reducers/accTestCaseReducer';
 
 const AccTestTypes = ({
-  dispatchToAccTestCase,
+  // dispatchToAccTestCase,
+  action,
 }) => {
-  
+  const [accTestCase, dispatchToAccTestCase] = useReducer(
+    accTestCaseReducer, 
+    accTestCaseState
+  )
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    //need to pass e.target.value to set state (do I need to set state? use redux?)
+    dispatchToAccTestCase(action(e.target.value));
+    console.log('after setting state (in AccTestType)', accTestCaseState);
   };
 
   return (

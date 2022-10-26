@@ -37,9 +37,9 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 
 // TO DO: 
 // quickly selects testType, but then resets to null, which results in the terminal code not being rendered in the code example for installing dependencies/changing directories
-export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
-  const [{ projectFilePath, accTestType }] = useContext(GlobalContext);
-  console.log('accTestType in modalHooks is', accTestType);
+export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io', accTestType) {
+  console.log('accTestType in modalHooks', accTestType);
+  const [{ projectFilePath }] = useContext(GlobalContext);
 
   switch (test) {
     case 'solid': 

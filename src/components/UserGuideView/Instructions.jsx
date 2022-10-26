@@ -13,6 +13,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { GlobalContext } from '../../context/reducers/globalReducer';;
 import { Button } from '@material-ui/core';
+import { accTestCaseState } from '../../context/reducers/accTestCaseReducer';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -22,7 +23,7 @@ const Instructions = ({
   dispatchToMockData,
   dispatchTestCase,
   createTest,
-  testType = null, //does this have to be null?
+  testType = null,
   puppeteerUrl = 'sample.io',
 }) => {
   const { handleNewTest } = useNewTest(
@@ -30,10 +31,13 @@ const Instructions = ({
     dispatchTestCase,
     createTest,
   );
+  const {accTestType} = accTestCaseState;
+  console.log('accTestType in Instructions', accTestType)
   const [fileName, setFileName] = useState('');
-  const script = useGenerateScript(title, testType, puppeteerUrl);
+  const script = useGenerateScript(title, testType, puppeteerUrl, accTestType); //do we need testType here? Or can I switch that out for accTestType
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{ isFileDirectoryOpen, theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ tabIndex }, dispatchToGlobal] = useContext(GlobalContext)
+  console.log('testCaseState', accTestType)
 
   // Change execute command based on os platform
   let execute = '\n';
