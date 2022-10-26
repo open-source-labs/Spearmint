@@ -37,7 +37,7 @@ const DenoTestMenu = () => {
   const [denoTestCase, dispatchToDenoTestCase] = useContext<any>(DenoTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('endpoint');
-  const generateTest = useGenerateTest('endpoint', projectFilePath);
+  const generateTest = useGenerateTest('deno', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
   // Deno testing docs url
@@ -50,7 +50,7 @@ const DenoTestMenu = () => {
   }, []);
 
   const openDocs = () => {
-    dispatchToGlobal(openBrowserDocs(endpointUrl));
+    dispatchToGlobal(openBrowserDocs(denoUrl));
   };
 
   // functionality when user clicks Preview
@@ -87,11 +87,11 @@ const DenoTestMenu = () => {
   }
 
   const handleClickAddDatabase = () => {
-    if (endpointTestCase.addDB) {
-      dispatchToEndpointTestCase(toggleDB(false));
-      dispatchToEndpointTestCase(updateDBFilePath('', ''));
-      dispatchToEndpointTestCase(setFilePath(''));
-    } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
+    if (denoTestCase.addDB) {
+      dispatchToDenoTestCase(toggleDB(false));
+      dispatchToDenoTestCase(updateDBFilePath('', ''));
+      dispatchToDenoTestCase(setFilePath(''));
+    } else dispatchToDenoTestCase(toggleDB('PostgreSQL'));
   };
 
   const openNewTestModal = () => {
@@ -99,14 +99,14 @@ const DenoTestMenu = () => {
   };
 
   const handleResetTests = () => {
-    dispatchToEndpointTestCase(resetTests());
+    dispatchToDenoTestCase(resetTests());
   }
   
   if (exportBool) {
-    const valid = validateInputs('endpoint', endpointTestCase);
+    const valid = validateInputs('deno', denoTestCase);
     dispatchToGlobal(setValidCode(valid));
     dispatchToGlobal(toggleExportBool());
-    if (valid && !file) dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
+    if (valid && !file) dispatchToGlobal(updateFile(generateTest(denoTestCase)));
   }
 
 
@@ -127,7 +127,7 @@ const DenoTestMenu = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         closeModal={closeModal}
-        dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
+        dispatchTestCase={title === 'New Test' ? dispatchToDenoTestCase : null}
         createTest={title === 'New Test' ? createNewEndpointTest : null}
       />
       <ExportFileModal

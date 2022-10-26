@@ -23,10 +23,10 @@ const minusIcon = require('../../assets/images/minus-box-outline.png');
 interface DenoProps {
   endpoint: DenoObj;
   index: number;
-  dispatchToEndpointTestCase: (action: Action) => void;
+  dispatchToDenoTestCase: (action: Action) => void;
 }
 
-const Deno = ({ endpoint, index, dispatchToEndpointTestCase }: DenoProps) => {
+const Deno = ({ endpoint, index, dispatchToDenoTestCase }: DenoProps) => {
   const [ {theme} ] = useContext<any>(GlobalContext)
   const handleChangeEndpointFields = ({ target }: EventTarget, field: string) => {
     let updatedEndpoint = { ...endpoint };
@@ -34,34 +34,34 @@ const Deno = ({ endpoint, index, dispatchToEndpointTestCase }: DenoProps) => {
     field === 'headerName' || field === 'headerValue'
       ? (updatedEndpoint.headers[Number(target.id)][field] = target.value)
       : (updatedEndpoint[field] = target.value);
-    dispatchToEndpointTestCase(updateEndpoint(updatedEndpoint));
+    dispatchToDenoTestCase(updateEndpoint(updatedEndpoint));
 
-    if (target.value === 'post') dispatchToEndpointTestCase(togglePost(index));
+    if (target.value === 'post') dispatchToDenoTestCase(togglePost(index));
     else if (target.type === 'select-one' && endpoint.post)
-      dispatchToEndpointTestCase(togglePost(index));
+      dispatchToDenoTestCase(togglePost(index));
   };
 
   const handleClickDeleteEndpoint = () => {
     // delete endpoint returns action object {type: 'DELETE_ENDPOINT, id: endpoint.id}
-    dispatchToEndpointTestCase(deleteEndpoint(endpoint.id));
+    dispatchToDenoTestCase(deleteEndpoint(endpoint.id));
   };
 
   const handleClickAddHeader = () => {
-    dispatchToEndpointTestCase(addHeader(index));
+    dispatchToDenoTestCase(addHeader(index));
   };
 
   const handleClickDeleteHeader = (i: number) => {
-    dispatchToEndpointTestCase(deleteHeader(index, i));
+    dispatchToDenoTestCase(deleteHeader(index, i));
   };
 
   const updatePostData = ({ target }: EventTarget) => {
-    dispatchToEndpointTestCase(updatePost(target.value, index));
+    dispatchToDenoTestCase(updatePost(target.value, index));
     target.style.height = 'inherit';
     target.style.height = `${Math.max(Math.min(target.scrollHeight, 200), 102)}px`;
   };
 
   const addAssertionHandleClick = () => {
-    dispatchToEndpointTestCase(addAssertion(index));
+    dispatchToDenoTestCase(addAssertion(index));
   };
 
 
