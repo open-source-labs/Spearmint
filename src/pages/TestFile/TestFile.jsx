@@ -11,7 +11,6 @@ import Draggable from 'react-draggable';
 // A simple JavaScript utility for conditionally joining classNames together
 import cn from 'classnames';
 
-import NextJSTestCase from '../../components/TestCase/NextJSTestCase';
 
 // may be able to delete toggleReact, etc. from their respective action files
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
@@ -84,9 +83,8 @@ import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaUniversalAccess, FaReact } from "react-icons/fa"
 import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
-import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql } from "react-icons/si"
+import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql, SiDeno } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
-import { SiNextdotjs } from 'react-icons/si';
 
 import { Button } from '@material-ui/core';
 import TestCard from './TestCard';
@@ -171,8 +169,7 @@ const TestFile = ({accTestType, handleAccChange}) => {
   const cardSize = '1rem';
 
   const testMappings = {
-    'react': [<FaReact size={cardSize}/>, 'React'],
-    'nextjs': [<SiNextdotjs size={cardSize}/>, 'Next.js'],          
+    'react': [<FaReact size={cardSize}/>, 'React'],         
     'redux': [<SiRedux size={cardSize}/>, 'Redux'],
     'svelte': [<SiSvelte size={cardSize}/>, 'Svelte'],
     'solid': [<>
@@ -182,6 +179,7 @@ const TestFile = ({accTestType, handleAccChange}) => {
               </>, 'Solid'],
     'hooks': [<GiHook size={cardSize}/>, 'Hooks'],
     'vue': [<IoLogoVue size={cardSize}/>, 'Vue'],
+    'deno': [<SiDeno size={cardSize}/>, 'Deno'],
     'puppeteer': [<SiPuppeteer size={cardSize}/>, 'Puppeteer'],
     'endpoint': [<IoServer size={cardSize}/>, 'Endpoint'],
     'acc': [<FaUniversalAccess size={cardSize}/>, 'Accessibility'],
@@ -258,12 +256,6 @@ const TestFile = ({accTestType, handleAccChange}) => {
       {testCase === 'react' && (
         <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
           <ReactTestCase filterFileType = {filterFileType}/>
-        </MockDataContext.Provider>
-      )}
-
-      {testCase === 'nextjs' && (
-        <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
-          <NextJSTestCase filterFileType = {filterFileType}/>
         </MockDataContext.Provider>
       )}
 

@@ -105,14 +105,6 @@
   align-items: center;
 
   span{
-    cursor: pointer;
-    &:hover{
-      svg {
-        path {
-          fill: var(--icon-fill);
-        }
-      }
-    }
     svg {
       path {
         fill: $eggshell; 

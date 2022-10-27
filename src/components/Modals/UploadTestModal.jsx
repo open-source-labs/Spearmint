@@ -6,10 +6,8 @@ import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCase
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
-import { NextJSTestCaseContext } from '../../context/reducers/nextjsTestCaseReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import styles from './Modal.module.scss';
-import NextJSTestCase from '../TestCase/NextJSTestCase';
 
 const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, testType }) => {
   const [testName, setTestName] = useState('');
@@ -18,7 +16,6 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
   const [hooksTestCase] = useContext(HooksTestCaseContext);
   const [puppeteerTestCase] = useContext(PuppeteerTestCaseContext);
   const [reactTestCase] = useContext(ReactTestCaseContext);
-  const [nextjsTestCase] = useContext(NextJSTestContext);
   const [reduxTestCase] = useContext(ReduxTestCaseContext);
 
   const closeUploadModal = () => {
@@ -46,9 +43,6 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
         break;
       case 'react':
         testState = reactTestCase;
-        break;
-      case 'nextjs':
-        testState = nextjsTestCase;
         break;
       case 'redux':
         testState = reduxTestCase;
