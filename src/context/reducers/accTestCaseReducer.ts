@@ -286,7 +286,6 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
     }
     case actionTypes.UPDATE_TEST_TYPE: {
       const { accTestType } = action;
-      console.log('in reducer, accTestType', accTestType);
       return {
         ...state,
         accTestType,

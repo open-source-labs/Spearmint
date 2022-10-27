@@ -25,7 +25,6 @@ export const globalState = {
   tabIndex: 0,
   isGuest: false,
   theme: window.localStorage.theme ?? 'light',
-  // accTestType: '',
 };
 
 export const globalReducer = (state, action) => {

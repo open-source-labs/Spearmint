@@ -25,19 +25,18 @@ const Instructions = ({
   createTest,
   testType = null,
   puppeteerUrl = 'sample.io',
+  accTestType
 }) => {
   const { handleNewTest } = useNewTest(
     dispatchToMockData,
     dispatchTestCase,
     createTest,
   );
-  const {accTestType} = accTestCaseState;
-  console.log('accTestType in Instructions', accTestType)
+  
   const [fileName, setFileName] = useState('');
-  const script = useGenerateScript(title, testType, puppeteerUrl, accTestType); //do we need testType here? Or can I switch that out for accTestType
+  const script = useGenerateScript(title, testType, puppeteerUrl, accTestType);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
   const [{ tabIndex }, dispatchToGlobal] = useContext(GlobalContext)
-  console.log('testCaseState', accTestType)
 
   // Change execute command based on os platform
   let execute = '\n';

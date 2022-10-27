@@ -72,10 +72,6 @@ import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
 import SolidTestCase from '../../components/TestCase/SolidTestCase';
 
 
-
-
-
-
 import {
   GraphQLTestCaseContext,
   graphQLTestCaseState,
@@ -103,11 +99,7 @@ import {
     setTabIndex,
 } from '../../context/actions/globalActions';
 
-import { IconContext } from "react-icons";
-import { AiFillCloseSquare } from "react-icons/ai"
-
-
-const TestFile = () => {
+const TestFile = ({accTestType, handleAccChange}) => {
   let [{ testCase, isTestModalOpen, projectFilePath, file, exportBool, theme }, dispatchToGlobal] = useContext(GlobalContext);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
@@ -133,6 +125,7 @@ const TestFile = () => {
     accTestCaseReducer,
     accTestCaseState
   );
+
   const [secTestCase, dispatchToSecTestCase] = useReducer(
     secTestCaseReducer,
     secTestCaseState
@@ -304,7 +297,9 @@ const TestFile = () => {
       {testCase === 'acc' && (
         <section>
           <AccTestCaseContext.Provider value={[accTestCase, dispatchToAccTestCase]}>
-            <AccTestCase />
+            <AccTestCase 
+            accTestType={accTestType}
+            handleAccChange={handleAccChange}/>
           </AccTestCaseContext.Provider>
         </section>
       )}

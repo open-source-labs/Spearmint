@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import styles from './App.module.scss';
 import {
   GlobalContext,
@@ -14,10 +14,15 @@ import FileDirectory from './components/FileDirectory/FileDirectory';
 import { CSSTransition } from 'react-transition-group';
 import { Switch } from '@material-ui/core';
 import { BiSun, BiMoon } from 'react-icons/bi';
-// import About from './pages/About/About';
+
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
+
+  const [accTestType, setAccTestType] = useState('select')
+  const handleAccChange = (event) => {
+    setAccTestType(event.target.value);
+  };
 
   const changeTheme = () => {
     localStorage.setItem('theme', global.theme === 'light' ? 'dark' : 'light');
@@ -62,22 +67,8 @@ const App = () => {
      *
      *
      * We access the value that we gave to the Provider through useContext
-     *
-     * 01/29 There does not seem to be 'about' page functionality visible
      */
     <div
-      //This could/should be deleted:
-      // id={
-      //     global.isProjectLoaded === 'about'
-      //       ? ''
-      //       : global.isFileDirectoryOpen
-      //         ? global.isRightPanelOpen
-      //           ? styles.fileDirectoryOpenRightPanelOpen
-      //           : styles.fileDirectoryOpenRightPanelClosed
-      //         : global.isRightPanelOpen
-      //           ? styles.fileDirectoryClosedRightPanelOpen
-      //           : styles.fileDirectoryClosedRightPanelClosed
-      //   }
       id={styles.app}
     >
       <GlobalContext.Provider value={[global, dispatchToGlobal]}>
@@ -92,8 +83,10 @@ const App = () => {
           >
             <FileDirectory fileTree={global.fileTree} />
           </CSSTransition>
-          <LeftPanel />
-          <RightPanel />
+          <LeftPanel 
+          handleAccChange={handleAccChange}/>
+          <RightPanel 
+          accTestType={accTestType}/>
         </div>
       </GlobalContext.Provider>
     </div>

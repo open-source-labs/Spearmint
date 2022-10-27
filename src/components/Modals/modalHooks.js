@@ -4,6 +4,7 @@ import { toggleModal, setTestCase, updateFile } from '../../context/actions/glob
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './Modal.module.scss';
 
+
 export function useCopy() {
   const [copySuccess, setCopySuccess] = useState(false);
   const codeRef = useRef(null);
@@ -35,10 +36,8 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
   return { handleNewTest };
 }
 
-// TO DO: 
-// quickly selects testType, but then resets to null, which results in the terminal code not being rendered in the code example for installing dependencies/changing directories
 export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io', accTestType) {
-  console.log('accTestType in modalHooks', accTestType);
+
   const [{ projectFilePath }] = useContext(GlobalContext);
 
   switch (test) {
