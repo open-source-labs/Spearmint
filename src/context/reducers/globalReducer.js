@@ -214,13 +214,6 @@ export const globalReducer = (state, action) => {
         theme: action.theme,
       };
 
-    // case actionTypes.SET_ACC_TEST_TYPE:
-    //   const accTestType = action.accTestType;
-    //   return {
-    //     ...state,
-    //     accTestType,
-    // }
-
     default:
       return state;
   }
