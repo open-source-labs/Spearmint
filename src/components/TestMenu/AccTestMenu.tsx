@@ -61,7 +61,7 @@ const AccTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    const updatedData = fileHandle();9
+    const updatedData = fileHandle();
     
     // store the file path of the new saved test file
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
