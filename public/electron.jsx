@@ -43,8 +43,8 @@ let mainWindow;
 // setup electron window
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1782,
-    height: 920,
+    width: 1290,
+    height: 1105,
     backgroundColor: 'white',
     icon: path.join(__dirname, './icon.icns'),
     webPreferences: {

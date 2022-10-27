@@ -52,21 +52,7 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 're
               (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
             );
       }
-    } else if (type === 'nextjs') {
-      if (statementType === 'action') {
-        return inputLength === 0
-          ? []
-          : eventTypesList.filter(
-              (eventType) => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
-            );
-      } else {
-        return inputLength === 0
-          ? []
-          : matcherTypesList.filter(
-              (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
-            );
-      }
-    }
+    } 
     else if (type === 'vue'){
       if (statementType === 'action') {
         return inputLength === 0

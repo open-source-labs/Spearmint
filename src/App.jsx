@@ -50,6 +50,28 @@ const App = () => {
       </div>
     );
   }
+  
+  if (global.testCase === '') {
+    return (
+      <div>
+        <GlobalContext.Provider value={[global, dispatchToGlobal]}>
+        <NavBar inAboutPage={false} />
+        <div id={styles[`content${global.theme}`]}>
+          <CSSTransition
+            in={global.isFileDirectoryOpen}
+            timeout={200}
+            classNames="my-node"
+            unmountOnExit
+            appear
+          >
+            <FileDirectory fileTree={global.fileTree} />
+          </CSSTransition>
+          <LeftPanel />
+        </div>
+      </GlobalContext.Provider>
+    </div>
+    )
+  }
   return (
     /**
      * Wrap the components that we want to share the unique states with.
