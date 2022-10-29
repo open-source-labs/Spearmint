@@ -27,7 +27,6 @@ const Editor = () => {
   }
 
   const updateAfile = (newValue, e) => {
-    console.log(newValue);
     editedText = newValue;
     if (wasSaved.length) setWasSaved('');
   };

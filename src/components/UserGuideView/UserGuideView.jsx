@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styles from './UserGuideView.module.scss';
 import Instructions from './Instructions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -8,10 +8,8 @@ const { ipcRenderer } = require('electron');
 // TO DO TUESDAY
 // find way to pass test type and test/title to pass to Instructions
 
-const UserGuideView = () => {
-  // TO DO 
-// conditionally change background color depending on light/dark mode
-const [{ theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
+const UserGuideView = ({theme, accTestType}) => {
+const [{ testCase }, dispatchToGlobal] = useContext(GlobalContext);
 
   return (
     <div 
@@ -27,6 +25,7 @@ const [{ theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
       <br/>
       <Instructions
       title={testCase}
+      accTestType={accTestType}
       />
     </div>
   );

@@ -36,7 +36,7 @@ const { ipcRenderer } = require('electron')
 const GraphQLTestMenu = () => {
   const [graphQLTestCase, dispatchToGraphQLTestCase] = useContext(GraphQLTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('graphQL');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('graphQL');
   const generateTest = useGenerateTest('graphQL', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
@@ -126,13 +126,15 @@ const GraphQLTestMenu = () => {
         dispatchToMockData={null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchTestCase={title === 'New Test' ? dispatchToGraphQLTestCase : null}
         createTest={title === 'New Test' ? createNewGraphQLTest : null}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
           {/* <UploadTest testType="endpoint test" />
           <GetTests testType="endpoint test" /> */}
 

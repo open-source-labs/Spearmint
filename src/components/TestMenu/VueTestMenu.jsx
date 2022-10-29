@@ -31,7 +31,7 @@ const VueTestMenu = () => {
   const vueUrl = 'https://next.vue-test-utils.vuejs.org/guide/';
 
   // const [isModalOpen, setIsModalOpen] = useState(false);
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('vue');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('vue');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [vueTestCase, dispatchToVueTestCase] = useContext(VueTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
@@ -112,14 +112,16 @@ const VueTestMenu = () => {
         title={title}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchMockData={dispatchToMockData}
         dispatchTestCase={dispatchToVueTestCase}
         createTest={createNewTest}
       />
-          <ExportFileModal
-            isExportModalOpen={isExportModalOpen}
-            setIsExportModalOpen={setIsExportModalOpen}
-          />
+      {/* marked for deletion */}
+      {/* <ExportFileModal
+        isExportModalOpen={isExportModalOpen}
+        setIsExportModalOpen={setIsExportModalOpen}
+      /> */}
     </>
           
          

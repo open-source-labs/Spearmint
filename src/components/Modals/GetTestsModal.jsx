@@ -58,7 +58,6 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
   };
 
   const handleSelectTest = (i) => {
-    console.log(testType + ':', tests[i].testState);
     switch (testType) {
       case 'acc':
         dispatchToAccTestCase(accReplaceTest(tests[i].testState));
