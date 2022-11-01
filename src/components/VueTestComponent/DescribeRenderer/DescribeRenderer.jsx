@@ -44,13 +44,13 @@ const DescribeRenderer = ({
           {...provided.dragHandleProps}
         >
 
-          <AiOutlineCloseCircle
+          { i > 0 && <AiOutlineCloseCircle
             tabIndex={0}
             id={id} 
             onKeyPress={deleteVueDescribeBlockOnKeyUp}
             onClick={deleteDescribeBlockHandleClick}
             className={cn('far fa-window-close', styles.describeClose)}
-          /> 
+          /> }
 
           <div className={styles.describeInputContainer}>
             <TextField 
