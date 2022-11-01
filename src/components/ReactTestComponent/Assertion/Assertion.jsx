@@ -140,11 +140,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <option value='queryBy'>queryBy</option>
               <option value='queryAllBy'>queryAllBy</option>
             </select>
-            {/* <span id={styles.hastooltip} role='tooltip'>
+            <span id={styles.hastooltip} role='tooltip'>
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
-            </span> */}
+            </span>
             <select
               id='querySelector'
               value={statement.querySelector}
@@ -161,12 +161,12 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <option value='TestId'>TestId</option>
               {/* TextMatch Precision & Normalization will be added */}
             </select>
-            {/* <span id={styles.hastooltip} role='tooltip'>
+            <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.querySelector} />
               </span>
-            </span> */}
+            </span>
           </div>
         </div>
         <div id={styles.query}>
@@ -210,12 +210,12 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
                 id={styles.matcherAuto}
               />
 
-              {/* <span id={styles.hastooltip} role='tooltip'>
+              <span id={styles.hastooltip} role='tooltip'>
                 <img src={questionIcon} alt='help' />
                 <span id={styles.tooltip}>
                   <ToolTipMatcher toolTipType={statement.matcherType} />
                 </span>
-              </span> */}
+              </span>
             </div>
           </div>
           {needsMatcherValue(statement.matcherType) && (
