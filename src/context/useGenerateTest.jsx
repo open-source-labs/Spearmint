@@ -583,8 +583,10 @@ function useGenerateTest(test, projectFilePath) {
     const addDenoTestStatements = () => {
       const { denoStatements } = denoTestCase;
       denoStatements.forEach((statement) => {
+        console.log(statement.type)
         switch (statement.type) {
-          case 'deno':
+          case 'endpoint':
+            console.log(statement)
             return addDenoEndpoint(statement);
           default:
             return statement;
@@ -873,11 +875,8 @@ function useGenerateTest(test, projectFilePath) {
         );
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `import app from '../${filePath}';
-        import * as mod from "https://deno.land/std@0.160.0/testing/asserts.ts"\n;\n
-        Deno.test("url test", () => {
-          const url = new URL("./foo.js", "https://deno.land/");
-          mod.assertEquals(url.href, "https://deno.land/foo.js");
-        });`;
+        import * as mod from "https://deno.land/std@0.160.0/testing/asserts.ts"\n
+        import {superoak} from "https://deno.land/x/superoak@4.7.0/mod.ts";\n`
       } else testFileCode = 'Please Select A Server!';
       // import "core-js/stable";
       // import "regenerator-runtime/runtime";
@@ -1178,7 +1177,7 @@ function useGenerateTest(test, projectFilePath) {
 
     // JASMINE EDIT
     const addDenoEndpoint = (statement) => {
-      testFileCode += `\n Deno.test('${statement.testName}', async () => {\n const response = await request.${statement.method}('${statement.route}')`;
+      testFileCode += `\n Deno.test('${statement.testName}', async () => {\n const request = await superoak(app);`;
       testFileCode += statement.postData
         ? `.send( ${statement.postData.trim()})\n`
         : statement.headers.length
@@ -1199,7 +1198,7 @@ function useGenerateTest(test, projectFilePath) {
             .split(' ')
             .join('');
             // we have not assigned the variable assertion but should be like "assertEquals(expectedResponse, optionalArg)"
-          testFileCode += `\n assert${assertion}(${expectedResponse.toLowerCase()}, ${optionalArg})`;
+          //testFileCode += `\n assert${assertion}(${expectedResponse.toLowerCase()}, ${optionalArg})`;
           testFileCode += not
             ? `.not.${matcher}(${value});`
             : `.${matcher}(${value});`;
@@ -1922,6 +1921,7 @@ function useGenerateTest(test, projectFilePath) {
         //---------------------------------------------------Deno switch statement---------------------------------------------
       case 'deno':
         var denoTestCase = testState;
+        console.log(denoTestCase)
         return (
           addDenoImportStatements(),
           addDenoTestStatements(),
