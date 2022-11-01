@@ -872,9 +872,12 @@ function useGenerateTest(test, projectFilePath) {
           serverFilePath
         );
         filePath = filePath.replace(/\\/g, '/');
-        testFileCode = `const app = require('../${filePath}');
-        const supertest = require('supertest')\n;
-        const request = supertest(app)\n;`;
+        testFileCode = `import app from '../${filePath}';
+        import * as mod from "https://deno.land/std@0.160.0/testing/asserts.ts"\n;\n
+        Deno.test("url test", () => {
+          const url = new URL("./foo.js", "https://deno.land/");
+          mod.assertEquals(url.href, "https://deno.land/foo.js");
+        });`;
       } else testFileCode = 'Please Select A Server!';
       // import "core-js/stable";
       // import "regenerator-runtime/runtime";

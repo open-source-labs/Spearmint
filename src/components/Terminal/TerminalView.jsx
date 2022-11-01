@@ -34,6 +34,7 @@ const TerminalView = () => {
     // will take it and writes it to xterm monitor
     ipc.on('terminal.incData', (event, data) => {
       term.write(data);
+      console.log(data);
     });
 
     //console.log("in useEffect once before fit", container.offsetWidth, container.offsetHeight)

@@ -129,6 +129,10 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
       return {
         cd: `cd ${projectFilePath}`,
         install: 'npm i -D @testing-library/svelte @testing-library/user-event @testing-library/jest-dom @babel/preset-env svelte-jester jest msw babel-jest'
+      };
+      case 'deno':
+      return {
+        cd: `cd ${projectFilePath}`
       }
     default:
       return '';

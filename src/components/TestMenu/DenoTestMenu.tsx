@@ -36,12 +36,12 @@ const { ipcRenderer } = require('electron')
 const DenoTestMenu = () => {
   const [denoTestCase, dispatchToDenoTestCase] = useContext<any>(DenoTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
-  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('endpoint');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('deno');
   const generateTest = useGenerateTest('deno', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
   // Deno testing docs url
-  const denoUrl = 'https://deno.land/';
+  const denoUrl = 'https://deno.land/manual@v1.27.0/testing';
 
   useEffect(() => {
     // validateInputs('endpoint', endpointTestCase)
@@ -104,9 +104,9 @@ const DenoTestMenu = () => {
   
   if (exportBool) {
     const valid = validateInputs('deno', denoTestCase);
-    dispatchToGlobal(setValidCode(valid));
+    dispatchToGlobal(setValidCode(true));
     dispatchToGlobal(toggleExportBool());
-    if (valid && !file) dispatchToGlobal(updateFile(generateTest(denoTestCase)));
+    if (true && !file) dispatchToGlobal(updateFile(generateTest(denoTestCase)));
   }
 
 
