@@ -47,13 +47,13 @@ const DescribeRenderer = ({
             Describe Block
           </label> */}
 
-          <AiOutlineCloseCircle
+          { i > 0 && <AiOutlineCloseCircle
             tabIndex={0}
             id={id} 
             onKeyPress={deleteReactDescribeBlockOnKeyUp}
             onClick={deleteDescribeBlockHandleClick}
             className={cn('far fa-window-close', styles.describeClose)}
-          />  
+          /> }
           
           {/* <input
             id={id}
