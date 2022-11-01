@@ -13,6 +13,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { GlobalContext } from '../../context/reducers/globalReducer';;
 import { Button } from '@material-ui/core';
+import { accTestCaseState } from '../../context/reducers/accTestCaseReducer';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -24,16 +25,18 @@ const Instructions = ({
   createTest,
   testType = null,
   puppeteerUrl = 'sample.io',
+  accTestType
 }) => {
   const { handleNewTest } = useNewTest(
     dispatchToMockData,
     dispatchTestCase,
     createTest,
   );
+  
   const [fileName, setFileName] = useState('');
-  const script = useGenerateScript(title, testType, puppeteerUrl);
+  const script = useGenerateScript(title, testType, puppeteerUrl, accTestType);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  // const [{ isFileDirectoryOpen, theme, testCase }, dispatchToGlobal] = useContext(GlobalContext);
+  const [{ tabIndex }, dispatchToGlobal] = useContext(GlobalContext)
 
   // Change execute command based on os platform
   let execute = '\n';
@@ -61,7 +64,7 @@ const Instructions = ({
     const fileName = e.currentTarget.value;
     setFileName(fileName);
   }
-   
+
   // EndPointGuide component definition, conditionally rendered
   const EndPointGuide = () => {
     // endpoint guide only exists when user is in endpoint testing

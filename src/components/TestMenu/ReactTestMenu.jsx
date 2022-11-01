@@ -65,18 +65,15 @@ const ReactTestMenu = () => {
   const saveTest = () => {
     const valid = validateInputs('react', reactTestCase);
     dispatchToGlobal(setValidCode(valid));
-
     
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
     const updatedData = fileHandle();
-
     // check to see if user has saved test before. If not, then open ExportFileModal
     if(!newFilePath.includes('test.js') || !userSavedTest){
       dispatchToGlobal(toggleExportBool())
       setIsExportModalOpen(true)
       setUserSavedTest(true)
     }
-
 
     // if user already has a saved test file, rewrite the file with the updated data
     if(newFilePath.includes('test.js') && userSavedTest){
@@ -105,6 +102,7 @@ const ReactTestMenu = () => {
         openDocs={openDocs}
       />
       <Modal
+        ariaHideApp={false}
         title={title}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
@@ -113,13 +111,14 @@ const ReactTestMenu = () => {
         dispatchTestCase={dispatchToReactTestCase}
         createTest={createNewTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
       
-
+      // can this be deleted?
     //     <div
     //       id={styles.right}
     //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}

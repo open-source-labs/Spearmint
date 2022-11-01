@@ -8,7 +8,7 @@ export interface AccTestCaseState {
   itStatements: ItStatements;
   fileName: string;
   filePath: string;
-  testType: string;
+  accTestType: string;
   puppeteerUrl: string;
 }
 export interface DescribeBlocks {
@@ -34,4 +34,5 @@ export interface Action {
   describeBlocks: any[];
   standardTag: string;
   catTag: string;
+  accTestType: string | undefined;
 }
