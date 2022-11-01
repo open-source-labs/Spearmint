@@ -15,7 +15,7 @@ function ProjectLoader() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
 
@@ -110,7 +110,6 @@ function ProjectLoader() {
     })
       .then((res) => {
         const { url } = res;
-        console.log('handleGoogleLogin function')
         // how we trigger the Main Process in electron to show our window
         ipcRenderer.send('Google-Oauth', url);
       })
@@ -121,7 +120,6 @@ function ProjectLoader() {
 
   const setUserTheme = (theme) => {
     dispatchToGlobal(setTheme(theme));
-    console.log(theme);
   }
 
   // Listens for event from electron.jsx line 205
@@ -167,10 +165,13 @@ function ProjectLoader() {
         password,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data);
-      }).then(setIsLoggedIn(true))
+      .then((res) => {
+        if (res.status === 200) setIsLoggedIn(true);
+        if (res.status === 400) {
+          setError(true);
+          setMessage('Username already exists. Please pick another one.')
+        };
+      })
       .catch((err) => console.log(err));
   };
 
@@ -263,16 +264,16 @@ function ProjectLoader() {
           renderLogin()
         ) : (
           <div className={styles.contentBox}>
-            <span id={styles.welcomeText}>
+            {/* <span id={styles.welcomeText}>
               Welcome <span id={styles.userText}>{username}</span>!
-            </span>
+            </span> */}
             <span id={styles.openFolderSpan}>
-              Select your application
+              Select your application:
               <OpenFolder />
             </span>
-            <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
+            {/* <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
               LOGOUT
-            </Button>
+            </Button> */}
           </div>
         )}
       </section>

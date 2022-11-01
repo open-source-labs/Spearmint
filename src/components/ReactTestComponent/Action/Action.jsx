@@ -50,12 +50,6 @@ const Action = ({ statement, statementId, describeId, itId }) => {
       <div id={styles.eventTypeFlexBox}>
         <div id={styles.eventType}>
           <label htmlFor='eventType'>Event Type</label>
-          {/* <AutoComplete
-            statement={statement}
-            statementType='action'
-            dispatchToTestCase={dispatchToReactTestCase}
-            id={styles.autoComplete}
-          /> */}
           <input
             type='text'
             id='eventType'
@@ -106,12 +100,12 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='findBy'>findBy</option>
               <option value='findAllBy'>findAllBy</option>
             </select>
-            {/* <span id={styles.hastooltip} role='tooltip'>
+            <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
-            </span> */}
+            </span>
 
             <select
               id='querySelector'
@@ -129,23 +123,27 @@ const Action = ({ statement, statementId, describeId, itId }) => {
               <option value='TestId'>TestId</option>
               {/* TextMatch Precision & Normalization will be added */}
             </select>
-            {/* <span id={styles.hastooltip} role='tooltip'>
+            <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.querySelector} />
               </span>
-            </span> */}
+            </span>
             <div id={styles.query}>
-              <label htmlFor='queryValue' className={styles.queryLabel}>
+              <span>
+              {/* <label htmlFor='queryValue' className={styles.queryLabel}>
                 Query
-              </label>
-
+              </label> */}
+              </span>
+              <span>
               <input
                 type='text'
                 id='queryValue'
+                placeholder='text, queryOptions, waitForOptions'
                 value={statement.queryValue}
                 onChange={(e) => handleChangeActionFields(e, 'queryValue')}
               />
+              </span>
             </div>
           </div>
           

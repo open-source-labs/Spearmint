@@ -130,10 +130,11 @@ const EndpointTestMenu = () => {
         dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
         createTest={title === 'New Test' ? createNewEndpointTest : null}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
           {/* <UploadTest testType="endpoint test" />
           <GetTests testType="endpoint test" /> */}
 

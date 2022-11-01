@@ -4,6 +4,7 @@ import { toggleModal, setTestCase, updateFile } from '../../context/actions/glob
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './Modal.module.scss';
 
+
 export function useCopy() {
   const [copySuccess, setCopySuccess] = useState(false);
   const codeRef = useRef(null);
@@ -35,8 +36,10 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
   return { handleNewTest };
 }
 
-export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io') {
+export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io', accTestType) {
+
   const [{ projectFilePath }] = useContext(GlobalContext);
+
   switch (test) {
     case 'solid': 
       return {
@@ -44,19 +47,19 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
         install: 'npm i --save-dev jest solid-jest \nnpm i @babel/preset-env babel-preset-solid \nnpm i --save-dev test-data-bot \nnpm i --save-dev @testing-library/jest-dom \nnpm i --save-dev jest-environment-jsdom \nnpm i --save-dev solid-testing-library'
       }
     case 'acc':
-      if (testType === 'html') {
+      if (accTestType === 'html') {
         return {
           cd: `cd ${projectFilePath}`,
           install: 'npm i -D axe-core regenerator-runtime jest',
         };
       }
-      if (testType === 'react') {
+      if (accTestType === 'react') {
         return {
           cd: `cd ${projectFilePath}`,
           install: 'npm i -D axe-core regenerator-runtime jest enzyme enzyme-adapter-react-16',
         };
       }
-      if (testType === 'puppeteer') {
+      if (accTestType === 'puppeteer') {
         return {
           cd: `cd ${projectFilePath}`,
           install: 'npm i -D axe-core puppeteer',

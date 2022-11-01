@@ -40,7 +40,7 @@ const NavBar = ({ inAboutPage }) => {
     reactTestCaseReducer,
     reactTestCaseState
   );
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('New Test');
+  const { title, isModalOpen, openModal, openScriptModal, setIsModalOpen } = useToggleModal('New Test');
   
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   // we might have to export the context from ProjectLoader.jsx and then userContext(LoginContext) here to read in and set isLoggedIn from the login component
@@ -99,9 +99,10 @@ const NavBar = ({ inAboutPage }) => {
         <span title='Change settings'>
           <VscSettingsGear size={'1.5rem'}/>
         </span> */}
-        <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
+        {/* <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
           LOGOUT
-        </Button>
+        </Button> */}
+      </div>
         <div className={styles.modBtnContainer}>
             <span title='Dark Mode'>
               <BiMoon size={'1.5rem'} />
@@ -113,12 +114,11 @@ const NavBar = ({ inAboutPage }) => {
               <BiSun size={'1.5rem'} />
             </span>
         </div>
-      </div>
       <div>
         <Modal
         title={title}
         isModalOpen={isModalOpen}
-        closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchMockData={dispatchToMockData}
         dispatchTestCase={dispatchToReactTestCase}
         createTest={createNewTest}

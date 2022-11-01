@@ -4,6 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import EditorView from './../../components/EditorView/EditorView';
 import BrowserView from './../../components/BrowserView/BrowserView';
+import UserGuideView from './../../components/UserGuideView/UserGuideView';
 import { GlobalContext } from './../../context/reducers/globalReducer';
 import { closeRightPanel, setTabIndex } from './../../context/actions/globalActions';
 import TerminalView from './../../components/Terminal/TerminalView';
@@ -38,21 +39,23 @@ const StyledTab = withStyles((theme) => ({
   },
 }))((props) => <Tab {...props} />);
 
-const RightPanel = () => {
-  const [{ rightPanelDisplay, url, tabIndex }, dispatchToGlobal] = useContext(GlobalContext);
-
+const RightPanel = ({accTestType}) => {
+  const [{ rightPanelDisplay, url, tabIndex, theme }, dispatchToGlobal] = useContext(GlobalContext);
   return (
-    <div id={styles.rightPanel}>
+    <div id={styles[`rightPanel${theme}`]}>
       <div id={styles.tabsContainer}>
         <StyledTabs 
           id={styles.tabsBox}
           value={tabIndex} 
           onChange={(event, newValue) => dispatchToGlobal(setTabIndex(newValue))} 
-          centered
+          variant="scrollable"
+          scrollButtons="auto"
+          aria-label="scrollable auto tabs example"
         >
-          <StyledTab  value={0} label="Code Editor" />
-          <StyledTab  value={1} label="Browser" />
-          <StyledTab  value={2} label="Test Terminal" />
+          <StyledTab  value={0} label="Code Editor" style={{ minWidth:'24%' }}/>
+          <StyledTab  value={1} label="Browser" style={{ minWidth:'24%' }}/>
+          <StyledTab  value={2} label="Test Terminal" style={{ minWidth:'24%' }}/>
+          <StyledTab  value={3} label='User Guide' style={{ minWidth:'24%' }}/>
         </StyledTabs>
       </div>
 
@@ -64,6 +67,12 @@ const RightPanel = () => {
       </div>
       <div className={styles.viewContainer} hidden={tabIndex !== 2}>
         <TerminalView />
+      </div>
+      <div className={styles.viewContainer} hidden={tabIndex !== 3}>
+        <UserGuideView 
+          theme={theme}
+          accTestType={accTestType}
+        />
       </div>
     </div>
   );

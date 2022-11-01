@@ -31,14 +31,14 @@ const ReactTestMenu = () => {
   // React testing docs url
   const reactUrl = 'https://testing-library.com/docs/react-testing-library/example-intro';
 
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('react');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('react');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [reactTestCase, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
     useContext(GlobalContext);
   const generateTest = useGenerateTest('react', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
-  const [userSavedTest, setUserSavedTest] = useState(false)
+  const [userSavedTest, setUserSavedTest] = useState(false);
 
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
@@ -65,18 +65,15 @@ const ReactTestMenu = () => {
   const saveTest = () => {
     const valid = validateInputs('react', reactTestCase);
     dispatchToGlobal(setValidCode(valid));
-
     
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`; 
     const updatedData = fileHandle();
-
     // check to see if user has saved test before. If not, then open ExportFileModal
     if(!newFilePath.includes('test.js') || !userSavedTest){
       dispatchToGlobal(toggleExportBool())
       setIsExportModalOpen(true)
       setUserSavedTest(true)
     }
-
 
     // if user already has a saved test file, rewrite the file with the updated data
     if(newFilePath.includes('test.js') && userSavedTest){
@@ -105,20 +102,23 @@ const ReactTestMenu = () => {
         openDocs={openDocs}
       />
       <Modal
+        ariaHideApp={false}
         title={title}
         isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
         closeModal={closeModal}
         dispatchMockData={dispatchToMockData}
         dispatchTestCase={dispatchToReactTestCase}
         createTest={createNewTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
       
-
+      // can this be deleted?
     //     <div
     //       id={styles.right}
     //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}

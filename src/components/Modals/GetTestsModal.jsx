@@ -10,8 +10,6 @@ import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCa
 import { puppeteerReplaceTest } from '../../context/actions/puppeteerTestCaseActions';
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import { reactReplaceTest } from '../../context/actions/frontendFrameworkTestCaseActions';
-import { NextJSTestCaseContext } from '../../context/reducers/nextjsTestCaseReducer';
-import { nextjsReplaceTest} from '../../context/actions/frontendFrameworkTestCaseActions'
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { reduxReplaceTest } from '../../context/actions/reduxTestCaseActions';
 import { SecTestCaseContext } from '../../context/reducers/secTestCaseReducer';
@@ -34,7 +32,6 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
   const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
   const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
   const [, dispatchToReactData] = useContext(ReactTestCaseContext);
-  const [, dispatchToNextJSData] = useContext(NextJSTestCaseContext);
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
   const [, dispatchToSecTestCase] = useContext(SecTestCaseContext);
   const [, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
@@ -61,16 +58,12 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
   };
 
   const handleSelectTest = (i) => {
-    console.log(testType + ':', tests[i].testState);
     switch (testType) {
       case 'acc':
         dispatchToAccTestCase(accReplaceTest(tests[i].testState));
         break;
       case 'react':
         dispatchToReactData(reactReplaceTest(tests[i].testState));
-        break;
-      case 'nextjs':
-        dispatchToNextJSData(nextjsReplaceTest(tests[i].testState));
         break;
       case 'redux':
         dispatchToReduxTestCase(reduxReplaceTest(tests[i].testState));

@@ -10,6 +10,7 @@
   border-radius: 2px;
   --text-color: black;
   --action-color: #{$mint};
+  --component-color: black;
 }
 
 #actiondark {
@@ -19,7 +20,12 @@
   padding: 14px 10px;
   border-radius: 2px;
 
+  --bg-color : #{$chromegray-less-light};
+  --action-color: white;
+  --component-color: #{$mint};
   --text-color: white;
+  --component-color: #{$mint};
+  --action-color: white;
 }
 
 #close {
@@ -47,14 +53,18 @@
   }
 }
 
+#componentName{
+  color: var(--component-color);
+}
+
 .header {
   font-size: 1rem;
   font-weight: bold;
   color: var(--action-color);
+}
 
-  .componentName {
-    font-family: 'Lucida Console', monospace;
-  }
+#componentName {
+  color: var(--component-color);
 }
 
 .queryLabel {
@@ -129,8 +139,10 @@
 }
 
 #query {
+  display: flex;
+  align-items: center;
   input {
-    width: 100%;
+    width: 200px;
     min-width: 150px;
     height: 25px;
     border: 1px solid $light-gray;
@@ -146,7 +158,8 @@
 #tooltip {
   min-width: 10em;
   padding: 0.5em 0.75em;
-
+  color: $dark-gray;
+  font-size: 12px;
   box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
   @include tooltip;
 }

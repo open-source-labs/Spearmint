@@ -29,7 +29,7 @@ const AccTestMenu = () => {
   const accUrl = 'https://www.deque.com/axe/core-documentation/api-documentation/';
 
   // initialize hooks
-  const { title, isModalOpen, openModal, openScriptModal, closeModal, } = useToggleModal('acc');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('acc');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -102,16 +102,18 @@ const AccTestMenu = () => {
         title={title}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchToMockData={null}
         dispatchTestCase={dispatchToAccTestCase}
         createTest={createNewTest}
         testType={accTestCase.testType}
         puppeteerUrl={accTestCase.puppeteerUrl}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-        />
+        /> */}
     
            {/* <UploadTest testType="acc" />
          <GetTests testType="acc" /> */}
