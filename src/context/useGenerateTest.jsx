@@ -1177,12 +1177,14 @@ function useGenerateTest(test, projectFilePath) {
 
     // JASMINE EDIT
     const addDenoEndpoint = (statement) => {
-      testFileCode += `\n Deno.test('${statement.testName}', async () => {\n const request = await superoak(app);`;
-      testFileCode += statement.postData
-        ? `.send( ${statement.postData.trim()})\n`
-        : statement.headers.length
-        ? `.set({`
-        : '';
+      testFileCode += `\n Deno.test('${statement.testName}', async () => {\n const request = await superoak(app);\n`;
+      // testFileCode += statement.postData
+      //   ? `.send( ${statement.postData.trim()})\n`
+      //   : statement.headers.length
+      //   ? `.set({`
+      //   : '';
+      testFileCode += `await request.${statement.method}('${statement.route}')`
+        console.log('statement--->', statement);
 
       statement.headers.forEach(({ headerName, headerValue }, index) => {
         testFileCode +=
@@ -1202,6 +1204,7 @@ function useGenerateTest(test, projectFilePath) {
           testFileCode += not
             ? `.not.${matcher}(${value});`
             : `.${matcher}(${value});`;
+          
         }
       );
       testFileCode += '});';

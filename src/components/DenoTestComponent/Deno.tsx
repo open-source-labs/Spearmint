@@ -61,6 +61,7 @@ const Deno = ({ endpoint, index, dispatchToDenoTestCase }: DenoProps) => {
   };
 
   const addAssertionHandleClick = () => {
+    // index is incremented everytime the user creates a new endpoint test
     dispatchToDenoTestCase(addAssertion(index));
   };
 

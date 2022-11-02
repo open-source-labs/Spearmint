@@ -5,7 +5,7 @@ import { DenoTestCaseContext } from '../../context/reducers/denoTestCaseReducer'
 import { deleteAssertion, updateAssertion } from '../../context/actions/denoTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import jestMatchers from './JestMatchers';
+import denoMatchers from './DenoMatchers';
 import { Assertion, EventTarget } from '../../utils/denoTypes';
 
 interface DenoProps {
@@ -78,13 +78,13 @@ const EndpointAssertion = ({ assertion, index, id }: DenoProps) => {
             value={assertion.matcher}
             onChange={(e) => handleChangeUpdateAssertion(e, 'matcher')}
           >
-            {jestMatchers.map((matcher) => (
+            {denoMatchers.map((matcher) => (
               <option value={matcher}>{matcher}</option>
             ))}
           </select>{' '}
           <span id={stylez.hastooltip} role='tooltip'>
             <img src={questionIcon} alt='help' onClick={handleClickTooltip} />
-            <span id={stylez.tooltip}>Click me to find out more about Jest test matchers</span>
+            <span id={stylez.tooltip}>Click me to find out more about Deno test matchers</span>
           </span>
         </div>
       </div>
