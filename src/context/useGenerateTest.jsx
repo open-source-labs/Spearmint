@@ -583,10 +583,8 @@ function useGenerateTest(test, projectFilePath) {
     const addDenoTestStatements = () => {
       const { denoStatements } = denoTestCase;
       denoStatements.forEach((statement) => {
-        console.log(statement.type)
         switch (statement.type) {
           case 'endpoint':
-            console.log(statement)
             return addDenoEndpoint(statement);
           default:
             return statement;

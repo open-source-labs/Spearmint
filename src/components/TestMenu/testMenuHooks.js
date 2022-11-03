@@ -59,11 +59,12 @@ export const validateInputs = (testSuite, testCaseState) => {
       return true;
     case 'deno': 
       const { denoStatements } = testCaseState;
-      if (!serverFilePath || (addDB && !dbFilePath)) return false;
+      // we are not configuring a server for deno tests so I commented this out
+      // if (!serverFilePath || (addDB && !dbFilePath)) return false;
       for (endpoint of denoStatements) {
         if (!endpoint.method || !endpoint.route) return false;
         for (assertion of endpoint.assertions) {
-          if (!assertion.expectedResponse || !assertion.value || !assertion.matcher) return false;
+          if (!assertion.value || !assertion.matcher) return false;
         }
       }
       return true;
