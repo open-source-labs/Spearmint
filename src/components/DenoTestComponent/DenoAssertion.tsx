@@ -15,12 +15,12 @@ interface DenoProps {
 }
 
 const EndpointAssertion = ({ assertion, index, id }: DenoProps) => {
-  const [, dispatchToDenoTestCase] = useContext(DenoTestCaseContext);
+  const [, dispatchToDenoTestCase] = useContext<any>(DenoTestCaseContext);
   const [, dispatchToGlobal] = useContext<any>(GlobalContext);
-
+  const [ {theme} ] = useContext<any>(GlobalContext);
   const questionIcon = require('../../assets/images/help-circle.png');
   const closeIcon = require('../../assets/images/close.png');
-  const jestURL: string = 'https://jestjs.io/docs/en/expect';
+  const jestURL: string = 'https://cmorten.github.io/superoak/';
 
   const handleClickDeleteAssertion = () => {
     dispatchToDenoTestCase(deleteAssertion(index, id));
@@ -40,36 +40,10 @@ const EndpointAssertion = ({ assertion, index, id }: DenoProps) => {
 
   return (
     <div id={styles.groupFlexboxAssertion}>
-      <div id={styles.labelInput}>
-        <label htmlFor='requestBody'>Expect Response</label>
-        <div id={styles.inputFlexBox}>
-          <input
-            type='text'
-            list='responseProperties'
-            value={assertion.expectedResponse}
-            onChange={(e) => handleChangeUpdateAssertion(e, 'expectedResponse')}
-          />
-          <datalist id='responseProperties'>
-            <option value='Headers'></option>
-            <option value='Status'></option>
-            <option value='Body'></option>
-            <option value='Text'></option>
-            <option value='Type'></option>
-          </datalist>
-        </div>
-      </div>
       <div id={styles.dropdownWrapper}>
         <div id={styles.endMatcherLabel}>
           <div>
             <label htmlFor='matcher'>Matcher</label>
-          </div>
-          <div id={styles.notDiv}>
-            Not?
-            <input
-              type='checkbox'
-              onChange={(e) => handleChangeUpdateAssertion(e, 'not')}
-              style={{ marginLeft: '5px' }}
-            />
           </div>
         </div>
         <div id={styles.dropdownFlex}>
@@ -84,7 +58,7 @@ const EndpointAssertion = ({ assertion, index, id }: DenoProps) => {
           </select>{' '}
           <span id={stylez.hastooltip} role='tooltip'>
             <img src={questionIcon} alt='help' onClick={handleClickTooltip} />
-            <span id={stylez.tooltip}>Click me to find out more about Deno test matchers</span>
+            <span id={stylez.tooltip}>Click me to find out more about SuperOak </span>
           </span>
         </div>
       </div>

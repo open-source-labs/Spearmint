@@ -1178,21 +1178,22 @@ function useGenerateTest(test, projectFilePath) {
     // JASMINE EDIT
     const addDenoEndpoint = (statement) => {
       testFileCode += `\n Deno.test('${statement.testName}', async () => {\n const request = await superoak(app);\n`;
-      // testFileCode += statement.postData
-      //   ? `.send( ${statement.postData.trim()})\n`
-      //   : statement.headers.length
-      //   ? `.set({`
-      //   : '';
-      testFileCode += `await request.${statement.method}('${statement.route}')`
-        console.log('statement--->', statement);
-
+      testFileCode += `await request.${statement.method}('${statement.route}')`;
+      testFileCode += statement.headers.length
+        ? `\n.set({`
+        : '';
       statement.headers.forEach(({ headerName, headerValue }, index) => {
         testFileCode +=
           headerName.length > 0 && headerValue.length > 0
             ? `'${headerName}': '${headerValue}',`
             : '';
       });
-      testFileCode += statement.headers.length ? '}); \n' : '';
+      testFileCode += statement.headers.length ? '\n})' : '';
+      testFileCode += statement.postData
+        ? `\n.send( ${statement.postData.trim()})`
+        : '';
+        console.log('statement--->', statement);
+      
       statement.assertions.forEach(
         ({ matcher, expectedResponse, not, value }) => {
           matcher = matcher
@@ -1203,12 +1204,12 @@ function useGenerateTest(test, projectFilePath) {
           //testFileCode += `\n assert${assertion}(${expectedResponse.toLowerCase()}, ${optionalArg})`;
           testFileCode += not
             ? `.not.${matcher}(${value});`
-            : `.${matcher}(${value});`;
+            : `\n.${matcher}(${value})`;
           
         }
       );
-      testFileCode += '});';
-      testFileCode += '\n';
+      testFileCode += '})';
+      testFileCode += ';\n';
     };
     // JASMINE EDIT
 

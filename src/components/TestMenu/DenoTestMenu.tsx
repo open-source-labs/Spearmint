@@ -41,8 +41,8 @@ const DenoTestMenu = () => {
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
   // Deno testing docs url
-  const denoUrl = 'https://deno.land/manual@v1.27.0/testing';
-
+  const denoUrl = 'https://cmorten.github.io/superoak/';
+  
   useEffect(() => {
     // validateInputs('endpoint', endpointTestCase)
     //   ? dispatchToGlobal(setValidCode(true))
@@ -86,14 +86,6 @@ const DenoTestMenu = () => {
     }
   }
 
-  const handleClickAddDatabase = () => {
-    if (denoTestCase.addDB) {
-      dispatchToDenoTestCase(toggleDB(false));
-      dispatchToDenoTestCase(updateDBFilePath('', ''));
-      dispatchToDenoTestCase(setFilePath(''));
-    } else dispatchToDenoTestCase(toggleDB('PostgreSQL'));
-  };
-
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
@@ -104,9 +96,10 @@ const DenoTestMenu = () => {
   
   if (exportBool) {
     const valid = validateInputs('deno', denoTestCase);
-    dispatchToGlobal(setValidCode(true));
+    dispatchToGlobal(setValidCode(valid));
+    console.log(valid)
     dispatchToGlobal(toggleExportBool());
-    if (true && !file) dispatchToGlobal(updateFile(generateTest(denoTestCase)));
+    if (valid && !file) dispatchToGlobal(updateFile(generateTest(denoTestCase)));
   }
 
 
@@ -134,18 +127,6 @@ const DenoTestMenu = () => {
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
       />
-          {/* <UploadTest testType="endpoint test" />
-          <GetTests testType="endpoint test" /> */}
-
-        <div id={styles[`dbConfig${theme}`]}>
-          <Button 
-            variant='outlined'
-            data-testid='endPointButton' 
-            size='medium'
-            onClick={handleClickAddDatabase}>
-            Configure Database
-          </Button>
-        </div>
     </>
   );
 };

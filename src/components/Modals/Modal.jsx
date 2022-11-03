@@ -361,7 +361,7 @@ if (title === 'New Test') {
                 <div className='code-wrapper'>
                   <code>
                     {title === 'vue' && `npx vue-cli-service test:unit ${fileName}\n`}
-                    {title === 'deno' && `deno test ${fileName}\n`}
+                    {title === 'deno' && `deno test ${fileName} --allow-net\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest ${fileName}\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest --verbose ${fileName}\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest --coverage ${fileName}\n`}
@@ -369,17 +369,22 @@ if (title === 'New Test') {
                 </div>
               </pre>
               <span id={styles.runTestButtons}>
-                {title !== 'deno' ? <Button id={styles.save} onClick={jestTest}>
-                  Jest Test
-                </Button> : <Button id={styles.save} onClick={denoTest}>
+                {title === 'deno' ? 
+                <Button id={styles.save} onClick={denoTest}>
                   Deno Test
-                </Button>}
-                <Button id={styles.save} onClick={verboseTest}>
-                  Verbose Test
-                </Button>
-                <Button id={styles.save} onClick={coverageTest}>
-                  Coverage Test
-                </Button>
+                </Button> : 
+                <div id={styles.runTestButtons}>
+                  <Button id={styles.save} onClick={jestTest}>
+                    Jest Test
+                  </Button> 
+                  <Button id={styles.save} onClick={verboseTest}>
+                    Verbose Test
+                  </Button>
+                  <Button id={styles.save} onClick={coverageTest}>
+                    Coverage Test
+                  </Button>
+                </div>
+                } 
                 <Button id={styles.save} onClick={clearTerminal}>
                   Clear Terminal
                 </Button>

@@ -289,7 +289,8 @@ const Instructions = ({
                 </AccordionDetails>
               </Accordion>
               {/* Install Dependencies */}
-              <Accordion>
+              {/* conditional rendering for Deno, since it does not require npm */}
+              {title === 'deno' ? null: <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls='panel1a-content'
@@ -314,7 +315,7 @@ const Instructions = ({
                     </span>
                   </div>
                 </AccordionDetails>
-              </Accordion>
+              </Accordion>}
               {/* Create config file only if title is react or hook */}
               <ReactDependencies />
             </div>
