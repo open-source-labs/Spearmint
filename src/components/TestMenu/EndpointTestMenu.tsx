@@ -47,7 +47,7 @@ const EndpointTestMenu = () => {
   useEffect(() => {
     // validateInputs('endpoint', endpointTestCase)
     //   ? dispatchToGlobal(setValidCode(true))
-    dispatchToGlobal(setValidCode(false));
+    dispatchToGlobal(setValidCode(true));
   }, []);
 
   const openDocs = () => {
