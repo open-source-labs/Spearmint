@@ -5,9 +5,6 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const { ipcRenderer } = require('electron');
 
-// TO DO TUESDAY
-// find way to pass test type and test/title to pass to Instructions
-
 const UserGuideView = ({theme, accTestType}) => {
 const [{ testCase }, dispatchToGlobal] = useContext(GlobalContext);
 
@@ -17,11 +14,7 @@ const [{ testCase }, dispatchToGlobal] = useContext(GlobalContext);
       className={styles.instructions}
       >
       <div id={styles.instructionsDiv}>
-        <br />
-        <br />
-        <p>CONDITIONALLY RENDERED VIDEO WILL GO HERE</p>
       </div>
-      <br/>
       <br/>
       <Instructions
       title={testCase}
@@ -29,6 +22,7 @@ const [{ testCase }, dispatchToGlobal] = useContext(GlobalContext);
       />
     </div>
   );
-}
+} 
+
 
 export default UserGuideView;
