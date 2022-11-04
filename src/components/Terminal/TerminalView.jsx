@@ -24,7 +24,6 @@ const TerminalView = () => {
   useLayoutEffect(() => {
     const container = document.getElementById('terminalContainer')
 
-    // console.log(container);
     term.open(document.getElementById('terminalContainer'));
     // when we have input events (e), we would send the data to the main processor
     term.onData((e) => {

@@ -73,9 +73,9 @@ const Modal = ({
     
     // reset fileName and invalidFileName
     setInvalidFileName(false);
-    setFileName('');
+    //setFileName('');
     dispatchToGlobal(toggleExportBool());
-    dispatchToGlobal(updateFile(''));
+    //dispatchToGlobal(updateFile(''));
   };
 
   const { handleNewTest } = useNewTest(
@@ -177,6 +177,10 @@ const Modal = ({
     execute = '\r';
   }
 
+  const denoTest = () => {
+    ipcRenderer.send('terminal.toTerm', `Deno test __tests__/${fileName}.test.js --allow-net ${execute}`);
+  };
+
   const jestTest = () => {
     if (title === 'vue'){
       ipcRenderer.send('terminal.toTerm', `npx vue-cli-service test:unit ${fileName}${execute}`);
@@ -204,6 +208,10 @@ const Modal = ({
     }
     dispatchToGlobal(setTabIndex(2));
   };
+
+  const clearTerminal = () => {
+    ipcRenderer.send('terminal.toTerm', `clear${execute}`);
+  }
 
 // Home Button functionality  
 // Warning that tests will not be saved while transitioning between test types
@@ -273,7 +281,7 @@ if (title === 'New Test') {
           id={styles.escapeButton} 
           onKeyPress={clearAndClose}
           onClick={clearAndClose}
-        />  
+        /> {console.log(title)} 
         
       </div>
       
@@ -353,21 +361,32 @@ if (title === 'New Test') {
                 <div className='code-wrapper'>
                   <code>
                     {title === 'vue' && `npx vue-cli-service test:unit ${fileName}\n`}
-                    {title !== 'vue' && `npx jest ${fileName}\n`}
-                    {title !== 'vue' && `npx jest --verbose ${fileName}\n`}
-                    {title !== 'vue' && `npx jest --coverage ${fileName}\n`}
+                    {title === 'deno' && `deno test ${fileName} --allow-net\n`}
+                    {title !== 'vue' && title !== 'deno' && `npx jest ${fileName}\n`}
+                    {title !== 'vue' && title !== 'deno' && `npx jest --verbose ${fileName}\n`}
+                    {title !== 'vue' && title !== 'deno' && `npx jest --coverage ${fileName}\n`}
                   </code>
                 </div>
               </pre>
               <span id={styles.runTestButtons}>
-                <Button id={styles.save} onClick={jestTest}>
-                  Jest Test
-                </Button>
-                <Button id={styles.save} onClick={verboseTest}>
-                  Verbose Test
-                </Button>
-                <Button id={styles.save} onClick={coverageTest}>
-                  Coverage Test
+                {title === 'deno' ? 
+                <Button id={styles.save} onClick={denoTest}>
+                  Deno Test
+                </Button> : 
+                <div id={styles.runTestButtons}>
+                  <Button id={styles.save} onClick={jestTest}>
+                    Jest Test
+                  </Button> 
+                  <Button id={styles.save} onClick={verboseTest}>
+                    Verbose Test
+                  </Button>
+                  <Button id={styles.save} onClick={coverageTest}>
+                    Coverage Test
+                  </Button>
+                </div>
+                } 
+                <Button id={styles.save} onClick={clearTerminal}>
+                  Clear Terminal
                 </Button>
               </span>
             </div>

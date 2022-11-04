@@ -119,7 +119,8 @@
   color: $chromegray-less-light;
   min-width: 15em;
   padding: 0.5em 0.75em;
-  box-shadow: 0 0.05em 0.15em rgba(black, 0.1);
+  color: black;
+  box-shadow: white;
   @include tooltip;
 }
 
@@ -183,9 +184,6 @@
 }
 #matcherInput {
   width: 200px;
-}
-
-#lastAssertion {
 }
 
 #matcherVal {

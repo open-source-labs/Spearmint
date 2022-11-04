@@ -4,6 +4,7 @@ import { toggleModal, setTestCase, updateFile } from '../../context/actions/glob
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './Modal.module.scss';
 
+/* is this being used? Cannot find anything calling this hook
 
 export function useCopy() {
   const [copySuccess, setCopySuccess] = useState(false);
@@ -21,7 +22,7 @@ export function useCopy() {
   };
 
   return { copySuccess, codeRef, handleCopy };
-}
+} */
 
 export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, closeModal) {
   const [, dispatchToGlobal] = useContext(GlobalContext);
@@ -130,7 +131,11 @@ export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.
       return {
         cd: `cd ${projectFilePath}`,
         install: 'npm i -D @testing-library/svelte @testing-library/user-event @testing-library/jest-dom @babel/preset-env svelte-jester jest msw babel-jest'
-      }
+      };
+    case 'deno':
+      return {
+        cd: `cd ${projectFilePath}`
+      };
     default:
       return '';
     // code block

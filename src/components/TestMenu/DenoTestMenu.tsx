@@ -19,9 +19,9 @@ import {
   toggleDB,
   updateDBFilePath,
   resetTests
-} from '../../context/actions/endpointTestCaseActions';
+} from '../../context/actions/denoTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
-import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
+import { DenoTestCaseContext } from '../../context/reducers/denoTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
@@ -32,31 +32,31 @@ const { ipcRenderer } = require('electron')
 // import UploadTest from '../UploadTest/UploadTest';
 // import GetTests from '../GetTests/GetTests';
 
-// child component of EndPointTest menu. has NewTest and Endpoint buttons
-const EndpointTestMenu = () => {
-  const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
+// child component of DenoTest menu. has NewTest and Endpoint buttons
+const DenoTestMenu = () => {
+  const [denoTestCase, dispatchToDenoTestCase] = useContext<any>(DenoTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
-  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('endpoint');
-  const generateTest = useGenerateTest('endpoint', projectFilePath);
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('deno');
+  const generateTest = useGenerateTest('deno', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
-
-  // Endpoint testing docs url
-  const endpointUrl = 'https://www.npmjs.com/package/supertest';
-
+  // Deno testing docs url
+  const denoUrl = 'https://cmorten.github.io/superoak/';
+  
   useEffect(() => {
-    // validateInputs('endpoint', endpointTestCase)
-    //   ? dispatchToGlobal(setValidCode(true))
-    dispatchToGlobal(setValidCode(true));
+    // this is commented due to a bug where the user cannot export a test
+    validateInputs('endpoint', denoTestCase)
+      // ? dispatchToGlobal(setValidCode(true)) : 
+      dispatchToGlobal(setValidCode(true));
   }, []);
 
   const openDocs = () => {
-    dispatchToGlobal(openBrowserDocs(endpointUrl));
+    dispatchToGlobal(openBrowserDocs(denoUrl));
   };
 
   // functionality when user clicks Preview
   const fileHandle = () => {
-    const testGeneration = generateTest(endpointTestCase);
+    const testGeneration = generateTest(denoTestCase);
 
     // generates test code using UseGenerateTest.jsx and displays it in the Code Editor View
     dispatchToGlobal(updateFile(testGeneration));
@@ -68,7 +68,8 @@ const EndpointTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    const valid = validateInputs('endpoint', endpointTestCase);
+    const valid = validateInputs('endpoint', denoTestCase);
+    console.log('I am inside saveTest button??!?!!?', valid)
     dispatchToGlobal(setValidCode(valid));
 
     // store the file path of the new saved test file
@@ -87,27 +88,20 @@ const EndpointTestMenu = () => {
     }
   }
 
-  const handleClickAddDatabase = () => {
-    if (endpointTestCase.addDB) {
-      dispatchToEndpointTestCase(toggleDB(false));
-      dispatchToEndpointTestCase(updateDBFilePath('', ''));
-      dispatchToEndpointTestCase(setFilePath(''));
-    } else dispatchToEndpointTestCase(toggleDB('PostgreSQL'));
-  };
-
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
   const handleResetTests = () => {
-    dispatchToEndpointTestCase(resetTests());
+    dispatchToDenoTestCase(resetTests());
   }
   
   if (exportBool) {
-    const valid = validateInputs('endpoint', endpointTestCase);
+    const valid = validateInputs('deno', denoTestCase);
     dispatchToGlobal(setValidCode(valid));
+    console.log(valid)
     dispatchToGlobal(toggleExportBool());
-    if (valid && !file) dispatchToGlobal(updateFile(generateTest(endpointTestCase)));
+    if (valid && !file) dispatchToGlobal(updateFile(generateTest(denoTestCase)));
   }
 
 
@@ -128,28 +122,15 @@ const EndpointTestMenu = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         closeModal={closeModal}
-        dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
+        dispatchTestCase={title === 'New Test' ? dispatchToDenoTestCase : null}
         createTest={title === 'New Test' ? createNewEndpointTest : null}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
+      <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      /> */}
-          {/* <UploadTest testType="endpoint test" />
-          <GetTests testType="endpoint test" /> */}
-
-        <div id={styles[`dbConfig${theme}`]}>
-          <Button 
-            variant='outlined'
-            data-testid='endPointButton' 
-            size='medium'
-            onClick={handleClickAddDatabase}>
-            Configure Database
-          </Button>
-        </div>
+      />
     </>
   );
 };
 
-export default EndpointTestMenu;
+export default DenoTestMenu;

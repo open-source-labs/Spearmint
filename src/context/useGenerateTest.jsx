@@ -563,6 +563,36 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
+    /* ------------------------------------------ DENO IMPORT + TEST STATEMENTS ------------------------------------------ */
+
+    // adds all your import statements at the top to the preview file
+    const addDenoImportStatements = () => {
+      let { serverFilePath, serverFileName, dbFileName, dbFilePath, addDB } =
+        denoTestCase;
+      createPathToDenoFiles(
+        serverFilePath,
+        serverFileName,
+        dbFilePath,
+        dbFileName,
+        addDB
+      );
+      testFileCode += '\n';
+    };
+
+    // adds all the statements from the test blocks and transforms it into code in the preview file
+    const addDenoTestStatements = () => {
+      const { denoStatements } = denoTestCase;
+      denoStatements.forEach((statement) => {
+        switch (statement.type) {
+          case 'endpoint':
+            return addDenoEndpoint(statement);
+          default:
+            return statement;
+        }
+      });
+    };
+
+
     /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
     // Actions Filepath
@@ -825,6 +855,57 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
+    // Deno Filepath: finds the endpoint routes in the project file
+    const createPathToDenoFiles = (
+      serverFilePath,
+      serverFileName,
+      dbFileName,
+      dbFilePath,
+      addDB
+    ) => {
+      // if you input a server file in the server search input box...
+      if (serverFilePath) {
+        // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          serverFilePath
+        );
+        filePath = filePath.replace(/\\/g, '/');
+        testFileCode = `import app from '../${filePath}';
+        import * as mod from "https://deno.land/std@0.160.0/testing/asserts.ts"\n
+        import {superoak} from "https://deno.land/x/superoak@4.7.0/mod.ts";\n`
+      } else testFileCode = 'Please Select A Server!';
+      // import "core-js/stable";
+      // import "regenerator-runtime/runtime";
+      // if you input a db file in the db search input box...
+      if (dbFilePath) {
+        // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          dbFilePath
+        );
+        filePath = filePath.replace(/\\/g, '/');
+
+        switch (addDB) {
+          case 'PostgreSQL':
+          // testFileCode += `const pgPoolClient = require('../${filePath}');
+          // \n afterAll( async () => { await pgPoolClient.end(); \n});`;
+          // break;
+          case 'MongoDB':
+          // testFileCode += `const client = require('../${filePath}');
+          // \n afterAll( async () => { await client.close(); \n});`;
+          // break;
+          case 'Mongoose':
+            // testFileCode += `const mongoose = require('../${filePath}');
+            // \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+            break;
+          default:
+            return;
+        }
+      }
+    };
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
 
     const addMockData = () => {
@@ -1091,6 +1172,43 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '\n';
     };
     //statement.method
+
+    const addDenoEndpoint = (statement) => {
+      testFileCode += `\n Deno.test('${statement.testName}', async () => {\n const request = await superoak(app);\n`;
+      testFileCode += `await request.${statement.method}('${statement.route}')`;
+      testFileCode += statement.headers.length
+        ? `\n.set({`
+        : '';
+      statement.headers.forEach(({ headerName, headerValue }, index) => {
+        testFileCode +=
+          headerName.length > 0 && headerValue.length > 0
+            ? `'${headerName}': '${headerValue}',`
+            : '';
+      });
+      testFileCode += statement.headers.length ? '\n})' : '';
+      testFileCode += statement.postData
+        ? `\n.send( ${statement.postData.trim()})`
+        : '';
+        
+      
+      statement.assertions.forEach(
+        ({ matcher, expectedResponse, not, value }) => {
+          matcher = matcher
+            .replace(/\(([^)]+)\)/, '')
+            .split(' ')
+            .join('');
+            // we have not assigned the variable assertion but should be like "assertEquals(expectedResponse, optionalArg)"
+          //testFileCode += `\n assert${assertion}(${expectedResponse.toLowerCase()}, ${optionalArg})`;
+          testFileCode += not
+            ? `.not.${matcher}(${value});`
+            : `\n.${matcher}(${value})`;
+          
+        }
+      );
+      testFileCode += '})';
+      testFileCode += ';\n';
+    };
+
     const addGraphQL = (statement) => {
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.post('${statement.route}')`;
       testFileCode += statement.postData
@@ -1799,6 +1917,21 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+      
+        //---------------------------------------------------Deno switch statement---------------------------------------------
+      case 'deno':
+        var denoTestCase = testState;
+        
+        return (
+          addDenoImportStatements(),
+          addDenoTestStatements(),
+          (testFileCode = beautify(testFileCode, {
+            indent_size: 2,
+            space_in_empty_paren: true,
+            e4x: true,
+          }))
+        );
+
       default:
         return 'not a test';
     }
