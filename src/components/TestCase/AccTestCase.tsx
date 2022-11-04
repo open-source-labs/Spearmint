@@ -65,7 +65,7 @@ const AccTestCase = ({handleAccChange}) => {
   };
 
   return (
-    <div id={styles.AccTestCase}>
+    <div>
       <div id="head">
       <h2 id={styles[`testName${theme}`]}>Accessibility Testing</h2>
         <AccTestMenu />
