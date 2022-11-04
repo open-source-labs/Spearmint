@@ -111,27 +111,7 @@ const ReactTestMenu = () => {
         dispatchTestCase={dispatchToReactTestCase}
         createTest={createNewTest}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      /> */}
     </>
-      
-      // can this be deleted?
-    //     <div
-    //       id={styles.right}
-    //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-    //     >
-    //       <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-    //         +Describe Block
-    //       </button>
-    //       <button id={styles.rightBtn} onClick={saveTest}>
-    //         Save Test
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

@@ -14,6 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { GlobalContext } from '../../context/reducers/globalReducer';;
 import { Button } from '@material-ui/core';
 import { accTestCaseState } from '../../context/reducers/accTestCaseReducer';
+import ReactInstructions from './ReactInstructions';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
@@ -135,37 +136,51 @@ const Instructions = ({
   const ReactDependencies = () => {
     if (title === 'hooks' || title === 'react') {
       return (
-        <Accordion hidden={false}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls='panel1a-content'
-            id='panel1a-header'
-            id={styles.accordionSummary}
-          >
-            3. Important React Babel Configuration
-          </AccordionSummary>
-          <AccordionDetails id={styles.configGuide}>
-            <div id={styles.accordionDiv}>
-              <div> Ensure that your project contains the following file: </div>
+        <>
+          <Accordion hidden={false}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel1a-content'
+              id='panel1a-header'
+              id={styles.accordionSummary}
+            >
+              3. Important React Babel Configuration
+            </AccordionSummary>
+            <AccordionDetails id={styles.configGuide}>
+              <div id={styles.accordionDiv}>
+                <div> Ensure that your project contains the following file: </div>
+                <pre>
+                  <div className='code-wrapper'>
+                    <code>babel.config.js</code>
+                  </div>
+                </pre>
+              </div>
+              <div>
+                and includes the following code:
+                <br />
+              </div>
               <pre>
                 <div className='code-wrapper'>
-                  <code>babel.config.js</code>
+                  <code>
+                    {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`}
+                  </code>
                 </div>
               </pre>
-            </div>
-            <div>
-              and includes the following code:
-              <br />
-            </div>
-            <pre>
-              <div className='code-wrapper'>
-                <code>
-                  {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`}
-                </code>
-              </div>
-            </pre>
-          </AccordionDetails>
-        </Accordion>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion>
+            <AccordionSummary 
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls='panel1a-content'
+              id='panel1a-header'
+              id={styles.accordionSummary}>
+                React Demo
+            </AccordionSummary>
+            <AccordionDetails>
+              <ReactInstructions/>
+            </AccordionDetails>
+          </Accordion>
+        </>
       );
     } else if (title === 'solid') {
       return (
