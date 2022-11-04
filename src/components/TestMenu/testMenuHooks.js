@@ -9,7 +9,7 @@ export function useToggleModal(test) {
   const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const openModal = () => {
-    setTitle('New Test');
+    setTitle(test);
     setIsModalOpen(true);
   };
 
@@ -23,7 +23,7 @@ export function useToggleModal(test) {
     setIsModalOpen(false);
     setTitle(test);
   };
-
+  
   return {
     title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen
   };

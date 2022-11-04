@@ -1173,7 +1173,6 @@ function useGenerateTest(test, projectFilePath) {
     };
     //statement.method
 
-    // JASMINE EDIT
     const addDenoEndpoint = (statement) => {
       testFileCode += `\n Deno.test('${statement.testName}', async () => {\n const request = await superoak(app);\n`;
       testFileCode += `await request.${statement.method}('${statement.route}')`;
@@ -1190,7 +1189,7 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += statement.postData
         ? `\n.send( ${statement.postData.trim()})`
         : '';
-        console.log('statement--->', statement);
+        
       
       statement.assertions.forEach(
         ({ matcher, expectedResponse, not, value }) => {
@@ -1209,7 +1208,6 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += '})';
       testFileCode += ';\n';
     };
-    // JASMINE EDIT
 
     const addGraphQL = (statement) => {
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.post('${statement.route}')`;
@@ -1923,7 +1921,7 @@ function useGenerateTest(test, projectFilePath) {
         //---------------------------------------------------Deno switch statement---------------------------------------------
       case 'deno':
         var denoTestCase = testState;
-        console.log(denoTestCase)
+        
         return (
           addDenoImportStatements(),
           addDenoTestStatements(),

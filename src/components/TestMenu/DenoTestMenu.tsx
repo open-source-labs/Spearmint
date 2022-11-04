@@ -99,7 +99,7 @@ const DenoTestMenu = () => {
   if (exportBool) {
     const valid = validateInputs('deno', denoTestCase);
     dispatchToGlobal(setValidCode(valid));
-    console.log('valid - inside of DenoTestMenu', valid)
+    console.log(valid)
     dispatchToGlobal(toggleExportBool());
     if (valid && !file) dispatchToGlobal(updateFile(generateTest(denoTestCase)));
   }
