@@ -1,26 +1,25 @@
 # How to use in development mode
 
-1. 
-    **Mac Developers**: Install Xcode 
+**Mac Developers**: Install Xcode command line tools if you don't already have them. 
 
-    **Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode. 
+**Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode. 
 
-2. Fork and clone this repository.
-3. Install node version 16.13: ```nvm install 16.13```
-4. Use node version 16.13: ```nvm use 16.13```
-5. ```npm install```
-6. Create a .env file in the root directory of the project
-7. Insert the following lines of code into the .env file
+1. Fork and clone this repository.
+2. Install node version 16.13: ```nvm install 16.13```
+3. Use node version 16.13: ```nvm use 16.13```
+4. ```npm install```
+5. Create a .env file in the root directory of the project
+6. Insert the following lines of code into the .env file
     ```
     APP_DEV=true
     BROWSER=non
     SKIP_PREFLIGHT_CHECK=true
     MONGO_LINK=
     ```
-8. Set MONGO_LINK to your MongoDB URI (ex: mongodb://localhost:27017)
-9. Make sure your MongoDB is running if it's hosted locally. 
-10. ```npm run rebuild``` 
-11. ```npm run dev``` 
+7. Set MONGO_LINK to your MongoDB URI (ex: mongodb://localhost:27017)
+8. Make sure your MongoDB is running if it's hosted locally. 
+9. ```npm run rebuild``` (different from `npm rebuild` so please pay attention to that)
+10. ```npm run dev```
 
 # Tips for development mode
 
@@ -28,6 +27,20 @@
         // require('electron-reloader')(module);
 - To enable dev tools, uncomment line 72 in the Electron.js file:
         // mainWindow.webContents.openDevTools();
+=======
+
+# Suggestions if you would like contriubute: 
+1. Exporting test files in TypeScript: the tests currently export in JS. 
+2. Convert codebase to TypeScript: currently, there are some files in TS, and others in JS. It would be great to convert all to TS.  
+3. Dry refactoring of codebase: A lot of the folders and files for the frontend frameworks testing are the same, and the codebase would GREATLY benefit from refactoring and modularizing those. 
+4. Persist user data: there is currently sign up and login functionality, including OAuth. However, V0.12.0 commented it out because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user. 
+5. A known issue/bug is some erratic behavior with the terminal. A more detailed issue will be opened for this. 
+6. Add more customization to the tests themseleves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
+7. Try to fix the dependencies issues. Currenly we have to run on node version 16.13 for the app to work. But if the packages incompatiblites is fixed that would be wonderful! 
+
+Or please feel free to add any other features or fixes that you would like or are interested in. 
+
+
 
 # Build and Run image on Docker
 
