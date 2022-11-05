@@ -60,6 +60,8 @@
 
 #container{
   display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: 700px;
   background: var(--container-bg);
   border: 8px solid var(--container-bg);
@@ -69,6 +71,8 @@
 
 #containerRun{
   display: flex;
+  flex-direction: column;
+  align-items: center;
   max-width: 700px;
   background: var(--container-bg);
   border: 8px solid var(--container-bg);
@@ -117,6 +121,24 @@
 
 #runTestButtons {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+
+  button {
+    background-color: $salmon;
+    color: white;
+
+    span {
+      width: 100%;
+    }
+  }
+}
+
+#exportFileButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   gap: 10px;
 
   button {

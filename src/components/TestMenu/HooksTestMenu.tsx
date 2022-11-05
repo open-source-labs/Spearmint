@@ -12,7 +12,7 @@ import {
   setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
-import { addHookUpdates, createNewHooksTest } from '../../context/actions/hooksTestCaseActions';
+import { addHookUpdates, createNewHooksTest, resetTests } from '../../context/actions/hooksTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
@@ -31,7 +31,7 @@ const HooksTestMenu = () => {
   const [{ hooksTestStatement, hooksStatements }, dispatchToHooksTestCase] = useContext(
     HooksTestCaseContext
   );
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('hooks');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('hooks');
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const generateTest = useGenerateTest('hooks', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -90,6 +90,10 @@ const HooksTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToHooksTestCase(resetTests());
+  };
+
   if (exportBool) {
     const valid = validateInputs('hooks', hooksStatements);
     dispatchToGlobal(setValidCode(valid));
@@ -106,6 +110,7 @@ const HooksTestMenu = () => {
 
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
@@ -118,13 +123,15 @@ const HooksTestMenu = () => {
         dispatchToMockData={null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
         createTest={title === 'New Test' ? createNewHooksTest : null}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-        />
+        /> */}
 
         {/* <UploadTest testType="hooks" />
         <GetTests testType="hooks" /> */}

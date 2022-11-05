@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import { addDescribeBlock, createNewTest } from '../../context/actions/frontendFrameworkTestCaseActions';
+import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/frontendFrameworkTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -20,6 +20,7 @@ import { SvelteTestCaseContext } from '../../context/reducers/svelteTestCaseRedu
 import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import ExportFileModal from '../Modals/ExportFileModal';
+import { clearMockData } from '../../context/actions/mockDataActions';
 const { ipcRenderer } = require('electron');
 
 // imports were declared in previous iterations, but were never used
@@ -30,7 +31,7 @@ const SvelteTestMenu = () => {
   // svelte testing docs url
   const svelteUrl = 'https://testing-library.com/docs/svelte-testing-library/intro/';
 
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('svelte');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('svelte');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [SvelteTestCase, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] =
@@ -87,11 +88,17 @@ const SvelteTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToSvelteTestCase(resetTests());
+    dispatchToMockData(clearMockData());
+  }
+
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest(SvelteTestCase, mockData)));
 
   return (
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
@@ -102,14 +109,16 @@ const SvelteTestMenu = () => {
         title={title}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchMockData={dispatchToMockData}
         dispatchTestCase={dispatchToSvelteTestCase}
         createTest={createNewTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
       
 

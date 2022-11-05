@@ -146,6 +146,10 @@ export const SolidTestCaseReducer = (state, action) => {
   }
 
   switch (action.type) {
+    case actionTypes.RESET_TESTS: {
+      return SolidTestCaseState;
+    }
+    
     case actionTypes.ADD_DESCRIBE_BLOCK: {
       let updatedDescribeId = state.describeId;
       const describeId = `describe${state.describeId}`;

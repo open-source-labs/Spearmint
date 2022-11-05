@@ -32,7 +32,7 @@ const ToolTip = ({ toolTipType }) => {
     DisplayValue:
       'Returns the input, textarea, or select element that has the matching display value.',
     Role:
-      'A shortcut to container.querySelector(`[role="${yourRole}"]`) (and it also accepts a TextMatch).',
+      'A shortcut to container.querySelector(`[role= "${yourRole}"]`) (and it also accepts a TextMatch).',
     TestId:
       'A shortcut to container.querySelector(`[data-testid="${yourId}"]`) (and it also accepts a TextMatch).',
     LCPTarget:

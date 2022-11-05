@@ -89,6 +89,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
   let reduxStatements = [...state.reduxStatements];
   let reduxTestStatement;
   switch (action.type) {
+    case actionTypes.RESET_TESTS: return reduxTestCaseState;
     case actionTypes.UPDATE_REDUX_TEST_STATEMENT:
       reduxTestStatement = action.payload;
       return {

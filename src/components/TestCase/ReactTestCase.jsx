@@ -16,7 +16,7 @@ import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import { createMockData } from '../../context/actions/mockDataActions';
 import ReactTestMenu from '../TestMenu/ReactTestMenu';
 import MockData from '../ReactTestComponent/MockData/MockData';
-import DecribeRenderer from '../ReactTestComponent/DescribeRenderer/DescribeRenderer';
+import DescribeRenderer from '../ReactTestComponent/DescribeRenderer/DescribeRenderer';
 import {
   ReactTestCaseContext,
   reactTestCaseState,
@@ -119,7 +119,7 @@ const ReactTestCase = (props) => {
             <Droppable droppableId='droppableReactDescribe' type='describe'>
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <DecribeRenderer
+                  <DescribeRenderer
                     dispatcher={dispatchToReactTestCase}
                     describeBlocks={describeBlocks}
                     itStatements={itStatements}

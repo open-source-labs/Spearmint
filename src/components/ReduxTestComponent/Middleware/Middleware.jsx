@@ -80,6 +80,7 @@ const Middleware = ({ middleware, index }) => {
                   onChange={(e) => handleChangeMiddlewareFields(e, 'queryVariant')}
                 >
                   <option value='' />
+                  <option value='toBe'>toBe</option>
                   <option value='toBeCalled'>toBeCalled</option>
                   <option value='toHaveBeenCalled'>toHaveBeenCalled</option>
                   <option value='toHaveBeenCalledWith'>toHaveBeenCalledWith</option>

@@ -88,7 +88,6 @@
     "name": "team spearmint",
     "url": "https://www.spearmintjs.com/",
     "email": "oslabsspearmint@gmail.com"
-
   },
   "license": "ISC",
   "dependencies": {
@@ -97,9 +96,13 @@
     "@babel/preset-react": "^7.14.5",
     "@capacitor/screen-reader": "^1.0.6",
     "@codemirror/lang-javascript": "^6.0.0",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
+    "@mui/icons-material": "^5.10.6",
+    "@mui/material": "^5.10.7",
     "@uiw/react-codemirror": "^4.8.1",
     "babel-loader": "^8.2.2",
     "bcryptjs": "^2.4.3",
@@ -120,7 +123,6 @@
     "node-fetch": "^3.2.0",
     "node-pty": "^0.10.1",
     "passport": "^0.5.2",
-    "passport-facebook": "^3.0.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
     "react": "^17.0.2",
@@ -139,8 +141,7 @@
     "webpack": "^5.50.0",
     "webpack-cli": "^4.7.2",
     "xterm": "^4.15.0",
-    "xterm-addon-fit": "^0.5.0",
-    "xterm-for-react": "^1.0.4"
+    "xterm-addon-fit": "^0.5.0"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.15.0",
