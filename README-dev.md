@@ -24,10 +24,10 @@
 # Tips for development mode
 
 - To enable hot-module reloading, uncomment line 24 in the Electron.js file.
-        // require('electron-reloader')(module);
+        ```// require('electron-reloader')(module);```
 - To enable dev tools, uncomment line 72 in the Electron.js file:
-        // mainWindow.webContents.openDevTools();
-=======
+        ```// mainWindow.webContents.openDevTools();```
+
 
 # Suggestions if you would like contriubute: 
 1. Exporting test files in TypeScript: the tests currently export in JS. 
