@@ -36,7 +36,7 @@
 4. Persist user data: there is currently sign up and login functionality, including OAuth. However, V0.12.0 commented it out because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user. 
 5. A known issue/bug is some erratic behavior with the terminal. A more detailed issue will be opened for this. 
 6. Add more customization to the tests themseleves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
-7. Try to fix the dependencies issues. Currenly we have to run on node version 16.13 for the app to work. But if the packages incompatiblites is fixed that would be wonderful! 
+7. Try to fix the dependencies issues. Currently we have to run on node version 16.13 for the app to work. But if the packages incompatiblites are fixed that would be wonderful! 
 
 Or please feel free to add any other features or fixes that you would like or are interested in. 
 
