@@ -16,6 +16,7 @@ import Modal from '../Modals/Modal';
 import {
   addPuppeteerPaintTiming,
   createNewPuppeteerTest,
+  deletePuppeteerTest,
 } from '../../context/actions/puppeteerTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
@@ -34,7 +35,7 @@ const PuppeteerTestMenu = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext
   );
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal(
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal(
     'puppeteer'
   );
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
@@ -93,11 +94,18 @@ const PuppeteerTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    //dispatchToPuppeteerTestCase(resetTests());
+    dispatchToPuppeteerTestCase(deletePuppeteerTest(0));
+    dispatchToPuppeteerTestCase(createNewPuppeteerTest());
+
+  }
   if (!file && exportBool) dispatchToGlobal(updateFile(generateTest({ puppeteerStatements })));
 
   return (
     <>
-      <TestMenuButtons 
+      <TestMenuButtons
+        resetTests={handleResetTests} 
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
@@ -110,13 +118,15 @@ const PuppeteerTestMenu = () => {
         dispatchToMockData={null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchTestCase={dispatchToPuppeteerTestCase}
         createTest={createNewPuppeteerTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
     //       {/* <UploadTest testType="puppeteer" />
     //       <GetTests testType="puppeteer" /> */}

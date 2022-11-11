@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs, setTabIndex } from '../../context/actions/globalActions';
-import { addDescribeBlock, createNewTest } from '../../context/actions/accTestCaseActions';
+import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/accTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import {
@@ -29,7 +29,7 @@ const AccTestMenu = () => {
   const accUrl = 'https://www.deque.com/axe/core-documentation/api-documentation/';
 
   // initialize hooks
-  const { title, isModalOpen, openModal, openScriptModal, closeModal, } = useToggleModal('acc');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('acc');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
@@ -83,11 +83,15 @@ const AccTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToAccTestCase(resetTests());
+  }
   if (!file && exportBool) {dispatchToGlobal(updateFile(generateTest(accTestCase)))};
  
   return (
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
@@ -98,16 +102,18 @@ const AccTestMenu = () => {
         title={title}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchToMockData={null}
         dispatchTestCase={dispatchToAccTestCase}
         createTest={createNewTest}
         testType={accTestCase.testType}
         puppeteerUrl={accTestCase.puppeteerUrl}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-        />
+        /> */}
     
            {/* <UploadTest testType="acc" />
          <GetTests testType="acc" /> */}

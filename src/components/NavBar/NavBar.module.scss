@@ -59,6 +59,21 @@
   }
 }
 
+.modBtnContainer{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+
+  span{
+    svg {
+      path {
+        fill: $eggshell; 
+      }
+    }
+  }
+}
+
 #spearmintTitle{
   flex: 1 0 auto;
   align-self: center;

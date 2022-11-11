@@ -28,6 +28,7 @@ userController.signup = (req, res, next) => {
     { username: req.body.username, password: res.locals.encryptedPassword },
     // Callback to handle results of query
     (err, newUser) => {
+    if (err.code === 11000) return res.status(400).json("Username already exists, please choose another one.");
       // If there is an error, invoke global error handler
       if (err) return next(err);
       // Save user ID into response locals
@@ -72,23 +73,6 @@ userController.getUsers = (req, res, next) => {
 };
 
 userController.githubLogin = (req, res, next) => {
-  // console.log('this is req.user', typeof req.user._id);
-
-  // Successful authentication, redirect home.
-  console.log('github authentication successful!');
-
-  // store user._id in res.locals
-  res.locals.userId = req.user._id;
-
-  return next();
-};
-
-userController.facebookLogin = (req, res, next) => {
-  // console.log('this is req.user', typeof req.user._id);
-
-  // Successful authentication, redirect home.
-  console.log('facebook authentication successful!');
-
   // store user._id in res.locals
   res.locals.userId = req.user._id;
 
@@ -96,11 +80,6 @@ userController.facebookLogin = (req, res, next) => {
 };
 
 userController.googleLogin = (req, res, next) => {
-  // console.log('this is req.user', typeof req.user._id);
-
-  // Successful authentication, redirect home.
-  console.log('google authentication successful!');
-
   // store user._id in res.locals
   res.locals.userId = req.user._id;
 

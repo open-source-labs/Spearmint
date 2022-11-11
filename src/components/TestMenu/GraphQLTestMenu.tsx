@@ -18,6 +18,7 @@ import {
   createNewGraphQLTest,
   toggleDB,
   updateDBFilePath,
+  resetTests,
 } from '../../context/actions/graphQLTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { GraphQLTestCaseContext } from '../../context/reducers/graphQLTestCaseReducer';
@@ -35,7 +36,7 @@ const { ipcRenderer } = require('electron')
 const GraphQLTestMenu = () => {
   const [graphQLTestCase, dispatchToGraphQLTestCase] = useContext(GraphQLTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('graphQL');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('graphQL');
   const generateTest = useGenerateTest('graphQL', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
@@ -98,6 +99,9 @@ const GraphQLTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToGraphQLTestCase(resetTests());
+  }
   if (exportBool) {
     const valid = validateInputs('graphQL', graphQLTestCase);
     dispatchToGlobal(setValidCode(valid));
@@ -108,7 +112,8 @@ const GraphQLTestMenu = () => {
 
   return (
     <>
-      <TestMenuButtons 
+      <TestMenuButtons
+        resetTests={handleResetTests} 
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
@@ -121,17 +126,19 @@ const GraphQLTestMenu = () => {
         dispatchToMockData={null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchTestCase={title === 'New Test' ? dispatchToGraphQLTestCase : null}
         createTest={title === 'New Test' ? createNewGraphQLTest : null}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
           {/* <UploadTest testType="endpoint test" />
           <GetTests testType="endpoint test" /> */}
 
-        <div id={styles[`testMenu${theme}`]}>
+        <div id={styles[`dbConfig${theme}`]}>
           <Button 
             variant='outlined'
             data-testid='graphQLButton' 

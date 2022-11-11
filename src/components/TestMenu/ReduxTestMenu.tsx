@@ -17,6 +17,7 @@ import {
   addActionCreator,
   addMiddleware,
   createNewReduxTest,
+  resetTests
 } from '../../context/actions/reduxTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
@@ -38,7 +39,7 @@ const ReduxTestMenu = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
     ReduxTestCaseContext
   );
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('redux');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('redux');
   const [{ projectFilePath, file, fileName, exportBool, isTestModalOpen }, dispatchToGlobal] = useContext<any>(GlobalContext);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
@@ -100,10 +101,13 @@ const ReduxTestMenu = () => {
     }
   }
 
-
   const openNewTestModal = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
+
+  const handleResetTests = () => {
+    dispatchToReduxTestCase(resetTests())
+  } 
 
   if (!file && exportBool)
     dispatchToGlobal(updateFile(generateTest({ reduxTestStatement, reduxStatements })));
@@ -111,6 +115,7 @@ const ReduxTestMenu = () => {
   return (
     <>
       <TestMenuButtons 
+        resetTests={handleResetTests}
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
@@ -123,13 +128,15 @@ const ReduxTestMenu = () => {
         dispatchToMockData={null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchTestCase={dispatchToReduxTestCase}
         createTest={createNewReduxTest}
       />
-      <ExportFileModal
+      {/* marked for deletion */}
+      {/* <ExportFileModal
         isExportModalOpen={isExportModalOpen}
         setIsExportModalOpen={setIsExportModalOpen}
-      />
+      /> */}
     </>
     //       {/* <UploadTest testType='redux' />
     //       <GetTests testType='redux' /> */}
