@@ -136,7 +136,7 @@
     "sass": "^1.37.5",
     "sass-loader": "^12.1.0",
     "save-dev": "0.0.1-security",
-    "snyk": "^1.790.0",
+    "snyk": "^1.996.0",
     "style-loader": "^3.2.1",
     "webpack": "^5.50.0",
     "webpack-cli": "^4.7.2",
