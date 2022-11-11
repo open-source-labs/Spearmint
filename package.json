@@ -122,7 +122,7 @@
     "mongoose": "^6.0.14",
     "node-fetch": "^3.2.0",
     "node-pty": "^0.10.1",
-    "passport": "^0.5.2",
+    "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
     "react": "^17.0.2",
