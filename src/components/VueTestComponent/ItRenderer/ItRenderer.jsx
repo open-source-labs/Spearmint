@@ -10,7 +10,7 @@ import {
 } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { VueTestCaseContext } from '../../../context/reducers/vueTestCaseReducer';
 import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const ItRenderer = ({

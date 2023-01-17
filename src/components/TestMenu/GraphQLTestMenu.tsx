@@ -25,7 +25,7 @@ import { GraphQLTestCaseContext } from '../../context/reducers/graphQLTestCaseRe
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 const { ipcRenderer } = require('electron')
 
 // imports were declared in previous iterations, but were never used

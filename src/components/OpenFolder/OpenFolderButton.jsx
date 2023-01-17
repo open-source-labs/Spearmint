@@ -19,7 +19,7 @@ const { ipcRenderer } = require('electron');
 const os = require('os');
 const folderOpenIcon = require('../../assets/images/folder-open.png');
 import { FaFolderOpen } from 'react-icons/fa'
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 // Change execute command based on os platform
  

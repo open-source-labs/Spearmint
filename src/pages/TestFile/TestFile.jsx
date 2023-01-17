@@ -93,7 +93,7 @@ import { GiHook } from "react-icons/gi"
 import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql, SiDeno } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
 
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import TestCard from './TestCard';
 import {
     updateFile,

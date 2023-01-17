@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SearchInput.scss';
-import { Autocomplete } from '@material-ui/lab';
-import { TextField } from '@material-ui/core';
+import { Autocomplete } from '@mui/material';
+import { TextField } from '@mui/material';
 import InputTextField from '../InputTextField';
 
 const SearchInput = ({
