@@ -14,6 +14,7 @@ import FileDirectory from './components/FileDirectory/FileDirectory';
 import { CSSTransition } from 'react-transition-group';
 import { Switch } from '@material-ui/core';
 import { BiSun, BiMoon } from 'react-icons/bi';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 
 const App = () => {
@@ -32,25 +33,28 @@ const App = () => {
   if (!global.isProjectLoaded) {
     return (
       <div>
+
         {/* pass global state and dispatch function as prop to context provider for child components */}
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          <div id={styles.toggle}>
-            <div id={styles.icon}>
-              <span title="Dark Mode">
-                <BiMoon size={'1.5rem'} />
-              </span>
-              <span title="Change theme">
-                <Switch
-                  checked={global.theme === 'light' ? true : false}
-                  onChange={changeTheme}
-                />
-              </span>
-              <span title="Light Mode">
-                <BiSun size={'1.5rem'} />
-              </span>
+          <ThemeProvider >
+            <div id={styles.toggle}>
+              <div id={styles.icon}>
+                <span title="Dark Mode">
+                  <BiMoon size={'1.5rem'} />
+                </span>
+                <span title="Change theme">
+                  <Switch
+                    checked={global.theme === 'light' ? true : false}
+                    onChange={changeTheme}
+                  />
+                </span>
+                <span title="Light Mode">
+                  <BiSun size={'1.5rem'} />
+                </span>
+              </div>
             </div>
-          </div>
-          <ProjectLoader />
+            <ProjectLoader />
+          </ThemeProvider>
         </GlobalContext.Provider>
       </div>
     );
