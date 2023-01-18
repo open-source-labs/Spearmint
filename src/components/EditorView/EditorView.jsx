@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
-//import { oneDark } from '@codemirror/theme-one-dark';
 import { javascript } from '@codemirror/lang-javascript';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';

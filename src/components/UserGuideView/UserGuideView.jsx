@@ -3,10 +3,10 @@ import styles from './UserGuideView.module.scss';
 import Instructions from './Instructions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
-const { ipcRenderer } = require('electron');
+// const { ipcRenderer } = require('electron');
 
 const UserGuideView = ({theme, accTestType}) => {
-const [{ testCase }, dispatchToGlobal] = useContext(GlobalContext);
+const [{ testCase }] = useContext(GlobalContext);
 
   return (
     <div 
