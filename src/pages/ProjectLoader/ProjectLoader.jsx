@@ -57,7 +57,7 @@ function ProjectLoader() {
       setMessage('Password must be longer than 4 characters')
       return;
     }
-
+    
     // handleLogout();
     fetch('http://localhost:3001/login', {
       method: 'POST',
