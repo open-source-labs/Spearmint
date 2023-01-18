@@ -7,7 +7,6 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
 import { InvertColors } from '@material-ui/icons';
 
-// import { ScreenReader } from '@capacitor/screen-reader';
 
 const BrowserView = () => {
   const [{ url, theme }, dispatchToGlobal] = useContext(GlobalContext);
@@ -28,11 +27,6 @@ const BrowserView = () => {
     const webview = document.querySelector('webview');
     webview.setAudioMuted(muted);
   };
-
-  // const activateReader = () => { 
-  //   // Ternary statement is backwards, as checkedBoxes.checkedReader updates after the case break
-  //   // checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
-  // }
 
   // helper function to add the https or http
   const addHttps = (url) => {
