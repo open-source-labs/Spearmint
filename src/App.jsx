@@ -14,8 +14,9 @@ import FileDirectory from './components/FileDirectory/FileDirectory';
 import { CSSTransition } from 'react-transition-group';
 import { Switch } from '@mui/material';
 import { BiSun, BiMoon } from 'react-icons/bi';
-import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/styles';
 
+const theme = createTheme();
 
 const App = () => {
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
@@ -36,27 +37,27 @@ const App = () => {
 
         {/* pass global state and dispatch function as prop to context provider for child components */}
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-          <StyledEngineProvider injectFirst>
-            <ThemeProvider >
-              <div id={styles.toggle}>
-                <div id={styles.icon}>
-                  <span title="Dark Mode">
-                    <BiMoon size={'1.5rem'} />
-                  </span>
-                  <span title="Change theme">
-                    <Switch
-                      checked={global.theme === 'light' ? true : false}
-                      onChange={changeTheme}
-                    />
-                  </span>
-                  <span title="Light Mode">
-                    <BiSun size={'1.5rem'} />
-                  </span>
+          <ThemeProvider theme={theme} >
+            <StyledEngineProvider injectFirst>
+                <div id={styles.toggle}>
+                  <div id={styles.icon}>
+                    <span title="Dark Mode">
+                      <BiMoon size={'1.5rem'} />
+                    </span>
+                    <span title="Change theme">
+                      <Switch
+                        checked={global.theme === 'light' ? true : false}
+                        onChange={changeTheme}
+                      />
+                    </span>
+                    <span title="Light Mode">
+                      <BiSun size={'1.5rem'} />
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <ProjectLoader />
-            </ThemeProvider>
-          </StyledEngineProvider>
+                <ProjectLoader />
+            </StyledEngineProvider>
+          </ThemeProvider>
         </GlobalContext.Provider>
       </div>
     );
@@ -66,21 +67,25 @@ const App = () => {
     return (
       <div>
         <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-        <NavBar inAboutPage={false} />
-        <div id={styles[`content${global.theme}`]}>
-          <CSSTransition
-            in={global.isFileDirectoryOpen}
-            timeout={200}
-            classNames="my-node"
-            unmountOnExit
-            appear
-          >
-            <FileDirectory fileTree={global.fileTree} />
-          </CSSTransition>
-          <LeftPanel />
-        </div>
-      </GlobalContext.Provider>
-    </div>
+          <ThemeProvider theme={theme} >
+            <StyledEngineProvider injectFirst>
+              <NavBar inAboutPage={false} />
+              <div id={styles[`content${global.theme}`]}>
+                <CSSTransition
+                  in={global.isFileDirectoryOpen}
+                  timeout={200}
+                  classNames="my-node"
+                  unmountOnExit
+                  appear
+                >
+                  <FileDirectory fileTree={global.fileTree} />
+                </CSSTransition>
+                <LeftPanel />
+              </div>
+            </StyledEngineProvider>
+          </ThemeProvider>
+        </GlobalContext.Provider>
+      </div>
     )
   }
   return (
@@ -100,22 +105,26 @@ const App = () => {
       id={styles.app}
     >
       <GlobalContext.Provider value={[global, dispatchToGlobal]}>
-        <NavBar inAboutPage={false} />
-        <div id={styles[`content${global.theme}`]}>
-          <CSSTransition
-            in={global.isFileDirectoryOpen}
-            timeout={200}
-            classNames="my-node"
-            unmountOnExit
-            appear
-          >
-            <FileDirectory fileTree={global.fileTree} />
-          </CSSTransition>
-          <LeftPanel 
-          handleAccChange={handleAccChange}/>
-          <RightPanel 
-          accTestType={accTestType}/>
-        </div>
+        <ThemeProvider theme={theme} >
+          <StyledEngineProvider injectFirst>
+            <NavBar inAboutPage={false} />
+            <div id={styles[`content${global.theme}`]}>
+              <CSSTransition
+                in={global.isFileDirectoryOpen}
+                timeout={200}
+                classNames="my-node"
+                unmountOnExit
+                appear
+              >
+                <FileDirectory fileTree={global.fileTree} />
+              </CSSTransition>
+              <LeftPanel 
+              handleAccChange={handleAccChange}/>
+              <RightPanel 
+              accTestType={accTestType}/>
+            </div>
+          </StyledEngineProvider>
+        </ThemeProvider>
       </GlobalContext.Provider>
     </div>
   );
