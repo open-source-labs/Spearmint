@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState } from 'react';
-import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/frontendFrameworkTestCaseActions';
@@ -19,12 +18,7 @@ import {
 import { VueTestCaseContext } from '../../context/reducers/vueTestCaseReducer';
 import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
-import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
-
-// Was commented out in legacy code
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
 
 const VueTestMenu = () => {
   // Vue testing docs url
@@ -117,29 +111,7 @@ const VueTestMenu = () => {
         dispatchTestCase={dispatchToVueTestCase}
         createTest={createNewTest}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      /> */}
     </>
-          
-         
-
-
-    //     <div
-    //       id={styles.right}
-    //       style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}
-    //     >
-    //       <button data-testid='addDescribeButton' onClick={handleAddDescribeBlock}>
-    //         +Describe Block
-    //       </button>
-    //       <button id={styles.rightBtn} onClick={saveTest}>
-    //         Save Test
-    //       </button>
-    //     </div>  
-    //   </div>
-    // </div>
   );
 };
 
