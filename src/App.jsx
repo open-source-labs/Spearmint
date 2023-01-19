@@ -17,6 +17,7 @@ import { BiSun, BiMoon } from 'react-icons/bi';
 
 
 const App = () => {
+  console.log('HELLO YOU ARE IN APP.JSX');
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   const [accTestType, setAccTestType] = useState('select')

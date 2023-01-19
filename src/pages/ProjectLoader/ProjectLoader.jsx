@@ -11,6 +11,7 @@ const { ipcRenderer } = require('electron');
 // const remote = require('@electron/remote/main')
 
 function ProjectLoader() {
+  console.log("Inside ProjectLoader");
   const [{ idFileDirectoryOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
   const [username, setUsername] = useState('');
@@ -264,16 +265,16 @@ function ProjectLoader() {
           renderLogin()
         ) : (
           <div className={styles.contentBox}>
-            {/* <span id={styles.welcomeText}>
+            <span id={styles.welcomeText}>
               Welcome <span id={styles.userText}>{username}</span>!
-            </span> */}
+            </span>
             <span id={styles.openFolderSpan}>
               Select your application:
               <OpenFolder />
             </span>
-            {/* <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
+            <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
               LOGOUT
-            </Button> */}
+            </Button>
           </div>
         )}
       </section>
