@@ -7,17 +7,12 @@ import {
   setFilePath,
   setValidCode,
   toggleExportBool,
-  setTestCase,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
-import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
 import {
-  addEndpoint,
   createNewEndpointTest,
-  toggleDB,
-  updateDBFilePath,
   resetTests
 } from '../../context/actions/denoTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
@@ -77,7 +72,7 @@ const DenoTestMenu = () => {
 
     const updatedData = fileHandle();
     if(!newFilePath.includes('test.js') || !userSavedTest){
-      dispatchToGlobal(toggleExportBool)
+      dispatchToGlobal(toggleExportBool())//Im assuming that this is supposed to be invoked? bc accTestMenu has it invoked line 68
       setIsExportModalOpen(true)
       setUserSavedTest(true)
     }

@@ -7,18 +7,15 @@ import {
   toggleRightPanel,
   setValidCode,
   toggleExportBool,
-  setTestCase,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
-import styles from './TestMenu.module.scss';
 import { addHookUpdates, createNewHooksTest, resetTests } from '../../context/actions/hooksTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
-import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
 
 // imports were declared in previous iterations, but were never used
@@ -127,15 +124,7 @@ const HooksTestMenu = () => {
         dispatchTestCase={title === 'New Test' ? dispatchToHooksTestCase : null}
         createTest={title === 'New Test' ? createNewHooksTest : null}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-        /> */}
-
-        {/* <UploadTest testType="hooks" />
-        <GetTests testType="hooks" /> */}
-
+      
     </>
   );
 };
