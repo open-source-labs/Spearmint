@@ -22,10 +22,6 @@ import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 const { ipcRenderer } = require('electron')
 
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
-
 const PuppeteerTestMenu = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
     PuppeteerTestCaseContext

@@ -18,10 +18,6 @@ import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
 const { ipcRenderer } = require('electron')
 
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
-
 const HooksTestMenu = () => {
   // Hooks testing docs url
   const hooksUrl = 'https://react-hooks-testing-library.com/usage/basic-hooks';

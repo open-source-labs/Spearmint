@@ -25,10 +25,6 @@ import TestMenuButtons from './TestMenuButtons';
 import { Button } from '@material-ui/core';
 const { ipcRenderer } = require('electron')
 
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
-
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const GraphQLTestMenu = () => {
   const [graphQLTestCase, dispatchToGraphQLTestCase] = useContext(GraphQLTestCaseContext);
@@ -127,14 +123,6 @@ const GraphQLTestMenu = () => {
         dispatchTestCase={title === 'New Test' ? dispatchToGraphQLTestCase : null}
         createTest={title === 'New Test' ? createNewGraphQLTest : null}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      /> */}
-          {/* <UploadTest testType="endpoint test" />
-          <GetTests testType="endpoint test" /> */}
-
         <div id={styles[`dbConfig${theme}`]}>
           <Button 
             variant='outlined'

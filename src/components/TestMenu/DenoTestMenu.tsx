@@ -20,12 +20,7 @@ import { DenoTestCaseContext } from '../../context/reducers/denoTestCaseReducer'
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
-import { Button } from '@material-ui/core';
 const { ipcRenderer } = require('electron')
-
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
 
 // child component of DenoTest menu. has NewTest and Endpoint buttons
 const DenoTestMenu = () => {
@@ -41,7 +36,6 @@ const DenoTestMenu = () => {
   useEffect(() => {
     // this is commented due to a bug where the user cannot export a test
     validateInputs('endpoint', denoTestCase)
-      // ? dispatchToGlobal(setValidCode(true)) : 
       dispatchToGlobal(setValidCode(true));
   }, []);
 

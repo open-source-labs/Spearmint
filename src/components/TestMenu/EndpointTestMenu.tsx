@@ -25,10 +25,6 @@ import TestMenuButtons from './TestMenuButtons';
 import { Button } from '@material-ui/core';
 const { ipcRenderer } = require('electron')
 
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
-
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
   const [endpointTestCase, dispatchToEndpointTestCase] = useContext(EndpointTestCaseContext);
@@ -43,7 +39,6 @@ const EndpointTestMenu = () => {
 
   useEffect(() => {
     // validateInputs('endpoint', endpointTestCase)
-    //   ? dispatchToGlobal(setValidCode(true))
     dispatchToGlobal(setValidCode(true));
   }, []);
 

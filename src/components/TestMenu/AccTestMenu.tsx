@@ -17,10 +17,6 @@ import { useToggleModal } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
 const { ipcRenderer } = require('electron')
 
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
-
 const AccTestMenu = () => {
   // link to accessibility testing docs url
   const accUrl = 'https://www.deque.com/axe/core-documentation/api-documentation/';
