@@ -280,6 +280,8 @@ ipcMain.on('Google-Oauth', (_event, url) => {
   });
 });
 
+// electron-devtools-vendor needs to be installed at v1.1 due to a bug with 1.2
+// where it is not accounting for a change in the newest version of the react dev tool itself
 app.whenReady()
   .then(createWindow)
   .then(app.on('activate', () => {

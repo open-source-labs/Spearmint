@@ -156,7 +156,7 @@
     "axe-core": "^4.6.2",
     "electron": "^22.0.3",
     "electron-builder": "^23.6.0",
-    "electron-devtools-vendor": "^1.2.0",
+    "electron-devtools-vendor": "1.1",
     "electron-rebuild": "^3.2.7",
     "electron-reloader": "^1.2.3",
     "eslint": "^8.32.0",
