@@ -7,14 +7,12 @@ import {
   setFilePath,
   setValidCode,
   toggleExportBool,
-  setTestCase,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
 import {
-  addEndpoint,
   createNewEndpointTest,
   toggleDB,
   updateDBFilePath,
@@ -24,7 +22,6 @@ import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
-import ExportFileModal from '../Modals/ExportFileModal';
 import { Button } from '@material-ui/core';
 const { ipcRenderer } = require('electron')
 
@@ -131,13 +128,6 @@ const EndpointTestMenu = () => {
         dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
         createTest={title === 'New Test' ? createNewEndpointTest : null}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      /> */}
-          {/* <UploadTest testType="endpoint test" />
-          <GetTests testType="endpoint test" /> */}
 
         <div id={styles[`dbConfig${theme}`]}>
           <Button 

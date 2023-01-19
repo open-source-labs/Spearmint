@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs, setTabIndex } from '../../context/actions/globalActions';
-import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/accTestCaseActions';
+import { createNewTest, resetTests } from '../../context/actions/accTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import {
@@ -10,14 +9,12 @@ import {
   setFilePath,
   toggleRightPanel,
   setValidCode,
-  setTestCase,
   toggleExportBool,
   toggleModal,
 } from '../../context/actions/globalActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
-import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
 
 // imports were declared in previous iterations, but were never used
@@ -109,17 +106,8 @@ const AccTestMenu = () => {
         testType={accTestCase.testType}
         puppeteerUrl={accTestCase.puppeteerUrl}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-        /> */}
-    
-           {/* <UploadTest testType="acc" />
-         <GetTests testType="acc" /> */}
-   
     </>
     );
-}
+};
 
 export default AccTestMenu;

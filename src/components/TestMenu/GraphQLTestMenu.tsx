@@ -7,14 +7,12 @@ import {
   setFilePath,
   setValidCode,
   toggleExportBool,
-  setTestCase,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
 import {
-  addGraphQL,
   createNewGraphQLTest,
   toggleDB,
   updateDBFilePath,
@@ -24,7 +22,6 @@ import useGenerateTest from '../../context/useGenerateTest';
 import { GraphQLTestCaseContext } from '../../context/reducers/graphQLTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
-import ExportFileModal from '../Modals/ExportFileModal';
 import { Button } from '@material-ui/core';
 const { ipcRenderer } = require('electron')
 
