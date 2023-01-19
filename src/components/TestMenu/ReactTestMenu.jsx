@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styles from '../TestMenu/TestMenu.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/frontendFrameworkTestCaseActions';
@@ -19,13 +18,8 @@ import {
 import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
-import ExportFileModal from '../Modals/ExportFileModal';
 import { clearMockData } from '../../context/actions/mockDataActions';
 const { ipcRenderer } = require('electron');
-
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
 
 const ReactTestMenu = () => {
   // React testing docs url
