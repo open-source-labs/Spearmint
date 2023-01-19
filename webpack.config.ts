@@ -46,11 +46,13 @@ const config: webpack.Configuration = {
     path: path.resolve(__dirname, "build"),
     filename: "bundle.js",
   },
-  devServer: {
-    contentBase: path.join(__dirname, "build"),
-    compress: true,
-    port: 4000,
-  },
+  // not sure what this is supposed to do but it no longer works after updating webpack types package
+  // devServer: {
+  //   contentBase: path.join(__dirname, "build"),
+  //   compress: true,
+  //   port: 4000,
+  // },
+  
 };
 
 export default config;

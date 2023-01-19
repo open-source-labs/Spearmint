@@ -9,6 +9,16 @@ const np = require('node-pty');
 const os = require('os');
 console.log(os.platform());
 
+const electronDevToolsInstaller = require('electron-devtools-installer');
+const REACT_DEVELOPER_TOOLS = electronDevToolsInstaller.REACT_DEVELOPER_TOOLS;
+
+console.log(`electron dev tools installer: ${Object.keys(electronDevToolsInstaller)}`);
+console.log(electronDevToolsInstaller.default);
+console.log(`react dev tools import: ${Object.keys(REACT_DEVELOPER_TOOLS)}`);
+console.log(REACT_DEVELOPER_TOOLS.id);
+console.log(REACT_DEVELOPER_TOOLS.electron);
+// import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+
 // app.commandLine.appendSwitch('--headless');
 // app.commandLine.appendSwitch('--no-sandbox');
 // from selenium import webdriver
@@ -281,9 +291,15 @@ ipcMain.on('Google-Oauth', (_event, url) => {
 app.whenReady()
   .then(createWindow)
 
-  // .then( app.on('activate', () => {
-  //   if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  // }) )
+  .then( app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  }) )
+  .then(() => {
+    electronDevToolsInstaller.installExtension(electronDevToolsInstaller.REACT_DEVELOPER_TOOLS)
+    .then((name) => console.log(`Added Extension: ${name}`))
+    .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
+  })
+  .catch((err) => console.log(`An error occurred when booting up electron: ${err}`));
 
   // react dev tools not working so commenting out...
   // .then(()=> {
