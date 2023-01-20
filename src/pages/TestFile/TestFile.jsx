@@ -1,16 +1,8 @@
-/* eslint-disable linebreak-style */
 import React, { useContext, useReducer, Fragment } from 'react';
-import ReactModal from 'react-modal';
 let styles = {};
 import modalStyles from '../../components/Modals/Modal.module.scss';
 import testStyles from './TestFile.module.scss'
 Object.assign(styles, modalStyles, testStyles)
-// import styles from '../../components/Modals/Modal.module.scss';
-
-import Draggable from 'react-draggable';
-// A simple JavaScript utility for conditionally joining classNames together
-import cn from 'classnames';
-
 
 // may be able to delete toggleReact, etc. from their respective action files
 import ReactTestCase from '../../components/TestCase/ReactTestCase';
@@ -86,14 +78,11 @@ import {
 import GraphQLTestCase from '../../components/TestCase/GraphQLTestCase';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaUniversalAccess, FaReact } from "react-icons/fa"
 import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
 import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql, SiDeno } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
-
-import { Button } from '@mui/material';
 import TestCard from './TestCard';
 import {
     updateFile,
@@ -169,15 +158,6 @@ const TestFile = ({accTestType, handleAccChange}) => {
     dispatchToGlobal(setTestCase(test));
   };
 
-  const modalStyles = {
-    overlay: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      zIndex: 3,
-    },
-  };
-
   const cardSize = '1rem';
 
   const testMappings = {
@@ -199,20 +179,6 @@ const TestFile = ({accTestType, handleAccChange}) => {
     'graphQL': [<SiGraphql size={cardSize}/>, 'GraphQL'],
   }
 
-  //No longer needed becuase we're not using the modal anymore 
-  // const allButtons = (Object.keys(testMappings)).map((elem, idx) => {
-  //   return (
-  //     <Button 
-  //       variant="outlined" 
-  //       onClick={() => handleToggle(elem)}
-  //       key={idx}
-  //     >
-  //       <span>{testMappings[elem][1]}</span>
-  //       {testMappings[elem][0]}
-  //     </Button>
-  //   );
-  // })
-
   const allCards = (Object.keys(testMappings)).map((elem, idx) => {
     return (
       <TestCard 
@@ -225,37 +191,8 @@ const TestFile = ({accTestType, handleAccChange}) => {
   })
 
   return (
-    // landing modal which displays button choices
+    // Displays each interactable test case EX: React, Redux, Svelte, Deno, Etc.
     <div>
-      {/* <ReactModal
-        className={styles.modal}
-        isOpen={isTestModalOpen}
-        onRequestClose={closeTestModal}
-        contentLabel='Save?'
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
-        ariaHideApp={false}
-        overlayClassName={styles[`modalOverlay${theme}`]}
-      >
-        <Draggable>
-          <div id={styles.container}>
-            
-            <AiOutlineCloseCircle
-              tabIndex={0}
-              id={styles.escapeButton} 
-              onKeyPress={closeTestModal}
-              onClick={closeTestModal}
-            />  
-            <div id={styles.body}>
-              <p id={styles.text}>What would you like to test?</p>
-              <div id={styles.newTestButtons}>
-              {allButtons}
-              </div>
-            </div>
-          </div>
-        </Draggable>
-      </ReactModal> */}
-      
       {/* instantiate context for each test option */}
       {testCase === 'redux' && (
         <section>

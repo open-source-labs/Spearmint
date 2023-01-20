@@ -56,6 +56,7 @@ const Instructions = ({
     dispatchToGlobal(setTabIndex(2));
   };
 
+//LINES 60-68 are functions that could be implmented in the future, not being used rn
   const submitFileName = () => {
     const fileName = document.getElementById('inputFileName').value;
     setFileName(fileName);
@@ -85,7 +86,6 @@ const Instructions = ({
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1a-content'
-            id='panel1a-header'
             id={styles.accordionSummary}
           >
             Endpoint Testing Configuration Guide
@@ -118,7 +118,6 @@ const Instructions = ({
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1a-content'
-            id='panel1a-header'
             id={styles.accordionSummary}
           >
             GraphQL Testing Configuration Guide
@@ -141,7 +140,6 @@ const Instructions = ({
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
               aria-controls='panel1a-content'
-              id='panel1a-header'
               id={styles.accordionSummary}
             >
               3. Important React Babel Configuration
@@ -172,7 +170,6 @@ const Instructions = ({
             <AccordionSummary 
               expandIcon={<ExpandMoreIcon />}
               aria-controls='panel1a-content'
-              id='panel1a-header'
               id={styles.accordionSummary}>
                 React Demo
             </AccordionSummary>
@@ -188,7 +185,6 @@ const Instructions = ({
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1a-content'
-            id='panel1a-header'
             id={styles.accordionSummary}
           >
             3. Important Solid Babel Configuration
@@ -222,7 +218,6 @@ const Instructions = ({
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1a-content'
-            id='panel1a-header'
             id={styles.accordionSummary}
           >
             3. Important Svelte Babel Configuration
@@ -263,7 +258,6 @@ const Instructions = ({
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls='panel1a-content'
-            id='panel1a-header'
             id={styles.accordionSummary}
           >
             Configuration Guide

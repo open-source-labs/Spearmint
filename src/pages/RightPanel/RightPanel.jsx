@@ -10,6 +10,11 @@ import { closeRightPanel, setTabIndex } from './../../context/actions/globalActi
 import TerminalView from './../../components/Terminal/TerminalView';
 import withStyles from '@mui/styles/withStyles';
 
+/*
+  Previous iterators added a closeRightPanel feature, but it doesnt seem like it's been implemented yet
+*/
+
+//StyledTabs and StyledTab are both material-ui imports that use theme. Might have issues while migrating material-ui version 5.
 const StyledTabs = withStyles({
   root:{
     backgroundColor:'#8f54a0',
@@ -58,7 +63,6 @@ const RightPanel = ({accTestType}) => {
           <StyledTab  value={3} label='User Guide' style={{ minWidth:'24%' }}/>
         </StyledTabs>
       </div>
-
       <div className={styles.viewContainer} hidden={tabIndex !== 0}>
         <EditorView />
       </div>

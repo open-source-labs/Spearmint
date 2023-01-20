@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import "./xterm.css";
@@ -22,7 +22,6 @@ term.loadAddon(fitAddon);
 const TerminalView = () => {
   
   useLayoutEffect(() => {
-    const container = document.getElementById('terminalContainer')
 
     term.open(document.getElementById('terminalContainer'));
     // when we have input events (e), we would send the data to the main processor
@@ -42,7 +41,6 @@ const TerminalView = () => {
 
   useLayoutEffect(() => {
     // console.log('USE-EFFEcT ALWAYS before fitaddon', term.cols, term.rows);
-    const container = document.getElementById('terminalContainer')
     //console.log(container.offsetWidth, container.offsetHeight)
     fitAddon.fit();
     //console.log('USE-EFFEcT ALWAYS after fitaddon', term.cols, term.rows);
@@ -52,13 +50,7 @@ const TerminalView = () => {
       //console.log('resizing with', term.cols, term.rows);
       ipc.send('terminal.resize', e, term.cols, term.rows)
     })
-    
-    //term.resize(Math.floor(container.offsetWidth/7), Math.floor(container.offsetHeight/14))
-    
   });
-
-
-
 
   return (
     <div id="terminalContainer">

@@ -7,17 +7,12 @@ import {
   setFilePath,
   setValidCode,
   toggleExportBool,
-  setTestCase,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
-import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
 import {
-  addEndpoint,
   createNewEndpointTest,
-  toggleDB,
-  updateDBFilePath,
   resetTests
 } from '../../context/actions/denoTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
@@ -25,12 +20,7 @@ import { DenoTestCaseContext } from '../../context/reducers/denoTestCaseReducer'
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
 import ExportFileModal from '../Modals/ExportFileModal';
-import { Button } from '@mui/material';
 const { ipcRenderer } = require('electron')
-
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
 
 // child component of DenoTest menu. has NewTest and Endpoint buttons
 const DenoTestMenu = () => {
@@ -46,7 +36,6 @@ const DenoTestMenu = () => {
   useEffect(() => {
     // this is commented due to a bug where the user cannot export a test
     validateInputs('endpoint', denoTestCase)
-      // ? dispatchToGlobal(setValidCode(true)) : 
       dispatchToGlobal(setValidCode(true));
   }, []);
 
@@ -77,7 +66,7 @@ const DenoTestMenu = () => {
 
     const updatedData = fileHandle();
     if(!newFilePath.includes('test.js') || !userSavedTest){
-      dispatchToGlobal(toggleExportBool)
+      dispatchToGlobal(toggleExportBool())//Im assuming that this is supposed to be invoked? bc accTestMenu has it invoked line 68
       setIsExportModalOpen(true)
       setUserSavedTest(true)
     }
