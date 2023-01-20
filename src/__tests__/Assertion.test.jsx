@@ -43,7 +43,7 @@ describe('Assertion ', () => {
         </MockDataContext.Provider>
       </ReactTestCaseContext.Provider>
     );
-    expect(getByText('Assertion')).;
+    expect(getByText('Assertion'));
 
     expect(getAllByRole('textbox')).toBeInTheDocument;
   

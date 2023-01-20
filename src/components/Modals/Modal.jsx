@@ -19,16 +19,16 @@ import {
   setFolderView,
 } from '../../context/actions/globalActions';
 // Accordion view
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import Draggable from 'react-draggable';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { VscNewFile } from "react-icons/vsc"
-import { Button, TextField, InputAdornment } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Button, TextField, InputAdornment } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 import { FaFileExport } from "react-icons/fa";
 
 // const ipc = require('electron').ipcRenderer;

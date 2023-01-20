@@ -22,7 +22,7 @@ import {
   SvelteTestCaseState ,
   SvelteTestCaseReducer,
 } from '../../context/reducers/svelteTestCaseReducer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const SvelteTestCase = (props) => {
   const [SvelteTestCase, dispatchToSvelteTestCase] = useReducer(

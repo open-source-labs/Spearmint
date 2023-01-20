@@ -22,7 +22,7 @@ import {
   reactTestCaseState,
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const ReactTestCase = (props) => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(

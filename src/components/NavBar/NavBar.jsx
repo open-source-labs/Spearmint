@@ -2,7 +2,7 @@
  * nav pannel
  * to export files, switch views, or open a new folder
  */
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import React, { useState, useContext, useReducer } from 'react';
 import styles from './NavBar.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -20,7 +20,7 @@ import { FaFileExport, FaUserCircle } from 'react-icons/fa';
 import { BiSun, BiMoon } from 'react-icons/bi';
 import { GoFileSubmodule } from 'react-icons/go';
 import { ImHome3 } from "react-icons/im"
-import { Switch } from '@material-ui/core';
+import { Switch } from '@mui/material';
 import { useToggleModal } from '../TestMenu/testMenuHooks';
 import { setTestCase } from '../../context/actions/globalActions';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';

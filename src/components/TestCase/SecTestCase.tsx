@@ -5,7 +5,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 
 import styles from './TestCase.module.scss';
 import SecTestMenu from '../TestMenu/SecTestMenu';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');

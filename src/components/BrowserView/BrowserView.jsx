@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import styles from './BrowserView.module.scss';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
-import { InvertColors } from '@material-ui/icons';
+import { InvertColors } from '@mui/icons-material';
 
 
 const BrowserView = () => {

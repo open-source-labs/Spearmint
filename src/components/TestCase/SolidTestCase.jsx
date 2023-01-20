@@ -21,7 +21,7 @@ import {
   SolidTestCaseState ,
   SolidTestCaseReducer,
 } from '../../context/reducers/solidTestCaseReducer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const SolidTestCase = (props) => {
   const [SolidTestCase, dispatchToSolidTestCase] = useReducer(

@@ -9,7 +9,7 @@ import { SolidTestCaseContext } from '../../../context/reducers/solidTestCaseRed
 
 import { deleteRender, addProp } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import Prop from './Prop';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 const closeIcon = require('../../../assets/images/close.png');

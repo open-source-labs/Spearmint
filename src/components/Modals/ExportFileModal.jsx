@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import Draggable from 'react-draggable';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@mui/styles/withStyles';
 import {
   setFilePathMap,
   createFileTree,
@@ -16,7 +16,7 @@ import {
 } from '../../context/actions/globalActions';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaFileExport } from "react-icons/fa"
-import { Button, TextField, InputAdornment } from '@material-ui/core';
+import { Button, TextField, InputAdornment } from '@mui/material';
 
 import styles from './Modal.module.scss';
 

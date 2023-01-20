@@ -22,7 +22,8 @@ import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
-import { Button } from '@material-ui/core';
+
+import { Button } from '@mui/material';
 const { ipcRenderer } = require('electron')
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons

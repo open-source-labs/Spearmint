@@ -8,7 +8,7 @@ import { PuppeteerStatements } from '../../utils/puppeteerTypes';
 
 //additions fo previously ExportFileModal functionality
 import styles from './TestCase.module.scss';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const PuppeteerTestCase = () => {

@@ -24,7 +24,7 @@ import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
 import PuppeteerUrl from '../AccTestComponent/PuppeteerUrl/PuppeteerUrl';
 import SearchInput from '../SearchInput/SearchInput';
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 
 const AccTestCase = ({handleAccChange}) => {

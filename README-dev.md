@@ -4,6 +4,12 @@
 
 **Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode. 
 
+// as of January 2023
+// works through node version 19.4.0
+// electron-devtools-vendor must be at version 1.1 for now due to a bug
+// react must be version 17 due to a dependency for mui
+// fix-path must be version 3.0.0 due to 4.0.0 only being usable with an import statement which is not supported in electron.jsx
+
 1. Fork and clone this repository.
 2. Install node version 16.13: ```nvm install 16.13```
 3. Use node version 16.13: ```nvm use 16.13```

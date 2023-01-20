@@ -5,7 +5,7 @@ import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from '../../ReactTestComponent/DescribeRenderer/DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 
 const DescribeRenderer = ({
   dispatcher,
@@ -65,7 +65,8 @@ const DescribeRenderer = ({
             onChange={handleChangeDescribeText}
           /> */}
           <div className={styles.describeInputContainer}>
-            <TextField 
+            <TextField
+              variant="standard"
               id={id}
               className={styles.describeInput}
               name='describe-label'
@@ -73,8 +74,7 @@ const DescribeRenderer = ({
               placeholder="Describe name of test"
               value={describeBlocks.byId['describe'+i]?.text}
               onChange={handleChangeDescribeText}
-              fullWidth
-            />
+              fullWidth />
           </div>
 
           <Droppable droppableId={'droppableSolidIt' + id} type={id}>
