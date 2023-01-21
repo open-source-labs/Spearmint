@@ -10,6 +10,9 @@
 // react must be version 17 due to a dependency for mui
 // fix-path must be version 3.0.0 due to 4.0.0 only being usable with an import statement which is not supported in electron.jsx
 
+// @capacitor/screen-reader did not seem to be implemented in any way, but could be good to implement now
+// or for a future iteration team to implement re: accessibility testing
+
 1. Fork and clone this repository.
 2. Install node version 16.13: ```nvm install 16.13```
 3. Use node version 16.13: ```nvm use 16.13```
