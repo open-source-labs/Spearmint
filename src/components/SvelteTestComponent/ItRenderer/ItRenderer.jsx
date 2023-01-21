@@ -11,7 +11,7 @@ import {
   deleteItStatement,
 } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { SvelteTestCaseContext } from '../../../context/reducers/svelteTestCaseReducer';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const SvelteItRenderer = ({

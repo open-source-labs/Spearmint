@@ -1,21 +1,22 @@
 import React, { useContext, useState} from 'react';
-import { Button, Switch, TextField } from '@material-ui/core';
+import { Button, Switch, TextField } from '@mui/material';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest, setTheme } from '../../context/actions/globalActions';
 import OpenFolder from '../../components/OpenFolder/OpenFolderButton';
-import { RiSpyLine, RiGithubFill, RiFacebookFill, RiGoogleFill } from 'react-icons/ri'
+import { RiSpyLine, RiGithubFill, RiGoogleFill } from 'react-icons/ri'
 import InputTextField from '../../components/InputTextField';
 
 const { ipcRenderer } = require('electron');
 // const remote = require('@electron/remote/main')
 
 function ProjectLoader() {
+  console.log("Inside ProjectLoader");
   const [{ idFileDirectoryOpen, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
 
@@ -57,8 +58,8 @@ function ProjectLoader() {
       setMessage('Password must be longer than 4 characters')
       return;
     }
-
-    handleLogout();
+    
+    // handleLogout();
     fetch('http://localhost:3001/login', {
       method: 'POST',
       headers: {
@@ -100,23 +101,6 @@ function ProjectLoader() {
       .catch((err) => console.log(err));
   };
 
-  const handleFacebookLogin = () => {
-    // create new window for github login
-    fetch('http://localhost:3001/oauth2/redirect/facebook', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        const { url } = res;
-        console.log('handleFaceBookLogin function')
-        // how we trigger the Main Process in electron to show our window
-        ipcRenderer.send('Facebook-Oauth', url);
-      })
-      .catch((err) => console.log(err));
-  };
-
   const handleGoogleLogin = () => {
     // create new window for github login
     fetch('http://localhost:3001/auth/google', {
@@ -127,7 +111,6 @@ function ProjectLoader() {
     })
       .then((res) => {
         const { url } = res;
-        console.log('handleGoogleLogin function')
         // how we trigger the Main Process in electron to show our window
         ipcRenderer.send('Google-Oauth', url);
       })
@@ -138,17 +121,10 @@ function ProjectLoader() {
 
   const setUserTheme = (theme) => {
     dispatchToGlobal(setTheme(theme));
-    console.log(theme);
   }
 
   // Listens for event from electron.jsx line 205
   ipcRenderer.on('github-new-url', (event, cookies) => {
-    setIsLoggedIn(true);
-    setUsername(cookies[0].value);
-  });
-
-  ipcRenderer.on('facebook-new-url', (event, cookies) => {
-    console.log(cookies);
     setIsLoggedIn(true);
     setUsername(cookies[0].value);
   });
@@ -190,15 +166,22 @@ function ProjectLoader() {
         password,
       }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setMessage(data);
+      .then((res) => {
+        if (res.status === 200) setIsLoggedIn(true);
+        if (res.status === 400) {
+          setError(true);
+          setMessage('Username already exists. Please pick another one.')
+        };
       })
       .catch((err) => console.log(err));
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setError(false);
+    setMessage('');
+    setUsername('');
+    setPassword('');
     fetch('http://localhost:3001/logout')
       .then((res) => res.json())
       .catch((err) => console.log(err));
@@ -246,10 +229,6 @@ function ProjectLoader() {
             <span>Login with GitHub</span>
             <RiGithubFill size={'1.25rem'}/>
           </Button>
-          <Button variant="outlined" id={styles.gitBtn} onClick={handleFacebookLogin}>
-            <span>Login with Facebook</span>
-            <RiFacebookFill size={'1.25rem'}/>
-          </Button>
           <Button variant="outlined" id={styles.gitBtn} onClick={handleGoogleLogin}>
             <span>Login with Google</span>
             <RiGoogleFill size={'1.25rem'}/>
@@ -290,7 +269,7 @@ function ProjectLoader() {
               Welcome <span id={styles.userText}>{username}</span>!
             </span>
             <span id={styles.openFolderSpan}>
-              Select your application
+              Select your application:
               <OpenFolder />
             </span>
             <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>

@@ -52,7 +52,7 @@ const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 're
               (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
             );
       }
-    }
+    } 
     else if (type === 'vue'){
       if (statementType === 'action') {
         return inputLength === 0

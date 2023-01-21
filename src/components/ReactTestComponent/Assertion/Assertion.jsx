@@ -42,6 +42,61 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
       'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
       'toHaveStyle', //takes in a sting value Ex: 'display: none'
       'toHaveTextContent', //takes in a string value Ex: 'Content'
+      'toBe', //
+      'toHaveBeenCalledTimes',
+      'toHaveBeenCalledWith',
+      'toHaveBeenLastCalledWith',
+      'toHaveBeenNthCalledWith',
+      'toHaveReturnedTimes',
+      'toHaveReturnedWith',
+      'toHaveLastReturnedWith',
+      'toHaveNthReturnedWith',
+      'toHaveLength',
+      'toHaveProperty',
+      'toBeCloseTo',
+      'not.toBeCloseTo',
+      'toBeGreaterThan',
+      'toBeGreaterThanOrEqual',
+      'toBeLessThan',
+      'toBeLessThanOrEqual',
+      'toBeInstanceOf',
+      'toContain',
+      'toContainEqual',
+      'toEqual',
+      'toMatch',
+      'toMatchObject',
+      'toMatchSnapshot',
+      'toMatchInLineSnapshot',
+      'toStrictEqual',
+      'toThrow',
+      'toThrowErrorMatchingSnapshot',
+      'toThrowErrorMatchingInLineSnapshot',
+      'not.toBeInstanceOf',
+      'not.toContain',
+      'not.toEqual',
+      'not.toContainEqual',
+      'not.toMatch',
+      'not.toMatchObject',
+      'not.toMatchSnapshot',
+      'not.toMatchInLineSnapshot',
+      'not.toStrictEqual',
+      'not.toThrow',
+      'not.toThrowErrorMatchingSnapshot',
+      'not.toThrowErrorMatchingInLineSnapshot',
+      'not.toBeLessThan',
+      'not.toBeLessThanOrEqual',
+      'not.toBeGreaterThanOrEqual',
+      'not.toBeGreaterThan',
+      'not.toHaveProperty',
+      'not.toHaveLength',
+      'not.toHaveNthReturnedWith',
+      'not.toHaveReturnedWith',
+      'not.toBe', //
+      'not.toHaveBeenCalledTimes',
+      'not.toHaveBeenCalledWith',
+      'not.toHaveBeenLastCalledWith',
+      'not.toHaveBeenNthCalledWith',
+      'not.toHaveReturnedTimes',
       'not.toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
       'not.toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
       'not.toHaveAttribute', //takes in a string Ex: 'type'
@@ -85,11 +140,11 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <option value='queryBy'>queryBy</option>
               <option value='queryAllBy'>queryAllBy</option>
             </select>
-            {/* <span id={styles.hastooltip} role='tooltip'>
+            <span id={styles.hastooltip} role='tooltip'>
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
-            </span> */}
+            </span>
             <select
               id='querySelector'
               value={statement.querySelector}
@@ -106,12 +161,12 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
               <option value='TestId'>TestId</option>
               {/* TextMatch Precision & Normalization will be added */}
             </select>
-            {/* <span id={styles.hastooltip} role='tooltip'>
+            <span id={styles.hastooltip} role='tooltip'>
               <img src={questionIcon} alt='help' />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.querySelector} />
               </span>
-            </span> */}
+            </span>
           </div>
         </div>
         <div id={styles.query}>
@@ -155,12 +210,12 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
                 id={styles.matcherAuto}
               />
 
-              {/* <span id={styles.hastooltip} role='tooltip'>
+              <span id={styles.hastooltip} role='tooltip'>
                 <img src={questionIcon} alt='help' />
                 <span id={styles.tooltip}>
                   <ToolTipMatcher toolTipType={statement.matcherType} />
                 </span>
-              </span> */}
+              </span>
             </div>
           </div>
           {needsMatcherValue(statement.matcherType) && (

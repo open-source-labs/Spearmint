@@ -16,7 +16,7 @@ import {
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { ReduxStatements } from '../../utils/reduxTypes';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import InputTextField from '../InputTextField';
 

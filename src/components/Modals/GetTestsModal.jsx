@@ -19,11 +19,10 @@ import { svelteReplaceTest } from '../../context/actions/frontendFrameworkTestCa
 
 import ReactModal from 'react-modal';
 import Draggable from 'react-draggable';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import styles from './Modal.module.scss';
-import { SvelteTestCaseContext } from '../../context/reducers/svelteTestCaseReducer';
 
 const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }) => {
   const [tests, setTests] = useState([]);
@@ -58,7 +57,6 @@ const GetTestsModal = ({ getTestsModalIsOpen, setGetTestsModalIsOpen, testType }
   };
 
   const handleSelectTest = (i) => {
-    console.log(testType + ':', tests[i].testState);
     switch (testType) {
       case 'acc':
         dispatchToAccTestCase(accReplaceTest(tests[i].testState));

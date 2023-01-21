@@ -1,13 +1,12 @@
 import React, { useContext, useState } from 'react';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import styles from './BrowserView.module.scss';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
-import { InvertColors } from '@material-ui/icons';
+import { InvertColors } from '@mui/icons-material';
 
-// import { ScreenReader } from '@capacitor/screen-reader';
 
 const BrowserView = () => {
   const [{ url, theme }, dispatchToGlobal] = useContext(GlobalContext);
@@ -26,14 +25,8 @@ const BrowserView = () => {
   // Mute/Unmute webview
   const muteAudio = (muted) => {
     const webview = document.querySelector('webview');
-    console.log(webview);
     webview.setAudioMuted(muted);
   };
-
-  const activateReader = () => { 
-    // Ternary statement is backwards, as checkedBoxes.checkedReader updates after the case break
-    // checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
-  }
 
   // helper function to add the https or http
   const addHttps = (url) => {
@@ -58,7 +51,6 @@ const BrowserView = () => {
 
   // Updates checkboxes states
   const handleChangeCheckBox = (e) => {
-    // console.log(e.target.name);
     switch (e.target.name) {
       case 'checkedMouse':
         setCheckBox({ ...checkedBoxes, checkedMouse: !checkedBoxes.checkedMouse });
@@ -89,17 +81,14 @@ const BrowserView = () => {
           ...checkedBoxes,
           checkedContrast: !checkedBoxes.checkedContrast,
         });
-        console.log('after everything: ' + checkedBoxes.checkedReader);
         break;
 
       // Updates screen reader
       case 'checkedReader':
-        console.log('before setCheckBox: ' + checkedBoxes.checkedReader);
         setCheckBox({
           ...checkedBoxes,
           checkedReader: !checkedBoxes.checkedReader,
         });
-        console.log('after setCheckBox: ' + checkedBoxes.checkedReader);
 
         activateReader(checkedBoxes.checkedReader);
         break;
@@ -237,7 +226,6 @@ const BrowserView = () => {
         id={styles.browserView}
         src={url}
         style={{
-          // filter: checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : 'grayscale(0%)',
           filter: checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast && checkedBoxes.checkedLowVision && checkedBoxes.checkedBrightness ? 'grayscale(100%) contrast(0.2) invert(100%) brightness(150%)'
             : checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast ? 'grayscale(100%) contrast(0.2)'
             : checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : checkedBoxes.checkedContrast ? 'contrast(0.2)' : checkedBoxes.checkedLowVision ? 'invert(100%)' : checkedBoxes.checkedBrightness ? 'brightness(150%)' : null,

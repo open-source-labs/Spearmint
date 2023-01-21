@@ -46,8 +46,8 @@
   align-items: center;
 
   svg {
-    height: 60%;
-    width: 60%;
+    height: 65%;
+    width: 65%;
     color: white;
     max-width: 80px;
     max-height: 80px;
@@ -69,25 +69,11 @@
   color: var(--card-title-color);
   flex: 1 1 30%;
   display: flex;
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   font-weight: bold;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   border-bottom: 2px solid $mint;
   width: 100%;
 }
-
-.cardDesc {
-  color: var(--card-desc-color);
-  flex: 1 1 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 0 10%;
-  font-size: 1rem;
-  font-family: $raleway;
-  line-height: 1.25;
-}
-
 

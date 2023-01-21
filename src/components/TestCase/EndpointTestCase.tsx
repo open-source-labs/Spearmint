@@ -15,7 +15,7 @@ import EndpointTestStatements from './EndpointTestStatements';
 import { EndpointStatements } from '../../utils/endpointTypes';
 import SearchInput from '../SearchInput/SearchInput';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const EndpointTestCase = () => {
   type DropResult = typeof DropResult;

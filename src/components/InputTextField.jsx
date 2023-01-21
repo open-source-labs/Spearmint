@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { TextField } from '@material-ui/core';
+import withStyles from '@mui/styles/withStyles';
+import { TextField } from '@mui/material';
 import { GlobalContext } from '../context/reducers/globalReducer';
 
 const CssTextFieldLight = withStyles({

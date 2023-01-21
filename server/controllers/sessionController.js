@@ -9,7 +9,6 @@ sessionController.startSession = (req, res, next) => {
   Session.create({ cookieId: res.locals.userId }, (err, result) => {
     if (err && err.code !== 11000) return next(err);
     res.locals.ssid = res.locals.userId;
-    console.log('session created');
     return next();
   });
 };

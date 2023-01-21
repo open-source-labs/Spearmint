@@ -11,7 +11,7 @@ import {
 import HooksAssertion from '../HooksAssertion';
 import HooksCallback from '../HooksCallback';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');

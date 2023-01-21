@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import styles from './ToolTip.scss';
 
 const ToolTip = ({ toolTipType }) => {
   const TOOLTIP_MAP = {
@@ -32,7 +31,7 @@ const ToolTip = ({ toolTipType }) => {
     DisplayValue:
       'Returns the input, textarea, or select element that has the matching display value.',
     Role:
-      'A shortcut to container.querySelector(`[role="${yourRole}"]`) (and it also accepts a TextMatch).',
+      'A shortcut to container.querySelector(`[role= "${yourRole}"]`) (and it also accepts a TextMatch).',
     TestId:
       'A shortcut to container.querySelector(`[data-testid="${yourId}"]`) (and it also accepts a TextMatch).',
     LCPTarget:
@@ -43,8 +42,6 @@ const ToolTip = ({ toolTipType }) => {
       "The First Contentful Paint (FCP) metric measures the time from when the page starts loading to when any part of the page's content is rendered on the screen. Provide a target value in ms.",
   };
 
-  // changed id from styles.tooltip to the string: "styles.tooltip" 
-  // As far as I can tell this isn't necessary
   return <span id={"styles.tooltip"}>{TOOLTIP_MAP[toolTipType]}</span>;
 };
 

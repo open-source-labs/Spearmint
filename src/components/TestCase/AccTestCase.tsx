@@ -24,19 +24,19 @@ import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
 import PuppeteerUrl from '../AccTestComponent/PuppeteerUrl/PuppeteerUrl';
 import SearchInput from '../SearchInput/SearchInput';
 import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 
-const AccTestCase = () => {
+const AccTestCase = ({handleAccChange}) => {
   interface Ref {
     theme: null | string
   }
   type DropResult = typeof DropResult;
 
+
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
   const [{ theme }] : Array<Ref> = useContext(GlobalContext);
   const { describeBlocks, itStatements, testType } = accTestCase;
-
   const [{ filePathMap }] = useContext<any>(GlobalContext);
 
   const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
@@ -65,7 +65,7 @@ const AccTestCase = () => {
   };
 
   return (
-    <div id={styles.AccTestCase}>
+    <div>
       <div id="head">
       <h2 id={styles[`testName${theme}`]}>Accessibility Testing</h2>
         <AccTestMenu />
@@ -74,9 +74,7 @@ const AccTestCase = () => {
       <section id={styles[`testCaseHeader${theme}`]}>
         <div id={styles.accTestDiv}>
           <AccTestTypes
-            dispatch={dispatchToAccTestCase}
-            action={updateTestType}
-            currTypes={testType}
+            handleAccChange={handleAccChange}
           />
 
           {testType === 'puppeteer' ? (
