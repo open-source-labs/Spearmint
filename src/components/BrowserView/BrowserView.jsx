@@ -5,13 +5,15 @@ import styles from './BrowserView.module.scss';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
-import { InvertColors } from '@mui/icons-material';
 
 
 const BrowserView = () => {
   const [{ url, theme }, dispatchToGlobal] = useContext(GlobalContext);
   // Track checked button state
 
+  /**
+   * Used for accessibility options
+   */
   const [checkedBoxes, setCheckBox] = useState({
     checkedMouse: false,
     muted: false,
