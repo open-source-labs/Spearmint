@@ -17,8 +17,8 @@ const [{ testCase }] = useContext(GlobalContext);
       </div>
       <br/>
       <Instructions
-      title={testCase}
-      accTestType={accTestType}
+        title={testCase}
+        accTestType={accTestType}
       />
     </div>
   );

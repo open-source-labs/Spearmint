@@ -18,25 +18,18 @@ import ReactInstructions from './ReactInstructions';
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
 
+/**
+ * This react component conditionally renders a specific test type instruction based on which test type is selected in its global context
+ */
 const Instructions = ({
   title,
-  dispatchToMockData,
-  dispatchTestCase,
-  createTest,
   testType = null,
   puppeteerUrl = 'sample.io',
   accTestType
 }) => {
-  const { handleNewTest } = useNewTest(
-    dispatchToMockData,
-    dispatchTestCase,
-    createTest,
-  );
   
-  const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl, accTestType);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{ tabIndex }, dispatchToGlobal] = useContext(GlobalContext)
 
   // Change execute command based on os platform
   let execute = '\n';
@@ -44,29 +37,27 @@ const Instructions = ({
     execute = '\r';
   }
 
+  /**
+   * This is a function that changes your current directory to the correct file path.
+   */
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
   };
 
+  /**
+   * This is a function that installs dependencies needed for the specific test type
+   */
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}${execute}`);
     setBtnFeedback({ ...btnFeedback, installed: true });
     dispatchToGlobal(setTabIndex(2));
   };
 
-//LINES 60-68 are functions that could be implmented in the future, not being used rn
-  const submitFileName = () => {
-    const fileName = document.getElementById('inputFileName').value;
-    setFileName(fileName);
-  };
-
-  const changeFileName = (e) => {
-    const fileName = e.currentTarget.value;
-    setFileName(fileName);
-  }
-
   // EndPointGuide component definition, conditionally rendered
+  /**
+   * Function that conditionally renders only when endpoint testing is selected in its global context
+   */
   const EndPointGuide = () => {
     // endpoint guide only exists when user is in endpoint testing
     if (script.endPointGuide) {
@@ -98,9 +89,10 @@ const Instructions = ({
   };
 
 
-  // GraphQLGuide component definition, conditionally rendered
+  /**
+   * Function that conditionally renders only when GraphQL testing is selected in its global context
+   */
   const GraphQLGuide = () => {
-    // graphQL guide only exists when user is in endpoint testing
     if (script.graphQLGuide) {
       const array = [];
       for (let step in script.graphQLGuide) {
@@ -129,8 +121,9 @@ const Instructions = ({
     return null;
   };
 
-
-  // ReactDependencies component definition, conditionally rendered
+  /**
+   * Function that conditionally renders only when react testing is selected in its global context
+   */
   const ReactDependencies = () => {
     if (title === 'hooks' || title === 'react') {
       return (
