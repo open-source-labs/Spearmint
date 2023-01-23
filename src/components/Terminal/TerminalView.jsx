@@ -3,6 +3,7 @@ import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import "./xterm.css";
 import "./Terminal.css";
+import { ipcRenderer } from 'electron';
 const ipc = require('electron').ipcRenderer;
 
 const terminalArgs = {
@@ -20,12 +21,11 @@ const fitAddon = new FitAddon();
 term.loadAddon(fitAddon);
 
 const TerminalView = () => {
-  
   useLayoutEffect(() => {
-
     term.open(document.getElementById('terminalContainer'));
     // when we have input events (e), we would send the data to the main processor
-    term.onData((e) => {
+    const onData = term.onData((e) => {
+      console.log('TERM.ONDATA');
       ipc.send('terminal.toTerm', e);
     });
     // when incoming Data comes back to the main process, this ipc renderer
@@ -34,27 +34,27 @@ const TerminalView = () => {
       term.write(data);
     });
 
-    //console.log("in useEffect once before fit", container.offsetWidth, container.offsetHeight)
     fitAddon.fit();
-    //console.log("in useEffect once after fit", container.offsetWidth, container.offsetHeight)
+
+    // remove event listeners when component is unmounted
+    return () => {
+      ipcRenderer.removeAllListeners('terminal.incData');
+      onData.dispose();
+    }
   }, []);
 
   useLayoutEffect(() => {
-    // console.log('USE-EFFEcT ALWAYS before fitaddon', term.cols, term.rows);
-    //console.log(container.offsetWidth, container.offsetHeight)
     fitAddon.fit();
-    //console.log('USE-EFFEcT ALWAYS after fitaddon', term.cols, term.rows);
 
     // tell ptyprocess to resize also 
     term.onResize((e) => {
-      //console.log('resizing with', term.cols, term.rows);
-      ipc.send('terminal.resize', e, term.cols, term.rows)
+      ipc.send('terminal.resize', e, term.cols, term.rows);
     })
   });
 
   return (
     <div id="terminalContainer">
-   </div>
+    </div>
   )
 };
 
