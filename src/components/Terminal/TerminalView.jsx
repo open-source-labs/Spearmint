@@ -25,7 +25,6 @@ const TerminalView = () => {
     term.open(document.getElementById('terminalContainer'));
     // when we have input events (e), we would send the data to the main processor
     const onData = term.onData((e) => {
-      console.log('TERM.ONDATA');
       ipc.send('terminal.toTerm', e);
     });
     // when incoming Data comes back to the main process, this ipc renderer
