@@ -1,10 +1,18 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ReduxTestCase from '../components/TestCase/ReduxTestCase';
+import { act } from 'react-dom/test-utils'
 
 describe('should render ReduxTestCase component', () => {
-  const { getByRole, debug } = render(<ReduxTestCase />);
+  // const { getByRole, debug } = act(() => { render(<ReduxTestCase />) });
 
-  screen.debug();
+  it('displays the component', () => {
+    act(() => { render(<ReduxTestCase />) });
+    screen.debug()
+  })
 });
