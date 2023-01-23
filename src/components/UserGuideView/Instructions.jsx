@@ -13,7 +13,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { GlobalContext } from '../../context/reducers/globalReducer';;
 import { Button } from '@mui/material';
-import { accTestCaseState } from '../../context/reducers/accTestCaseReducer';
 import ReactInstructions from './ReactInstructions';
 
 const ipc = require('electron').ipcRenderer;

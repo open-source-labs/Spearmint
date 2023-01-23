@@ -6,7 +6,11 @@ import styles from './BrowserView.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
 
-
+/**
+ * This component is the Browser tab of the application, a child component of the RightPanel
+ * 
+ * The browser allows for multiple accessibility options to help those with disabilites
+ */
 const BrowserView = () => {
   const [{ url, theme }, dispatchToGlobal] = useContext(GlobalContext);
   // Track checked button state
@@ -24,13 +28,17 @@ const BrowserView = () => {
     checkedBrightness: false,
   });
 
-  // Mute/Unmute webview
+  /**
+   * This function has the option to Mute/Unmute webview
+   */ 
   const muteAudio = (muted) => {
     const webview = document.querySelector('webview');
     webview.setAudioMuted(muted);
   };
 
-  // helper function to add the https or http
+  /**
+   * Helper function to automatically add the https or http if the user didn't include it in url
+   */ 
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
@@ -43,6 +51,10 @@ const BrowserView = () => {
     return url;
   };
 
+  /**
+   * Event listener that handles when a user inputs a new website into the fully functional browser.
+   * @param {event} e - event
+   */
   const handleChangeUrl = (e) => {
     if (e.keyCode === 13) {
       const testSiteURL = addHttps(e.target.value);
@@ -51,7 +63,10 @@ const BrowserView = () => {
     }
   };
 
-  // Updates checkboxes states
+  /**
+   * Checks to see which box is clicked and updates checkboxes states and browser visuals.
+   * @param {event} e - event
+   */
   const handleChangeCheckBox = (e) => {
     switch (e.target.name) {
       case 'checkedMouse':

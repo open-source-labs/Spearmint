@@ -7,28 +7,32 @@ import styles from './EditorView.module.scss';
 
 const { ipcRenderer } = require('electron');
 
-// this file is using codemirror to display the code editor
-// also saves changes when they are manually typed into the editor
-
+/**
+ * This component uses codemirror to display the code editor 
+ * It also saves changes when they are manually typed into the editor
+ */
 const Editor = () => {
   const [{ file, filePath, theme }, dispatchToGlobal] = useContext(GlobalContext);
   const [wasSaved, setWasSaved] = useState('');
   const [buttonText, setButtonText] = useState('Save Changes');
   let editedText = '';
 
-
-  // to change then reset the text of a button after a click
-  function handleClick(){
-    setButtonText('Saved!')
-    setTimeout(function (){
-      setButtonText('Save Changes')
-    }, 1500)
-  }
-
-  const updateAfile = (newValue, e) => {
+/**
+ * This function updates the file in local file, it is invoked when user saves the file
+ * @param {string} newValue - New updated text inside of the current code editor
+ */
+  const updateAfile = (newValue) => {
     editedText = newValue;
     if (wasSaved.length) setWasSaved('');
   };
+
+/**
+ * This function compares the existing local file that you are currently testing,
+ * and checks to see if there are any differences between the code editor and your local file
+ * If there are any differences it then updates your local file
+ * 
+ * NOTE: Currently, the functionaliy for this button seems to be broken and doesn't save the local file you are testing.
+ */  
   const saveFile = () => {
     if (editedText.length) {
       dispatchToGlobal(updateFile(editedText));
@@ -40,8 +44,13 @@ const Editor = () => {
       // Upon reply from main process, update wasSaved state
       setWasSaved(reply);
     }
+    setButtonText('Saved!')
+    setTimeout(function (){
+      setButtonText('Save Changes')
+    }, 1500)
   };
 
+  
 // docs --> https://www.npmjs.com/package/@uiw/react-codemirror
   const fileType = filePath.split('.')[1];
   const extensionChecker = {
@@ -70,9 +79,8 @@ const Editor = () => {
     </div>
       <div>
       <button type="button" id={styles.btn} onClick={() => {
-          saveFile();
-          handleClick();
-          }}>
+        saveFile();
+      }}>
         {buttonText}
       </button>
       <span id={styles.span}>{wasSaved}</span>
