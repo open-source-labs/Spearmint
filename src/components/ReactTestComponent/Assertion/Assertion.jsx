@@ -1,8 +1,3 @@
-/**
- * functionlity to add and update assertions
- * same layout as action.jsx
- *  - but for only the last assertion card?
- */
 import React, { useContext } from 'react';
 import styles from './Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/actions/frontendFrameworkTestCaseActions';
