@@ -10,6 +10,7 @@ import { setProjectUrl } from '../../context/actions/globalActions';
  * This component is the Browser tab of the application, a child component of the RightPanel
  * 
  * The browser allows for multiple accessibility options to help those with disabilites
+ * @returns { JSX.Element } BrowserView component
  */
 const BrowserView = () => {
   const [{ url, theme }, dispatchToGlobal] = useContext(GlobalContext);
@@ -38,6 +39,8 @@ const BrowserView = () => {
 
   /**
    * Helper function to automatically add the https or http if the user didn't include it in url
+   * @param { string } url - Url of the website
+   * @returns { string } Updated Url that adds Https if it did not have it previously
    */ 
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
@@ -53,7 +56,8 @@ const BrowserView = () => {
 
   /**
    * Event listener that handles when a user inputs a new website into the fully functional browser.
-   * @param {event} e - event
+   * @param { event } e - event
+   * @returns { void }
    */
   const handleChangeUrl = (e) => {
     if (e.keyCode === 13) {
@@ -66,6 +70,7 @@ const BrowserView = () => {
   /**
    * Checks to see which box is clicked and updates checkboxes states and browser visuals.
    * @param {event} e - event
+   * @returns {object} The new updated state of all the browser view accessibility checkboxes
    */
   const handleChangeCheckBox = (e) => {
     switch (e.target.name) {

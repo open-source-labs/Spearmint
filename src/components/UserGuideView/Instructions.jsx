@@ -20,7 +20,8 @@ const os = require('os');
 
 /**
  * This react component conditionally renders a specific test type instruction based on which test type is selected in its global context
- */
+ * @returns { JSX.Element } Renders the Instructions component
+*/
 const Instructions = ({
   title,
   testType = null,
@@ -39,6 +40,7 @@ const Instructions = ({
 
   /**
    * This is a function that changes your current directory to the correct file path.
+   * @returns { void } Returns void.
    */
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}${execute}`);
@@ -47,6 +49,7 @@ const Instructions = ({
 
   /**
    * This is a function that installs dependencies needed for the specific test type
+   * @returns { void } Returns void
    */
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}${execute}`);
@@ -57,6 +60,7 @@ const Instructions = ({
   // EndPointGuide component definition, conditionally rendered
   /**
    * Function that conditionally renders only when endpoint testing is selected in its global context
+   * @returns { JSX.Element || null } Conditionally returns either the EndPointGuide component or null
    */
   const EndPointGuide = () => {
     // endpoint guide only exists when user is in endpoint testing
@@ -91,6 +95,7 @@ const Instructions = ({
 
   /**
    * Function that conditionally renders only when GraphQL testing is selected in its global context
+   * @returns { JSX.Element || null } Conditionally returns either the GraphQLGuide or null
    */
   const GraphQLGuide = () => {
     if (script.graphQLGuide) {
@@ -123,6 +128,7 @@ const Instructions = ({
 
   /**
    * Function that conditionally renders only when react testing is selected in its global context
+   * @returns { JSX.Element || null } Conditionally returns either the ReactDependencies component or null
    */
   const ReactDependencies = () => {
     if (title === 'hooks' || title === 'react') {

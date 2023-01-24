@@ -5,7 +5,15 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 
 // const { ipcRenderer } = require('electron');
 
+
+/**
+ * 
+ * @param {  } theme
+ * @param {  } accTestType
+ * @returns { JSX.Element } renders the UserGuide component
+ */
 const UserGuideView = ({theme, accTestType}) => {
+console.log(theme)
 const [{ testCase }] = useContext(GlobalContext);
 
   return (

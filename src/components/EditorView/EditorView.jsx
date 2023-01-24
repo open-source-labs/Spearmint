@@ -10,6 +10,7 @@ const { ipcRenderer } = require('electron');
 /**
  * This component uses codemirror to display the code editor 
  * It also saves changes when they are manually typed into the editor
+ * @returns { JSX.Element } EditorView component
  */
 const Editor = () => {
   const [{ file, filePath, theme }, dispatchToGlobal] = useContext(GlobalContext);
@@ -20,6 +21,7 @@ const Editor = () => {
 /**
  * This function updates the file in local file, it is invoked when user saves the file
  * @param {string} newValue - New updated text inside of the current code editor
+ * @returns { void } Updates wasSaved state, but returns nothing
  */
   const updateAfile = (newValue) => {
     editedText = newValue;
@@ -32,6 +34,8 @@ const Editor = () => {
  * If there are any differences it then updates your local file
  * 
  * NOTE: Currently, the functionaliy for this button seems to be broken and doesn't save the local file you are testing.
+ * 
+ * @returns { void } Returns void, but updates the state of the save button and saves your local file.
  */  
   const saveFile = () => {
     if (editedText.length) {

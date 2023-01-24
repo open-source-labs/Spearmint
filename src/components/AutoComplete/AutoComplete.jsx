@@ -6,6 +6,10 @@ import { eventTypesList } from '../TypesList/eventTypesList';
 import { matcherTypesList} from '../TypesList/matcherTypesList';
 
 
+/**
+ * @param { string } statement - 
+ * @returns { JSX.Element }
+ */
 const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 'react' }) => {
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
