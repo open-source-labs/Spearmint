@@ -22,11 +22,6 @@ const App = () => {
   console.log('HELLO YOU ARE IN APP.JSX');
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
-  const [accTestType, setAccTestType] = useState('select')
-  const handleAccChange = (event) => {
-    setAccTestType(event.target.value);
-  };
-
   const changeTheme = () => {
     localStorage.setItem('theme', global.theme === 'light' ? 'dark' : 'light');
     dispatchToGlobal(toggleTheme());
@@ -119,10 +114,8 @@ const App = () => {
               >
                 <FileDirectory fileTree={global.fileTree} />
               </CSSTransition>
-              <LeftPanel 
-              handleAccChange={handleAccChange}/>
-              <RightPanel 
-              accTestType={accTestType}/>
+              <LeftPanel/>
+              <RightPanel/>
             </div>
           </StyledEngineProvider>
         </ThemeProvider>

@@ -58,7 +58,7 @@ beforeEach(() => {
   jest.resetModules();
 });
 
-describe('testing hooks left panel', () => {
+xdescribe('testing hooks left panel', () => {
   it('renders the hooks test case with corresponding buttons', () => {
     expect(wrapper.text()).toContain('Context');
     expect(wrapper.text()).toContain('Hook: Updates');

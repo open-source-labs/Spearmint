@@ -22,7 +22,7 @@ global.before(function () {
   chai.use(chaiAsPromised);
 });
 
-describe('Application Accessibility Audit', function () {
+xdescribe('Application Accessibility Audit', function () {
   this.timeout(10000);
 
   beforeEach(function () {

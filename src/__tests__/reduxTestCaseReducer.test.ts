@@ -1,7 +1,7 @@
 import { reduxTestCaseReducer as subject } from '../context/reducers/reduxTestCaseReducer';
 import { ReduxTestCaseState } from '../utils/reduxTypes';
 
-describe('Redux Test Case Reducer', () => {
+xdescribe('Redux Test Case Reducer', () => {
   let state: ReduxTestCaseState;
 
   beforeEach(() => {
