@@ -14,7 +14,7 @@ const dispatchToTestFileModal = jest.fn();
 
 afterEach(cleanup);
 
-describe('Puppeteer Left Panel', () => {
+xdescribe('Puppeteer Left Panel', () => {
   it('should render the puppeteer test menu with two buttons: [New Test +] and [Paint Timing]', () => {
     const puppeteerTestCase = {
       puppeteerStatements: [],

@@ -20,6 +20,10 @@ const term = new Terminal(terminalArgs);
 const fitAddon = new FitAddon();
 term.loadAddon(fitAddon);
 
+/**
+ * React component that renders on the RightPanel component
+ * @returns { JSX.Element } returns the TerminalView component
+ */
 const TerminalView = () => {
   useLayoutEffect(() => {
     term.open(document.getElementById('terminalContainer'));

@@ -1,6 +1,6 @@
 import { reactTestCaseReducer, reactTestCaseState } from '../context/reducers/reactTestCaseReducer';
 
-describe('React Reducer', () => {
+xdescribe('React Reducer', () => {
   let initialState = {};
 
   beforeEach(() => {

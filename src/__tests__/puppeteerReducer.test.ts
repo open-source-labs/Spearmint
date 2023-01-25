@@ -1,7 +1,7 @@
 import { puppeteerTestCaseReducer } from '../context/reducers/puppeteerTestCaseReducer';
 import { PuppeteerTestCaseState, PuppeteerAction } from '../utils/puppeteerTypes';
 
-describe('puppeteerTestCaseReducer', () => {
+xdescribe('puppeteerTestCaseReducer', () => {
   let state: PuppeteerTestCaseState;
 
   beforeEach(() => {

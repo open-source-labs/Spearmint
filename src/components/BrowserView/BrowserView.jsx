@@ -5,6 +5,7 @@ import styles from './BrowserView.module.scss';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
+import { ScreenReader } from '@capacitor/screen-reader';
 
 /**
  * This component is the Browser tab of the application, a child component of the RightPanel
@@ -31,11 +32,24 @@ const BrowserView = () => {
 
   /**
    * This function has the option to Mute/Unmute webview
-   */ 
+   * @param { boolean } boolean - Based on it's value it will mute or unmute the audio
+   * @returns { void } 
+   */
   const muteAudio = (muted) => {
     const webview = document.querySelector('webview');
     webview.setAudioMuted(muted);
   };
+
+  /**
+   * Renders the activateReader react component based on the state in the checkedBoxes\
+   *
+   * NOTE: Currently this component does turn on and off, but it seems like it's unable to read the pages. Presumably needs another function to actually read the contents of a page.
+   * @returns { JSX.Element } Returns the activateReader react component
+   */
+  const activateReader = () => { 
+    // Ternary statement is backwards, as checkedBoxes.checkedReader updates after the case break
+    checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
+  }
 
   /**
    * Helper function to automatically add the https or http if the user didn't include it in url

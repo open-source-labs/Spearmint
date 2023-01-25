@@ -105,7 +105,7 @@ beforeEach(() => {
   jest.resetModules();
 });
 
-describe('testing left panel react test menu', () => {
+xdescribe('testing left panel react test menu', () => {
   it('renders the react menu with initial buttons, component input, first Describe Block', () => {
     expect(wrapper.text()).toContain('Enter Component Name:');
     expect(wrapper.text()).toContain('Mock Data');

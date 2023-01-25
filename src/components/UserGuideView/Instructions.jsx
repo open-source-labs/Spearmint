@@ -60,7 +60,7 @@ const Instructions = ({
   // EndPointGuide component definition, conditionally rendered
   /**
    * Function that conditionally renders only when endpoint testing is selected in its global context
-   * @returns { JSX.Element || null } Conditionally returns either the EndPointGuide component or null
+   * @returns { (JSX.Element|null) } Conditionally returns either the EndPointGuide component or null
    */
   const EndPointGuide = () => {
     // endpoint guide only exists when user is in endpoint testing
@@ -95,7 +95,7 @@ const Instructions = ({
 
   /**
    * Function that conditionally renders only when GraphQL testing is selected in its global context
-   * @returns { JSX.Element || null } Conditionally returns either the GraphQLGuide or null
+   * @returns { (JSX.Element | null) } Conditionally returns either the GraphQLGuide or null
    */
   const GraphQLGuide = () => {
     if (script.graphQLGuide) {
@@ -128,7 +128,7 @@ const Instructions = ({
 
   /**
    * Function that conditionally renders only when react testing is selected in its global context
-   * @returns { JSX.Element || null } Conditionally returns either the ReactDependencies component or null
+   * @returns { (JSX.Element | null) } Conditionally returns either the ReactDependencies component or null
    */
   const ReactDependencies = () => {
     if (title === 'hooks' || title === 'react') {

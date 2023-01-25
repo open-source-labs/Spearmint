@@ -9,7 +9,11 @@ import {
 } from '../../../context/actions/accTestCaseActions';
 
 import styles from './ItRenderer.module.scss';
-
+/**
+ * Renders the ItRenderer react compoonent that allows
+ * the users to create it statements for Accessibility
+ * @returns { JSX.Element } Returns the DescribeRenderer component
+ */
 const ItRenderer = ({
   itStatements,
   describeId,
@@ -19,10 +23,22 @@ const ItRenderer = ({
 
   const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
+  /**
+   * Function that on click, deletes a It statement 
+   * @param { e } e - event 
+   * @returns { void } Returns void
+   */
   const deleteItStatementHandleClick = (e: ChangeEvent) => {
     const itId = e.target.id;
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
+/**
+   * Deletes the statement block in Accessibility test type when the charCode 13 (ENTER) is pressed.
+   * 
+   * NOTE: This functionality doesn't seem to be working at the moment.
+   * @param { e } e - event 
+   * @returns { void } Returns void
+   */
 
   const deleteItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {

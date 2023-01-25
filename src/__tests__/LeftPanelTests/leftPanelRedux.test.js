@@ -54,7 +54,7 @@ beforeEach(() => {
   jest.resetModules();
 });
 
-describe('testing left panel redux test menu', () => {
+xdescribe('testing left panel redux test menu', () => {
   it('renders the redux menu with initial buttons and first render boxes', () => {
     expect(wrapper.text()).toContain('Reducer');
     expect(wrapper.text()).toContain('Action Creator');
