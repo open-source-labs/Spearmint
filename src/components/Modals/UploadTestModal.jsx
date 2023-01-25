@@ -9,6 +9,10 @@ import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReduce
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import styles from './Modal.module.scss';
 
+/**
+ * This react component UploadTestModal renders a modal that allows the user to save a test case to the database
+ * @returns A modal that allows the user to save a test case.
+ */
 const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, testType }) => {
   const [testName, setTestName] = useState('');
   const [accTestCase] = useContext(AccTestCaseContext);
@@ -18,6 +22,9 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
   const [reactTestCase] = useContext(ReactTestCaseContext);
   const [reduxTestCase] = useContext(ReduxTestCaseContext);
 
+/**
+ * Closes the upload modal
+ */
   const closeUploadModal = () => {
     setUploadTestModalIsOpen(false);
   };
@@ -108,4 +115,4 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
   );
 };
 
-export default UploadTestModal;
+export default ;

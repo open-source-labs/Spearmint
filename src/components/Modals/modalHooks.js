@@ -4,26 +4,6 @@ import { toggleModal, setTestCase, updateFile } from '../../context/actions/glob
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './Modal.module.scss';
 
-/* is this being used? Cannot find anything calling this hook
-
-export function useCopy() {
-  const [copySuccess, setCopySuccess] = useState(false);
-  const codeRef = useRef(null);
-
-  const handleCopy = async (e) => {
-    const code = document.createRange();
-    code.setStartBefore(codeRef.current);
-    code.setEndAfter(codeRef.current);
-    window.getSelection().empty();
-    window.getSelection().addRange(code);
-    document.execCommand('copy');
-    setCopySuccess(true);
-    setTimeout(() => setCopySuccess(false), 800);
-  };
-
-  return { copySuccess, codeRef, handleCopy };
-} */
-
 export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, closeModal) {
   const [, dispatchToGlobal] = useContext(GlobalContext);
   const handleNewTest = (e) => {
