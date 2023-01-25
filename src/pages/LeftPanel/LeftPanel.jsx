@@ -3,7 +3,13 @@ import styles from './LeftPanel.module.scss';
 import TestFile from '../TestFile/TestFile';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
-const LeftPanel = ({accTestType, handleAccChange}) => {
+/**
+ * Renders the LeftPanel react component. 
+ * 
+ * This component consists of main page to choose a test along with the individual testing component that you selected.
+ * @returns { JSX.Element } Returns the LeftPanel react component
+ */
+const LeftPanel = () => {
 
   const [{ theme }] = useContext(
     GlobalContext
@@ -11,10 +17,7 @@ const LeftPanel = ({accTestType, handleAccChange}) => {
 
   return (
     <div id={styles[`leftPanel${theme}`]}>
-      <TestFile 
-        accTestType={accTestType}
-        handleAccChange={handleAccChange}
-      />    
+      <TestFile/>    
     </div>
   );
 

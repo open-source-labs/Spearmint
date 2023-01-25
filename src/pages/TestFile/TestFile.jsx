@@ -93,7 +93,7 @@ import {
     setTabIndex,
 } from '../../context/actions/globalActions';
 
-const TestFile = ({accTestType, handleAccChange}) => {
+const TestFile = () => {
   let [{ testCase, isTestModalOpen, projectFilePath, file, exportBool, theme }, dispatchToGlobal] = useContext(GlobalContext);
   const [mockData, dispatchToMockData] = useReducer(mockDataReducer, mockDataState);
 
