@@ -1,8 +1,6 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/globalActions';
-import { DispatchType, GlobalStateTypes } from '../../utils/globalTypes';
-
-
+import {  GlobalStateTypes, GlobalActionTypes } from '../../utils/globalTypes';
 
 export const globalState: GlobalStateTypes = {
   url: 'http://www.google.com/',
@@ -29,39 +27,16 @@ export const globalState: GlobalStateTypes = {
   theme: window.localStorage.theme ?? 'light',
 };
 
- const Dispatch: DispatchType = {
-  dispatchToGlobal: () => null,
- }
+const dispatchToGlobal = () => null;
 
- 
+const contextArr: [GlobalStateTypes, Function] = [globalState, dispatchToGlobal]
 
-const contextArr = [globalState, Dispatch]
-
-export const GlobalContext = createContext<any[]>(contextArr); // originally createContext(null)
+export const GlobalContext = createContext<[GlobalStateTypes, Function]>(contextArr); // originally createContext(null)
 
 
 // TODO: action type is any due to the fact that each action in glovalActions.ts is an object with different properties which does not lead itself to a unified Action interface via Typescript
 // All of the actions must be modified to nest the necessary data inside of a payload property and/or all of the cases in the reducer below must be modified
-interface GlobalActionTypes {
-  type: string,
-  url?: string,
-  load?: string,
-  fileTree?: string,
-  display?: string,
-  filePath?: string,
-  fileName?: string,
-  projectFilePath?: string,
-  filePathMap?: string,
-  testCase?: string,
-  testString?: string,
-  docsUrl?: string,
-  validCode?: boolean,
-  tabIndex?: number,
-  testState?: Object,
-  guestState?: string,
-  theme?: string,
-  fileDirectoryOpen?: string,
-}
+
 
 export const globalReducer = (state: GlobalStateTypes, action: GlobalActionTypes) => {
   Object.freeze(state);

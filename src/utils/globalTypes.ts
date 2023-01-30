@@ -1,3 +1,24 @@
+export interface GlobalActionTypes {
+  type: string,
+  url?: string,
+  load?: string,
+  fileTree?: string,
+  display?: string,
+  filePath?: string,
+  fileName?: string,
+  projectFilePath?: string,
+  filePathMap?: string,
+  testCase?: string,
+  testString?: string,
+  docsUrl?: string,
+  validCode?: boolean,
+  tabIndex?: number,
+  testState?: Object,
+  guestState?: string,
+  theme?: string,
+  fileDirectoryOpen?: string,
+}
+
 export interface GlobalStateTypes {
   url: string,
   projectUrl: (null | string),
@@ -28,11 +49,7 @@ export interface GlobalStateTypes {
  */
 export interface extensionCheckerType {
     [key: string]: number,
-  }
-
-export interface DispatchType {
-  dispatchToGlobal: React.Dispatch<any>,
- }
+}
 
 export interface isFolderOpenType {
   [key: string]: boolean;

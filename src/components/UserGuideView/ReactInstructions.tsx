@@ -5,7 +5,7 @@ import React from "react";
  * Renders the video guide in the UserGuideView Component (Purely for when viewing the React TestType).
  * @returns { JSX.Element } Renders the ReactInstructions component
  */
-const ReactInstructions = () => {
+const ReactInstructions = (): JSX.Element => {
 
   return (
     <div>

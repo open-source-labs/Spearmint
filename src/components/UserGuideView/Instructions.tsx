@@ -22,10 +22,27 @@ const os = require('os');
  * This react component conditionally renders a specific test type instruction based on which test type is selected in its global context
  * @returns { JSX.Element } Renders the Instructions component
 */
-const Instructions = ({
-  title,
-}) => {
-  const script = useGenerateScript(title);
+const Instructions = ({ title }: { title: string }) => {
+  interface guideType {
+    1: string,
+    2: string,
+    3: string,
+    4: string,
+    5: string,
+    '5a': string,
+    '5b': string,
+    '5c': string,
+    [key: string]: string,
+  }
+
+  interface scriptType {
+    graphQLGuide?: guideType,
+    endPointGuide?: guideType,
+    install: string,
+    cd: string,
+  }
+
+  const script: scriptType = useGenerateScript(title);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
 
   const [, dispatchToGlobal] = useContext(GlobalContext)

@@ -101,10 +101,14 @@ export function useGenerateScript(test) {
       };
     case 'deno':
       return {
-        cd: `cd ${projectFilePath}`
+        cd: `cd ${projectFilePath}`,
+        install: ``,
       };
     default:
-      return '';
+      return {
+        cd: ``,
+        install: ``,
+      };
     // code block
   }
 }

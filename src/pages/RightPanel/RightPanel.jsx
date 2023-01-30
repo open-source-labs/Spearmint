@@ -9,7 +9,6 @@ import { GlobalContext } from './../../context/reducers/globalReducer';
 import { closeRightPanel, setTabIndex } from './../../context/actions/globalActions';
 import TerminalView from './../../components/Terminal/TerminalView';
 import withStyles from '@mui/styles/withStyles';
-
 /*
   Previous iterators added a closeRightPanel feature, but it doesnt seem like it's been implemented yet
 */
