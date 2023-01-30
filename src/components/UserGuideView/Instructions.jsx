@@ -28,7 +28,6 @@ const Instructions = ({
   puppeteerUrl = 'sample.io',
   accTestType
 }) => {
-  
   const script = useGenerateScript(title, testType, puppeteerUrl, accTestType);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
 

@@ -13,9 +13,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
  * @returns { JSX.Element } renders the UserGuide component
  */
 const UserGuideView = ({theme, accTestType}) => {
-console.log(theme)
 const [{ testCase }] = useContext(GlobalContext);
-
   return (
     <div 
       id={styles[`userGuide${theme}`]}
