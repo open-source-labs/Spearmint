@@ -28,7 +28,7 @@ userController.signup = (req, res, next) => {
     { username: req.body.username, password: res.locals.encryptedPassword },
     // Callback to handle results of query
     (err, newUser) => {
-    if (err.code === 11000) return res.status(400).json("Username already exists, please choose another one.");
+      if (!newUser) return res.status(400).json("Username already exists, please choose another one.");
       // If there is an error, invoke global error handler
       if (err) return next(err);
       // Save user ID into response locals
