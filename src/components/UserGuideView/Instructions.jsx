@@ -3,7 +3,7 @@
  * which render on the top Test Menu component.
  */
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useReducer } from 'react';
 import { useNewTest, useGenerateScript } from '../Modals/modalHooks';
 import { setTabIndex } from '../../context/actions/globalActions';
 import styles from '../Modals/Modal.module.scss';
@@ -11,33 +11,28 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { GlobalContext } from '../../context/reducers/globalReducer';;
+import { GlobalContext, globalReducer } from '../../context/reducers/globalReducer';;
 import { Button } from '@mui/material';
-import { accTestCaseState } from '../../context/reducers/accTestCaseReducer';
 import ReactInstructions from './ReactInstructions';
 
 const ipc = require('electron').ipcRenderer;
 const os = require('os');
 
+/**
+ * This react component conditionally renders a specific test type instruction based on which test type is selected in its global context
+ * @returns { JSX.Element } Renders the Instructions component
+*/
 const Instructions = ({
   title,
-  dispatchToMockData,
-  dispatchTestCase,
-  createTest,
   testType = null,
   puppeteerUrl = 'sample.io',
   accTestType
 }) => {
-  const { handleNewTest } = useNewTest(
-    dispatchToMockData,
-    dispatchTestCase,
-    createTest,
-  );
   
-  const [fileName, setFileName] = useState('');
   const script = useGenerateScript(title, testType, puppeteerUrl, accTestType);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
-  const [{ tabIndex }, dispatchToGlobal] = useContext(GlobalContext)
+
+  const [, dispatchToGlobal] = useContext(GlobalContext)
 
   // Change execute command based on os platform
   let execute = '\n';
@@ -45,29 +40,30 @@ const Instructions = ({
     execute = '\r';
   }
 
+  /**
+   * This is a function that changes your current directory to the correct file path.
+   * @returns { void } Returns void.
+   */
   const changeDirectory = () => {
     ipc.send('terminal.toTerm', `${script.cd}${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
   };
 
+  /**
+   * This is a function that installs dependencies needed for the specific test type
+   * @returns { void } Returns void
+   */
   const installDependencies = () => {
     ipc.send('terminal.toTerm', `${script.install}${execute}`);
     setBtnFeedback({ ...btnFeedback, installed: true });
     dispatchToGlobal(setTabIndex(2));
   };
 
-//LINES 60-68 are functions that could be implmented in the future, not being used rn
-  const submitFileName = () => {
-    const fileName = document.getElementById('inputFileName').value;
-    setFileName(fileName);
-  };
-
-  const changeFileName = (e) => {
-    const fileName = e.currentTarget.value;
-    setFileName(fileName);
-  }
-
   // EndPointGuide component definition, conditionally rendered
+  /**
+   * Function that conditionally renders only when endpoint testing is selected in its global context
+   * @returns { (JSX.Element|null) } Conditionally returns either the EndPointGuide component or null
+   */
   const EndPointGuide = () => {
     // endpoint guide only exists when user is in endpoint testing
     if (script.endPointGuide) {
@@ -99,9 +95,11 @@ const Instructions = ({
   };
 
 
-  // GraphQLGuide component definition, conditionally rendered
+  /**
+   * Function that conditionally renders only when GraphQL testing is selected in its global context
+   * @returns { (JSX.Element | null) } Conditionally returns either the GraphQLGuide or null
+   */
   const GraphQLGuide = () => {
-    // graphQL guide only exists when user is in endpoint testing
     if (script.graphQLGuide) {
       const array = [];
       for (let step in script.graphQLGuide) {
@@ -130,8 +128,10 @@ const Instructions = ({
     return null;
   };
 
-
-  // ReactDependencies component definition, conditionally rendered
+  /**
+   * Function that conditionally renders only when react testing is selected in its global context
+   * @returns { (JSX.Element | null) } Conditionally returns either the ReactDependencies component or null
+   */
   const ReactDependencies = () => {
     if (title === 'hooks' || title === 'react') {
       return (

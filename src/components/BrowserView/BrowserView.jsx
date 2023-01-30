@@ -5,13 +5,21 @@ import styles from './BrowserView.module.scss';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setProjectUrl } from '../../context/actions/globalActions';
-import { InvertColors } from '@mui/icons-material';
+import { ScreenReader } from '@capacitor/screen-reader';
 
-
+/**
+ * This component is the Browser tab of the application, a child component of the RightPanel
+ * 
+ * The browser allows for multiple accessibility options to help those with disabilites
+ * @returns { JSX.Element } BrowserView component
+ */
 const BrowserView = () => {
   const [{ url, theme }, dispatchToGlobal] = useContext(GlobalContext);
   // Track checked button state
 
+  /**
+   * Used for accessibility options
+   */
   const [checkedBoxes, setCheckBox] = useState({
     checkedMouse: false,
     muted: false,
@@ -22,13 +30,32 @@ const BrowserView = () => {
     checkedBrightness: false,
   });
 
-  // Mute/Unmute webview
+  /**
+   * This function has the option to Mute/Unmute webview
+   * @param { boolean } boolean - Based on it's value it will mute or unmute the audio
+   * @returns { void } 
+   */
   const muteAudio = (muted) => {
     const webview = document.querySelector('webview');
     webview.setAudioMuted(muted);
   };
 
-  // helper function to add the https or http
+  /**
+   * Renders the activateReader react component based on the state in the checkedBoxes\
+   *
+   * NOTE: Currently this component does turn on and off, but it seems like it's unable to read the pages. Presumably needs another function to actually read the contents of a page.
+   * @returns { JSX.Element } Returns the activateReader react component
+   */
+  const activateReader = () => { 
+    // Ternary statement is backwards, as checkedBoxes.checkedReader updates after the case break
+    checkedBoxes.checkedReader ? ScreenReader.speak({ value: 'Screen Reader is off' }) : ScreenReader.speak({ value: 'Screen Reader is on' });
+  }
+
+  /**
+   * Helper function to automatically add the https or http if the user didn't include it in url
+   * @param { string } url - Url of the website
+   * @returns { string } Updated Url that adds Https if it did not have it previously
+   */ 
   const addHttps = (url) => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
@@ -41,6 +68,11 @@ const BrowserView = () => {
     return url;
   };
 
+  /**
+   * Event listener that handles when a user inputs a new website into the fully functional browser.
+   * @param { event } e - event
+   * @returns { void }
+   */
   const handleChangeUrl = (e) => {
     if (e.keyCode === 13) {
       const testSiteURL = addHttps(e.target.value);
@@ -49,7 +81,11 @@ const BrowserView = () => {
     }
   };
 
-  // Updates checkboxes states
+  /**
+   * Checks to see which box is clicked and updates checkboxes states and browser visuals.
+   * @param {event} e - event
+   * @returns {object} The new updated state of all the browser view accessibility checkboxes
+   */
   const handleChangeCheckBox = (e) => {
     switch (e.target.name) {
       case 'checkedMouse':

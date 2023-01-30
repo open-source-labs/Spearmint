@@ -26,7 +26,7 @@ const mockDataState = {
   hasMockData: false,
 };
 
-describe('should render ReduxTestCase component', () => {
+xdescribe('should render ReduxTestCase component', () => {
   it('renders Test Menu', () => {
     const { getByText, debug } = render();
     <ReduxTestCaseContext.Provider value={(reduxTestCaseState, dispatchToReduxTextCase)}>

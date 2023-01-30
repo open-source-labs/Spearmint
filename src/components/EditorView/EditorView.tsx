@@ -4,32 +4,42 @@ import { javascript } from '@codemirror/lang-javascript';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
 import styles from './EditorView.module.scss';
+import { extensionCheckerType } from '../../utils/globalTypes';
 
 const { ipcRenderer } = require('electron');
 
-// this file is using codemirror to display the code editor
-// also saves changes when they are manually typed into the editor
-
-const Editor = () => {
-  const [{ file, filePath, theme }, dispatchToGlobal] = useContext(GlobalContext);
-  const [wasSaved, setWasSaved] = useState('');
-  const [buttonText, setButtonText] = useState('Save Changes');
+/**
+ * This component uses codemirror to display the code editor 
+ * It also saves changes when they are manually typed into the editor
+ * @returns { JSX.Element } EditorView component
+ */
+const Editor = () : JSX.Element => {
+  const [{ file, theme, filePath }, dispatchToGlobal] = useContext(GlobalContext);
+  console.log('GLOBALCONTEXT', useContext(GlobalContext));
+  const [wasSaved, setWasSaved] = useState<string>('');
+  const [buttonText, setButtonText] = useState<string>('Save Changes');
   let editedText = '';
 
-
-  // to change then reset the text of a button after a click
-  function handleClick(){
-    setButtonText('Saved!')
-    setTimeout(function (){
-      setButtonText('Save Changes')
-    }, 1500)
-  }
-
-  const updateAfile = (newValue, e) => {
+/**
+ * This function updates the file in local file, it is invoked when user saves the file
+ * @param {string} newValue - New updated text inside of the current code editor
+ * @returns { void } Updates wasSaved state, but returns nothing
+ */
+  const updateAfile = (newValue: string): void => {
     editedText = newValue;
     if (wasSaved.length) setWasSaved('');
   };
-  const saveFile = () => {
+
+/**
+ * This function compares the existing local file that you are currently testing,
+ * and checks to see if there are any differences between the code editor and your local file
+ * If there are any differences it then updates your local file
+ * 
+ * NOTE: Currently, the functionaliy for this button seems to be broken and doesn't save the local file you are testing.
+ * 
+ * @returns { void } Returns void, but updates the state of the save button and saves your local file.
+ */  
+  const saveFile = (): void => {
     if (editedText.length) {
       dispatchToGlobal(updateFile(editedText));
       if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');
@@ -40,11 +50,15 @@ const Editor = () => {
       // Upon reply from main process, update wasSaved state
       setWasSaved(reply);
     }
+    setButtonText('Saved!')
+    setTimeout(function (){
+      setButtonText('Save Changes')
+    }, 1500)
   };
-
+  
 // docs --> https://www.npmjs.com/package/@uiw/react-codemirror
-  const fileType = filePath.split('.')[1];
-  const extensionChecker = {
+  const fileType : string = filePath.split('.')[1];
+  const extensionChecker: extensionCheckerType = {
     png: 1,
     jpg: 1,
     gif: 1,
@@ -57,7 +71,7 @@ const Editor = () => {
       <CodeMirror
         value={
           file
-            ? extensionChecker[fileType]
+            ? extensionChecker[fileType ]
               ? '//Please select a valid file type'
               : file
             : '// Open a file or click preview to view your code.'
@@ -70,9 +84,8 @@ const Editor = () => {
     </div>
       <div>
       <button type="button" id={styles.btn} onClick={() => {
-          saveFile();
-          handleClick();
-          }}>
+        saveFile();
+      }}>
         {buttonText}
       </button>
       <span id={styles.span}>{wasSaved}</span>

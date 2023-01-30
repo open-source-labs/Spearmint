@@ -1,8 +1,10 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/globalActions';
-export const GlobalContext = createContext([]); // originally createContext(null)
+import { DispatchType, GlobalStateTypes } from '../../utils/globalTypes';
 
-export const globalState = {
+
+
+export const globalState: GlobalStateTypes = {
   url: 'http://www.google.com/',
   projectUrl: null,
   isProjectLoaded: false,
@@ -20,14 +22,48 @@ export const globalState = {
   isTestModalOpen: true,
   exportBool: false,
   fileName: '',
-  filePath: '',
+  filePath: 'TEST INITIAL FILE PATH',
   validCode: true,
   tabIndex: 0,
   isGuest: false,
   theme: window.localStorage.theme ?? 'light',
 };
 
-export const globalReducer = (state, action) => {
+ const Dispatch: DispatchType = {
+  dispatchToGlobal: () => null,
+ }
+
+ 
+
+const contextArr = [globalState, Dispatch]
+
+export const GlobalContext = createContext<any[]>(contextArr); // originally createContext(null)
+
+
+// TODO: action type is any due to the fact that each action in glovalActions.ts is an object with different properties which does not lead itself to a unified Action interface via Typescript
+// All of the actions must be modified to nest the necessary data inside of a payload property and/or all of the cases in the reducer below must be modified
+interface GlobalActionTypes {
+  type: string,
+  url?: string,
+  load?: string,
+  fileTree?: string,
+  display?: string,
+  filePath?: string,
+  fileName?: string,
+  projectFilePath?: string,
+  filePathMap?: string,
+  testCase?: string,
+  testString?: string,
+  docsUrl?: string,
+  validCode?: boolean,
+  tabIndex?: number,
+  testState?: Object,
+  guestState?: string,
+  theme?: string,
+  fileDirectoryOpen?: string,
+}
+
+export const globalReducer = (state: GlobalStateTypes, action: GlobalActionTypes) => {
   Object.freeze(state);
 
   switch (action.type) {
@@ -84,7 +120,7 @@ export const globalReducer = (state, action) => {
 
     case actionTypes.TOGGLE_FOLDER_VIEW:
       let isFolderOpen = { ...state.isFolderOpen };
-      isFolderOpen[action.filePath] = !isFolderOpen[action.filePath] ?? true;
+      isFolderOpen[action.filePath!] = !isFolderOpen[action.filePath!] ?? true;
       return {
         ...state,
         isFolderOpen,
@@ -92,7 +128,7 @@ export const globalReducer = (state, action) => {
 
     case actionTypes.SET_FOLDER_VIEW:
       isFolderOpen = { ...state.isFolderOpen };
-      isFolderOpen[action.filePath] = true;
+      isFolderOpen[action.filePath!] = true;
       return {
         ...state,
         isFolderOpen,
