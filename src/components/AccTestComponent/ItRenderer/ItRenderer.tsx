@@ -3,6 +3,7 @@ import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
 import CatTagFilter from '../CatTagFilter/CatTagFilter';
+import { AiOutlineClose } from 'react-icons/ai';
 
 import {
   deleteItStatement,
@@ -70,7 +71,7 @@ const ItRenderer = ({
             catTag={itStatements.byId[id].catTag}
           />
 
-          <i
+          <AiOutlineClose
             tabIndex={0}
             onKeyPress={deleteItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}

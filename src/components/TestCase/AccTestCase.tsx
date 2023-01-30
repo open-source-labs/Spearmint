@@ -27,7 +27,7 @@ import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRender
 import { Button } from '@mui/material';
 
 
-const AccTestCase = ({handleAccChange}) => {
+const AccTestCase = () => {
   interface Ref {
     theme: null | string
   }
@@ -74,7 +74,7 @@ const AccTestCase = ({handleAccChange}) => {
       <section id={styles[`testCaseHeader${theme}`]}>
         <div id={styles.accTestDiv}>
           <AccTestTypes
-            handleAccChange={handleAccChange}
+            // handleAccChange={handleAccChange}
           />
 
           {testType === 'puppeteer' ? (
