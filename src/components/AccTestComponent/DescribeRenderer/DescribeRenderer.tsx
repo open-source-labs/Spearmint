@@ -5,6 +5,7 @@ import ItRenderer from '../ItRenderer/ItRenderer';
 import StandardTagFilter from '../StandardTagFilter/StandardTagFilter';
 import styles from './DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItStatement } from '../../../context/actions/accTestCaseActions';
+import { AiOutlineClose } from 'react-icons/ai';
 
 /**
  * Renders the DescribeRenderer react component that allows 
@@ -38,14 +39,14 @@ const DescribeRenderer = ({
    */
   const deleteDescribeBlockHandleClick = (e: ChangeEvent) => {
     e.stopPropagation();
-    const describeId = e.target.id;
+    const describeId = e.currentTarget.id;
     dispatcher(deleteDescribeBlock(describeId));
   };
-/**
- * Function that on click, adds a statement to the describe block in the Accessibility test type
- * @param { e } e - event 
- * @returns { void } Returns void
-*/
+  /**
+   * Function that on click, adds a statement to the describe block in the Accessibility test type
+   * @param { e } e - event 
+   * @returns { void } Returns void
+  */
   const addItStatementHandleClick = (e: ChangeEvent) => {
     const describeId = e.target.id;
     dispatcher(addItStatement(describeId));
@@ -92,13 +93,13 @@ const DescribeRenderer = ({
               key={`StandardTagFilter-${id}-${i}`}
             />
 
-            <i
+            {i > 0 && <AiOutlineClose
               tabIndex={0}
               onKeyPress={deleteDescribeBlockOnKeyUp}
               onClick={deleteDescribeBlockHandleClick}
               id={id}
               className={cn('far fa-window-close', styles.describeClose)}
-            />
+            />}
 
             <p className={styles.describeStatement}>{describeBlocks.byId[id].text}</p>
             <div className={styles.separator} />
@@ -127,11 +128,11 @@ const DescribeRenderer = ({
             </Droppable>
 
             <div className={styles.buttonContainer}>
-            <div>
-              <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
-                Add It Statement
-              </button>
-            </div>
+              <div>
+                <button className={styles.addIt} id={id} onClick={addItStatementHandleClick}>
+                  Add It Statement
+                </button>
+              </div>
             </div>
           </div>
         </div>

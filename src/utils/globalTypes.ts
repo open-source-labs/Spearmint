@@ -23,9 +23,9 @@ export interface GlobalStateTypes {
   theme: any,
 }
 
-  /**
-   * Fixing input validation due to indexing errors.
-   */
+/**
+ * Fixing input validation due to indexing errors.
+ */
 export interface extensionCheckerType {
     [key: string]: number,
   }
