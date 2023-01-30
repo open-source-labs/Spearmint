@@ -13,7 +13,7 @@ import { ScreenReader } from '@capacitor/screen-reader';
  * The browser allows for multiple accessibility options to help those with disabilites
  * @returns { JSX.Element } BrowserView component
  */
-const BrowserView = () => {
+const BrowserView = () : JSX.Element => {
   const [{ url, theme }, dispatchToGlobal] = useContext(GlobalContext);
   // Track checked button state
 
@@ -35,8 +35,9 @@ const BrowserView = () => {
    * @param { boolean } boolean - Based on it's value it will mute or unmute the audio
    * @returns { void } 
    */
-  const muteAudio = (muted) => {
-    const webview = document.querySelector('webview');
+  const muteAudio = (muted: boolean): void => {
+    //Resorted to using any type for webview because the webview type is a known bug.
+    const webview: any = document.querySelector('webview');
     webview.setAudioMuted(muted);
   };
 
@@ -56,7 +57,7 @@ const BrowserView = () => {
    * @param { string } url - Url of the website
    * @returns { string } Updated Url that adds Https if it did not have it previously
    */ 
-  const addHttps = (url) => {
+  const addHttps = (url: string): string => {
     if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) {
       return url;
     }
@@ -73,11 +74,12 @@ const BrowserView = () => {
    * @param { event } e - event
    * @returns { void }
    */
-  const handleChangeUrl = (e) => {
+  const handleChangeUrl = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLButtonElement;
     if (e.keyCode === 13) {
-      const testSiteURL = addHttps(e.target.value);
+      const testSiteURL = addHttps(target.value);
       dispatchToGlobal(setProjectUrl(testSiteURL));
-      e.target.value = '';
+      target.value = '';
     }
   };
 
@@ -86,7 +88,7 @@ const BrowserView = () => {
    * @param {event} e - event
    * @returns {object} The new updated state of all the browser view accessibility checkboxes
    */
-  const handleChangeCheckBox = (e) => {
+  const handleChangeCheckBox = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (e.target.name) {
       case 'checkedMouse':
         setCheckBox({ ...checkedBoxes, checkedMouse: !checkedBoxes.checkedMouse });
@@ -126,7 +128,7 @@ const BrowserView = () => {
           checkedReader: !checkedBoxes.checkedReader,
         });
 
-        activateReader(checkedBoxes.checkedReader);
+        activateReader();
         break;
       // a filter for low Vision, easier on eyes
       case 'checkedLowVision':
@@ -264,7 +266,7 @@ const BrowserView = () => {
         style={{
           filter: checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast && checkedBoxes.checkedLowVision && checkedBoxes.checkedBrightness ? 'grayscale(100%) contrast(0.2) invert(100%) brightness(150%)'
             : checkedBoxes.checkedGrayscale && checkedBoxes.checkedContrast ? 'grayscale(100%) contrast(0.2)'
-            : checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : checkedBoxes.checkedContrast ? 'contrast(0.2)' : checkedBoxes.checkedLowVision ? 'invert(100%)' : checkedBoxes.checkedBrightness ? 'brightness(150%)' : null,
+            : checkedBoxes.checkedGrayscale ? 'grayscale(100%)' : checkedBoxes.checkedContrast ? 'contrast(0.2)' : checkedBoxes.checkedLowVision ? 'invert(100%)' : checkedBoxes.checkedBrightness ? 'brightness(150%)' : 'none',
           pointerEvents: checkedBoxes.checkedMouse ? 'none' : 'auto',
         }}
       />
