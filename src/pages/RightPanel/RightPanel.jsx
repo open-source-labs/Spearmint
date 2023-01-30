@@ -44,7 +44,7 @@ const StyledTab = withStyles((theme) => ({
   },
 }))((props) => <Tab {...props} />);
 
-const RightPanel = ({accTestType}) => {
+const RightPanel = () => {
   const [{ rightPanelDisplay, url, tabIndex, theme }, dispatchToGlobal] = useContext(GlobalContext);
   return (
     <div id={styles[`rightPanel${theme}`]}>
@@ -75,7 +75,6 @@ const RightPanel = ({accTestType}) => {
       <div className={styles.viewContainer} hidden={tabIndex !== 3}>
         <UserGuideView 
           theme={theme}
-          accTestType={accTestType}
         />
       </div>
     </div>

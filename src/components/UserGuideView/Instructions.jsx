@@ -24,11 +24,8 @@ const os = require('os');
 */
 const Instructions = ({
   title,
-  testType = null,
-  puppeteerUrl = 'sample.io',
-  accTestType
 }) => {
-  const script = useGenerateScript(title, testType, puppeteerUrl, accTestType);
+  const script = useGenerateScript(title);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
 
   const [, dispatchToGlobal] = useContext(GlobalContext)
