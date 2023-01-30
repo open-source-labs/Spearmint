@@ -9,7 +9,6 @@ import {
   updateDescribeStandardTag,
   updateItCatTag,
   updateFilePath,
-  updateTestType,
   createPuppeteerUrl,
   addDescribeBlock,
 } from '../../context/actions/accTestCaseActions';

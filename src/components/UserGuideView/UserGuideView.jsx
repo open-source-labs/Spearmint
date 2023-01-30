@@ -9,10 +9,9 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 /**
  * 
  * @param {  } theme
- * @param {  } accTestType
  * @returns { JSX.Element } renders the UserGuide component
  */
-const UserGuideView = ({theme, accTestType}) => {
+const UserGuideView = ({theme}) => {
 const [{ testCase }] = useContext(GlobalContext);
   return (
     <div 
@@ -24,7 +23,6 @@ const [{ testCase }] = useContext(GlobalContext);
       <br/>
       <Instructions
         title={testCase}
-        accTestType={accTestType}
       />
     </div>
   );

@@ -19,7 +19,7 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 /**
  * This function will return an object with a cd and a install property that are based on which test argument it receives
  */
-export function useGenerateScript(test, testType = null, puppeteerUrl = 'sample.io', accTestType) {
+export function useGenerateScript(test) {
 
   const [{ projectFilePath }] = useContext(GlobalContext);
   //TODO: DRY this code
