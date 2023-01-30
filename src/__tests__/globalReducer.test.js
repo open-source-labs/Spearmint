@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { globalReducer, globalState } from '../context/reducers/globalReducer';
 
 xdescribe('Global Reducer works properly', () => {

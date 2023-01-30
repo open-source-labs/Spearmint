@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 window.require = jest.fn();
 
 import { ReduxTestCaseState } from '../utils/reduxTypes';

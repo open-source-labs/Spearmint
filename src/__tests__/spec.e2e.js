@@ -1,6 +1,7 @@
 const Application = require('spectron').Application;
 const path = require('path');
 const chai = require('chai');
+// const global = require('chai')
 const chaiAsPromised = require('chai-as-promised');
 
 // specifies the path of the application to launch
