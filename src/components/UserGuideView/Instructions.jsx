@@ -3,7 +3,7 @@
  * which render on the top Test Menu component.
  */
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useReducer } from 'react';
 import { useNewTest, useGenerateScript } from '../Modals/modalHooks';
 import { setTabIndex } from '../../context/actions/globalActions';
 import styles from '../Modals/Modal.module.scss';
@@ -11,7 +11,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { GlobalContext } from '../../context/reducers/globalReducer';;
+import { GlobalContext, globalReducer } from '../../context/reducers/globalReducer';;
 import { Button } from '@mui/material';
 import ReactInstructions from './ReactInstructions';
 
@@ -31,6 +31,8 @@ const Instructions = ({
   
   const script = useGenerateScript(title, testType, puppeteerUrl, accTestType);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
+
+  const [, dispatchToGlobal] = useContext(GlobalContext)
 
   // Change execute command based on os platform
   let execute = '\n';

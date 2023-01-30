@@ -4,6 +4,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
 import styles from './EditorView.module.scss';
+import { extensionCheckerType } from '../../utils/globalTypes';
 
 const { ipcRenderer } = require('electron');
 
@@ -12,10 +13,11 @@ const { ipcRenderer } = require('electron');
  * It also saves changes when they are manually typed into the editor
  * @returns { JSX.Element } EditorView component
  */
-const Editor = () => {
-  const [{ file, filePath, theme }, dispatchToGlobal] = useContext(GlobalContext);
-  const [wasSaved, setWasSaved] = useState('');
-  const [buttonText, setButtonText] = useState('Save Changes');
+const Editor = () : JSX.Element => {
+  const [{ file, theme, filePath }, dispatchToGlobal] = useContext(GlobalContext);
+  console.log('GLOBALCONTEXT', useContext(GlobalContext));
+  const [wasSaved, setWasSaved] = useState<string>('');
+  const [buttonText, setButtonText] = useState<string>('Save Changes');
   let editedText = '';
 
 /**
@@ -23,7 +25,7 @@ const Editor = () => {
  * @param {string} newValue - New updated text inside of the current code editor
  * @returns { void } Updates wasSaved state, but returns nothing
  */
-  const updateAfile = (newValue) => {
+  const updateAfile = (newValue: string): void => {
     editedText = newValue;
     if (wasSaved.length) setWasSaved('');
   };
@@ -37,7 +39,7 @@ const Editor = () => {
  * 
  * @returns { void } Returns void, but updates the state of the save button and saves your local file.
  */  
-  const saveFile = () => {
+  const saveFile = (): void => {
     if (editedText.length) {
       dispatchToGlobal(updateFile(editedText));
       if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');
@@ -53,11 +55,10 @@ const Editor = () => {
       setButtonText('Save Changes')
     }, 1500)
   };
-
   
 // docs --> https://www.npmjs.com/package/@uiw/react-codemirror
-  const fileType = filePath.split('.')[1];
-  const extensionChecker = {
+  const fileType : string = filePath.split('.')[1];
+  const extensionChecker: extensionCheckerType = {
     png: 1,
     jpg: 1,
     gif: 1,
@@ -70,7 +71,7 @@ const Editor = () => {
       <CodeMirror
         value={
           file
-            ? extensionChecker[fileType]
+            ? extensionChecker[fileType ]
               ? '//Please select a valid file type'
               : file
             : '// Open a file or click preview to view your code.'

@@ -79,6 +79,7 @@ const FileDirectory = ({ fileTree }) => {
   const handleDisplayFileCode = (filePath) => {
     const fileContent = ipcRenderer.sendSync('Universal.readFile', filePath);
     dispatchToGlobal(updateFile(fileContent));
+    console.log(`FILE PATH IN FILEDIRECTORY: ${filePath}`);
     dispatchToGlobal(setFilePath(filePath));
   };
   

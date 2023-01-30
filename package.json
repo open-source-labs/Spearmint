@@ -101,6 +101,7 @@
     "@mui/material": "^5.11.5",
     "@mui/styles": "^5.11.2",
     "@types/babel-core": "^6.25.7",
+    "@types/jest": "^29.4.0",
     "@uiw/react-codemirror": "^4.19.7",
     "babel-loader": "^9.1.2",
     "bcryptjs": "^2.4.3",
