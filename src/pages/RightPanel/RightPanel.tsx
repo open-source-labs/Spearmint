@@ -9,11 +9,17 @@ import { GlobalContext } from './../../context/reducers/globalReducer';
 import { closeRightPanel, setTabIndex } from './../../context/actions/globalActions';
 import TerminalView from './../../components/Terminal/TerminalView';
 import withStyles from '@mui/styles/withStyles';
-/*
-  Previous iterators added a closeRightPanel feature, but it doesnt seem like it's been implemented yet
-*/
 
-//StyledTabs and StyledTab are both material-ui imports that use theme. Might have issues while migrating material-ui version 5.
+
+/**
+ * While converting files to typescript RightPanel is having some issues. The StyledTabs
+ * component is having a Type children element error, saying children does not exist on type. After trying many types for this material ui component we could find
+ * no solution.
+ * 
+ * StyleTab is having a type error where value does not exist on type.
+ */
+
+
 const StyledTabs = withStyles({
   root:{
     backgroundColor:'#8f54a0',
@@ -42,6 +48,9 @@ const StyledTab = withStyles((theme) => ({
     },
   },
 }))((props) => <Tab {...props} />);
+
+console.log('StyledTabs: ', StyledTabs);
+console.log('StyledTab: ', StyledTab);
 
 const RightPanel = () => {
   const [{ rightPanelDisplay, url, tabIndex, theme }, dispatchToGlobal] = useContext(GlobalContext);
