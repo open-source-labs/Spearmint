@@ -2,8 +2,6 @@ import { createContext } from 'react';
 import { AccTestCaseState, Action } from '../../utils/accTypes';
 import { actionTypes } from '../actions/accTestCaseActions';
 
-export const AccTestCaseContext:any = createContext([]);
-
 export const accTestCaseState: AccTestCaseState = {
   modalOpen: false,
   describeId: 1,
@@ -37,6 +35,12 @@ export const accTestCaseState: AccTestCaseState = {
   filePath: '',
   puppeteerUrl: 'sample.io',
 };
+
+
+const dispatchToAccTestCase = () => null;
+const accTestCaseArr: [AccTestCaseState, Function] = [accTestCaseState, dispatchToAccTestCase]
+
+export const AccTestCaseContext = createContext(accTestCaseArr);
 
 /* ---------------------------- Helper Functions ---------------------------- */
 

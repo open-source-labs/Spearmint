@@ -33,11 +33,11 @@ const AccTestCase = () => {
   type DropResult = typeof DropResult;
 
 
-  const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
-  const [{ theme }] : Array<Ref> = useContext(GlobalContext);
+  const [ accTestCase , dispatchToAccTestCase] = useContext(AccTestCaseContext);
+  const [{ theme }] = useContext(GlobalContext);
   const { describeBlocks, itStatements, testType } = accTestCase;
-  const [{ filePathMap }] = useContext<any>(GlobalContext);
-
+  const [{ filePathMap }] = useContext(GlobalContext);
+  
   const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
