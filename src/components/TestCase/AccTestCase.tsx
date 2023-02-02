@@ -23,7 +23,7 @@ import AccTestMenu from '../TestMenu/AccTestMenu';
 import AccTestTypes from '../AccTestComponent/AccTestTypes/AccTestTypes';
 import PuppeteerUrl from '../AccTestComponent/PuppeteerUrl/PuppeteerUrl';
 import SearchInput from '../SearchInput/SearchInput';
-import DecribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
+import DescribeRenderer from '../AccTestComponent/DescribeRenderer/DescribeRenderer';
 import { Button } from '@mui/material';
 
 
@@ -96,7 +96,7 @@ const AccTestCase = () => {
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               > 
-                <DecribeRenderer
+                <DescribeRenderer
                   key="describeRendererAcc"
                   dispatcher={dispatchToAccTestCase}
                   describeBlocks={describeBlocks}
