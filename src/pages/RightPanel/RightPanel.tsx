@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { JSXElementConstructor, useContext, useState } from 'react';
 import styles from './RightPanel.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -19,8 +19,22 @@ import withStyles from '@mui/styles/withStyles';
  * StyleTab is having a type error where value does not exist on type.
  */
 
+interface StyledTabsProps {
+  children: JSX.Element[],
+  id: string,
+  value: number,
+  onChange: Function, 
+  variant: string,
+  scrollButtons: string,
+}
 
-const StyledTabs = withStyles({
+interface StyledTabProps {
+  value: number,
+  label: string,
+  style: Object,
+}
+
+const StyledTabs: JSXElementConstructor<StyledTabsProps> = withStyles({
   root:{
     backgroundColor:'#8f54a0',
     borderRadius:'4px',
@@ -36,7 +50,7 @@ const StyledTabs = withStyles({
   },
 })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
-const StyledTab = withStyles((theme) => ({
+const StyledTab: JSXElementConstructor<StyledTabProps> = withStyles((theme) => ({
   root: {
     textTransform: 'none',
     color: '#fff',
@@ -60,7 +74,7 @@ const RightPanel = () => {
         <StyledTabs 
           id={styles.tabsBox}
           value={tabIndex} 
-          onChange={(event, newValue) => dispatchToGlobal(setTabIndex(newValue))} 
+          onChange={(event: React.SyntheticEvent, newValue: number) => dispatchToGlobal(setTabIndex(newValue))} 
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"
