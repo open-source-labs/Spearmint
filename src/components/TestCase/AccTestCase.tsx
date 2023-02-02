@@ -1,5 +1,6 @@
 import React, { Ref, useContext } from 'react';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DropResult } from '../../utils/globalTypes';
 
 import {
   updateDescribeText,
@@ -27,18 +28,12 @@ import { Button } from '@mui/material';
 
 
 const AccTestCase = () => {
-  interface Ref {
-    theme: null | string
-  }
-  type DropResult = typeof DropResult;
-
-
   const [ accTestCase , dispatchToAccTestCase] = useContext(AccTestCaseContext);
   const [{ theme }] = useContext(GlobalContext);
-  const { describeBlocks, itStatements, testType } = accTestCase;
+  const { describeBlocks, itStatements } = accTestCase;
   const [{ filePathMap }] = useContext(GlobalContext);
   
-  const reorder = (list: Array<any>, startIndex: number, endIndex: number) => {
+  const reorder = (list: (Array<string> | string) , startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -76,9 +71,6 @@ const AccTestCase = () => {
             // handleAccChange={handleAccChange}
           />
 
-          {testType === 'puppeteer' ? (
-            <PuppeteerUrl dispatch={dispatchToAccTestCase} action={createPuppeteerUrl} />
-          ) : (
             // <div style={{'alignSelf': 'right'}}>
               <div id={styles.labelInput} style={{'width': '50%', 'alignSelf': 'right', 'margin': '0'}}>
                 <SearchInput
@@ -90,7 +82,7 @@ const AccTestCase = () => {
                 />
               </div>
             // </div>
-          )}
+
         </div>
         <div id={styles.describeContainer}>
         <DragDropContext onDragEnd={onDragEnd} key={`acc-dnd-context`}>

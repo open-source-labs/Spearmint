@@ -1,3 +1,7 @@
+type allIdsType = {
+  [key: string]: string,
+}
+
 export interface AccTestCaseState {
   modalOpen: boolean;
   describeId: number;
@@ -16,7 +20,7 @@ export interface DescribeBlocks {
 }
 export interface ItStatements {
   byId: Object;
-  allIds: Object;
+  allIds: allIdsType;
 }
 export interface Action {
   type: string;
