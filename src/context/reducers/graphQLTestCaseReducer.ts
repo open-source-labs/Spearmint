@@ -8,8 +8,6 @@ import {
   Header,
 } from '../../utils/graphQLTypes';
 
-export const GraphQLTestCaseContext: any = createContext([]);
-
 const newAssertion: Assertion = {
   id: 0,
   expectedResponse: '',
@@ -218,3 +216,8 @@ export const graphQLTestCaseReducer = (state: GraphQLTestCaseState, action: Acti
       return state;
   }
 };
+
+const dispatchToGraphQLTestCase = () => null;
+
+const graphQLTestCaseArr: [GraphQLTestCaseState, (action: Action) => void] = [graphQLTestCaseState, dispatchToGraphQLTestCase]
+export const GraphQLTestCaseContext = createContext(graphQLTestCaseArr);

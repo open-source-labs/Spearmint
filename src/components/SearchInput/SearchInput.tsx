@@ -3,13 +3,9 @@ import './SearchInput.scss';
 import { Autocomplete } from '@mui/material';
 import { TextField } from '@mui/material';
 import InputTextField from '../InputTextField';
+import { Action } from '../../utils/hooksTypes';
 
-interface SearchInputType {
-  dispatch: function,
-  
-}
-
-const SearchInput: SearchInputType = ({
+const SearchInput = ({
   dispatch,
   action,
   filePathMap,
@@ -19,6 +15,16 @@ const SearchInput: SearchInputType = ({
   updateActionsFilePath = null,
   type = null,
   label,
+} : { 
+  dispatch: Function,
+  action: Action,
+  filePathMap: Object,
+  options: Object,
+  reactTestCase: string | null,
+  updateTypesFilePath: Function | null,
+  updateActionsFilePath: Function | null,
+  type: string | null,
+  label: string
 }) => {
   const [activeOption, setActiveOption] = useState(0);
   const [filteredOptions, setFilteredOptions] = useState([]);

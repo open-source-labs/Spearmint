@@ -210,7 +210,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
     case actionTypes.REPLACE_TEST: {
       const { testState } = action;
       return testState;
-    }
+    } 
     default:
       return state;
   }
