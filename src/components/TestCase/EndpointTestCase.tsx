@@ -1,5 +1,5 @@
 import React, { useContext, ChangeEvent } from 'react';
-import { DragDropContext, Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
@@ -16,15 +16,14 @@ import { EndpointStatements } from '../../utils/endpointTypes';
 import SearchInput from '../SearchInput/SearchInput';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { Button } from '@mui/material';
-import { DropResult } from '../../utils/globalTypes';
+// import { DropResult, DroppableProvided } from '../../utils/reactBeautifulDndTypes';
 
 const EndpointTestCase = () => {
-  type DroppableProvided = typeof DroppableProvided
   let [{ endpointStatements, addDB }, dispatchToEndpointTestCase] = useContext(
     EndpointTestCaseContext
   );
   const [{ filePathMap, theme }] = useContext(GlobalContext);
-  
+
   const handleAddEndpoint = () => {
     dispatchToEndpointTestCase(addEndpoint());
   };
@@ -38,7 +37,7 @@ const EndpointTestCase = () => {
     return result;
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = (result:typeof DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -125,7 +124,7 @@ const EndpointTestCase = () => {
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided :DroppableProvided) => (
+          {(provided: typeof DroppableProvided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <EndpointTestStatements />
               {provided.placeholder}

@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "types": ["node", "jest"],
+    "types": ["node", "jest", "react-beautiful-dnd"],
   },
   "include": ["src", "declaration.d.ts"]
 }

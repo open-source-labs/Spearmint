@@ -217,5 +217,6 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
 };
 
 const dispatchToEndpointTestCase = () => null;
-const endpointTestCaseArr: [EndpointTestCaseState, Function] = [endpointTestCaseState, dispatchToEndpointTestCase]
+
+const endpointTestCaseArr: [EndpointTestCaseState, (action: Action) => void] = [endpointTestCaseState, dispatchToEndpointTestCase]
 export const EndpointTestCaseContext = createContext(endpointTestCaseArr);

@@ -1,6 +1,5 @@
 import React, { Ref, useContext } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import { DropResult } from '../../utils/globalTypes';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 
 import {
   updateDescribeText,
@@ -40,7 +39,7 @@ const AccTestCase = () => {
     return result;
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = (result: typeof DropResult) => {
     // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
     if (!result.destination) return;
     if (result.destination.index === result.source.index) return;

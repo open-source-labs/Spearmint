@@ -54,20 +54,3 @@ export interface extensionCheckerType {
 export interface isFolderOpenType {
   [key: string]: boolean;
 }
-
-type Id = string
-type TypeId = Id
-type DraggableId = Id
-type DroppableId = Id
-
-type DraggableLocation = {
-  droppableId: DroppableId
-  index: number
-}
-
-export type DropResult = {
-  draggableId: DraggableId,
-  type: TypeId
-  source: DraggableLocation
-  destination?: DraggableLocation
-}
