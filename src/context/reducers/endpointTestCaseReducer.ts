@@ -8,8 +8,6 @@ import {
   Header,
 } from '../../utils/endpointTypes';
 
-export const EndpointTestCaseContext: any = createContext([]);
-
 const newAssertion: Assertion = {
   id: 0,
   expectedResponse: '',
@@ -217,3 +215,7 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
       return state;
   }
 };
+
+const dispatchToEndpointTestCase = () => null;
+const endpointTestCaseArr: [EndpointTestCaseState, Function] = [endpointTestCaseState, dispatchToEndpointTestCase]
+export const EndpointTestCaseContext = createContext(endpointTestCaseArr);

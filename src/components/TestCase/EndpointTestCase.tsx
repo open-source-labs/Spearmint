@@ -1,5 +1,5 @@
 import React, { useContext, ChangeEvent } from 'react';
-import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
@@ -16,9 +16,9 @@ import { EndpointStatements } from '../../utils/endpointTypes';
 import SearchInput from '../SearchInput/SearchInput';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { Button } from '@mui/material';
+import { DropResult } from '../../utils/globalTypes';
 
 const EndpointTestCase = () => {
-  type DropResult = typeof DropResult;
   type DroppableProvided = typeof DroppableProvided
   let [{ endpointStatements, addDB }, dispatchToEndpointTestCase] = useContext(
     EndpointTestCaseContext
