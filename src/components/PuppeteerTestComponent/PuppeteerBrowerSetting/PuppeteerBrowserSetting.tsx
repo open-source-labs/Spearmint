@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import styles from '../PaintTiming/PaintTiming.module.scss';
+import { PuppeteerStatements } from '../../../utils/puppeteerTypes';
 import {
   addBrowserOption,
   deleteBrowserOption,
@@ -10,19 +11,21 @@ import { PuppeteerTestCaseContext } from '../../../context/reducers/puppeteerTes
 const plusIcon = require('../../../assets/images/plus.png');
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
-const PuppeteerBrowserSetting = ({ puppeteer, handleChangePuppeteerFields }) => {
+const PuppeteerBrowserSetting = ({ puppeteer, handleChangePuppeteerFields } : { puppeteer: PuppeteerStatements, handleChangePuppeteerFields: Function }) => {
   const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
 
-  const handleChangeBrowserOptionFields = (e, field, optionId) => {
-    dispatchToPuppeteerTestCase(updateBrowserOption(puppeteer.id, field, e.target.value, optionId));
+  const handleChangeBrowserOptionFields = (e: React.SyntheticEvent, field: string, optionId: number) => {
+    const target = e.target as HTMLButtonElement;
+    dispatchToPuppeteerTestCase(updateBrowserOption(puppeteer.id, field, target.value, optionId));
   };
 
   const handleAddBrowserOptions = () => {
     dispatchToPuppeteerTestCase(addBrowserOption(puppeteer.id));
   };
 
-  const handleClickDeleteBrowserOption = (e) => {
-    dispatchToPuppeteerTestCase(deleteBrowserOption(puppeteer.id, Number(e.target.id)));
+  const handleClickDeleteBrowserOption = (e: React.SyntheticEvent) => {
+    const target = e.target as HTMLButtonElement;
+    dispatchToPuppeteerTestCase(deleteBrowserOption(puppeteer.id, Number(target.id)));
   };
 
   const browserOptionsJSX = puppeteer.browserOptions.map((option) => {
@@ -42,7 +45,7 @@ const PuppeteerBrowserSetting = ({ puppeteer, handleChangePuppeteerFields }) => 
           id={`value${option.id}`}
           onChange={(e) => handleChangeBrowserOptionFields(e, 'optionValue', option.id)}
         />
-        <img src={minusIcon} alt='delete' id={option.id} onClick={handleClickDeleteBrowserOption} />
+        <img src={minusIcon} alt='delete' id={`${option.id}`} onClick={handleClickDeleteBrowserOption} />
       </div>
     );
   });
@@ -77,7 +80,7 @@ const PuppeteerBrowserSetting = ({ puppeteer, handleChangePuppeteerFields }) => 
           <input
             type='checkbox'
             id='render-checkbox'
-            disabled={puppeteer.browserOptions.length}
+            disabled={puppeteer.browserOptions.length ? true : false}
             checked={puppeteer.hasBrowserOption}
             onChange={handleAddBrowserOptions}
           />

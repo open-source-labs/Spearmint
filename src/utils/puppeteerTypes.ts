@@ -37,7 +37,6 @@ export interface BrowserOptions {
 
 export interface paintTimingType {
   id: number,
-  // paintTiming: PuppeteerStatements,
   firstPaintIt?: string,
   firstPaintTime?: number,
   FCPIt?: string,

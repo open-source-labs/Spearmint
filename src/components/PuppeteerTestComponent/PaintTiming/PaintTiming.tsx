@@ -9,13 +9,13 @@ import { PuppeteerTestCaseContext } from '../../../context/reducers/puppeteerTes
 import ToolTip from '../../ToolTip/ToolTip';
 import PuppeteerBrowserSetting from '../PuppeteerBrowerSetting/PuppeteerBrowserSetting';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
-import { paintTimingType } from '../../../utils/puppeteerTypes';
+import { PuppeteerStatements } from '../../../utils/puppeteerTypes';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
 
-const PaintTiming = ({ paintTiming, index }: { paintTiming: paintTimingType, index: number }) => {
+const PaintTiming = ({ paintTiming, index }: { paintTiming: PuppeteerStatements, index: number }) => {
   const [ {theme} ] = useContext(GlobalContext)
   const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
 
@@ -50,7 +50,6 @@ const PaintTiming = ({ paintTiming, index }: { paintTiming: paintTimingType, ind
 
           <PuppeteerBrowserSetting
             puppeteer={paintTiming}
-            updatePuppeteer={updatePaintTiming}
             handleChangePuppeteerFields={handleChangePaintTimingFields}
           />
 
