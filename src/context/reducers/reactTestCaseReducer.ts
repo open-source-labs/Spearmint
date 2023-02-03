@@ -1,9 +1,8 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
+import { ReactTestCaseTypes, Action } from '../../utils/ReactTypes';
 
-export const ReactTestCaseContext = createContext([]);
-
-export const reactTestCaseState = {
+export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
 
   describeId: 1,
@@ -598,3 +597,7 @@ export const reactTestCaseReducer = (state, action) => {
       return state;
   }
 };
+
+const dispatchToReactTestCase = () => null;
+const reactTestCaseArr: [ReactTestCaseTypes, (action: Action) => void] = [reactTestCaseState, dispatchToReactTestCase]
+export const ReactTestCaseContext = createContext(reactTestCaseArr);

@@ -1,9 +1,18 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/mockDataActions';
+import { Action } from '../../utils/ReactTypes';
 
-export const MockDataContext = createContext([]);
+interface MockDataArrayType {
+  id: number,
+  fieldKeys: Array<number>,
+}
 
-export const mockDataState = {
+interface MockDataTypes {
+  mockData: Array<MockDataArrayType>,
+  hasMockData: boolean,
+}
+
+export const mockDataState: MockDataTypes = {
   mockData: [],
   hasMockData: false,
 };
@@ -117,3 +126,7 @@ export const mockDataReducer = (state, action) => {
       return state;
   }
 };
+
+const dispatchToMockData = () => null;
+const mockDataArr: [MockDataTypes, (action: Action) => void] = [mockDataState, dispatchToMockData]
+export const MockDataContext = createContext(mockDataArr);

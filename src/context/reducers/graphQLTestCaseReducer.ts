@@ -218,6 +218,5 @@ export const graphQLTestCaseReducer = (state: GraphQLTestCaseState, action: Acti
 };
 
 const dispatchToGraphQLTestCase = () => null;
-
 const graphQLTestCaseArr: [GraphQLTestCaseState, (action: Action) => void] = [graphQLTestCaseState, dispatchToGraphQLTestCase]
 export const GraphQLTestCaseContext = createContext(graphQLTestCaseArr);
