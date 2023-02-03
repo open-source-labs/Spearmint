@@ -12,7 +12,7 @@ const PuppeteerTestStatements = () => {
       {puppeteerStatements.map((statement: PuppeteerStatements, i: number) => {
         switch (statement.type) {
           case 'paintTiming':
-            return <PaintTiming id={styles.partTiming} key={statement.id} paintTiming={statement} index={i} />;
+            return <PaintTiming id={styles.paintTiming} key={statement.id} paintTiming={statement} index={i} />;
           default:
             return <></>;
         }

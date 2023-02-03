@@ -1,6 +1,7 @@
 interface statements {
   type: string;
 }
+
 export default function importOptionsSwitch(statements: statements[]) {
   let isReducerOn = false;
   let isMiddleWareOn = false;

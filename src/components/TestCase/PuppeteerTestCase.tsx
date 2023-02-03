@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useEffect } from 'react';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
@@ -12,7 +12,6 @@ import { Button } from '@mui/material';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const PuppeteerTestCase = () => {
-  type DropResult = typeof DropResult;
   const handleAddPuppeteerPaintTiming = () => {
     dispatchToPuppeteerTestCase(addPuppeteerPaintTiming());
   };
@@ -37,7 +36,7 @@ const PuppeteerTestCase = () => {
     return result;
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = (result: typeof DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -61,7 +60,7 @@ const PuppeteerTestCase = () => {
       <div id={styles.testMockSection}></div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided: any) => (
+          {(provided: typeof DroppableProvided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <PuppeteerTestStatements />
               {provided.placeholder}

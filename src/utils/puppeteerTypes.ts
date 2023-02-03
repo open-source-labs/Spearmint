@@ -34,6 +34,16 @@ export interface BrowserOptions {
   [key: string]: any;
 }
 
+export interface paintTimingType {
+  id: number,
+  firstPaintIt?: string,
+  firstPaintTime?: number,
+  FCPIt?: string,
+  FCPTime?: number,
+  LCPIt?: string,
+  LCPTime?: number,
+}
+
 export type PuppeteerAction =
   | {
       type:

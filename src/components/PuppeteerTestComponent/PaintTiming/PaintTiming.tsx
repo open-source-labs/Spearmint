@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styles from './PaintTiming.module.scss';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import {
   deletePuppeteerTest,
   updatePaintTiming,
@@ -9,24 +9,27 @@ import { PuppeteerTestCaseContext } from '../../../context/reducers/puppeteerTes
 import ToolTip from '../../ToolTip/ToolTip';
 import PuppeteerBrowserSetting from '../PuppeteerBrowerSetting/PuppeteerBrowserSetting';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { paintTimingType } from '../../../utils/puppeteerTypes';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
-const PaintTiming = ({ paintTiming, index }) => {
+
+const PaintTiming = ({ paintTiming, index }: { paintTiming: paintTimingType, index: number }) => {
   const [ {theme} ] = useContext(GlobalContext)
   const [, dispatchToPuppeteerTestCase] = useContext(PuppeteerTestCaseContext);
 
-  const handleChangePaintTimingFields = (e, field) => {
-    dispatchToPuppeteerTestCase(updatePaintTiming(paintTiming.id, field, e.target.value));
+  const handleChangePaintTimingFields = (e: React.SyntheticEvent, field: string) => {
+    const target = e.target as HTMLButtonElement
+    dispatchToPuppeteerTestCase(updatePaintTiming(paintTiming.id, field, target.value));
   };
-  const handleClickDeletePaintTiming = (e) => {
+  const handleClickDeletePaintTiming = (e: React.SyntheticEvent) => {
     dispatchToPuppeteerTestCase(deletePuppeteerTest(paintTiming.id));
   };
 
   return (
     <Draggable draggableId={paintTiming.id.toString()} index={index}>
-      {(provided) => (
+      {(provided:typeof DraggableProvided) => (
         <div
           ref={provided.innerRef}
           {...provided.draggableProps}
@@ -66,7 +69,7 @@ const PaintTiming = ({ paintTiming, index }) => {
                   type='text'
                   name='first-paint-benchmark'
                   value={paintTiming.firstPaintTime}
-                  placeholder={100}
+                  placeholder={'100'}
                   onChange={(e) => handleChangePaintTimingFields(e, 'firstPaintTime')}
                 />
               </div>
@@ -92,8 +95,8 @@ const PaintTiming = ({ paintTiming, index }) => {
                 <input
                   type='text'
                   name='first-contentful-paint-benchmark'
-                  value={paintTiming.FCPtTime}
-                  placeholder={100}
+                  value={paintTiming.FCPTime}
+                  placeholder={'100'}
                   onChange={(e) => handleChangePaintTimingFields(e, 'FCPtTime')}
                 />
               </div>
@@ -120,7 +123,7 @@ const PaintTiming = ({ paintTiming, index }) => {
                   type='text'
                   name='largest-contentful-paint-benchmark'
                   value={paintTiming.LCPTime}
-                  placeholder={250}
+                  placeholder={'250'}
                   onChange={(e) => handleChangePaintTimingFields(e, 'LCPTime')}
                 />
               </div>
