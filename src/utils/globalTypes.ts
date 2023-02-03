@@ -30,7 +30,7 @@ export interface GlobalStateTypes {
   isFolderOpen: isFolderOpenType,
   isFileHighlighted: string,
   projectFilePath: string,
-  filePathMap: Object,
+  filePathMap: filePathMapType,
   file: string,
   testCase: string,
   docsOpen: boolean,
@@ -53,4 +53,9 @@ export interface extensionCheckerType {
 
 export interface isFolderOpenType {
   [key: string]: boolean;
+}
+
+
+export interface filePathMapType {
+  [key: string]: Object
 }
