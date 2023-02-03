@@ -19,6 +19,7 @@ export interface PuppeteerTestCaseState {
 export interface PuppeteerStatements {
   id: number;
   type: string;
+  // paintTiming: PuppeteerStatements;
   describe: string;
   url: string;
   browserOptions: Array<BrowserOptions>;
@@ -36,6 +37,7 @@ export interface BrowserOptions {
 
 export interface paintTimingType {
   id: number,
+  // paintTiming: PuppeteerStatements,
   firstPaintIt?: string,
   firstPaintTime?: number,
   FCPIt?: string,
