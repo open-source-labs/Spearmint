@@ -24,9 +24,10 @@ term.loadAddon(fitAddon);
  * React component that renders on the RightPanel component
  * @returns { JSX.Element } returns the TerminalView component
  */
-const TerminalView = () => {
+const TerminalView = (): JSX.Element => {
   useLayoutEffect(() => {
-    term.open(document.getElementById('terminalContainer'));
+    const terminalContainer = document.getElementById('terminalContainer') as HTMLElement
+    term.open(terminalContainer);
     // when we have input events (e), we would send the data to the main processor
     const onData = term.onData((e) => {
       ipc.send('terminal.toTerm', e);

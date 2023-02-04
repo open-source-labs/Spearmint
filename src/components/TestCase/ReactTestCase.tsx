@@ -1,6 +1,6 @@
 import React, { useContext, useReducer } from 'react';
 import cn from 'classnames';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
@@ -23,8 +23,9 @@ import {
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@mui/material';
+import { ReactStatements } from '../../utils/ReactTypes';
 
-const ReactTestCase = (props) => {
+const ReactTestCase = ({ filterFileType } : { filterFileType: Function}) => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
     reactTestCaseReducer,
     reactTestCaseState
@@ -38,26 +39,28 @@ const ReactTestCase = (props) => {
     dispatchToMockData(createMockData());
   };
 
-  const handleChangeDescribeText = (e) => {
-    const text = e.target.value;
-    const describeId = e.target.id;
+  const handleChangeDescribeText = (e: React.SyntheticEvent) => {
+    const target = e.target as HTMLButtonElement;
+    const text = target.value;
+    const describeId = target.id;
     dispatchToReactTestCase(updateDescribeText(text, describeId));
   };
 
-  const handleChangeItStatementText = (e) => {
-    const text = e.target.value;
-    const itId = e.target.id;
+  const handleChangeItStatementText = (e: React.SyntheticEvent) => {
+    const target = e.target as HTMLButtonElement;
+    const text = target.value;
+    const itId = target.id;
     dispatchToReactTestCase(updateItStatementText(text, itId));
   };
 
-  const reorder = (list, startIndex, endIndex) => {
+  const reorder = (list: Array<ReactStatements>, startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result;
   };
 
-  const onDragEnd = (result) => {
+  const onDragEnd = (result: typeof DropResult) => {
     // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
     if (!result.destination) return;
     if (result.destination.index === result.source.index) return;
@@ -73,7 +76,7 @@ const ReactTestCase = (props) => {
     dispatchToReactTestCase(func(reorderedStatements, result.type));
   };
 
-  const handleAddDescribeBlock = (e) => {
+  const handleAddDescribeBlock = (e: React.SyntheticEvent) => {
     dispatchToReactTestCase(addDescribeBlock());
   };
 
@@ -85,11 +88,10 @@ const ReactTestCase = (props) => {
         <div className={styles.header}>
           <div className={styles.searchInput}>
             <SearchInput
-              reactTestCase
               dispatch={dispatchToReactTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
-              options={props.filterFileType(Object.keys(filePathMap), ['js', 'jsx', 'ts', 'tsx'])}
+              options={filterFileType(Object.keys(filePathMap), ['js', 'jsx', 'ts', 'tsx'])}
               label='Search Component'
             />
           </div>
@@ -117,7 +119,7 @@ const ReactTestCase = (props) => {
         <div id={styles.describeContainer}>
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId='droppableReactDescribe' type='describe'>
-              {(provided) => (
+              {(provided: typeof DroppableProvided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
                   <DescribeRenderer
                     dispatcher={dispatchToReactTestCase}

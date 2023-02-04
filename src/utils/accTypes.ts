@@ -1,3 +1,7 @@
+export type allIdsType = {
+  [key: string]: string[],
+}
+
 export interface AccTestCaseState {
   modalOpen: boolean;
   describeId: number;
@@ -10,13 +14,19 @@ export interface AccTestCaseState {
   filePath: string;
   puppeteerUrl: string;
 }
+
+export type ByIdType = {
+  [key: string | number]: Object,
+  
+}
+
 export interface DescribeBlocks {
-  byId: Object;
+  byId: ByIdType;
   allIds: Array<string>;
 }
 export interface ItStatements {
-  byId: Object;
-  allIds: Object;
+  byId: ByIdType;
+  allIds: allIdsType;
 }
 export interface Action {
   type: string;
@@ -24,8 +34,8 @@ export interface Action {
   draggableStatements?: Array<string>;
   index?: number;
   text?: string;
-  itId?: number;
-  describeId?: number | string;
+  itId: number;
+  describeId: number | string;
   reorderedDescribe?: Array<string>;
   reorderedIt?: Array<string>;
   fileName?: string;
@@ -33,4 +43,6 @@ export interface Action {
   describeBlocks: any[];
   standardTag: string;
   catTag: string;
+  puppeteerUrl?: string,
+  testState?: string,
 }

@@ -22,10 +22,28 @@ const os = require('os');
  * This react component conditionally renders a specific test type instruction based on which test type is selected in its global context
  * @returns { JSX.Element } Renders the Instructions component
 */
-const Instructions = ({
-  title,
-}) => {
-  const script = useGenerateScript(title);
+const Instructions = ({ title }: { title: string }): JSX.Element => {
+  
+  interface guideType {
+    1: string,
+    2: string,
+    3: string,
+    4: string,
+    5: string,
+    '5a': string,
+    '5b': string,
+    '5c': string,
+    [key: string]: string,
+  }
+
+  interface scriptType {
+    graphQLGuide?: guideType,
+    endPointGuide?: guideType,
+    install: string,
+    cd: string,
+  }
+
+  const script: scriptType = useGenerateScript(title);
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
 
   const [, dispatchToGlobal] = useContext(GlobalContext)
@@ -40,7 +58,7 @@ const Instructions = ({
    * This is a function that changes your current directory to the correct file path.
    * @returns { void } Returns void.
    */
-  const changeDirectory = () => {
+  const changeDirectory = (): void => {
     ipc.send('terminal.toTerm', `${script.cd}${execute}`);
     setBtnFeedback({ ...btnFeedback, changedDir: true });
   };
@@ -49,7 +67,7 @@ const Instructions = ({
    * This is a function that installs dependencies needed for the specific test type
    * @returns { void } Returns void
    */
-  const installDependencies = () => {
+  const installDependencies = (): void => {
     ipc.send('terminal.toTerm', `${script.install}${execute}`);
     setBtnFeedback({ ...btnFeedback, installed: true });
     dispatchToGlobal(setTabIndex(2));
@@ -60,7 +78,7 @@ const Instructions = ({
    * Function that conditionally renders only when endpoint testing is selected in its global context
    * @returns { (JSX.Element|null) } Conditionally returns either the EndPointGuide component or null
    */
-  const EndPointGuide = () => {
+  const EndPointGuide = (): JSX.Element | null => {
     // endpoint guide only exists when user is in endpoint testing
     if (script.endPointGuide) {
       const array = [];
@@ -95,7 +113,7 @@ const Instructions = ({
    * Function that conditionally renders only when GraphQL testing is selected in its global context
    * @returns { (JSX.Element | null) } Conditionally returns either the GraphQLGuide or null
    */
-  const GraphQLGuide = () => {
+  const GraphQLGuide = (): JSX.Element | null => {
     if (script.graphQLGuide) {
       const array = [];
       for (let step in script.graphQLGuide) {
@@ -128,7 +146,7 @@ const Instructions = ({
    * Function that conditionally renders only when react testing is selected in its global context
    * @returns { (JSX.Element | null) } Conditionally returns either the ReactDependencies component or null
    */
-  const ReactDependencies = () => {
+  const ReactDependencies = (): JSX.Element | null => {
     if (title === 'hooks' || title === 'react') {
       return (
         <>

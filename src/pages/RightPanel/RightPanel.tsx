@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { JSXElementConstructor, useContext, useState } from 'react';
 import styles from './RightPanel.module.scss';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -10,12 +10,31 @@ import { closeRightPanel, setTabIndex } from './../../context/actions/globalActi
 import TerminalView from './../../components/Terminal/TerminalView';
 import withStyles from '@mui/styles/withStyles';
 
-/*
-  Previous iterators added a closeRightPanel feature, but it doesnt seem like it's been implemented yet
-*/
 
-//StyledTabs and StyledTab are both material-ui imports that use theme. Might have issues while migrating material-ui version 5.
-const StyledTabs = withStyles({
+/**
+ * While converting files to typescript RightPanel is having some issues. The StyledTabs
+ * component is having a Type children element error, saying children does not exist on type. After trying many types for this material ui component we could find
+ * no solution.
+ * 
+ * StyleTab is having a type error where value does not exist on type.
+ */
+
+interface StyledTabsProps {
+  children: JSX.Element[],
+  id: string,
+  value: number,
+  onChange: Function, 
+  variant: string,
+  scrollButtons: string,
+}
+
+interface StyledTabProps {
+  value: number,
+  label: string,
+  style: Object,
+}
+
+const StyledTabs: JSXElementConstructor<StyledTabsProps> = withStyles({
   root:{
     backgroundColor:'#8f54a0',
     borderRadius:'4px',
@@ -31,7 +50,7 @@ const StyledTabs = withStyles({
   },
 })((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />);
 
-const StyledTab = withStyles((theme) => ({
+const StyledTab: JSXElementConstructor<StyledTabProps> = withStyles((theme) => ({
   root: {
     textTransform: 'none',
     color: '#fff',
@@ -44,6 +63,9 @@ const StyledTab = withStyles((theme) => ({
   },
 }))((props) => <Tab {...props} />);
 
+console.log('StyledTabs: ', StyledTabs);
+console.log('StyledTab: ', StyledTab);
+
 const RightPanel = () => {
   const [{ rightPanelDisplay, url, tabIndex, theme }, dispatchToGlobal] = useContext(GlobalContext);
   return (
@@ -52,7 +74,7 @@ const RightPanel = () => {
         <StyledTabs 
           id={styles.tabsBox}
           value={tabIndex} 
-          onChange={(event, newValue) => dispatchToGlobal(setTabIndex(newValue))} 
+          onChange={(event: React.SyntheticEvent, newValue: number) => dispatchToGlobal(setTabIndex(newValue))} 
           variant="scrollable"
           scrollButtons="auto"
           aria-label="scrollable auto tabs example"

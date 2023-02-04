@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided} from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import EndpointAssertion from './EndpointAssertion';
 import { Assertion, EndpointObj, Header, Action, EventTarget } from '../../utils/endpointTypes';
-
 import {
   deleteEndpoint,
   updateEndpoint,
@@ -26,8 +25,10 @@ interface EndpointProps {
   dispatchToEndpointTestCase: (action: Action) => void;
 }
 
+
+
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps) => {
-  const [ {theme} ] = useContext<any>(GlobalContext)
+  const [ {theme} ] = useContext(GlobalContext)
   const handleChangeEndpointFields = ({ target }: EventTarget, field: string) => {
     let updatedEndpoint = { ...endpoint };
 
@@ -69,7 +70,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
   return (
     <div style={{ maxWidth: '650px' }}>
       <Draggable draggableId={endpoint.id.toString()} index={index}>
-        {(provided) => (
+        {(provided: typeof DraggableProvided) => (
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}

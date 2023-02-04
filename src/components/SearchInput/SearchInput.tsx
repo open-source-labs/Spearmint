@@ -3,6 +3,10 @@ import './SearchInput.scss';
 import { Autocomplete } from '@mui/material';
 import { TextField } from '@mui/material';
 import InputTextField from '../InputTextField';
+import { Action } from '../../utils/hooksTypes';
+import { filePathMapType } from '../../utils/globalTypes';
+
+
 
 const SearchInput = ({
   dispatch,
@@ -14,33 +18,45 @@ const SearchInput = ({
   updateActionsFilePath = null,
   type = null,
   label,
+} : { 
+  dispatch: Function,
+  action?: Function,
+  filePathMap: filePathMapType,
+  options: Array<string>,
+  reactTestCase?: string | null,
+  updateTypesFilePath?: Function | null,
+  updateActionsFilePath?: Function | null,
+  type?: string | null,
+  label: string | null,
 }) => {
   const [activeOption, setActiveOption] = useState(0);
-  const [filteredOptions, setFilteredOptions] = useState([]);
+  const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   const [showOptions, setShowOptions] = useState(false);
   const [userInput, setUserInput] = useState('');
 
-  const handleChange = (e) => {
-    const input = e.currentTarget.value;
+  const handleChange = (e: React.SyntheticEvent) => {
+    const currentTarget = e.currentTarget as HTMLButtonElement;
+    const input = currentTarget.value;
 
     // this filters the options as we type, showing only relevant results from file tree
-    const newFilteredOptions = options.filter(
+    const newFilteredOptions: string[] = options.filter(
       (optionName) => (optionName.toLowerCase().indexOf(input.toLowerCase()) > -1)
     );
 
     setActiveOption(0);
     setFilteredOptions(newFilteredOptions);
     setShowOptions(true);
-    setUserInput(e.currentTarget.value);
+    setUserInput(currentTarget.value);
   };
 
-  const handleClick = (e) => {
+  const handleClick = (e: React.SyntheticEvent) => {
     setActiveOption(0);
     setFilteredOptions([]);
     setShowOptions(false);
-    setUserInput(e.currentTarget.innerText);
+    const currentTarget = e.currentTarget as HTMLButtonElement
+    setUserInput(currentTarget.innerText);
 
-    const selectedOption = e.currentTarget.innerText;
+    const selectedOption = currentTarget.innerText;
     const filePath = filePathMap[selectedOption] || '';
 
     // updateTypesFilePath and updateActionsFilePath are only not-null if used within Redux
@@ -52,7 +68,7 @@ const SearchInput = ({
     if (action) dispatch(action(selectedOption, filePath));
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (action) dispatch(action('', ''));
 
     if (e.keyCode === 13) { // keycode 13 = enter
@@ -83,30 +99,6 @@ const SearchInput = ({
       setActiveOption(activeOption + 1);
     }
   };
-
-  let optionList;
-  if (showOptions && userInput) {
-    optionList = filteredOptions
-      ? (
-        <ul className={reactTestCase ? 'react-test-options' : 'options'}>
-          {filteredOptions.map((optionName, index) => (
-            <li
-              className={index === activeOption ? 'option-active' : ''}
-              key={optionName}
-              type={optionName}
-              onClick={handleClick}
-            >
-              {optionName}
-            </li>
-          ))}
-        </ul>
-      )
-      : (
-        <div className='no-options'>
-          <em>No Option!</em>
-        </div>
-      );
-  }
 
   return (
   <Autocomplete

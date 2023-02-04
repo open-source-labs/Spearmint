@@ -36,6 +36,21 @@ export interface Hooks {
   hookFileName: string;
   hookFilePath: string;
 }
+
+export interface Action {
+  type: string;
+  id?: number;
+  serverFileName?: string;
+  serverFilePath?: string;
+  draggableStatements?: Array<HooksStatements>;
+  index?: number;
+  text?: string;
+  assertion?: Assertion;
+  db?: string | boolean;
+  dbFilePath?: string;
+  dbFileName?: string;
+  testState?: object;
+}
 /* ---------------------------- Actions In Reducer coming from hooksTestCaseActions ---------------------- */
 
 export type HooksAction =

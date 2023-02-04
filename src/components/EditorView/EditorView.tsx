@@ -41,6 +41,7 @@ const Editor = () : JSX.Element => {
  */  
   const saveFile = (): void => {
     if (editedText.length) {
+      console.log('UPDATEFILE(EDITEDTEXT)', updateFile(editedText));
       dispatchToGlobal(updateFile(editedText));
       if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');
     } else setWasSaved('No Changes to Save');

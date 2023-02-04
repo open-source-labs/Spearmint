@@ -1,0 +1,65 @@
+const axe = require('axe-core');
+const regeneratorRuntime = require('regenerator-runtime');
+
+describe('Component is accessible according to all standards enforced by axe-core.', () => {
+  const print = (violations) => {
+    if (violations.length === 0) {
+      console.log('Congrats! Keep up the good work, you have 0 known violations!');
+    } else {
+      violations.forEach(axeViolation => {
+        const whereItFailed = axeViolation.nodes.map(node => node.html);
+        // uncomment the line(s) below to see suggestions on how to fix accessibility issues
+        // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
+
+        const {
+          description,
+          help,
+          helpUrl
+        } = axeViolation;
+
+        console.log('---------',
+          '\nTEST DESCRIPTION: ', description,
+          '\nISSUE: ', help,
+          '\nMORE INFO: ', helpUrl,
+          '\nWHERE IT FAILED: ', whereItFailed,
+          // '\nHOW TO FIX: ', failureSummary
+
+                    ////TEST/////
+        );
+      });
+    }
+  }
+
+  let options;
+
+  beforeAll((done) => {
+    // exclude tests that are incompatible
+    options = {
+      rules: {
+        'color-contrast': {
+          enabled: false
+        },
+        'link-in-text-block': {
+          enabled: false
+        },
+      },
+    };
+
+    done();
+  });
+
+  it('Component is accessible regarding all axe-core categories.', (done) => {
+    axe.run(options, async (err, results) => {
+      if (err) {
+        console.log('err: ', err);
+        done();
+      }
+
+      print(results.violations);
+
+      expect(err).toBe(null);
+      expect(results.violations).toHaveLength(0);
+      done();
+    });
+  })
+});
