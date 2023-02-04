@@ -200,7 +200,7 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
           ...itStatements,
           byId: {
             ...itStatements.byId,
-            [itId]: createItStatement(`${describeId}`, itId),
+            [itId]: createItStatement(describeId.toString(), itId),
           },
           allIds: {
             ...itStatements.allIds,
@@ -214,7 +214,7 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
       const byId: ByIdType = { ...itStatements.byId };
       delete byId[itId];
       const newAllIds = itStatements.allIds[describeId].filter(
-        (id: string) => +id !== itId
+        (id: string) => id !== itId
       );
 
       return {

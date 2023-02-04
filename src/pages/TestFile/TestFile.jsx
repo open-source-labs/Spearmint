@@ -62,13 +62,6 @@ import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
 
 import SolidTestCase from '../../components/TestCase/SolidTestCase';
 
-import {
-  DenoTestCaseContext,
-  denoTestCaseState,
-  denoTestCaseReducer
-} from '../../context/reducers/denoTestCaseReducer';
-import DenoTestCase from '../../components/TestCase/DenoTestCase'
-
 
 import {
   GraphQLTestCaseContext,
@@ -81,7 +74,7 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import { FaUniversalAccess, FaReact } from "react-icons/fa"
 import { IoServer, IoLogoVue } from "react-icons/io5"
 import { GiHook } from "react-icons/gi"
-import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql, SiDeno } from "react-icons/si"
+import { SiPuppeteer, SiRedux, SiSvelte, SiGraphql } from "react-icons/si"
 import { MdSecurity } from "react-icons/md"
 import TestCard from './TestCard';
 import {
@@ -129,11 +122,6 @@ const TestFile = () => {
     graphQLTestCaseState
   );
 
-  const [denoTestCase, dispatchToDenoTestCase] = useReducer(
-    denoTestCaseReducer,
-    denoTestCaseState
-  );
-
   const filterFileType = (files, acceptedFileTypes) => {
     // files is an array of the keys in filePathMap
     const output = [];
@@ -171,7 +159,6 @@ const TestFile = () => {
     </>, 'Solid'],
     'hooks': [<GiHook size={cardSize} />, 'Hooks'],
     'vue': [<IoLogoVue size={cardSize} />, 'Vue'],
-    'deno': [<SiDeno size={cardSize} />, 'Deno'],
     'puppeteer': [<SiPuppeteer size={cardSize} />, 'Puppeteer'],
     'endpoint': [<IoServer size={cardSize} />, 'Endpoint'],
     'acc': [<FaUniversalAccess size={cardSize} />, 'Accessibility'],
@@ -191,7 +178,7 @@ const TestFile = () => {
   })
 
   return (
-    // Displays each interactable test case EX: React, Redux, Svelte, Deno, Etc.
+    // Displays each interactable test case EX: React, Redux, Svelte, Etc.
     <div>
       {/* instantiate context for each test option */}
       {testCase === 'redux' && (
@@ -280,14 +267,6 @@ const TestFile = () => {
           <MockDataContext.Provider value={[mockData, dispatchToMockData]}>
             <SolidTestCase filterFileType={filterFileType} />
           </MockDataContext.Provider >
-        </section>
-      )}
-
-      {testCase === 'deno' && (
-        <section>
-          <DenoTestCaseContext.Provider value={[denoTestCase, dispatchToDenoTestCase]}>
-            <DenoTestCase filterFileType={filterFileType} />
-          </DenoTestCaseContext.Provider>
         </section>
       )}
 

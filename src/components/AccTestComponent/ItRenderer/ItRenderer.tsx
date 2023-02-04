@@ -30,7 +30,7 @@ const ItRenderer = ({
    * @returns { void } Returns void
    */
   const deleteItStatementHandleClick = (e: ChangeEvent) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
 /**
@@ -43,13 +43,15 @@ const ItRenderer = ({
 
   const deleteItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {
-      const itId = e.target.id;
+      const itId = e.currentTarget.id;
       dispatchToAccTestCase(deleteItStatement(describeId, itId));
     }
   }
 
-  return itStatements.allIds[describeId].map((id: string, i: number) => (
-    <Draggable
+  return itStatements.allIds[describeId].map((id: string, i: number) => {
+    console.log('ID: ', id);
+    console.log('ID IN ITSTATEMENTS: ', itStatements.byId[id]);
+    return (<Draggable
       draggableId={id}
       index={i}
       key={`itRenderer-${id}`}
@@ -84,8 +86,8 @@ const ItRenderer = ({
 
         </div>
       )}
-    </Draggable>
-  ));
+    </Draggable>)
+  });
 };
 
 export default ItRenderer;

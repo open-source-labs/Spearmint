@@ -15,7 +15,6 @@ testStateController.upload = (req, res, next) => {
       testState
     },
     (err) => {
-      console.log(err);
       if (err) return next('Upload Failed');
       return next();
     }
