@@ -177,10 +177,6 @@ const Modal = ({
     execute = '\r';
   }
 
-  const denoTest = () => {
-    ipcRenderer.send('terminal.toTerm', `Deno test __tests__/${fileName}.test.js --allow-net ${execute}`);
-  };
-
   const jestTest = () => {
     if (title === 'vue'){
       ipcRenderer.send('terminal.toTerm', `npx vue-cli-service test:unit ${fileName}${execute}`);
@@ -361,7 +357,6 @@ if (title === 'New Test') {
                 <div className='code-wrapper'>
                   <code>
                     {title === 'vue' && `npx vue-cli-service test:unit ${fileName}\n`}
-                    {title === 'deno' && `deno test ${fileName} --allow-net\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest ${fileName}\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest --verbose ${fileName}\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest --coverage ${fileName}\n`}
@@ -369,10 +364,7 @@ if (title === 'New Test') {
                 </div>
               </pre>
               <span id={styles.runTestButtons}>
-                {title === 'deno' ? 
-                <Button id={styles.save} onClick={denoTest}>
-                  Deno Test
-                </Button> : 
+                {
                 <div id={styles.runTestButtons}>
                   <Button id={styles.save} onClick={jestTest}>
                     Jest Test

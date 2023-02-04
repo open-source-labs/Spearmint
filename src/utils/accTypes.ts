@@ -34,7 +34,7 @@ export interface Action {
   draggableStatements?: Array<string>;
   index?: number;
   text?: string;
-  itId: number;
+  itId: string;
   describeId: number | string;
   reorderedDescribe?: Array<string>;
   reorderedIt?: Array<string>;

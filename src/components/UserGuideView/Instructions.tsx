@@ -312,8 +312,7 @@ const Instructions = ({ title }: { title: string }): JSX.Element => {
                 </AccordionDetails>
               </Accordion>
               {/* Install Dependencies */}
-              {/* conditional rendering for Deno, since it does not require npm */}
-              {title === 'deno' ? null: <Accordion>
+              {<Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls='panel1a-content'
