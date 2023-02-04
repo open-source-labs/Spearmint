@@ -19,7 +19,6 @@ import { ThemeProvider, StyledEngineProvider, createTheme } from '@mui/material/
 const theme = createTheme();
 
 const App = () => {
-  console.log('HELLO YOU ARE IN APP.JSX');
   const [global, dispatchToGlobal] = useReducer(globalReducer, globalState);
 
   const changeTheme = () => {

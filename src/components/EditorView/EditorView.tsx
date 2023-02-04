@@ -15,7 +15,6 @@ const { ipcRenderer } = require('electron');
  */
 const Editor = () : JSX.Element => {
   const [{ file, theme, filePath }, dispatchToGlobal] = useContext(GlobalContext);
-  console.log('GLOBALCONTEXT', useContext(GlobalContext));
   const [wasSaved, setWasSaved] = useState<string>('');
   const [buttonText, setButtonText] = useState<string>('Save Changes');
   let editedText = '';
@@ -41,7 +40,6 @@ const Editor = () : JSX.Element => {
  */  
   const saveFile = (): void => {
     if (editedText.length) {
-      console.log('UPDATEFILE(EDITEDTEXT)', updateFile(editedText));
       dispatchToGlobal(updateFile(editedText));
       if (!filePath.length) setWasSaved('Preview Saved, be sure to export file');
     } else setWasSaved('No Changes to Save');

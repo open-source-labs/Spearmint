@@ -6,8 +6,6 @@ const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
-console.log(os.platform());
-
 const { REACT_DEVELOPER_TOOLS } = require('electron-devtools-vendor');
 
 // app.commandLine.appendSwitch('--headless');
@@ -82,7 +80,6 @@ function createWindow() {
     cwd: process.env.HOME,
     env: process.env,
   };
-  // console.log('process.env.HOME: ', process.env.HOME);
 
   const ptyProcess = np.spawn(shell, [], ptyArgs);
   // with ptyProcess, we want to send incoming data to the channel terminal.incData
@@ -96,7 +93,6 @@ function createWindow() {
   });
  
   ipcMain.on('terminal.resize', (event, data) => {
-    //console.log('resizing pty shell', "data: ", data, "data.cols", data.cols);
     ptyProcess.resize(data.cols, data.rows);
   });
  

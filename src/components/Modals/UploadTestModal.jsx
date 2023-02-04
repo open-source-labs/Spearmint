@@ -59,8 +59,6 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
         break;
     }
 
-    console.log('test being saved:', testState);
-
     fetch('http://spearmint.us-west-1.elasticbeanstalk.com/upload', {
       method: 'POST',
       headers: {
@@ -115,4 +113,4 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
   );
 };
 
-export default ;
+export default UploadTestModal;

@@ -63,9 +63,6 @@ const StyledTab: JSXElementConstructor<StyledTabProps> = withStyles((theme) => (
   },
 }))((props) => <Tab {...props} />);
 
-console.log('StyledTabs: ', StyledTabs);
-console.log('StyledTab: ', StyledTab);
-
 const RightPanel = () => {
   const [{ rightPanelDisplay, url, tabIndex, theme }, dispatchToGlobal] = useContext(GlobalContext);
   return (

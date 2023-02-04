@@ -125,7 +125,7 @@ router.get(
 
   // Anonymous middleware to send back valid response
   (req, res) => {
-    console.log('ssid:', res.locals.ssid);
+    //console.log('ssid:', res.locals.ssid);
     // we send the ssid back to the front end
     res.status(200).json({ ssid: res.locals.ssid });
   }

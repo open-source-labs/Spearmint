@@ -58,7 +58,7 @@ const DenoTestMenu = () => {
   // functionality when user clicks Save Test button
   const saveTest = () => {
     const valid = validateInputs('endpoint', denoTestCase);
-    console.log('I am inside saveTest button??!?!!?', valid)
+    //console.log('I am inside saveTest button??!?!!?', valid)
     dispatchToGlobal(setValidCode(valid));
 
     // store the file path of the new saved test file
@@ -88,7 +88,7 @@ const DenoTestMenu = () => {
   if (exportBool) {
     const valid = validateInputs('deno', denoTestCase);
     dispatchToGlobal(setValidCode(valid));
-    console.log(valid)
+    //console.log(valid)
     dispatchToGlobal(toggleExportBool());
     if (valid && !file) dispatchToGlobal(updateFile(generateTest(denoTestCase)));
   }
