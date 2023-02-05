@@ -61,7 +61,7 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 
 - Working with updated versions of node and electron.
 
-- Accessability component fixed.
+- Accessibility component fixed.
 
 - Reinstated dev testing.
 
@@ -88,7 +88,7 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 
 # Known Bugs
 
-1. Screen reader for Accessabilty can turn on and off but does not read.
+1. Screen reader for Accessibilty can turn on and off but does not read.
 
 <br>
 
