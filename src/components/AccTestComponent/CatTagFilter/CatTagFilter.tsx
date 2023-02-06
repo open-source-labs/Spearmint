@@ -1,7 +1,24 @@
 import React from 'react';
 import styles from './CatTagFilter.module.scss';
 
-const CatTagFilter = ({ dispatch, tagAction, textAction, itId, catTag }) => {
+interface CatTagFilterTypes {
+  dispatch: Function,
+  tagAction: object,
+  textAction: object,
+  itId: number,
+  catTag: string,
+}
+
+/**
+ * Renders the dropdown menu to 'Choose A Content Filter' inside the Accessibility TestType.
+ * @param { prop } dispatch - 
+ * @param { prop } tagAction - 
+ * @param { prop } textAction - 
+ * @param { prop } itId - number
+ * @param { prop } catTag string
+ * @returns { JSX.Element } Returns the CatTagFilter react component
+ */
+const CatTagFilter = ({ dispatch, tagAction, textAction, itId, catTag }): JSX.Element => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(tagAction(itId, e.target.value));
     if (e.target.value === 'none') dispatch(textAction(`Component is accessible regarding all axe-core categories.`, itId));

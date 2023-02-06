@@ -8,8 +8,6 @@ import {
   Header,
 } from '../../utils/endpointTypes';
 
-export const EndpointTestCaseContext: any = createContext([]);
-
 const newAssertion: Assertion = {
   id: 0,
   expectedResponse: '',
@@ -212,8 +210,13 @@ export const endpointTestCaseReducer = (state: EndpointTestCaseState, action: Ac
     case actionTypes.REPLACE_TEST: {
       const { testState } = action;
       return testState;
-    }
+    } 
     default:
       return state;
   }
 };
+
+const dispatchToEndpointTestCase = () => null;
+
+const endpointTestCaseArr: [EndpointTestCaseState, (action: Action) => void] = [endpointTestCaseState, dispatchToEndpointTestCase]
+export const EndpointTestCaseContext = createContext(endpointTestCaseArr);

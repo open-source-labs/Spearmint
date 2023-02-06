@@ -1,7 +1,5 @@
 import { createContext } from 'react';
-import { HooksTestCaseState, Assertion, HooksAction, Hooks, Callback } from '../../utils/hooksTypes';
-
-export const HooksTestCaseContext: any = createContext([]);
+import { HooksTestCaseState, Assertion, Action, Hooks, Callback } from '../../utils/hooksTypes';
 
 const newAssertion: Assertion = {
   id: 0,
@@ -305,3 +303,9 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
       return state;
   }
 };
+
+const dispatchToHooksTestCase = () => null;
+
+
+const hooksTestCaseArr: [HooksTestCaseState, (action: Action) => void] = [hooksTestCaseState, dispatchToHooksTestCase]
+export const HooksTestCaseContext = createContext(hooksTestCaseArr);

@@ -6,12 +6,10 @@ import {
   setFilePath,
   updateFile,
   setValidCode,
-  setTestCase,
   toggleExportBool,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
-import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
 import {
   addPuppeteerPaintTiming,
@@ -20,16 +18,9 @@ import {
 } from '../../context/actions/puppeteerTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
-import UploadTest from '../UploadTest/UploadTest';
-import GetTests from '../GetTests/GetTests';
 import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
-import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
-
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
 
 const PuppeteerTestMenu = () => {
   const [{ puppeteerStatements }, dispatchToPuppeteerTestCase] = useContext(
@@ -122,22 +113,8 @@ const PuppeteerTestMenu = () => {
         dispatchTestCase={dispatchToPuppeteerTestCase}
         createTest={createNewPuppeteerTest}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      /> */}
+      
     </>
-    //       {/* <UploadTest testType="puppeteer" />
-    //       <GetTests testType="puppeteer" /> */}
- 
-    //   </div>
-    //   <div id={styles.right}>
-    //     <button id={styles.rightBtn} onClick={saveTest}>
-    //       Save Test
-    //     </button>
-    //   </div>
-    // </div>
   );
 };
 

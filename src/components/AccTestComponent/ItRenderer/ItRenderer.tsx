@@ -3,13 +3,18 @@ import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
 import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
 import CatTagFilter from '../CatTagFilter/CatTagFilter';
+import { AiOutlineClose } from 'react-icons/ai';
 
 import {
   deleteItStatement,
 } from '../../../context/actions/accTestCaseActions';
 
 import styles from './ItRenderer.module.scss';
-
+/**
+ * Renders the ItRenderer react compoonent that allows
+ * the users to create it statements for Accessibility
+ * @returns { JSX.Element } Returns the DescribeRenderer component
+ */
 const ItRenderer = ({
   itStatements,
   describeId,
@@ -19,20 +24,34 @@ const ItRenderer = ({
 
   const [, dispatchToAccTestCase] = useContext(AccTestCaseContext);
 
+  /**
+   * Function that on click, deletes a It statement 
+   * @param { e } e - event 
+   * @returns { void } Returns void
+   */
   const deleteItStatementHandleClick = (e: ChangeEvent) => {
-    const itId = e.target.id;
+    const itId = e.currentTarget.id;
     dispatchToAccTestCase(deleteItStatement(describeId, itId));
   };
+/**
+   * Deletes the statement block in Accessibility test type when the charCode 13 (ENTER) is pressed.
+   * 
+   * NOTE: This functionality doesn't seem to be working at the moment.
+   * @param { e } e - event 
+   * @returns { void } Returns void
+   */
 
   const deleteItStatementOnKeyUp = (e) => {
     if (e.charCode === 13) {
-      const itId = e.target.id;
+      const itId = e.currentTarget.id;
       dispatchToAccTestCase(deleteItStatement(describeId, itId));
     }
   }
 
-  return itStatements.allIds[describeId].map((id: string, i: number) => (
-    <Draggable
+  return itStatements.allIds[describeId].map((id: string, i: number) => {
+    console.log('ID: ', id);
+    console.log('ID IN ITSTATEMENTS: ', itStatements.byId[id]);
+    return (<Draggable
       draggableId={id}
       index={i}
       key={`itRenderer-${id}`}
@@ -54,7 +73,7 @@ const ItRenderer = ({
             catTag={itStatements.byId[id].catTag}
           />
 
-          <i
+          <AiOutlineClose
             tabIndex={0}
             onKeyPress={deleteItStatementOnKeyUp}
             onClick={deleteItStatementHandleClick}
@@ -67,8 +86,8 @@ const ItRenderer = ({
 
         </div>
       )}
-    </Draggable>
-  ));
+    </Draggable>)
+  });
 };
 
 export default ItRenderer;

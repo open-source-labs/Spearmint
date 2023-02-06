@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import styles from './TestMenu.module.scss';
 import {
   updateFile,
   setFilePath,
@@ -24,16 +23,8 @@ import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { ReduxTestCaseContext } from '../../context/reducers/reduxTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
-import UploadTest from '../UploadTest/UploadTest';
-import GetTests from '../GetTests/GetTests';
 import TestMenuButtons from './TestMenuButtons';
-import ExportFileModal from '../Modals/ExportFileModal';
 const { ipcRenderer } = require('electron')
-
-
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
 
 const ReduxTestMenu = () => {
   const [{ reduxTestStatement, reduxStatements }, dispatchToReduxTestCase] = useContext(
@@ -51,22 +42,6 @@ const ReduxTestMenu = () => {
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
   }, []);
-
-  const handleAddMiddleware = () => {
-    dispatchToReduxTestCase(addMiddleware());
-  };
-
-  const handleAddActionCreator = () => {
-    dispatchToReduxTestCase(addActionCreator());
-  };
-
-  const handleAddAsync = () => {
-    dispatchToReduxTestCase(addAsync());
-  };
-
-  const handleAddReducer = () => {
-    dispatchToReduxTestCase(addReducer());
-  };
 
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(reduxUrl));
@@ -132,55 +107,7 @@ const ReduxTestMenu = () => {
         dispatchTestCase={dispatchToReduxTestCase}
         createTest={createNewReduxTest}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      /> */}
     </>
-    //       {/* <UploadTest testType='redux' />
-    //       <GetTests testType='redux' /> */}
-    // <div id='test'>
-    //   <div id={styles.testMenu}>
-    //     <div id={styles.left}>
-    //       <button onClick={openModal} autoFocus >New Test +</button>
-    //       <button id={styles.preview} onClick={fileHandle}>
-    //         Preview
-    //       </button>
-    //       <button id={styles.example} onClick={openScriptModal}>
-    //         Run Test
-    //       </button>
-    //       <button id={styles.example} onClick={openDocs}>
-    //         Need Help?
-    //       </button>
-
-    //     </div>
-    //     <div
-    //       id={styles.right}
-    //       style={{
-    //         display: 'flex',
-    //         flexWrap: 'wrap',
-    //         justifyContent: 'center',
-    //       }}
-    //     >
-    //       <button data-testid='reducerButton' onClick={handleAddReducer}>
-    //         Reducer
-    //       </button>
-    //       <button data-testid='actionCreatorButton' onClick={handleAddActionCreator}>
-    //         Action Creator
-    //       </button>
-    //       <button data-testid='asyncButton' onClick={handleAddAsync}>
-    //         Async Action Creator
-    //       </button>
-    //       <button data-testid='middlewareButton' onClick={handleAddMiddleware}>
-    //         Middleware
-    //       </button>
-    //       <button id={styles.rightBtn} onClick={saveTest}>
-    //         Save Test
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

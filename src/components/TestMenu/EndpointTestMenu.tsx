@@ -7,14 +7,12 @@ import {
   setFilePath,
   setValidCode,
   toggleExportBool,
-  setTestCase,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
 import {
-  addEndpoint,
   createNewEndpointTest,
   toggleDB,
   updateDBFilePath,
@@ -24,13 +22,9 @@ import useGenerateTest from '../../context/useGenerateTest';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
-import ExportFileModal from '../Modals/ExportFileModal';
-import { Button } from '@material-ui/core';
-const { ipcRenderer } = require('electron')
 
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
+import { Button } from '@mui/material';
+const { ipcRenderer } = require('electron')
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const EndpointTestMenu = () => {
@@ -46,7 +40,6 @@ const EndpointTestMenu = () => {
 
   useEffect(() => {
     // validateInputs('endpoint', endpointTestCase)
-    //   ? dispatchToGlobal(setValidCode(true))
     dispatchToGlobal(setValidCode(true));
   }, []);
 
@@ -131,13 +124,6 @@ const EndpointTestMenu = () => {
         dispatchTestCase={title === 'New Test' ? dispatchToEndpointTestCase : null}
         createTest={title === 'New Test' ? createNewEndpointTest : null}
       />
-      {/* marked for deletion */}
-      {/* <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      /> */}
-          {/* <UploadTest testType="endpoint test" />
-          <GetTests testType="endpoint test" /> */}
 
         <div id={styles[`dbConfig${theme}`]}>
           <Button 

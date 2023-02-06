@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
 import Draggable from 'react-draggable';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@mui/styles/withStyles';
 import {
   setFilePathMap,
   createFileTree,
@@ -16,7 +16,7 @@ import {
 } from '../../context/actions/globalActions';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { FaFileExport } from "react-icons/fa"
-import { Button, TextField, InputAdornment } from '@material-ui/core';
+import { Button, TextField, InputAdornment } from '@mui/material';
 
 import styles from './Modal.module.scss';
 
@@ -44,6 +44,12 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
+/**
+ * Renders the ExportFileModal react component, this component is the pop up when clicking on the Export File Button in the Navigation bar.
+ * @property { boolean } isExportModalOpen
+ * @property { Function } setIsExportModalOpen
+ * @returns { JSX.Element } Returns the ExportFileModal react component
+ */
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
   const [fileName, setFileName ] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
@@ -54,17 +60,25 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     setInvalidFileName(false);
   };
   
-  /* cancel export file (when false) */
+  /**
+   * This function closes the existing Export File popup menu and also resets the state back to an empty string. 
+   * 
+   * Just in case a user wanted to reopen the modal later, the input box will be empty again.
+   * 
+   * @returns { void } Returns void
+   */
   const closeExportModal = () => {
     setIsExportModalOpen(false);
-    
-    // reset fileName and invalidFileName
     setInvalidFileName(false);
     setFileName('');
     dispatchToGlobal(toggleExportBool());
     dispatchToGlobal(updateFile(''));
   };
-  
+
+  /**
+   * Function that creates a path of the modal when save button is clicked
+   * @returns { void }
+   */
   const handleClickSave = () => {
     // file name uniqueness check
     const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;
@@ -81,6 +95,11 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 
   // /* ------------------------------------------ EXPORT + DISPLAY FILE ------------------------------------------ */
 
+
+  /**
+   * This function creates a Test file in your local project directory
+   * @returns { void }
+   */
   const exportTestFile = () => {
     const folderPath = `${projectFilePath}/__tests__`;
     const folderExists = ipcRenderer.sendSync('ExportFileModal.exists', folderPath);
@@ -93,7 +112,9 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
     displayTestFile(folderPath);
   };
-
+/**
+ * Function that updates global state and highlights the test file where the user is redirected
+ */
   const displayTestFile = (testFolderFilePath) => {
     const filePath = `${testFolderFilePath}/${fileName}.test.js`;
     const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
@@ -114,6 +135,11 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     }
   };
 
+  /**
+   * Function that creates the FileTree Array of Objects
+   * @param { string } - current project file directory
+   * @returns { Object[] } Returns the FileTree Object
+   */
   const generateFileTreeObject = (projectFilePath) => {
     const filePaths = ipcRenderer.sendSync('Universal.readDir', projectFilePath);
     const fileArray = filePaths.map((fileName) => {

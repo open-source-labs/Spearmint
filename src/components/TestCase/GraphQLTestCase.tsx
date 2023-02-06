@@ -15,14 +15,10 @@ import GraphQLTestStatements from './GraphQLTestStatements';
 import { GraphQLStatements } from '../../utils/graphQLTypes';
 import SearchInput from '../SearchInput/SearchInput';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const GraphQLTestCase = () => {
-  type DropResult = typeof DropResult;
-  type DroppableProvided = typeof DroppableProvided
-  let [graphQLstate, dispatchToGraphQLTestCase] = useContext(
-    GraphQLTestCaseContext
-  );
+  let [graphQLstate, dispatchToGraphQLTestCase] = useContext(GraphQLTestCaseContext);
   let { graphQLStatements, addDB } = graphQLstate;
   const [{ filePathMap, theme }] = useContext(GlobalContext);
   
@@ -39,7 +35,7 @@ const GraphQLTestCase = () => {
     return result;
   };
 
-  const onDragEnd = (result: DropResult) => {
+  const onDragEnd = (result:typeof DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -126,7 +122,7 @@ const GraphQLTestCase = () => {
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided :DroppableProvided) => (
+          {(provided:typeof DroppableProvided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <GraphQLTestStatements />
               {provided.placeholder}

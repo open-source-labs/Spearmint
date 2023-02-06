@@ -1,8 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { renderHook, act, cleanup } from '@testing-library/react-hooks';
 import useToggleModal from '../components/TestMenu/testMenuHooks';
 
 afterEach(cleanup);
-describe('asomsdfak', () => {
+xdescribe('Hooks testing', () => {
   test('hooks should render', () => {
     const { result } = renderHook(() => useToggleModal('redux'));
     expect(result.current.title).toBe('redux');

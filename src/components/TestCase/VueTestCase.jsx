@@ -22,7 +22,7 @@ import {
   vueTestCaseState,
   vueTestCaseReducer,
 } from '../../context/reducers/vueTestCaseReducer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const VueTestCase = (props) => {
   const [vueTestCase, dispatchToVueTestCase] = useReducer(
