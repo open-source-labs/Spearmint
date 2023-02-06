@@ -271,9 +271,9 @@ function ProjectLoader() {
               Select your application:
               <OpenFolder />
             </span>
-            <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
+            {/* <Button variant="outlined" type="button" onClick={handleLogout} id={styles.loginBtn}>
               LOGOUT
-            </Button>
+            </Button> */}
           </div>
         )}
       </section>

@@ -1,99 +1,133 @@
 # How to use in development mode
 
-**Mac Developers**: Install Xcode command line tools if you don't already have them. 
+**Mac Developers**: Install Xcode command line tools if you don't already have them.
 
-**Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode. 
+**Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode.
 
-// as of January 2023
-// works through node version 19.4.0
-// electron-devtools-vendor must be at version 1.1 for now due to a bug
-// react must be version 17 due to a dependency for mui
-// fix-path must be version 3.0.0 due to 4.0.0 only being usable with an import statement which is not supported in electron.jsx
+As of January 2023, spearmint works with node version 19.4.0 electron-devtools-vendor must be at version 1.1 for now due to a bug.
+React must be version 17 due to a dependency for mui. Fix-path must be version 3.0.0 due to 4.0.0 only being usable with an import statement, which is not supported in electron.jsx.
 
 1. Fork and clone this repository.
-2. Install node version 16.13: ```nvm install 16.13```
-3. Use node version 16.13: ```nvm use 16.13```
-4. ```npm install```
-5. Create a .env file in the root directory of the project
-6. Insert the following lines of code into the .env file
-    ```
-    APP_DEV=true
-    BROWSER=non
-    SKIP_PREFLIGHT_CHECK=true
-    MONGO_LINK=
-    ```
-7. Set MONGO_LINK to your MongoDB URI (ex: mongodb://localhost:27017)
-8. Make sure your MongoDB is running if it's hosted locally. 
-9. ```npm run rebuild``` (different from `npm rebuild` so please pay attention to that)
-10. ```npm run dev```
+
+2. `npm install`
+
+3. Create a .env file in the root directory of the project
+
+4. Insert the following lines of code into the .env file
+
+   ```
+   APP_DEV=true
+   BROWSER=non
+   SKIP_PREFLIGHT_CHECK=true
+   MONGO_LINK=mongodb+srv://username:spearmint1234@cluster0.nzon2t8.mongodb.net/?retryWrites=true&w=majority
+   ```
+
+5. Set MONGO_LINK to your MongoDB URI or use the URI we provided (ex: mongodb://localhost:27017)
+
+6. Make sure your MongoDB is running if it's hosted locally.
+
+7. `npm run rebuild` (different from `npm rebuild` so please pay attention to that)
+
+8. `npm run dev`
 
 # Tips for development mode
 
-- To enable hot-module reloading, uncomment line 24 in the Electron.js file.
-        ```// require('electron-reloader')(module);```
-- To enable dev tools, uncomment line 72 in the Electron.js file:
-        ```// mainWindow.webContents.openDevTools();```
+- To enable hot-module reloading, uncomment line 23 in the electron.jsx file.
 
+      // require('electron-reloader')(module);
 
-# Suggestions if you would like contriubute: 
-1. Exporting test files in TypeScript: the tests currently export in JS. 
-2. Convert codebase to TypeScript: currently, there are some files in TS, and others in JS. It would be great to convert all to TS.  
-3. Dry refactoring of codebase: A lot of the folders and files for the frontend frameworks testing are the same, and the codebase would GREATLY benefit from refactoring and modularizing those. 
-4. Persist user data: there is currently sign up and login functionality, including OAuth. However, V0.12.0 commented it out because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user. 
-5. A known issue/bug is some erratic behavior with the terminal. A more detailed issue will be opened for this. 
+- To enable Chrome Dev Tools, uncomment line 71 in the electron.jsx file:
+
+      // mainWindow.webContents.openDevTools();
+
+- To enable React Dev Tools, uncomment lines 285 to 289 in the electron.jsx file:
+
+      // .then(() => {
+      //   session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
+      //     .then((name) => console.log(`Added Extension: ${name}`))
+      // .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
+      // })
+
+# Suggestions if you would like contriubute:
+
+1. Exporting test files in TypeScript: the tests currently export in JS.
+
+2. Convert codebase to TypeScript: currently, there are some files in TS, and others in JS. It would be great to convert all to TS.
+
+3. Dry refactoring of codebase: A lot of the folders and files for the frontend frameworks testing are the same, and the codebase would GREATLY benefit from refactoring and modularizing those.
+
+4. Persist user data: there is currently sign up and login functionality. V0.13.0 commented out the login functionality because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user.
+
+5. GitHub OAuth is functional, but Google OAuth is currently broken. If you are planning to persist user data, this is an excellent feature to resolve.
+
 6. Add more customization to the tests themseleves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
-7. Try to fix the dependencies issues. Currently we have to run on node version 16.13 for the app to work. But if the packages incompatiblites are fixed that would be wonderful! 
 
-Or please feel free to add any other features or fixes that you would like or are interested in. 
+7. Some of test cases needs improvement on UI as they do not have any styling or optimal user experience
 
-
+**_Please feel free to add any other features or fixes that you would like or are interested in._**
 
 # Build and Run image on Docker
 
-## Pre-requisites 
-- Mongo: Mongodb is used for authentication functionality. If you didn't use locally hosted mongodb URI in .env file, you may skip to the X server section. 
+## Pre-requisites
 
-    1. Add `172.17.0.1` and `0.0.0.0` to the network interfaces of mongo config file.
+- Mongo: Mongodb is used for authentication functionality. If you didn't use locally hosted mongodb URI in .env file, you may skip to the X server section.
 
-        a. Open `mongod.cfg` (Usually located in C:\Program Files\MongoDB\Server\4.4\bin)
+  1.  Add `172.17.0.1` and `0.0.0.0` to the network interfaces of mongo config file.
 
-            # network interfaces
-            net:
-              port: 27017
-              bindIp: 127.0.0.1, 172.17.0.1, 0.0.0.0
+      a. Open `mongod.cfg` (Usually located in C:\Program Files\MongoDB\Server\4.4\bin)
 
-     2. Run mongo on port 27017
+          # network interfaces
+          net:
+            port: 27017
+            bindIp: 127.0.0.1, 172.17.0.1, 0.0.0.0
+
+  2.  Run mongo on port 27017
 
 - X server
 
-    1. Download and run either [X410](https://x410.dev/) or [VcXsrv](https://sourceforge.net/projects/vcxsrv/)
+  1. Download and run either [X410](https://x410.dev/) or [VcXsrv](https://sourceforge.net/projects/vcxsrv/)
 
-        * For X410, use the following configuration
+     - For X410, use the following configuration
 
-        ![x410 with display = 0](/public/x410.png)
+     ![x410 with display = 0](/public/x410.png)
 
-        * For VcXsrv: change the display number to 0, for other settings, use default. 
+     - For VcXsrv: change the display number to 0, for other settings, use default.
 
-        ![VcXsrv with display = 0](/public/VcXsrv.png)
+     ![VcXsrv with display = 0](/public/VcXsrv.png)
 
+## Running the image
 
-## Running the image 
-After running the mongo on port 27017 and running the x server with display number of 0, follow the steps below. 
+After running the mongo on port 27017 and running the x server with display number of 0, follow the steps below.
 
-1. Build the docker image by running the following command
+1.  Build the docker image by running the following command
 
     `docker build -t [image name] .`
 
-2. Run the docker image by using the following command: 
+2.  Run the docker image by using the following command:
 
-    `docker run -e DISPLAY='host.docker.internal:0.0' -it -v [directory of project to be tested]:/[directory to create volume] [image name]`
+        `docker run -e DISPLAY='host.docker.internal:0.0' -it -v [directory of project to be tested]:/[directory to create volume] [image name]`
 
-    - `-e DISPLAY='host.docker.internal:0.0'`: Set environment variable ‘display’ to host.docker.internal:0.0 
+        - `-e DISPLAY='host.docker.internal:0.0'`: Set environment variable ‘display’ to host.docker.internal:0.0
 
-    - `-it`: Run container as interactive
+        - `-it`: Run container as interactive
 
-    - `-v`: Creates a volume and mounts the testing application into the container. (ex: `-v [testing files]:[created volume]`)
+        - `-v`: Creates a volume and mounts the testing application into the container. (ex: `-v [testing files]:[created volume]`)
 
-    *Please note that once the spearmint container is running, you can only access the folders that you mounted here.`  qGHP\
-*Please note that the image uses root user, as shown in the Dockerfile.
-    
+        *Please note that once the spearmint container is running, you can only access the folders that you mounted here.`
+
+    **_Please note that the image uses root user, as shown in the Dockerfile._**
+
+# Resources for onboarding developers
+
+<div align="center" style="display:flex;flex-direction:column;"}>
+  <div align>
+  <a href="https://excalidraw.com/#room=9abc890c35d8e7d3f149,htwzR9k0SUhZzhwB3zjJ8A">
+      <img width="300" height="72" alt="Connect to the Dev Excalidraw" src="https://img.shields.io/badge/Excalidraw-181717?style=for-the-badge&logo"/>
+  </a>
+  <a href="https://discord.gg/5FNPTvZSTq">
+    <img width="300" height="72" src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white"/>
+  </a>
+  <h3>Virtual whiteboard for sketching the structure/data flow of spearmint. Also inside the /public/spearmint.svg file</h3>
+  <h3>Let's stay up to date, ask/answer questions, and connect with one another!</h3>
+  <h3>Join the spearmint developer community Discord!</h3>
+</div>
