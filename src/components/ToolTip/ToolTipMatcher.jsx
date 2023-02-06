@@ -3,7 +3,6 @@
  */
 
 import React from 'react';
-import styles from './ToolTip.scss';
 
 const ToolTipMatcher = ({ toolTipType }) => {
   if (toolTipType.includes('.')) {
@@ -64,8 +63,6 @@ const ToolTipMatcher = ({ toolTipType }) => {
       'This allows you to check whether the given element does not have a text content.',
   };
 
-  // changed id from styles.tooltip to the string: "styles.tooltip" 
-  // As far as I can tell this isn't necessary
   return <span id={'styles.tooltip'}>{TOOLTIP_MAP_MATCHERS[toolTipType]}</span>;
 };
 

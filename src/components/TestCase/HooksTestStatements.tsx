@@ -20,13 +20,9 @@ const HooksTestStatements = () => {
       <div id={styles[`testCaseHeader${theme}`]}>
             <SearchInput
               label={'Import Hooks From'}
-              type={null}
-              reactTestCase={null}
-              updateTypesFilePath={null}
               updateActionsFilePath={updateHooksFilePath}
               options={Object.keys(filePathMap)}
               dispatch={dispatchToHooksTestCase}
-              action={null}
               filePathMap={filePathMap}
             />
       </div>

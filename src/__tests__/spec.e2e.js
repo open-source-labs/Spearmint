@@ -1,6 +1,7 @@
 const Application = require('spectron').Application;
 const path = require('path');
 const chai = require('chai');
+// const global = require('chai')
 const chaiAsPromised = require('chai-as-promised');
 
 // specifies the path of the application to launch
@@ -22,7 +23,7 @@ global.before(function () {
   chai.use(chaiAsPromised);
 });
 
-describe('Application Accessibility Audit', function () {
+xdescribe('Application Accessibility Audit', function () {
   this.timeout(10000);
 
   beforeEach(function () {

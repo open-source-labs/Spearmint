@@ -1,3 +1,6 @@
+/**
+ * List of event types that are used in the AutoComplete component to help with the auto complete process
+ */
 export const eventTypesList = [
   // Clipboard Events
   {

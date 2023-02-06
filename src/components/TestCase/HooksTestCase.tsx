@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useEffect } from 'react';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
@@ -9,7 +9,7 @@ import {
 } from '../../context/actions/hooksTestCaseActions';
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { HooksStatements } from '../../utils/hooksTypes';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import InputTextField from '../InputTextField';
@@ -17,7 +17,7 @@ import InputTextField from '../InputTextField';
 const HooksTestCase = () => {
   
   const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
-  const [{theme}] = useContext<any>(GlobalContext);
+  const [{theme}] = useContext(GlobalContext);
 
 
   const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +31,7 @@ const HooksTestCase = () => {
     return result;
   };
 
-  const onDragEnd = (result: any) => {
+  const onDragEnd = (result:typeof DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -69,7 +69,7 @@ const HooksTestCase = () => {
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
-          {(provided: any) => (
+          {(provided: typeof DroppableProvided) => (
             <div ref={provided.innerRef} {...provided.droppableProps}>
               <HooksTestStatements />
               {provided.placeholder}

@@ -11,7 +11,7 @@ import {
 } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import styles from './ItRenderer.module.scss';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 
 const ItRenderer = ({

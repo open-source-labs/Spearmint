@@ -13,12 +13,12 @@ module.exports = function (passport) {
       },
 
       (accessToken, refreshToken, profile, done) => {
-        console.log('this is our accessToken:', accessToken);
+        //console.log('this is our accessToken:', accessToken);
         // we are checking if the github profile is in our monogDB
         GithubUser.findOne({ githubId: profile.id }, (err, result) => {
           if (result) {
             // already have this user
-            console.log('user is: ', result);
+            //console.log('user is: ', result);
             // res.locals.userId = result._id
             done(null, result);
           } else if (!result) {
@@ -29,7 +29,7 @@ module.exports = function (passport) {
             })
               .save()
               .then((newUser) => {
-                console.log('created new user: ', newUser);
+                //console.log('created new user: ', newUser);
                 //   res.locals.userId = newUser._id
                 done(null, newUser);
               });
@@ -50,12 +50,12 @@ module.exports = function (passport) {
       },
 
       (accessToken, refreshToken, profile, done) => {
-        console.log('this is our accessToken:', accessToken);
+        //console.log('this is our accessToken:', accessToken);
         // we are checking if the google profile is in our monogDB
         GoogleUser.findOne({ googleId: profile.id }, (err, result) => {
           if (result) {
             // already have this user
-            console.log('user is: ', result);
+            //console.log('user is: ', result);
             // res.locals.userId = result._id
             done(null, result);
           } else if (!result) {
@@ -65,7 +65,7 @@ module.exports = function (passport) {
             })
               .save()
               .then((newUser) => {
-                console.log('created new user: ', newUser);
+                //console.log('created new user: ', newUser);
                 //   res.locals.userId = newUser._id
                 done(null, newUser);
               });

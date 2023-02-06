@@ -1,5 +1,5 @@
 import React, { useContext, useState} from 'react';
-import { Button, Switch, TextField } from '@material-ui/core';
+import { Button, Switch, TextField } from '@mui/material';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest, setTheme } from '../../context/actions/globalActions';
@@ -57,7 +57,7 @@ function ProjectLoader() {
       setMessage('Password must be longer than 4 characters')
       return;
     }
-
+    
     // handleLogout();
     fetch('http://localhost:3001/login', {
       method: 'POST',
@@ -264,9 +264,9 @@ function ProjectLoader() {
           renderLogin()
         ) : (
           <div className={styles.contentBox}>
-            {/* <span id={styles.welcomeText}>
+            <span id={styles.welcomeText}>
               Welcome <span id={styles.userText}>{username}</span>!
-            </span> */}
+            </span>
             <span id={styles.openFolderSpan}>
               Select your application:
               <OpenFolder />

@@ -8,6 +8,22 @@ import {
 } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 
+/**
+ * Renders the AutoCompleteMockData react component - this component is specifically for the FrontEnd frameworks and uses the eventTypesList 
+ * and the matcherTypesList Javascript files to AutoComplete when typing in the corresponding field (Matcher for Assertions, Event Type for Actions)
+ *
+ * NOTE: The functionality is very similar to the AutoComplete react component, reference that component for many of these functions.
+ * @property { string } statement - 
+ * @property { string } statementType - 
+ * @property { Function } dispatchToTestCase - 
+ * @property { } propType
+ * @property { } renderId
+ * @property { } propId
+ * @property { } propKey
+ * @property { } propValue
+ * 
+ * @returns { JSX.Element } Returns the AutoCompleteMockData react component
+ */
 const AutoCompleteMockData = ({
   statement,
   statementType,

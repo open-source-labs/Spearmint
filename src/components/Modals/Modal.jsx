@@ -19,16 +19,16 @@ import {
   setFolderView,
 } from '../../context/actions/globalActions';
 // Accordion view
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import Draggable from 'react-draggable';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { VscNewFile } from "react-icons/vsc"
-import { Button, TextField, InputAdornment } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { Button, TextField, InputAdornment } from '@mui/material';
+import withStyles from '@mui/styles/withStyles';
 import { FaFileExport } from "react-icons/fa";
 
 // const ipc = require('electron').ipcRenderer;
@@ -176,10 +176,6 @@ const Modal = ({
   if (os.platform() === 'win32') {
     execute = '\r';
   }
-
-  const denoTest = () => {
-    ipcRenderer.send('terminal.toTerm', `Deno test __tests__/${fileName}.test.js --allow-net ${execute}`);
-  };
 
   const jestTest = () => {
     if (title === 'vue'){
@@ -361,7 +357,6 @@ if (title === 'New Test') {
                 <div className='code-wrapper'>
                   <code>
                     {title === 'vue' && `npx vue-cli-service test:unit ${fileName}\n`}
-                    {title === 'deno' && `deno test ${fileName} --allow-net\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest ${fileName}\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest --verbose ${fileName}\n`}
                     {title !== 'vue' && title !== 'deno' && `npx jest --coverage ${fileName}\n`}
@@ -369,10 +364,7 @@ if (title === 'New Test') {
                 </div>
               </pre>
               <span id={styles.runTestButtons}>
-                {title === 'deno' ? 
-                <Button id={styles.save} onClick={denoTest}>
-                  Deno Test
-                </Button> : 
+                {
                 <div id={styles.runTestButtons}>
                   <Button id={styles.save} onClick={jestTest}>
                     Jest Test
