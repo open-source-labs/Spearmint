@@ -8,34 +8,58 @@ As of January 2023, spearmint works through node version 19.4.0 electron-devtool
 react must be version 17 due to a dependency for mui fix-path must be version 3.0.0 due to 4.0.0 only being usable with an import statement which is not supported in electron.jsx.
 
 1. Fork and clone this repository.
+
 2. `npm install`
+
 3. Create a .env file in the root directory of the project
+
 4. Insert the following lines of code into the .env file
+
    ```
    APP_DEV=true
    BROWSER=non
    SKIP_PREFLIGHT_CHECK=true
-   MONGO_LINK=
+   MONGO_LINK=mongodb+srv://username:spearmint1234@cluster0.nzon2t8.mongodb.net/?retryWrites=true&w=majority
    ```
-5. Set MONGO_LINK to your MongoDB URI (ex: mongodb://localhost:27017)
+
+5. Set MONGO_LINK to your MongoDB URI or use the URI we provided (ex: mongodb://localhost:27017)
+
 6. Make sure your MongoDB is running if it's hosted locally.
+
 7. `npm run rebuild` (different from `npm rebuild` so please pay attention to that)
+
 8. `npm run dev`
 
 # Tips for development mode
 
 - To enable hot-module reloading, uncomment line 23 in the Electron.js file.
-  `// require('electron-reloader')(module);`
-- To enable dev tools, uncomment line 71 in the Electron.js file:
-  `// mainWindow.webContents.openDevTools();`
+
+      // require('electron-reloader')(module);
+
+- To enable Chrome Dev Tools, uncomment line 71 in the Electron.js file:
+
+      // mainWindow.webContents.openDevTools();
+
+- To enable React Dev Tools, uncomment lines 285 to 289 in the Electron.js file:
+
+      // .then(() => {
+      //   session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
+      //     .then((name) => console.log(`Added Extension: ${name}`))
+      // .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
+      // })
 
 # Suggestions if you would like contriubute:
 
 1. Exporting test files in TypeScript: the tests currently export in JS.
+
 2. Convert codebase to TypeScript: currently, there are some files in TS, and others in JS. It would be great to convert all to TS.
+
 3. Dry refactoring of codebase: A lot of the folders and files for the frontend frameworks testing are the same, and the codebase would GREATLY benefit from refactoring and modularizing those.
-4. Persist user data: there is currently sign up and login functionality, including OAuth. However, V0.13.0 commented it out because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user.
+
+4. Persist user data: there is currently sign up and login functionality. **GitHub OAuth** is functional, but **Google OAuth** is currently broken. However, V0.13.0 commented it out because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user.
+
 5. Add more customization to the tests themseleves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
+
 6. Some of test cases needs improvement on UI as they do not have any styling or optimal user experience
 
 Or please feel free to add any other features or fixes that you would like or are interested in.
@@ -93,4 +117,10 @@ After running the mongo on port 27017 and running the x server with display numb
 
 # Resources for onboarding developers
 
-Inside the public folder is a file called spearmint.svg. Open this (you may have to zoom out), and you will see the structure of spearmint, the paths it takes as well as information on relationships and files.
+1. The excalidraw link contains information regarding the structure/data flow of spearmint. These pictures are also inside the public folder in a file called spearmint.svg. Open this (you may have to zoom out), and you will see the structure of spearmint, the paths it takes as well as information on relationships and files.
+
+   - https://excalidraw.com/#room=9abc890c35d8e7d3f149,htwzR9k0SUhZzhwB3zjJ8A\
+     <br>
+
+2. Join the spearmint developer community discord! Here, we can stay up to date, ask/answer questions, and connect with one another!
+   - https://discord.gg/5FNPTvZSTq

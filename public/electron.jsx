@@ -282,11 +282,11 @@ app.whenReady()
   .then(app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   }))
-  .then(() => {
-    session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
-      .then((name) => console.log(`Added Extension: ${name}`))
-      .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
-  })
+  // .then(() => {
+  //   session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
+  //     .then((name) => console.log(`Added Extension: ${name}`))
+  //     .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
+  // })
   .catch((err) => console.log(`An error occurred when booting up electron: ${err}`));
 
 
