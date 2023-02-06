@@ -17,12 +17,6 @@
 
 Spearmint helps developers easily create functional Accessibility, Endpoint, GraphQL, Puppeteer, React, Hooks, Redux, Svelte, Vue, Security, and Solid.js tests without writing any code. It dynamically converts user inputs into executable Jest test code by using DOM query selectors provided by @testing-library.
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="public/ShowDemo.gif">
-  <source media="(prefers-color-scheme: light)" srcset="public/ShowDemo.gif">
-  <img alt="spearmint gif" src="public/ShowDemo.gif" width="800px">
-</picture>
-
 # Installation
 
 Please download spearmint from our [website](https://www.spearmintjs.com/)
@@ -36,16 +30,33 @@ Please refer to [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 # How it works
 
 1. Open the folder of the repo you'd like to create tests for, then choose the framework/type of test you'd like to create.
+   <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/LoadProjectDemo.gif">
+      <source media="(prefers-color-scheme: light)" srcset="public/LoadProjectDemo.gif">
+      <img alt="spearmint gif" src="public/LoadProjectDemo.gif" width="800px">
+   </picture>
 
 2. Utilize our auto-complete, drop-down options, and tooltips features to easily create arrangement, action, and assertion test statements for React, Vue, Svelte, and Solid; reducer, action creator, asynchronous action creator, and middleware test statements for Redux; and hooks, context, endpoint, and GraphQL test statements.
+3. Spearmint will then convert user input to dynamically generate a test file in the Code Editor.
+   <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/ShowDemo.gif">
+      <source media="(prefers-color-scheme: light)" srcset="public/ShowDemo.gif">
+      <img alt="spearmint gif" src="public/ShowDemo.gif" width="800px">
+   </picture>
 
-3. Spearmint will then convert user input to dynamically generate a test file. Follow the instructions in the recently added User Guide tab on the right to export and run your tests. Don't forget to select your test file from the left panel in order to manually edit the test in the Test Editor; otherwise the changes won't be reflected in the test file.
+4. Follow the instructions in the recently added User Guide tab on the right to export and run your tests.
+   <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/RunDemo.gif">
+      <source media="(prefers-color-scheme: light)" srcset="public/RunDemo.gif">
+      <img alt="spearmint gif" src="public/RunDemo.gif" width="800px">
+   </picture>
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="./client/assets/readme/insert.gif">
-  <source media="(prefers-color-scheme: light)" srcset="./client/assets/readme/insert.gif">
-  <img alt="Select Update Gif" src="./client/assets/readme/insert.gif" width="800px">
-</picture>
+5. Don't forget to select your test file from the left panel in order to manually edit the test in the Test Editor; otherwise the changes won't be reflected in the test file.
+   <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="public/SaveDemo.gif">
+      <source media="(prefers-color-scheme: light)" srcset="public/SaveDemo.gif">
+      <img alt="spearmint gif" src="public/SaveDemo.gif" width="800px">
+   </picture>
 
 # Containerization with Docker
 
