@@ -4,8 +4,8 @@
 
 **Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode.
 
-As of January 2023, spearmint works through node version 19.4.0 electron-devtools-vendor must be at version 1.1 for now due to a bug
-react must be version 17 due to a dependency for mui fix-path must be version 3.0.0 due to 4.0.0 only being usable with an import statement which is not supported in electron.jsx.
+As of January 2023, spearmint works with node version 19.4.0 electron-devtools-vendor must be at version 1.1 for now due to a bug.
+React must be version 17 due to a dependency for mui. Fix-path must be version 3.0.0 due to 4.0.0 only being usable with an import statement, which is not supported in electron.jsx.
 
 1. Fork and clone this repository.
 
@@ -32,15 +32,15 @@ react must be version 17 due to a dependency for mui fix-path must be version 3.
 
 # Tips for development mode
 
-- To enable hot-module reloading, uncomment line 23 in the Electron.js file.
+- To enable hot-module reloading, uncomment line 23 in the electron.jsx file.
 
       // require('electron-reloader')(module);
 
-- To enable Chrome Dev Tools, uncomment line 71 in the Electron.js file:
+- To enable Chrome Dev Tools, uncomment line 71 in the electron.jsx file:
 
       // mainWindow.webContents.openDevTools();
 
-- To enable React Dev Tools, uncomment lines 285 to 289 in the Electron.js file:
+- To enable React Dev Tools, uncomment lines 285 to 289 in the electron.jsx file:
 
       // .then(() => {
       //   session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
@@ -56,13 +56,15 @@ react must be version 17 due to a dependency for mui fix-path must be version 3.
 
 3. Dry refactoring of codebase: A lot of the folders and files for the frontend frameworks testing are the same, and the codebase would GREATLY benefit from refactoring and modularizing those.
 
-4. Persist user data: there is currently sign up and login functionality. **GitHub OAuth** is functional, but **Google OAuth** is currently broken. However, V0.13.0 commented it out because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user.
+4. Persist user data: there is currently sign up and login functionality. V0.13.0 commented out the login functionality because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user.
 
-5. Add more customization to the tests themseleves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
+5. GitHub OAuth is functional, but Google OAuth is currently broken. If you are planning to persist user data, this is an excellent feature to resolve.
 
-6. Some of test cases needs improvement on UI as they do not have any styling or optimal user experience
+6. Add more customization to the tests themseleves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
 
-Or please feel free to add any other features or fixes that you would like or are interested in.
+7. Some of test cases needs improvement on UI as they do not have any styling or optimal user experience
+
+**_Please feel free to add any other features or fixes that you would like or are interested in._**
 
 # Build and Run image on Docker
 
@@ -111,16 +113,21 @@ After running the mongo on port 27017 and running the x server with display numb
 
         - `-v`: Creates a volume and mounts the testing application into the container. (ex: `-v [testing files]:[created volume]`)
 
-        *Please note that once the spearmint container is running, you can only access the folders that you mounted here.`  qGHP\
+        *Please note that once the spearmint container is running, you can only access the folders that you mounted here.`
 
-    \*Please note that the image uses root user, as shown in the Dockerfile.
+    **_Please note that the image uses root user, as shown in the Dockerfile._**
 
 # Resources for onboarding developers
 
-1. The excalidraw link contains information regarding the structure/data flow of spearmint. These pictures are also inside the public folder in a file called spearmint.svg. Open this (you may have to zoom out), and you will see the structure of spearmint, the paths it takes as well as information on relationships and files.
-
-   - https://excalidraw.com/#room=9abc890c35d8e7d3f149,htwzR9k0SUhZzhwB3zjJ8A\
-     <br>
-
-2. Join the spearmint developer community discord! Here, we can stay up to date, ask/answer questions, and connect with one another!
-   - https://discord.gg/5FNPTvZSTq
+<div align="center" style="display:flex;flex-direction:column;"}>
+  <div align>
+  <a href="https://excalidraw.com/#room=9abc890c35d8e7d3f149,htwzR9k0SUhZzhwB3zjJ8A">
+      <img width="300" height="72" alt="Connect to the Dev Excalidraw" src="https://img.shields.io/badge/Excalidraw-181717?style=for-the-badge&logo"/>
+  </a>
+  <a href="https://discord.gg/5FNPTvZSTq">
+    <img width="300" height="72" src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white"/>
+  </a>
+  <h3>Virtual whiteboard for sketching the structure/data flow of spearmint. Also inside the /public/spearmint.svg file</h3>
+  <h3>Let's stay up to date, ask/answer questions, and connect with one another!</h3>
+  <h3>Join the spearmint developer community Discord!</h3>
+</div>
