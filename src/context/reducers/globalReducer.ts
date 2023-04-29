@@ -27,10 +27,12 @@ export const globalState: GlobalStateTypes = {
   theme: window.localStorage.theme ?? 'light',
 };
 
+
 const dispatchToGlobal = () => null;
 
 const contextArr: [GlobalStateTypes, Function] = [globalState, dispatchToGlobal]
 
+//used in most files to pass in the global state and dispatchToGlobal
 export const GlobalContext = createContext<[GlobalStateTypes, Function]>(contextArr); // originally createContext(null)
 
 
