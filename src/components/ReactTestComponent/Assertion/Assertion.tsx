@@ -35,7 +35,6 @@ const Assertion = (props: ReactTestComponentAssertion): JSX.Element => {
     let updatedAssertion = { ...statement };
     updatedAssertion.isNot = !updatedAssertion.isNot;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
-    console.log(statement.isNot);
   }
 
   const handleClickDelete = () => {
