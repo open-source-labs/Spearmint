@@ -18,8 +18,8 @@ export interface ReactStatements {
     allIds: Array<string>;
   }
   export interface ItStatements {
-    byId: Object;
-    allIds: allIdsType;
+    byId: Array<string>;
+    allIds: Array<Array<string>>;
   }
   type allIdsType = {
     [key: string]: string,

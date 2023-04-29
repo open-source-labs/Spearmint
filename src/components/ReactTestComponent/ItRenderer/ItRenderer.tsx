@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, ChangeEvent } from 'react';
 import cn from 'classnames';
 import { Draggable } from 'react-beautiful-dnd';
+import type { DraggableProvided } from 'react-beautiful-dnd';
 import ReactTestStatements from '../../TestCase/ReactTestStatements';
 import CustomInput from '../CustomInput/CustomInput';
 import {
@@ -13,6 +14,17 @@ import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseRed
 import styles from './ItRenderer.module.scss';
 import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
+import { ItStatements, Statements } from '../../../utils/ReactTypes';
+
+interface ItRendererProps {
+  type: string;
+  itStatements: ItStatements;
+  describeId: number;
+  statements: Statements;
+  handleChangeItStatementText: ChangeEvent<HTMLInputElement>;
+  // handleChangeItStatementText: any;
+  theme: 'light' | 'dark';
+}
 
 const ItRenderer = ({
   type,
@@ -21,41 +33,41 @@ const ItRenderer = ({
   statements,
   handleChangeItStatementText,
   theme,
-}) => {
+}: ItRendererProps) => {
   const [, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
 
-  const addRenderHandleClick = (e) => {
+  const addRenderHandleClick = (e: React.MouseEvent) => {
     const itId = e.currentTarget.id;
     dispatchToReactTestCase(addRender(describeId, itId));
   };
 
-  const deleteItStatementHandleClick = (e) => {
+  const deleteItStatementHandleClick = (e: React.MouseEvent) => {
     const itId = e.currentTarget.id;
     dispatchToReactTestCase(deleteItStatement(describeId, itId));
   };
 
-  const deleteReactItStatementOnKeyUp = (e) => {
+  const deleteReactItStatementOnKeyUp = (e: React.KeyboardEvent) => {
     if (e.charCode === 13) {
       const itId = e.currentTarget.id;
       dispatchToReactTestCase(deleteItStatement(describeId, itId));
     }
   }
-  const addActionHandleClick = (e) => {
+  const addActionHandleClick = (e: React.MouseEvent) => {
     const itId = e.currentTarget.id;
     dispatchToReactTestCase(addAction(describeId, itId));
   };
-  const addAssertionHandleClick = (e) => {
+  const addAssertionHandleClick = (e: React.MouseEvent) => {
     const itId = e.currentTarget.id;
     dispatchToReactTestCase(addAssertion(describeId, itId));
   };
 
-  return itStatements.allIds[describeId].map((id, i) => (
+  return itStatements.allIds[describeId].map((id: string, i) => (
     <Draggable
       key={id}
       draggableId={id}
       index={i}
     >
-      {(provided) => (
+      {(provided: ResponderProvided) => (
         <div
           id={styles[`ItRenderer${theme}`]}
           ref={provided.innerRef}
