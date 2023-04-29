@@ -27,6 +27,7 @@ export const globalState: GlobalStateTypes = {
   theme: window.localStorage.theme ?? 'light',
 };
 
+
 const dispatchToGlobal = () => null;
 
 const contextArr: [GlobalStateTypes, Function] = [globalState, dispatchToGlobal]

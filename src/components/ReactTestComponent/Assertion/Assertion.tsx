@@ -8,27 +8,41 @@ import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
+import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
-const Assertion = ({ statement, describeId, itId, statementId }) => {
+type FieldTypes = (
+  'queryVariant'
+  | 'querySelector'
+  | 'queryValue'
+  | 'matcherValue'
+)
+
+const Assertion = (props: ReactTestComponentAssertion): JSX.Element => {
+  const { statement, describeId, itId, statementId } = props;
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
-  const handleChangeAssertionFields = (e, field) => {
+  const handleChangeAssertionFields = (e: (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>), field: FieldTypes) => {
     let updatedAssertion = { ...statement };
-    field === 'isNot'
-      ? (updatedAssertion[field] = !updatedAssertion.isNot)
-      : (updatedAssertion[field] = e.target.value);
+    updatedAssertion[field] = e.target.value;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
   };
 
-  const handleClickDelete = (e) => {
+  const handleIsNot = () => {
+    let updatedAssertion = { ...statement };
+    updatedAssertion.isNot = !updatedAssertion.isNot;
+    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    console.log(statement.isNot);
+  }
+
+  const handleClickDelete = () => {
     dispatchToReactTestCase(deleteAssertion(statementId));
   };
 
-  const needsMatcherValue = (matcherType) => {
+  const needsMatcherValue = (matcherType: string) => {
     const matchersWithValues = [
       'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
       'toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
@@ -105,7 +119,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
 
   return (
     <section id={styles[`assertion${theme}`]} data-testid='assertionCard'>
-      <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDelete} />
+      <AiOutlineClose id={styles.close} onClick={handleClickDelete} />
         <div className={styles.actionHeader}>
           <span className={styles.header}>
             Assertion <span id={styles.componentName}>{statements.componentName}</span>
@@ -193,7 +207,7 @@ const Assertion = ({ statement, describeId, itId, statementId }) => {
                 <input
                   type='checkbox'
                   checked={statement.isNot}
-                  onChange={(e) => handleChangeAssertionFields(e, 'isNot')}
+                  onChange={() => handleIsNot()}
                 />
               </div>
             </div>
