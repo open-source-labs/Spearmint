@@ -8,27 +8,38 @@ import { MockDataContext } from '../../../context/reducers/mockDataReducer';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
+import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
+type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
+
+type FieldTypes = (
+  'eventType'
+  | 'eventValue'
+  | 'queryVariant'
+  | 'querySelector'
+  | 'queryValue'
+)
+
 // Action box in middle panel (testCase.jsx)
-const Action = ({ statement, statementId, describeId, itId }) => {
+const Action = ({ statement, statementId, describeId, itId }: ReactTestComponentAssertion): JSX.Element => {
   const [{ mockData }] = useContext(MockDataContext);
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
-  const handleChangeActionFields = (e, field) => {
+  const handleChangeActionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAction = { ...statement };
     updatedAction[field] = e.target.value;
     dispatchToReactTestCase(updateAction(updatedAction));
   };
 
-  const handleClickDeleteAction = (e) => {
+  const handleClickDeleteAction = () => {
     dispatchToReactTestCase(deleteAction(statement.id));
   };
   //conditional rendering for events with values
-  const needsEventValue = (eventType) => {
+  const needsEventValue = (eventType: string) => {
     const eventsWithValues = [
       'keyDown',
       'keyPress',
@@ -43,7 +54,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
 
   return (
     <div id={styles[`action${theme}`]}>
-      <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteAction} />
+      <AiOutlineClose id={styles.close} onClick={handleClickDeleteAction} />
         <span className={styles.header}>
           Action <span id={styles.componentName}>{statements.componentName}</span>
         </span>

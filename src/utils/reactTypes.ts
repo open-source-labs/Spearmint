@@ -64,6 +64,8 @@ export interface ReactStatements {
         itId: string,
         describeId: string,
         type: string,
+        eventType: string,
+        eventValue: string,
         queryVariant: string,
         querySelector: string,
         queryValue: string,

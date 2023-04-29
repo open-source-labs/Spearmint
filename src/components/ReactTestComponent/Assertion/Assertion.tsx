@@ -13,6 +13,8 @@ import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
+type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
+
 type FieldTypes = (
   'queryVariant'
   | 'querySelector'
@@ -25,7 +27,7 @@ const Assertion = (props: ReactTestComponentAssertion): JSX.Element => {
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
-  const handleChangeAssertionFields = (e: (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>), field: FieldTypes) => {
+  const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAssertion = { ...statement };
     updatedAssertion[field] = e.target.value;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
