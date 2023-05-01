@@ -12,9 +12,10 @@ import Prop from './Prop';
 import { Button } from '@mui/material';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
+import { RenderProps } from '../../../utils/reactTypes';
 const closeIcon = require('../../../assets/images/close.png');
 
-const Render = ({ statement, statementId, describeId, itId }) => {
+const Render = ({ statement, statementId, describeId, itId }: RenderProps) => {
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
@@ -35,7 +36,7 @@ const Render = ({ statement, statementId, describeId, itId }) => {
         <Button onClick={handleClickAddProp} variant='outlined'>
           Add Props
         </Button>
-        <AiOutlineClose id={styles.close} alt='close' onClick={handleClickDeleteRender} />
+        <AiOutlineClose id={styles.close} onClick={handleClickDeleteRender} />
       </div>
       <div className={'props'}>
         {statement.props.length > 0 && (
