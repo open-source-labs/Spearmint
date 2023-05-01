@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import cn from 'classnames';
 import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
 import SvelteTestStatements from '../../TestCase/SvelteTestStatements';
-import CustomInput from '../CustomInput/CustomInput';
 import {
   addRender,
   addAction,
@@ -64,14 +63,6 @@ const SvelteItRenderer = ({
             onClick={deleteItStatementHandleClick}
             className={cn(styles.itClose, 'far fa-window-close')}
           />
-          {/* <CustomInput
-            key={`input-${id}-${i}`}
-            id={id}
-            label={'The component should...'}
-            placeholder={'Button component renders correctly...'}
-            value={itStatements.byId[id].text}
-            handleChange={handleChangeItStatementText}
-          /> */}
           <div id={styles.itInputContainer}>
             <TextField
               key={`input-${id}-${i}`}

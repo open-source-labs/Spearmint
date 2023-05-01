@@ -14,7 +14,7 @@ export interface ReactStatements {
     statements: Statements
   }
   export interface DescribeBlocks {
-    byId: Object;
+    byId: DescribeById;
     allIds: Array<string>;
   }
   export interface ItStatements {
@@ -95,4 +95,11 @@ export interface ReactStatements {
     matcherType?: string,
     matcherValue?: string,
     suggestions?: string[],
+  }
+
+  export interface DescribeById {
+    [key: string]: {
+      id: string,
+      text: string
+    }
   }

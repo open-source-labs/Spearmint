@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
 import ReactTestStatements from '../../TestCase/ReactTestStatements';
-import CustomInput from '../CustomInput/CustomInput';
 import {
   addRender,
   addAction,
@@ -59,14 +58,6 @@ const ItRenderer = ({
             onClick={deleteItStatementHandleClick}
             className={cn(styles.itClose, 'far fa-window-close')}
           />
-          {/* <CustomInput
-            key={`input-${id}-${i}`}
-            id={id}
-            label={'The component should...'}
-            placeholder={'Button component renders correctly...'}
-            value={itStatements.byId[id].text}
-            handleChange={handleChangeItStatementText}
-          /> */}
           <div id={styles.itInputContainer}>
             <TextField
               key={`input-${id}-${i}`}
