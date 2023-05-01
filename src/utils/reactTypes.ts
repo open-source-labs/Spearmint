@@ -63,3 +63,24 @@ export interface ReactStatements {
     componentPath: string;
     componentName: string;
   }
+
+  export interface ReactTestComponentAssertion {
+    describeId: string,
+      itId: string,
+      statementId: string,
+      statement: {
+        id: string,
+        itId: string,
+        describeId: string,
+        type: string,
+        eventType: string,
+        eventValue: string,
+        queryVariant: string,
+        querySelector: string,
+        queryValue: string,
+        isNot: boolean,
+        matcherType: string,
+        matcherValue: string,
+        suggestions: [],
+      },
+  }
