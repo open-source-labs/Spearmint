@@ -96,3 +96,34 @@ export interface ReactStatements {
     matcherValue?: string,
     suggestions?: string[],
   }
+
+  export interface Prop {
+    id: string,
+    statementId: string,
+    propKey: string,
+    propValue: string
+  }
+
+  export interface PropProps {
+    statementId: string,
+    propId: string,
+    propKey: string,
+    propValue: string,
+    dispatchToTestCase: Function,
+    theme: string
+  }
+
+  export interface RenderStatement {
+    id: string,
+    itId: string,
+    describeId: string,
+    type: string,
+    props: Prop[]
+  }
+
+  export interface RenderProps {
+    statement: RenderStatement,
+    statementId: string,
+    describeId: string,
+    itId: string
+  }
