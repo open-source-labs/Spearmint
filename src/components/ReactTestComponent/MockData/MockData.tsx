@@ -14,23 +14,24 @@ import {
 } from '../../../context/actions/mockDataActions';
 import MockDataFieldKey from './MockDataKey';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
+import { MockDataProps } from '../../../utils/mockTypes';
 
 const plusIcon = require('../../../assets/images/plus.png');
 const closeIcon = require('../../../assets/images/close.png');
 
-const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }) => {
+const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }: MockDataProps) => {
   const [{theme}] = useContext(GlobalContext);
-  const handleClickAdd = (e, id) => {
+  const handleClickAdd = (e: React.BaseSyntheticEvent<MouseEvent>, id: number) => {
     e.stopPropagation();
     dispatchToMockData(addMockDataKey(id));
   };
 
-  const handleClickDelete = (e) => {
+  const handleClickDelete = (e: React.BaseSyntheticEvent<MouseEvent>) => {
     e.stopPropagation();
     dispatchToMockData(deleteMockData(mockDatumId));
   };
 
-  const handleClickUpdate = (e) => {
+  const handleClickUpdate = (e: React.BaseSyntheticEvent<MouseEvent>) => {
     e.stopPropagation();
     dispatchToMockData(updateMockDataName(mockDatumId, e.target.value));
   };

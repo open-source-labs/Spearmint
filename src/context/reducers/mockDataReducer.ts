@@ -1,31 +1,7 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/mockDataActions';
 import { Action } from '../../utils/reactTypes';
-
-interface MockDataArrayType {
-  id: number,
-  fieldKeys: Array<number>,
-}
-
-interface MockDataTypes {
-  mockData: Array<MockDataArrayType>,
-  hasMockData: boolean,
-}
-
-// ADDED KEY
-interface KeyType {
-  id: number,
-  fieldKey: string,
-  fieldType: string,
-}
-
-interface MockDatumType {
-  id: number,
-  name: string,
-  fieldKeys: Array<KeyType>,
-  content: string,
-  type: string,
-}
+import { MockDataArrayType, MockDataTypes, KeyType, MockDatumType } from '../../utils/mockTypes';
 
 export const mockDataState: MockDataTypes = {
   mockData: [],
