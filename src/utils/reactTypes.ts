@@ -17,12 +17,21 @@ export interface ReactStatements {
     byId: Object;
     allIds: Array<string>;
   }
+
+  export interface ItById {
+      it0: {
+        id: string;
+        describeId: string
+        text: string
+      }
+  }
+
   export interface ItStatements {
-    byId: Array<string>;
-    allIds: Array<Array<string>>;
+    byId: Object;
+    allIds: allIdsType;
   }
   type allIdsType = {
-    [key: string]: string,
+    [key: string]: Array<string>,
   }
   
   export interface Action {
