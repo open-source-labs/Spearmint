@@ -17,7 +17,7 @@ import { ItStatements, Statements, ItById } from '../../../utils/reactTypes';
 interface ItRendererProps {
   type: string;
   itStatements: ItStatements;
-  describeId: number;
+  describeId: string;
   statements: Statements;
   handleChangeItStatementText: React.ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
   theme: 'light' | 'dark';

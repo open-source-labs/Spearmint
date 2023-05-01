@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Draggable, DraggableProvided} from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
@@ -69,12 +68,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
 
   return (
     <div style={{ maxWidth: '650px' }}>
-      <Draggable draggableId={endpoint.id.toString()} index={index}>
-        {(provided: typeof DraggableProvided) => (
           <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
             id={styles[`endpointmodal${theme}`]}
           >
             <img
@@ -84,7 +78,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
               onClick={handleClickDeleteEndpoint}
             />
             <div id={styles.header}>
-              <img src={dragIcon} alt='drag' />
               <h3>Endpoint</h3>
             </div>
             <div id={styles.groupFlexbox}>
@@ -223,8 +216,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
               </button>
             </div>
           </div>
-        )}
-      </Draggable>
     </div>
   );
 };

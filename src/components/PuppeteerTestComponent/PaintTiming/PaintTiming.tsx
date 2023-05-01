@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import styles from './PaintTiming.module.scss';
-import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import {
   deletePuppeteerTest,
   updatePaintTiming,
@@ -28,12 +27,7 @@ const PaintTiming = ({ paintTiming, index }: { paintTiming: PuppeteerStatements,
   };
 
   return (
-    <Draggable draggableId={paintTiming.id.toString()} index={index}>
-      {(provided:typeof DraggableProvided) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles[`modal${theme}`]}
         >
           <img
@@ -44,7 +38,6 @@ const PaintTiming = ({ paintTiming, index }: { paintTiming: PuppeteerStatements,
           />
 
           <div id={styles.header}>
-            <img src={dragIcon} alt='drag' />
             <h3>Paint Timing</h3>
           </div>
 
@@ -135,8 +128,6 @@ const PaintTiming = ({ paintTiming, index }: { paintTiming: PuppeteerStatements,
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 

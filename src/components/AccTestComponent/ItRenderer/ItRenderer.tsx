@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useContext } from 'react';
 import cn from 'classnames';
-import { Draggable } from 'react-beautiful-dnd';
 import { AccTestCaseContext } from '../../../context/reducers/accTestCaseReducer';
 import CatTagFilter from '../CatTagFilter/CatTagFilter';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -51,16 +50,9 @@ const ItRenderer = ({
   return itStatements.allIds[describeId].map((id: string, i: number) => {
     console.log('ID: ', id);
     console.log('ID IN ITSTATEMENTS: ', itStatements.byId[id]);
-    return (<Draggable
-      draggableId={id}
-      index={i}
-      key={`itRenderer-${id}`}
-    >
-      {(provided) => (
+    return (
+
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles.ItRenderer}
           key={i}
         >
@@ -85,8 +77,7 @@ const ItRenderer = ({
           <hr />
 
         </div>
-      )}
-    </Draggable>)
+    )
   });
 };
 

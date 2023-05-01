@@ -24,7 +24,6 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import Draggable from 'react-draggable';
 import { AiOutlineCloseCircle } from "react-icons/ai"
 import { VscNewFile } from "react-icons/vsc"
 import { Button, TextField, InputAdornment } from '@mui/material';
@@ -221,7 +220,7 @@ if (title === 'New Test') {
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
     >
-      <Draggable id={styles.testModal}>
+      <div id={styles.testModal}>
         <div id={styles.container}>
           <AiOutlineCloseCircle
             id={styles.escapeButton} 
@@ -253,7 +252,7 @@ if (title === 'New Test') {
             </div>
           </div>
         </div>
-      </Draggable>
+      </div>
     </ReactModal>
   );
 }
@@ -268,7 +267,6 @@ if (title === 'New Test') {
       overlayClassName={styles[`modalOverlay${theme}`]}
       ariaHideApp={false}
     >
-      {/* <Draggable> */}
       <div id={styles.containerRun}>
       {/* Modal Title */}
         <div id={styles.title}> 
@@ -386,7 +384,6 @@ if (title === 'New Test') {
         </Accordion>
       </div>
       </div>
-      {/* </Draggable> */}
     </ReactModal>
   );
 };

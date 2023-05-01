@@ -20,7 +20,7 @@ const { REACT_DEVELOPER_TOOLS } = require('electron-devtools-vendor');
 // (python) so maybe not work 
 
 // Comment below require out if you don't want app to reload on code changes
-// require('electron-reloader')(module);
+require('electron-reloader')(module);
 
 // react developer tools for electron in dev mode
 //const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
@@ -282,11 +282,11 @@ app.whenReady()
   .then(app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   }))
-  // .then(() => {
-  //   session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
-  //     .then((name) => console.log(`Added Extension: ${name}`))
-  //     .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
-  // })
+  .then(() => {
+    session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
+      .then((name) => console.log(`Added Extension: ${name}`))
+      .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
+  })
   .catch((err) => console.log(`An error occurred when booting up electron: ${err}`));
 
 
