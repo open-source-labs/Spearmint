@@ -219,19 +219,19 @@ export interface UpdateAsync {
 }
 
 export interface UpdateReducer {
-  id: number;
-  reducerAction: string;
-  itStatement: string;
-  initialState: string;
-  payloadKey: string;
-  payloadValue: any;
-  reducerName: string;
-  typesFileName: string;
-  typesFilePath: string;
-  reducersFileName: string;
-  reducersFilePath: string;
-  expectedKey: string;
-  expectedValue: string;
+  id?: number;
+  reducerAction?: string;
+  itStatement?: string;
+  initialState?: string;
+  payloadKey?: string | null;
+  payloadValue?: any;
+  reducerName?: string;
+  typesFileName?: string;
+  typesFilePath?: string;
+  reducersFileName?: string;
+  reducersFilePath?: string;
+  expectedKey?: string;
+  expectedValue?: string;
 }
 
 export interface UpdateActionsFilePath {

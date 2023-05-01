@@ -14,15 +14,24 @@ export interface ReactStatements {
     statements: Statements
   }
   export interface DescribeBlocks {
-    byId: Object;
+    byId: DescribeById;
     allIds: Array<string>;
   }
+
+  export interface ItById {
+      [key: string]: {
+        id: string;
+        describeId: string
+        text: string
+      }
+  }
+
   export interface ItStatements {
-    byId: Object;
+    byId: ItById;
     allIds: allIdsType;
   }
   type allIdsType = {
-    [key: string]: string,
+    [key: string]: Array<string>,
   }
   
   export interface Action {
@@ -74,4 +83,63 @@ export interface ReactStatements {
         matcherValue: string,
         suggestions: [],
       },
+  }
+
+  export interface UpdateActionProps {
+    id: string,
+    eventType?: string,
+    eventValue?: string,
+    queryVariant?: string,
+    querySelector?: string,
+    queryValue?: string,
+    suggestions?: string[]
+  }
+
+  export interface UpdateAssertionProps {
+    id: string,
+    queryVariant?: string,
+    querySelector?: string,
+    queryValue?: string,
+    isNot?: boolean,
+    matcherType?: string,
+    matcherValue?: string,
+    suggestions?: string[],
+  }
+
+  export interface Prop {
+    id: string,
+    statementId: string,
+    propKey: string,
+    propValue: string
+  }
+
+  export interface PropProps {
+    statementId: string,
+    propId: string,
+    propKey: string,
+    propValue: string,
+    dispatchToTestCase: Function,
+    theme: string
+  }
+
+  export interface RenderStatement {
+    id: string,
+    itId: string,
+    describeId: string,
+    type: string,
+    props: Prop[]
+  }
+
+  export interface RenderProps {
+    statement: RenderStatement,
+    statementId: string,
+    describeId: string,
+    itId: string
+   }
+
+  export interface DescribeById {
+    [key: string]: {
+      id: string,
+      text: string
+    }
   }

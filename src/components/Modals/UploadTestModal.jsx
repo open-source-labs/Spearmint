@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
-import Draggable from 'react-draggable';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
@@ -89,7 +88,6 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
       ariaHideApp={false}
       style={modalStyles}
     >
-      <Draggable>
         <div id={styles.container}>
           <div id={styles.title}>
             <p>Save Test Case</p>
@@ -108,7 +106,6 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
             </button>
           </div>
         </div>
-      </Draggable>
     </ReactModal>
   );
 };

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
-import { ReactTestCaseTypes, Action } from '../../utils/ReactTypes';
+import { ReactTestCaseTypes, Action } from '../../utils/reactTypes';
 
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,

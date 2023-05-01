@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useEffect } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './HookUpdates.module.scss';
 import { HooksTestCaseContext } from '../../../context/reducers/hooksTestCaseReducer';
 import {
@@ -45,13 +44,9 @@ const HookUpdates = ({ hookUpdates, index }) => {
     }
   }, []);
   return (
-    <Draggable draggableId={hookUpdates.id.toString()} index={index}>
-      {(provided) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
           id={styles[`hooksmodal${theme}`]}
-          {...provided.dragHandleProps}
+          index={index}
         >
           <img
             src={closeIcon}
@@ -60,7 +55,6 @@ const HookUpdates = ({ hookUpdates, index }) => {
             onClick={handleClickDeleteHookUpdates}
           />
           <div id={styles.hookUpdatesHeader}>
-            <img src={dragIcon} alt='drag' />
             <h3>Hooks</h3>
           </div>
           <div id={styles.hooksFlexBox}>
@@ -129,8 +123,6 @@ const HookUpdates = ({ hookUpdates, index }) => {
             </Button>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 

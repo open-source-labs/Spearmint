@@ -22,8 +22,7 @@ type FieldTypes = (
   | 'matcherValue'
 )
 
-const Assertion = (props: ReactTestComponentAssertion): JSX.Element => {
-  const { statement, describeId, itId, statementId } = props;
+const Assertion = ({ statement, describeId, itId, statementId }: ReactTestComponentAssertion ): JSX.Element => {
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
