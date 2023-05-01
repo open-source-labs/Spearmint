@@ -16,7 +16,8 @@ import { matcherTypesList} from '../TypesList/matcherTypesList';
  * 
  * @returns { JSX.Element } Returns the AutoComplete react component
  */
-const AutoComplete = ({ statement, statementType, dispatchToTestCase, type = 'react' }) => {
+const AutoComplete = (props) => {
+  const { statement, statementType, dispatchToTestCase, type = 'react' } = props;
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
 

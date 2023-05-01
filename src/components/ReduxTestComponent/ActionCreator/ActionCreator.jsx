@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './ActionCreator.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import {
@@ -8,7 +7,6 @@ import {
 } from '../../../context/actions/reduxTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const ActionCreator = ({ actionCreator, index }) => {
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
@@ -24,12 +22,7 @@ const ActionCreator = ({ actionCreator, index }) => {
   };
 
   return (
-    <Draggable draggableId={actionCreator.id.toString()} index={index}>
-      {(provided) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles.actionCreator}
         >
           <img
@@ -39,7 +32,6 @@ const ActionCreator = ({ actionCreator, index }) => {
             onClick={handleClickDeleteActionCreator}
           />
           <div id={styles.actionCreatorHeader}>
-            <img src={dragIcon} alt='drag' />
             <h3>Action Creator</h3>
           </div>
 
@@ -109,8 +101,6 @@ const ActionCreator = ({ actionCreator, index }) => {
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 

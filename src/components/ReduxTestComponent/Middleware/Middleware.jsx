@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './Middleware.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteMiddleware, updateMiddleware } from '../../../context/actions/reduxTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Middleware = ({ middleware, index }) => {
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
@@ -21,12 +19,7 @@ const Middleware = ({ middleware, index }) => {
   };
 
   return (
-    <Draggable draggableId={middleware.id.toString()} index={index}>
-      {(provided) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles.middleware}
         >
           <img
@@ -37,7 +30,6 @@ const Middleware = ({ middleware, index }) => {
           />
 
           <div id={styles.middlewareHeader}>
-            <img src={dragIcon} alt='drag' />
             <h3>Middleware</h3>
           </div>
 
@@ -115,8 +107,6 @@ const Middleware = ({ middleware, index }) => {
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 

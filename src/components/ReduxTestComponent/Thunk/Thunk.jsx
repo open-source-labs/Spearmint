@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './Thunk.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteAsync, updateAsync } from '../../../context/actions/reduxTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Async = ({ async, index }) => {
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
@@ -21,18 +19,12 @@ const Async = ({ async, index }) => {
   };
 
   return (
-    <Draggable draggableId={async.id.toString()} index={index}>
-      {(provided) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles.modal}
         >
           <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteAsync} />
 
           <div id={styles.header}>
-            <img src={dragIcon} alt='drag' />
             <h3>Asynchronous Action Creator</h3>
           </div>
           <div id={styles.groupFlexbox}>
@@ -161,8 +153,6 @@ const Async = ({ async, index }) => {
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 

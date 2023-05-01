@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
-import { Draggable } from 'react-beautiful-dnd';
 import ReactTestStatements from '../../TestCase/ReactTestStatements';
 import {
   addRender,
@@ -49,17 +48,8 @@ const ItRenderer = ({
   };
 
   return itStatements.allIds[describeId].map((id, i) => (
-    <Draggable
-      key={id}
-      draggableId={id}
-      index={i}
-    >
-      {(provided) => (
         <div
           id={styles[`ItRenderer${theme}`]}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
           <AiOutlineClose
             tabIndex={0}
@@ -106,8 +96,6 @@ const ItRenderer = ({
             )}
           </div>
         </div>
-      )}
-    </Draggable>
   ));
 };
 

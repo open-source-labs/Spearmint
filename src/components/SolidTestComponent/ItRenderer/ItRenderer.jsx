@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
 import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
-import { Draggable } from 'react-beautiful-dnd';
 import SolidTestStatements from '../../TestCase/SolidTestStatements';
 import {
   addRender,
@@ -49,17 +48,13 @@ const SolidItRenderer = ({
   };
 
   return itStatements.allIds[describeId].map((id, i) => (
-    <Draggable
+    <div
       key={id}
       draggableId={id}
       index={i}
     >
-      {(provided) => (
         <div
           id={styles[`ItRenderer${theme}`]}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
           <AiOutlineClose
             tabIndex={0}
@@ -106,8 +101,7 @@ const SolidItRenderer = ({
             )}
           </div>
         </div>
-      )}
-    </Draggable>
+    </div>
   ));
 };
 

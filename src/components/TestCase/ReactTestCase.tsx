@@ -23,7 +23,7 @@ import {
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@mui/material';
-import { ReactStatements } from '../../utils/ReactTypes';
+import { ReactStatements } from '../../utils/reactTypes';
 
 const ReactTestCase = ({ filterFileType } : { filterFileType: Function}) => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
@@ -53,7 +53,7 @@ const ReactTestCase = ({ filterFileType } : { filterFileType: Function}) => {
     dispatchToReactTestCase(updateItStatementText(text, itId));
   };
 
-  const reorder = (list: Array<ReactStatements>, startIndex: number, endIndex: number) => {
+  const reorder = (list: string[], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
