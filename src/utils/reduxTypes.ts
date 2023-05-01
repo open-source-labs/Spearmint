@@ -1,3 +1,5 @@
+import { CSSProperties, LegacyRef } from "react";
+
 // ----------------Action types--------------------
 export const actionTypes = {
   TOGGLE_REDUX: 'TOGGLE_REDUX',
@@ -136,6 +138,38 @@ interface ResetTestAction {
   payload?: null;
 }
 
+export interface ReduxActionCreator {
+  actionCreator: { id: number;
+  actionsFileName: string;
+  filePath: string;
+  typesFileName: string;
+  typesFilePath: string;
+  type?: string;
+  actionCreatorFunc: string;
+  actionType: string;
+  payloadKey: string;
+  payloadType: string;
+  it: string;},
+  index: Number,
+}
+
+export interface ReduxMiddleware {
+  middleware: {
+    id: number;
+    field: string;
+    eventType: string;
+    eventValue: string;
+    queryType: string;
+    queryVariant: string;
+    querySelector: string;
+    queryValue: string;
+    queryFunction: string;
+    suggestions: string;
+  };
+  index: number;
+}
+
+
 // -------------Reducer Types--------------
 
 export interface ReduxTestCaseState {
@@ -238,6 +272,7 @@ interface Middleware {
   queryFunction?: string;
   suggestions?: string;
 }
+
 interface ActionCreator {
   id?: number;
   actionsFileName?: string;
@@ -313,3 +348,4 @@ export type ReduxActionTypes =
   | UpdateMiddlewaresFilePathAction
   | CreateNewReduxTestAction
   | ResetTestAction
+  | ReduxActionCreator
