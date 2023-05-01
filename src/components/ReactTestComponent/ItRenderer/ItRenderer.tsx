@@ -12,7 +12,7 @@ import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseRed
 import styles from './ItRenderer.module.scss';
 import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ItStatements, Statements, ItById } from '../../../utils/ReactTypes';
+import { ItStatements, Statements, ItById } from '../../../utils/reactTypes';
 
 interface ItRendererProps {
   type: string;

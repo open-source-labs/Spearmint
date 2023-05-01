@@ -19,7 +19,7 @@ export interface ReactStatements {
   }
 
   export interface ItById {
-      it0: {
+      [key: string]: {
         id: string;
         describeId: string
         text: string
@@ -27,7 +27,7 @@ export interface ReactStatements {
   }
 
   export interface ItStatements {
-    byId: Object;
+    byId: ItById;
     allIds: allIdsType;
   }
   type allIdsType = {
