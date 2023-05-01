@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import ReactModal from 'react-modal';
-import Draggable from 'react-draggable';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import withStyles from '@mui/styles/withStyles';
 import {
@@ -177,7 +176,6 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
         ariaHideApp={false}
         overlayClassName={styles[`modalOverlay${theme}`]}
       >
-        <Draggable>
           <div id={styles.container}>
             <AiOutlineCloseCircle
               id={styles.escapeButton} 
@@ -227,7 +225,6 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
               </div>
             )}
           </div>
-        </Draggable>
       </ReactModal>
     </div>
   );
