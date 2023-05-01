@@ -3,14 +3,43 @@ import { Draggable } from 'react-beautiful-dnd';
 import styles from './Reducer.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteReducer, updateReducer } from '../../../context/actions/reduxTestCaseActions';
+import { ReduxStatements } from '../../../utils/reduxTypes';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-const Reducer = ({ reducer, index }) => {
-  const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
+interface ReducerType {
+  reducer: {
+    id: number;
+    itStatement: string,
+    reducerName: string,
+    initialState: string,
+    reducerAction: string,
+    payloadKey: string,
+    payloadValue: string,
+    expectedKey: string,
+    expectedValue: string,
+  },
+  index: number,
+}
 
-  const handleChangeReducerFields = (e, field) => {
+type FieldTypes = (
+   'itStatement'
+   | 'reducerName'
+   | 'initialState'
+   | 'reducerAction'
+   | 'payloadKey'
+   | 'payloadValue'
+   | 'expectedKey'
+   | 'expectedValue'
+)
+
+
+
+const Reducer = ({ reducer, index }: ReducerType) => {
+  const [, dispatchToReduxTestCase]: (Function)[] = useContext(ReduxTestCaseContext);
+
+  const handleChangeReducerFields = (e: React.ChangeEvent<HTMLInputElement>, field: FieldTypes) => {
     // reducer is a single test statment
     let updatedReducer = { ...reducer };
     // adding key/value pair to test statement
@@ -19,7 +48,7 @@ const Reducer = ({ reducer, index }) => {
     dispatchToReduxTestCase(updateReducer(updatedReducer));
   };
 
-  const handleClickDeleteReducer = (e) => {
+  const handleClickDeleteReducer = () => {
     dispatchToReduxTestCase(deleteReducer(reducer.id));
   };
 
