@@ -54,3 +54,24 @@ export interface ReactStatements {
     componentPath: string;
     componentName: string;
   }
+
+  export interface UpdateActionProps {
+    id: string,
+    eventType?: string,
+    eventValue?: string,
+    queryVariant?: string,
+    querySelector?: string,
+    queryValue?: string,
+    suggestions?: string[]
+  }
+
+  export interface UpdateAssertionProps {
+    id: string,
+    queryVariant?: string,
+    querySelector?: string,
+    queryValue?: string,
+    isNot?: boolean,
+    matcherType?: string,
+    matcherValue?: string,
+    suggestions?: string[],
+  }

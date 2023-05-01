@@ -55,7 +55,7 @@ const Action = ({ statement, statementId, describeId, itId }) => {
             id='eventType'
             value={statement.eventType}
             onChange={(e) => handleChangeActionFields(e, 'eventType')}
-            placeholder='eg. click, change, keypress'
+            placeholder='eg. click, change, keyPress'
           />
         </div>
         <div id={styles.eventTypeVal}>

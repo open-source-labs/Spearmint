@@ -1,6 +1,8 @@
 
 /* ------------------------------ Action Types ------------------------------ */
 
+import { UpdateActionProps, UpdateAssertionProps } from "../../utils/ReactTypes";
+
 export const actionTypes = {
   ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',
   DELETE_DESCRIBE_BLOCK: 'DELETE_DESCRIBE_BLOCK',
@@ -43,54 +45,55 @@ export const addDescribeBlock = () => {
   };
 };
 
-export const deleteDescribeBlock = (describeId) => {
+export const deleteDescribeBlock = (describeId: string) => {
   return {
     type: actionTypes.DELETE_DESCRIBE_BLOCK,
     describeId,
   };
 };
 
-export const updateDescribeText = (text, describeId) => ({
+export const updateDescribeText = (text: string, describeId: string) => ({
   type: actionTypes.UPDATE_DESCRIBE_TEXT,
   text,
   describeId,
 });
 
-export const updateDescribeOrder = (reorderedDescribe) => ({
+export const updateDescribeOrder = (reorderedDescribe: string[]) => ({
   type: actionTypes.UPDATE_DESCRIBE_ORDER,
   reorderedDescribe,
 });
 
-export const addItstatement = (describeId) => ({
+// not being imported anywhere?
+export const addItstatement = (describeId: string) => ({
   type: actionTypes.ADD_ITSTATEMENT,
   describeId,
 });
 
-export const deleteItStatement = (describeId, itId) => ({
+export const deleteItStatement = (describeId: string, itId: string) => ({
   type: actionTypes.DELETE_ITSTATEMENT,
   describeId,
   itId,
 });
 
-export const updateItStatementText = (text, itId) => ({
+export const updateItStatementText = (text: string, itId: string) => ({
   type: actionTypes.UPDATE_ITSTATEMENT_TEXT,
   itId,
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt, describeId) => ({
+export const updateItStatementOrder = (reorderedIt: string[], describeId: string) => ({
   type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
   reorderedIt,
   describeId,
 });
 
-export const addAction = (describeId, itId) => ({
+export const addAction = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_ACTION,
   describeId,
   itId,
 });
 
-export const deleteAction = (statementId) => ({
+export const deleteAction = (statementId: string) => ({
   type: actionTypes.DELETE_ACTION,
   statementId,
 });
@@ -103,7 +106,7 @@ export const updateAction = ({
   querySelector,
   queryValue,
   suggestions,
-}) => ({
+}: UpdateActionProps) => ({
   type: actionTypes.UPDATE_ACTION,
   id,
   eventType,
@@ -114,13 +117,13 @@ export const updateAction = ({
   suggestions,
 });
 
-export const addAssertion = (describeId, itId) => ({
+export const addAssertion = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_ASSERTION,
   describeId,
   itId,
 });
 
-export const deleteAssertion = (statementId) => ({
+export const deleteAssertion = (statementId: string) => ({
   type: actionTypes.DELETE_ASSERTION,
   statementId,
 });
@@ -134,7 +137,7 @@ export const updateAssertion = ({
   matcherType,
   matcherValue,
   suggestions,
-}) => ({
+}: UpdateAssertionProps) => ({
   type: actionTypes.UPDATE_ASSERTION,
   id,
   queryVariant,
@@ -146,29 +149,29 @@ export const updateAssertion = ({
   suggestions,
 });
 
-export const addRender = (describeId, itId) => ({
+export const addRender = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_RENDER,
   describeId,
   itId,
 });
 
-export const deleteRender = (statementId) => ({
+export const deleteRender = (statementId: string) => ({
   type: actionTypes.DELETE_RENDER,
   statementId,
 });
 
-export const updateRenderComponent = (componentName, filePath) => ({
+export const updateRenderComponent = (componentName: string, filePath: string) => ({
   type: actionTypes.UPDATE_RENDER_COMPONENT,
   componentName,
   filePath,
 });
 
-export const addProp = (statementId) => ({
+export const addProp = (statementId: string) => ({
   type: actionTypes.ADD_PROP,
   statementId,
 });
 
-export const deleteProp = (statementId, id) => {
+export const deleteProp = (statementId: string, id: string) => {
   return {
     type: actionTypes.DELETE_PROP,
     id,
@@ -176,7 +179,7 @@ export const deleteProp = (statementId, id) => {
   };
 };
 
-export const updateProp = (statementId, id, propKey, propValue) => ({
+export const updateProp = (statementId: string, id: string, propKey: string, propValue: string) => ({
   type: actionTypes.UPDATE_PROP,
   id,
   statementId,
@@ -196,20 +199,21 @@ export const closeInfoModal = () => {
   return { type: actionTypes.CLOSE_INFO_MODAL };
 };
 
-export const reactReplaceTest = (testState) => ({
-  type: actionTypes.REPLACE_TEST,
-  testState,
-});
+// -------- NOT IMPORTED IN ANY FILES ---------------
+// export const reactReplaceTest = (testState) => ({
+//   type: actionTypes.REPLACE_TEST,
+//   testState,
+// });
 
-export const svelteReplaceTest = (testState) => ({
-  type: actionTypes.REPLACE_TEST,
-  testState,
-});
+// export const svelteReplaceTest = (testState) => ({
+//   type: actionTypes.REPLACE_TEST,
+//   testState,
+// });
 
-export const vueReplaceTest = (testState) => ({
-  type: actionTypes.REPLACE_TEST,
-  testState,
-});
+// export const vueReplaceTest = (testState) => ({
+//   type: actionTypes.REPLACE_TEST,
+//   testState,
+// });
 
 export const resetTests = () => ({
   type: actionTypes.RESET_TESTS
