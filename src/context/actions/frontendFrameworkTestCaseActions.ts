@@ -1,7 +1,7 @@
 
 /* ------------------------------ Action Types ------------------------------ */
 
-import { UpdateActionProps, UpdateAssertionProps } from "../../utils/ReactTypes";
+import { UpdateActionProps, UpdateAssertionProps } from "../../utils/reactTypes";
 
 export const actionTypes = {
   ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',

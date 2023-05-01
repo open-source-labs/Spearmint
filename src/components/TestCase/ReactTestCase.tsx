@@ -23,7 +23,7 @@ import {
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@mui/material';
-import { ReactStatements } from '../../utils/ReactTypes';
+import { ReactStatements } from '../../utils/reactTypes';
 
 const ReactTestCase = ({ filterFileType } : { filterFileType: Function}) => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
