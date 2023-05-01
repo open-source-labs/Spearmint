@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './Middleware.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteMiddleware, updateMiddleware } from '../../../context/actions/reduxTestCaseActions';
 import { ReduxMiddleware } from '../../../utils/reduxTypes';
 
 const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const Middleware = (props: ReduxMiddleware) => {
   const { middleware, index } = props;
@@ -24,12 +22,7 @@ const Middleware = (props: ReduxMiddleware) => {
   };
 
   return (
-    <Draggable draggableId={middleware.id.toString()} index={index}>
-      {(provided) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles.middleware}
         >
           <img
@@ -40,7 +33,6 @@ const Middleware = (props: ReduxMiddleware) => {
           />
 
           <div id={styles.middlewareHeader}>
-            <img src={dragIcon} alt='drag' />
             <h3>Middleware</h3>
           </div>
 
@@ -118,8 +110,6 @@ const Middleware = (props: ReduxMiddleware) => {
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 

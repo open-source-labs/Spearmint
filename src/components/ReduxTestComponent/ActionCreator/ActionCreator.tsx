@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './ActionCreator.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import {
   deleteActionCreator,
   updateActionCreator,
 } from '../../../context/actions/reduxTestCaseActions';
-import { ReduxActionCreator, DraggableEl } from '../../../utils/reduxTypes';
+import { ReduxActionCreator } from '../../../utils/reduxTypes';
 const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 const ActionCreator = (props: ReduxActionCreator): JSX.Element => {
   const { actionCreator, index } = props;
@@ -27,12 +25,7 @@ const ActionCreator = (props: ReduxActionCreator): JSX.Element => {
   };
 
   return (
-    <Draggable draggableId={actionCreator.id.toString()} index={index}>
-      {(provided: DraggableEl) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles.actionCreator}
         >
           <img
@@ -42,7 +35,6 @@ const ActionCreator = (props: ReduxActionCreator): JSX.Element => {
             onClick={handleClickDeleteActionCreator}
           />
           <div id={styles.actionCreatorHeader}>
-            <img src={dragIcon} alt='drag' />
             <h3>Action Creator</h3>
           </div>
 
@@ -112,8 +104,6 @@ const ActionCreator = (props: ReduxActionCreator): JSX.Element => {
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 
