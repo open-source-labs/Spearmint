@@ -2,19 +2,22 @@ import React, { useContext } from 'react';
 import styles from './Middleware.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteMiddleware, updateMiddleware } from '../../../context/actions/reduxTestCaseActions';
+import { ReduxMiddleware } from '../../../utils/reduxTypes';
 
 const closeIcon = require('../../../assets/images/close.png');
 
-const Middleware = ({ middleware, index }) => {
+const Middleware = (props: ReduxMiddleware) => {
+  const { middleware, index } = props;
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
-  const handleChangeMiddlewareFields = (e, field) => {
+  const handleChangeMiddlewareFields = (e: (React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>), 
+  field: ('queryValue' | 'queryVariant' | 'querySelector' | 'queryType')) => {
     let updatedMiddleware = { ...middleware };
     updatedMiddleware[field] = e.target.value;
     dispatchToReduxTestCase(updateMiddleware(updatedMiddleware));
   };
 
-  const handleClickDeleteMiddleware = (e) => {
+  const handleClickDeleteMiddleware = (e: React.MouseEvent) => {
     dispatchToReduxTestCase(deleteMiddleware(middleware.id));
   };
 
