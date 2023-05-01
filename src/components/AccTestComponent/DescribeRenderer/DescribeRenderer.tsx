@@ -67,18 +67,11 @@ const DescribeRenderer = ({
   };
 
   return describeBlocks.allIds.map((id: string, i: number) => (
-    <Draggable
+    <div
       key={`describeBlock-${id}`}
-      draggableId={id}
       index={i}
       type="describe"
     >
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
           <div id={styles.describeBlock} key={i}>
             <label htmlFor="describe-label" className={styles.describeLabel}>
               Describe Block
@@ -104,16 +97,7 @@ const DescribeRenderer = ({
             <p className={styles.describeStatement}>{describeBlocks.byId[id].text}</p>
             <div className={styles.separator} />
 
-            <Droppable
-              droppableId={"droppableAccIt" + id}
-              type={id}
-              key={`droppable-${id}-${i}`}
-            >
-              {(innerProvided) => (
-                <div
-                  ref={innerProvided.innerRef}
-                  {...innerProvided.droppableProps}
-                >
+              
                   <ItRenderer
                     type={type}
                     key={`it-${id}-${i}`}
@@ -122,10 +106,6 @@ const DescribeRenderer = ({
                     updateItStatementText={updateItStatementText}
                     updateItCatTag={updateItCatTag}
                   />
-                  {innerProvided.placeholder}
-                </div>
-              )}
-            </Droppable>
 
             <div className={styles.buttonContainer}>
               <div>
@@ -136,8 +116,6 @@ const DescribeRenderer = ({
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   ));
 };
 
