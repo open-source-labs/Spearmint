@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './Reducer.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteReducer, updateReducer } from '../../../context/actions/reduxTestCaseActions';
@@ -53,12 +52,7 @@ const Reducer = ({ reducer, index }: ReducerType) => {
   };
 
   return (
-    <Draggable draggableId={reducer.id.toString()} index={index}>
-      {(provided) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles.reducer}
         >
           <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteReducer} />
@@ -148,8 +142,6 @@ const Reducer = ({ reducer, index }: ReducerType) => {
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 
