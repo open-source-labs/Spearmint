@@ -1,5 +1,6 @@
 import { createContext } from 'react';
-import { HooksTestCaseState, Assertion, Action, Hooks, Callback } from '../../utils/hooksTypes';
+import { actionTypes } from '../actions/hooksTestCaseActions';
+import { HooksTestCaseState, Assertion, Action, Hooks, Callback, HooksAction } from '../../utils/hooksTypes';
 
 const newAssertion: Assertion = {
   id: 0,
@@ -63,7 +64,7 @@ export const hooksTestCaseState: HooksTestCaseState = {
   hookFilePath: '',
 };
 
-const deepCopy = (hooksStatements: Hooks[]) => {
+const deepCopy = (hooksStatements: Hooks[]): Hooks[] => {
   function copyAssertions(array: Assertion[]) {
     const copy: Assertion[] = array.map((el) => {
       return { ...el };
@@ -89,24 +90,26 @@ const deepCopy = (hooksStatements: Hooks[]) => {
   return fullCopy;
 };
 
-export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAction) => {
+// used to be
+// export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAction) => {
+export const hooksTestCaseReducer = (state: HooksTestCaseState, action: Action) => {
   Object.freeze(state);
-  let hooksStatements = [...state.hooksStatements];
+  let hooksStatements: Hooks[] = [...state.hooksStatements];
 
   switch (action.type) {
     
-    case 'RESET_TESTS': {
+    case actionTypes.RESET_TESTS: {
       return hooksTestCaseState;
     }
   
-    case 'UPDATE_HOOKS_TEST_STATEMENT': {
+    case actionTypes.UPDATE_HOOKS_TEST_STATEMENT: {
       return {
         ...state,
         hooksTestStatement: action.hooksTestStatement,
       };
     }
 
-    case 'ADD_CONTEXT':
+    case actionTypes.ADD_CONTEXT: {
       if (hooksStatements.length === 0) {
         return {
           ...state,
@@ -123,37 +126,42 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         ...state,
         hooksStatements,
       };
-    case 'DELETE_CONTEXT':
+    }
+
+    case actionTypes.DELETE_CONTEXT: {
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         hooksStatements,
       };
+    }
 
-    case 'UPDATE_CONTEXT':
-      hooksStatements = hooksStatements.map((statement) => {
-        if (statement.id === action.id) {
-          return {
-            ...statement,
-            queryVariant: action.queryVariant,
-            querySelector: action.querySelector,
-            queryValue: action.queryValue,
-            values: action.values,
-            textNode: action.textNodes,
-            testName: action.testName,
-            providerComponent: action.providerComponent,
-            consumerComponent: action.consumerComponent,
-            context: action.context,
-          };
-        }
-        return statement;
-      });
-      return {
-        ...state,
-        hooksStatements,
-      };
+    // >>>>>>>>> CURRENTLY NOT USED <<<<<<<<
+    // case actionTypes.UPDATE_CONTEXT: {
+    //   hooksStatements = hooksStatements.map((statement) => {
+    //     if (statement.id === action.id) {
+    //       return {
+    //         ...statement,
+    //         queryVariant: action.queryVariant,
+    //         querySelector: action.querySelector,
+    //         queryValue: action.queryValue,
+    //         values: action.values,
+    //         textNode: action.textNodes,
+    //         testName: action.testName,
+    //         providerComponent: action.providerComponent,
+    //         consumerComponent: action.consumerComponent,
+    //         context: action.context,
+    //       };
+    //     }
+    //     return statement;
+    //   });
+    //   return {
+    //     ...state,
+    //     hooksStatements,
+    //   };
+    // }
 
-    case 'ADD_HOOK_UPDATES':
+    case actionTypes.ADD_HOOK_UPDATES: {
       if (hooksStatements.length === 0) {
         return {
           ...state,
@@ -171,26 +179,32 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         ...state,
         hooksStatements,
       };
+    }
 
-    case 'DELETE_HOOK_UPDATES':
+    case actionTypes.DELETE_HOOK_UPDATES: {
       hooksStatements = hooksStatements.filter((statement) => statement.id !== action.id);
       return {
         ...state,
         hooksStatements,
       };
+    }
 
-    case 'UPDATE_HOOK_UPDATES':
+    case actionTypes.UPDATE_HOOK_UPDATES: {
       let newStatement = hooksStatements.find((statement) => {
         return statement.id === action.id;
       });
-      Object.assign(newStatement, action, {
-        type: 'hooks',
-      });
+      if (newStatement !== undefined) {
+        Object.assign(newStatement, action, {
+          type: 'hooks',
+        });
+      }
       return {
         ...state,
         hooksStatements,
       };
-    case 'UPDATE_HOOKS_FILEPATH':
+    }
+
+    case actionTypes.UPDATE_HOOKS_FILEPATH: {
       hooksStatements = hooksStatements.map((statement) => {
         return {
           ...statement,
@@ -202,7 +216,9 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         ...state,
         hooksStatements,
       };
-    case 'UPDATE_CONTEXT_FILEPATH':
+    }
+
+    case actionTypes.UPDATE_CONTEXT_FILEPATH: {
       hooksStatements = hooksStatements.map((statement) => {
         if (statement.type === 'context') {
           return {
@@ -217,32 +233,41 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         ...state,
         hooksStatements,
       };
+    }
 
-    case 'CREATE_NEW_HOOKS_TEST':
+    case actionTypes.CREATE_NEW_HOOKS_TEST: {
       return {
         modalOpen: false,
         hooksTestStatement: '',
         hooksStatements: [{ ...newHooks, assertions: [{ ...newAssertion }] }],
       };
-    case 'UPDATE_STATEMENTS_ORDER': {
-      const newHooksStatements = [...action.draggableStatements];
-      return {
-        ...state,
-        hooksStatements: newHooksStatements,
-      };
     }
-    case 'OPEN_INFO_MODAL':
+
+    case actionTypes.UPDATE_STATEMENTS_ORDER: {
+      if (action.draggableStatements) {
+        const newHooksStatements = [...action.draggableStatements];
+        return {
+          ...state,
+          hooksStatements: newHooksStatements,
+        };
+      }
+    }
+
+    case actionTypes.OPEN_INFO_MODAL: {
       return {
         ...state,
         modalOpen: true,
       };
-    case 'CLOSE_INFO_MODAL':
+    }
+
+    case actionTypes.CLOSE_INFO_MODAL: {
       return {
         ...state,
         modalOpen: false,
       };
+    }
 
-    case 'ADD_ASSERTION':
+    case actionTypes.ADD_ASSERTION: {
       hooksStatements[action.index as number].assertions.push({
         id: hooksStatements[hooksStatements.length - 1].id + 1,
         expectedState: '',
@@ -254,20 +279,25 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         ...state,
         hooksStatements: deepCopy(hooksStatements),
       };
-    case 'DELETE_ASSERTION':
+    }
+
+    case actionTypes.DELETE_ASSERTION: {
       hooksStatements[action.index as number].assertions.splice(action.id!, 1);
       return {
         ...state,
         hooksStatements: deepCopy(hooksStatements),
       };
-    case 'UPDATE_ASSERTION':
+    }
+
+    case actionTypes.UPDATE_ASSERTION: {
       hooksStatements[action.index as number].assertions[action.id as number] = action.assertion!;
       return {
         ...state,
         hooksStatements: deepCopy(hooksStatements),
       };
+    }
 
-    case 'ADD_CALLBACKFUNC':
+    case actionTypes.ADD_CALLBACKFUNC: {
       hooksStatements[action.index as number].callbackFunc.push({
         id: hooksStatements[hooksStatements.length - 1].id + 1,
         callbackFunc: '',
@@ -276,29 +306,39 @@ export const hooksTestCaseReducer = (state: HooksTestCaseState, action: HooksAct
         ...state,
         hooksStatements: deepCopy(hooksStatements),
       };
-    case 'DELETE_CALLBACKFUNC':
+    }
+
+    case actionTypes.DELETE_CALLBACKFUNC: {
       hooksStatements[action.index as number].callbackFunc.splice(action.id!, 1);
       return {
         ...state,
         hooksStatements: deepCopy(hooksStatements),
       };
-    case 'UPDATE_CALLBACKFUNC':
+    }
+
+    case actionTypes.UPDATE_CALLBACKFUNC: {
       hooksStatements[action.index as number].callbackFunc[
         action.id as number
-      ] = action.callbackFunc!;
+      ] = action.callback!;
       return {
         ...state,
         hooksStatements: deepCopy(hooksStatements),
       };
-    case 'TOGGLE_TYPEOF':
-      hooksStatements[action.index as number].post = !hooksStatements[action.index as number].post;
-      return {
-        ...state,
-        hooksStatements,
-      };
-    case 'REPLACE_TEST': {
+    }
+
+    // >>>>>>>>> CURRENTLY NOT USED <<<<<<<<
+    // case actionTypes.TOGGLE_TYPEOF: {
+    //   hooksStatements[action.index as number].post = !hooksStatements[action.index as number].post;
+    //   return {
+    //     ...state,
+    //     hooksStatements,
+    //   };
+    // }
+
+    case actionTypes.REPLACE_TEST: {
       return action.testState;
     }
+
     default:
       return state;
   }

@@ -1,4 +1,4 @@
-import { HooksStatements } from '../../utils/hooksTypes';
+import { Assertion, Callback, Hooks } from '../../utils/hooksTypes';
 
 export const actionTypes = {
   TOGGLE_HOOKS: 'TOGGLE_HOOKS',
@@ -44,7 +44,7 @@ export const deleteHookUpdates = (id: number) => ({
   id,
 });
 
-export const updateHookUpdates = (hooksUpdates: object) => ({
+export const updateHookUpdates = (hooksUpdates: Hooks) => ({
   ...hooksUpdates,
   type: actionTypes.UPDATE_HOOK_UPDATES,
 });
@@ -59,7 +59,7 @@ export const createNewHooksTest = () => ({
   type: actionTypes.CREATE_NEW_HOOKS_TEST,
 });
 
-export const updateStatementsOrder = (draggableStatements: Array<HooksStatements>) => ({
+export const updateStatementsOrder = (draggableStatements: Hooks[]) => ({
   type: actionTypes.UPDATE_STATEMENTS_ORDER,
   draggableStatements,
 });

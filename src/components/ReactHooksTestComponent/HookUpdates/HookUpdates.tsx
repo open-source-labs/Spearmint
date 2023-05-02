@@ -11,8 +11,8 @@ import HooksAssertion from '../HooksAssertion';
 import HooksCallback from '../HooksCallback';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { Button } from '@mui/material';
-import { HookUpdatesProps } from '../../../utils/hooksTypes';
-import { Assertion } from '../../../utils/reactTypes';
+import { Callback, HookUpdatesProps } from '../../../utils/hooksTypes';
+import { Assertion } from '../../../utils/hooksTypes';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -40,9 +40,9 @@ const HookUpdates = ({ hookUpdates, index }: HookUpdatesProps): JSX.Element => {
     dispatchToHooksTestCase(addCallbackFunc(index));
   };
 
+  // useEffect and useRef used to focus user to the test description field after creating a new hook test
   const testDescription = useRef<HTMLInputElement>(null);
 
-  // useEffect used to focus user to the test description field after creating a new hook test
   useEffect(() => {
     if (testDescription && testDescription.current) {
       testDescription.current.focus();
@@ -107,7 +107,7 @@ const HookUpdates = ({ hookUpdates, index }: HookUpdatesProps): JSX.Element => {
               />
             </div>
           </div>
-          {hookUpdates.callbackFunc.map((callbackFunc: Function, i: number) => {
+          {hookUpdates.callbackFunc.map((callbackFunc: Callback, i: number) => {
             return (
               <div id={styles.cbFlexBox}>
                 <HooksCallback callbackFunc={callbackFunc} index={index} id={i} key={'k' + i} />
