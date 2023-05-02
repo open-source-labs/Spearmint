@@ -103,54 +103,55 @@ const createProp = (propId: string, statementId: string) => ({
   propValue: '',
 });
 
-// Try splitting this function into two separate functions, based on the object type /////
+// DELETE CHILDREN HAS BEEN SPLIT into two separate functions, based on the object type /////
 
-// const deleteItChildren = (object: ItStatements, deletionId: string, lookup: string, it?: string) => {
-//   let allIdCopy;
-//   // delete everything appropriate in itStatements.byId object
-//   object.allIds[deletionId].forEach((id) => {
-//     delete object.byId[id];
-//   });
-//   // delete everything appropriate in itStatements.allIds object
-//   delete object.allIds[deletionId];
-//   allIdCopy = object.allIds;
-//   return allIdCopy;
-// };
-// const deleteStatementChildren = (object: Statements, deletionId: string, lookup: string) => {
-//   // use .filter to delete from statements.allIds array
-//   let allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
-//     // delete from statements.byId object
-//     object.allIds.forEach((id) => {
-//       if (object.byId[id][lookup] === deletionId) {
-//         delete object.byId[id];
-//       }
-//     });
-//   return allIdCopy;
-// }
-
-const deleteChildren = (object: (ItStatements | Statements), deletionId: string, lookup: string, it?: string) => {
+const deleteItChildren = (object: ItStatements, deletionId: string, lookup: string, it?: string) => {
   let allIdCopy;
-  if (it && !Array.isArray(object.allIds)) {
-    // delete everything appropriate in itStatements.byId object
-    object.allIds[deletionId].forEach((id) => {
-      delete object.byId[id];
-    });
-    // delete everything appropriate in itStatements.allIds object
-    delete object.allIds[deletionId];
-    allIdCopy = object.allIds;
-  } else if (Array.isArray(object.allIds)) {
-    // use .filter to delete from statements.allIds array
-    allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
+  // delete everything appropriate in itStatements.byId object
+  object.allIds[deletionId].forEach((id) => {
+    delete object.byId[id];
+  });
+  // delete everything appropriate in itStatements.allIds object
+  delete object.allIds[deletionId];
+  allIdCopy = object.allIds;
+  return allIdCopy;
+};
+
+const deleteStatementChildren = (object: Statements, deletionId: string, lookup: string) => {
+  // use .filter to delete from statements.allIds array
+  let allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
     // delete from statements.byId object
     object.allIds.forEach((id) => {
       if (object.byId[id][lookup] === deletionId) {
         delete object.byId[id];
       }
     });
-  }
-
   return allIdCopy;
-};
+}
+
+// const deleteChildren = (object: (ItStatements | Statements), deletionId: string, lookup: string, it?: string) => {
+//   let allIdCopy;
+//   if (it && !Array.isArray(object.allIds)) {
+//     // delete everything appropriate in itStatements.byId object
+//     object.allIds[deletionId].forEach((id) => {
+//       delete object.byId[id];
+//     });
+//     // delete everything appropriate in itStatements.allIds object
+//     delete object.allIds[deletionId];
+//     allIdCopy = object.allIds;
+//   } else if (Array.isArray(object.allIds)) {
+//     // use .filter to delete from statements.allIds array
+//     allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
+//     // delete from statements.byId object
+//     object.allIds.forEach((id) => {
+//       if (object.byId[id][lookup] === deletionId) {
+//         delete object.byId[id];
+//       }
+//     });
+//   }
+
+//   return allIdCopy;
+// };
 
 /* ------------------------- React Test Case Reducer ------------------------ */
 
@@ -203,8 +204,8 @@ export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: any) => 
       delete byId[describeId];
       const allIds = describeBlocks.allIds.filter((id: string) => id !== describeId);
 
-      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId', 'it');
-      const statementAllIds = deleteChildren(statements, describeId, 'describeId');
+      const itStatementAllIds = deleteItChildren(itStatements, describeId, 'describeId', 'it');
+      const statementAllIds = deleteStatementChildren(statements, describeId, 'describeId');
 
       return {
         ...state,
@@ -305,7 +306,7 @@ export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: any) => 
       const byId = { ...itStatements.byId };
       delete byId[itId];
       const allIds = itStatements.allIds[describeId].filter((id: string) => id !== itId);
-      const statementAllIds = deleteChildren(statements, itId, 'itId');
+      const statementAllIds = deleteStatementChildren(statements, itId, 'itId');
 
       return {
         ...state,
