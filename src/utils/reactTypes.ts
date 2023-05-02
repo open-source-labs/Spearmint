@@ -86,24 +86,25 @@ export interface ReactStatements {
   }
 
   export interface UpdateActionProps {
-    id: string,
+    id?: string,
     eventType?: string,
     eventValue?: string,
     queryVariant?: string,
     querySelector?: string,
     queryValue?: string,
-    suggestions?: string[]
+    suggestions?: any[] | number | void
+
   }
 
   export interface UpdateAssertionProps {
-    id: string,
-    queryVariant?: string,
-    querySelector?: string,
-    queryValue?: string,
-    isNot?: boolean,
-    matcherType?: string,
-    matcherValue?: string,
-    suggestions?: string[],
+    id?: string;
+    queryVariant?: string;
+    querySelector?: string;
+    queryValue?: string;
+    isNot?: boolean;
+    matcherType?: string;
+    matcherValue?: string;
+    suggestions?: any[] | number | void;
   }
 
   export interface Prop {
@@ -142,4 +143,34 @@ export interface ReactStatements {
       id: string,
       text: string
     }
+  }
+
+  export interface AutoCompleteStatement {
+    eventType?: string;
+    matcherType?: string;
+    isNot?: boolean;
+    suggestions?: number | any[] | void;
+  }
+
+  export interface AutoCompleteProps {
+    statement: AutoCompleteStatement; 
+    statementType: string;
+    dispatchToTestCase: Function;
+    type: string;
+  }
+
+  export interface AutoCompleteMockDataStatement {
+    eventValue?: string;
+    queryValue?: string;
+  }
+
+  export interface AutoCompleteMockDataProps {
+    statement: AutoCompleteMockDataStatement;
+    statementType: string;
+    dispatchToTestCase: Function;
+    propType: string;
+    renderId: string;
+    propId: string;
+    propKey: string;
+    propValue: string;
   }

@@ -7,6 +7,7 @@ import {
   updateProp,
 } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
+import { AutoCompleteMockDataProps } from '../../utils/reactTypes';
 
 /**
  * Renders the AutoCompleteMockData react component - this component is specifically for the FrontEnd frameworks and uses the eventTypesList 
@@ -33,16 +34,17 @@ const AutoCompleteMockData = ({
   propId,
   propKey,
   propValue,
-}) => {
+}: AutoCompleteMockDataProps) => {
   let updatedAction = { ...statement };
   let updatedAssertion = { ...statement };
 
-  const [{ mockData }] = useContext(MockDataContext);
+  const initialState: { value: string }[] = []
+  const [{ mockData }]: any[] = useContext(MockDataContext);
   const [mockDataValue, setMockDataValue] = useState('');
-  const [mockDataSuggestions, setMockDataSuggestions] = useState([]);
-  const mockOptionsList = [];
+  const [mockDataSuggestions, setMockDataSuggestions] = useState(initialState);
+  const mockOptionsList: { value: string }[] = [];
 
-  const handleChangeValue = (event, { newValue }) => {
+  const handleChangeValue = (event: React.FormEvent, { newValue }: { newValue: string }) => {
     setMockDataValue(newValue);
     if (statementType === 'action') {
       updatedAction.eventValue = newValue;
@@ -55,7 +57,7 @@ const AutoCompleteMockData = ({
     }
   };
 
-  mockData.forEach((mockDatum) => {
+  mockData.forEach((mockDatum: { name: string; fieldKeys: { fieldKey: string }[] }) => {
     let name = mockDatum.name.charAt(0).toUpperCase() + mockDatum.name.slice(1);
     mockDatum.fieldKeys.forEach((key) => {
       mockOptionsList.push({ value: `mock${name}.${key.fieldKey}` });
@@ -64,20 +66,20 @@ const AutoCompleteMockData = ({
     mockOptionsList.push({ value: `{mock${name}}` });
   });
 
-  const getSuggestions = (mockDataValue) => {
+  const getSuggestions = (value: string) => {
     // const inputValue = mockDataValue.trim().toLowerCase();
-    const inputLength = 1;
-    return inputLength === 0 ? [] : mockOptionsList.filter((mockOption) => mockOption.value);
+    // const inputLength = 1;
+    return mockOptionsList.filter((mockOption) => mockOption.value);
   };
 
   const shouldRenderSuggestions = () => {
     return true;
   };
 
-  const getSuggestionValue = (suggestion) => suggestion.value;
-  const renderSuggestion = (suggestion) => <div>{suggestion.value}</div>;
+  const getSuggestionValue = (suggestion: { value: string }) => suggestion.value;
+  const renderSuggestion = (suggestion: { value: string }) => <div>{suggestion.value}</div>;
 
-  const onSuggestionsFetchRequested = ({ value }) => {
+  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
     setMockDataSuggestions(getSuggestions(value));
   };
   const onSuggestionsClearRequested = () => {

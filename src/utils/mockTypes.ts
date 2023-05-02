@@ -1,6 +1,7 @@
 export interface MockDataArrayType {
-  id: number,
-  fieldKeys: Array<number>,
+  id: number;
+  fieldKeys: Array<number>;
+  name: string;
 }
 
 export interface MockDatumType {
