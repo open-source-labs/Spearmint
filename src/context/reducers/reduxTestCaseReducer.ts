@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import { actionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
+import { actionTypes, ReduxActionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
 
-export const ReduxTestCaseContext: any = createContext([]);
+// export const ReduxTestCaseContext: any = createContext([]); <-- previous implementation, now done at the bottom of page with type implementation based on GraphQL test case reducer shape
 
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
 /* initial state for testCase */
@@ -308,3 +308,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       return state;
   }
 };
+
+const dispatchToReduxTestCase = () => null;
+const reduxTestCaseArr: [ReduxTestCaseState, (action: ReduxActionTypes) => void] = [reduxTestCaseState, dispatchToReduxTestCase]
+export const ReduxTestCaseContext = createContext(reduxTestCaseArr);

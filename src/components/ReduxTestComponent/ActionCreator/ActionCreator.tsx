@@ -5,19 +5,22 @@ import {
   deleteActionCreator,
   updateActionCreator,
 } from '../../../context/actions/reduxTestCaseActions';
-
+import { ReduxActionCreator } from '../../../utils/reduxTypes';
 const closeIcon = require('../../../assets/images/close.png');
 
-const ActionCreator = ({ actionCreator, index }) => {
+const ActionCreator = (props: ReduxActionCreator): JSX.Element => {
+  const { actionCreator, index } = props;
+  // let dispatchToReduxTestCase: jest.Mock<any, any, any>;
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
-  const handleChangeActionCreatorFields = (e, field) => {
+  const handleChangeActionCreatorFields = (e: (React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>)
+  , field: ('it' | 'actionCreatorFunc' | 'actionType' | 'payloadKey' | 'payloadType')) => {
     let updatedActionCreator = { ...actionCreator };
     updatedActionCreator[field] = e.target.value;
     dispatchToReduxTestCase(updateActionCreator(updatedActionCreator));
   };
 
-  const handleClickDeleteActionCreator = (e) => {
+  const handleClickDeleteActionCreator = (e: React.MouseEvent) => {
     dispatchToReduxTestCase(deleteActionCreator(actionCreator.id));
   };
 
