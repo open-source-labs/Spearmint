@@ -156,17 +156,13 @@ export interface ReactStatements {
 
 /* Types for reactTestCaseReducer (also using ReactTestCaseTypes and Action interfaces) */
 
-export interface DeletionIdProp {
-
-}
-
 export interface ObjectProp {
   allIds: {
     [key: string]: Array<string>
   };
-  byId: ItById
+  byId: ItById | StatementsById
 }
 
-export interface Lookup {
-
+export interface NewAction {
+  
 }
