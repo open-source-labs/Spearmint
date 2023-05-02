@@ -103,9 +103,11 @@ const createProp = (propId: string, statementId: string) => ({
   propValue: '',
 });
 
-const deleteChildren = (object, deletionId: string, lookup: string, it?: string) => {
+// Try splitting this function into two separate functions, based on the object type
+
+const deleteChildren = (object: (ItStatements | Statements), deletionId: string, lookup: string, it?: string) => {
   let allIdCopy;
-  if (it) {
+  if (it && !Array.isArray(object.allIds)) {
     // delete everything appropriate in itStatements.byId object
     object.allIds[deletionId].forEach((id) => {
       delete object.byId[id];
@@ -113,7 +115,7 @@ const deleteChildren = (object, deletionId: string, lookup: string, it?: string)
     // delete everything appropriate in itStatements.allIds object
     delete object.allIds[deletionId];
     allIdCopy = object.allIds;
-  } else {
+  } else if (Array.isArray(object.allIds)) {
     // use .filter to delete from statements.allIds array
     allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
     // delete from statements.byId object
@@ -132,15 +134,17 @@ const deleteChildren = (object, deletionId: string, lookup: string, it?: string)
 export const reactTestCaseReducer = (state: ReactTestCaseTypes, action) => {
   Object.freeze(state);
 
-  let describeBlocks;
-  let itStatements;
-  let statements;
+  let describeBlocks: DescribeBlocks = { ...state.describeBlocks };
+  let itStatements: ItStatements = { ...state.itStatements };
+  let statements: Statements = { ...state.statements };
 
-  if (state && action) {
-    describeBlocks = { ...state.describeBlocks };
-    itStatements = { ...state.itStatements };
-    statements = { ...state.statements };
-  }
+  // Commented this out because the variables had to be initialized before their types could be set
+  
+  // if (state && action) {
+  //   describeBlocks = { ...state.describeBlocks };
+  //   itStatements = { ...state.itStatements };
+  //   statements = { ...state.statements };
+  // }
 
   switch (action.type) {
     case actionTypes.RESET_TESTS: {
