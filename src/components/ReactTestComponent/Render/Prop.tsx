@@ -10,20 +10,19 @@ import { PropProps } from '../../../utils/reactTypes';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
-type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
 
 const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase, theme }: PropProps): JSX.Element => {
-  const handleClickDeleteProp = (e: EventTypes): void => {
+  const handleClickDeleteProp = (e: React.MouseEvent): void => {
     e.stopPropagation();
     dispatchToTestCase(deleteProp(statementId, propId));
   };
 
-  const handleChangeUpdatePropKey = (e: EventTypes): void => {
+  const handleChangeUpdatePropKey = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.stopPropagation();
     dispatchToTestCase(updateProp(statementId, propId, e.target.value, propValue));
   };
 
-  const handleChangeUpdatePropValue = (e: EventTypes): void => {
+  const handleChangeUpdatePropValue = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.stopPropagation();
     dispatchToTestCase(updateProp(statementId, propId, propKey, e.target.value));
   };
@@ -47,7 +46,7 @@ const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase, the
         propValue={propValue}
         dispatchToTestCase={dispatchToTestCase}
       /> */}
-      <img src={minusIcon} alt='delete' onClick={()=>handleClickDeleteProp} />
+      <img src={minusIcon} alt='delete' onClick={handleClickDeleteProp} />
     </div>
   );
 };

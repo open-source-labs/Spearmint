@@ -17,13 +17,13 @@ import { Assertion } from '../../../utils/reactTypes';
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
 
-type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
+type FieldTypes = ('testName' | 'hook' | 'hookParams');
 
 const HookUpdates = ({ hookUpdates, index }: HookUpdatesProps): JSX.Element => {
   const [ { theme } ] = useContext(GlobalContext)
   const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
 
-  const handleChangeHookUpdatesFields = (e: EventTypes, field: string): void => {
+  const handleChangeHookUpdatesFields = (e: React.ChangeEvent<HTMLInputElement>, field: FieldTypes): void => {
     let updatedHookUpdates = { ...hookUpdates };
     updatedHookUpdates[field] = e.target.value;
     dispatchToHooksTestCase(updateHookUpdates(updatedHookUpdates));
