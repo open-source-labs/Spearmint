@@ -11,7 +11,7 @@ export interface ReactStatements {
     propId: number,
     describeBlocks: DescribeBlocks,
     itStatements: ItStatements,
-    statements: Statements
+    statements: Statements,
   }
   export interface DescribeBlocks {
     byId: DescribeById,
@@ -58,10 +58,20 @@ export interface ReactStatements {
   }
   
   export interface Statements {
-    byId: Object,
+    byId: StatementsById,
     allIds: Array<string>,
     componentPath: string,
     componentName: string,
+  }
+
+  export interface StatementsById {
+    [key: string]: {
+      id: string;
+      itId: string;
+      describeId: string;
+      type: string;
+      props: Array<Prop>;
+    }
   }
 
   export interface ReactTestComponentAssertion {
@@ -151,7 +161,9 @@ export interface DeletionIdProp {
 }
 
 export interface ObjectProp {
-  allIds: allIdsType;
+  allIds: {
+    [key: string]: Array<string>
+  };
   byId: ItById
 }
 

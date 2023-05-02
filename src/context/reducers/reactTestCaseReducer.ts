@@ -1,6 +1,6 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
-import { ReactTestCaseTypes, Action, ItStatements, DescribeBlocks, ObjectProp } from '../../utils/reactTypes';
+import { ReactTestCaseTypes, Action, ItStatements, DescribeBlocks, ObjectProp, Statements, Prop } from '../../utils/reactTypes';
 
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
@@ -103,7 +103,7 @@ const createProp = (propId: string, statementId: string) => ({
   propValue: '',
 });
 
-const deleteChildren = (object, deletionId, lookup, it) => {
+const deleteChildren = (object, deletionId: string, lookup: string, it?: string) => {
   let allIdCopy;
   if (it) {
     // delete everything appropriate in itStatements.byId object
@@ -129,7 +129,7 @@ const deleteChildren = (object, deletionId, lookup, it) => {
 
 /* ------------------------- React Test Case Reducer ------------------------ */
 
-export const reactTestCaseReducer = (state, action) => {
+export const reactTestCaseReducer = (state: ReactTestCaseTypes, action) => {
   Object.freeze(state);
 
   let describeBlocks;
@@ -174,7 +174,7 @@ export const reactTestCaseReducer = (state, action) => {
       const { describeId } = action;
       const byId = { ...describeBlocks.byId };
       delete byId[describeId];
-      const allIds = describeBlocks.allIds.filter((id) => id !== describeId);
+      const allIds = describeBlocks.allIds.filter((id: string) => id !== describeId);
 
       const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId', 'it');
       const statementAllIds = deleteChildren(statements, describeId, 'describeId');
@@ -277,7 +277,7 @@ export const reactTestCaseReducer = (state, action) => {
       const { describeId } = itStatements.byId[itId];
       const byId = { ...itStatements.byId };
       delete byId[itId];
-      const allIds = itStatements.allIds[describeId].filter((id) => id !== itId);
+      const allIds = itStatements.allIds[describeId].filter((id: string) => id !== itId);
       const statementAllIds = deleteChildren(statements, itId, 'itId');
 
       return {
@@ -520,7 +520,7 @@ export const reactTestCaseReducer = (state, action) => {
     }
     case actionTypes.DELETE_PROP: {
       const { id, statementId } = action;
-      const props = statements.byId[statementId].props.filter((prop) => prop.id !== id);
+      const props = statements.byId[statementId].props.filter((prop: Prop) => prop.id !== id);
       return {
         ...state,
         statements: {
