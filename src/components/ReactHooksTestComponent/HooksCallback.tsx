@@ -2,17 +2,18 @@ import React, { useContext } from 'react';
 import styles from '../EndpointTestComponent/Endpoint.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import { deleteCallbackFunc, updateCallbackFunc } from '../../context/actions/hooksTestCaseActions';
+import { HooksCallbackProps } from '../../utils/hooksTypes';
 
 const closeIcon = require('../../assets/images/close.png');
 
-const HooksCallback = ({ callbackFunc, index, id }) => {
+const HooksCallback = ({ callbackFunc, index, id }: HooksCallbackProps): JSX.Element => {
   const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
 
-  const handleClickDeleteCallbackFunc = () => {
+  const handleClickDeleteCallbackFunc = (): void => {
     dispatchToHooksTestCase(deleteCallbackFunc(index, id));
   };
 
-  const handleChangeUpdateCallbackFunc = (e, field) => {
+  const handleChangeUpdateCallbackFunc = (e: React.ChangeEvent<HTMLInputElement>, field: 'callbackFunc'): void => {
     const updatedCallbackFunc = { ...callbackFunc, [field]: e.target.value };
     dispatchToHooksTestCase(updateCallbackFunc(index, id, updatedCallbackFunc));
   };
