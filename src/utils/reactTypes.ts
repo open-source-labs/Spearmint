@@ -14,15 +14,24 @@ export interface ReactStatements {
     statements: Statements
   }
   export interface DescribeBlocks {
-    byId: Object;
+    byId: DescribeById;
     allIds: Array<string>;
   }
+
+  export interface ItById {
+      [key: string]: {
+        id: string;
+        describeId: string
+        text: string
+      }
+  }
+
   export interface ItStatements {
-    byId: Object;
+    byId: ItById;
     allIds: allIdsType;
   }
   type allIdsType = {
-    [key: string]: string,
+    [key: string]: Array<string>,
   }
   
   export interface Action {
@@ -126,4 +135,11 @@ export interface ReactStatements {
     statementId: string,
     describeId: string,
     itId: string
+   }
+
+  export interface DescribeById {
+    [key: string]: {
+      id: string,
+      text: string
+    }
   }
