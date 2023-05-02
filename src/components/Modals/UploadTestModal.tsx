@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import ReactModal from 'react-modal';
+import ReactModal from '/react-modal';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
 import { EndpointTestCaseContext } from '../../context/reducers/endpointTestCaseReducer';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
@@ -12,7 +12,14 @@ import styles from './Modal.module.scss';
  * This react component UploadTestModal renders a modal that allows the user to save a test case to the database
  * @returns A modal that allows the user to save a test case.
  */
-const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, testType }) => {
+
+interface UploadTestModalProps {
+  uploadTestModalIsOpen: React.Dispatch<Element>;
+  setUploadTestModalIsOpen: React.Dispatch<boolean>;
+  testType: string;
+}
+
+const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, testType }: UploadTestModalProps) => {
   const [testName, setTestName] = useState('');
   const [accTestCase] = useContext(AccTestCaseContext);
   const [endpointTestCase] = useContext(EndpointTestCaseContext);
@@ -28,7 +35,7 @@ const UploadTestModal = ({ uploadTestModalIsOpen, setUploadTestModalIsOpen, test
     setUploadTestModalIsOpen(false);
   };
 
-  const handleChangeTestName = (e) => {
+  const handleChangeTestName = (e: React.BaseSyntheticEvent<KeyboardEvent>) => {
     setTestName(e.target.value);
   };
 
