@@ -15,15 +15,15 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { RenderProps } from '../../../utils/reactTypes';
 const closeIcon = require('../../../assets/images/close.png');
 
-const Render = ({ statement, statementId, describeId, itId }: RenderProps) => {
+const Render = ({ statement, statementId, describeId, itId }: RenderProps): JSX.Element => {
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
 
-  const handleClickAddProp = () => {
+  const handleClickAddProp = (): void => {
     dispatchToReactTestCase(addProp(statementId));
   };
 
-  const handleClickDeleteRender = () => {
+  const handleClickDeleteRender = (): void => {
     dispatchToReactTestCase(deleteRender(statementId));
   };
 
@@ -36,7 +36,7 @@ const Render = ({ statement, statementId, describeId, itId }: RenderProps) => {
         <Button onClick={handleClickAddProp} variant='outlined'>
           Add Props
         </Button>
-        <AiOutlineClose id={styles.close} onClick={handleClickDeleteRender} />
+        <AiOutlineClose id={styles.close} aria-label='close' onClick={handleClickDeleteRender} />
       </div>
       <div className={'props'}>
         {statement.props.length > 0 && (

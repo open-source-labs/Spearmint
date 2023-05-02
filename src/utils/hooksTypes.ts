@@ -19,6 +19,7 @@ export interface Assertion {
   expectedValue: string;
   not: boolean;
 }
+
 export interface Callback {
   id: number;
   callbackFunc: string;
@@ -51,6 +52,12 @@ export interface Action {
   dbFileName?: string;
   testState?: object;
 }
+
+export interface HookUpdatesProps {
+  hookUpdates: HooksStatements,
+  index: number
+}
+
 /* ---------------------------- Actions In Reducer coming from hooksTestCaseActions ---------------------- */
 
 export type HooksAction =
