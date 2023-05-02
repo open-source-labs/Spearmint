@@ -143,3 +143,18 @@ export interface ReactStatements {
       text: string
     }
   }
+
+/* Types for reactTestCaseReducer (also using ReactTestCaseTypes and Action interfaces) */
+
+export interface DeletionIdProp {
+
+}
+
+export interface ObjectProp {
+  allIds: allIdsType;
+  byId: ItById
+}
+
+export interface Lookup {
+
+}

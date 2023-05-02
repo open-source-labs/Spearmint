@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
-import { ReactTestCaseTypes, Action } from '../../utils/reactTypes';
+import { ReactTestCaseTypes, Action, ItStatements, DescribeBlocks, ObjectProp } from '../../utils/reactTypes';
 
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
@@ -48,20 +48,20 @@ export const reactTestCaseState: ReactTestCaseTypes = {
 
 /* ---------------------------- Helper Functions ---------------------------- */
 
-const createDescribeBlock = (describeId) => {
+const createDescribeBlock = (describeId: string) => {
   return {
     id: describeId,
     text: '',
   };
 };
 
-const createItStatement = (describeId, itId) => ({
+const createItStatement = (describeId: string, itId: string) => ({
   id: itId,
   describeId,
   text: '',
 });
 
-const createAction = (describeId, itId, statementId) => ({
+const createAction = (describeId: string, itId: string, statementId: string) => ({
   id: statementId,
   itId,
   describeId,
@@ -74,7 +74,7 @@ const createAction = (describeId, itId, statementId) => ({
   suggestions: [],
 });
 
-const createAssertion = (describeId, itId, statementId) => ({
+const createAssertion = (describeId: string, itId: string, statementId: string) => ({
   id: statementId,
   itId,
   describeId,
@@ -88,7 +88,7 @@ const createAssertion = (describeId, itId, statementId) => ({
   suggestions: [],
 });
 
-const createRender = (describeId, itId, statementId) => ({
+const createRender = (describeId: string, itId: string, statementId: string) => ({
   id: statementId,
   itId,
   describeId,
@@ -96,7 +96,7 @@ const createRender = (describeId, itId, statementId) => ({
   props: [],
 });
 
-const createProp = (propId, statementId) => ({
+const createProp = (propId: string, statementId: string) => ({
   id: propId,
   statementId,
   propKey: '',
