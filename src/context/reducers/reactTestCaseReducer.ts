@@ -103,7 +103,30 @@ const createProp = (propId: string, statementId: string) => ({
   propValue: '',
 });
 
-// Try splitting this function into two separate functions, based on the object type
+// Try splitting this function into two separate functions, based on the object type /////
+
+// const deleteItChildren = (object: ItStatements, deletionId: string, lookup: string, it?: string) => {
+//   let allIdCopy;
+//   // delete everything appropriate in itStatements.byId object
+//   object.allIds[deletionId].forEach((id) => {
+//     delete object.byId[id];
+//   });
+//   // delete everything appropriate in itStatements.allIds object
+//   delete object.allIds[deletionId];
+//   allIdCopy = object.allIds;
+//   return allIdCopy;
+// };
+// const deleteStatementChildren = (object: Statements, deletionId: string, lookup: string) => {
+//   // use .filter to delete from statements.allIds array
+//   let allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
+//     // delete from statements.byId object
+//     object.allIds.forEach((id) => {
+//       if (object.byId[id][lookup] === deletionId) {
+//         delete object.byId[id];
+//       }
+//     });
+//   return allIdCopy;
+// }
 
 const deleteChildren = (object: (ItStatements | Statements), deletionId: string, lookup: string, it?: string) => {
   let allIdCopy;
@@ -131,7 +154,7 @@ const deleteChildren = (object: (ItStatements | Statements), deletionId: string,
 
 /* ------------------------- React Test Case Reducer ------------------------ */
 
-export const reactTestCaseReducer = (state: ReactTestCaseTypes, action) => {
+export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: any) => {
   Object.freeze(state);
 
   let describeBlocks: DescribeBlocks = { ...state.describeBlocks };
@@ -139,7 +162,7 @@ export const reactTestCaseReducer = (state: ReactTestCaseTypes, action) => {
   let statements: Statements = { ...state.statements };
 
   // Commented this out because the variables had to be initialized before their types could be set
-  
+
   // if (state && action) {
   //   describeBlocks = { ...state.describeBlocks };
   //   itStatements = { ...state.itStatements };
