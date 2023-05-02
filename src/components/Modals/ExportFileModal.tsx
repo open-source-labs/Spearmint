@@ -18,6 +18,7 @@ import { FaFileExport } from "react-icons/fa"
 import { Button, TextField, InputAdornment } from '@mui/material';
 
 import styles from './Modal.module.scss';
+import { filePathMapType } from '../../utils/globalTypes';
 
 const { ipcRenderer } = require('electron');
 
@@ -49,12 +50,19 @@ const CssTextField = withStyles({
  * @property { Function } setIsExportModalOpen
  * @returns { JSX.Element } Returns the ExportFileModal react component
  */
-const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
+
+interface ExportFileModalProps {
+  isExportModalOpen: boolean;
+  setIsExportModalOpen: React.Dispatch<boolean>;
+}
+
+
+const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFileModalProps) => {
   const [fileName, setFileName ] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
   const [{ projectFilePath, file, validCode, theme }, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleChangeFileName = (e) => {
+  const handleChangeFileName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFileName(e.target.value);
     setInvalidFileName(false);
   };
@@ -114,7 +122,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
 /**
  * Function that updates global state and highlights the test file where the user is redirected
  */
-  const displayTestFile = (testFolderFilePath) => {
+  const displayTestFile = (testFolderFilePath: string) => {
     const filePath = `${testFolderFilePath}/${fileName}.test.js`;
     const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
     dispatchToGlobal(updateFile(fileContent));
@@ -124,8 +132,13 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
     dispatchToGlobal(setFileDirectory(true));
   };
 
-  const filePathMap = {};
-  const populateFilePathMap = (file) => {
+  interface File {
+    fileName: string;
+    filePath: string;
+  }
+
+  const filePathMap: filePathMapType = {};
+  const populateFilePathMap = (file: File) => {
     const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
     const fileType = file.fileName.split('.')[1];
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
@@ -139,9 +152,9 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }) => {
    * @param { string } - current project file directory
    * @returns { Object[] } Returns the FileTree Object
    */
-  const generateFileTreeObject = (projectFilePath) => {
+  const generateFileTreeObject = (projectFilePath: string) => {
     const filePaths = ipcRenderer.sendSync('Universal.readDir', projectFilePath);
-    const fileArray = filePaths.map((fileName) => {
+    const fileArray = filePaths.map((fileName: string) => {
       // replace backslashes for Windows OS
       projectFilePath = projectFilePath.replace(/\\/g, '/');
       const filePath = `${projectFilePath}/${fileName}`;
