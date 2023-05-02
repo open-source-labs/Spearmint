@@ -58,10 +58,21 @@ export interface ReactStatements {
   }
   
   export interface Statements {
-    byId: Object,
+    byId: StatementsById,
     allIds: Array<string>,
     componentPath: string,
     componentName: string,
+  }
+
+  export interface StatementsById {
+    [key: string]: {
+      id: string;
+      itId: string;
+      describeId: string;
+      type: string;
+      // fix props!!!!! may not work
+      props: [];
+    }
   }
 
   export interface ReactTestComponentAssertion {
