@@ -12,18 +12,18 @@ const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
 type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
 
-const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase, theme }: PropProps) => {
-  const handleClickDeleteProp = (e: EventTypes) => {
+const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase, theme }: PropProps): JSX.Element => {
+  const handleClickDeleteProp = (e: EventTypes): void => {
     e.stopPropagation();
     dispatchToTestCase(deleteProp(statementId, propId));
   };
 
-  const handleChangeUpdatePropKey = (e: EventTypes) => {
+  const handleChangeUpdatePropKey = (e: EventTypes): void => {
     e.stopPropagation();
     dispatchToTestCase(updateProp(statementId, propId, e.target.value, propValue));
   };
 
-  const handleChangeUpdatePropValue = (e: EventTypes) => {
+  const handleChangeUpdatePropValue = (e: EventTypes): void => {
     e.stopPropagation();
     dispatchToTestCase(updateProp(statementId, propId, propKey, e.target.value));
   };
