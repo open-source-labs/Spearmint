@@ -6,7 +6,17 @@ import InputTextField from '../InputTextField';
 import { Action } from '../../utils/hooksTypes';
 import { filePathMapType } from '../../utils/globalTypes';
 
-
+interface SearchInputProps {
+  dispatch: Function;
+  action?: Function;
+  filePathMap: filePathMapType;
+  options: Array<string>;
+  reactTestCase?: string | null;
+  updateTypesFilePath?: Function | null;
+  updateActionsFilePath?: Function | null;
+  type?: string | null;
+  label: string | null
+}
 
 const SearchInput = ({
   dispatch,
@@ -18,17 +28,7 @@ const SearchInput = ({
   updateActionsFilePath = null,
   type = null,
   label,
-} : { 
-  dispatch: Function,
-  action?: Function,
-  filePathMap: filePathMapType,
-  options: Array<string>,
-  reactTestCase?: string | null,
-  updateTypesFilePath?: Function | null,
-  updateActionsFilePath?: Function | null,
-  type?: string | null,
-  label: string | null,
-}) => {
+} : SearchInputProps ) => {
   const [activeOption, setActiveOption] = useState(0);
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   const [showOptions, setShowOptions] = useState(false);
