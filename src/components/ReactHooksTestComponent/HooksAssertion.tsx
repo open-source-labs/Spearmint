@@ -5,8 +5,12 @@ import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReduce
 import { deleteAssertion, updateAssertion } from '../../context/actions/hooksTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
+import { HooksAssertionProps } from '../../utils/hooksTypes';
 
-const HooksAssertion = ({ assertion, index, id }) => {
+type EventTypes = (React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>);
+type FieldTypes = ('expectedState' | 'expectedValue' | 'not' | 'matcher');
+
+const HooksAssertion = ({ assertion, index, id }: HooksAssertionProps): JSX.Element => {
   const [, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
   const [, dispatchToGlobal] = useContext(GlobalContext);
   const jestDOMMatcher = [
@@ -40,11 +44,11 @@ const HooksAssertion = ({ assertion, index, id }) => {
   const closeIcon = require('../../assets/images/close.png');
   const jestDOMURL = 'https://github.com/testing-library/jest-dom';
 
-  const handleClickDeleteAssertion = () => {
+  const handleClickDeleteAssertion = (): void => {
     dispatchToHooksTestCase(deleteAssertion(index, id));
   };
 
-  const handleChangeUpdateAssertion = (e, field) => {
+  const handleChangeUpdateAssertion = (e: EventTypes, field: FieldTypes): void => {
     const updatedAssertion =
       field === 'not'
         ? { ...assertion, [field]: !assertion[field] }

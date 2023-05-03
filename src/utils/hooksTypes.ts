@@ -1,8 +1,8 @@
-export interface HooksStatements {
-  id: number;
-  type: string;
-  [key: string]: any;
-}
+// export interface HooksStatements {
+//   id: number;
+//   type: string;
+//   [key: string]: any;
+// }
 
 export interface HooksTestCaseState {
   hookFileName: string;
@@ -14,10 +14,10 @@ export interface HooksTestCaseState {
 
 export interface Assertion {
   id: number;
-  expectedState: string;
-  matcher: string;
-  expectedValue: string;
-  not: boolean;
+  expectedState?: string;
+  matcher?: string;
+  expectedValue?: string;
+  not?: boolean;
 }
 
 export interface Callback {
@@ -34,8 +34,8 @@ export interface Hooks {
   assertions: Assertion[];
   callbackFunc: Callback[];
   typeof: boolean;
-  hookFileName: string;
-  hookFilePath: string;
+  hookFileName?: string;
+  hookFilePath?: string;
 }
 
 export interface Action {
@@ -43,7 +43,7 @@ export interface Action {
   id?: number;
   serverFileName?: string;
   serverFilePath?: string;
-  draggableStatements?: Array<HooksStatements>;
+  draggableStatements?: Hooks[];
   index?: number;
   text?: string;
   assertion?: Assertion;
@@ -51,16 +51,34 @@ export interface Action {
   dbFilePath?: string;
   dbFileName?: string;
   testState?: object;
+  hooksTestStatement?: string;
+  hookFileName?: string;
+  hookFilePath?: string;
+  contextFileName?: string;
+  contextFilePath?: string;
+  callback?: Callback;
 }
 
 export interface HookUpdatesProps {
-  hookUpdates: HooksStatements,
-  index: number
+  hookUpdates: Hooks;
+  index: number;
+}
+
+export interface HooksAssertionProps {
+  assertion: Assertion;
+  index: number;
+  id: number;
+}
+
+export interface HooksCallbackProps {
+  callbackFunc: Callback;
+  index: number;
+  id: number;
 }
 
 /* ---------------------------- Actions In Reducer coming from hooksTestCaseActions ---------------------- */
 
-export type HooksAction =
+export type HooksAction = 
   | {
       type:
         | 'TOGGLE_HOOKS'
@@ -120,5 +138,5 @@ export interface HooksTestModalProps {
 }
 
 export interface HooksTestStatementsProps extends HooksTestMenuProps {
-  hooksStatements: Array<HooksStatements>;
+  hooksStatements: Hooks[];
 }
