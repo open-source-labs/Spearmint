@@ -153,16 +153,3 @@ export interface ReactStatements {
       text: string
     }
   }
-
-/* Types for reactTestCaseReducer (also using ReactTestCaseTypes and Action interfaces) */
-
-export interface ObjectProp {
-  allIds: {
-    [key: string]: Array<string>
-  };
-  byId: ItById | StatementsById
-}
-
-export interface NewAction {
-  
-}
