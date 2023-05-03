@@ -2,19 +2,22 @@ import React, { useContext } from 'react';
 import styles from './Thunk.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteAsync, updateAsync } from '../../../context/actions/reduxTestCaseActions';
+import { ReduxAsync } from '../../../utils/reduxTypes'
 
 const closeIcon = require('../../../assets/images/close.png');
 
-const Async = ({ async, index }) => {
+const Async = (props: ReduxAsync) => {
+  const { async, index } = props;
   const [, dispatchToReduxTestCase] = useContext(ReduxTestCaseContext);
 
-  const handleChangeAsyncFields = (e, field) => {
+  const handleChangeAsyncFields = (e: (React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>), 
+  field: ('it' | 'asyncFunction' | 'actionType' | 'expectedArg' | 'responseType' | 'payloadKey' | 'payloadType' | 'method' | 'route')) => {
     let updatedAsync = { ...async };
     updatedAsync[field] = e.target.value;
     dispatchToReduxTestCase(updateAsync(updatedAsync));
   };
 
-  const handleClickDeleteAsync = (e) => {
+  const handleClickDeleteAsync = (e: React.MouseEvent) => {
     dispatchToReduxTestCase(deleteAsync(async.id));
   };
 

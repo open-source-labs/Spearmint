@@ -169,6 +169,28 @@ export interface ReduxMiddleware {
   index: number;
 }
 
+export interface ReduxAsync {
+  async: {
+    id: number;
+    field: string;
+    actionType: string;
+    actionsFileName: string;
+    filePath: string;
+    typesFileName: string;
+    typesFilePath: string;
+    asyncFunction: string;
+    method: string;
+    route: string;
+    actionsFile?: string;
+    responseType?: string;
+    it?: string;
+    payloadKey?: null | string;
+    payloadType?: null | string;
+    expectedArg?: string;
+  },
+  index: void,
+}
+
 
 // -------------Reducer Types--------------
 
