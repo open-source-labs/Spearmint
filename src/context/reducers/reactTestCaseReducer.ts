@@ -103,7 +103,7 @@ const createProp = (propId: string, statementId: string) => ({
   propValue: '',
 });
 
-// DELETE CHILDREN HAS BEEN SPLIT into two separate functions, based on the object type /////
+// The function deleteChildren, is now split into two separate functions, based on the object type, as trying to reference the type of 'object' based on a conditional statement was throwing errors throughout the reducer actionTypes /////
 
 const deleteItChildren = (object: ItStatements, deletionId: string, lookup: string, it?: string) => {
   let allIdCopy;
