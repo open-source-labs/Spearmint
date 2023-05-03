@@ -3,10 +3,12 @@ import { clearMockData } from '../../context/actions/mockDataActions';
 import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import styles from './Modal.module.scss';
+import { DispatchMock, KeyDispatchMock } from '../../utils/mockTypes';
+import { EventType } from '@testing-library/react';
 
-export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, closeModal) {
+export function useNewTest(dispatchToMockData: React.Dispatch<KeyDispatchMock | DispatchMock> | null, dispatchTestCase: Function, createTest: () => {type: string}, closeModal: () => void) {
   const [, dispatchToGlobal] = useContext(GlobalContext);
-  const handleNewTest = (e) => {
+  const handleNewTest = (e: React.MouseEvent) => {
     if (dispatchToMockData) dispatchToMockData(clearMockData());
     dispatchTestCase(createTest());
     closeModal();
@@ -19,7 +21,7 @@ export function useNewTest(dispatchToMockData, dispatchTestCase, createTest, clo
 /**
  * This function will return an object with a cd and a install property that are based on which test argument it receives
  */
-export function useGenerateScript(test) {
+export function useGenerateScript(test: string) {
 
   const [{ projectFilePath }] = useContext(GlobalContext);
   //TODO: DRY this code
