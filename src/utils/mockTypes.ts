@@ -20,7 +20,7 @@ export interface MockDataProps {
 
 export interface DispatchMock {
   type: string,
-  id: number,
+  id?: number,
   name?: string,
 }
 
