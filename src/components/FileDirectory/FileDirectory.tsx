@@ -18,24 +18,28 @@ import { FaReact, FaSass } from 'react-icons/fa';
 import { SiTypescript, SiJest } from 'react-icons/si';
 import { RiFileCodeFill } from 'react-icons/ri';
 import { HiFolder, HiFolderOpen } from 'react-icons/hi'
+import { File } from '../../utils/globalTypes';
 
 const { ipcRenderer } = require('electron');
 
 const fileImg = require('../../assets/images/file-document-outline.svg');
+
+
 
 /**
  * Renders the FileDirectory react component, this is the directory of your project that opens to the left when the icon in the navbar is clicked
  * @param { Object[] } fileTree - Array of Objects including fileName - string, filePath - string, files - Array of Objects
  * @returns { JSX.Element } Returns the file directory, this is done "recursively" and you can choose to expand a Folder in another Folder
  */
-const FileDirectory = ({ fileTree }) => {
+const FileDirectory = ({ fileTree }: { fileTree: File[] }) => {
   const [{ isFolderOpen, isFileHighlighted, projectFilePath }, dispatchToGlobal] = useContext(
     GlobalContext
   );
   const idx = projectFilePath.lastIndexOf('/');
   const projectName = projectFilePath.substring(idx + 1);
 
-  const ICON_MAP = {
+
+  const ICON_MAP: {[key: string]: JSX.Element} = {
     '.html': <AiFillHtml5 size={'1rem'}/>,
     '.json': <VscJson size={'1rem'}/>,
     '.js': <IoLogoJavascript size={'1rem'}/>,
@@ -53,7 +57,7 @@ const FileDirectory = ({ fileTree }) => {
    * @param { string } file - Array of files and folders as Objects
    * @returns { JSX.Element } 
    */
-  const differImg = (file) => {
+  const differImg = (file: string) => {
     const imageTypes = ['.psd', '.ai', '.png', '.gif', '.svg', '.jpg', '.ps', '.eps', '.tif'];
     if (file.includes('.test')){
       return <SiJest size={'1rem'}/>;
@@ -62,7 +66,7 @@ const FileDirectory = ({ fileTree }) => {
     let fileType = file.substring(idx);
     if (imageTypes.includes(fileType)) {
       return <MdImage size={'1rem'}/>;
-    } else if (ICON_MAP[fileType]) {
+    } else if (fileType in ICON_MAP) {
       return ICON_MAP[fileType];
     } else {
       return <RiFileCodeFill size={'1rem'}/>;
@@ -76,7 +80,7 @@ const FileDirectory = ({ fileTree }) => {
    * @param { string } filePath
    * @returns { void } Returns void
    */
-  const handleDisplayFileCode = (filePath) => {
+  const handleDisplayFileCode = (filePath: string) => {
     const fileContent = ipcRenderer.sendSync('Universal.readFile', filePath);
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(setFilePath(filePath));
@@ -87,7 +91,7 @@ const FileDirectory = ({ fileTree }) => {
    * @param { string } filePath
    * @returns { void } Returns void
    */
-  const handleClickToggleFolderView = (filePath) => {
+  const handleClickToggleFolderView = (filePath: string) => {
     dispatchToGlobal(toggleFolderView(filePath));
   };
 
@@ -96,7 +100,7 @@ const FileDirectory = ({ fileTree }) => {
    * @param { string } fileName
    * @returns { void } Returns void
    */
-  const handleClickHighlightFile = (fileName) => {
+  const handleClickHighlightFile = (fileName: string) => {
     dispatchToGlobal(highlightFile(fileName));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
   };
@@ -107,7 +111,7 @@ const FileDirectory = ({ fileTree }) => {
  * @returns { JSX.Element[] }
  */
 
-  const convertToHTML = (filetree) => {
+  const convertToHTML = (filetree: File[]) => {
     return filetree.map((file) => {
       if (
         file.fileName !== 'node_modules' &&
@@ -125,7 +129,7 @@ const FileDirectory = ({ fileTree }) => {
                   <span>{file.fileName}</span>
                 </button>
               </li>
-              {isFolderOpen[file.filePath] && convertToHTML(file.files, fileImg)}
+              {isFolderOpen[file.filePath] && convertToHTML(file.files)}
             </ul>
           );
         } else {
