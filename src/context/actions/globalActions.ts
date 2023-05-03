@@ -1,4 +1,4 @@
-import { filePathMapType } from "../../utils/globalTypes";
+import { File, filePathMapType } from "../../utils/globalTypes";
 
 export const actionTypes = {
   SET_PROJECT_URL: 'SET_PROJECT_URL',
@@ -43,7 +43,7 @@ export const loadProject = (load: string) => ({
   load,
 });
 
-export const createFileTree = (fileTree: string) => ({
+export const createFileTree = (fileTree: File[]) => ({
   type: actionTypes.CREATE_FILE_TREE,
   fileTree,
 });
