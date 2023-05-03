@@ -59,3 +59,10 @@ export interface isFolderOpenType {
 export interface filePathMapType {
   [key: string]: Object
 }
+
+/* Interface for Modal files */
+export interface File {
+    fileName: string;
+    filePath: string;
+    files: Array<string>
+}

@@ -18,7 +18,7 @@ import { FaFileExport } from "react-icons/fa"
 import { Button, TextField, InputAdornment } from '@mui/material';
 
 import styles from './Modal.module.scss';
-import { filePathMapType } from '../../utils/globalTypes';
+import { File, filePathMapType } from '../../utils/globalTypes';
 
 const { ipcRenderer } = require('electron');
 
@@ -131,11 +131,6 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFile
     // dispatchToGlobal(toggleFileDirectory(true));
     dispatchToGlobal(setFileDirectory(true));
   };
-
-  interface File {
-    fileName: string;
-    filePath: string;
-  }
 
   const filePathMap: filePathMapType = {};
   const populateFilePathMap = (file: File) => {
