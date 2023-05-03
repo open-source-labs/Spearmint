@@ -153,3 +153,37 @@ export interface ReactStatements {
       text: string
     }
   }
+
+  // Type interface for reactTestCaseReducer action type
+  export interface ReactReducerAction {
+  type: string,
+  id: number | string,
+  serverFileName?: string,
+  serverFilePath?: string,
+  draggableStatements?: Array<ReactStatements>,
+  index?: number,
+  text?: string,
+  assertion?: Assertion,
+  db?: string | boolean,
+  dbFilePath?: string,
+  dbFileName?: string,
+  testState?: object,
+  describeId: string,
+  reorderedDescribe: Array<string>,
+  itId: string,
+  reorderedIt: Array<string>,
+  statementId: string,
+  eventType: string,
+  eventValue?: string,
+  queryVariant: string,
+  querySelector: string,
+  queryValue: string,
+  suggestions: Array<string>
+  isNot: boolean,
+  matcherType: string,
+  matcherValue: string,
+  componentName: string,
+  filePath: string,
+  propKey: string,
+  propValue: string
+}

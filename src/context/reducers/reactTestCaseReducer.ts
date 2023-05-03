@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
-import { ReactTestCaseTypes, Action, ItStatements, DescribeBlocks, Statements, Prop, StatementsById } from '../../utils/reactTypes';
+import { ReactTestCaseTypes, Action, ItStatements, DescribeBlocks, Statements, Prop, StatementsById, ReactReducerAction } from '../../utils/reactTypes';
 
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
@@ -117,7 +117,7 @@ const deleteItChildren = (object: ItStatements, deletionId: string, lookup: stri
   return allIdCopy;
 };
 
-const deleteStatementChildren = (object: Statements, deletionId: string, lookup: string) => {
+const deleteStatementChildren = (object: Statements, deletionId: string, lookup: 'describeId' | 'itId') => {
   // use .filter to delete from statements.allIds array
   let allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
     // delete from statements.byId object
@@ -129,33 +129,9 @@ const deleteStatementChildren = (object: Statements, deletionId: string, lookup:
   return allIdCopy;
 }
 
-// const deleteChildren = (object: (ItStatements | Statements), deletionId: string, lookup: string, it?: string) => {
-//   let allIdCopy;
-//   if (it && !Array.isArray(object.allIds)) {
-//     // delete everything appropriate in itStatements.byId object
-//     object.allIds[deletionId].forEach((id) => {
-//       delete object.byId[id];
-//     });
-//     // delete everything appropriate in itStatements.allIds object
-//     delete object.allIds[deletionId];
-//     allIdCopy = object.allIds;
-//   } else if (Array.isArray(object.allIds)) {
-//     // use .filter to delete from statements.allIds array
-//     allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
-//     // delete from statements.byId object
-//     object.allIds.forEach((id) => {
-//       if (object.byId[id][lookup] === deletionId) {
-//         delete object.byId[id];
-//       }
-//     });
-//   }
-
-//   return allIdCopy;
-// };
-
 /* ------------------------- React Test Case Reducer ------------------------ */
 
-export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: any) => {
+export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: ReactReducerAction) => {
   Object.freeze(state);
 
   let describeBlocks: DescribeBlocks = { ...state.describeBlocks };
