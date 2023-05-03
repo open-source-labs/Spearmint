@@ -20,6 +20,7 @@ const os = require('os');
 const folderOpenIcon = require('../../assets/images/folder-open.png');
 import { FaFolderOpen } from 'react-icons/fa'
 import { Button } from '@mui/material';
+import { File, FilePathMap } from '../../utils/globalTypes';
 
 // Change execute command based on os platform
  
@@ -28,14 +29,14 @@ if (os.platform() === 'win32') {
   execute = '\r';
 }
 
-const OpenFolder = () => {
+const OpenFolder = (): JSX.Element => {
   const [{ testCase, isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
     GlobalContext,
   );
 
   const handleOpenFolder = () => {
     // opens finder (or equivalent), prompts user to select file directory
-    const directory = ipcRenderer.sendSync('OpenFolderButton.dialog');
+    const directory: string[] | undefined = ipcRenderer.sendSync('OpenFolderButton.dialog');
     if (directory && directory[0]) {
       let directoryPath = directory[0];
       // replace backslashes for Windows OS
@@ -54,9 +55,8 @@ const OpenFolder = () => {
     }
   };
 
-  
-  const filePathMap = {};
-  const populateFilePathMap = (file) => {
+  const filePathMap: FilePathMap = {};
+  const populateFilePathMap = (file: File) => {
     const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx', 'vue', 'svelte'];
     const fileType = file.fileName.split('.')[1];
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
@@ -64,15 +64,15 @@ const OpenFolder = () => {
     }
 
   };
-  
+
 //generates current file tree for current nesting level if there are more directories inside the directory recursively call each other. at the end return file to the mapping. 
-  const generateFileTreeObject = (directoryPath) => {
+  const generateFileTreeObject = (directoryPath: string): File[] => {
     const filePaths = ipcRenderer.sendSync('Universal.readDir', directoryPath);
-    const fileArray = filePaths.map((fileName) => {
+    const fileArray = filePaths.map((fileName: string) => {
       // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       const filePath = `${directoryPath}/${fileName}`;
-      const file = {
+      const file: File = {
         filePath,
         fileName,
         files: [],

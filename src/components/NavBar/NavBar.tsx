@@ -31,8 +31,12 @@ import {
 } from '../../context/reducers/reactTestCaseReducer';
 import { createNewTest } from '../../context/actions/frontendFrameworkTestCaseActions';
 
+interface inAboutPageProps {
+  inAboutPage: boolean;
+}
+
 // make sure to import in the dispatcher to the global state variable, isProjectLoaded
-const NavBar = ({ inAboutPage }) => {
+const NavBar = ({ inAboutPage }: inAboutPageProps) => {
   const [{ fileTree, isFileDirectoryOpen, theme, isProjectLoaded }, dispatchToGlobal] =
     useContext(GlobalContext);
   const [, dispatchToMockData] = useContext(MockDataContext);
@@ -47,12 +51,13 @@ const NavBar = ({ inAboutPage }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false); // this is currently a component-scoped state
   
   /* handles logout */
-  const handleLogout = () => {
-    dispatchToGlobal(loadProject(false));
-    fetch('http://localhost:3001/logout')
-      .then((res) => res.json())
-      .catch((err) => console.log(err));
-  };
+  // logout feature not being used
+  // const handleLogout = () => {
+  //   dispatchToGlobal(loadProject(false));
+  //   fetch('http://localhost:3001/logout')
+  //     .then((res) => res.json())
+  //     .catch((err) => console.log(err));
+  // };
 
   /* opens/closes the filedirectory */
   const handleToggleFileDirectory = () => {
@@ -119,7 +124,7 @@ const NavBar = ({ inAboutPage }) => {
         title={title}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        dispatchMockData={dispatchToMockData}
+        dispatchToMockData={dispatchToMockData}
         dispatchTestCase={dispatchToReactTestCase}
         createTest={createNewTest}
         />

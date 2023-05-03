@@ -69,7 +69,6 @@ const DescribeRenderer = ({
                   handleChangeItStatementText={handleChangeItStatementText}
                   theme={theme}
                 />
-                {innerProvided.placeholder}
           <Button className={styles.addIt} id={id} onClick={addItStatementHandleClick} variant="outlined">
             Add It Statement
           </Button>

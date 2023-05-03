@@ -1,6 +1,7 @@
 export interface MockDataArrayType {
-  id: number,
-  fieldKeys: Array<number>,
+  id: number;
+  fieldKeys: Array<number>;
+  name: string;
 }
 
 export interface MockDatumType {
@@ -19,7 +20,7 @@ export interface MockDataProps {
 
 export interface DispatchMock {
   type: string,
-  id: number,
+  id?: number,
   name?: string,
 }
 

@@ -29,6 +29,8 @@ import { VscNewFile } from "react-icons/vsc"
 import { Button, TextField, InputAdornment } from '@mui/material';
 import withStyles from '@mui/styles/withStyles';
 import { FaFileExport } from "react-icons/fa";
+import { DispatchMock, KeyDispatchMock } from '../../utils/mockTypes';
+import { File, filePathMapType } from '../../utils/globalTypes';
 
 // const ipc = require('electron').ipcRenderer;
 const { ipcRenderer } = require('electron');
@@ -56,6 +58,17 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
+interface ModalProps {
+  title: string;
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  dispatchToMockData: React.Dispatch<KeyDispatchMock | DispatchMock> | null;
+  dispatchTestCase: Function;
+  createTest: () => {type: string};
+  testType: null | string;
+  puppeteerUrl: string;
+}
+
 const Modal = ({
   title,
   isModalOpen,
@@ -65,7 +78,7 @@ const Modal = ({
   createTest,
   testType = null,
   puppeteerUrl = 'sample.io'
-}) => {
+}: ModalProps) => {
   // /* cancel export file (when false) */
   const closeModal = () => {
     setIsModalOpen(false); 
@@ -89,7 +102,7 @@ const Modal = ({
   const [btnFeedback, setBtnFeedback] = useState({ changedDir: false, installed: false });
   const [{ theme, validCode, projectFilePath, file }, dispatchToGlobal] = useContext(GlobalContext);
 
-  const handleChangeFileName = (e) => {
+  const handleChangeFileName = (e: React.BaseSyntheticEvent<KeyboardEvent>) => {
     setFileName(e.target.value);
     setInvalidFileName(false);
   };
@@ -125,7 +138,7 @@ const Modal = ({
     displayTestFile(folderPath);
   };
 
-  const displayTestFile = (testFolderFilePath) => {
+  const displayTestFile = (testFolderFilePath: string) => {
     const filePath = `${testFolderFilePath}/${fileName}.test.js`;
     const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
     dispatchToGlobal(updateFile(fileContent));
@@ -135,8 +148,8 @@ const Modal = ({
     dispatchToGlobal(setFileDirectory(true));
   };
 
-  const filePathMap = {};
-  const populateFilePathMap = (file) => {
+  const filePathMap: filePathMapType = {};
+  const populateFilePathMap = (file: File) => {
     const javaScriptFileTypes = ['js', 'jsx', 'ts', 'tsx'];
     const fileType = file.fileName.split('.')[1];
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
@@ -145,9 +158,9 @@ const Modal = ({
     }
   };
 
-  const generateFileTreeObject = (projectFilePath) => {
+  const generateFileTreeObject = (projectFilePath: string) => {
     const filePaths = ipcRenderer.sendSync('Universal.readDir', projectFilePath);
-    const fileArray = filePaths.map((fileName) => {
+    const fileArray = filePaths.map((fileName: string) => {
       // replace backslashes for Windows OS
       projectFilePath = projectFilePath.replace(/\\/g, '/');
       const filePath = `${projectFilePath}/${fileName}`;
