@@ -11,7 +11,7 @@ export interface ReactStatements {
     propId: number,
     describeBlocks: DescribeBlocks,
     itStatements: ItStatements,
-    statements: Statements
+    statements: Statements,
   }
   export interface DescribeBlocks {
     byId: DescribeById,
@@ -58,10 +58,20 @@ export interface ReactStatements {
   }
   
   export interface Statements {
-    byId: Object,
+    byId: StatementsById,
     allIds: Array<string>,
     componentPath: string,
     componentName: string,
+  }
+
+  export interface StatementsById {
+    [key: string]: {
+      id: string;
+      itId: string;
+      describeId: string;
+      type: string;
+      props: Array<Prop>;
+    }
   }
 
   export interface ReactTestComponentAssertion {
@@ -174,3 +184,37 @@ export interface ReactStatements {
     propKey: string;
     propValue: string;
   }
+
+  // Type interface for reactTestCaseReducer action type
+  export interface ReactReducerAction {
+  type: string,
+  id: number | string,
+  serverFileName?: string,
+  serverFilePath?: string,
+  draggableStatements?: Array<ReactStatements>,
+  index?: number,
+  text?: string,
+  assertion?: Assertion,
+  db?: string | boolean,
+  dbFilePath?: string,
+  dbFileName?: string,
+  testState?: object,
+  describeId: string,
+  reorderedDescribe: Array<string>,
+  itId: string,
+  reorderedIt: Array<string>,
+  statementId: string,
+  eventType: string,
+  eventValue?: string,
+  queryVariant: string,
+  querySelector: string,
+  queryValue: string,
+  suggestions: Array<string>
+  isNot: boolean,
+  matcherType: string,
+  matcherValue: string,
+  componentName: string,
+  filePath: string,
+  propKey: string,
+  propValue: string
+}

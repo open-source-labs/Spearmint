@@ -1,6 +1,6 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
-import { ReactTestCaseTypes, Action } from '../../utils/reactTypes';
+import { ReactTestCaseTypes, Action, ItStatements, DescribeBlocks, Statements, Prop, StatementsById, ReactReducerAction } from '../../utils/reactTypes';
 
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
@@ -48,20 +48,20 @@ export const reactTestCaseState: ReactTestCaseTypes = {
 
 /* ---------------------------- Helper Functions ---------------------------- */
 
-const createDescribeBlock = (describeId) => {
+const createDescribeBlock = (describeId: string) => {
   return {
     id: describeId,
     text: '',
   };
 };
 
-const createItStatement = (describeId, itId) => ({
+const createItStatement = (describeId: string, itId: string) => ({
   id: itId,
   describeId,
   text: '',
 });
 
-const createAction = (describeId, itId, statementId) => ({
+const createAction = (describeId: string, itId: string, statementId: string) => ({
   id: statementId,
   itId,
   describeId,
@@ -74,7 +74,7 @@ const createAction = (describeId, itId, statementId) => ({
   suggestions: [],
 });
 
-const createAssertion = (describeId, itId, statementId) => ({
+const createAssertion = (describeId: string, itId: string, statementId: string) => ({
   id: statementId,
   itId,
   describeId,
@@ -88,7 +88,7 @@ const createAssertion = (describeId, itId, statementId) => ({
   suggestions: [],
 });
 
-const createRender = (describeId, itId, statementId) => ({
+const createRender = (describeId: string, itId: string, statementId: string) => ({
   id: statementId,
   itId,
   describeId,
@@ -96,51 +96,55 @@ const createRender = (describeId, itId, statementId) => ({
   props: [],
 });
 
-const createProp = (propId, statementId) => ({
+const createProp = (propId: string, statementId: string) => ({
   id: propId,
   statementId,
   propKey: '',
   propValue: '',
 });
 
-const deleteChildren = (object, deletionId, lookup, it) => {
+// The function deleteChildren, is now split into two separate functions, based on the object type, as trying to reference the type of 'object' based on a conditional statement was throwing errors throughout the reducer actionTypes /////
+
+const deleteItChildren = (object: ItStatements, deletionId: string, lookup: string, it?: string) => {
   let allIdCopy;
-  if (it) {
-    // delete everything appropriate in itStatements.byId object
-    object.allIds[deletionId].forEach((id) => {
-      delete object.byId[id];
-    });
-    // delete everything appropriate in itStatements.allIds object
-    delete object.allIds[deletionId];
-    allIdCopy = object.allIds;
-  } else {
-    // use .filter to delete from statements.allIds array
-    allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
+  // delete everything appropriate in itStatements.byId object
+  object.allIds[deletionId].forEach((id) => {
+    delete object.byId[id];
+  });
+  // delete everything appropriate in itStatements.allIds object
+  delete object.allIds[deletionId];
+  allIdCopy = object.allIds;
+  return allIdCopy;
+};
+
+const deleteStatementChildren = (object: Statements, deletionId: string, lookup: 'describeId' | 'itId') => {
+  // use .filter to delete from statements.allIds array
+  let allIdCopy = object.allIds.filter((id) => object.byId[id][lookup] !== deletionId);
     // delete from statements.byId object
     object.allIds.forEach((id) => {
       if (object.byId[id][lookup] === deletionId) {
         delete object.byId[id];
       }
     });
-  }
-
   return allIdCopy;
-};
+}
 
 /* ------------------------- React Test Case Reducer ------------------------ */
 
-export const reactTestCaseReducer = (state, action) => {
+export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: ReactReducerAction) => {
   Object.freeze(state);
 
-  let describeBlocks;
-  let itStatements;
-  let statements;
+  let describeBlocks: DescribeBlocks = { ...state.describeBlocks };
+  let itStatements: ItStatements = { ...state.itStatements };
+  let statements: Statements = { ...state.statements };
 
-  if (state && action) {
-    describeBlocks = { ...state.describeBlocks };
-    itStatements = { ...state.itStatements };
-    statements = { ...state.statements };
-  }
+  // Commented this out because the variables had to be initialized before their types could be set
+
+  // if (state && action) {
+  //   describeBlocks = { ...state.describeBlocks };
+  //   itStatements = { ...state.itStatements };
+  //   statements = { ...state.statements };
+  // }
 
   switch (action.type) {
     case actionTypes.RESET_TESTS: {
@@ -174,10 +178,10 @@ export const reactTestCaseReducer = (state, action) => {
       const { describeId } = action;
       const byId = { ...describeBlocks.byId };
       delete byId[describeId];
-      const allIds = describeBlocks.allIds.filter((id) => id !== describeId);
+      const allIds = describeBlocks.allIds.filter((id: string) => id !== describeId);
 
-      const itStatementAllIds = deleteChildren(itStatements, describeId, 'describeId', 'it');
-      const statementAllIds = deleteChildren(statements, describeId, 'describeId');
+      const itStatementAllIds = deleteItChildren(itStatements, describeId, 'describeId', 'it');
+      const statementAllIds = deleteStatementChildren(statements, describeId, 'describeId');
 
       return {
         ...state,
@@ -277,8 +281,8 @@ export const reactTestCaseReducer = (state, action) => {
       const { describeId } = itStatements.byId[itId];
       const byId = { ...itStatements.byId };
       delete byId[itId];
-      const allIds = itStatements.allIds[describeId].filter((id) => id !== itId);
-      const statementAllIds = deleteChildren(statements, itId, 'itId');
+      const allIds = itStatements.allIds[describeId].filter((id: string) => id !== itId);
+      const statementAllIds = deleteStatementChildren(statements, itId, 'itId');
 
       return {
         ...state,
@@ -520,7 +524,7 @@ export const reactTestCaseReducer = (state, action) => {
     }
     case actionTypes.DELETE_PROP: {
       const { id, statementId } = action;
-      const props = statements.byId[statementId].props.filter((prop) => prop.id !== id);
+      const props = statements.byId[statementId].props.filter((prop: Prop) => prop.id !== id);
       return {
         ...state,
         statements: {
