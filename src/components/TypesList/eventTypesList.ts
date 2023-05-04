@@ -1,7 +1,12 @@
 /**
  * List of event types that are used in the AutoComplete component to help with the auto complete process
+ * TODO: The functionality for autocompleting eventtypes is not currently in use. Check AutoComplete Component.
  */
-export const eventTypesList = [
+interface EventType {
+  name: string
+}
+
+export const eventTypesList: Array<EventType> = [
   // Clipboard Events
   {
     name: 'copy',
