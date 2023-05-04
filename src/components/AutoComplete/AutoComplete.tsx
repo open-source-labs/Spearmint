@@ -4,6 +4,8 @@ import styles from './AutoComplete.module.scss';
 import { updateAction, updateAssertion } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { eventTypesList } from '../TypesList/eventTypesList';
 import { matcherTypesList} from '../TypesList/matcherTypesList';
+import { AutoCompleteProps, AutoCompleteStatement } from '../../utils/reactTypes';
+import { AutosuggestProps } from 'react-autosuggest';
 
 
 /**
@@ -16,9 +18,15 @@ import { matcherTypesList} from '../TypesList/matcherTypesList';
  * 
  * @returns { JSX.Element } Returns the AutoComplete react component
  */
-const AutoComplete = (props) => {
+
+interface SuggestionType {
+  name: string;
+}
+
+
+const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   const { statement, statementType, dispatchToTestCase, type = 'react' } = props;
-  let updatedAction = { ...statement };
+  let updatedAction: AutoCompleteStatement = { ...statement };
   let updatedAssertion = { ...statement };
 
   /**
@@ -26,7 +34,7 @@ const AutoComplete = (props) => {
    * @param { e } e - event
    * @param { string } newValue - current input box text
    */
-  const handleChangeValue = (e, { newValue }) => {
+  const handleChangeValue = (e: React.ChangeEvent, { newValue }: { newValue: string }) => {
     if (statementType === 'action') {
       updatedAction.eventType = newValue;
       dispatchToTestCase(updateAction(updatedAction));
@@ -47,7 +55,6 @@ const AutoComplete = (props) => {
         : statementType === 'assertion' && updatedAssertion.isNot
         ? `not.${statement.matcherType}`
         : null,
-
     onChange: handleChangeValue,
   };
   /**
@@ -56,7 +63,7 @@ const AutoComplete = (props) => {
    * @param { string } value - User input
    * @returns { (string[] | []) } Returns an array of eventTypes/matcherTypes or an empty array when user has to provide an input
    */
-  const getSuggestions = (value) => {
+  const getSuggestions = (value: string): number | any[] | void => { //array must be typed as any since this sometimes returns an empty array
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     if(type === 'react' || type === 'vue' || type === 'svelte'){
@@ -81,7 +88,7 @@ const AutoComplete = (props) => {
    * @param { string } value - User Input
    * @returns { void } Returns void
    */
-  const onSuggestionsFetchRequested = ({ value }) => {
+  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
     if (statementType === 'action') {
       updatedAction.suggestions = getSuggestions(value);
       dispatchToTestCase(updateAction(updatedAction));
@@ -109,16 +116,18 @@ const AutoComplete = (props) => {
   //udatedAssertion.isNot is a property that is updated when the Not checkbox is clicked (Visible when adding Assertions to tests)
   let getSuggestionValue;
   updatedAssertion.isNot
-    ? (getSuggestionValue = (suggestion) => `not.${suggestion.name}`)
-    : (getSuggestionValue = (suggestion) => suggestion.name);
+    ? (getSuggestionValue = (suggestion: SuggestionType) => `not.${suggestion.name}`)
+    : (getSuggestionValue = (suggestion: SuggestionType) => suggestion.name);
 
   let renderSuggestion;
 
   updatedAssertion.isNot
-    ? (renderSuggestion = (suggestion) => <div>not.{suggestion.name}</div>)
-    : (renderSuggestion = (suggestion) => <div>{suggestion.name}</div>);
+    ? (renderSuggestion = (suggestion: SuggestionType) => <div>not.{suggestion.name}</div>)
+    : (renderSuggestion = (suggestion: SuggestionType) => <div>{suggestion.name}</div>);
 
   return (
+    //@ts-ignore --> whoever wrote the code below borked the implementation, so if you can correctly deduce the type of this, hats off to you
+    // this component should probably be completely rewritten, the way it interacts with state is suboptimal
     <AutoSuggest
       theme={styles}
       suggestions={statement.suggestions}

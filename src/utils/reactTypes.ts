@@ -11,7 +11,7 @@ export interface ReactStatements {
     propId: number,
     describeBlocks: DescribeBlocks,
     itStatements: ItStatements,
-    statements: Statements
+    statements: Statements,
   }
   export interface DescribeBlocks {
     byId: DescribeById,
@@ -70,8 +70,7 @@ export interface ReactStatements {
       itId: string;
       describeId: string;
       type: string;
-      // fix props!!!!! may not work
-      props: [];
+      props: Array<Prop>;
     }
   }
 
@@ -97,24 +96,25 @@ export interface ReactStatements {
   }
 
   export interface UpdateActionProps {
-    id: string,
+    id?: string,
     eventType?: string,
     eventValue?: string,
     queryVariant?: string,
     querySelector?: string,
     queryValue?: string,
-    suggestions?: string[]
+    suggestions?: any[] | number | void
+
   }
 
   export interface UpdateAssertionProps {
-    id: string,
-    queryVariant?: string,
-    querySelector?: string,
-    queryValue?: string,
-    isNot?: boolean,
-    matcherType?: string,
-    matcherValue?: string,
-    suggestions?: string[],
+    id?: string;
+    queryVariant?: string;
+    querySelector?: string;
+    queryValue?: string;
+    isNot?: boolean;
+    matcherType?: string;
+    matcherValue?: string;
+    suggestions?: any[] | number | void;
   }
 
   export interface Prop {
@@ -154,3 +154,67 @@ export interface ReactStatements {
       text: string
     }
   }
+
+  export interface AutoCompleteStatement {
+    eventType?: string;
+    matcherType?: string;
+    isNot?: boolean;
+    suggestions?: number | any[] | void;
+  }
+
+  export interface AutoCompleteProps {
+    statement: AutoCompleteStatement; 
+    statementType: string;
+    dispatchToTestCase: Function;
+    type: string;
+  }
+
+  export interface AutoCompleteMockDataStatement {
+    eventValue?: string;
+    queryValue?: string;
+  }
+
+  export interface AutoCompleteMockDataProps {
+    statement: AutoCompleteMockDataStatement;
+    statementType: string;
+    dispatchToTestCase: Function;
+    propType: string;
+    renderId: string;
+    propId: string;
+    propKey: string;
+    propValue: string;
+  }
+
+  // Type interface for reactTestCaseReducer action type
+  export interface ReactReducerAction {
+  type: string,
+  id: number | string,
+  serverFileName?: string,
+  serverFilePath?: string,
+  draggableStatements?: Array<ReactStatements>,
+  index?: number,
+  text?: string,
+  assertion?: Assertion,
+  db?: string | boolean,
+  dbFilePath?: string,
+  dbFileName?: string,
+  testState?: object,
+  describeId: string,
+  reorderedDescribe: Array<string>,
+  itId: string,
+  reorderedIt: Array<string>,
+  statementId: string,
+  eventType: string,
+  eventValue?: string,
+  queryVariant: string,
+  querySelector: string,
+  queryValue: string,
+  suggestions: Array<string>
+  isNot: boolean,
+  matcherType: string,
+  matcherValue: string,
+  componentName: string,
+  filePath: string,
+  propKey: string,
+  propValue: string
+}

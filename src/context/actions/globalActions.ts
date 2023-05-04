@@ -1,3 +1,5 @@
+import { File, filePathMapType } from "../../utils/globalTypes";
+
 export const actionTypes = {
   SET_PROJECT_URL: 'SET_PROJECT_URL',
   LOAD_PROJECT: 'LOAD_PROJECT',
@@ -41,7 +43,7 @@ export const loadProject = (load: string) => ({
   load,
 });
 
-export const createFileTree = (fileTree: string) => ({
+export const createFileTree = (fileTree: File[]) => ({
   type: actionTypes.CREATE_FILE_TREE,
   fileTree,
 });
@@ -74,7 +76,7 @@ export const setProjectFilePath = (projectFilePath: string) => ({
   projectFilePath,
 });
 
-export const setFilePathMap = (filePathMap: string) => ({
+export const setFilePathMap = (filePathMap: filePathMapType) => ({
   type: actionTypes.SET_FILE_PATH_MAP,
   filePathMap,
 });
@@ -141,7 +143,7 @@ export const setTheme = (theme: string) => ({
   theme,
 });
 
-export const setFileDirectory = (fileDirectoryOpen: string) => ({
+export const setFileDirectory = (fileDirectoryOpen: boolean) => ({
   type: actionTypes.SET_FILE_DIRECTORY,
   fileDirectoryOpen,
 });
