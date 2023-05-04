@@ -1,14 +1,8 @@
-/**
- * question mark notes for matchers
- */
+/*
+  ToolTipMatcher object for Assertion '? Mark' feature and relevant interface/type
+*/
 
-import React from 'react';
-
-const ToolTipMatcher = ({ toolTipType }) => {
-  if (toolTipType.includes('.')) {
-    toolTipType = toolTipType.replace(/\./g, '');
-  }
-  const TOOLTIP_MAP_MATCHERS = {
+export const TOOLTIP_MAP_MATCHERS = {
     '': 'Choose a matcher',
     toBeDisabled:
       "This allows you to check whether an element is disabled from the user's perspective.",
@@ -63,7 +57,8 @@ const ToolTipMatcher = ({ toolTipType }) => {
       'This allows you to check whether the given element does not have a text content.',
   };
 
-  return <span id={'styles.tooltip'}>{TOOLTIP_MAP_MATCHERS[toolTipType]}</span>;
-};
+export type ToolTipMatcherType = keyof typeof TOOLTIP_MAP_MATCHERS;
 
-export default ToolTipMatcher;
+export interface MatchersProps {
+  toolTipType: ToolTipMatcherType;
+}
