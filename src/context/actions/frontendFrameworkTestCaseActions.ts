@@ -1,4 +1,7 @@
 
+// Actions for all front end frameworks, React, Solid, Svelete, and Vue can all use this because they 
+// function the same
+
 /* ------------------------------ Action Types ------------------------------ */
 
 import { UpdateActionProps, UpdateAssertionProps } from "../../utils/reactTypes";

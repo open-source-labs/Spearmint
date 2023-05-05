@@ -13,6 +13,9 @@ import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
 const questionIcon = require('../../../assets/images/help-circle.png');
 const closeIcon = require('../../../assets/images/close.png');
 
+// This is tracking the assertions that you have in a certain test, following the flow of data will help 
+// you better understand how exactly this is working
+
 type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
 
 type FieldTypes = (

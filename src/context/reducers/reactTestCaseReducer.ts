@@ -2,6 +2,8 @@ import React, { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
 import { ReactTestCaseTypes, Action, ItStatements, DescribeBlocks, Statements, Prop, StatementsById, ReactReducerAction } from '../../utils/reactTypes';
 
+// similar to globalReducer, but instead of dealing with global items, this is specific to React, 
+// this holds state for things like describe and it statements, basically what your React test looks like
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
 
@@ -146,6 +148,8 @@ export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: ReactRed
   //   statements = { ...state.statements };
   // }
 
+  // these are all of the actions that are specific to the test, this will be similar in other frameworks because
+  // they funciton the same
   switch (action.type) {
     case actionTypes.RESET_TESTS: {
       return reactTestCaseState;
@@ -602,6 +606,7 @@ export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: ReactRed
   }
 };
 
+// here we are using useContext to create the React state to be used in other files
 const dispatchToReactTestCase = () => null;
 const reactTestCaseArr: [ReactTestCaseTypes, (action: Action) => void] = [reactTestCaseState, dispatchToReactTestCase]
 export const ReactTestCaseContext = createContext(reactTestCaseArr);

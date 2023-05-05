@@ -15,6 +15,8 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { RenderProps } from '../../../utils/reactTypes';
 const closeIcon = require('../../../assets/images/close.png');
 
+// this is the file that shows what component you are rendering in your test
+
 const Render = ({ statement, statementId, describeId, itId }: RenderProps): JSX.Element => {
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{theme}] = useContext(GlobalContext)
