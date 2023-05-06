@@ -2,10 +2,10 @@
  * the question mark notes for selectors
  */
 
-import React from 'react';
+import React, { ReactElement } from 'react';
+import { TOOLTIP_MAP_ASYNC } from '../../utils/toolTipTypes';
 
-const ToolTip = ({ toolTipType }) => {
-  const TOOLTIP_MAP = {
+const TOOLTIP_MAP = {
     '': 'Choose a selector',
     getBy:
       'Returns the first matching node for a query, and throws an error if no elements match or if more than one match is found (use getAllBy instead).',
@@ -42,7 +42,11 @@ const ToolTip = ({ toolTipType }) => {
       "The First Contentful Paint (FCP) metric measures the time from when the page starts loading to when any part of the page's content is rendered on the screen. Provide a target value in ms.",
   };
 
+const ToolTip = ({ toolTipType }: { toolTipType:  ToolTipMapType}): ReactElement<any, any> => {
+  
   return <span id={"styles.tooltip"}>{TOOLTIP_MAP[toolTipType]}</span>;
 };
+
+export type ToolTipMapType = keyof typeof TOOLTIP_MAP;
 
 export default ToolTip;
