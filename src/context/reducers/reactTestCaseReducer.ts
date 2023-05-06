@@ -132,7 +132,15 @@ const deleteStatementChildren = (object: Statements, deletionId: string, lookup:
 }
 
 /* ------------------------- React Test Case Reducer ------------------------ */
-
+/* 
+If you have reached this comment in search of trying to resolve type errors of passed in actions of dispatch
+functions pointing at this reducer, I have looked at this for several hours and come to the conclusion that the
+actions & cases will need to be somewhat (read: completely) rewritten in a more consistent way in order to
+satisfy typescript. Unfortunately we are not able to achieve this in the time available to us. For inspiration,
+I would encourage you to look at ./hooksTestCaseReducer, which seems to have a workable implementation that could 
+be extended to the other reducers. I hope this comment can save you the hours of confusion I experienced when trying
+to parse this code. Good luck!
+*/
 export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: ReactReducerAction) => {
   Object.freeze(state);
 
