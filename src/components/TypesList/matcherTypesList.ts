@@ -1,7 +1,12 @@
 /**
  * List of event types that are used in the AutoComplete component to help with the auto complete process
+ * This list is imported in the AutoComplete functionality for assertion matcher autocomplete.
  */
-export const matcherTypesList = [
+interface MatcherType {
+  name: string
+}
+
+export const matcherTypesList: Array<MatcherType> = [
   {
     name: 'toHaveTextContent',
   },

@@ -13,6 +13,9 @@ import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ItStatements, Statements, ItById } from '../../../utils/reactTypes';
 
+// This is tracking the it statements you have in a certain test, following the flow of data will 
+// help you better understand exactly how this works
+
 interface ItRendererProps {
   type: string;
   itStatements: ItStatements;

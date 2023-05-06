@@ -10,6 +10,7 @@ import { PropProps } from '../../../utils/reactTypes';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
+// This is the file that tracks what props you are passing into a specific test
 
 const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase, theme }: PropProps): JSX.Element => {
   const handleClickDeleteProp = (e: React.MouseEvent): void => {
