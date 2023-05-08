@@ -1,6 +1,6 @@
 import { reactTestCaseReducer, reactTestCaseState } from '../context/reducers/reactTestCaseReducer';
 
-xdescribe('React Reducer', () => {
+describe('React Reducer', () => {
   let initialState = {};
 
   beforeEach(() => {
@@ -26,7 +26,9 @@ xdescribe('React Reducer', () => {
             text: '',
           },
         },
-        allIds: ['it0'],
+        allIds: {
+          describe0: ['it0']
+        },
       },
       statements: {
         byId: {
@@ -101,6 +103,13 @@ xdescribe('React Reducer', () => {
         },
         allIds: ['describe0', 'describe1'],
       },
+      itStatements: {
+        byId: {...initialState.itStatements.byId},
+        allIds: {
+          describe0: ['it0'],
+          describe1: []
+        },
+      }
     });
   });
 
@@ -137,7 +146,7 @@ xdescribe('React Reducer', () => {
       },
       itStatements: {
         byId: {},
-        allIds: [],
+        allIds: {},
       },
       statements: {
         ...initialState.statements,
@@ -164,7 +173,9 @@ xdescribe('React Reducer', () => {
             text: '',
           },
         },
-        allIds: ['it0', 'it1'],
+        allIds: {
+          describe0: ['it0', 'it1']
+        },
       },
     });
   });
@@ -199,7 +210,8 @@ xdescribe('React Reducer', () => {
       ...initialState,
       itStatements: {
         byId: {},
-        allIds: [],
+        allIds: {
+          describe0: []},
       },
       statements: {
         ...initialState.statements,
@@ -609,7 +621,8 @@ xdescribe('React Reducer', () => {
     });
   });
 
-  it('should handle CREATE_NEW_TEST', () => {
+  // this test is associated with creating a new test in the database, which there is currently no functionality for.
+  xit('should handle CREATE_NEW_TEST', () => {
     const action = { type: 'CREATE_NEW_TEST' };
     expect(reactTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
@@ -619,7 +632,7 @@ xdescribe('React Reducer', () => {
       },
       itStatements: {
         byId: {},
-        allIds: [],
+        allIds: {},
       },
       statements: {
         byId: {},
