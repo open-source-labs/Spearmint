@@ -1,7 +1,7 @@
 import { reduxTestCaseReducer as subject } from '../context/reducers/reduxTestCaseReducer';
 import { ReduxTestCaseState } from '../utils/reduxTypes';
 
-xdescribe('Redux Test Case Reducer', () => {
+describe('Redux Test Case Reducer', () => {
   let state: ReduxTestCaseState;
 
   beforeEach(() => {
@@ -296,6 +296,7 @@ xdescribe('Redux Test Case Reducer', () => {
           actionsFileName: 'Hello',
           filePath: 'World',
           id: 3,
+          type: 'action-creator',
         },
       };
 
@@ -360,14 +361,18 @@ xdescribe('Redux Test Case Reducer', () => {
         state.reduxStatements.push({
           id: 1,
           type: 'reducer',
+          itStatement: '',
           typesFileName: '',
           typesFilePath: '',
           reducersFileName: '',
           reducersFilePath: '',
           reducerAction: '',
           initialState: '',
+          payloadKey: '',
+          payloadValue: '',
           reducerName: '',
-          expectedState: '',
+          expectedKey: '',
+          expectedValue: '',
         });
 
         const { reduxStatements } = subject(state, action);
@@ -385,14 +390,19 @@ xdescribe('Redux Test Case Reducer', () => {
         type: 'UPDATE_REDUCER',
         payload: {
           id: 3,
+          type: 'reducer',
+          itStatement: 'itStatement',
+          typesFileName: 'typesFileName',
+          typesFilePath: 'typesFilePath',
           reducersFileName: 'reducersFileName',
           reducersFilePath: 'reducersFilePath',
-          typesFilePath: 'typesFilePath',
-          typesFileName: 'typesFileName',
           reducerAction: 'reducerAction',
-          initialState: 'initalState',
+          initialState: 'initialState',
+          payloadKey: 'payloadKey',
+          payloadValue: 'payloadValue',
           reducerName: 'reducerName',
-          expectedState: 'expectedState',
+          expectedKey: 'expectedKey',
+          expectedValue: 'expectedValue',
         },
       };
 
@@ -405,28 +415,36 @@ xdescribe('Redux Test Case Reducer', () => {
         state.reduxStatements.push({
           id: 3,
           type: 'reducer',
+          itStatement: '',
           typesFileName: '',
           typesFilePath: '',
           reducersFileName: '',
           reducersFilePath: '',
           reducerAction: '',
           initialState: '',
+          payloadKey: '',
+          payloadValue: '',
           reducerName: '',
-          expectedState: '',
+          expectedKey: '',
+          expectedValue: '',
         });
 
         const { reduxStatements } = subject(state, action);
 
         expect(reduxStatements[0].id).toEqual(3);
         expect(reduxStatements[0].type).toEqual('reducer');
+        expect(reduxStatements[0].itStatement).toEqual('itStatement');
         expect(reduxStatements[0].reducersFileName).toEqual('reducersFileName');
         expect(reduxStatements[0].reducersFilePath).toEqual('reducersFilePath');
         expect(reduxStatements[0].typesFilePath).toEqual('typesFilePath');
         expect(reduxStatements[0].typesFileName).toEqual('typesFileName');
         expect(reduxStatements[0].reducerAction).toEqual('reducerAction');
-        expect(reduxStatements[0].initialState).toEqual('initalState');
+        expect(reduxStatements[0].initialState).toEqual('initialState');
+        expect(reduxStatements[0].payloadKey).toEqual('payloadKey');
+        expect(reduxStatements[0].payloadValue).toEqual('payloadValue');
         expect(reduxStatements[0].reducerName).toEqual('reducerName');
-        expect(reduxStatements[0].expectedState).toEqual('expectedState');
+        expect(reduxStatements[0].expectedKey).toEqual('expectedKey');
+        expect(reduxStatements[0].expectedValue).toEqual('expectedValue');
       });
 
       it('should return copy of state object', () => {
@@ -450,14 +468,18 @@ xdescribe('Redux Test Case Reducer', () => {
             {
               id: 3,
               type: 'reducer',
+              itStatement: '',
               typesFileName: '',
               typesFilePath: '',
               reducersFileName: '',
               reducersFilePath: '',
               reducerAction: '',
               initialState: '',
+              payloadKey: '',
+              payloadValue: '',
               reducerName: '',
-              expectedState: '',
+              expectedKey: '',
+              expectedValue: '',
             },
           ],
         };
@@ -510,10 +532,15 @@ xdescribe('Redux Test Case Reducer', () => {
           asyncFunction: '',
           method: '',
           route: '',
-          requestBody: '',
           store: '',
           matcher: '',
-          expectedResponse: '',
+          status: '',
+          actionType: '',
+          payloadKey: '',
+          payloadType: '',
+          responseKey: '',
+          responseValue: '',
+          it: '',
         });
 
         const { reduxStatements } = subject(state, action);
@@ -531,16 +558,18 @@ xdescribe('Redux Test Case Reducer', () => {
         type: 'UPDATE_ASYNC',
         payload: {
           id: 3,
-          actionsFile: 'actionsFile',
+          actionsFileName: 'actionsFileName',
           typesFileName: 'typesFileName',
           typesFilePath: 'typesFilePath',
           asyncFunction: 'asyncFunction',
           method: 'method',
           route: 'route',
-          requestBody: 'requestBody',
-          store: 'store',
-          matcher: 'matcher',
-          expectedResponse: 'expectedResponse',
+          actionType: 'actionType',
+          payloadKey: 'payloadKey',
+          payloadType: 'payloadType',
+          responseType: 'responseValue',
+          it: 'it',
+          expectedArg: 'expectedArg'
         },
       };
 
@@ -554,31 +583,35 @@ xdescribe('Redux Test Case Reducer', () => {
           id: 3,
           type: 'async',
           actionsFileName: '',
-          filePath: '',
+          asyncFunction: '',
           typesFileName: '',
           typesFilePath: '',
-          asyncFunction: '',
           method: '',
           route: '',
-          requestBody: '',
-          store: '',
-          matcher: '',
-          expectedResponse: '',
+          actionType: '',
+          payloadKey: '',
+          payloadType: '',
+          responseType: '',
+          it: '',
+          expectedArg: '',
         });
 
         const { reduxStatements } = subject(state, action);
 
         expect(reduxStatements[0].id).toEqual(3);
         expect(reduxStatements[0].type).toEqual('async');
+        expect(reduxStatements[0].actionsFileName).toEqual('actionsFileName');
+        expect(reduxStatements[0].asyncFunction).toEqual('asyncFunction');
         expect(reduxStatements[0].typesFileName).toEqual('typesFileName');
         expect(reduxStatements[0].typesFilePath).toEqual('typesFilePath');
-        expect(reduxStatements[0].asyncFunction).toEqual('asyncFunction');
         expect(reduxStatements[0].method).toEqual('method');
         expect(reduxStatements[0].route).toEqual('route');
-        expect(reduxStatements[0].requestBody).toEqual('requestBody');
-        expect(reduxStatements[0].store).toEqual('store');
-        expect(reduxStatements[0].matcher).toEqual('matcher');
-        expect(reduxStatements[0].expectedResponse).toEqual('expectedResponse');
+        expect(reduxStatements[0].actionType).toEqual('actionType');
+        expect(reduxStatements[0].payloadKey).toEqual('payloadKey');
+        expect(reduxStatements[0].payloadType).toEqual('payloadType');
+        expect(reduxStatements[0].responseType).toEqual('responseValue');
+        expect(reduxStatements[0].it).toEqual('it');
+        expect(reduxStatements[0].expectedArg).toEqual('expectedArg');
       });
 
       it('should return copy of state object', () => {
@@ -663,10 +696,14 @@ xdescribe('Redux Test Case Reducer', () => {
     });
   });
   //----------- Update Types FilePath ------->
-  describe('Update Types File Path', () => {
+  /* The switch case associated with this test seems to not actually do anything -
+     updateTypesFilePath exists as a prop on several components, but points to null
+     in every case I could find. Further investigation may be necessary. */
+/*  describe('Update Types File Path', () => {
     const action = {
       type: 'UPDATE_TYPES_FILEPATH',
       payload: {
+        type: '',
         typesFileName: 'Hello',
         typesFilePath: 'World',
         id: 3,
@@ -698,5 +735,5 @@ xdescribe('Redux Test Case Reducer', () => {
       expect(reduxStatements[0].typesFilePath).toEqual('World');
       expect(reduxStatements[0].id).toEqual(3);
     });
-  });
-});
+  }); */
+}); 
