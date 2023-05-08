@@ -9,9 +9,9 @@ import ReduxTestCase from '../components/TestCase/ReduxTestCase';
 import { act } from 'react-dom/test-utils'
 import ReduxTestMenu from '../components/TestMenu/ReduxTestMenu';
 import TestMenuButtons from '../components/TestMenu/TestMenuButtons';
+import { ReduxTestCaseState } from '../utils/reduxTypes';
 
 describe('should render ReduxTestCase component', () => {
-  // const { getByRole, debug } = act(() => { render(<ReduxTestCase />) });
   beforeEach(() => {
     render(<ReduxTestCase/>);
   });
@@ -26,9 +26,24 @@ describe('should render ReduxTestCase component', () => {
   })
 });
 
+describe('should render the ReduxTestMenu component.', () => {
+
+  beforeEach(() => {
+    render(<ReduxTestMenu/>);
+    let state = {
+      reduxTestStatement: '',
+      reduxStatements: [],
+    };
+  })
+
+  it('handles resetting the tests', () => {
+    
+  })
+})
+
 describe('should render the TestMenuButtons component', () => {
   beforeEach(() => {
-    render(<TestMenuButtons/>)
+    render(<TestMenuButtons/>);
   })
 
   it('displays the test menu component', () => {
@@ -47,9 +62,4 @@ describe('should render the TestMenuButtons component', () => {
     })
   });
 
-  it('displays all of the svg icons', () => {
-      const buttons = screen.getAllByRole('button');
-
-
-  })
 })
