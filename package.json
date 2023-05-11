@@ -158,6 +158,7 @@
     "@electron-forge/maker-rpm": "^6.0.4",
     "@electron-forge/maker-squirrel": "^6.0.4",
     "@electron-forge/maker-zip": "^6.0.4",
+    "@testing-library/user-event": "^14.4.3",
     "@types/babel__core": "^7.20.0",
     "@types/electron-devtools-installer": "^2.2.2",
     "@types/react-autosuggest": "^10.1.6",
