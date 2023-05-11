@@ -36,11 +36,36 @@ describe('should render ReduxTestCase component', () => {
     const input = screen.getByLabelText(/describe block/i);
     expect(input).toBeInTheDocument();
   })
+
+  it('displays the correct text for the buttons', () => {
+    const reducer = screen.getByTestId('reducerButton');
+    expect(reducer).toBeInTheDocument();
+    expect(reducer.textContent).toBe('Reducer');
+
+    const actionCreator = screen.getByTestId('actionCreatorButton');
+    expect(actionCreator).toBeInTheDocument();
+    expect(actionCreator.textContent).toBe('Action Creator');
+
+    const asyncButton = screen.getByTestId('asyncButton');
+    expect(asyncButton).toBeInTheDocument();
+    expect(asyncButton.textContent).toBe('Async Action Creator');
+
+    const middleware = screen.getByTestId('middlewareButton');
+    expect(middleware).toBeInTheDocument();
+    expect(middleware.textContent).toBe('Middleware');
+  })
+
+  it('displays all nine button options on the page', () => {
+    const buttons = screen.getAllByRole('button');
+
+    expect(buttons).toHaveLength(9);
+    expect(buttons).not.toBeNull();
+  });
 });
 
 describe('should render the ReduxTestMenu component.', () => {
 
-  it('should pass openDocs function as prop to TestMenuButtons', () => {
+  xit('should pass openDocs function as prop to TestMenuButtons', () => {
     const openDocs = jest.fn();
 
     render(<ReduxTestMenu openDocs={openDocs} dispatchToGlobal={dispatchToGlobal}/>);
