@@ -11,6 +11,15 @@ import ReduxTestMenu from '../components/TestMenu/ReduxTestMenu';
 import TestMenuButtons from '../components/TestMenu/TestMenuButtons';
 import { ReduxTestCaseState } from '../utils/reduxTypes';
 import { IconButton } from '@mui/material';
+import { ReduxTestCaseContext } from '../context/reducers/reduxTestCaseReducer';
+
+const dispatchToReduxTestCase = jest.fn();
+const dispatchToGlobal = jest.fn();
+
+const reduxTestCaseState = {
+  reduxTestStatement: '',
+  reduxStatements: []
+};
 
 describe('should render ReduxTestCase component', () => {
   beforeEach(() => {
@@ -34,30 +43,33 @@ describe('should render ReduxTestCase component', () => {
 
 describe('should render the ReduxTestMenu component.', () => {
 
-  beforeEach(() => {
-    render(<ReduxTestMenu/>);
-    let state = {
-      reduxTestStatement: '',
-      reduxStatements: [],
-    };
-  })
+  it('opens the Redux testing docs on click', () => {
+    const openDocs = jest.fn();
 
-  it('handles resetting the tests', () => {
-    const mock = jest.fn();
+    render(<ReduxTestMenu openDocs={openDocs} dispatchToGlobal={dispatchToGlobal}/>);
 
-  })
+    // Assert that the openDocs function was called
+    expect(screen.getByText(/openDocs/i).toBeInTheDocument());
+  });
+
+  xit('should pass openDocs function as prop to TestMenuButtons', async () => {
+    const { getByDisplayName } = render(<ReduxTestMenu />);
+    const TestMenuButtonsComponent = await getByDisplayName('TestMenuButtons');
+    const openDocsProp = TestMenuButtonsComponent.props.openDocs;
+
+    expect(typeof openDocsProp).toBe('function');
+  });
 })
 
 describe('should render the TestMenuButtons component', () => {
-  beforeEach(() => {
-    render(<TestMenuButtons/>);
-  })
 
   it('displays the test menu component', () => {
+    render(<TestMenuButtons/>);
     screen.debug();
   });
 
   it('displays all five test menu buttons', () => {
+    render(<TestMenuButtons/>);
     const buttons = screen.getAllByRole('button');
 
     expect(buttons).toHaveLength(5);
@@ -69,10 +81,10 @@ describe('should render the TestMenuButtons component', () => {
     })
   });
 
-  //needs work
-  xit('opens the redux testing docs on click', () => {
+  it('opens the redux testing docs on click', () => {
     const openDocs = jest.fn();
-    render(<TestMenuButtons onClick={openDocs}/>)
+
+    render(<TestMenuButtons openDocs={openDocs}/>)
 
     const helpButton = screen.getByTitle('Need Help?');
 
