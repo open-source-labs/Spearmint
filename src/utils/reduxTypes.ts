@@ -324,6 +324,11 @@ interface Async {
   payloadKey?: null | string;
   payloadType?: null | string;
   expectedArg?: string;
+  store?: string;
+  matcher?: string;
+  status?: string;
+  responseKey?: string;
+  responseValue?: string;
 }
 
 interface Reducer {
