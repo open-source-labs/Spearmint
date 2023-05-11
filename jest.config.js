@@ -16,7 +16,7 @@ module.exports = {
     "!**/*.json"
   ],
   "roots": [
-      "./__tests__",
+      "./src/__tests__",
       "./src",
       "./public",
       "./server",
