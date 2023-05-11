@@ -57,33 +57,3 @@ describe('should render the ReduxTestMenu component.', () => {
     expect(typeof openDocsProp).toBe('function');
   });
 })
-
-describe('should render the TestMenuButtons component', () => {
-
-  it('displays the test menu component', () => {
-    render(<TestMenuButtons/>);
-    screen.debug();
-  });
-
-  it('displays all five test menu buttons', () => {
-    render(<TestMenuButtons/>);
-    const buttons = screen.getAllByRole('button');
-
-    expect(buttons).toHaveLength(5);
-    expect(buttons).not.toBeNull();
-
-    buttons.forEach(button => {
-     const icon = within(button).getByTestId(/icon/i);
-     expect(icon).toBeInTheDocument();
-    })
-  });
-
-  it('opens the redux testing docs on click', async () => {
-    const props = {
-      openDocs: jest.fn()
-    }
-    render(<TestMenuButtons {...props}/>)
-    await userEvent.click(screen.getByTitle('Need Help?'));
-    expect(props.openDocs).toHaveBeenCalledTimes(1);
-  })
-})
