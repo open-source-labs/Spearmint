@@ -95,14 +95,7 @@ const AccTestCase = () => {
           </div>
         </div>
         <div id={styles.describeContainer}>
-          <DragDropContext onDragEnd={onDragEnd} key={`acc-dnd-context`}>
-            <Droppable
-              droppableId="droppableAccDescribe"
-              key="acc-droppable-context"
-              type="describe"
-            >
-              {(provided: any) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
+            <div droppableId="droppableAccDescribe" key="acc-droppable-context" type="describe">
                   <DescribeRenderer
                     key="describeRendererAcc"
                     dispatcher={dispatchToAccTestCase}
@@ -115,11 +108,7 @@ const AccTestCase = () => {
                     type="acc"
                     theme={theme}
                   />
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+            </div>
         </div>
         <Button
           style={{ width: '50vw' }}
