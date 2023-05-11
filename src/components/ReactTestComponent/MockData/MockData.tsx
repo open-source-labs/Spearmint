@@ -19,6 +19,8 @@ import { MockDataProps } from '../../../utils/mockTypes';
 const plusIcon = require('../../../assets/images/plus.png');
 const closeIcon = require('../../../assets/images/close.png');
 
+// This is the file for when mock data is added to the test
+
 const MockData = ({ mockDatumId, dispatchToMockData, fieldKeys }: MockDataProps) => {
   const [{theme}] = useContext(GlobalContext);
   const handleClickAdd = (e: React.BaseSyntheticEvent<MouseEvent>, id: number) => {

@@ -1,5 +1,8 @@
 import { File, filePathMapType } from "../../utils/globalTypes";
 
+// These are the global actions, like in the globalReducer, these pertain to global things, file items,
+// different panels, themes, etc.
+
 export const actionTypes = {
   SET_PROJECT_URL: 'SET_PROJECT_URL',
   LOAD_PROJECT: 'LOAD_PROJECT',

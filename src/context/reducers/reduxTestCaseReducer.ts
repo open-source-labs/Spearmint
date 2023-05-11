@@ -31,7 +31,7 @@ const createActionCreator = () => {
   statementId += 1;
   return {
     id: statementId,
-    actionsFileName: '',
+    actionsFile: '',
     filePath: '',
     typesFileName: '',
     typesFilePath: '',
@@ -49,15 +49,11 @@ const createAsync = () => {
     id: statementId,
     type: 'async',
     actionsFileName: '',
-    filePath: '',
     typesFileName: '',
     typesFilePath: '',
     asyncFunction: '',
     method: '',
     route: '',
-    store: '',
-    matcher: '',
-    status: '',
     actionType: '',
     payloadKey: '',
     payloadType: '',
@@ -176,7 +172,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
     case actionTypes.UPDATE_ASYNC:
       reduxStatements = reduxStatements.map((statement) => {
         if (statement.id === action.payload.id) {
-          statement.actionsFile = action.payload.actionsFile;
+          statement.actionsFileName = action.payload.actionsFileName;
           statement.asyncFunction = action.payload.asyncFunction;
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;

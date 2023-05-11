@@ -7,6 +7,9 @@ import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { Button, TextField } from '@mui/material';
 import { DescribeBlocks, ItStatements, Statements } from '../../../utils/reactTypes'
 
+// This is tracking your describe statements in a certain test, following the flow of data will help you
+// better understand exactly how this is working
+
 interface DescribeRendererProps {
   dispatcher: React.Dispatch<{ type: string, describeId: any }>,
   describeBlocks: DescribeBlocks,

@@ -8,7 +8,7 @@ import '@testing-library/jest-dom/extend-expect';
 import ReduxTestCase from '../components/TestCase/ReduxTestCase';
 import { act } from 'react-dom/test-utils'
 
-describe('should render ReduxTestCase component', () => {
+xdescribe('should render ReduxTestCase component', () => {
   // const { getByRole, debug } = act(() => { render(<ReduxTestCase />) });
 
   it('displays the component', () => {

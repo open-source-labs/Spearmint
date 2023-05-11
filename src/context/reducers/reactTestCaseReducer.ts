@@ -2,6 +2,8 @@ import React, { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
 import { ReactTestCaseTypes, Action, ItStatements, DescribeBlocks, Statements, Prop, StatementsById, ReactReducerAction } from '../../utils/reactTypes';
 
+// similar to globalReducer, but instead of dealing with global items, this is specific to React, 
+// this holds state for things like describe and it statements, basically what your React test looks like
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
 
@@ -130,7 +132,15 @@ const deleteStatementChildren = (object: Statements, deletionId: string, lookup:
 }
 
 /* ------------------------- React Test Case Reducer ------------------------ */
-
+/* 
+If you have reached this comment in search of trying to resolve type errors of passed in actions of dispatch
+functions pointing at this reducer, I have looked at this for several hours and come to the conclusion that the
+actions & cases will need to be somewhat (read: completely) rewritten in a more consistent way in order to
+satisfy typescript. Unfortunately we are not able to achieve this in the time available to us. For inspiration,
+I would encourage you to look at ./hooksTestCaseReducer, which seems to have a workable implementation that could 
+be extended to the other reducers. I hope this comment can save you the hours of confusion I experienced when trying
+to parse this code. Good luck!
+*/
 export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: ReactReducerAction) => {
   Object.freeze(state);
 
@@ -146,6 +156,8 @@ export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: ReactRed
   //   statements = { ...state.statements };
   // }
 
+  // these are all of the actions that are specific to the test, this will be similar in other frameworks because
+  // they funciton the same
   switch (action.type) {
     case actionTypes.RESET_TESTS: {
       return reactTestCaseState;
@@ -602,6 +614,7 @@ export const reactTestCaseReducer = (state: ReactTestCaseTypes, action: ReactRed
   }
 };
 
+// here we are using useContext to create the React state to be used in other files
 const dispatchToReactTestCase = () => null;
 const reactTestCaseArr: [ReactTestCaseTypes, (action: Action) => void] = [reactTestCaseState, dispatchToReactTestCase]
 export const ReactTestCaseContext = createContext(reactTestCaseArr);
