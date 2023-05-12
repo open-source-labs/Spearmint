@@ -58,16 +58,7 @@ const PuppeteerTestCase = () => {
         <PuppeteerTestMenu />
       </div>
       <div id={styles.testMockSection}></div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='droppable'>
-          {(provided: typeof DroppableProvided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <PuppeteerTestStatements />
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <PuppeteerTestStatements />
       <div id={styles[`PaintTime${theme}`]}>
         <Button
             type='button'
