@@ -288,7 +288,7 @@ if (title === 'New Test') {
           id={styles.escapeButton} 
           onKeyPress={clearAndClose}
           onClick={clearAndClose}
-        /> {console.log(title)} 
+        /> 
         
       </div>
       
