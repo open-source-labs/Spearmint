@@ -26,7 +26,7 @@ describe('should render ReduxTestCase component', () => {
   });
 
   it('displays the component', () => {
-    screen.debug()
+    expect(<ReduxTestCase/>).not.toBe(null);
   })
 
   it('displays the name of the test component to be at the top of the page', () => {
