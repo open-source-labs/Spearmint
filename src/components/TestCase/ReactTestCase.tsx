@@ -1,6 +1,5 @@
 import React, { useContext, useReducer } from 'react';
 import cn from 'classnames';
-import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
@@ -60,22 +59,6 @@ const ReactTestCase = ({ filterFileType } : { filterFileType: Function}) => {
     return result;
   };
 
-  const onDragEnd = (result: typeof DropResult) => {
-    // edge cases: dropped to a non-destination, or dropped where it was grabbed (no change)
-    if (!result.destination) return;
-    if (result.destination.index === result.source.index) return;
-
-    const list = result.draggableId.includes('describe')
-      ? describeBlocks.allIds
-      : itStatements.allIds[result.type];
-    const func = result.draggableId.includes('describe')
-      ? updateDescribeOrder
-      : updateItStatementOrder;
-
-    const reorderedStatements = reorder(list, result.source.index, result.destination.index);
-    dispatchToReactTestCase(func(reorderedStatements, result.type));
-  };
-
   const handleAddDescribeBlock = (e: React.SyntheticEvent) => {
     dispatchToReactTestCase(addDescribeBlock());
   };
@@ -117,10 +100,7 @@ const ReactTestCase = ({ filterFileType } : { filterFileType: Function}) => {
             )
           : null}
         <div id={styles.describeContainer}>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId='droppableReactDescribe' type='describe'>
-              {(provided: typeof DroppableProvided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
+            <div /*droppableId='droppableReactDescribe'*/ type='describe'>
                   <DescribeRenderer
                     dispatcher={dispatchToReactTestCase}
                     describeBlocks={describeBlocks}
@@ -131,11 +111,7 @@ const ReactTestCase = ({ filterFileType } : { filterFileType: Function}) => {
                     type='react'
                     theme={theme}
                   />
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+            </div>
           
         </div>
         <div id={styles.addDescribeButton}>

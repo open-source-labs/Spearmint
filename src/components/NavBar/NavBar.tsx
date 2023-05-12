@@ -10,17 +10,14 @@ import {
   loadProject,
   toggleFileDirectory,
   toggleExportBool,
-  toggleTheme,
 } from '../../context/actions/globalActions';
 import OpenFolder from '../OpenFolder/OpenFolderButton';
 import ExportFileModal from '../Modals/ExportFileModal';
 import Modal from '../Modals/Modal';
 import { VscSettingsGear } from 'react-icons/vsc'
 import { FaFileExport, FaUserCircle } from 'react-icons/fa';
-import { BiSun, BiMoon } from 'react-icons/bi';
 import { GoFileSubmodule } from 'react-icons/go';
 import { ImHome3 } from "react-icons/im"
-import { Switch } from '@mui/material';
 import { useToggleModal } from '../TestMenu/testMenuHooks';
 import { setTestCase } from '../../context/actions/globalActions';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -30,6 +27,7 @@ import {
   reactTestCaseReducer 
 } from '../../context/reducers/reactTestCaseReducer';
 import { createNewTest } from '../../context/actions/frontendFrameworkTestCaseActions';
+import ModeSwitch from '../ModeSwitch/ModeSwitch';
 
 interface inAboutPageProps {
   inAboutPage: boolean;
@@ -70,11 +68,6 @@ const NavBar = ({ inAboutPage }: inAboutPageProps) => {
     setIsExportModalOpen(true);
   };
 
-  const changeTheme = () => {
-    localStorage.setItem("theme", theme === 'light' ? 'dark' : 'light');
-    dispatchToGlobal(toggleTheme());
-  };
-
   /*
    * renders: buttons + icons for navbar, exportFileModal, boxes to open new folder and enter url, file directory
    */
@@ -108,25 +101,15 @@ const NavBar = ({ inAboutPage }: inAboutPageProps) => {
           LOGOUT
         </Button> */}
       </div>
-        <div className={styles.modBtnContainer}>
-            <span title='Dark Mode'>
-              <BiMoon size={'1.5rem'} />
-            </span>
-            <span title='Change theme'>
-              <Switch checked={theme === 'light' ? true : false} onChange={changeTheme}/>
-            </span>
-            <span title='Light Mode'>
-              <BiSun size={'1.5rem'} />
-            </span>
-        </div>
+      <ModeSwitch />
       <div>
         <Modal
-        title={title}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        dispatchToMockData={dispatchToMockData}
-        dispatchTestCase={dispatchToReactTestCase}
-        createTest={createNewTest}
+          title={title}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          dispatchToMockData={dispatchToMockData}
+          dispatchTestCase={dispatchToReactTestCase}
+          createTest={createNewTest}
         />
       </div>
       {!inAboutPage && (

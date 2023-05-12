@@ -53,7 +53,6 @@ import {
   secTestCaseState,
   secTestCaseReducer,
 } from '../../context/reducers/secTestCaseReducer';
-
 import SecTestCase from '../../components/TestCase/SecTestCase';
 
 import VueTestCase from '../../components/TestCase/VueTestCase';
@@ -61,7 +60,6 @@ import VueTestCase from '../../components/TestCase/VueTestCase';
 import SvelteTestCase from '../../components/TestCase/SvelteTestCase';
 
 import SolidTestCase from '../../components/TestCase/SolidTestCase';
-
 
 import {
   GraphQLTestCaseContext,
