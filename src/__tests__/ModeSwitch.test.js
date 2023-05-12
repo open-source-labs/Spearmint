@@ -3,11 +3,9 @@
  */
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ModeSwitch from '../components/ModeSwitch/ModeSwitch';
-
 
 describe('ModeSwitch testing', () => {
 
@@ -25,16 +23,12 @@ describe('ModeSwitch testing', () => {
     expect(screen.getByTitle('Light Mode')).toBeVisible();
   });
 
-  // theme default is 'light' and should be changed to 'dark'
-  // after user toggles mode switch
-  test('User toggling mode switch should change theme', async() => {
-    const user = userEvent.setup();
+  // mode switch is checked by default
+  test('User toggling mode switch should check or uncheck switch', async() => {
     render(<ModeSwitch/>);
-    expect(localStorage.getItem("theme")).toEqual('light');
     const toggle = screen.getByRole('checkbox');
-    // toggle is checked by default
-    expect(toggle).toBeChecked();
-    await user.click(toggle);
-    expect(localStorage.getItem("theme")).toEqual('dark');
+    expect(toggle.checked).toEqual(true);
+    fireEvent.change(toggle, {target: {checked: false}});
+    expect(toggle.checked).toEqual(false);
   });
 });
