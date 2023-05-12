@@ -116,10 +116,7 @@ const VueTestCase = (props) => {
             )
           : null} */}
 
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='droppableReactDescribe' type='describe'>
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
+          <div droppableId='droppableReactDescribe' type='describe'>
                 <DecribeRenderer
                   dispatcher={dispatchToVueTestCase}
                   describeBlocks={describeBlocks}
@@ -130,11 +127,7 @@ const VueTestCase = (props) => {
                   type='vue'
                   theme={theme}
                 />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+          </div>
         <div id={styles.addDescribeButton}>
           <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
             Add Describe Block

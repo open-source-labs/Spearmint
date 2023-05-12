@@ -73,16 +73,7 @@ const HooksTestCase = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='droppable'>
-          {(provided: typeof DroppableProvided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
               <HooksTestStatements />
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
       <div id={styles[`PaintTime${theme}`]}>
         <Button 
           className='hookUpdatesButton' 
