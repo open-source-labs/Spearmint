@@ -3,14 +3,16 @@
  */
 
 import React from 'react';
-import { render, screen, within, fireEvent } from '@testing-library/react';
+import { render, screen, within, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ReduxTestCase from '../components/TestCase/ReduxTestCase';
 import ReduxTestMenu from '../components/TestMenu/ReduxTestMenu';
 import TestMenuButtons from '../components/TestMenu/TestMenuButtons';
 import userEvent from '@testing-library/user-event'
+import { ReduxTestCaseContext } from '../context/reducers/reduxTestCaseReducer';
+import { addReducer } from '../context/actions/reduxTestCaseActions';
+import Reducer from '../components/ReduxTestComponent/Reducer/Reducer';
 
-const dispatchToReduxTestCase = jest.fn();
 const dispatchToGlobal = jest.fn();
 
 const reduxTestCaseState = {
@@ -37,6 +39,13 @@ describe('should render ReduxTestCase component', () => {
     expect(input).toBeInTheDocument();
   })
 
+  it('displays all nine button options on the page', () => {
+    const buttons = screen.getAllByRole('button');
+
+    expect(buttons).toHaveLength(9);
+    expect(buttons).not.toBeNull();
+  });
+
   it('displays the correct text for the buttons', () => {
     const reducer = screen.getByTestId('reducerButton');
     expect(reducer).toBeInTheDocument();
@@ -54,31 +63,18 @@ describe('should render ReduxTestCase component', () => {
     expect(middleware).toBeInTheDocument();
     expect(middleware.textContent).toBe('Middleware');
   })
-
-  it('displays all nine button options on the page', () => {
-    const buttons = screen.getAllByRole('button');
-
-    expect(buttons).toHaveLength(9);
-    expect(buttons).not.toBeNull();
-  });
 });
 
-describe('should render the ReduxTestMenu component.', () => {
+describe('handles user interaction on input/buttons', () => {
 
-  xit('should pass openDocs function as prop to TestMenuButtons', () => {
-    const openDocs = jest.fn();
-
-    render(<ReduxTestMenu openDocs={openDocs} dispatchToGlobal={dispatchToGlobal}/>);
-    expect(TestMenuButtons).toHaveBeenCalled();
-    // Assert that the openDocs function was called
-    // expect(screen.getByText(/openDocs/i).toBeInTheDocument());
-  });
-
-  xit('checks that openDocs prop is a function on TestMenuButtons', async () => {
-    const { getByDisplayName } = render(<ReduxTestMenu />);
-    const TestMenuButtonsComponent = await getByDisplayName('TestMenuButtons');
-    const openDocsProp = TestMenuButtonsComponent.props.openDocs;
-
-    expect(typeof openDocsProp).toBe('function');
-  });
+  xit('displays the new reducer block in the DOM on click', async () => {
+    const handleAddReducer = jest.fn(() => {<Reducer/>});
+    render(<ReduxTestCase handleAddReducer={handleAddReducer}/>);
+    // const reducer = screen.getByRole('button', {name: 'Reducer'});
+    // await userEvent.click(reducer);
+    // expect(<Reducer/>).toBeInTheDocument();
+    const reducer = screen.getByRole('button', { name: 'Reducer' });
+    await userEvent.click(reducer);
+    expect(handleAddReducer).toHaveBeenCalled();
+  })
 })
