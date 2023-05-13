@@ -1,4 +1,8 @@
 /* eslint-disable comma-dangle */
+
+import { Request, Response, Router } from "express";
+import { userControllerType } from "../utils/backendTypes";
+
 // Import Express to streamline server logic with router
 const express = require('express');
 // Import all relevant controller objects equipped with middleware
@@ -11,7 +15,7 @@ const testStateController = require('../controllers/testStateController');
 // const githubController = require('../controllers/githubController');
 
 // Initialize an express router
-const router = express.Router();
+const router: Router = express.Router();
 
 // Set up route for post requests to /signup
 router.post(
@@ -21,7 +25,7 @@ router.post(
   // Signup middleware to sign user up with encrypted credentials
   userController.signup,
   // Anonymous middleware to send back valid response
-  (req, res) => {
+  (req: Request, res: Response): Response => {
     return res.sendStatus(200);
   }
 );

@@ -1,7 +1,9 @@
+import { userControllerType } from "../utils/backendTypes";
+
 const { User } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 
-const userController = {};
+const userController: userControllerType = {};
 
 // Middleware to encrypt passwords using bcrypt
 userController.bcrypt = (req, res, next) => {
