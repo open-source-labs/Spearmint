@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { fireEvent, render, screen,  cleanup, getByPlaceholderText, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom/extend-expect';
 import ActionCreator from '../components/ReduxTestComponent/ActionCreator/ActionCreator'
