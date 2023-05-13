@@ -184,7 +184,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFile
         ariaHideApp={false}
         overlayClassName={styles[`modalOverlay${theme}`]}
       >
-          <div id={styles.container}>
+          <div id={styles.container} title={'Export File Modal'}>
             <AiOutlineCloseCircle
               id={styles.escapeButton} 
               onKeyPress={closeExportModal}

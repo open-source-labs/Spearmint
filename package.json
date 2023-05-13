@@ -162,6 +162,7 @@
     "@types/babel__core": "^7.20.0",
     "@types/electron-devtools-installer": "^2.2.2",
     "@types/react-autosuggest": "^10.1.6",
+    "@types/react-modal": "^3.16.0",
     "@types/webpack-dev-server": "^4.7.1",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",

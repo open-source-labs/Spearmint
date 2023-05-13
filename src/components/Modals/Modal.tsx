@@ -233,7 +233,7 @@ if (title === 'New Test') {
       shouldCloseOnOverlayClick={true}
       shouldCloseOnEsc={true}
     >
-      <div id={styles.testModal}>
+      <div id={styles.testModal} title={'New Test Modal'}>
         <div id={styles.container}>
           <AiOutlineCloseCircle
             id={styles.escapeButton} 
