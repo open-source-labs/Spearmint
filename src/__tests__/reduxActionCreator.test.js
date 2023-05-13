@@ -158,8 +158,8 @@ describe('User input on Action Creator', () => {
     expect(actionType.placeholder).toBe('e.g. ADD_TODO');
     expect(actionType.value).toBe('');
     
-    fireEvent.change(actionType, { target: { value: 'Testing' } });
-    // await user.type(actionType, 'Testing');
+    // fireEvent.change(actionType, { target: { value: 'Testing' } });
+    await user.type(actionType, 'Testing');
     expect(actionType.value).toBe('Testing');
   })
 
@@ -177,11 +177,12 @@ describe('User input on Action Creator', () => {
     expect(payloadKey.value).toBe('Testing');
   })
 
-  it('should correctly set default option on Payload Type dropdown', () => {
+  it('should correctly set default option on Payload Type dropdown', async () => {
+    const user = userEvent.setup();
     render(<ActionCreator {...props}/>);
     expect(screen.getByRole('option', { name: '' }).selected).toBe(true);
 
-    userEvent.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'number' }));
+    await user.selectOptions(screen.getByRole('combobox'), screen.getByRole('option', { name: 'number' }));
     expect(screen.getByRole('option', { name: 'number' }).selected).toBe(true);
   })
 })
