@@ -75,7 +75,7 @@ const Action = ({ statement, statementId, describeId, itId }: ReactTestComponent
         <div id={styles.eventTypeVal}>
           {needsEventValue(statement.eventType) && mockData.length > 0 ? (
             <div className={styles.eventValueMock}>
-              <label htmlFor='eventValue'> Value </label>
+              <label htmlFor='eventValue'>Value</label>
               <AutoCompleteMockData
                 statement={statement}
                 dispatchToTestCase={dispatchToReactTestCase}
@@ -85,7 +85,7 @@ const Action = ({ statement, statementId, describeId, itId }: ReactTestComponent
             </div>
           ) : needsEventValue(statement.eventType) ? (
             <span className={styles.eventValue}>
-              <label htmlFor='eventValue'> Value </label>
+              <label htmlFor='eventValue'>Value</label>
               <input
                 type='text'
                 id='eventValue'
