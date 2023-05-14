@@ -20,7 +20,9 @@ export interface userControllerType {
 }
 
 export interface sessionControllerType {
-
+  startSession?: Function,
+  endSession?: Function,
+  isLoggedIn?: Function,
 }
 
 export interface cookieControllerType {
