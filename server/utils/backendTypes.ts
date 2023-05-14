@@ -11,12 +11,12 @@ export interface defaultErrType {
 }
 
 export interface userControllerType {
-  bcrypt?: Function,
-  signup?: Function,
-  login?: Function,
-  getUsers?: Function,
-  githubLogin?: Function,
-  googleLogin?: Function,
+  bcrypt: Function,
+  signup: Function,
+  login: Function,
+  getUsers: Function,
+  githubLogin: Function,
+  googleLogin: Function,
 }
 
 export interface sessionControllerType {

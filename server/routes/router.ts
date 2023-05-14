@@ -40,7 +40,7 @@ router.post(
   // Session middleware to initialize new session
   sessionController.startSession,
   // Anonymous middleware to send back valid response
-  (req, res) => {
+  (req: Request, res: Response): void => {
     res.status(200).json({ ssid: res.locals.ssid });
   }
 );
@@ -51,7 +51,7 @@ router.get(
   // Session middleware to end any existing sessions
   sessionController.endSession,
   // Anonymous middleware to send back valid response
-  (req, res) => {
+  (req: Request, res: Response): void => {
     res.status(200).json('Logged Out Successfully');
   }
 );
@@ -64,7 +64,7 @@ router.post(
   // Upload middleware to save passed test object into DB
   testStateController.upload,
   // Anonymous middleware to send back valid response
-  (req, res) => {
+  (req: Request, res: Response): void => {
     res.status(200).json('Test Uploaded Successfully');
   }
 );
@@ -77,7 +77,7 @@ router.get(
   // GetTests middleware to retrieve all saved tests from DB
   testStateController.getTests,
   // Anonymous middleware to send back valid response
-  (req, res) => {
+  (req: Request, res: Response): void => {
     res.status(200).json(res.locals.tests);
   }
 );
@@ -100,7 +100,7 @@ router.get(
   sessionController.startSession,
 
   // Anonymous middleware to send back valid response
-  (req, res) => {
+  (req: Request, res: Response): void => {
     // we send the ssid back to the front end
     res.status(200).json({ ssid: res.locals.ssid });
   }
@@ -128,7 +128,7 @@ router.get(
   sessionController.startSession,
 
   // Anonymous middleware to send back valid response
-  (req, res) => {
+  (req: Request, res: Response): void => {
     //console.log('ssid:', res.locals.ssid);
     // we send the ssid back to the front end
     res.status(200).json({ ssid: res.locals.ssid });
