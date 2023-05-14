@@ -1,7 +1,7 @@
 import { expression } from "@babel/template";
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import { Cursor } from "mongoose";
-import { string } from "yargs";
+import { BasicGroupByOptions } from "rxjs";
 import { userControllerType } from "../utils/backendTypes";
 
 const { User } = require('../models/userModel');
@@ -10,15 +10,15 @@ const bcrypt = require('bcryptjs');
 const userController: userControllerType = {};
 
 // Middleware to encrypt passwords using bcrypt
-userController.bcrypt = (req: Request, res: Response, next: NextFunction) => {
+userController.bcrypt = (req: Request, res: Response, next: NextFunction): void => {
   // The cost factor determines how much time is needed to calculate a single bcrypt hash
   const saltRounds: number = 10;
   // Destructure password from request body
-  const { password }: { password: string } = req.body;
+  const { password }: { password: String } = req.body;
   // Generate the salt by passing in saltRounds (cost factor)
-  bcrypt.genSalt(saltRounds, (err: ErrorRequestHandler, salt: string): void => {
+  bcrypt.genSalt(saltRounds, (err: ErrorRequestHandler, salt: String): void => {
     // Hash a password by passing in the plaintext into the hash function
-    bcrypt.hash(password, salt, (err: ErrorRequestHandler, hash: string): void => {
+    bcrypt.hash(password, salt, (err: ErrorRequestHandler, hash: String): void => {
       // Save encrypted password into res.locals to be accessed later
       res.locals.encryptedPassword = hash;
       return next();
@@ -46,10 +46,10 @@ userController.signup = (req: Request, res: Response, next: NextFunction): (void
 };
 
 // Middleware to check credentials and log user into application
-userController.login = (req: Request, res: Response, next: NextFunction) => {
+userController.login = (req: Request, res: Response, next: NextFunction): void => {
   // Collection.find method to look for all user instances with passed username
   User.find({ username: req.body.username }, (err: ErrorRequestHandler, 
-    result: Array<{ _id: number, username: string, password: string }>): void => {
+    result: Array<{ _id: number, username: String, password: String }>): void => {
     // If there is an error, invoke global error handler
     if (err) return next(err);
     // If there are no matching usernames, invoke global error handler
@@ -71,7 +71,7 @@ userController.login = (req: Request, res: Response, next: NextFunction) => {
 
 userController.getUsers = (req: Request, res: Response, next: NextFunction): void => {
   // Collection.find method to look for all user instances with passed username
-  User.find({}, (err: ErrorRequestHandler, result: Array<{ _id: number, username: string, password: string }>) => {
+  User.find({}, (err: ErrorRequestHandler, result: Array<{ _id: number, username: String, password: String }>) => {
     // If there is an error, invoke global error handler
     if (err) return next(err);
     res.locals.users = result;
@@ -79,7 +79,7 @@ userController.getUsers = (req: Request, res: Response, next: NextFunction): voi
   });
 };
 
-userController.githubLogin = (req: Request, res: Response, next: NextFunction) => {
+userController.githubLogin = (req: Request, res: Response, next: NextFunction): void => {
   // store user._id in res.locals
   if(!req.user || !req.user._id) throw new Error("User or user ID not defined.")
   res.locals.userId = req.user._id;
@@ -87,7 +87,7 @@ userController.githubLogin = (req: Request, res: Response, next: NextFunction) =
   return next();
 };
 
-userController.googleLogin = (req: Request, res: Response, next: NextFunction) => {
+userController.googleLogin = (req: Request, res: Response, next: NextFunction): void => {
   // store user._id in res.locals
   if(!req.user || !req.user._id) throw new Error("User or user ID not defined.")
   res.locals.userId = req.user._id;
