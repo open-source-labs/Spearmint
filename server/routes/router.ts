@@ -1,16 +1,16 @@
 /* eslint-disable comma-dangle */
 
 import { Request, Response, Router } from "express";
-import { userControllerType } from "../utils/backendTypes";
+import { cookieControllerType, sessionControllerType, testStateControllerType, userControllerType } from "../utils/backendTypes";
 
 // Import Express to streamline server logic with router
 const express = require('express');
 // Import all relevant controller objects equipped with middleware
 const passport = require('passport');
-const userController = require('../controllers/userController');
-const cookieController = require('../controllers/cookieController');
-const sessionController = require('../controllers/sessionController');
-const testStateController = require('../controllers/testStateController');
+const userController: userControllerType = require('../controllers/userController');
+const cookieController: cookieControllerType = require('../controllers/cookieController');
+const sessionController: sessionControllerType = require('../controllers/sessionController');
+const testStateController: testStateControllerType = require('../controllers/testStateController');
 // const { ipcRenderer } = require('electron');
 // const githubController = require('../controllers/githubController');
 

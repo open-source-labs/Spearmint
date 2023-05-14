@@ -18,3 +18,16 @@ export interface userControllerType {
   githubLogin?: Function,
   googleLogin?: Function,
 }
+
+export interface sessionControllerType {
+
+}
+
+export interface cookieControllerType {
+  setSSIDCookie?: Function,
+  deleteCookie?: Function,
+}
+
+export interface testStateControllerType {
+
+}
