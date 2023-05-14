@@ -51,7 +51,7 @@ const Middleware = (props: ReduxMiddleware) => {
           <div>
             <div id={styles.dropdownFlex}>
               <div id={styles.middlewareDrop}>
-                <label htmlFor='typesFile'>Query Value</label>
+                <label htmlFor='queryValue'>Query Value</label>
                 <select
                   id='queryValue'
                   value={middleware.queryValue}
@@ -68,7 +68,7 @@ const Middleware = (props: ReduxMiddleware) => {
               </div>
 
               <div id={styles.middlewareDrop}>
-                <label htmlFor='typesFile'>Query Variant</label>
+                <label htmlFor='queryVariant'>Query Variant</label>
                 <select
                   id='queryVariant'
                   value={middleware.queryVariant}
@@ -84,7 +84,7 @@ const Middleware = (props: ReduxMiddleware) => {
               </div>
 
               <div id={styles.middlewareDrop}>
-                <label htmlFor='typesFile'>Query Selector</label>
+                <label htmlFor='querySelector'>Query Selector</label>
                 <select
                   id='querySelector'
                   value={middleware.querySelector}
@@ -100,7 +100,7 @@ const Middleware = (props: ReduxMiddleware) => {
             </div>
 
             <div id={styles.middlewareBox}>
-              <label htmlFor='typesFile'>Middleware Function</label>
+              <label htmlFor='queryType'>Middleware Function</label>
               <input
                 id='queryType'
                 value={middleware.queryType}
