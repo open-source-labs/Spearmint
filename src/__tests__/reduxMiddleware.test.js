@@ -55,4 +55,12 @@ describe('Redux Middleware', () => {
     const close = screen.getByRole('img', {name: 'close'});
     expect(close).toBeInTheDocument();
   })
+
+  it('should correctly display default option on QueryValue', () => {
+    render(<Middleware {...props}/>);
+
+    const queryValue = screen.getByRole('combobox', {name: 'Query Value'});
+    const options = screen.getAllByRole('option');
+    expect(options).toHaveLength(15);
+  })
 })
