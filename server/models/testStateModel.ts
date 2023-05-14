@@ -1,10 +1,12 @@
+import { Schema as SchemaType } from "mongoose";
+
 // Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 // Schema constructor
 const Schema = mongoose.Schema;
 
 // Initialize a new schema object for collection 'testState'
-const testStateSchema = new Schema({
+const testStateSchema: SchemaType = new Schema({
   // Save ID of user that saves test
   userId: { type: String, required: true },
   // Save name of test as user input
