@@ -29,5 +29,6 @@ export interface cookieControllerType {
 }
 
 export interface testStateControllerType {
-
+  upload?: Function,
+  getTests?: Function,
 }
