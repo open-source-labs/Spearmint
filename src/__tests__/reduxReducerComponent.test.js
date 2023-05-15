@@ -48,4 +48,44 @@ describe('Redux Test Component Reducer', () => {
     expect(it.value).toBe('');
   })
 
+  it('should correctly display default input value on Reducer Name', () => {
+    render(<Reducer {...props}/>);
+
+    const reducerName = screen.getByRole('textbox', {name: 'Reducer Name'});
+    expect(reducerName).toBeInTheDocument();
+    expect(reducerName.placeholder).toBe('e.g. todoReducer');
+    expect(reducerName.value).toBe('');
+  })
+
+  it('should correctly display default input value on Reducer Name', () => {
+    render(<Reducer {...props}/>);
+
+    const initialState = screen.getByRole('textbox', {name: 'Initial State'});
+    expect(initialState).toBeInTheDocument();
+    expect(initialState.placeholder).toBe('e.g. todosState');
+    expect(initialState.value).toBe('');
+  })
+
+  it('should correctly display default input value on Reducer Name', () => {
+    render(<Reducer {...props}/>);
+
+    const action = screen.getByRole('textbox', {name: 'Action'});
+    expect(action).toBeInTheDocument();
+    expect(action.placeholder).toBe('e.g. ADD_TODO');
+    expect(action.value).toBe('');
+  })
+
+  it('should correctly display default inputs and their values on Reducer Name', () => {
+    render(<Reducer {...props}/>);
+
+    const payloadKey = screen.getByRole('textbox', {name: 'Payload Key (optional)'});
+    expect(payloadKey).toBeInTheDocument();
+    expect(payloadKey.placeholder).toBe('Key');
+    expect(payloadKey.value).toBe('');
+
+    const payloadValue = screen.getByRole('textbox', {name: 'Payload Value (optional)'});
+    expect(payloadValue).toBeInTheDocument();
+    expect(payloadValue.placeholder).toBe('Value');
+    expect(payloadValue.value).toBe('');
+  })
 })

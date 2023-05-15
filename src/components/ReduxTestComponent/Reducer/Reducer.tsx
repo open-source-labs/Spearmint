@@ -107,7 +107,7 @@ const Reducer = ({ reducer, index }: ReducerType) => {
           </div>
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='payload'>Payload (optional. if action requires)</label>
+              <label htmlFor='payloadKey'>Payload Key (optional)</label>
               <input
                 type='text'
                 id='payloadKey'
@@ -115,6 +115,7 @@ const Reducer = ({ reducer, index }: ReducerType) => {
                 placeholder='Key'
                 onChange={(e) => handleChangeReducerFields(e, 'payloadKey')}
               />
+              <label htmlFor='payloadValue'>Payload Value (optional)</label>
               <input
                 type='text'
                 id='payloadValue'
