@@ -11,14 +11,14 @@ import Reducer from '../components/ReduxTestComponent/Reducer/Reducer';
 const props = {
   reducer: {
     id: 1,
-    itStatement: '',
-    reducerName: '',
-    initialState: '',
-    reducerAction: '',
-    payloadKey: '',
-    payloadValue: '',
-    expectedKey: '',
-    expectedValue: '',
+    itStatement: null,
+    reducerName: null,
+    initialState: null,
+    reducerAction: null,
+    payloadKey: null,
+    payloadValue: null,
+    expectedKey: null,
+    expectedValue: null,
   },
   index: 0
 }
@@ -101,5 +101,86 @@ describe('Redux Test Component Reducer', () => {
     expect(stateValue).toBeInTheDocument();
     expect(stateValue.placeholder).toBe('Value');
     expect(stateValue.value).toBe('');
+  })
+})
+
+describe('User Events on Redux Reduer Component', () => {
+
+  it('updates the It Statement input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Reducer {...props}/>);
+
+    const it = screen.getByRole('textbox', {name: 'It Statement'});
+    expect(it.value).toBe('');
+
+    await user.type(it, 'Hello');
+    expect(it.value).toBe('Hello');
+  })
+
+  it('updates the Reducer Name input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Reducer {...props}/>);
+
+    const reducerName = screen.getByRole('textbox', {name: 'Reducer Name'});
+    expect(reducerName.value).toBe('');
+
+    await user.type(reducerName, 'v.15');
+    expect(reducerName.value).toBe('v.15');
+  })
+
+  it('updates the Initial State input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Reducer {...props}/>);
+
+    const initialState = screen.getByRole('textbox', {name: 'Initial State'});
+    expect(initialState.value).toBe('');
+
+    await user.type(initialState, 'I hope');
+    expect(initialState.value).toBe('I hope');
+  })
+
+  it('updates the Action input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Reducer {...props}/>);
+
+    const action = screen.getByRole('textbox', {name: 'Action'});
+    expect(action.value).toBe('');
+
+    await user.type(action, 'you are');
+    expect(action.value).toBe('you are');
+  })
+
+  it('updates the Payload input field values on user input', async () => {
+    const user = userEvent.setup();
+    render(<Reducer {...props}/>);
+
+    const payloadKey = screen.getByRole('textbox', {name: 'Payload Key (optional)'});
+    expect(payloadKey.value).toBe('');
+
+    await user.type(payloadKey, 'doing well.');
+    expect(payloadKey.value).toBe('doing well.');
+
+    const payloadValue = screen.getByRole('textbox', {name: 'Payload Value (optional)'});
+    expect(payloadValue.value).toBe('');
+
+    await user.type(payloadValue, 'Spearmint is a');
+    expect(payloadValue.value).toBe('Spearmint is a');
+  })
+
+  it('updates the Expected State input field values on user input', async () => {
+    const user = userEvent.setup();
+    render(<Reducer {...props}/>);
+
+    const stateKey = screen.getByRole('textbox', {name: 'Expected State (key)'});
+    expect(stateKey.value).toBe('');
+
+    await user.type(stateKey, 'challenging codebase.');
+    expect(stateKey.value).toBe('challenging codebase.');
+
+    const stateValue = screen.getByRole('textbox', {name: 'Expected State (value)'});
+    expect(stateValue.value).toBe('');
+
+    await user.type(stateValue, 'You got this');
+    expect(stateValue.value).toBe('You got this');
   })
 })
