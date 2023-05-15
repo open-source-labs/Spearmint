@@ -3,7 +3,6 @@
  */
 
 import React, { useContext } from 'react';
-import cn from 'classnames';
 import styles from './Render.module.scss';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 
@@ -13,7 +12,6 @@ import { Button } from '@mui/material';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { RenderProps } from '../../../utils/reactTypes';
-const closeIcon = require('../../../assets/images/close.png');
 
 // this is the file that shows what component you are rendering in your test
 

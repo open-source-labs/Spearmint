@@ -10,7 +10,6 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const TestMenuButtons = ({
   resetTests,
-  openModal,
   fileHandle,
   openScriptModal,
   saveTest,

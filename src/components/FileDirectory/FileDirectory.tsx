@@ -22,10 +22,6 @@ import { File } from '../../utils/globalTypes';
 
 const { ipcRenderer } = require('electron');
 
-const fileImg = require('../../assets/images/file-document-outline.svg');
-
-
-
 /**
  * Renders the FileDirectory react component, this is the directory of your project that opens to the left when the icon in the navbar is clicked
  * @param { Object[] } fileTree - Array of Objects including fileName - string, filePath - string, files - Array of Objects

@@ -1,7 +1,7 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/mockDataActions';
 import { Action } from '../../utils/reactTypes';
-import { MockDataArrayType, MockDataTypes, KeyType, MockDatumType } from '../../utils/mockTypes';
+import { MockDataTypes, KeyType, MockDatumType } from '../../utils/mockTypes';
 
 export const mockDataState: MockDataTypes = {
   mockData: [],

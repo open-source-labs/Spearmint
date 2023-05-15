@@ -1,11 +1,9 @@
-import React, { useContext, useRef, useEffect } from 'react';
-import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
+import React, { useContext } from 'react';
 import styles from './TestCase.module.scss';
 import { HooksTestCaseContext } from '../../context/reducers/hooksTestCaseReducer';
 import {
   addHookUpdates,
   updateHooksTestStatement,
-  updateStatementsOrder, 
 } from '../../context/actions/hooksTestCaseActions';
 import HooksTestMenu from '../TestMenu/HooksTestMenu';
 import HooksTestStatements from './HooksTestStatements';
@@ -32,22 +30,6 @@ const HooksTestCase = (): JSX.Element => {
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result;
-  };
-
-  // after dropping draggable, update state with reorderd list of Hooks
-  const onDragEnd = (result:typeof DropResult): void => {
-    if (!result.destination) {
-      return;
-    }
-    if (result.destination.index === result.source.index) {
-      return;
-    }
-    const reorderedStatements: Array<Hooks> = reorder(
-      hooksStatements,
-      result.source.index,
-      result.destination.index
-    );
-    dispatchToHooksTestCase(updateStatementsOrder(reorderedStatements));
   };
 
   // create new Hook

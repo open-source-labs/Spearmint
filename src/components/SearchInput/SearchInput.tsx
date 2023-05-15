@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import './SearchInput.scss';
 import { Autocomplete } from '@mui/material';
-import { TextField } from '@mui/material';
 import InputTextField from '../InputTextField';
-import { Action } from '../../utils/hooksTypes';
 import { filePathMapType } from '../../utils/globalTypes';
 
 interface SearchInputProps {

@@ -1,12 +1,9 @@
 import React, { useContext, useReducer } from 'react';
-import cn from 'classnames';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
   updateRenderComponent,
   updateItStatementText,
-  updateDescribeOrder,
-  updateItStatementOrder,
   addDescribeBlock
 } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -22,7 +19,6 @@ import {
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@mui/material';
-import { ReactStatements } from '../../utils/reactTypes';
 
 const ReactTestCase = ({ filterFileType } : { filterFileType: Function}) => {
   const [reactTestCase, dispatchToReactTestCase] = useReducer(

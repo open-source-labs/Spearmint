@@ -1,16 +1,12 @@
 import React, { useContext } from 'react';
 import styles from '../../ReactTestComponent/Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/actions/frontendFrameworkTestCaseActions';
-import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
-import ToolTip from '../../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/reducers/mockDataReducer';
 import { SolidTestCaseContext } from '../../../context/reducers/solidTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 
-const questionIcon = require('../../../assets/images/help-circle.png');
-const closeIcon = require('../../../assets/images/close.png');
 
 // Action box in middle panel (testCase.jsx)
 const Action = ({ statement, statementId, describeId, itId }) => {

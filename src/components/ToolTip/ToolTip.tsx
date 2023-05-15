@@ -3,7 +3,6 @@
  */
 
 import React, { ReactElement } from 'react';
-import { TOOLTIP_MAP_ASYNC } from '../../utils/toolTipTypes';
 
 const TOOLTIP_MAP = {
     '': 'Choose a selector',

@@ -9,7 +9,6 @@ import {
   createFileTree,
   setFilePathMap,
   setProjectFilePath,
-  toggleFileDirectory,
   setTestCase,
   toggleModal,
 } from '../../context/actions/globalActions';
@@ -17,7 +16,6 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const { ipcRenderer } = require('electron');
 const os = require('os');
-const folderOpenIcon = require('../../assets/images/folder-open.png');
 import { FaFolderOpen } from 'react-icons/fa'
 import { Button } from '@mui/material';
 import { File, FilePathMap } from '../../utils/globalTypes';

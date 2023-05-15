@@ -4,8 +4,7 @@ import { Authenticator, Profile } from "passport";
 
 const GitHubStrategy = require('passport-github2').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const passport = require('passport');
-const { User, GithubUser, GoogleUser } = require('../models/userModel.js');
+const { GithubUser, GoogleUser } = require('../models/userModel.js');
 
 module.exports = function (passport: Authenticator) {
   passport.use(

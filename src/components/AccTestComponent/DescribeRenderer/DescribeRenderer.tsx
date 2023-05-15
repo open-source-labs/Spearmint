@@ -1,6 +1,5 @@
 import React, { ChangeEvent } from 'react';
 import cn from 'classnames';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import StandardTagFilter from '../StandardTagFilter/StandardTagFilter';
 import styles from './DescribeRenderer.module.scss';

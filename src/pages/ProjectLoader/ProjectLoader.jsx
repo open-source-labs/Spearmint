@@ -1,5 +1,5 @@
 import React, { useContext, useState} from 'react';
-import { Button, Switch, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import styles from './ProjectLoader.module.scss';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { setGuest, setTheme } from '../../context/actions/globalActions';

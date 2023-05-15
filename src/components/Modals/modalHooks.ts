@@ -2,9 +2,7 @@ import React, { useState, useRef, useContext } from 'react';
 import { clearMockData } from '../../context/actions/mockDataActions';
 import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-import styles from './Modal.module.scss';
 import { DispatchMock, KeyDispatchMock } from '../../utils/mockTypes';
-import { EventType } from '@testing-library/react';
 
 export function useNewTest(dispatchToMockData: React.Dispatch<KeyDispatchMock | DispatchMock> | null, dispatchTestCase: Function, createTest: () => {type: string}, closeModal: () => void) {
   const [, dispatchToGlobal] = useContext(GlobalContext);

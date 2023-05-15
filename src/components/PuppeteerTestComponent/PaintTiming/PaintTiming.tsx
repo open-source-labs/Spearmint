@@ -10,7 +10,6 @@ import PuppeteerBrowserSetting from '../PuppeteerBrowerSetting/PuppeteerBrowserS
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { PuppeteerStatements } from '../../../utils/puppeteerTypes';
 const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
 

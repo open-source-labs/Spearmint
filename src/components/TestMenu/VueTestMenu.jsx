@@ -10,7 +10,6 @@ import {
   setFilePath,
   toggleRightPanel,
   setValidCode,
-  setTestCase,
   toggleModal,
   toggleExportBool,
   setTabIndex,

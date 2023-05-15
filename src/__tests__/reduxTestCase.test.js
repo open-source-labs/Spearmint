@@ -3,18 +3,11 @@
  */
 
 import React from 'react';
-import { render, screen, within, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ReduxTestCase from '../components/TestCase/ReduxTestCase';
 import userEvent from '@testing-library/user-event'
 import Reducer from '../components/ReduxTestComponent/Reducer/Reducer';
-
-const dispatchToGlobal = jest.fn();
-
-const reduxTestCaseState = {
-  reduxTestStatement: '',
-  reduxStatements: []
-};
 
 describe('should render ReduxTestCase component', () => {
   beforeEach(() => {

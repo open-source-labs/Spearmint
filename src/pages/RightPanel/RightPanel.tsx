@@ -6,7 +6,7 @@ import EditorView from './../../components/EditorView/EditorView';
 import BrowserView from './../../components/BrowserView/BrowserView';
 import UserGuideView from './../../components/UserGuideView/UserGuideView';
 import { GlobalContext } from './../../context/reducers/globalReducer';
-import { closeRightPanel, setTabIndex } from './../../context/actions/globalActions';
+import { setTabIndex } from './../../context/actions/globalActions';
 import TerminalView from './../../components/Terminal/TerminalView';
 import withStyles from '@mui/styles/withStyles';
 

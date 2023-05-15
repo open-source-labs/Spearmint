@@ -5,7 +5,6 @@ import { updateAction, updateAssertion } from '../../context/actions/frontendFra
 import { eventTypesList } from '../TypesList/eventTypesList';
 import { matcherTypesList} from '../TypesList/matcherTypesList';
 import { AutoCompleteProps, AutoCompleteStatement } from '../../utils/reactTypes';
-import { AutosuggestProps } from 'react-autosuggest';
 
 
 /**
