@@ -61,7 +61,7 @@ describe('Action Creator', () => {
     expect(payloadType).toBeInTheDocument();
   })
 
-  it('updates the It should... input field value on user input', async () => {
+  it('should correctly display default input value on It statement', async () => {
     render(<ActionCreator {...props}/>);
 
     const it = screen.getByLabelText('It should...');
@@ -70,7 +70,7 @@ describe('Action Creator', () => {
     expect(it.value).toBe('');
   })
 
-  it('updates the Action Creator input field value on user input', async () => {
+  it('should correctly display default input value on Action Creator', async () => {
     render(<ActionCreator {...props}/>);
 
     const actionCreator = screen.getByRole('textbox', {name: 'Action Creator'});
@@ -79,7 +79,7 @@ describe('Action Creator', () => {
     expect(actionCreator.value).toBe('');
   })
 
-  it('updates the Action Type input field value on user input', async () => {
+  it('should correctly display default input value on Action Type', async () => {
     render(<ActionCreator {...props}/>);
 
     const actionType = screen.getByRole('textbox', {name: 'Action Type'});
@@ -88,7 +88,7 @@ describe('Action Creator', () => {
     expect(actionType.value).toBe('');
   })
 
-  it('updates the Payload Key input field value on user input', () => {
+  it('should correctly display default input value on Payload Key', () => {
     render(<ActionCreator {...props}/>);
 
     const payloadKey = screen.getByRole('textbox', {name: 'Payload Key'});
@@ -152,7 +152,7 @@ describe('User Events on Action Creator', () => {
     expect(payloadKey.value).toBe('Testing');
   })
 
-  it('should correctly set default option on Payload Type dropdown', async () => {
+  it('updates the Payload Type dropdown option on user input', async () => {
     const user = userEvent.setup();
     render(<ActionCreator {...props}/>);
     expect(screen.getByRole('option', { name: '' }).selected).toBe(true);
