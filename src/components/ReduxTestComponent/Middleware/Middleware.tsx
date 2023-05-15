@@ -104,7 +104,7 @@ const Middleware = (props: ReduxMiddleware) => {
               <input
                 id='queryType'
                 value={middleware.queryType}
-                placeholder='eg. thunk'
+                placeholder='e.g. thunk'
                 onChange={(e) => handleChangeMiddlewareFields(e, 'queryType')}
               ></input>
             </div>
