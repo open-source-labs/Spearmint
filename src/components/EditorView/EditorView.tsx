@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
+import { EditorView } from '@codemirror/view';
 import { javascript } from '@codemirror/lang-javascript';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { updateFile } from '../../context/actions/globalActions';
@@ -68,6 +69,7 @@ const Editor = () : JSX.Element => {
     <div>
     <div id={styles.codeEditor} onClick={() => setWasSaved('')}>
       <CodeMirror
+        title={'Code Editor'}
         value={
           file
             ? extensionChecker[fileType ]
@@ -76,7 +78,7 @@ const Editor = () : JSX.Element => {
             : '// Open a file or click preview to view your code.'
         }
         height="95%"        
-        extensions={[javascript({ jsx: true })]}
+        extensions={[javascript({ jsx: true }), EditorView.lineWrapping]}
         onChange={updateAfile}
         theme={theme}
       />

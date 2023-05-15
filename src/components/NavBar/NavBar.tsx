@@ -29,12 +29,9 @@ import {
 import { createNewTest } from '../../context/actions/frontendFrameworkTestCaseActions';
 import ModeSwitch from '../ModeSwitch/ModeSwitch';
 
-interface inAboutPageProps {
-  inAboutPage: boolean;
-}
 
 // make sure to import in the dispatcher to the global state variable, isProjectLoaded
-const NavBar = ({ inAboutPage }: inAboutPageProps) => {
+const NavBar = ({ inAboutPage }: {inAboutPage: boolean}) => {
   const [{ fileTree, isFileDirectoryOpen, theme, isProjectLoaded }, dispatchToGlobal] =
     useContext(GlobalContext);
   const [, dispatchToMockData] = useContext(MockDataContext);
