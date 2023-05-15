@@ -83,7 +83,7 @@ const Async = (props: ReduxAsync) => {
               </div>
             </div>
             <div id={styles.dropdownWrapper}>
-              <label htmlFor='responseType'>Type</label>
+              <label htmlFor='responseType'>Type 1</label>
               <div id={styles.dropdownFlex}>
                 <select
                   id='responseType'
@@ -110,7 +110,7 @@ const Async = (props: ReduxAsync) => {
               />
             </div>
             <div id={styles.dropdownWrapper}>
-              <label htmlFor='payloadType'>Type</label>
+              <label htmlFor='payloadType'>Type 2</label>
               <div id={styles.dropdownFlex}>
                 <select
                   id='payloadType'

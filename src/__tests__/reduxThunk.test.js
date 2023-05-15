@@ -67,11 +67,58 @@ describe('Redux Test Component Thunk', () => {
     expect(thunkActionCreator.value).toBe('');
   })
 
-  it('should correctly display default input value on Thunk Name', () => {
+  it('should correctly display default input value on Action Type', () => {
     render(<Thunk {...props}/>);
 
-    const thunkActionCreator = screen.getByRole('textbox', {name: 'Thunk Action Creator'});
-    expect(thunkActionCreator).toBeInTheDocument();
-    expect(thunkActionCreator.value).toBe('');
+    const actionType = screen.getByRole('textbox', {name: 'Action Type Of Expected Action'});
+    expect(actionType).toBeInTheDocument();
+    expect(actionType.placeholder).toBe('e.g. ADD_TODO');
+    expect(actionType.value).toBe('');
+  })
+
+  it('should correctly display default input value on Argument 1', () => {
+    render(<Thunk {...props}/>);
+
+    const argumentOne = screen.getByRole('textbox', {name: 'Argument 1'});
+    expect(argumentOne).toBeInTheDocument();
+    expect(argumentOne.placeholder).toBe('e.g. response');
+    expect(argumentOne.value).toBe('');
+  })
+
+  it('should correctly display the options on Type 1 dropdown', () => {
+    render(<Thunk {...props}/>);
+
+    const typeOne = screen.getByRole('combobox', {name: 'Type 1'});
+    const options = typeOne.querySelectorAll('option');
+    expect(options).toHaveLength(6);
+    expect(options[0].value).toBe('');
+    expect(options[1].value).toBe('word');
+    expect(options[2].value).toBe('words');
+    expect(options[3].value).toBe('number');
+    expect(options[4].value).toBe('arrayElement');
+    expect(options[5].value).toBe('objectElement');
+  })
+
+  it('should correctly display default input value on Argument 2', () => {
+    render(<Thunk {...props}/>);
+
+    const argumentOne = screen.getByRole('textbox', {name: 'Argument 2'});
+    expect(argumentOne).toBeInTheDocument();
+    expect(argumentOne.placeholder).toBe('e.g. id');
+    expect(argumentOne.value).toBe('');
+  })
+
+  it('should correctly display the options on Type 2 dropdown', () => {
+    render(<Thunk {...props}/>);
+
+    const typeTwo = screen.getByRole('combobox', {name: 'Type 2'});
+    const options = typeTwo.querySelectorAll('option');
+    expect(options).toHaveLength(6);
+    expect(options[0].value).toBe('');
+    expect(options[1].value).toBe('word');
+    expect(options[2].value).toBe('words');
+    expect(options[3].value).toBe('number');
+    expect(options[4].value).toBe('arrayElement');
+    expect(options[5].value).toBe('objectElement');
   })
 })
