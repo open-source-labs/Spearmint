@@ -1,5 +1,5 @@
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
-import { number } from "yargs";
+import { FindCursor } from "mongodb";
 import { testStateControllerType } from "../utils/backendTypes";
 
 // Import test state model that defines the structure of test stored in DB
@@ -14,10 +14,10 @@ testStateController.upload = (req: Request, res: Response, next: NextFunction): 
 
   TestState.create(
     {
-      userId,
-      testName,
-      testType,
-      testState
+      userId: String,
+      testName: String,
+      testType: String,
+      testState: Object
     },
     (err: Error): void => {
       if (err) return next('Upload Failed');
@@ -28,7 +28,7 @@ testStateController.upload = (req: Request, res: Response, next: NextFunction): 
 
 // Middleware too get all saved tests of current user and of selected type
 testStateController.getTests = (req: Request, res: Response, next: NextFunction) => {
-  TestState.find({ userId: req.cookies.ssid, testType: req.params.testType }, (err: ErrorRequestHandler, result: Object): void => {
+  TestState.find({ userId: req.cookies.ssid, testType: req.params.testType }, (err: ErrorRequestHandler, result: FindCursor): void => {
     // If an error occurs, invoke error handler with err object
     if (err) return next(err);
     // Save resulting tests array to locals object

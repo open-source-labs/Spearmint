@@ -4,6 +4,11 @@ import { Cursor } from "mongoose";
 import { BasicGroupByOptions } from "rxjs";
 import { userControllerType } from "../utils/backendTypes";
 
+/**
+ * Errors on lines 89-90 and 97-98 are due to Typescript not recognizing inherent _id property on MongoDB collections.
+ */
+
+
 const { User } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 

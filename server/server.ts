@@ -1,4 +1,5 @@
 import { Application, ErrorRequestHandler, NextFunction, Request, Response, Router } from "express";
+import { Authenticator } from "passport";
 import { defaultErrType } from "./utils/backendTypes";
 
 const express = require('express');
@@ -6,7 +7,7 @@ const app: Application = express();
 const cookieParser: Function = require('cookie-parser');
 const router: Router = require('./routes/router');
 const PORT: number = 3001;
-const passport = require('passport');
+const passport: Authenticator = require('passport');
 
 // dotenv.config({ path: './config/config.env' });
 require('./config/passport')(passport);
@@ -29,7 +30,7 @@ app.use((err: ErrorRequestHandler, req: Request, res: Response, next: NextFuncti
   const defaultErr: defaultErrType = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
-    message: { err: 'An error occurred' },
+    message: 'An error occurred',
   };
   const errorObj = Object.assign({}, defaultErr, err);
   return res.status(errorObj.status).json(err);

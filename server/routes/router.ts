@@ -2,11 +2,12 @@
 
 import { Request, Response, Router } from "express";
 import { cookieControllerType, sessionControllerType, testStateControllerType, userControllerType } from "../utils/backendTypes";
+import { Authenticator } from "passport";
 
 // Import Express to streamline server logic with router
 const express = require('express');
 // Import all relevant controller objects equipped with middleware
-const passport = require('passport');
+const passport: Authenticator = require('passport');
 const userController: userControllerType = require('../controllers/userController');
 const cookieController: cookieControllerType = require('../controllers/cookieController');
 const sessionController: sessionControllerType = require('../controllers/sessionController');
@@ -15,7 +16,13 @@ const testStateController: testStateControllerType = require('../controllers/tes
 // const githubController = require('../controllers/githubController');
 
 // Initialize an express router
-const router: Router = express.Router();
+const router: Router = Router();
+
+/**
+ * Express middleware functions are throwing errors when being called inside router's methods due to a Typescript conflict with the expected method params.
+ * The solution to this appears to be merging custom interfaces into the Express namespace in order to extend the acceptable Typescript inputs.
+ * See: https://stackoverflow.com/questions/69889862/express-use-custom-typed-middleware
+ */
 
 // Set up route for post requests to /signup
 router.post(

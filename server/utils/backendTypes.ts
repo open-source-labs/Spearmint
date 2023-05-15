@@ -5,9 +5,7 @@ const express = require('express')
 export interface defaultErrType {
   log: string,
   status: number,
-  message: {
-    err: string,
-  },
+  message: string,
 }
 
 export interface userControllerType {
