@@ -1,5 +1,5 @@
 //not using useRef or useEffect which are both react hooks...
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext } from 'react';
 // if react-beautiful-dnd is declared in declaration.d.ts then eslint becomes unhappy about DropResult
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
@@ -16,7 +16,7 @@ import {
 import ReduxTestMenu from '../TestMenu/ReduxTestMenu';
 import ReduxTestStatements from './ReduxTestStatements';
 import { ReduxStatements } from '../../utils/reduxTypes';
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import InputTextField from '../InputTextField';
 

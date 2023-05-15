@@ -3,8 +3,8 @@
  * which render on the top Test Menu component.
  */
 
-import React, { useState, useContext, useReducer } from 'react';
-import { useNewTest, useGenerateScript } from '../Modals/modalHooks';
+import React, { useState, useContext } from 'react';
+import {  useGenerateScript } from '../Modals/modalHooks';
 import { setTabIndex } from '../../context/actions/globalActions';
 import styles from '../Modals/Modal.module.scss';
 import Accordion from '@mui/material/Accordion';

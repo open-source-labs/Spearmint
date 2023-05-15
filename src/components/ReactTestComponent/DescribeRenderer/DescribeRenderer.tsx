@@ -1,4 +1,4 @@
-import React, { Dispatch } from 'react';
+import React from 'react';
 import cn from 'classnames';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from './DescribeRenderer.module.scss';

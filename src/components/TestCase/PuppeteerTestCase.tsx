@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useEffect } from 'react';
-import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
@@ -34,21 +33,6 @@ const PuppeteerTestCase = () => {
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result;
-  };
-
-  const onDragEnd = (result: typeof DropResult) => {
-    if (!result.destination) {
-      return;
-    }
-    if (result.destination.index === result.source.index) {
-      return;
-    }
-    const reorderedStatements: Array<PuppeteerStatements> = reorder(
-      puppeteerStatements,
-      result.source.index,
-      result.destination.index
-    );
-    dispatchToPuppeteerTestCase(updateStatementsOrder(reorderedStatements));
   };
 
   return (

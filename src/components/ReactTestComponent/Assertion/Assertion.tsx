@@ -4,14 +4,12 @@ import { deleteAssertion, updateAssertion } from '../../../context/actions/front
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
-import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
-const closeIcon = require('../../../assets/images/close.png');
 
 // This is tracking the assertions that you have in a certain test, following the flow of data will help 
 // you better understand how exactly this is working

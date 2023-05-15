@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/frontendFrameworkTestCaseActions';
+import { createNewTest, resetTests } from '../../context/actions/frontendFrameworkTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -10,8 +10,6 @@ import {
   setFilePath,
   toggleRightPanel,
   setValidCode,
-  setTestCase,
-  toggleModal,
   toggleExportBool,
   setTabIndex,
 } from '../../context/actions/globalActions';
@@ -37,10 +35,6 @@ const SolidTestMenu = () => {
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
   }, []);
-
-  const handleAddDescribeBlock = (e) => {
-    dispatchToSolidTestCase(addDescribeBlock());
-  };
 
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(solidUrl));
@@ -77,10 +71,6 @@ const SolidTestMenu = () => {
       ipcRenderer.sendSync('ExportFileModal.fileCreate', newFilePath, updatedData)
     }
   }
-
-  const openNewTestModal = () => {
-    if (!isTestModalOpen) dispatchToGlobal(toggleModal());
-  };
 
   const handleResetTests = () => {
     dispatchToSolidTestCase(resetTests());

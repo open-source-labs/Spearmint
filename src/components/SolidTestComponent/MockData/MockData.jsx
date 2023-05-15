@@ -5,7 +5,7 @@
  *  - the labels in the card (name, key, type)
  */
 
-import React, {useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import styles from './MockData.module.scss';
 import {
   deleteMockData,

@@ -5,16 +5,11 @@ import {
   toggleRightPanel,
   setValidCode,
   openBrowserDocs,
-  setTestCase,
   toggleModal,
   toggleExportBool,
   setTabIndex,
 } from '../../context/actions/globalActions';
 import {
-  addAsync,
-  addReducer,
-  addActionCreator,
-  addMiddleware,
   createNewReduxTest,
   resetTests
 } from '../../context/actions/reduxTestCaseActions';

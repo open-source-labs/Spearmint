@@ -1,6 +1,4 @@
 import React, { useContext, useReducer } from 'react';
-import cn from 'classnames';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,

@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import styles from '../Action/Action.module.scss';
 import { deleteAction, updateAction } from '../../../context/actions/frontendFrameworkTestCaseActions';
-import AutoComplete from '../../AutoComplete/AutoComplete';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/reducers/mockDataReducer';
@@ -11,7 +10,6 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
-const closeIcon = require('../../../assets/images/close.png');
 
 // This is tracking the actions that you have in a specific test, following the flow of data will
 // help you better understand exactly how this is working

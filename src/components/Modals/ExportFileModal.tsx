@@ -5,11 +5,9 @@ import withStyles from '@mui/styles/withStyles';
 import {
   setFilePathMap,
   createFileTree,
-  toggleFolderView,
   highlightFile,
   toggleExportBool,
   updateFile,
-  toggleFileDirectory,
   setFileDirectory,
   setFolderView,
 } from '../../context/actions/globalActions';

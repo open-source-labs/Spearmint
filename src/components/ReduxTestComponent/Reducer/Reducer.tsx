@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import styles from './Reducer.module.scss';
 import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseReducer';
 import { deleteReducer, updateReducer } from '../../../context/actions/reduxTestCaseActions';
-import { ReduxStatements } from '../../../utils/reduxTypes';
 
 const closeIcon = require('../../../assets/images/close.png');
 const dragIcon = require('../../../assets/images/drag-vertical.png');
@@ -57,7 +56,6 @@ const Reducer = ({ reducer, index }: ReducerType) => {
         >
           <img src={closeIcon} id={styles.close} alt='close' onClick={handleClickDeleteReducer} />
           <div id={styles.reducerHeader}>
-            <img src={dragIcon} alt='drag' />
             <h3>Reducer</h3>
           </div>
 
