@@ -152,7 +152,7 @@ describe('User Events on Action Creator', () => {
     expect(payloadKey.value).toBe('Testing');
   })
 
-  it('should correctly set default option on Payload Type dropdown', async () => {
+  it('updates the Payload Type dropdown option on user input', async () => {
     const user = userEvent.setup();
     render(<ActionCreator {...props}/>);
     expect(screen.getByRole('option', { name: '' }).selected).toBe(true);

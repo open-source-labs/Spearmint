@@ -103,3 +103,34 @@ describe('Redux Middleware', () => {
     expect(middlewareBox.value).toBe('');
   })
 })
+
+describe('User Events on Redux Middleware', () => {
+
+  it('updates the Query Value dropdown option on user input', async () => {
+    const user = userEvent.setup();
+    render(<Middleware {...props}/>);
+
+    const queryValue = screen.getByRole('combobox', {name: 'Query Value'});
+    const options = queryValue.querySelector('option', {name: ''});
+    expect(options.selected).toBe(true);
+
+    const userSelection = queryValue.querySelector('option', {name: 'calls_the_function'})
+    await user.selectOptions(queryValue, userSelection);
+    expect(userSelection.selected).toBe(true);
+  })
+
+  it('updates the Query Variant dropdown option on user input', async () => {
+    const user = userEvent.setup();
+    render(<Middleware {...props}/>);
+
+    const queryVariant = screen.getByRole('combobox', {name: 'Query Variant'});
+    const options = queryVariant.querySelector('option', {name: ''});
+    expect(options.selected).toBe(true);
+
+    const userSelection = queryVariant.querySelector('option', {name: 'toHaveBeenCalled'})
+    await user.selectOptions(queryVariant, userSelection);
+    expect(userSelection.selected).toBe(true);
+  })
+
+
+})
