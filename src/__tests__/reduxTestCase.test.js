@@ -6,11 +6,7 @@ import React from 'react';
 import { render, screen, within, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import ReduxTestCase from '../components/TestCase/ReduxTestCase';
-import ReduxTestMenu from '../components/TestMenu/ReduxTestMenu';
-import TestMenuButtons from '../components/TestMenu/TestMenuButtons';
 import userEvent from '@testing-library/user-event'
-import { ReduxTestCaseContext } from '../context/reducers/reduxTestCaseReducer';
-import { addReducer } from '../context/actions/reduxTestCaseActions';
 import Reducer from '../components/ReduxTestComponent/Reducer/Reducer';
 
 const dispatchToGlobal = jest.fn();
