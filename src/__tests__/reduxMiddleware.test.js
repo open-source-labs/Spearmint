@@ -59,8 +59,8 @@ describe('Redux Middleware', () => {
   it('should correctly displays the options on Query Value dropdown', () => {
     render(<Middleware {...props}/>);
 
-    const queryValue = screen.getByRole('combobox', {name: 'Query Value'});
-    const options = queryValue.querySelectorAll('option');
+    const queryValueOption = screen.getByRole('combobox', {name: 'Query Value'});
+    const options = queryValueOption.querySelectorAll('option');
     expect(options).toHaveLength(4);
     expect(options[0].value).toBe('');
     expect(options[1].value).toBe('passes_non_functional_arguments');
@@ -71,8 +71,8 @@ describe('Redux Middleware', () => {
   it('should correctly displays the options on Query Variant dropdown', () => {
     render(<Middleware {...props}/>);
 
-    const queryVariant = screen.getByRole('combobox', {name: 'Query Variant'});
-    const options = queryVariant.querySelectorAll('option');
+    const queryVariantOption = screen.getByRole('combobox', {name: 'Query Variant'});
+    const options = queryVariantOption.querySelectorAll('option');
     expect(options).toHaveLength(6);
     expect(options[0].value).toBe('');
     expect(options[1].value).toBe('toBe');
@@ -85,8 +85,8 @@ describe('Redux Middleware', () => {
   it('should correctly displays the options on Query Selector dropdown', () => {
     render(<Middleware {...props}/>);
 
-    const querySelectorDropdown = screen.getByRole('combobox', {name: 'Query Selector'});
-    const options = querySelectorDropdown.querySelectorAll('option');
+    const querySelectorOption = screen.getByRole('combobox', {name: 'Query Selector'});
+    const options = querySelectorOption.querySelectorAll('option');
     expect(options).toHaveLength(5);
     expect(options[0].value).toBe('');
     expect(options[1].value).toBe('next');
@@ -110,12 +110,12 @@ describe('User Events on Redux Middleware', () => {
     const user = userEvent.setup();
     render(<Middleware {...props}/>);
 
-    const queryValue = screen.getByRole('combobox', {name: 'Query Value'});
-    const options = queryValue.querySelector('option', {name: ''});
+    const queryValueOption = screen.getByRole('combobox', {name: 'Query Value'});
+    const options = queryValueOption.querySelector('option', {name: ''});
     expect(options.selected).toBe(true);
 
-    const userSelection = queryValue.querySelector('option', {name: 'calls_the_function'})
-    await user.selectOptions(queryValue, userSelection);
+    const userSelection = queryValueOption.querySelector('option', {name: 'calls_the_function'})
+    await user.selectOptions(queryValueOption, userSelection);
     expect(userSelection.selected).toBe(true);
   })
 
@@ -123,14 +123,25 @@ describe('User Events on Redux Middleware', () => {
     const user = userEvent.setup();
     render(<Middleware {...props}/>);
 
-    const queryVariant = screen.getByRole('combobox', {name: 'Query Variant'});
-    const options = queryVariant.querySelector('option', {name: ''});
+    const queryVariantOption = screen.getByRole('combobox', {name: 'Query Variant'});
+    const options = queryVariantOption.querySelector('option', {name: ''});
     expect(options.selected).toBe(true);
 
-    const userSelection = queryVariant.querySelector('option', {name: 'toHaveBeenCalled'})
-    await user.selectOptions(queryVariant, userSelection);
+    const userSelection = queryVariantOption.querySelector('option', {name: 'toHaveBeenCalled'})
+    await user.selectOptions(queryVariantOption, userSelection);
     expect(userSelection.selected).toBe(true);
   })
 
+  it('updates the Query Selector dropdown option on user input', async () => {
+    const user = userEvent.setup();
+    render(<Middleware {...props}/>);
 
+    const querySelectorOption = screen.getByRole('combobox', {name: 'Query Selector'});
+    const options = querySelectorOption.querySelector('option', {name: ''});
+    expect(options.selected).toBe(true);
+
+    const userSelection = querySelectorOption.querySelector('option', {name: 'store.GetState'})
+    await user.selectOptions(querySelectorOption, userSelection);
+    expect(userSelection.selected).toBe(true);
+  })
 })
