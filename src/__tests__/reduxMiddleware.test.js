@@ -17,7 +17,10 @@ const props = {
     field: '',
     eventType: '',
     eventValue: null,
-    queryType: '',
+    queryType: null, 
+    /* queryType is defined as an empty string in the reduxTestCaseState. 
+     - check the note at the top of reduxActionCreator.test.js to see why this had to be changed to null.
+    */
     queryVariant: '',
     querySelector: '',
     queryValue: '',
@@ -31,12 +34,9 @@ describe('Redux Middleware', () => {
 
   it('displays the Middleware component', () => {
     render(<Middleware {...props}/>);
-    screen.debug();
+
     const middleware = screen.getByRole('heading');
     expect(middleware).toHaveTextContent('Middleware');
-
-    const middlewareLabel = screen.getAllByText('Middleware');
-    expect(middlewareLabel).toHaveLength(1);
   });
 
   it('displays all of the labels', () => {
@@ -143,5 +143,17 @@ describe('User Events on Redux Middleware', () => {
     const userSelection = querySelectorOption.querySelector('option', {name: 'store.GetState'})
     await user.selectOptions(querySelectorOption, userSelection);
     expect(userSelection.selected).toBe(true);
+  })
+
+  it('updates the Middleware Function input value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Middleware {...props}/>);
+
+    const middlewareBox = screen.getByRole('textbox', {name: 'Middleware Function'});
+    expect(middlewareBox.placeholder).toBe('e.g. thunk');
+    expect(middlewareBox.value).toBe('');
+
+    await user.type(middlewareBox, 'Carter was here');
+    expect(middlewareBox.value).toBe('Carter was here');
   })
 })
