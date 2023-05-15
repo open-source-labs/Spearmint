@@ -104,7 +104,7 @@ describe('Redux Test Component Reducer', () => {
   })
 })
 
-describe('User Events on Redux Reduer Component', () => {
+describe('User Events on Redux Reducer Component', () => {
 
   it('updates the It Statement input field value on user input', async () => {
     const user = userEvent.setup();

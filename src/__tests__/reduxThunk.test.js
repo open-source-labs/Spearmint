@@ -13,20 +13,20 @@ const props = {
   async: {
     id: 0,
     field: '',
-    actionType: '',
+    actionType: null,
     actionsFileName: '',
     filePath: '',
     typesFileName: '',
     typesFilePath: '',
-    asyncFunction: '',
+    asyncFunction: null,
     method: '',
     route: '',
     actionsFile: '',
     responseType: '',
-    it: '',
+    it: null,
     payloadKey: null,
     payloadType: null,
-    expectedArg: '',
+    expectedArg: null,
   },
   index: 0
 }
@@ -120,5 +120,89 @@ describe('Redux Test Component Thunk', () => {
     expect(options[3].value).toBe('number');
     expect(options[4].value).toBe('arrayElement');
     expect(options[5].value).toBe('objectElement');
+  })
+})
+
+describe('User Events on Redux Thunk Component', () => {
+
+  it('updates the It Statement input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const it = screen.getByRole('textbox', {name: 'It should...'});
+    expect(it.value).toBe('');
+
+    await user.type(it, 'If spearmint has a million fans');
+    expect(it.value).toBe('If spearmint has a million fans');
+  })
+
+  it('updates the Thunk Action Creator input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const thunkActionCreator = screen.getByRole('textbox', {name: 'Thunk Action Creator'});
+    expect(thunkActionCreator.value).toBe('');
+
+    await user.type(thunkActionCreator, 'then I am one of them.');
+    expect(thunkActionCreator.value).toBe('then I am one of them.');
+  })
+
+  it('updates the Action Type input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const actionType = screen.getByRole('textbox', {name: 'Action Type Of Expected Action'});
+    expect(actionType.value).toBe('');
+
+    await user.type(actionType, 'If spearmint has a ten fans, then I am one of them.');
+    expect(actionType.value).toBe('If spearmint has a ten fans, then I am one of them.');
+  })
+
+  it('updates the Argument 1 input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const argumentOne = screen.getByRole('textbox', {name: 'Argument 1'});
+    expect(argumentOne.value).toBe('');
+
+    await user.type(argumentOne, 'If spearmint has only one fan, then that is me.');
+    expect(argumentOne.value).toBe('If spearmint has only one fan, then that is me.');
+  })
+
+  it('updates the Type 1 dropdown option on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const typeOne = screen.getByRole('combobox', {name: 'Type 1'});
+    const options = typeOne.querySelector('option', {name: ''});
+    expect(options.selected).toBe(true);
+
+    const userSelection = typeOne.querySelector('option', {name: 'arrayElement'});
+    await user.selectOptions(typeOne, userSelection);
+    expect(userSelection.selected).toBe(true);
+  })
+
+  it('updates the Argument 2 input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const argumentTwo = screen.getByRole('textbox', {name: 'Argument 2'});
+    expect(argumentTwo.value).toBe('');
+
+    await user.type(argumentTwo, 'If the world is against spearmint, then I am against the world.');
+    expect(argumentTwo.value).toBe('If the world is against spearmint, then I am against the world.');
+  })
+
+  it('updates the Type 2 dropdown option on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const typeTwo = screen.getByRole('combobox', {name: 'Type 2'});
+    const options = typeTwo.querySelector('option', {name: ''});
+    expect(options.selected).toBe(true);
+
+    const userSelection = typeTwo.querySelector('option', {name: 'number'});
+    await user.selectOptions(typeTwo, userSelection);
+    expect(userSelection.selected).toBe(true);
   })
 })
