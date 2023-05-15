@@ -125,18 +125,19 @@ const Reducer = ({ reducer, index }: ReducerType) => {
               />
             </div>
             <div id={styles.reducerName}>
-              <label htmlFor='expectedState'>Expected State</label>
+              <label htmlFor='expectedStateKey'>Expected State (key)</label>
               <input
                 type='text'
                 placeholder='Key'
-                id='expectedKey'
+                id='expectedStateKey'
                 value={reducer.expectedKey}
                 onChange={(e) => handleChangeReducerFields(e, 'expectedKey')}
               />
+              <label htmlFor='expectedStateValue'>Expected State (value)</label>
               <input
                 type='text'
                 placeholder='Value'
-                id='expectedValue'
+                id='expectedStateValue'
                 value={reducer.expectedValue}
                 onChange={(e) => handleChangeReducerFields(e, 'expectedValue')}
               />

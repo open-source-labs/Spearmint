@@ -75,7 +75,7 @@ describe('Redux Test Component Reducer', () => {
     expect(action.value).toBe('');
   })
 
-  it('should correctly display default inputs and their values on Reducer Name', () => {
+  it('should correctly display default input values on Payload Key and Value', () => {
     render(<Reducer {...props}/>);
 
     const payloadKey = screen.getByRole('textbox', {name: 'Payload Key (optional)'});
@@ -87,5 +87,19 @@ describe('Redux Test Component Reducer', () => {
     expect(payloadValue).toBeInTheDocument();
     expect(payloadValue.placeholder).toBe('Value');
     expect(payloadValue.value).toBe('');
+  })
+
+  it('should correctly display default input values on Expected State Key and Value', () => {
+    render(<Reducer {...props}/>);
+
+    const stateKey = screen.getByRole('textbox', {name: 'Expected State (key)'});
+    expect(stateKey).toBeInTheDocument();
+    expect(stateKey.placeholder).toBe('Key');
+    expect(stateKey.value).toBe('');
+
+    const stateValue = screen.getByRole('textbox', {name: 'Expected State (value)'});
+    expect(stateValue).toBeInTheDocument();
+    expect(stateValue.placeholder).toBe('Value');
+    expect(stateValue.value).toBe('');
   })
 })
