@@ -66,9 +66,9 @@ const Reducer = ({ reducer, index }: ReducerType) => {
               <label htmlFor='testStatement'>It Statement</label>
               <input
                 type='text'
-                id='testStatment'
+                id='testStatement'
                 value={reducer.itStatement}
-                placeholder='eg. handles ADD_TODO action properly'
+                placeholder='e.g. handles ADD_TODO action properly'
                 onChange={(e) => handleChangeReducerFields(e, 'itStatement')}
               />
             </div>
@@ -78,19 +78,19 @@ const Reducer = ({ reducer, index }: ReducerType) => {
                 type='text'
                 id='reducerName'
                 value={reducer.reducerName}
-                placeholder='eg. todoReducer'
+                placeholder='e.g. todoReducer'
                 onChange={(e) => handleChangeReducerFields(e, 'reducerName')}
               />
             </div>
           </div>
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='initialStae'>Initial State</label>
+              <label htmlFor='initialState'>Initial State</label>
               <input
                 type='text'
                 id='initialState'
                 value={reducer.initialState}
-                placeholder='eg. todosState'
+                placeholder='e.g. todosState'
                 onChange={(e) => handleChangeReducerFields(e, 'initialState')}
               />
             </div>
@@ -100,14 +100,14 @@ const Reducer = ({ reducer, index }: ReducerType) => {
                 type='text'
                 id='reducerAction'
                 value={reducer.reducerAction}
-                placeholder='eg ADD_TODO'
+                placeholder='e.g. ADD_TODO'
                 onChange={(e) => handleChangeReducerFields(e, 'reducerAction')}
               />
             </div>
           </div>
           <div id={styles.reducerNameFlexBox}>
             <div id={styles.reducerName}>
-              <label htmlFor='initialState'>Payload (optional. if action requires)</label>
+              <label htmlFor='payloadKey'>Payload Key (optional)</label>
               <input
                 type='text'
                 id='payloadKey'
@@ -115,6 +115,7 @@ const Reducer = ({ reducer, index }: ReducerType) => {
                 placeholder='Key'
                 onChange={(e) => handleChangeReducerFields(e, 'payloadKey')}
               />
+              <label htmlFor='payloadValue'>Payload Value (optional)</label>
               <input
                 type='text'
                 id='payloadValue'
@@ -124,18 +125,19 @@ const Reducer = ({ reducer, index }: ReducerType) => {
               />
             </div>
             <div id={styles.reducerName}>
-              <label htmlFor='expectedState'>Expected State</label>
+              <label htmlFor='expectedStateKey'>Expected State (key)</label>
               <input
                 type='text'
                 placeholder='Key'
-                id='expectedKey'
+                id='expectedStateKey'
                 value={reducer.expectedKey}
                 onChange={(e) => handleChangeReducerFields(e, 'expectedKey')}
               />
+              <label htmlFor='expectedStateValue'>Expected State (value)</label>
               <input
                 type='text'
                 placeholder='Value'
-                id='expectedValue'
+                id='expectedStateValue'
                 value={reducer.expectedValue}
                 onChange={(e) => handleChangeReducerFields(e, 'expectedValue')}
               />

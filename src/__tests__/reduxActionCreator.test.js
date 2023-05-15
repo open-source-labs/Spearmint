@@ -61,16 +61,16 @@ describe('Action Creator', () => {
     expect(payloadType).toBeInTheDocument();
   })
 
-  it('should correctly display default input value on It statement', async () => {
+  it('should correctly display default input value on It statement', () => {
     render(<ActionCreator {...props}/>);
 
-    const it = screen.getByLabelText('It should...');
+    const it = screen.getByRole('textbox', {name: 'It should...'});
     expect(it).toBeInTheDocument();
     expect(it.placeholder).toBe('e.g.should return expected action');
     expect(it.value).toBe('');
   })
 
-  it('should correctly display default input value on Action Creator', async () => {
+  it('should correctly display default input value on Action Creator', () => {
     render(<ActionCreator {...props}/>);
 
     const actionCreator = screen.getByRole('textbox', {name: 'Action Creator'});
@@ -79,7 +79,7 @@ describe('Action Creator', () => {
     expect(actionCreator.value).toBe('');
   })
 
-  it('should correctly display default input value on Action Type', async () => {
+  it('should correctly display default input value on Action Type', () => {
     render(<ActionCreator {...props}/>);
 
     const actionType = screen.getByRole('textbox', {name: 'Action Type'});
