@@ -153,7 +153,7 @@ const Async = (props: ReduxAsync) => {
                   id='route'
                   name='route'
                   value={async.route}
-                  placeholder='eg. /route'
+                  placeholder='e.g. /route'
                   onChange={(e) => handleChangeAsyncFields(e, 'route')}
                 />
               </div>

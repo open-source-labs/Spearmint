@@ -19,8 +19,8 @@ const props = {
     typesFileName: '',
     typesFilePath: '',
     asyncFunction: null,
-    method: '',
-    route: '',
+    method: null,
+    route: null,
     actionsFile: '',
     responseType: '',
     it: null,
@@ -121,6 +121,28 @@ describe('Redux Test Component Thunk', () => {
     expect(options[4].value).toBe('arrayElement');
     expect(options[5].value).toBe('objectElement');
   })
+
+  it('should correctly display the options on Method dropdown', () => {
+    render(<Thunk {...props}/>);
+
+    const method = screen.getByRole('combobox', {name: 'Method'});
+    const options = method.querySelectorAll('option');
+    expect(options).toHaveLength(5);
+    expect(options[0].value).toBe('');
+    expect(options[1].value).toBe('get');
+    expect(options[2].value).toBe('post');
+    expect(options[3].value).toBe('put');
+    expect(options[4].value).toBe('delete');
+  })
+
+  it('should correctly display default input value on Route', () => {
+    render(<Thunk {...props}/>);
+
+    const route = screen.getByRole('textbox', {name: 'Route'});
+    expect(route).toBeInTheDocument();
+    expect(route.placeholder).toBe('e.g. /route');
+    expect(route.value).toBe('');
+  })
 })
 
 describe('User Events on Redux Thunk Component', () => {
@@ -204,5 +226,29 @@ describe('User Events on Redux Thunk Component', () => {
     const userSelection = typeTwo.querySelector('option', {name: 'number'});
     await user.selectOptions(typeTwo, userSelection);
     expect(userSelection.selected).toBe(true);
+  })
+
+  it('updates the Method dropdown option on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const method = screen.getByRole('combobox', {name: 'Method'});
+    const options = method.querySelector('option', {name: ''});
+    expect(options.selected).toBe(true);
+
+    const userSelection = method.querySelector('option', {name: 'post'});
+    await user.selectOptions(method, userSelection);
+    expect(userSelection.selected).toBe(true);
+  })
+
+  it('updates the Route input field value on user input', async () => {
+    const user = userEvent.setup();
+    render(<Thunk {...props}/>);
+
+    const route = screen.getByRole('textbox', {name: 'Route'});
+    expect(route.value).toBe('');
+
+    await user.type(route, 'If the world is against spearmint, then I am against the world.');
+    expect(route.value).toBe('If the world is against spearmint, then I am against the world.');
   })
 })
