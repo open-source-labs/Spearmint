@@ -22,3 +22,14 @@ const props = {
   },
   index: 0
 }
+
+describe('Redux Test Component Reducer', () => {
+
+  it('displays the Reducer component', () => {
+    render(<Reducer {...props}/>);
+    screen.debug();
+    const reducer = screen.getByRole('heading');
+    expect(reducer).toHaveTextContent('Reducer'); 
+  })
+
+})
