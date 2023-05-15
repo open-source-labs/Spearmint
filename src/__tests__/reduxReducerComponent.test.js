@@ -57,7 +57,7 @@ describe('Redux Test Component Reducer', () => {
     expect(reducerName.value).toBe('');
   })
 
-  it('should correctly display default input value on Reducer Name', () => {
+  it('should correctly display default input value on Initial State', () => {
     render(<Reducer {...props}/>);
 
     const initialState = screen.getByRole('textbox', {name: 'Initial State'});
@@ -66,7 +66,7 @@ describe('Redux Test Component Reducer', () => {
     expect(initialState.value).toBe('');
   })
 
-  it('should correctly display default input value on Reducer Name', () => {
+  it('should correctly display default input value on Action', () => {
     render(<Reducer {...props}/>);
 
     const action = screen.getByRole('textbox', {name: 'Action'});

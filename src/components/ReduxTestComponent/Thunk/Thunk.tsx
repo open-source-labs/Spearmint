@@ -35,6 +35,7 @@ const Async = (props: ReduxAsync) => {
               <label htmlFor='it'>It should...</label>
               <input
                 type='text'
+                id='it'
                 name='it'
                 value={async.it}
                 placeholder='e.g. store should hold expected action'
@@ -48,6 +49,7 @@ const Async = (props: ReduxAsync) => {
               <label htmlFor='asyncFunction'>Thunk Action Creator</label>
               <input
                 type='text'
+                id='asyncFunction'
                 name='asyncFunction'
                 value={async.asyncFunction}
                 onChange={(e) => handleChangeAsyncFields(e, 'asyncFunction')}
@@ -72,6 +74,7 @@ const Async = (props: ReduxAsync) => {
               <div id={styles.inputFlexBox}>
                 <input
                   type='text'
+                  id='expectedArg'
                   name='expectedArg'
                   value={async.expectedArg}
                   placeholder='e.g. response'
@@ -147,6 +150,7 @@ const Async = (props: ReduxAsync) => {
               <div id={styles.inputFlexBox}>
                 <input
                   type='text'
+                  id='route'
                   name='route'
                   value={async.route}
                   placeholder='eg. /route'
