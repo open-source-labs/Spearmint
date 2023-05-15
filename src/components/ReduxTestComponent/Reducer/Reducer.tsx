@@ -4,7 +4,6 @@ import { ReduxTestCaseContext } from '../../../context/reducers/reduxTestCaseRed
 import { deleteReducer, updateReducer } from '../../../context/actions/reduxTestCaseActions';
 
 const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
 
 interface ReducerType {
   reducer: {
