@@ -15,7 +15,7 @@ describe('EditorView', () => {
 
   test('should render and display Code Editor', () => {
     render(<Editor/>);
-    const codeEditor = screen.queryByTitle('Code Editor');
+    const codeEditor = screen.queryByTestId('Code Editor');
     expect(codeEditor).toBeVisible();
   });
 
