@@ -69,7 +69,7 @@ const Editor = () : JSX.Element => {
     <div>
     <div id={styles.codeEditor} onClick={() => setWasSaved('')}>
       <CodeMirror
-        title={'Code Editor'}
+        data-testid={'Code Editor'}
         value={
           file
             ? extensionChecker[fileType ]
