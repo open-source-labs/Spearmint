@@ -32,4 +32,20 @@ describe('Redux Test Component Reducer', () => {
     expect(reducer).toHaveTextContent('Reducer'); 
   })
 
+  it('displays all of the labels', () => {
+    render(<Reducer {...props}/>);
+    
+    const labels = screen.getAllByRole('textbox');
+    expect(labels).toHaveLength(8);
+  })
+
+  it('should correctly display default input value on It Statement', () => {
+    render(<Reducer {...props}/>);
+
+    const it = screen.getByRole('textbox', {name: 'It Statement'});
+    expect(it).toBeInTheDocument();
+    expect(it.placeholder).toBe('e.g. handles ADD_TODO action properly');
+    expect(it.value).toBe('');
+  })
+
 })
