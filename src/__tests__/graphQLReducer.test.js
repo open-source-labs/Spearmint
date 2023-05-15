@@ -112,9 +112,7 @@ describe('GraphQL Reducer', () => {
     });
 
     it('should handle CLOSE_INFO_MODAL', () => {
-      expect(
-        graphQLTestCaseReducer(initialState, { type: 'CLOSE_MODAL_INFO' })
-      ).toEqual({
+      expect(graphQLTestCaseReducer(initialState, { type: 'CLOSE_MODAL_INFO' })).toEqual({
         modalOpen: false,
         ...initialState,
       });
