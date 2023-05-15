@@ -18,10 +18,11 @@ const app = new Application({
 });
 
 // define the use of chai and chai as promised packages
-global.before(function () {
-  chai.should();
-  chai.use(chaiAsPromised);
-});
+// UNCOMMENT THE LINES BELOW TO UPDATE TESTING SUITE
+// global.before(function () {
+//   chai.should();
+//   chai.use(chaiAsPromised);
+// });
 
 xdescribe('Application Accessibility Audit', function () {
   this.timeout(10000);
