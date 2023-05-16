@@ -1,12 +1,8 @@
-import { TablePaginationUnstyledSpacerSlotProps } from "@mui/base";
-import { Error } from "mongoose";
-import { Authenticator, Profile } from "passport";
-
 const GitHubStrategy = require('passport-github2').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { GithubUser, GoogleUser } = require('../models/userModel.js');
 
-module.exports = function (passport: Authenticator) {
+module.exports = function (passport) {
   passport.use(
     new GitHubStrategy(
       {
@@ -15,10 +11,10 @@ module.exports = function (passport: Authenticator) {
         callbackURL: 'http://localhost:3001/auth/github/callback',
       },
 
-      (accessToken: String, refreshToken: (String | undefined), profile: Profile, done: Function): void => {
+      (accessToken, refreshToken, profile, done) => {
         //console.log('this is our accessToken:', accessToken);
         // we are checking if the github profile is in our monogDB
-        GithubUser.findOne({ githubId: profile.id }, (err: Error, result: { githubId: String, username: String }): void => {
+        GithubUser.findOne({ githubId: profile.id }, (err, result) => {
           if (result) {
             // already have this user
             //console.log('user is: ', result);
@@ -31,7 +27,7 @@ module.exports = function (passport: Authenticator) {
               username: profile.displayName,
             })
               .save()
-              .then((newUser): void => {
+              .then((newUser) => {
                 //console.log('created new user: ', newUser);
                 //   res.locals.userId = newUser._id
                 done(null, newUser);
@@ -52,10 +48,10 @@ module.exports = function (passport: Authenticator) {
         callbackURL: 'http://localhost:3001/auth/google/callback',
       },
 
-      (accessToken: String, refreshToken: (String | undefined), profile: Profile, done: Function): void => {
+      (accessToken, refreshToken, profile, done) => {
         //console.log('this is our accessToken:', accessToken);
         // we are checking if the google profile is in our monogDB
-        GoogleUser.findOne({ googleId: profile.id }, (err: Error, result: {googleId: String, username: String}) => {
+        GoogleUser.findOne({ googleId: profile.id }, (err, result) => {
           if (result) {
             // already have this user
             //console.log('user is: ', result);
@@ -67,7 +63,7 @@ module.exports = function (passport: Authenticator) {
               googleId: profile.id,
             })
               .save()
-              .then((newUser): void => {
+              .then((newUser) => {
                 //console.log('created new user: ', newUser);
                 //   res.locals.userId = newUser._id
                 done(null, newUser);
@@ -80,11 +76,11 @@ module.exports = function (passport: Authenticator) {
     )
   );
 
-  passport.serializeUser((user, done): void => {
+  passport.serializeUser((user, done) => {
     done(null, user);
   });
 
-  passport.deserializeUser((obj: (false | Express.User | null | undefined), done): void => {
+  passport.deserializeUser((obj, done) => {
     done(null, obj);
   });
 };
