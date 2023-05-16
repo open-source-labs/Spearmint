@@ -22,12 +22,6 @@ const testStateController/*: testStateControllerType*/ = require('../controllers
 // Initialize an express router
 const router/*: Router*/ = express.Router();
 
-/**
- * Express middleware functions are throwing errors when being called inside router's methods due to a Typescript conflict with the expected method params.
- * The solution to this appears to be merging custom interfaces into the Express namespace in order to extend the acceptable Typescript inputs.
- * See: https://stackoverflow.com/questions/69889862/express-use-custom-typed-middleware
- */
-
 // Set up route for post requests to /signup
 router.post(
   '/signup',

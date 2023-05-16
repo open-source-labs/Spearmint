@@ -9,7 +9,8 @@ const mongoose = require('mongoose');
 // Schema constructor
 const Schema = mongoose.Schema;
 
-const testStateObj = {
+// Initialize a new schema object for collection 'testState'
+const testStateSchema = new Schema({
   // Save ID of user that saves test
   userId: { type: String, required: true },
   // Save name of test as user input
@@ -29,12 +30,11 @@ const testStateSchema/* : SchemaType */ = new Schema(testStateObj);
 // Therefore we use a pre-script to throw an error if any prop is the incorrect type,
   // preventing the uploading of documents with incorrect data type
 testStateSchema.pre('save', function(next) {
-  if (typeof testStateObj.userId !== 'string' ||
-      typeof testStateObj.testName !== 'string' ||
-      typeof testStateObj.testType !== 'string' ||
-      typeof testStateObj.testState !== 'object') {
-        const err = new Error('type failure');
-        return next(err);
+  if (typeof userId !== 'string' ||
+      typeof testName !== 'string' ||
+      typeof testType !== 'string' ||
+      typeof testState !== 'object') {
+        return next('type failure');
       }
   else return next();
 });

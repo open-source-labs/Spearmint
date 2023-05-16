@@ -45,3 +45,4 @@ app.listen(PORT, ()/*: void*/ => {
 });
 
 module.exports = app;
+module.exports = app;
