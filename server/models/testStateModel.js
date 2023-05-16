@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 // Initialize a new schema object for collection 'testState'
-const testStateSchema = new Schema({
+const testStateObj = {
   // Save ID of user that saves test
   userId: { type: String, required: true },
   // Save name of test as user input
@@ -19,7 +19,7 @@ const testStateSchema = new Schema({
   testType: { type: String, required: true },
   // Save test state object
   testState: { type: Object, required: true },
-});
+};
 
 
 // Initialize a new schema object for collection 'testState'
