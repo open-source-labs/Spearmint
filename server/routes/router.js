@@ -1,22 +1,26 @@
+/**  using import statements in the electron / node files breaks npm start and nodepty 
+* - types are left in place in these files for future iteration alternate import method is required for them to function
+*/
+
 /* eslint-disable comma-dangle */
 
-import { Request, Response, Router } from "express";
-import { cookieControllerType, sessionControllerType, testStateControllerType, userControllerType } from "../utils/backendTypes";
-import { Authenticator } from "passport";
+// import { Request, Response, Router } from "express";
+// import { cookieControllerType, sessionControllerType, testStateControllerType, userControllerType } from "../utils/backendTypes";
+// import { Authenticator } from "passport";
 
 // Import Express to streamline server logic with router
 const express = require('express');
 // Import all relevant controller objects equipped with middleware
-const passport: Authenticator = require('passport');
-const userController: userControllerType = require('../controllers/userController');
-const cookieController: cookieControllerType = require('../controllers/cookieController');
-const sessionController: sessionControllerType = require('../controllers/sessionController');
-const testStateController: testStateControllerType = require('../controllers/testStateController');
+const passport/*: Authenticator*/ = require('passport');
+const userController/*: userControllerType*/ = require('../controllers/userController');
+const cookieController/*: cookieControllerType*/ = require('../controllers/cookieController');
+const sessionController/*: sessionControllerType*/ = require('../controllers/sessionController');
+const testStateController/*: testStateControllerType*/ = require('../controllers/testStateController');
 // const { ipcRenderer } = require('electron');
 // const githubController = require('../controllers/githubController');
 
 // Initialize an express router
-const router: Router = Router();
+const router/*: Router*/ = express.Router();
 
 /**
  * Express middleware functions are throwing errors when being called inside router's methods due to a Typescript conflict with the expected method params.
@@ -32,7 +36,7 @@ router.post(
   // Signup middleware to sign user up with encrypted credentials
   userController.signup,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): Response => {
+  (req/*: Request*/, res/*: Response*/)/*: Response*/ => {
     return res.sendStatus(200);
   }
 );
@@ -47,7 +51,7 @@ router.post(
   // Session middleware to initialize new session
   sessionController.startSession,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     res.status(200).json({ ssid: res.locals.ssid });
   }
 );
@@ -58,7 +62,7 @@ router.get(
   // Session middleware to end any existing sessions
   sessionController.endSession,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     res.status(200).json('Logged Out Successfully');
   }
 );
@@ -71,7 +75,7 @@ router.post(
   // Upload middleware to save passed test object into DB
   testStateController.upload,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     res.status(200).json('Test Uploaded Successfully');
   }
 );
@@ -84,7 +88,7 @@ router.get(
   // GetTests middleware to retrieve all saved tests from DB
   testStateController.getTests,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     res.status(200).json(res.locals.tests);
   }
 );
@@ -107,7 +111,7 @@ router.get(
   sessionController.startSession,
 
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     // we send the ssid back to the front end
     res.status(200).json({ ssid: res.locals.ssid });
   }
@@ -135,7 +139,7 @@ router.get(
   sessionController.startSession,
 
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     //console.log('ssid:', res.locals.ssid);
     // we send the ssid back to the front end
     res.status(200).json({ ssid: res.locals.ssid });

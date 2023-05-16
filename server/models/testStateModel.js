@@ -1,4 +1,8 @@
-import { Schema as SchemaType } from "mongoose";
+/**  using import statements in the electron / node files breaks npm start and nodepty 
+* - types are left in place in these files for future iteration alternate import method is required for them to function
+*/
+
+//import { Schema as SchemaType } from "mongoose";
 
 // Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
@@ -18,7 +22,7 @@ const testStateObj = {
 
 
 // Initialize a new schema object for collection 'testState'
-const testStateSchema: SchemaType = new Schema(testStateObj);
+const testStateSchema/* : SchemaType */ = new Schema(testStateObj);
 
 // Mongoose does not validate the types of the properties specified in schema
 // It will only coerce the properties to equal the types specified above

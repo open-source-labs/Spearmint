@@ -1,4 +1,8 @@
-import { NextFunction, Request, Response } from "express";
+/**  using import statements in the electron / node files breaks npm start and nodepty 
+* - types are left in place in these files for future iteration alternate import method is required for them to function
+*/
+
+//import { NextFunction, Request, Response } from "express";
 
 const express = require('express')
 
