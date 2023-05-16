@@ -1,28 +1,17 @@
 /* eslint-disable comma-dangle */
-
-import { Request, Response, Router } from "express";
-import { cookieControllerType, sessionControllerType, testStateControllerType, userControllerType } from "../utils/backendTypes";
-import { Authenticator } from "passport";
-
 // Import Express to streamline server logic with router
 const express = require('express');
 // Import all relevant controller objects equipped with middleware
-const passport: Authenticator = require('passport');
-const userController: userControllerType = require('../controllers/userController');
-const cookieController: cookieControllerType = require('../controllers/cookieController');
-const sessionController: sessionControllerType = require('../controllers/sessionController');
-const testStateController: testStateControllerType = require('../controllers/testStateController');
+const passport = require('passport');
+const userController = require('../controllers/userController');
+const cookieController = require('../controllers/cookieController');
+const sessionController = require('../controllers/sessionController');
+const testStateController = require('../controllers/testStateController');
 // const { ipcRenderer } = require('electron');
 // const githubController = require('../controllers/githubController');
 
 // Initialize an express router
-const router: Router = Router();
-
-/**
- * Express middleware functions are throwing errors when being called inside router's methods due to a Typescript conflict with the expected method params.
- * The solution to this appears to be merging custom interfaces into the Express namespace in order to extend the acceptable Typescript inputs.
- * See: https://stackoverflow.com/questions/69889862/express-use-custom-typed-middleware
- */
+const router = express.Router();
 
 // Set up route for post requests to /signup
 router.post(
@@ -32,7 +21,7 @@ router.post(
   // Signup middleware to sign user up with encrypted credentials
   userController.signup,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): Response => {
+  (req, res) => {
     return res.sendStatus(200);
   }
 );
@@ -47,7 +36,7 @@ router.post(
   // Session middleware to initialize new session
   sessionController.startSession,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req, res) => {
     res.status(200).json({ ssid: res.locals.ssid });
   }
 );
@@ -58,7 +47,7 @@ router.get(
   // Session middleware to end any existing sessions
   sessionController.endSession,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req, res) => {
     res.status(200).json('Logged Out Successfully');
   }
 );
@@ -71,7 +60,7 @@ router.post(
   // Upload middleware to save passed test object into DB
   testStateController.upload,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req, res) => {
     res.status(200).json('Test Uploaded Successfully');
   }
 );
@@ -84,7 +73,7 @@ router.get(
   // GetTests middleware to retrieve all saved tests from DB
   testStateController.getTests,
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req, res) => {
     res.status(200).json(res.locals.tests);
   }
 );
@@ -107,7 +96,7 @@ router.get(
   sessionController.startSession,
 
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req, res) => {
     // we send the ssid back to the front end
     res.status(200).json({ ssid: res.locals.ssid });
   }
@@ -135,7 +124,7 @@ router.get(
   sessionController.startSession,
 
   // Anonymous middleware to send back valid response
-  (req: Request, res: Response): void => {
+  (req, res) => {
     //console.log('ssid:', res.locals.ssid);
     // we send the ssid back to the front end
     res.status(200).json({ ssid: res.locals.ssid });
