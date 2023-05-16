@@ -19,7 +19,7 @@ const testStateSchema = new Schema({
   testType: { type: String, required: true },
   // Save test state object
   testState: { type: Object, required: true },
-};
+});
 
 
 // Initialize a new schema object for collection 'testState'
