@@ -6,7 +6,6 @@ const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
-const { REACT_DEVELOPER_TOOLS } = require('electron-devtools-vendor');
 
 // app.commandLine.appendSwitch('--headless');
 // app.commandLine.appendSwitch('--no-sandbox');
@@ -275,18 +274,11 @@ ipcMain.on('Google-Oauth', (_event, url) => {
   });
 });
 
-// electron-devtools-vendor needs to be installed at v1.1 due to a bug with 1.2
-// where it is not accounting for a change in the newest version of the react dev tool itself
 app.whenReady()
   .then(createWindow)
   .then(app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   }))
-  .then(() => {
-    session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
-      .then((name) => console.log(`Added Extension: ${name}`))
-      .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
-  })
   .catch((err) => console.log(`An error occurred when booting up electron: ${err}`));
 
 
