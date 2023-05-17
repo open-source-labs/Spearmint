@@ -1,0 +1,16 @@
+@import '../../assets/stylesheets/colors.scss';
+
+.modBtnContainer{
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+
+  span{
+    svg {
+      path {
+        fill: $eggshell; 
+      }
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import cn from 'classnames';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from '../../ReactTestComponent/DescribeRenderer/DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../../context/actions/frontendFrameworkTestCaseActions';
@@ -35,13 +34,9 @@ const DescribeRenderer = ({
   };
 
   return describeBlocks.allIds.map((id, i) => (
-    <Draggable key={id} draggableId={id} index={i} type='describe'>
-      {(provided) => (
+    <div key={id} draggableId={id} index={i} type='describe'>
         <div
           id={styles[`describeBlock${theme}`]}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
           {/* <label htmlFor='describe-label' className={styles.describeLabel}>
             Describe Block
@@ -77,9 +72,6 @@ const DescribeRenderer = ({
               fullWidth />
           </div>
 
-          <Droppable droppableId={'droppableSvelteIt' + id} type={id}>
-            {(innerProvided) => (
-              <div ref={innerProvided.innerRef} {...innerProvided.droppableProps}>
                 <ItRenderer
                   type={type}
                   key={`it-${id}-${i}`}
@@ -89,16 +81,11 @@ const DescribeRenderer = ({
                   handleChangeItStatementText={handleChangeItStatementText}
                   theme={theme}
                 />
-                {innerProvided.placeholder}
-              </div>
-            )}
-          </Droppable>
           <Button className={styles.addIt} id={id} onClick={addItStatementHandleClick} variant="outlined">
             Add It Statement
           </Button>
         </div>
-      )}
-    </Draggable>
+    </div>
   ));
 };
 

@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import { actionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
+import { actionTypes, ReduxActionTypes, ReduxTestCaseState } from '../../utils/reduxTypes';
 
-export const ReduxTestCaseContext: any = createContext([]);
+// export const ReduxTestCaseContext: any = createContext([]); <-- previous implementation, now done at the bottom of page with type implementation based on GraphQL test case reducer shape
 
 /* here we create context for the redux test case. Dont provide it a default value (only used when you dont hve a provider for it), use null instead */
 /* initial state for testCase */
@@ -31,7 +31,7 @@ const createActionCreator = () => {
   statementId += 1;
   return {
     id: statementId,
-    actionsFileName: '',
+    actionsFile: '',
     filePath: '',
     typesFileName: '',
     typesFilePath: '',
@@ -49,15 +49,11 @@ const createAsync = () => {
     id: statementId,
     type: 'async',
     actionsFileName: '',
-    filePath: '',
     typesFileName: '',
     typesFilePath: '',
     asyncFunction: '',
     method: '',
     route: '',
-    store: '',
-    matcher: '',
-    status: '',
     actionType: '',
     payloadKey: '',
     payloadType: '',
@@ -176,7 +172,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
     case actionTypes.UPDATE_ASYNC:
       reduxStatements = reduxStatements.map((statement) => {
         if (statement.id === action.payload.id) {
-          statement.actionsFile = action.payload.actionsFile;
+          statement.actionsFileName = action.payload.actionsFileName;
           statement.asyncFunction = action.payload.asyncFunction;
           statement.typesFileName = action.payload.typesFileName;
           statement.typesFilePath = action.payload.typesFilePath;
@@ -308,3 +304,7 @@ export const reduxTestCaseReducer = (state = reduxTestCaseState, action: any) =>
       return state;
   }
 };
+
+const dispatchToReduxTestCase = () => null;
+const reduxTestCaseArr: [ReduxTestCaseState, (action: ReduxActionTypes) => void] = [reduxTestCaseState, dispatchToReduxTestCase]
+export const ReduxTestCaseContext = createContext(reduxTestCaseArr);

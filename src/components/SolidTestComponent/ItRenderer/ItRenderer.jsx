@@ -1,9 +1,7 @@
 import React, { useContext } from 'react';
 import cn from 'classnames';
 import styles from '../../ReactTestComponent/ItRenderer/ItRenderer.module.scss';
-import { Draggable } from 'react-beautiful-dnd';
 import SolidTestStatements from '../../TestCase/SolidTestStatements';
-import CustomInput from '../CustomInput/CustomInput';
 import {
   addRender,
   addAction,
@@ -50,17 +48,13 @@ const SolidItRenderer = ({
   };
 
   return itStatements.allIds[describeId].map((id, i) => (
-    <Draggable
+    <div
       key={id}
       draggableId={id}
       index={i}
     >
-      {(provided) => (
         <div
           id={styles[`ItRenderer${theme}`]}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
           <AiOutlineClose
             tabIndex={0}
@@ -69,14 +63,6 @@ const SolidItRenderer = ({
             onClick={deleteItStatementHandleClick}
             className={cn(styles.itClose, 'far fa-window-close')}
           />
-          {/* <CustomInput
-            key={`input-${id}-${i}`}
-            id={id}
-            label={'The component should...'}
-            placeholder={'Button component renders correctly...'}
-            value={itStatements.byId[id].text}
-            handleChange={handleChangeItStatementText}
-          /> */}
           <div id={styles.itInputContainer}>
             <TextField
               key={`input-${id}-${i}`}
@@ -115,8 +101,7 @@ const SolidItRenderer = ({
             )}
           </div>
         </div>
-      )}
-    </Draggable>
+    </div>
   ));
 };
 

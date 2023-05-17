@@ -23,7 +23,7 @@ export interface GlobalStateTypes {
   url: string,
   projectUrl: (null | string),
   isProjectLoaded: boolean,
-  fileTree: (null | Object),
+  fileTree: (null | File[]),
   isFileDirectoryOpen: boolean,
   isRightPanelOpen: boolean,
   rightPanelDisplay: string,
@@ -58,4 +58,16 @@ export interface isFolderOpenType {
 
 export interface filePathMapType {
   [key: string]: Object
+}
+
+/* Interface for Modal files and fileTree */
+export interface File {
+    fileName: string;
+    filePath: string;
+    files: File[];
+}
+
+//  Interface for filePathMap
+export interface FilePathMap {
+  [key: string]: string;
 }

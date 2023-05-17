@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
-import { addDescribeBlock, createNewTest, resetTests } from '../../context/actions/frontendFrameworkTestCaseActions';
+import { createNewTest, resetTests } from '../../context/actions/frontendFrameworkTestCaseActions';
 import Modal from '../Modals/Modal';
 import useGenerateTest from '../../context/useGenerateTest.jsx';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
@@ -10,7 +10,6 @@ import {
   setFilePath,
   toggleRightPanel,
   setValidCode,
-  setTestCase,
   toggleModal,
   toggleExportBool,
   setTabIndex,
@@ -37,10 +36,6 @@ const SvelteTestMenu = () => {
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
   }, []);
-
-  const handleAddDescribeBlock = (e) => {
-    dispatchToSvelteTestCase(addDescribeBlock());
-  };
 
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(svelteUrl));

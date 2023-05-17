@@ -2,6 +2,8 @@ import { createContext } from 'react';
 import { actionTypes } from '../actions/globalActions';
 import {  GlobalStateTypes, GlobalActionTypes } from '../../utils/globalTypes';
 
+// This is your global state, holds status of things like file directory, different panels,
+// basically all global items
 export const globalState: GlobalStateTypes = {
   url: 'http://www.google.com/',
   projectUrl: null,
@@ -27,17 +29,21 @@ export const globalState: GlobalStateTypes = {
   theme: window.localStorage.theme ?? 'light',
 };
 
+
 const dispatchToGlobal = () => null;
 
 const contextArr: [GlobalStateTypes, Function] = [globalState, dispatchToGlobal]
 
+// use useContext to create that global state to be used in other files
+//used in most files to pass in the global state and dispatchToGlobal
 export const GlobalContext = createContext<[GlobalStateTypes, Function]>(contextArr); // originally createContext(null)
 
 
 // TODO: action type is any due to the fact that each action in glovalActions.ts is an object with different properties which does not lead itself to a unified Action interface via Typescript
 // All of the actions must be modified to nest the necessary data inside of a payload property and/or all of the cases in the reducer below must be modified
 
-
+// These are your global actions, again like above these pertain to things globally like the files,
+// navbar actions, themes, etc.
 export const globalReducer = (state: GlobalStateTypes, action: GlobalActionTypes) => {
   Object.freeze(state);
 

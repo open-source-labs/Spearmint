@@ -1,7 +1,7 @@
 import { puppeteerTestCaseReducer } from '../context/reducers/puppeteerTestCaseReducer';
 import { PuppeteerTestCaseState, PuppeteerAction } from '../utils/puppeteerTypes';
 
-xdescribe('puppeteerTestCaseReducer', () => {
+describe('puppeteerTestCaseReducer', () => {
   let state: PuppeteerTestCaseState;
 
   beforeEach(() => {
@@ -50,7 +50,7 @@ xdescribe('puppeteerTestCaseReducer', () => {
     const action: PuppeteerAction = { type: 'DELETE_PUPPETEER_TEST', id: 0 };
     expect(puppeteerTestCaseReducer(state, action)).toEqual({
       puppeteerStatements: [],
-      statementId: 1,
+      statementId: state.statementId - 1,
     });
   });
 

@@ -6,16 +6,10 @@
 import React, { useContext } from 'react';
 import styles from '../../ReactTestComponent/Assertion/Assertion.module.scss';
 import { deleteAssertion, updateAssertion } from '../../../context/actions/frontendFrameworkTestCaseActions';
-import ToolTip from '../../ToolTip/ToolTip';
-import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
-import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import { SvelteTestCaseContext } from '../../../context/reducers/svelteTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
-
-const questionIcon = require('../../../assets/images/help-circle.png');
-const closeIcon = require('../../../assets/images/close.png');
 
 const Assertion = ({ statement, describeId, itId, statementId }) => {
   const [{ statements }, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);

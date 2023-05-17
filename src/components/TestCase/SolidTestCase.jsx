@@ -1,5 +1,4 @@
 import React, { useContext, useReducer } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
@@ -114,10 +113,7 @@ const SolidTestCase = (props) => {
             )
           : null}
         <div id={styles.describeContainer}>
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId='droppableSolidDescribe' type='describe'>
-              {(provided) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
+            <div droppableId='droppableSolidDescribe' type='describe'>
                   <DecribeRenderer
                     dispatcher={dispatchToSolidTestCase}
                     describeBlocks={describeBlocks}
@@ -128,11 +124,7 @@ const SolidTestCase = (props) => {
                     type='solid'
                     theme={theme}
                   />
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
+            </div>
           
         </div>
         <div id={styles.addDescribeButton}>

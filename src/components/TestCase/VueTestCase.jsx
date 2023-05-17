@@ -1,6 +1,4 @@
 import React, { useContext, useReducer } from 'react';
-import cn from 'classnames';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
@@ -15,7 +13,6 @@ import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import { createMockData } from '../../context/actions/mockDataActions';
 import VueTestMenu from '../TestMenu/VueTestMenu';
-import MockData from '../VueTestComponent/MockData/MockData';
 import DecribeRenderer from '../VueTestComponent/DescribeRenderer/DescribeRenderer';
 import {
   VueTestCaseContext,
@@ -116,10 +113,7 @@ const VueTestCase = (props) => {
             )
           : null} */}
 
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='droppableReactDescribe' type='describe'>
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
+          <div droppableId='droppableReactDescribe' type='describe'>
                 <DecribeRenderer
                   dispatcher={dispatchToVueTestCase}
                   describeBlocks={describeBlocks}
@@ -130,11 +124,7 @@ const VueTestCase = (props) => {
                   type='vue'
                   theme={theme}
                 />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+          </div>
         <div id={styles.addDescribeButton}>
           <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
             Add Describe Block

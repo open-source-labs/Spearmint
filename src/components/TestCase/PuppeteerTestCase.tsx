@@ -1,5 +1,4 @@
 import React, { useContext, useRef, useEffect } from 'react';
-import { DragDropContext, Droppable, DropResult, DroppableProvided } from 'react-beautiful-dnd';
 import { PuppeteerTestCaseContext } from '../../context/reducers/puppeteerTestCaseReducer';
 import PuppeteerTestMenu from '../TestMenu/PuppeteerTestMenu';
 import PuppeteerTestStatements from './PuppeteerTestStatements';
@@ -36,21 +35,6 @@ const PuppeteerTestCase = () => {
     return result;
   };
 
-  const onDragEnd = (result: typeof DropResult) => {
-    if (!result.destination) {
-      return;
-    }
-    if (result.destination.index === result.source.index) {
-      return;
-    }
-    const reorderedStatements: Array<PuppeteerStatements> = reorder(
-      puppeteerStatements,
-      result.source.index,
-      result.destination.index
-    );
-    dispatchToPuppeteerTestCase(updateStatementsOrder(reorderedStatements));
-  };
-
   return (
     <div>
       <div id='head'>
@@ -58,16 +42,7 @@ const PuppeteerTestCase = () => {
         <PuppeteerTestMenu />
       </div>
       <div id={styles.testMockSection}></div>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='droppable'>
-          {(provided: typeof DroppableProvided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              <PuppeteerTestStatements />
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      <PuppeteerTestStatements />
       <div id={styles[`PaintTime${theme}`]}>
         <Button
             type='button'
