@@ -4,7 +4,25 @@
 
 **Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode.
 
-As of January 2023, spearmint works with node version 19.4.0 electron-devtools-vendor must be at version 1.1 for now due to a bug.
+## Procedure for working on the project as a Windows user.
+
+1. Download VcXsrv or a similar program in order to run an X environment on Windows. [VcXsrv](https://sourceforge.net/projects/vcxsrv/)
+2. Configure XLaunch properly:
+3. On the first settings screen on launch, select the following settings:
+	- Multiple windows
+	- Display number: -1
+4. On the second page select the “Start no client” option
+5. On the third setting screen select the following options:
+   -	Clipboard
+   -  Primary Selection
+   -	Native opengl
+   -	Under “Additional Parameters” textbox write ‘-ac’ (no quotes)
+
+Completing these steps after installing will launch XLaunch and enable you to run Spearmint in the Windows desktop environment.  
+
+# Initial Setup
+
+As of January 2023, spearmint works with node version 20.1.0.
 React must be version 17 due to a dependency for mui. Fix-path must be version 3.0.0 due to 4.0.0 only being usable with an import statement, which is not supported in electron.jsx.
 
 1. Fork and clone this repository.
@@ -32,21 +50,13 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 # Tips for development mode
 
-- To enable hot-module reloading, uncomment line 23 in the electron.jsx file.
+- To enable hot-module reloading, uncomment line 22 in the electron.jsx file.
 
       // require('electron-reloader')(module);
 
-- To enable Chrome Dev Tools, uncomment line 71 in the electron.jsx file:
+- To enable Chrome Dev Tools, uncomment line 70 in the electron.jsx file:
 
       // mainWindow.webContents.openDevTools();
-
-- To enable React Dev Tools, uncomment lines 285 to 289 in the electron.jsx file:
-
-      // .then(() => {
-      //   session.defaultSession.loadExtension(REACT_DEVELOPER_TOOLS, { allowFileAccess: true })
-      //     .then((name) => console.log(`Added Extension: ${name}`))
-      // .catch((err) => console.log(`An error occurred adding an extension: ${err}`));
-      // })
 
 # Suggestions if you would like contriubute:
 
@@ -60,9 +70,15 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 5. GitHub OAuth is functional, but Google OAuth is currently broken. If you are planning to persist user data, this is an excellent feature to resolve.
 
-6. Add more customization to the tests themseleves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
+6. Add more customization to the tests themselves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
 
 7. Some of test cases needs improvement on UI as they do not have any styling or optimal user experience
+
+8. Continue to improve internal testing coverage – while it has been greatly expanded there are many parts of the internals of the application that are still not being tested, and especially with regards to integration and end to end testing, more could be done.
+
+9. Consider removing MUI framework as it is incompatible with React v18+ and no longer being actively updated - either replacing with another frontend framework or styling via CSS.
+
+10. Consider implementing React Dev Tools in the app. 
 
 **_Please feel free to add any other features or fixes that you would like or are interested in._**
 
