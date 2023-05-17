@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import styles from './PaintTiming.module.scss';
-import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import {
   deletePuppeteerTest,
   updatePaintTiming,
@@ -11,7 +10,6 @@ import PuppeteerBrowserSetting from '../PuppeteerBrowerSetting/PuppeteerBrowserS
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { PuppeteerStatements } from '../../../utils/puppeteerTypes';
 const closeIcon = require('../../../assets/images/close.png');
-const dragIcon = require('../../../assets/images/drag-vertical.png');
 const questionIcon = require('../../../assets/images/help-circle.png');
 
 
@@ -28,12 +26,7 @@ const PaintTiming = ({ paintTiming, index }: { paintTiming: PuppeteerStatements,
   };
 
   return (
-    <Draggable draggableId={paintTiming.id.toString()} index={index}>
-      {(provided:typeof DraggableProvided) => (
         <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
           id={styles[`modal${theme}`]}
         >
           <img
@@ -44,7 +37,6 @@ const PaintTiming = ({ paintTiming, index }: { paintTiming: PuppeteerStatements,
           />
 
           <div id={styles.header}>
-            <img src={dragIcon} alt='drag' />
             <h3>Paint Timing</h3>
           </div>
 
@@ -135,8 +127,6 @@ const PaintTiming = ({ paintTiming, index }: { paintTiming: PuppeteerStatements,
             </div>
           </div>
         </div>
-      )}
-    </Draggable>
   );
 };
 
