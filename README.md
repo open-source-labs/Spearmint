@@ -1,7 +1,7 @@
 ![](/public/spearmint_crop.png)
 
 <p align="center">
-  🍃 ✨ spearmint v13 ✨ 🍃
+  🍃 ✨ Spearmint v14 ✨ 🍃
 </p>
 
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
@@ -21,7 +21,7 @@ Spearmint helps developers easily create functional Accessibility, Endpoint, Gra
 
 # Installation
 
-Please download spearmint from our [website](https://www.spearmintjs.com/)
+Please download Spearmint from our [website](https://www.spearmintjs.com/)
 
 # How to use in development mode
 
@@ -60,7 +60,7 @@ Please refer to [README-dev.md](https://github.com/open-source-labs/spearmint/bl
       <img alt="spearmint gif" src="public/SaveDemo.gif" width="800px">
    </picture>
 
-# Containerization with Docker
+<!-- # Containerization with Docker
 
 Spearmint is now available as an OCI-compliant container image via Docker.
 
@@ -68,19 +68,19 @@ Windows and Linux users may access Spearmint by running a Docker image.
 
 Please pull down the image from [Docker hub](https://hub.docker.com/repository/docker/spearmintoslabs/spearmint) if you would like to run Spearmint on Docker.
 
-![Screenshot of spearmint's docker hub webpage](/public/docker.png)
+![Screenshot of spearmint's docker hub webpage](/public/docker.png) -->
 
 For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/blob/main/README-dev.md). This containes more information specific to developers such as data systems, outlines of the application, turning on dev tools, etc.
 
-# New features with version 0.13.0
+# New features with version 0.14.0
 
-- Working with updated versions of node and electron.
+- Increased Typescript coverage – Spearmint is now majority Typescript!
 
-- Accessibility component fixed.
+- Greatly bolstered internal testing on the program and instituted testing coverage reports for completeness visibility
 
-- Reinstated dev testing.
+- Updated to latest version of electron
 
-- Migrating the codebase to TypeScript
+- Updated a variety of dependencies and libraries
 
 - Added documentation for future developers
 
@@ -88,22 +88,32 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 
 # Iteration Roadmap
 
-1. _Continual TypeScript Conversion:_
-   - This will help with the maintainability and quality of spearmint
-2. _Persistant data:_
-   - There is a framework for login, including github and google, however it is not implemented
-   - Adding more features to make login and user data more valuable, such as favorited or saved tests
+1. _Continuing TypeScript Conversion:_
+  - This will help with the maintainability and readability of Spearmint’s code, and move closer to 100% coverage
+2. _Persistent data:_
+  - There is a framework for login, including GitHub and Google, however it is not implemented
+  - Adding more features to make login and user data more valuable, such as favorited or saved tests, saved templates, etc.
 3. _Adding more testing:_
-   - Either more frameworks to test
-   - Or deeper testing of existing frameworks
-4. _Revamp UI for certain test cases:_
-   - Some of test cases needs improvement on UI as they do not have any styling or optimal user experience
+  - Deeper testing of existing frameworks should probably be the main priority here as many frameworks are implemented already, but could use more fleshed-out features
+  - Adding additional frameworks is a possibility if there is a strong case for them, but adding more robustness to the current test suites is probably more important
+4. _Add functionality for exporting test files as Typescript_
+  - Currently the only export option is vanilla Javascript
+5. _Continue to extend internal testing coverage_
+  - A far greater amount of the application is tested now than it was previously, but there is more work to do on this
+6. _Update some dependencies and tools_
+  - Consider removing MUI and switching to another component library or redoing styling in CSS in order to update the program to React v18+ as MUI is incompatible and seems not to be actively updating.
+  - Consider implementing React Dev Tools or react-dnd to restore the drag-drop functionality
+  - Monitor for other opportunities to update dependencies or otherwise improve the program with different libraries or tools.
+7. _Revamp UI for certain test cases:_
+  - Some of test cases needs improvement on UI as they do not have any styling or optimal user experience
 
 <br>
 
 # Known Bugs
 
 1. Screen reader for Accessibilty can turn on and off but does not read.
+2.	Text to speech not functioning properly under Accessibility
+3.	Some elements of draggable remaining in Redux test case components
 
 <br>
 
@@ -118,6 +128,7 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 |      Annie Shin       |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/annieshinn)      |          [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/annieshinn/)          |
 |       Ben Kwak        |        [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bkwak)         |           [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ben-kwak/)           |
 |     Brandon Tran      |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/btran140)       |             [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/btran140)              |
+|    Carter Long    |   [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Cartlong7)    |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/carterrobertlong/)         |
 |     Chacta Brice      |    [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/StaticShock93)     | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/chacta-isaacs-brice-258636ba/) |
 |    Charlie Maloney    |   [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/charlie-maloney)    |       [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/charlie-maloney/)        |
 |    Chen 'Chloe' Lu    |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/chloelu29)       |           [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/chloeclu/)           |
@@ -129,12 +140,14 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 |       David Kim       |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/koyykdy)        |          [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dydavidkim/)          |
 |   DeriAnte Sinclair   |        [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dsin16)        | [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/deriante-sinclair-a76321238/)  |
 | Dieu 'Dieunity' Hyunh |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/dieunity)       |          [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dieu-huynh/)          |
+|    Dylan Hawkins    |   [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/hawkinsd)    |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dylan-andrew-hawkins/)         |
 |     Erik Komatsu      |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/etkomatsu)       |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/eric-komatsu/)         |
 |       Erik Park       |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ericgpark)       |          [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ericgpark/)           |
 |     Erika Collins     | [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/erikacollinsreynolds) |    [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/erika-collins-reynolds/)    |
 |     Evan Berghoff     |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Berghoer)       |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/evanberghoff/)         |
 |      Evan Decker      |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/EvanDecker)      |    [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/evan-d-decker/)     |
 |    Gabriel Christo    |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bielchristo)      |   [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gabriel-christo-44364086/)   |
+|    Gary Balogh    |   [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GaryB93)    |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/garybalogh/)         |
 |        Huy Bui        |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/huyqbui)        |           [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/huyqbui/)            |
 |   Jasmine Gonzalez    |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/jasminezalez)     |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jasminezalez/)         |
 |      Joseph Nagy      |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Josephnagy)      |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/josephmnagy/)          |
@@ -142,10 +155,12 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 |       Judy Song       |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/judysongg)       |          [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/judysongg/)           |
 |      Julie Beak       |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/julicious100)     |          [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/juliebeak/)           |
 |      Justin Baik      |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JIB3377)        |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/justin-baik/)          |
+|    Justin Dilts    |   [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Suigin1)    |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/justin-d-1674a5191/)         |
 |     Karen Pinilla     |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/karenpinilla)     |        [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/karen-pinilla/)         |
 |       Li Cheng        |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/delacour124)      |      [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/li-cheng-76890540/)       |
 |   Linda Wishingrad    |        [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lcwish)        |       [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lindawishingrad/)        |
 |        Luis Lo        |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Luis-KM-Lo)      |           [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/luis-lo/)            |
+|    Luke Lauther    |   [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/lukelauther)    |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lukelauther/)         |
 |  Mahmoud 'Mo' Hmaidi  |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mhmaidi789)      |      [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mahmoud-hmaidi-mo/)       |
 |      Max Bromet       |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mbromet)        |     [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/max-bromet-2607aa211/)     |
 |   Max Weisenberger    |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MaxWeisen)       |          [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/maxweisen/)           |
