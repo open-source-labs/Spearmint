@@ -102,7 +102,7 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += `render(() => <${formattedComponentName} ${props}/>);`;
     };
 
-    // createSolidRenderProps 
+    // createSolidRenderProps
     const createSolidRenderProps = (props) => {
       return props.reduce((acc, prop) => {
         return acc + `${prop.propKey}={${prop.propValue}}`;
@@ -115,9 +115,9 @@ function useGenerateTest(test, projectFilePath) {
     const addReactImportStatements = () => {
       testFileCode += `
         import React from 'react';
-        import { render, fireEvent } from '@testing-library/react'; 
+        import { render, screen, } from '@testing-library/react'; 
+        import userEvent from '@testing-library/user-event';
         import { build, fake } from 'test-data-bot'; 
-        import '@testing-library/jest-dom/extend-expect'
         \n`;
     };
 
@@ -194,7 +194,7 @@ function useGenerateTest(test, projectFilePath) {
       let props = createRenderProps(statement.props);
       const formattedComponentName =
         reactTestCase.statements.componentName.replace(/\.jsx?/, '');
-      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
+      testFileCode += `render(<${formattedComponentName} ${props}/>);`;
     };
 
     // Render Props Jest Test Code
@@ -563,7 +563,6 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-
     /* ------------------------------------------ FILEPATHS ------------------------------------------ */
 
     // Actions Filepath
@@ -856,30 +855,32 @@ function useGenerateTest(test, projectFilePath) {
           testFileCode += `fireEvent.${action.eventType}(${
             action.queryVariant + action.querySelector
           }
-          (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+          (${action.queryValue}), { target: { value: ${
+            action.eventValue
+          } } });`;
         } else {
-          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector
+          testFileCode += `fireEvent.${action.eventType}(${
+            action.queryVariant + action.querySelector
           }
           (${action.queryValue}));`;
         }
-      }
-      else if (type === 'solid') {
+      } else if (type === 'solid') {
         if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(screen.${
             action.queryVariant + action.querySelector
           }
-          (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+          (${action.queryValue}), { target: { value: ${
+            action.eventValue
+          } } });`;
         } else {
           testFileCode += `fireEvent.${action.eventType}(screen.${
             action.queryVariant + action.querySelector
           }
           (${action.queryValue}));`;
         }
-      } 
-      else if (type === 'vue') {
+      } else if (type === 'vue') {
         testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
-      } 
-      else if (type === 'svelte') {
+      } else if (type === 'svelte') {
         if (action.eventValue) {
           testFileCode += `await userEvent.${action.eventType}(screen.${
             action.queryVariant + action.querySelector
@@ -1643,7 +1644,6 @@ function useGenerateTest(test, projectFilePath) {
     // ------------------------------------ switch statement on test type -------------------------
 
     switch (test) {
-
       //---------------------------------------------------Accessbility switch statement---------------------------------------------
       case 'acc':
         var accTestCase = testState;
@@ -1668,7 +1668,7 @@ function useGenerateTest(test, projectFilePath) {
           );
         }
 
-      //---------------------------------------------------React switch statement---------------------------------------------  
+      //---------------------------------------------------React switch statement---------------------------------------------
       case 'react':
         var reactTestCase = testState;
         var mockData = mockDataState;
@@ -1684,9 +1684,9 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-        
+
       //---------------------------------------------------Vue switch statement---------------------------------------------
-          case 'vue':
+      case 'vue':
         var vueTestCase = testState;
         var mockData = mockDataState;
         return (
@@ -1718,7 +1718,7 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
 
-        //---------------------------------------------------Redux switch statement---------------------------------------------
+      //---------------------------------------------------Redux switch statement---------------------------------------------
       case 'redux':
         var reduxTestCase = testState;
         return (
@@ -1732,7 +1732,7 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
 
-        //---------------------------------------------------Hooks switch statement---------------------------------------------
+      //---------------------------------------------------Hooks switch statement---------------------------------------------
       case 'hooks':
         var hooksTestCase = testState;
         return (
@@ -1745,7 +1745,7 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
 
-        //---------------------------------------------------Endpoint switch statement---------------------------------------------
+      //---------------------------------------------------Endpoint switch statement---------------------------------------------
       // case was "endpoint test" but that is not the case being dispatched by the frontend
       case 'endpoint':
         var endpointTestCase = testState;
@@ -1759,7 +1759,7 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
 
-        //---------------------------------------------------Puppeteer switch statement---------------------------------------------
+      //---------------------------------------------------Puppeteer switch statement---------------------------------------------
       case 'puppeteer':
         var puppeteerTestCase = testState;
         return (
@@ -1772,7 +1772,7 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
 
-        //---------------------------------------------------graphQL switch statement---------------------------------------------
+      //---------------------------------------------------graphQL switch statement---------------------------------------------
       case 'graphQL':
         var graphQLTestCase = testState;
         return (
