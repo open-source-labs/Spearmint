@@ -33,7 +33,7 @@ export function useGenerateScript(test: string) {
     case 'acc':
       return {
         cd: `cd ${projectFilePath}`,
-        install: `npm i -D jest`
+        install: `npm i -D jest axe-core --save` //npm i --save-dev package1 package2
       }
     case 'react':
       return {
