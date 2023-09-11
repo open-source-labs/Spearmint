@@ -1206,7 +1206,11 @@ function useGenerateTest(test, projectFilePath) {
         import React from 'react';
         import ReactDOMServer from 'react-dom/server';
         import { configureAxe, toHaveNoViolations } from 'jest-axe';
-        import InfoContainer from '../client/containers/infoContainer.jsx';
+        import ${
+          //capitalize the first letter of the component 
+          fileName.split('.')[0][0].toUpperCase() +
+          fileName.split('.')[0].slice(1)
+        } from '../${filePath}';
         import { JSDOM } from 'jsdom';
 
         // Configure the JSDOM
@@ -1335,6 +1339,7 @@ function useGenerateTest(test, projectFilePath) {
 
     const addAccItStatements = (descId) => {
       const { itStatements } = accTestCase;
+      const { fileName } = accTestCase;
 
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
@@ -1358,7 +1363,11 @@ function useGenerateTest(test, projectFilePath) {
 
         testFileCode += ` 
             // UPDATE to render the react component from the state of the import file menu
-            const render = () => ReactDOMServer.renderToString(<div role="main"><InfoContainer /></div>);
+            const render = () => ReactDOMServer.renderToString(<div role="main"><${
+              //capitalize the first letter of the component 
+              fileName.split('.')[0][0].toUpperCase() +
+              fileName.split('.')[0].slice(1)
+            } /></div>);
 
             const html = render();
             // pass anything that outputs html to axe
@@ -1382,7 +1391,6 @@ function useGenerateTest(test, projectFilePath) {
       })
     `;
     */
-
       });
     };
 
