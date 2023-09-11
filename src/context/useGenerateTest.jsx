@@ -1224,7 +1224,7 @@ function useGenerateTest(test, projectFilePath) {
           '../${filePath}'), 'utf8');`;
       } else if (accTestCase.testType === 'react') {
         testFileCode += `
-        import React from 'react' XXX;
+        import React from 'react';
         import { configure, mount } from 'enzyme';
         import Adapter from 'enzyme-adapter-react-16';
         import ${fileName.split('.')[0]} from '../${filePath}';`;
@@ -1295,8 +1295,8 @@ function useGenerateTest(test, projectFilePath) {
 
     const addAccBeforeAll = (descId) => {
       const { fileName } = accTestCase;
-      testFileCode += `
-        let options;`;
+      // testFileCode += ` // REVIEW: Was disable during V.0.15.0
+      //   let options;`;
 
       if (accTestCase.testType === 'react') {
         testFileCode += `
@@ -1305,25 +1305,16 @@ function useGenerateTest(test, projectFilePath) {
       }
 
       testFileCode += `\n
-        beforeAll((done) => {
-          // exclude tests that are incompatible
-          options = {
-            rules: {
-              'color-contrast': { enabled: false },
-              'link-in-text-block': { enabled: false },
-            },`;
+      let axe;
+      beforeAll(() => {
+        axe = configureAxe({
+          rules: {
+            region: { enable: false}, ${ accTestCase.describeBlocks.byId[descId].standardTag === 'text-alternatives'? `\n "image-alt": { enabled: true },` : ''}
+          },
+        })
 
-      if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
-        testFileCode += `
-              runOnly: {
-                type: 'tag',
-                value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
-            }`;
-      }
-
-      testFileCode += `
-          };
-        `;
+        expect.extend(toHaveNoViolations);
+      })`;
 
       if (accTestCase.testType === 'html') {
         testFileCode += `
@@ -1340,11 +1331,6 @@ function useGenerateTest(test, projectFilePath) {
         linkNode = linkComponent.getDOMNode();
         `;
       }
-
-      testFileCode += `
-          done();
-        });
-      `;
     };
 
     const addAccItStatements = (descId) => {
@@ -1352,35 +1338,51 @@ function useGenerateTest(test, projectFilePath) {
 
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
-          it('${itStatements.byId[itId].text}', (done) => {`;
+          it('${itStatements.byId[itId].text}', async (done) => {`;
 
-        if (itStatements.byId[itId].catTag !== 'none') {
+        /**  REVIEW: Was disable during V.0.15.0
+        if (itStatements.byId[itId].catTag !== 'none') { 
           testFileCode += `  
-            options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`;
+            options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`; // check
+          testFileCode += '\n expect.extend(toHaveNoViolations);'
         }
 
-        if (accTestCase.testType === 'react') {
+        if (accTestCase.testType === 'react') { 
           testFileCode += `
             axe.run(linkNode, options, async (err, results) => {`;
         } else {
           testFileCode += `
-            axe.run(options, async (err, results) => {`;
+            axe.run(options, async (err, results) => {`; // check
         }
+        */
 
-        testFileCode += `
-            if (err) {
-              console.log('err: ', err);
-              done();
-            }
+        testFileCode += ` 
+            // UPDATE to render the react component from the state of the import file menu
+            const render = () => ReactDOMServer.renderToString(<div role="main"><InfoContainer /></div>);
 
-            print(results.violations);      
-      
-            expect(err).toBe(null);
-            expect(results.violations).toHaveLength(0);
-            done();
-          });
+            const html = render();
+            // pass anything that outputs html to axe
+            expect(await axe(html)).toHaveNoViolations();
         })
       `;
+    
+    /* // REVIEW: Was disable during V.0.15.0
+      testFileCode += `  
+          if (err) {
+            console.log('err: ', err);
+            done();
+          }
+
+          print(results.violations);      
+
+          expect(err).toBe(null);
+          expect(results.violations).toHaveLength(0);
+          done();
+        });
+      })
+    `;
+    */
+
       });
     };
 
