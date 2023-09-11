@@ -1203,7 +1203,7 @@ function useGenerateTest(test, projectFilePath) {
       testFileCode += `
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');`;
-
+      // EDIT: is not accessing neither accTestCase.testType html, HTML, React, or react
       if (accTestCase.testType === 'html') {
         testFileCode += `
         const path = require('path');
@@ -1213,10 +1213,9 @@ function useGenerateTest(test, projectFilePath) {
           '../${filePath}'), 'utf8');`;
       } else if (accTestCase.testType === 'react') {
         testFileCode += `
-        import React from 'react';
+        import React from 'react' XXX;
         import { configure, mount } from 'enzyme';
         import Adapter from 'enzyme-adapter-react-16';
-
         import ${fileName.split('.')[0]} from '../${filePath}';`;
       }
     };
