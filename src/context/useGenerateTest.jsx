@@ -1202,7 +1202,18 @@ function useGenerateTest(test, projectFilePath) {
 
       testFileCode += `
         const axe = require('axe-core');
-        const regeneratorRuntime = require('regenerator-runtime');`;
+        const regeneratorRuntime = require('regenerator-runtime');
+        import React from 'react';
+        import ReactDOMServer from 'react-dom/server';
+        import { configureAxe, toHaveNoViolations } from 'jest-axe';
+        import InfoContainer from '../client/containers/infoContainer.jsx';
+        import { JSDOM } from 'jsdom';
+
+        // Configure the JSDOM
+        const { window } = new JSDOM('<!DOCTYPE html>');
+        global.window = window;
+        global.document = window.document;`;
+
       // EDIT: is not accessing neither accTestCase.testType html, HTML, React, or react
       if (accTestCase.testType === 'html') {
         testFileCode += `
@@ -1228,37 +1239,37 @@ function useGenerateTest(test, projectFilePath) {
 
         describe('${describeBlocks.byId[id].text}', () => {`;
         addAccPrint();
-        if (accTestCase.testType === 'react') addMount();
+        if (accTestCase.testType === 'react') addMount(); // REVIEW: no accessing this statement
         addAccBeforeAll(id);
         addAccItStatements(id);
         testFileCode += `}); \n \n`;
       });
     };
 
-    const addAccPrint = () => {
-      testFileCode += `
-        const print = (violations) => {
-          if (violations.length === 0) {
-            console.log('Congrats! Keep up the good work, you have 0 known violations!');
-          } else {
-            violations.forEach(axeViolation => {
-              const whereItFailed = axeViolation.nodes.map(node => node.html);
-              // uncomment the line(s) below to see suggestions on how to fix accessibility issues
-              // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
+    const addAccPrint = () => { // REVIEW: No operable during V.0.15.0
+      // testFileCode += `
+      //   const print = (violations) => {
+      //     if (violations.length === 0) {
+      //       console.log('Congrats! Keep up the good work, you have 0 known violations!');
+      //     } else {
+      //       violations.forEach(axeViolation => {
+      //         const whereItFailed = axeViolation.nodes.map(node => node.html);
+      //         // uncomment the line(s) below to see suggestions on how to fix accessibility issues
+      //         // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
         
-              const { description, help, helpUrl } = axeViolation;
+      //         const { description, help, helpUrl } = axeViolation;
       
-              console.log('---------',
-                '\\nTEST DESCRIPTION: ', description,
-                '\\nISSUE: ', help,
-                '\\nMORE INFO: ', helpUrl,
-                '\\nWHERE IT FAILED: ', whereItFailed,
-                // '\\nHOW TO FIX: ', failureSummary
-              );
-            });
-          }
-        }
-      `;
+      //         console.log('---------',
+      //           '\\nTEST DESCRIPTION: ', description,
+      //           '\\nISSUE: ', help,
+      //           '\\nMORE INFO: ', helpUrl,
+      //           '\\nWHERE IT FAILED: ', whereItFailed,
+      //           // '\\nHOW TO FIX: ', failureSummary
+      //         );
+      //       });
+      //     }
+      //   }
+      // `;
     };
 
     const addMount = () => {
