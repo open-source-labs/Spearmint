@@ -1199,7 +1199,7 @@ function useGenerateTest(test, projectFilePath) {
       );
       filePath = filePath.replace(/\\/g, '/');
 
-      
+
       testFileCode += `
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');`;
@@ -1645,10 +1645,13 @@ function useGenerateTest(test, projectFilePath) {
 
     switch (test) {
 
-      //---------------------------------------------------Accessbility switch statement---------------------------------------------
+      //---------------------------------------------------Accessibility switch statement---------------------------------------------
       case 'acc':
+        // Store the current test state in a variable for easier access
         var accTestCase = testState;
+        // Check if the test type is puppeteer
         if (accTestCase.testType === 'puppeteer') {
+          // and beautify the testFileCode using the options bellow
           return (
             addAccPuppeteer(),
             (testFileCode = beautify(testFileCode, {
@@ -1658,6 +1661,9 @@ function useGenerateTest(test, projectFilePath) {
             }))
           );
         } else {
+          // If it's not 'puppeteer', add 'acc' import statements and describe blocks
+          // and beautify the testFileCode using specific options
+          // beautify function will format this code to make it more readable
           return (
             addAccImportStatements(),
             addAccDescribeBlocks(),
