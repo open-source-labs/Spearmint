@@ -47,7 +47,7 @@ export function useGenerateScript(test: string) {
     case 'react':
       return {
         cd: `cd ${projectFilePath}`,
-        install: `npm i -D jest-environment-jsdom@latest @testing-library/react test-data-bot jest@latest`,
+        install: `npm i -D jest-environment-jsdom@latest @testing-library/user-event @testing-library/react test-data-bot jest@latest`,
       };
     case 'redux':
       return {

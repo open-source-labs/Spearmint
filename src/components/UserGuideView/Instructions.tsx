@@ -166,28 +166,19 @@ const Instructions = ({ title }: { title: string }): JSX.Element => {
               <div id={styles.accordionDiv}>
                 <div>
                   {' '}
-                  Ensure that your project contains the following file:{' '}
+                  Ensure that your project contains the following files with the
+                  following code:
                 </div>
-                <pre>
-                  <div className="code-wrapper">
-                    <code>
-                      babel.config.js -OR- babelrc.js
-                      <br></br>-AND-
-                      <br></br> jest.config.js
-                    </code>
-                  </div>
-                </pre>
-              </div>
-              <div>
-                and includes the following code:
-                <br />
               </div>
               <pre>
                 <div className="code-wrapper">
                   <code>
-                    <p>Babel</p>
+                    <p>A 'babel.config.js' -OR- a 'babelrc.js' file with:</p>
                     {`module.exports = {presets: ['@babel/preset-env', '@babel/preset-react']}`}
-                    <p>Jest</p>
+                    <br></br>
+                    <span>-----------</span>
+                    <br></br>
+                    <p>A 'jest.config.js' file with :</p>
                     {`module.exports = {testEnvironment: ‘jsdom’,};`}
                   </code>
                 </div>

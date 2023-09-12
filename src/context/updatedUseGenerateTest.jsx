@@ -134,7 +134,7 @@ function useGenerateTest(test, projectFilePath) {
       const formattedComponentName =
         reactTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
-    }; //
+    };
 
     const addDescribeBlocks = () => {
       const describeBlocks = reactTestCase.describeBlocks;
