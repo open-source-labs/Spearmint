@@ -1345,7 +1345,7 @@ function useGenerateTest(test, projectFilePath) {
 
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
-          it('${itStatements.byId[itId].text}', async (done) => {`;
+          it('${itStatements.byId[itId].text}', async () => {`;
 
         if (accTestCase.testType !== 'react' && itStatements.byId[itId].catTag !== 'none') {
           testFileCode += `  
