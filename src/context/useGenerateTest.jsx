@@ -115,7 +115,7 @@ function useGenerateTest(test, projectFilePath) {
     const addReactImportStatements = () => {
       testFileCode += `
         import React from 'react';
-        import { render, screen, } from '@testing-library/react'; 
+        import { render, screen,fireEvent} from '@testing-library/react'; 
         import userEvent from '@testing-library/user-event';
         import { build, fake } from 'test-data-bot'; 
         \n`;
@@ -194,7 +194,7 @@ function useGenerateTest(test, projectFilePath) {
       let props = createRenderProps(statement.props);
       const formattedComponentName =
         reactTestCase.statements.componentName.replace(/\.jsx?/, '');
-      testFileCode += `render(<${formattedComponentName} ${props}/>);`;
+      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
     };
 
     // Render Props Jest Test Code
