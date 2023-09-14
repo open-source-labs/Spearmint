@@ -1,51 +1,36 @@
-import React, { useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 import styles from './TestCase.module.scss';
-import {
-  updateDescribeText,
-  updateRenderComponent,
-  updateItStatementText,
-  addDescribeBlock,
-} from '../../context/actions/frontendFrameworkTestCaseActions';
+import { updateRenderComponent } from '../../context/actions/updatedFrontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import { createMockData } from '../../context/actions/mockDataActions';
-import ReactTestMenu from '../TestMenu/ReactTestMenu';
-import MockData from '../ReactTestComponent/MockData/MockData';
-import DescribeRenderer from '../ReactTestComponent/DescribeRenderer/DescribeRenderer';
-import {
-  ReactTestCaseContext,
-  reactTestCaseState,
-  reactTestCaseReducer,
-} from '../../context/reducers/reactTestCaseReducer';
+import UpdatedReactTestMenu from '../TestMenu/UpdatedReactTestMenu';
+import MockData from '../UpdatedReactTestComponent/MockData/MockData';
 import { Button } from '@mui/material';
+import { RTFsContexts } from '../../context/RTFsContextsProvider';
+import DescribeBlock from '../UpdatedReactTestComponent/DescribeBlock/DescribeBlock';
 
-const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
-  const [reactTestCase, dispatchToReactTestCase] = useReducer(
-    reactTestCaseReducer,
-    reactTestCaseState
-  );
-
-  const { describeBlocks, itStatements, statements } = reactTestCase;
+const UpdatedReactTestCase = ({
+  filterFileType,
+}: {
+  filterFileType: Function;
+}) => {
+  const {
+    reactTestFileState,
+    rTFDispatch,
+    handleAddBlock,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    ModalStyles,
+  } = useContext(RTFsContexts);
+  console.log('reactTestFileState', reactTestFileState);
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, theme }] = useContext(GlobalContext);
 
   const handleAddMockData = () => {
     dispatchToMockData(createMockData());
-  };
-
-  const handleChangeDescribeText = (e: React.SyntheticEvent) => {
-    const target = e.target as HTMLButtonElement;
-    const text = target.value;
-    const describeId = target.id;
-    dispatchToReactTestCase(updateDescribeText(text, describeId));
-  };
-
-  const handleChangeItStatementText = (e: React.SyntheticEvent) => {
-    const target = e.target as HTMLButtonElement;
-    const text = target.value;
-    const itId = target.id;
-    dispatchToReactTestCase(updateItStatementText(text, itId));
   };
 
   const reorder = (list: string[], startIndex: number, endIndex: number) => {
@@ -55,21 +40,25 @@ const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
     return result;
   };
 
-  const handleAddDescribeBlock = (e: React.SyntheticEvent) => {
-    dispatchToReactTestCase(addDescribeBlock());
-  };
+  const reactTestFileStateChildren = Object.values(
+    reactTestFileState.children
+  ).map((childObject) => (
+    <DescribeBlock
+      blockObjectsState={childObject}
+      key={childObject.filepath}
+      theme={theme}
+    />
+  ));
 
   return (
-    <ReactTestCaseContext.Provider
-      value={[reactTestCase, dispatchToReactTestCase]}
-    >
+    <>
       <div id={styles[`ReactTestCase${theme}`]}>
         <h2 id={styles[`testName${theme}`]}>React Testing</h2>
-        <ReactTestMenu />
+        <UpdatedReactTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
             <SearchInput
-              dispatch={dispatchToReactTestCase}
+              dispatch={rTFDispatch}
               action={updateRenderComponent}
               filePathMap={filePathMap}
               options={filterFileType(Object.keys(filePathMap), [
@@ -104,30 +93,21 @@ const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
           : null}
         <div id={styles.describeContainer}>
           <div /*droppableId='droppableReactDescribe'*/ type="describe">
-            <DescribeRenderer
-              dispatcher={dispatchToReactTestCase}
-              describeBlocks={describeBlocks}
-              itStatements={itStatements}
-              statements={statements}
-              handleChangeDescribeText={handleChangeDescribeText}
-              handleChangeItStatementText={handleChangeItStatementText}
-              type="react"
-              theme={theme}
-            />
+            {reactTestFileStateChildren}
           </div>
         </div>
         <div id={styles.addDescribeButton}>
           <Button
             data-testid="addDescribeButton"
-            onClick={handleAddDescribeBlock}
+            onClick={(e) => handleAddBlock(e, 'describe', '')}
             variant="outlined"
           >
             Add Describe Block
           </Button>
         </div>
       </div>
-    </ReactTestCaseContext.Provider>
+    </>
   );
 };
 
-export default ReactTestCase;
+export default UpdatedReactTestCase;

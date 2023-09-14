@@ -145,6 +145,8 @@
     "snyk": "^1.1087.0",
     "spectron": "^19.0.0",
     "style-loader": "^3.3.1",
+    "uid": "^2.0.2",
+    "uuid": "^9.0.0",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
     "xterm": "^5.1.0",
@@ -184,6 +186,7 @@
     "regenerator-runtime": "^0.13.11",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4",
+    "webpack-bundle-analyzer": "^4.9.1",
     "webpack-dev-server": "^4.11.1"
   },
   "config": {

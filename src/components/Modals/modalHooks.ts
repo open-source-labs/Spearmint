@@ -1,10 +1,19 @@
 import React, { useState, useRef, useContext } from 'react';
 import { clearMockData } from '../../context/actions/mockDataActions';
-import { toggleModal, setTestCase, updateFile } from '../../context/actions/globalActions';
+import {
+  toggleModal,
+  setTestCase,
+  updateFile,
+} from '../../context/actions/globalActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { DispatchMock, KeyDispatchMock } from '../../utils/mockTypes';
 
-export function useNewTest(dispatchToMockData: React.Dispatch<KeyDispatchMock | DispatchMock> | null, dispatchTestCase: Function, createTest: () => {type: string}, closeModal: () => void) {
+export function useNewTest(
+  dispatchToMockData: React.Dispatch<KeyDispatchMock | DispatchMock> | null,
+  dispatchTestCase: Function,
+  createTest: () => { type: string },
+  closeModal: () => void
+) {
   const [, dispatchToGlobal] = useContext(GlobalContext);
   const handleNewTest = (e: React.MouseEvent) => {
     if (dispatchToMockData) dispatchToMockData(clearMockData());
@@ -20,25 +29,25 @@ export function useNewTest(dispatchToMockData: React.Dispatch<KeyDispatchMock | 
  * This function will return an object with a cd and a install property that are based on which test argument it receives
  */
 export function useGenerateScript(test: string) {
-
   const [{ projectFilePath }] = useContext(GlobalContext);
   //TODO: DRY this code
 
   switch (test) {
-    case 'solid': 
+    case 'solid':
       return {
         cd: `cd ${projectFilePath}`,
-        install: 'npm i --save-dev jest solid-jest \nnpm i @babel/preset-env babel-preset-solid \nnpm i --save-dev test-data-bot \nnpm i --save-dev @testing-library/jest-dom \nnpm i --save-dev jest-environment-jsdom \nnpm i --save-dev solid-testing-library'
-      }
+        install:
+          'npm i --save-dev jest solid-jest \nnpm i @babel/preset-env babel-preset-solid \nnpm i --save-dev test-data-bot \nnpm i --save-dev @testing-library/jest-dom \nnpm i --save-dev jest-environment-jsdom \nnpm i --save-dev solid-testing-library',
+      };
     case 'acc':
       return {
         cd: `cd ${projectFilePath}`,
-        install: `npm i -D jest`
-      }
+        install: `npm i -D jest`,
+      };
     case 'react':
       return {
         cd: `cd ${projectFilePath}`,
-        install: `npm i -D @testing-library/jest-dom @testing-library/react test-data-bot jest`,
+        install: `npm i -D jest-environment-jsdom@latest @testing-library/user-event @testing-library/react test-data-bot jest@latest`,
       };
     case 'redux':
       return {
@@ -83,7 +92,7 @@ export function useGenerateScript(test: string) {
         graphQLGuide: graphQLGuide,
         cd: `cd ${projectFilePath}`,
         install: 'npm i -D jest supertest regenerator-runtime core-js',
-      };    
+      };
     case 'puppeteer':
       return {
         cd: `cd ${projectFilePath}`,
@@ -97,7 +106,8 @@ export function useGenerateScript(test: string) {
     case 'svelte':
       return {
         cd: `cd ${projectFilePath}`,
-        install: 'npm i -D @testing-library/svelte @testing-library/user-event @testing-library/jest-dom @babel/preset-env svelte-jester jest msw babel-jest'
+        install:
+          'npm i -D @testing-library/svelte @testing-library/user-event @testing-library/jest-dom @babel/preset-env svelte-jester jest msw babel-jest',
       };
     default:
       return {

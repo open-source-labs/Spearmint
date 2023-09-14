@@ -1,9 +1,11 @@
-import path from "path";
-import webpack from "webpack";
+import path from 'path';
+import webpack from 'webpack';
+//const BundleAnalyzerPlugin =
+//require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config: webpack.Configuration = {
   mode: 'development',
-  entry: "./src/index.js",
+  entry: './src/index.js',
   devtool: 'inline-source-map',
   target: 'electron-renderer',
   module: {
@@ -12,17 +14,17 @@ const config: webpack.Configuration = {
         test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
             presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-              "@babel/preset-typescript",
+              '@babel/preset-env',
+              '@babel/preset-react',
+              '@babel/preset-typescript',
             ],
           },
         },
       },
-       {
+      {
         test: [/\.s[ac]ss$/i, /\.css$/i],
         use: [
           // Creates `style` nodes from JS strings
@@ -32,27 +34,27 @@ const config: webpack.Configuration = {
           // Compiles Sass to CSS
           'sass-loader',
         ],
-      }, 
+      },
       {
         test: [/\.png/, /\.svg/],
-       type: 'asset/resource'
-     }
+        type: 'asset/resource',
+      },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".jsx", ".ts", ".js"],
+    extensions: ['.tsx', '.jsx', '.ts', '.js'],
   },
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "bundle.js",
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
   },
+  //plugins: [new BundleAnalyzerPlugin()],
   // not sure what this is supposed to do but it no longer works after updating webpack types package
   // devServer: {
   //   contentBase: path.join(__dirname, "build"),
   //   compress: true,
   //   port: 4000,
   // },
-  
 };
 
 export default config;
