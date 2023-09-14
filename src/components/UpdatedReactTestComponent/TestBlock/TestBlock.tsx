@@ -6,6 +6,8 @@ import {
   addAction,
   addAssertion,
 } from '../../../context/actions/updatedFrontendFrameworkTestCaseActions';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
+
 import { RTFsContexts } from '../../../context/RTFsContextsProvider';
 import styles from './ItRenderer.module.scss';
 import { Button, TextField } from '@mui/material';
@@ -15,43 +17,47 @@ import { ItStatements, Statements } from '../../../utils/updatedReactTypes';
 // This is tracking the it statements you have in a certain test, following the flow of data will
 // help you better understand exactly how this works
 
-interface ItBlockProps {
-  type: string;
-  itStatements: ItStatements;
-  describeId: string;
-  forKey: string;
-  statements: Statements;
-  handleChangeItStatementText: React.ChangeEventHandler<
-    HTMLTextAreaElement | HTMLInputElement
-  >;
-  theme: string;
-}
+interface ItBlockProps {}
 
-const TestBlock = ({ blockObjectsState, theme }) => {
+const TestBlock = ({ blockObjectsState }) => {
+  const [{ theme }] = useContext(GlobalContext);
+  const {
+    handleAddBlock,
+    handleChange,
+    handleDeleteBlock,
+    setChildrenComponents,
+  } = useContext(RTFsContexts);
+
   const thisBlockObjectsState = blockObjectsState;
-  const { handleAddBlock, handleChange, handleDeleteBlock } =
-    useContext(RTFsContexts);
+  const { setupTeardownBlock, arrayOfChildComponents } = setChildrenComponents(
+    blockObjectsState,
+    theme
+  );
 
   return (
     <>
-      <div
-        id={styles[`ItRenderer${theme}`]}
-        key={thisBlockObjectsState.filepath}
-      >
+      <div id={styles[`ItRenderer${theme}`]} key={thisBlockObjectsState.key}>
         <AiOutlineClose
           tabIndex={0}
           id={thisBlockObjectsState.filepath}
-          onClick={(e) => handleDeleteBlock()}
+          onClick={(e) => {
+            handleDeleteBlock(
+              thisBlockObjectsState.parentsFilepath,
+              thisBlockObjectsState.key
+            );
+          }}
           className={cn(styles.itClose, 'far fa-window-close')}
         />
+        <div>Test</div>
+        {/*Code For implementing ${thisBlockObjectsState.filepath} as an input field. allow for people to make comments to go in their testfiles*/}
         <div id={styles.itInputContainer}>
           <TextField
             key={thisBlockObjectsState.filepath}
             id={thisBlockObjectsState.filepath}
             className={styles.describeInput}
-            name="describe-label"
+            name="test-label"
             type="text"
-            placeholder="Enter unit test name..."
+            placeholder="Enter unit test name/description..."
             value={thisBlockObjectsState.text}
             onChange={(e) =>
               handleChange(e, 'text', thisBlockObjectsState.filepath)
@@ -69,34 +75,40 @@ const TestBlock = ({ blockObjectsState, theme }) => {
             describeId={describeId}
               />*/}
         <div>
-          {/*type === 'react' && (
-              <div className={styles.buttonsContainer}>
-                <Button
-                  id={id}
-                  onClick={addRenderHandleClick}
-                  className={styles.reactButton}
-                  variant="outlined"
-                >
-                  Add Render
-                </Button>
-                <Button
-                  id={id}
-                  onClick={addActionHandleClick}
-                  className={styles.reactButton}
-                  variant="outlined"
-                >
-                  Add Action
-                </Button>
-                <Button
-                  id={id}
-                  onClick={addAssertionHandleClick}
-                  className={styles.reactButton}
-                  variant="outlined"
-                >
-                  Add Assertion
-                </Button>
-              </div>
-            )*/}
+          {setupTeardownBlock}
+          {arrayOfChildComponents}
+          <div className={styles.buttonsContainer}>
+            <Button
+              id={`AddRenderTo${thisBlockObjectsState.key}`}
+              onClick={(e) => {
+                handleAddBlock(e, 'render', thisBlockObjectsState.filepath);
+              }}
+              className={styles.reactButton}
+              variant="outlined"
+            >
+              Add Render
+            </Button>
+            <Button
+              id={`AddActionTo${thisBlockObjectsState.key}`}
+              onClick={(e) => {
+                handleAddBlock(e, 'action', thisBlockObjectsState.filepath);
+              }}
+              className={styles.reactButton}
+              variant="outlined"
+            >
+              Add Action
+            </Button>
+            <Button
+              id={`AddAssestionTo${thisBlockObjectsState.key}`}
+              onClick={(e) => {
+                handleAddBlock(e, 'assert', thisBlockObjectsState.filepath);
+              }}
+              className={styles.reactButton}
+              variant="outlined"
+            >
+              Add Assertion
+            </Button>
+          </div>
         </div>
       </div>
     </>

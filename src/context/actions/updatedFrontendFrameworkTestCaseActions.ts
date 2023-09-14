@@ -48,22 +48,6 @@ export const updateDescribeOrder = (reorderedDescribe: string[]) => ({
 });
 
 // not being imported anywhere?
-export const addItstatement = (describeId: string) => ({
-  type: actionTypes.ADD_ITSTATEMENT,
-  describeId,
-});
-
-export const deleteItStatement = (describeId: string, itId: string) => ({
-  type: actionTypes.DELETE_ITSTATEMENT,
-  describeId,
-  itId,
-});
-
-export const updateItStatementText = (text: string, itId: string) => ({
-  type: actionTypes.UPDATE_ITSTATEMENT_TEXT,
-  itId,
-  text,
-});
 
 export const updateItStatementOrder = (
   reorderedIt: string[],
@@ -78,62 +62,6 @@ export const addAction = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_ACTION,
   describeId,
   itId,
-});
-
-export const deleteAction = (statementId: string) => ({
-  type: actionTypes.DELETE_ACTION,
-  statementId,
-});
-
-export const updateAction = ({
-  id,
-  eventType,
-  eventValue,
-  queryVariant,
-  querySelector,
-  queryValue,
-  suggestions,
-}: UpdateActionProps) => ({
-  type: actionTypes.UPDATE_ACTION,
-  id,
-  eventType,
-  eventValue,
-  queryVariant,
-  querySelector,
-  queryValue,
-  suggestions,
-});
-
-export const addAssertion = (describeId: string, itId: string) => ({
-  type: actionTypes.ADD_ASSERTION,
-  describeId,
-  itId,
-});
-
-export const deleteAssertion = (statementId: string) => ({
-  type: actionTypes.DELETE_ASSERTION,
-  statementId,
-});
-
-export const updateAssertion = ({
-  id,
-  queryVariant,
-  querySelector,
-  queryValue,
-  isNot,
-  matcherType,
-  matcherValue,
-  suggestions,
-}: UpdateAssertionProps) => ({
-  type: actionTypes.UPDATE_ASSERTION,
-  id,
-  queryVariant,
-  querySelector,
-  queryValue,
-  isNot,
-  matcherType,
-  matcherValue,
-  suggestions,
 });
 
 export const addRender = (describeId: string, itId: string) => ({
@@ -236,6 +164,7 @@ export function makeDeepCopyOfObject(objectToCopy) {
 }
 
 export function traverseObject(objectToTraverse, filePath) {
+  if (!filePath) return objectToTraverse; //currently, a filepath will only not exist if you're starting at top level state object
   const filePathFolders = filePath.split('/'); //The delimiter is removed and the keys that lead to your target object in the state are stored in array indexes, order kept
   let curObject = objectToTraverse; //let's us track how deep we've looked following path
   filePathFolders.forEach((folderToEnter) => {
@@ -255,7 +184,6 @@ export function addObjectToStateObject(
   addObjectToWhere, //filepath for its parent object in state
   newObjectsKey
 ) {
-  console.log('enter addObjectTOStateObject');
   return {
     type: actionTypes.ADD_OBJECT_TO_STATE_OBJECT,
     payload: { objectType, addObjectToWhere, newObjectsKey },
@@ -269,16 +197,13 @@ export function updateObjectInStateObject(
 ) {
   return {
     type: actionTypes.UPDATE_OBJECT_IN_STATE_OBJECT,
-    payload: { key, value },
+    payload: { filepathToObject, key, value },
   };
 }
 
-export function deleteObjectFromStateObject(
-  pathToObjectToDelete,
-  pathToObjectsParent
-) {
+export function deleteObjectFromStateObject(parentsFilepath, targetsKey) {
   return {
     type: actionTypes.DELETE_OBJECT_FROM_STATE_OBJECT,
-    payload: { pathToObjectToDelete, pathToObjectsParent },
+    payload: { parentsFilepath, targetsKey },
   };
 }

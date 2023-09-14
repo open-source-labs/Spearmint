@@ -16,9 +16,15 @@ const UpdatedReactTestCase = ({
 }: {
   filterFileType: Function;
 }) => {
-  const { reactTestFileState, rTFDispatch, handleAddBlock } =
-    useContext(RTFsContexts);
-  console.log('RTC entered');
+  const {
+    reactTestFileState,
+    rTFDispatch,
+    handleAddBlock,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    ModalStyles,
+  } = useContext(RTFsContexts);
   console.log('reactTestFileState', reactTestFileState);
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, theme }] = useContext(GlobalContext);

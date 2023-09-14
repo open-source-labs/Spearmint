@@ -1,11 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import cn from 'classnames';
-import TestBlock from '../TestBlock/TestBlock';
-import styles from './DescribeRenderer.module.scss';
+import describeBlockStyles from './DescribeRenderer.module.scss';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { Button, TextField } from '@mui/material';
+import {
+  FormControl,
+  InputLabel,
+  Input,
+  Button,
+  TextField,
+} from '@mui/material';
 import { DescribeBlocks } from '../../../utils/reactTypes';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+
+import styles from '../../Modals/Modal.module.scss';
 
 // This is tracking your describe statements in a certain test, following the flow of data will help you
 // better understand exactly how this is working
@@ -16,50 +24,46 @@ interface DescribeBlockProps {
   theme: string;
 }
 
-const DescribeBlock = ({ blockObjectsState, theme }) => {
-  const thisBlockObjectsState = blockObjectsState;
-  const { handleAddBlock, handleChange, handleDeleteBlock } =
-    useContext(RTFsContexts);
+const DescribeBlock = ({ blockObjectsState, key }) => {
+  const [{ theme }] = useContext(GlobalContext);
 
-  console.log('a new render');
+  const thisBlockObjectsState = blockObjectsState;
+  //const [hasSetupTeardown, setHasSetupTeardown] = useState(false);
+  const {
+    handleAddBlock,
+    handleChange,
+    handleDeleteBlock,
+    setChildrenComponents,
+  } = useContext(RTFsContexts);
+
+  // useEffect(() => {
+  //   setHasSetupTeardown(false);
+  // }, []);
+
+  //only allow users to ask for 1 setup teardown per Block
 
   //function prepChildrenBlocksForRendering(stateObject){
-  const childrenOfBlock = Object.values(thisBlockObjectsState.children).map(
-    (childsStateObject) => {
-      if (childsStateObject['objectType'] === 'describe') {
-        return (
-          <DescribeBlock
-            blockObjectsState={childsStateObject}
-            key={childsStateObject.filepath}
-            theme={theme}
-          />
-        );
-      } else if (childsStateObject['objectType'] === 'test') {
-        return (
-          <TestBlock
-            blockObjectsState={childsStateObject}
-            key={childsStateObject.filepath}
-            theme={theme}
-          />
-        );
-      }
-    }
-  );
+
   //}
+
+  const { setupTeardownBlock, arrayOfChildComponents } = setChildrenComponents(
+    blockObjectsState,
+    theme
+  );
 
   return (
     <>
       <div
-        key={thisBlockObjectsState.filepath}
+        key={thisBlockObjectsState.key}
         className="describe-block"
-        data-draggableid={thisBlockObjectsState.filepath}
+        data-draggableid={thisBlockObjectsState.key}
         data-type="describe"
       >
         <div
-          id={styles[`describeBlock${theme}`]}
+          id={describeBlockStyles[`describeBlock${theme}`]}
           data-filepath={thisBlockObjectsState['filepath']}
         >
-          {/* <label htmlFor='describe-label' className={styles.describeLabel}>
+          {/* <label htmlFor='describe-label' className={describeBlockStyles.describeLabel}>
                 Describe Block
               </label> */}
 
@@ -68,22 +72,43 @@ const DescribeBlock = ({ blockObjectsState, theme }) => {
             id={thisBlockObjectsState.filepath}
             onClick={(e) => {
               handleDeleteBlock(
-                thisBlockObjectsState.filepath,
-                thisBlockObjectsState.parentsFilepath
+                thisBlockObjectsState.parentsFilepath,
+                thisBlockObjectsState.key
               );
             }}
-            className={cn('far fa-window-close', styles.describeClose)}
+            className={cn(
+              'far fa-window-close',
+              describeBlockStyles.describeClose
+            )}
           />
 
-          {childrenOfBlock}
-          <div className={styles.describeInputContainer}>
+          <div className={describeBlockStyles.describeInputContainer}>
+            {/*<FormControl>
+              <InputLabel>Describe:</InputLabel>
+              <Input
+                variant="standard"
+                id={thisBlockObjectsState.filepath}
+                className={describeBlockStyles.describeInput}
+                name="describe-label"
+                type="text"
+                placeholder="What is the focus of your test(s)"
+                value={thisBlockObjectsState.text}
+                onChange={(e) => {
+                  handleChange(e, 'text', thisBlockObjectsState.filepath);
+                }}
+                fullWidth={true}
+              />
+              </FormControl>*/}
+            <div>Describe</div>
+            {/*Code For implementing ${thisBlockObjectsState.filepath} as an input field. allow for people to make comments to go in their testfiles*/}
+
             <TextField
               variant="standard"
-              id={thisBlockObjectsState.filepath}
+              id={`textFieldFor${thisBlockObjectsState}`}
               className={styles.describeInput}
               name="describe-label"
               type="text"
-              placeholder="Describe name of test"
+              placeholder="What is the focus of your test(s)"
               value={thisBlockObjectsState.text}
               onChange={(e) => {
                 handleChange(e, 'text', thisBlockObjectsState.filepath);
@@ -92,28 +117,52 @@ const DescribeBlock = ({ blockObjectsState, theme }) => {
             />
           </div>
 
-          <Button
-            className={styles.addIt}
-            id={thisBlockObjectsState.filepath}
-            onClick={(e) => {
-              handleAddBlock(e, 'test', thisBlockObjectsState.filepath);
-            }}
-            variant="outlined"
-          >
-            Add It Statement
-          </Button>
+          <div className={describeBlockStyles.describeChildrenSection}>
+            {setupTeardownBlock}
+
+            <Button
+              className={describeBlockStyles.addIt}
+              id={thisBlockObjectsState.filepath}
+              onClick={(e) => {
+                handleAddBlock(
+                  e,
+                  'setupTeardown',
+                  thisBlockObjectsState.filepath
+                );
+              }}
+              variant="outlined"
+            >
+              Add Setup and Teardowns
+            </Button>
+          </div>
+          <div className={describeBlockStyles.describeChildrenSection}>
+            {arrayOfChildComponents}
+          </div>
+          <div className={describeBlockStyles.describeChildrenSection}>
+            <Button
+              className={describeBlockStyles.addIt}
+              id={thisBlockObjectsState.filepath}
+              onClick={(e) => {
+                handleAddBlock(e, 'describe', thisBlockObjectsState.filepath);
+              }}
+              variant="outlined"
+            >
+              Add Nested Describe Block
+            </Button>
+          </div>
+          <div className={describeBlockStyles.describeChildrenSection}>
+            <Button
+              className={describeBlockStyles.addIt}
+              id={thisBlockObjectsState.filepath}
+              onClick={(e) => {
+                handleAddBlock(e, 'test', thisBlockObjectsState.filepath);
+              }}
+              variant="outlined"
+            >
+              Add It Statement
+            </Button>
+          </div>
         </div>
-        <p>POC</p>
-        <Button
-          className={styles.addIt}
-          id={thisBlockObjectsState.filepath}
-          onClick={(e) => {
-            handleAddBlock(e, 'describe', thisBlockObjectsState.filepath);
-          }}
-          variant="outlined"
-        >
-          Add Nested Describe Block
-        </Button>
       </div>
     </>
   );

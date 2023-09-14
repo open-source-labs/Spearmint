@@ -189,7 +189,7 @@ const TestFile = () => {
     acc: [<FaUniversalAccess size={cardSize} />, 'Accessibility'],
     sec: [<MdSecurity size={cardSize} />, 'Security'],
     graphQL: [<SiGraphql size={cardSize} />, 'GraphQL'],
-    'updated react': [<FaReact size={cardSize} />, 'Updated React'], //Added By Cider
+    'updated react': [<FaReact size={cardSize} />, 'React(Beta)'], //Added By Cider
   };
 
   const allCards = Object.keys(testMappings).map((elem, idx) => {

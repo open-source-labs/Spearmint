@@ -29,25 +29,20 @@ type FieldTypes =
   | 'queryValue';
 
 // Action box in middle panel (testCase.jsx)
-const Action = ({
-  statement,
-  statementId,
-  describeId,
-  itId,
-}: ReactTestComponentAssertion): JSX.Element => {
-  const [{ mockData }] = useContext(MockDataContext);
-  const [{ statements }, rTFDispatch] = useContext(RTFsContexts);
-  const [{ theme }] = useContext(GlobalContext);
+const Action = ({ blockObjectsState }) => {
+  const thisBlockObjectsState = blockObjectsState;
 
-  const handleChangeActionFields = (e: EventTypes, field: FieldTypes) => {
+  const [{ mockData }] = useContext(MockDataContext);
+  const [{ theme }] = useContext(GlobalContext);
+  const { handleAddBlock, handleChange, handleDeleteBlock } =
+    useContext(RTFsContexts);
+
+  /*const handleChangeActionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAction = { ...statement };
     updatedAction[field] = e.target.value;
     rTFDispatch(updateAction(updatedAction));
-  };
+  };*/
 
-  const handleClickDeleteAction = () => {
-    rTFDispatch(deleteAction(statement.id));
-  };
   //conditional rendering for events with values
   const needsEventValue = (eventType: string) => {
     const eventsWithValues = [
@@ -61,42 +56,44 @@ const Action = ({
     ];
     return eventsWithValues.includes(eventType);
   };
-
+  //needsEventsValue should be iterated on to create a <select>option
   return (
     <div id={styles[`action${theme}`]}>
       <AiOutlineClose id={styles.close} onClick={handleClickDeleteAction} />
-      <span className={styles.header}>
-        Action <span id={styles.componentName}>{statements.componentName}</span>
-      </span>
+      <span className={styles.header}>Action</span>
       <div id={styles.eventTypeFlexBox}>
         <div id={styles.eventType}>
           <label htmlFor="eventType">Event Type</label>
           <input
             type="text"
             id="eventType"
-            value={statement.eventType}
-            onChange={(e) => handleChangeActionFields(e, 'eventType')}
+            value={blockObjectsState.eventType}
+            onChange={(e) =>
+              handleChange(e, 'eventType', thisBlockObjectsState.filepath)
+            }
             placeholder="eg. click, change, keyPress"
           />
         </div>
         <div id={styles.eventTypeVal}>
-          {needsEventValue(statement.eventType) && mockData.length > 0 ? (
+          {needsEventValue(blockObjectsState.eventType) &&
+          mockData.length > 0 ? (
             <div className={styles.eventValueMock}>
               <label htmlFor="eventValue">Value</label>
               <AutoCompleteMockData
-                statement={statement}
                 dispatchToTestCase={rTFDispatch}
                 statementType="action"
                 // id={styles2.autoCompleteMockData}
               />
             </div>
-          ) : needsEventValue(statement.eventType) ? (
+          ) : needsEventValue(blockObjectsState.eventType) ? (
             <span className={styles.eventValue}>
               <label htmlFor="eventValue">Value</label>
               <input
                 type="text"
                 id="eventValue"
-                onChange={(e) => handleChangeActionFields(e, 'eventValue')}
+                onChange={(e) =>
+                  handleChange(e, 'eventValue', thisBlockObjectsState.filepath)
+                }
               />
             </span>
           ) : null}
@@ -110,8 +107,10 @@ const Action = ({
           <div id={styles.dropdownFlex}>
             <select
               id="queryVariant"
-              value={statement.queryVariant}
-              onChange={(e) => handleChangeActionFields(e, 'queryVariant')}
+              value={blockObjectsState.queryVariant}
+              onChange={(e) =>
+                handleChange(e, 'queryVariant', thisBlockObjectsState.filepath)
+              }
             >
               <option value="" />
               <option value="getBy">getBy</option>
@@ -124,14 +123,16 @@ const Action = ({
             <span id={styles.hastooltip} role="tooltip">
               <img src={questionIcon} alt="help" />
               <span id={styles.tooltip}>
-                <ToolTip toolTipType={statement.queryVariant} />
+                <ToolTip toolTipType={blockObjectsState.queryVariant} />
               </span>
             </span>
 
             <select
               id="querySelector"
-              value={statement.querySelector}
-              onChange={(e) => handleChangeActionFields(e, 'querySelector')}
+              value={blockObjectsState.querySelector}
+              onChange={(e) =>
+                handleChange(e, 'querySelector', thisBlockObjectsState.filepath)
+              }
             >
               <option value="" />
               <option value="LabelText">LabelText</option>
@@ -147,7 +148,7 @@ const Action = ({
             <span id={styles.hastooltip} role="tooltip">
               <img src={questionIcon} alt="help" />
               <span id={styles.tooltip}>
-                <ToolTip toolTipType={statement.querySelector} />
+                <ToolTip toolTipType={blockObjectsState.querySelector} />
               </span>
             </span>
             <div id={styles.query}>
@@ -161,8 +162,14 @@ const Action = ({
                   type="text"
                   id="queryValue"
                   placeholder="text, queryOptions, waitForOptions"
-                  value={statement.queryValue}
-                  onChange={(e) => handleChangeActionFields(e, 'queryValue')}
+                  value={blockObjectsState.queryValue}
+                  onChange={(e) =>
+                    handleChange(
+                      e,
+                      'queryValue',
+                      thisBlockObjectsState.filepath
+                    )
+                  }
                 />
               </span>
             </div>
