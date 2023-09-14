@@ -5,7 +5,7 @@ export interface ReactStatements {
 }
 export interface ReactTestCaseTypes {
   modalOpen: boolean;
-  describeId: number;
+  describeId: number; //
   itId: number;
   statementId: number;
   propId: number;
@@ -16,7 +16,6 @@ export interface ReactTestCaseTypes {
 export interface DescribeBlocks {
   byId: DescribeById;
   allIds: Array<string>;
-  children: Object;
 }
 
 export interface ItById {
@@ -150,6 +149,7 @@ export interface RenderProps {
 
 export interface DescribeById {
   [key: string]: {
+    filePath: string;
     id: string;
     text: string;
   };
