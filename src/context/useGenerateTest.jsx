@@ -115,7 +115,7 @@ function useGenerateTest(test, projectFilePath) {
     const addReactImportStatements = () => {
       testFileCode += `
         import React from 'react';
-        import { render, screen, } from '@testing-library/react'; 
+        import { render, screen,fireEvent} from '@testing-library/react'; 
         import userEvent from '@testing-library/user-event';
         import { build, fake } from 'test-data-bot'; 
         \n`;
@@ -194,7 +194,7 @@ function useGenerateTest(test, projectFilePath) {
       let props = createRenderProps(statement.props);
       const formattedComponentName =
         reactTestCase.statements.componentName.replace(/\.jsx?/, '');
-      testFileCode += `render(<${formattedComponentName} ${props}/>);`;
+      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
     };
 
     // Render Props Jest Test Code
@@ -1200,10 +1200,28 @@ function useGenerateTest(test, projectFilePath) {
       );
       filePath = filePath.replace(/\\/g, '/');
 
-      testFileCode += `
+      // imports for react testing
+      if (accTestCase.testType === 'react') {
+        testFileCode += `
+        import React from 'react';
+        import ReactDOMServer from 'react-dom/server';
+        import { configureAxe, toHaveNoViolations } from 'jest-axe';
+        import ${
+          //capitalize the first letter of the component 
+          fileName.split('.')[0][0].toUpperCase() +
+          fileName.split('.')[0].slice(1)
+        } from '../${filePath}';
+        import { JSDOM } from 'jsdom';
+
+        `;
+        addMount();
+      } else {
+        testFileCode += `
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');`;
+      }
 
+      // EDIT: is not accessing neither accTestCase.testType html, HTML, React, or react
       if (accTestCase.testType === 'html') {
         testFileCode += `
         const path = require('path');
@@ -1211,14 +1229,7 @@ function useGenerateTest(test, projectFilePath) {
         
         const html = fs.readFileSync(path.resolve(__dirname,
           '../${filePath}'), 'utf8');`;
-      } else if (accTestCase.testType === 'react') {
-        testFileCode += `
-        import React from 'react';
-        import { configure, mount } from 'enzyme';
-        import Adapter from 'enzyme-adapter-react-16';
-
-        import ${fileName.split('.')[0]} from '../${filePath}';`;
-      }
+      } 
     };
 
     const addAccDescribeBlocks = () => {
@@ -1228,73 +1239,70 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `
 
         describe('${describeBlocks.byId[id].text}', () => {`;
-        addAccPrint();
-        if (accTestCase.testType === 'react') addMount();
+        if (accTestCase.testType !== 'react') addAccPrint();
+        // if (accTestCase.testType === 'react') addMount(); // REVIEW: no accessing this statement
         addAccBeforeAll(id);
         addAccItStatements(id);
         testFileCode += `}); \n \n`;
       });
     };
 
-    const addAccPrint = () => {
-      testFileCode += `
-        const print = (violations) => {
-          if (violations.length === 0) {
-            console.log('Congrats! Keep up the good work, you have 0 known violations!');
-          } else {
-            violations.forEach(axeViolation => {
-              const whereItFailed = axeViolation.nodes.map(node => node.html);
-              // uncomment the line(s) below to see suggestions on how to fix accessibility issues
-              // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
-        
-              const { description, help, helpUrl } = axeViolation;
+    const addAccPrint = () => { // REVIEW: No operable during V.0.15.0
       
-              console.log('---------',
-                '\\nTEST DESCRIPTION: ', description,
-                '\\nISSUE: ', help,
-                '\\nMORE INFO: ', helpUrl,
-                '\\nWHERE IT FAILED: ', whereItFailed,
-                // '\\nHOW TO FIX: ', failureSummary
-              );
-            });
-          }
+      testFileCode += `
+      const print = (violations) => {
+        if (violations.length === 0) {
+          console.log('Congrats! Keep up the good work, you have 0 known violations!');
+        } else {
+          violations.forEach(axeViolation => {
+            const whereItFailed = axeViolation.nodes.map(node => node.html);
+            // uncomment the line(s) below to see suggestions on how to fix accessibility issues
+            // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
+      
+            const { description, help, helpUrl } = axeViolation;
+    
+            console.log('---------',
+              '\\nTEST DESCRIPTION: ', description,
+              '\\nISSUE: ', help,
+              '\\nMORE INFO: ', helpUrl,
+              '\\nWHERE IT FAILED: ', whereItFailed,
+              // '\\nHOW TO FIX: ', failureSummary
+            );
+          });
         }
-      `;
+      }
+    `;
+    
     };
 
     const addMount = () => {
       testFileCode += `
-        const mountToDoc = (reactElm) => {
-          configure({ adapter: new Adapter() });
-          if (!document) {
-            // Set up a basic DOM
-            global.document = jsdom('<!doctype html><html><body></body></html>');
-          }
-          if (!wrapper) {
-            wrapper = document.createElement('main');
-            document.body.appendChild(wrapper);
-          }
-        
-          const container = mount(reactElm);
-          wrapper.innerHTML = '';
-          wrapper.appendChild(container.getDOMNode());
-          return container;
-        }
+      // Configure the JSDOM
+      const { window } = new JSDOM('<!DOCTYPE html>');
+      global.window = window;
+      global.document = window.document;
       `;
     };
 
     const addAccBeforeAll = (descId) => {
       const { fileName } = accTestCase;
-      testFileCode += `
-        let options;`;
+      // testFileCode += ` // REVIEW: Was disable during V.0.15.0
+      //   let options;`;
 
       if (accTestCase.testType === 'react') {
-        testFileCode += `
-          let linkNode;
-          let wrapper;`;
-      }
+        testFileCode += `\n
+          let axe;
+          beforeAll(() => {
+            axe = configureAxe({
+            rules: {
+            region: { enable: false}, ${ accTestCase.describeBlocks.byId[descId].standardTag === 'text-alternatives'? `\n "image-alt": { enabled: true },` : ''}
+            },
+          })
 
-      testFileCode += `\n
+          expect.extend(toHaveNoViolations);
+        })`;
+      } else {
+        testFileCode += `\n
         beforeAll((done) => {
           // exclude tests that are incompatible
           options = {
@@ -1302,19 +1310,19 @@ function useGenerateTest(test, projectFilePath) {
               'color-contrast': { enabled: false },
               'link-in-text-block': { enabled: false },
             },`;
-
-      if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
-        testFileCode += `
-              runOnly: {
-                type: 'tag',
-                value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
+        if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
+          testFileCode += `
+            runOnly: {
+              type: 'tag',
+              value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
             }`;
-      }
-
-      testFileCode += `
+        }
+        testFileCode += `
           };
         `;
 
+      }  
+      
       if (accTestCase.testType === 'html') {
         testFileCode += `
           // get language tag from imported html file and assign to jsdom document
@@ -1322,55 +1330,62 @@ function useGenerateTest(test, projectFilePath) {
           if (langTag) document.documentElement.lang = langTag[1];
           document.documentElement.innerHTML = html.toString();
         `;
-      } else if (accTestCase.testType === 'react') {
-        testFileCode += `
-        const linkComponent = mountToDoc(
-          < ${fileName.split('.')[0]} />
-        );
-        linkNode = linkComponent.getDOMNode();
-        `;
-      }
-
-      testFileCode += `
+      };
+    
+      if (accTestCase.testType !== 'react'){
+          testFileCode += `
           done();
         });
       `;
+      };
     };
 
     const addAccItStatements = (descId) => {
       const { itStatements } = accTestCase;
+      const { fileName } = accTestCase;
 
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
-          it('${itStatements.byId[itId].text}', (done) => {`;
+          it('${itStatements.byId[itId].text}', async () => {`;
 
-        if (itStatements.byId[itId].catTag !== 'none') {
+        if (accTestCase.testType !== 'react' && itStatements.byId[itId].catTag !== 'none') {
           testFileCode += `  
             options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`;
         }
-
+        
         if (accTestCase.testType === 'react') {
-          testFileCode += `
-            axe.run(linkNode, options, async (err, results) => {`;
+          testFileCode += ` 
+            // UPDATE to render the react component from the state of the import file menu
+            const render = () => ReactDOMServer.renderToString(<div role="main"><${
+              //capitalize the first letter of the component 
+              fileName.split('.')[0][0].toUpperCase() +
+              fileName.split('.')[0].slice(1)
+            } /></div>);
+
+            const html = render();
+            // pass anything that outputs html to axe
+            expect(await axe(html)).toHaveNoViolations();
+            })
+          `;
         } else {
           testFileCode += `
-            axe.run(options, async (err, results) => {`;
+            axe.run(options, async (err, results) => {
+
+              if (err) {
+                console.log('err: ', err);
+                done();
+              }
+
+              print(results.violations);      
+      
+              expect(err).toBe(null);
+              expect(results.violations).toHaveLength(0);
+              done();
+            });
+          })
+         `;
         }
 
-        testFileCode += `
-            if (err) {
-              console.log('err: ', err);
-              done();
-            }
-
-            print(results.violations);      
-      
-            expect(err).toBe(null);
-            expect(results.violations).toHaveLength(0);
-            done();
-          });
-        })
-      `;
       });
     };
 
@@ -1644,10 +1659,14 @@ function useGenerateTest(test, projectFilePath) {
     // ------------------------------------ switch statement on test type -------------------------
 
     switch (test) {
-      //---------------------------------------------------Accessbility switch statement---------------------------------------------
+
+      //---------------------------------------------------Accessibility switch statement---------------------------------------------
       case 'acc':
+        // Store the current test state in a variable for easier access
         var accTestCase = testState;
+        // Check if the test type is puppeteer
         if (accTestCase.testType === 'puppeteer') {
+          // and beautify the testFileCode using the options bellow
           return (
             addAccPuppeteer(),
             (testFileCode = beautify(testFileCode, {
@@ -1657,6 +1676,9 @@ function useGenerateTest(test, projectFilePath) {
             }))
           );
         } else {
+          // If it's not 'puppeteer', add 'acc' import statements and describe blocks
+          // and beautify the testFileCode using specific options
+          // beautify function will format this code to make it more readable
           return (
             addAccImportStatements(),
             addAccDescribeBlocks(),

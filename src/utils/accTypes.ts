@@ -12,6 +12,7 @@ export interface AccTestCaseState {
   itStatements: ItStatements;
   fileName: string;
   filePath: string;
+  testType: string;
   puppeteerUrl: string;
 }
 
@@ -40,6 +41,7 @@ export interface Action {
   reorderedIt?: Array<string>;
   fileName?: string;
   filePath?: string;
+  testType?: string;
   describeBlocks: any[];
   standardTag: string;
   catTag: string;

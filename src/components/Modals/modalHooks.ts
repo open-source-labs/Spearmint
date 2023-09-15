@@ -42,8 +42,9 @@ export function useGenerateScript(test: string) {
     case 'acc':
       return {
         cd: `cd ${projectFilePath}`,
-        install: `npm i -D jest`,
-      };
+        install: `npm i --save-dev jest axe-core react react-dom jest-axe jsdom @babel/core @babel/preset-env @babel/preset-react
+        ` // V 0.15.0: Added react react-dom jest-axe jsdom @babel/core @babel/preset-env @babel/preset-react for react component testing files
+      }
     case 'react':
       return {
         cd: `cd ${projectFilePath}`,

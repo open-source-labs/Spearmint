@@ -100,6 +100,11 @@ export const updateFilePath = (fileName: string, filePath: string) => ({
   filePath,
 });
 
+export const updateTestType = (testType: string) => ({
+  type: actionTypes.UPDATE_TEST_TYPE,
+  testType,
+});
+
 export const createPuppeteerUrl = (puppeteerUrl: string) => ({
   type: actionTypes.CREATE_PUPPETEER_URL,
   puppeteerUrl,
