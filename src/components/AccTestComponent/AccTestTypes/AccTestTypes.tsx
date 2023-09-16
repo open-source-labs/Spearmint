@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import styles from './AccTestTypes.module.scss';
+
 
 /**
  * Renders the dropdown menu to 'Choose Type of Accessibility Test' inside the Accessibility TestType.
  * @returns { JSX.Element } Returns the AccTestTypes react component
  */
-const AccTestTypes = () => {
+
+
+const AccTestTypes = (prop: any) => {
+
+  const { action,  dispatch} = prop;
+
+  const handleChange = (event: any) => {
+    if (action) dispatch(action(event.target.value));
+  } 
 
   return (
     <div id={styles.AccTestTypesComponent}>
@@ -13,6 +23,7 @@ const AccTestTypes = () => {
         Choose Type of Accessibility Test
       </label>
       <select 
+        onChange={handleChange}
         id='accTestTypes' 
         className={styles.AccTestTypesInput} 
         defaultValue='select'

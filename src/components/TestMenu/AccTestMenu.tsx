@@ -20,7 +20,7 @@ const { ipcRenderer } = require('electron')
 const AccTestMenu = () => {
   // link to accessibility testing docs url
   const accUrl = 'https://www.deque.com/axe/core-documentation/api-documentation/';
-
+  
   // initialize hooks
   const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('acc');
   const [accTestCase, dispatchToAccTestCase] = useContext(AccTestCaseContext);
