@@ -3,14 +3,14 @@ import styles from './Assertion.module.scss';
 import {
   deleteAssertion,
   updateAssertion,
-} from '../../../context/actions/frontendFrameworkTestCaseActions';
+} from '../../../context/actions/updatedFrontendFrameworkTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
+import { ReactTestComponentAssertion } from '../../../utils/updatedReactTypes';
+import { RTFsContexts } from '../../../context/RTFsContextsProvider';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 
@@ -27,14 +27,11 @@ type FieldTypes =
   | 'queryValue'
   | 'matcherValue';
 
-const Assertion = ({
-  statement,
-  describeId,
-  itId,
-  statementId,
-}: ReactTestComponentAssertion): JSX.Element => {
-  const [{ statements }, dispatchToReactTestCase] =
-    useContext(ReactTestCaseContext);
+const Assertion = ({ blockObjectsState }) => {
+  const thisBlockObjectsState = blockObjectsState;
+
+  const { handleAddBlock, handleChange, handleDeleteBlock } =
+    useContext(RTFsContexts);
   const [{ theme }] = useContext(GlobalContext);
 
   const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
@@ -132,10 +129,7 @@ const Assertion = ({
     <section id={styles[`assertion${theme}`]} data-testid="assertionCard">
       <AiOutlineClose id={styles.close} onClick={handleClickDelete} />
       <div className={styles.actionHeader}>
-        <span className={styles.header}>
-          Assertion{' '}
-          <span id={styles.componentName}>{statements.componentName}</span>
-        </span>
+        <span className={styles.header}>Assertion</span>
       </div>
       <div id={styles.queryFlexBox}>
         <div id={styles.querySelector}>
@@ -145,8 +139,10 @@ const Assertion = ({
           <div id={styles.dropdownFlex}>
             <select
               id="queryVariant"
-              value={statement.queryVariant}
-              onChange={(e) => handleChangeAssertionFields(e, 'queryVariant')}
+              value={blockObjectsState.queryVariant}
+              onChange={(e) =>
+                handleChange(e, 'queryVariant', thisBlockObjectsState.filepath)
+              }
             >
               <option value="" />
               <option value="find">find</option>
@@ -163,13 +159,18 @@ const Assertion = ({
             </select>
             <span id={styles.hastooltip} role="tooltip">
               <span id={styles.tooltip}>
-                <ToolTip toolTipType={statement.queryVariant} />
+                <ToolTip toolTipType={blockObjectsState.queryVariant} />
               </span>
             </span>
             <select
               id="querySelector"
-              value={statement.querySelector}
-              onChange={(e) => handleChangeAssertionFields(e, 'querySelector')}
+              value={blockObjectsState.querySelector}
+              onClick={(e) =>
+                handleChange(e, 'querySelector', thisBlockObjectsState.filepath)
+              }
+              onChange={(e) =>
+                handleChange(e, 'querySelector', thisBlockObjectsState.filepath)
+              }
             >
               <option value="" />
               <option value="LabelText">LabelText</option>
@@ -185,7 +186,7 @@ const Assertion = ({
             <span id={styles.hastooltip} role="tooltip">
               <img src={questionIcon} alt="help" />
               <span id={styles.tooltip}>
-                <ToolTip toolTipType={statement.querySelector} />
+                <ToolTip toolTipType={blockObjectsState.querySelector} />
               </span>
             </span>
           </div>
@@ -202,8 +203,10 @@ const Assertion = ({
           <input
             type="text"
             id="queryValue"
-            value={statement.queryValue}
-            onChange={(e) => handleChangeAssertionFields(e, 'queryValue')}
+            value={blockObjectsState.queryValue}
+            onChange={(e) =>
+              handleChange(e, 'queryValue', thisBlockObjectsState.filepath)
+            }
           />
         </div>
       </div>
@@ -218,11 +221,10 @@ const Assertion = ({
                 Not?
                 <input
                   type="checkbox"
-                  checked={statement.isNot}
-                  onChange={(e) => {
-                    console.log(e);
-                    handleIsNot();
-                  }}
+                  checked={blockObjectsState.isNot}
+                  onChange={() =>
+                    handleChange(e, 'isNot', thisBlockObjectsState.filepath)
+                  }
                 />
               </div>
             </div>
@@ -237,19 +239,23 @@ const Assertion = ({
               <span id={styles.hastooltip} role="tooltip">
                 <img src={questionIcon} alt="help" />
                 <span id={styles.tooltip}>
-                  <ToolTipMatcher toolTipType={statement.matcherType} />
+                  <ToolTipMatcher toolTipType={blockObjectsState.matcherType} />
                 </span>
               </span>
             </div>
           </div>
-          {needsMatcherValue(statement.matcherType) && (
+          {needsMatcherValue(blockObjectsState.matcherType) && (
             <div>
               <span id={styles.matcherVal}>
                 <input
                   type="text"
                   id={styles.matcherInput}
                   onChange={(e) =>
-                    handleChangeAssertionFields(e, 'matcherValue')
+                    handleChange(
+                      e,
+                      'matcherValue',
+                      thisBlockObjectsState.filepath
+                    )
                   }
                   placeholder="Value"
                 />

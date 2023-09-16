@@ -6,6 +6,7 @@ import {
   updateDescribeStandardTag,
   updateItCatTag,
   updateFilePath,
+  updateTestType,
   addDescribeBlock,
 } from '../../context/actions/accTestCaseActions';
 import { AccTestCaseContext } from '../../context/reducers/accTestCaseReducer';
@@ -49,8 +50,10 @@ const AccTestCase = () => {
 
       <section id={styles[`testCaseHeader${theme}`]}>
         <div id={styles.accTestDiv}>
-          <AccTestTypes
+          <AccTestTypes 
           // handleAccChange={handleAccChange}
+            action={updateTestType} 
+            dispatch={dispatchToAccTestCase}
           />
 
           <div style={{ alignSelf: 'right' }}>
@@ -58,7 +61,7 @@ const AccTestCase = () => {
               id={styles.labelInput}
               style={{ width: '50%', alignSelf: 'right', margin: '0' }}
             >
-              <SearchInput
+              <SearchInput // Selects the files
                 options={Object.keys(filePathMap)}
                 dispatch={dispatchToAccTestCase}
                 action={updateFilePath}

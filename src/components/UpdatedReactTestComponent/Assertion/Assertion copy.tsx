@@ -7,7 +7,7 @@ import {
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { RTFsContexts } from '../../../context/RTFsContextsProvider';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
@@ -33,24 +33,23 @@ const Assertion = ({
   itId,
   statementId,
 }: ReactTestComponentAssertion): JSX.Element => {
-  const [{ statements }, dispatchToReactTestCase] =
-    useContext(ReactTestCaseContext);
+  const [{ statements }, rTFDispatch] = useContext(RTFsContexts);
   const [{ theme }] = useContext(GlobalContext);
 
   const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAssertion = { ...statement };
     updatedAssertion[field] = e.target.value;
-    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    rTFDispatch(updateAssertion(updatedAssertion));
   };
 
   const handleIsNot = () => {
     let updatedAssertion = { ...statement };
     updatedAssertion.isNot = !updatedAssertion.isNot;
-    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    rTFDispatch(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = () => {
-    dispatchToReactTestCase(deleteAssertion(statementId));
+    rTFDispatch(deleteAssertion(statementId));
   };
 
   const needsMatcherValue = (matcherType: string) => {
@@ -196,7 +195,7 @@ const Assertion = ({
           </label>
           {/* <AutoCompleteMockData
             statement={statement}
-            dispatchToTestCase={dispatchToReactTestCase}
+            dispatchToTestCase={rTFDispatch}
             statementType='assertion'
           /> */}
           <input
@@ -219,10 +218,7 @@ const Assertion = ({
                 <input
                   type="checkbox"
                   checked={statement.isNot}
-                  onChange={(e) => {
-                    console.log(e);
-                    handleIsNot();
-                  }}
+                  onChange={() => handleIsNot()}
                 />
               </div>
             </div>
@@ -230,7 +226,7 @@ const Assertion = ({
               <AutoComplete
                 statement={statement}
                 statementType="assertion"
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={rTFDispatch}
                 id={styles.matcherAuto}
               />
 

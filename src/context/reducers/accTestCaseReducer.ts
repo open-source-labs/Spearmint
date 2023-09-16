@@ -39,6 +39,7 @@ export const accTestCaseState: AccTestCaseState = {
   },
   fileName: '',
   filePath: '',
+  testType: '',
   puppeteerUrl: 'sample.io',
 };
 
@@ -85,6 +86,7 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
   switch (action.type) {
     case actionTypes.RESET_TESTS:
       return accTestCaseState;
+
     case actionTypes.ADD_DESCRIBE_BLOCK: {
       let updatedDescribeId = state.describeId;
       const describeId = `describe${state.describeId}`;
@@ -303,6 +305,15 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
         filePath,
       };
     }
+    
+    case actionTypes.UPDATE_TEST_TYPE: {
+      const { testType } = action;
+      return {
+        ...state,
+        testType
+      };
+    }
+
     case actionTypes.CREATE_PUPPETEER_URL: {
       const { puppeteerUrl } = action;
       return {

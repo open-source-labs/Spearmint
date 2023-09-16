@@ -2,12 +2,11 @@ import React, { useState, useEffect, useContext } from 'react';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import { openBrowserDocs } from '../../context/actions/globalActions';
 import {
-  addDescribeBlock,
   createNewTest,
   resetTests,
-} from '../../context/actions/frontendFrameworkTestCaseActions';
+} from '../../context/actions/updatedFrontendFrameworkTestCaseActions';
 import Modal from '../Modals/Modal';
-import useGenerateTest from '../../context/useGenerateTest.jsx';
+import useGenerateTest from '../../context/updatedUseGenerateTest.jsx';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import {
   updateFile,
@@ -19,17 +18,19 @@ import {
   toggleExportBool,
   setTabIndex,
 } from '../../context/actions/globalActions';
-import { ReactTestCaseContext } from '../../context/reducers/reactTestCaseReducer';
 import TestMenuButtons from './TestMenuButtons';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import { clearMockData } from '../../context/actions/mockDataActions';
+import { RTFsContexts } from '../../context/RTFsContextsProvider';
+
 const { ipcRenderer } = require('electron');
 
-const ReactTestMenu = () => {
+const UpdatedReactTestMenu = () => {
   // React testing docs url
   const reactUrl =
     'https://testing-library.com/docs/react-testing-library/example-intro';
-
+  const { reactTestFileState, rTFDispatch, handleAddBlock } =
+    useContext(RTFsContexts);
   const {
     title,
     isModalOpen,
@@ -39,8 +40,6 @@ const ReactTestMenu = () => {
     setIsModalOpen,
   } = useToggleModal('react');
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [reactTestCase, dispatchToReactTestCase] =
-    useContext(ReactTestCaseContext);
   const [
     { projectFilePath, file, exportBool, isTestModalOpen, fileName },
     dispatchToGlobal,
@@ -53,16 +52,14 @@ const ReactTestMenu = () => {
     dispatchToGlobal(setValidCode(true));
   }, []);
 
-  const handleAddDescribeBlock = (e) => {
-    dispatchToReactTestCase(addDescribeBlock());
-  };
+  const handleAddDescribeBlock = (e) => {};
 
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(reactUrl));
   };
 
   const fileHandle = () => {
-    const testGeneration = generateTest(reactTestCase, mockData);
+    const testGeneration = generateTest(reactTestFileState, mockData);
     dispatchToGlobal(updateFile(testGeneration));
     dispatchToGlobal(toggleRightPanel('codeEditorView'));
     dispatchToGlobal(setFilePath(''));
@@ -72,7 +69,7 @@ const ReactTestMenu = () => {
 
   // functionality when user clicks Save Test button
   const saveTest = () => {
-    const valid = validateInputs('react', reactTestCase);
+    const valid = validateInputs('react', reactTestFileState);
     dispatchToGlobal(setValidCode(valid));
 
     const newFilePath = `${projectFilePath}/__tests__/${fileName}`;
@@ -99,11 +96,11 @@ const ReactTestMenu = () => {
   };
 
   const handleResetTests = () => {
-    dispatchToReactTestCase(resetTests());
+    rTFDispatch(resetTests());
     dispatchToMockData(clearMockData());
   };
   if (!file && exportBool)
-    dispatchToGlobal(updateFile(generateTest(reactTestCase, mockData)));
+    dispatchToGlobal(updateFile(generateTest(reactTestFileState, mockData)));
 
   return (
     <>
@@ -122,11 +119,11 @@ const ReactTestMenu = () => {
         setIsModalOpen={setIsModalOpen}
         closeModal={closeModal}
         dispatchMockData={dispatchToMockData}
-        dispatchTestCase={dispatchToReactTestCase}
+        dispatchTestCase={rTFDispatch}
         createTest={createNewTest}
       />
     </>
   );
 };
 
-export default ReactTestMenu;
+export default UpdatedReactTestMenu;
