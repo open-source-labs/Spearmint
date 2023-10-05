@@ -16,16 +16,8 @@ const UpdatedReactTestCase = ({
 }: {
   filterFileType: Function;
 }) => {
-  const {
-    reactTestFileState,
-    rTFDispatch,
-    handleAddBlock,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    ModalStyles,
-  } = useContext(RTFsContexts);
-  console.log('reactTestFileState', reactTestFileState);
+  const { reactTestFileState, rTFDispatch, handleAddBlock } =
+    useContext(RTFsContexts);
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, theme }] = useContext(GlobalContext);
 
@@ -43,11 +35,7 @@ const UpdatedReactTestCase = ({
   const reactTestFileStateChildren = Object.values(
     reactTestFileState.children
   ).map((childObject) => (
-    <DescribeBlock
-      blockObjectsState={childObject}
-      key={childObject.filepath}
-      theme={theme}
-    />
+    <DescribeBlock blockObjectsState={childObject} key={childObject.filepath} />
   ));
 
   return (

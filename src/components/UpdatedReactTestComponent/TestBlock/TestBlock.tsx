@@ -60,7 +60,11 @@ const TestBlock = ({ blockObjectsState }) => {
             placeholder="Enter unit test name/description..."
             value={thisBlockObjectsState.text}
             onChange={(e) =>
-              handleChange(e, 'text', thisBlockObjectsState.filepath)
+              handleChange(
+                thisBlockObjectsState.filepath,
+                'text',
+                e.target.value
+              )
             }
             fullWidth
             variant="filled"
@@ -101,7 +105,7 @@ const TestBlock = ({ blockObjectsState }) => {
             <Button
               id={`AddAssestionTo${thisBlockObjectsState.key}`}
               onClick={(e) => {
-                handleAddBlock(e, 'assert', thisBlockObjectsState.filepath);
+                handleAddBlock(e, 'assertion', thisBlockObjectsState.filepath);
               }}
               className={styles.reactButton}
               variant="outlined"

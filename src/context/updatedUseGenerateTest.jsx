@@ -115,7 +115,7 @@ function useGenerateTest(test, projectFilePath) {
     const addReactImportStatements = () => {
       testFileCode += `
         import React from 'react';
-        import { render, screen, } from '@testing-library/react'; 
+        import { render, screen,fireEvent } from '@testing-library/react'; 
         import userEvent from '@testing-library/user-event';
         import { build, fake } from 'test-data-bot'; 
         \n`;
@@ -194,7 +194,7 @@ function useGenerateTest(test, projectFilePath) {
       let props = createRenderProps(statement.props);
       const formattedComponentName =
         reactTestCase.statements.componentName.replace(/\.jsx?/, '');
-      testFileCode += `render(<${formattedComponentName} ${props}/>);`;
+      testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
     };
 
     // Render Props Jest Test Code
@@ -202,6 +202,73 @@ function useGenerateTest(test, projectFilePath) {
       return props.reduce((acc, prop) => {
         return acc + `${prop.propKey}={${prop.propValue}}`;
       }, '');
+    };
+
+    /* ------------------------------------------ UPDATED REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
+
+    // React Import Statements
+    const buildReactTestFilesCode = (stateObject, testCode) => {
+      switch (stateObject.objectType) {
+        case 'describe': {
+          testCode += `describe('${stateObject.text}', () => {`;
+          testCode = buildChildrensCode(stateObject, testCode);
+          testCode += `}); \n`;
+          return testCode;
+        }
+        case 'test': {
+          testCode += `it('${stateObject.text}', () => {`;
+          testCode = buildChildrensCode(stateObject, testCode);
+          testCode += `}); \n`;
+          return testCode;
+        }
+        case 'render': {
+          //testCode to setup render{goes here}, which then calls buildChildrensCode
+          testCode = buildChildrensCode(stateObject, testCode);
+          return testCode;
+        }
+        case 'action': {
+          //testCode to setup action{goes here}, which then calls buildChildrensCode
+          testCode = buildChildrensCode(stateObject, testCode);
+          return testCode;
+        }
+        //testCode to setup assertion{goes here}, which then calls buildChildrensCode
+
+        case 'assertion': {
+          testCode = buildChildrensCode(stateObject, testCode);
+          return testCode;
+        }
+        default: {
+          testCode = buildChildrensCode(stateObject, testCode);
+          return testCode;
+        }
+      }
+    };
+
+    const buildChildrensCode = (stateObject, testCode) => {
+      testCode = setupSetupTeardowns(stateObject, testCode);
+      Object.values(stateObject.children).forEach((children) => {
+        testCode = buildReactTestFilesCode(children, testCode);
+      });
+      return testCode;
+    };
+
+    //testFileCode = buildTestCode(stateObject, testCode);
+
+    const setupSetupTeardowns = (stateObject, testCode) => {
+      const children = Object.values(stateObject.children);
+      for (let i = 0; i < children.length; i++) {
+        if (children.objectType === 'setupTeardown') {
+          /*
+          add Setup Teardowns to Testcode
+          SetupTeardown is usually listed first within a describe/test block
+           */
+        }
+      }
+      return testCode;
+    };
+
+    const handleStatements = (stateObject, testCode) => {
+      const children = Object.values(stateObject.children);
     };
 
     /* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
@@ -1684,6 +1751,17 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+      //---------------------------------------------------React switch statement---------------------------------------------
+      case 'updatedReact':
+        var reactTestCase = testState;
+        var mockData = mockDataState;
+        testFileCode = buildReactTestFilesCode(reactTestCase, testFileCode);
+        return (testFileCode = beautify(testFileCode, {
+          brace_style: 'collapse, preserve-inline',
+          indent_size: 2,
+          space_in_empty_paren: true,
+          e4x: true,
+        }));
 
       //---------------------------------------------------Vue switch statement---------------------------------------------
       case 'vue':

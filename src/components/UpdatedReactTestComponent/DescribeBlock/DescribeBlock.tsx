@@ -24,7 +24,7 @@ interface DescribeBlockProps {
   theme: string;
 }
 
-const DescribeBlock = ({ blockObjectsState, key }) => {
+const DescribeBlock = ({ blockObjectsState }) => {
   const [{ theme }] = useContext(GlobalContext);
 
   const thisBlockObjectsState = blockObjectsState;
@@ -63,10 +63,6 @@ const DescribeBlock = ({ blockObjectsState, key }) => {
           id={describeBlockStyles[`describeBlock${theme}`]}
           data-filepath={thisBlockObjectsState['filepath']}
         >
-          {/* <label htmlFor='describe-label' className={describeBlockStyles.describeLabel}>
-                Describe Block
-              </label> */}
-
           <AiOutlineCloseCircle
             tabIndex={0}
             id={thisBlockObjectsState.filepath}
@@ -83,22 +79,6 @@ const DescribeBlock = ({ blockObjectsState, key }) => {
           />
 
           <div className={describeBlockStyles.describeInputContainer}>
-            {/*<FormControl>
-              <InputLabel>Describe:</InputLabel>
-              <Input
-                variant="standard"
-                id={thisBlockObjectsState.filepath}
-                className={describeBlockStyles.describeInput}
-                name="describe-label"
-                type="text"
-                placeholder="What is the focus of your test(s)"
-                value={thisBlockObjectsState.text}
-                onChange={(e) => {
-                  handleChange(e, 'text', thisBlockObjectsState.filepath);
-                }}
-                fullWidth={true}
-              />
-              </FormControl>*/}
             <div>Describe</div>
             {/*Code For implementing ${thisBlockObjectsState.filepath} as an input field. allow for people to make comments to go in their testfiles*/}
 
@@ -111,7 +91,11 @@ const DescribeBlock = ({ blockObjectsState, key }) => {
               placeholder="What is the focus of your test(s)"
               value={thisBlockObjectsState.text}
               onChange={(e) => {
-                handleChange(e, 'text', thisBlockObjectsState.filepath);
+                handleChange(
+                  thisBlockObjectsState.filepath,
+                  'text',
+                  e.target.value
+                );
               }}
               fullWidth
             />

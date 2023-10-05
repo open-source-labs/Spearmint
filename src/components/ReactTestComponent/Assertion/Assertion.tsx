@@ -220,7 +220,6 @@ const Assertion = ({
                   type="checkbox"
                   checked={statement.isNot}
                   onChange={(e) => {
-                    console.log(e);
                     handleIsNot();
                   }}
                 />
