@@ -58,58 +58,6 @@ export const updateItStatementOrder = (
   describeId,
 });
 
-export const addAction = (describeId: string, itId: string) => ({
-  type: actionTypes.ADD_ACTION,
-  describeId,
-  itId,
-});
-
-export const addRender = (describeId: string, itId: string) => ({
-  type: actionTypes.ADD_RENDER,
-  describeId,
-  itId,
-});
-
-export const deleteRender = (statementId: string) => ({
-  type: actionTypes.DELETE_RENDER,
-  statementId,
-});
-
-export const updateRenderComponent = (
-  componentName: string,
-  filePath: string
-) => ({
-  type: actionTypes.UPDATE_RENDER_COMPONENT,
-  componentName,
-  filePath,
-});
-
-export const addProp = (statementId: string) => ({
-  type: actionTypes.ADD_PROP,
-  statementId,
-});
-
-export const deleteProp = (statementId: string, id: string) => {
-  return {
-    type: actionTypes.DELETE_PROP,
-    id,
-    statementId,
-  };
-};
-
-export const updateProp = (
-  statementId: string,
-  id: string,
-  propKey: string,
-  propValue: string
-) => ({
-  type: actionTypes.UPDATE_PROP,
-  id,
-  statementId,
-  propKey,
-  propValue,
-});
-
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
 });

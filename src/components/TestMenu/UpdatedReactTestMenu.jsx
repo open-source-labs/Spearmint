@@ -44,15 +44,13 @@ const UpdatedReactTestMenu = () => {
     { projectFilePath, file, exportBool, isTestModalOpen, fileName },
     dispatchToGlobal,
   ] = useContext(GlobalContext);
-  const generateTest = useGenerateTest('react', projectFilePath);
+  const generateTest = useGenerateTest('updatedReact', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false);
 
   useEffect(() => {
     dispatchToGlobal(setValidCode(true));
   }, []);
-
-  const handleAddDescribeBlock = (e) => {};
 
   const openDocs = () => {
     dispatchToGlobal(openBrowserDocs(reactUrl));

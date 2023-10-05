@@ -9,6 +9,8 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ConfirmDialogue from '../context/errorHandle/ConfirmDialogue';
+
 import DescribeBlock from '../components/UpdatedReactTestComponent/DescribeBlock/DescribeBlock';
 import SetupTeardownBlock from '../components/UpdatedReactTestComponent/SetupTeardownBlock/SetupTeardownBlock';
 import TestBlock from '../components/UpdatedReactTestComponent/TestBlock/TestBlock';
@@ -77,14 +79,14 @@ const RTFsContextsProvider = ({ children }) => {
             />
           );
           //setHasSetupTeardown(true);
-        } else if (childComponent['statementType'] === 'act') {
+        } else if (childComponent['statementType'] === 'action') {
           arrayOfChildComponents.push(
             <Action
               blockObjectsState={childComponent}
               key={childComponent.filepath}
             />
           );
-        } else if (childComponent['statementType'] === 'assert') {
+        } else if (childComponent['statementType'] === 'assertion') {
           arrayOfChildComponents.push(
             <Assertion
               blockObjectsState={childComponent}
@@ -124,27 +126,24 @@ const RTFsContextsProvider = ({ children }) => {
   };
 
   const handleChange = (
-    e: React.SyntheticEvent,
+    pathToTargetStateObject: String,
     propertyToUpdate: String,
-    pathToTargetStateObject: String
+    updatedValue: String
   ): void => {
-    const target = e.target as HTMLButtonElement;
-    const value = target.value;
-
     rTFDispatch(
       updateObjectInStateObject(
         pathToTargetStateObject,
         propertyToUpdate,
-        value
+        updatedValue
       )
     );
   };
 
   const handleDeleteBlock = (
-    parentFilePath: String, //filepath
+    parentsFilepath: String, //filepath
     targetsKey: String //parentsFilepath
   ) => {
-    rTFDispatch(deleteObjectFromStateObject(parentFilePath, targetsKey));
+    rTFDispatch(deleteObjectFromStateObject(parentsFilepath, targetsKey));
   };
 
   return (

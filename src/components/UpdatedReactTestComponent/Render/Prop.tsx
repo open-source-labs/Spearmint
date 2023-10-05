@@ -16,6 +16,8 @@ const minusIcon = require('../../../assets/images/minus-box-outline.png');
 // This is the file that tracks what props you are passing into a specific test
 
 const Prop = ({ blockObjectsState }): JSX.Element => {
+  const thisBlockObjectsState = blockObjectsState;
+
   const { handleAddBlock, handleChange, handleDeleteBlock } =
     useContext(RTFsContexts);
   const [{ theme }] = useContext(GlobalContext);
@@ -50,16 +52,24 @@ const Prop = ({ blockObjectsState }): JSX.Element => {
         id="propKey"
         value={thisBlockObjectsState.propKey}
         onChange={(e) => {
-          handleChange(e, 'propKey', thisBlockObjectsState.filepath);
+          handleChange(
+            thisBlockObjectsState.filepath,
+            'propKey',
+            e.target.value
+          );
         }}
       />
       <input
         type="text"
         id="propValue"
         value={thisBlockObjectsState.propValue}
-        onChange={(e) => {
-          handleChange(e, 'propValue', thisBlockObjectsState.filepath);
-        }}
+        onChange={(e) =>
+          handleChange(
+            thisBlockObjectsState.filepath,
+            'propValue',
+            e.target.value
+          )
+        }
         placeholder="Enter or select a value."
       />
       {/* <AutoCompleteMockData

@@ -7,6 +7,8 @@ import {
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
+import UpdatedAutoComplete from '../../AutoComplete/UpdatedAutoComplete';
+
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/updatedReactTypes';
@@ -30,25 +32,21 @@ type FieldTypes =
 const Assertion = ({ blockObjectsState }) => {
   const thisBlockObjectsState = blockObjectsState;
 
-  const { handleAddBlock, handleChange, handleDeleteBlock } =
+  const { handleAddBlock, handleChange, handleDeleteBlock, rTFDispatch } =
     useContext(RTFsContexts);
   const [{ theme }] = useContext(GlobalContext);
 
-  const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
+  /*const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAssertion = { ...statement };
     updatedAssertion[field] = e.target.value;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
-  };
+  };*/
 
-  const handleIsNot = () => {
+  /*const handleIsNot = () => {
     let updatedAssertion = { ...statement };
     updatedAssertion.isNot = !updatedAssertion.isNot;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
-  };
-
-  const handleClickDelete = () => {
-    dispatchToReactTestCase(deleteAssertion(statementId));
-  };
+  };*/
 
   const needsMatcherValue = (matcherType: string) => {
     const matchersWithValues = [
@@ -127,7 +125,15 @@ const Assertion = ({ blockObjectsState }) => {
 
   return (
     <section id={styles[`assertion${theme}`]} data-testid="assertionCard">
-      <AiOutlineClose id={styles.close} onClick={handleClickDelete} />
+      <AiOutlineClose
+        id={styles.close}
+        onClick={() => {
+          handleDeleteBlock(
+            thisBlockObjectsState.parentsFilepath,
+            thisBlockObjectsState.key
+          );
+        }}
+      />
       <div className={styles.actionHeader}>
         <span className={styles.header}>Assertion</span>
       </div>
@@ -141,7 +147,11 @@ const Assertion = ({ blockObjectsState }) => {
               id="queryVariant"
               value={blockObjectsState.queryVariant}
               onChange={(e) =>
-                handleChange(e, 'queryVariant', thisBlockObjectsState.filepath)
+                handleChange(
+                  thisBlockObjectsState.filepath,
+                  'queryVariant',
+                  e.target.value
+                )
               }
             >
               <option value="" />
@@ -165,11 +175,19 @@ const Assertion = ({ blockObjectsState }) => {
             <select
               id="querySelector"
               value={blockObjectsState.querySelector}
-              onClick={(e) =>
-                handleChange(e, 'querySelector', thisBlockObjectsState.filepath)
-              }
+              /*onClick={(e) =>
+                handleChange(
+                  thisBlockObjectsState.filepath,
+                  'querySelector',
+                  e.target.value
+                )
+              }*/
               onChange={(e) =>
-                handleChange(e, 'querySelector', thisBlockObjectsState.filepath)
+                handleChange(
+                  thisBlockObjectsState.filepath,
+                  'querySelector',
+                  e.target.value
+                )
               }
             >
               <option value="" />
@@ -205,7 +223,11 @@ const Assertion = ({ blockObjectsState }) => {
             id="queryValue"
             value={blockObjectsState.queryValue}
             onChange={(e) =>
-              handleChange(e, 'queryValue', thisBlockObjectsState.filepath)
+              handleChange(
+                thisBlockObjectsState.filepath,
+                'queryValue',
+                e.target.value
+              )
             }
           />
         </div>
@@ -222,19 +244,26 @@ const Assertion = ({ blockObjectsState }) => {
                 <input
                   type="checkbox"
                   checked={blockObjectsState.isNot}
-                  onChange={() =>
-                    handleChange(e, 'isNot', thisBlockObjectsState.filepath)
+                  onChange={(e) =>
+                    handleChange(
+                      thisBlockObjectsState.filepath,
+                      'isNot',
+                      !e.target.value
+                    )
                   }
                 />
               </div>
             </div>
             <div id={styles.autoTool}>
-              <AutoComplete
-                statement={statement}
+              {/*
+              Needs To Be reimplemented once 
+              UpdatedAutoComplete has been modified to work with new state object
+              
+              <UpdatedAutoComplete
                 statementType="assertion"
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={rTFDispatch}
                 id={styles.matcherAuto}
-              />
+                />*/}
 
               <span id={styles.hastooltip} role="tooltip">
                 <img src={questionIcon} alt="help" />
@@ -252,9 +281,9 @@ const Assertion = ({ blockObjectsState }) => {
                   id={styles.matcherInput}
                   onChange={(e) =>
                     handleChange(
-                      e,
+                      thisBlockObjectsState.filepath,
                       'matcherValue',
-                      thisBlockObjectsState.filepath
+                      e.target.value
                     )
                   }
                   placeholder="Value"

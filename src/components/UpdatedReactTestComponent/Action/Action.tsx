@@ -1,9 +1,5 @@
 import React, { useContext } from 'react';
 import styles from '../Action/Action.module.scss';
-import {
-  deleteAction,
-  updateAction,
-} from '../../../context/actions/updatedFrontendFrameworkTestCaseActions';
 import AutoCompleteMockData from '../../AutoComplete/AutoCompleteMockData';
 import ToolTip from '../../ToolTip/ToolTip';
 import { MockDataContext } from '../../../context/reducers/updatedMockDataReducer';
@@ -34,7 +30,7 @@ const Action = ({ blockObjectsState }) => {
 
   const [{ mockData }] = useContext(MockDataContext);
   const [{ theme }] = useContext(GlobalContext);
-  const { handleAddBlock, handleChange, handleDeleteBlock } =
+  const { handleAddBlock, handleChange, handleDeleteBlock, rTFDispatch } =
     useContext(RTFsContexts);
 
   /*const handleChangeActionFields = (e: EventTypes, field: FieldTypes) => {
@@ -59,7 +55,15 @@ const Action = ({ blockObjectsState }) => {
   //needsEventsValue should be iterated on to create a <select>option
   return (
     <div id={styles[`action${theme}`]}>
-      <AiOutlineClose id={styles.close} onClick={handleClickDeleteAction} />
+      <AiOutlineClose
+        id={styles.close}
+        onClick={() => {
+          handleDeleteBlock(
+            thisBlockObjectsState.parentsFilepath,
+            thisBlockObjectsState.key
+          );
+        }}
+      />
       <span className={styles.header}>Action</span>
       <div id={styles.eventTypeFlexBox}>
         <div id={styles.eventType}>
@@ -69,7 +73,11 @@ const Action = ({ blockObjectsState }) => {
             id="eventType"
             value={blockObjectsState.eventType}
             onChange={(e) =>
-              handleChange(e, 'eventType', thisBlockObjectsState.filepath)
+              handleChange(
+                thisBlockObjectsState.filepath,
+                'eventType',
+                e.target.value
+              )
             }
             placeholder="eg. click, change, keyPress"
           />
@@ -80,6 +88,7 @@ const Action = ({ blockObjectsState }) => {
             <div className={styles.eventValueMock}>
               <label htmlFor="eventValue">Value</label>
               <AutoCompleteMockData
+                //This needs to be figured out. Didn't have time to look into making AutoCOmpleteMck Data work
                 dispatchToTestCase={rTFDispatch}
                 statementType="action"
                 // id={styles2.autoCompleteMockData}
@@ -92,7 +101,11 @@ const Action = ({ blockObjectsState }) => {
                 type="text"
                 id="eventValue"
                 onChange={(e) =>
-                  handleChange(e, 'eventValue', thisBlockObjectsState.filepath)
+                  handleChange(
+                    thisBlockObjectsState.filepath,
+                    'eventValue',
+                    e.target.value
+                  )
                 }
               />
             </span>
@@ -109,7 +122,11 @@ const Action = ({ blockObjectsState }) => {
               id="queryVariant"
               value={blockObjectsState.queryVariant}
               onChange={(e) =>
-                handleChange(e, 'queryVariant', thisBlockObjectsState.filepath)
+                handleChange(
+                  thisBlockObjectsState.filepath,
+                  'queryVariant',
+                  e.target.value
+                )
               }
             >
               <option value="" />
@@ -131,7 +148,11 @@ const Action = ({ blockObjectsState }) => {
               id="querySelector"
               value={blockObjectsState.querySelector}
               onChange={(e) =>
-                handleChange(e, 'querySelector', thisBlockObjectsState.filepath)
+                handleChange(
+                  thisBlockObjectsState.filepath,
+                  'querySelector',
+                  e.target.value
+                )
               }
             >
               <option value="" />
@@ -165,9 +186,9 @@ const Action = ({ blockObjectsState }) => {
                   value={blockObjectsState.queryValue}
                   onChange={(e) =>
                     handleChange(
-                      e,
+                      thisBlockObjectsState.filepath,
                       'queryValue',
-                      thisBlockObjectsState.filepath
+                      e.target.value
                     )
                   }
                 />

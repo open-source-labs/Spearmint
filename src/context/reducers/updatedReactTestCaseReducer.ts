@@ -26,7 +26,7 @@ export const initialReactTestFileState = {
     /*
       describe1: {
         key:'describe1',
-        parentFilepath: '',
+        parentsFilepath: '',
         filepath: 'describe1', //filepath is a string, which in the UI, will be treated like the id for a block
         objectType: 'describe',
         comment: 'describe block for describe1',
@@ -36,7 +36,7 @@ export const initialReactTestFileState = {
           k23on32230h23: {
             //a uuid, or unique value that can be generated and used as id upon the adding of a new UI block
             key: 'k23on32230h23',
-            parentFilepath: 'describe1',
+            parentsFilepath: 'describe1',
             filepath: 'describe1/k23on32230h23', //delimiter for levels deep represented by either a ',' or a'-'
             objectType: 'setupTeardown',
             text: 'comment for Object',
@@ -44,7 +44,7 @@ export const initialReactTestFileState = {
               // since objectType is a 'setupTeardown', logically it's children will be things like 'beforeAll'
               ha23204802302: {
                 key: 'ha23204802302',
-                parentFilepath: 'describe1/k23on32230h23',
+                parentsFilepath: 'describe1/k23on32230h23',
                 filepath: 'describe1/k23on32230h23/ha23204802302', //
                 objectType: 'beforeAll', // object type key exists to with future "generateTestFile" functionality
                 mockData: {
@@ -57,7 +57,7 @@ export const initialReactTestFileState = {
           },
           Poree2230h23: {
             key: 'Poree2230h23',
-            parentFilepath: 'describe1',
+            parentsFilepath: 'describe1',
             filePath: 'describe1/Poree2230h23',
             objectType: 'setupTeardown',
             children: {
@@ -70,14 +70,14 @@ export const initialReactTestFileState = {
           a23lki3h23: {
             key: 'a23lki3h23',
             //a uuid, or unique value that can be generated and used as id upon the adding of a new UI block
-            parentFilepath: 'describe1',
+            parentsFilepath: 'describe1',
             filepath: 'describe1/a23lki3h23', //delimiter for levels deep represented by either a ',' or a'-'
             objectType: 'describe',
             text: 'comment for 2nd describe Object',
             children: {
               pa3onO22H0h2p: {
                 key: 'pa3onO22H0h2p',
-                parentFilepath: 'describe1/a23lki3h23',
+                parentsFilepath: 'describe1/a23lki3h23',
                 filepath: 'describe1/a23lki3h23/pa3onO22H0h2p', //
                 objectType: 'test', // object type key exists to with future "generateTestFile" functionality
                 text: 'Comment Related to Test File',
@@ -92,11 +92,11 @@ export const initialReactTestFileState = {
 
 /* ---------------------------- Helper Functions ---------------------------- */
 
-const createDescribeObject = (key, filepath: string, parentFilepath) => {
+const createDescribeObject = (key, filepath: string, parentsFilepath) => {
   return {
     key,
     filepath,
-    parentFilepath,
+    parentsFilepath,
     objectType: 'describe',
     comment: '',
     text: '',
@@ -104,21 +104,21 @@ const createDescribeObject = (key, filepath: string, parentFilepath) => {
   };
 };
 
-const createTestObject = (key, filepath, parentFilepath) => ({
+const createTestObject = (key, filepath, parentsFilepath) => ({
   key,
   filepath,
-  parentFilepath,
+  parentsFilepath,
   objectType: 'test',
   comment: '',
   text: '',
   children: {},
 });
-const createStatementBlock = (key, filepath, parentFilepath) => ({});
+const createStatementBlock = (key, filepath, parentsFilepath) => ({});
 
-const createSetupTeardownObject = (key, filepath, parentFilepath) => ({
+const createSetupTeardownObject = (key, filepath, parentsFilepath) => ({
   key,
   filepath,
-  parentFilepath,
+  parentsFilepath,
   objectType: 'setupTeardown',
   children: {
     beforeAll: {},
@@ -128,10 +128,10 @@ const createSetupTeardownObject = (key, filepath, parentFilepath) => ({
   },
 });
 
-const createAction = (key, filepath, parentFilepath) => ({
+const createAction = (key, filepath, parentsFilepath) => ({
   key,
   filepath,
-  parentFilepath,
+  parentsFilepath,
   objectType: 'statement',
   statementType: 'action',
   comment: '',
@@ -143,10 +143,10 @@ const createAction = (key, filepath, parentFilepath) => ({
   suggestions: [],
 });
 
-const createAssertion = (key, filepath, parentFilepath) => ({
+const createAssertion = (key, filepath, parentsFilepath) => ({
   key,
   filepath,
-  parentFilepath,
+  parentsFilepath,
   objectType: 'statement',
   statementType: 'assertion',
   comment: '',
@@ -159,10 +159,10 @@ const createAssertion = (key, filepath, parentFilepath) => ({
   suggestions: [],
 });
 
-const createRender = (key, filepath, parentFilepath) => ({
+const createRender = (key, filepath, parentsFilepath) => ({
   key,
   filepath,
-  parentFilepath,
+  parentsFilepath,
   objectType: 'statement',
   statementType: 'render',
   comment: '',
@@ -170,11 +170,11 @@ const createRender = (key, filepath, parentFilepath) => ({
   //props: [],
 });
 
-const createProp = (key, filepath, parentFilepath) => ({
+const createProp = (key, filepath, parentsFilepath) => ({
   key,
   filepath,
   objectType: 'prop',
-  parentFilepath,
+  parentsFilepath,
   comment: '',
   propKey: '',
   propValue: '',
@@ -264,13 +264,11 @@ export const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
       return deepCopyOfObject;
     }
     case actionTypes.DELETE_OBJECT_FROM_STATE_OBJECT: {
-      console.log('payload', action.payload);
       const { parentsFilepath, targetsKey } = action.payload;
       const deepCopyOfObject = makeDeepCopyOfObject(state);
       let objectToDeleteFrom = parentsFilepath
         ? traverseObject(deepCopyOfObject, parentsFilepath)
         : deepCopyOfObject;
-      console.log('objectToDeleteFrom', objectToDeleteFrom);
 
       delete objectToDeleteFrom.children[targetsKey];
       return deepCopyOfObject;
