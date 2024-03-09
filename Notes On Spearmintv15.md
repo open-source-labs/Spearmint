@@ -16,6 +16,7 @@ Existed Since We've Started:
 run react DevTools
 -No Error Handler for Components
 -No Confirmation Dialogue before X'ing out of blocks
+-No way to import a test file and make modifications on it using the UI
 
 Changes Implemented:
 For Accessibility Tool
