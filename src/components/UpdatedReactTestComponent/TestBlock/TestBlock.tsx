@@ -8,7 +8,7 @@ import {
 } from '../../../context/actions/updatedFrontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+import { useRTFsContexts } from '../../../context/RTFsContextsProvider';
 import styles from './ItRenderer.module.scss';
 import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -19,16 +19,17 @@ import { ItStatements, Statements } from '../../../utils/updatedReactTypes';
 
 interface ItBlockProps {}
 
-const TestBlock = ({ blockObjectsState }) => {
+const TestBlock = React.memo(({ blockObjectsState }) => {
   const [{ theme }] = useContext(GlobalContext);
   const {
     handleAddBlock,
     handleChange,
     handleDeleteBlock,
     setChildrenComponents,
-  } = useContext(RTFsContexts);
-
+  } = useRTFsContexts();
   const thisBlockObjectsState = blockObjectsState;
+  console.log(`Test Block ${thisBlockObjectsState.key} rerendered`);
+
   const { setupTeardownBlock, arrayOfChildComponents } = setChildrenComponents(
     blockObjectsState,
     theme
@@ -117,6 +118,6 @@ const TestBlock = ({ blockObjectsState }) => {
       </div>
     </>
   );
-};
+});
 
 export default TestBlock;

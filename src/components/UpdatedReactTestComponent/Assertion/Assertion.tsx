@@ -8,46 +8,37 @@ import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import UpdatedAutoComplete from '../../AutoComplete/UpdatedAutoComplete';
-
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/updatedReactTypes';
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
-
+import { useRTFsContexts } from '../../../context/RTFsContextsProvider';
 const questionIcon = require('../../../assets/images/help-circle.png');
-
 // This is tracking the assertions that you have in a certain test, following the flow of data will help
 // you better understand how exactly this is working
-
 type EventTypes =
   | React.ChangeEvent<HTMLSelectElement>
   | React.ChangeEvent<HTMLInputElement>;
-
 type FieldTypes =
   | 'queryVariant'
   | 'querySelector'
   | 'queryValue'
   | 'matcherValue';
-
-const Assertion = ({ blockObjectsState }) => {
+const Assertion = React.memo(({ blockObjectsState }) => {
   const thisBlockObjectsState = blockObjectsState;
-
   const { handleAddBlock, handleChange, handleDeleteBlock, rTFDispatch } =
-    useContext(RTFsContexts);
+    // useContext(RTFsContexts);
+    useRTFsContexts();
   const [{ theme }] = useContext(GlobalContext);
-
   /*const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAssertion = { ...statement };
     updatedAssertion[field] = e.target.value;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
   };*/
-
   /*const handleIsNot = () => {
     let updatedAssertion = { ...statement };
     updatedAssertion.isNot = !updatedAssertion.isNot;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
   };*/
-
   const needsMatcherValue = (matcherType: string) => {
     const matchersWithValues = [
       'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
@@ -122,7 +113,6 @@ const Assertion = ({ blockObjectsState }) => {
     ];
     return matchersWithValues.includes(matcherType);
   };
-
   return (
     <section id={styles[`assertion${theme}`]} data-testid="assertionCard">
       <AiOutlineClose
@@ -264,7 +254,6 @@ const Assertion = ({ blockObjectsState }) => {
                 dispatchToTestCase={rTFDispatch}
                 id={styles.matcherAuto}
                 />*/}
-
               <span id={styles.hastooltip} role="tooltip">
                 <img src={questionIcon} alt="help" />
                 <span id={styles.tooltip}>
@@ -295,6 +284,5 @@ const Assertion = ({ blockObjectsState }) => {
       </div>
     </section>
   );
-};
-
+});
 export default Assertion;

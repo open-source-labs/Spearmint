@@ -14,8 +14,14 @@ Existed Since We've Started:
 -Some Accessibility Test existed only in name, not in functionality
 -Debugging. Error messages point to bundle. Also, unable to get Electrons "devtools" to
 run react DevTools
--No Error Handler for Components
+-No Error Handler for Components(Look into Error Boundary and componentDidCatch)
 -No Confirmation Dialogue before X'ing out of blocks
+-No way to import a test file and make modifications on it using the UI
+-No way to use the application as a functioning desktop app. Only as a github download
+-Working Backend(MongoDB connection and CRUD functionality) can't be confirmed
+-Mock Data functionality is tied between all testing widgets
+
+-
 
 Changes Implemented:
 For Accessibility Tool
@@ -39,9 +45,15 @@ should look)
 
 Additinoal fixes/considerations needed needed
 For the React(Beta)
+-File system structure: maybe grouping all files related to only 1 widget into 1 folder makes more sense then keeping them seperate(e.g., the 'ReactTestCase' and 'Reducer' files should be put inside a folder that contains the other files related to only the React tool widget)
 -Decide for yourself which state structure makes the the most sense for you, and lends itself to implementing full jest testing capabilities
 -AutoFill for options of Action and Assert Components needs to be updated wot work with
 new state structure and re-enabled
+-Steps toward reduced Component rerenders
+-Custom Hooks
+-React.Memo
+React useMemo
+-React useCallback
 -debug the Props Component so it will render properly
 -Setup Teardowns need to be quanitfied in a way that can be represented
 by a form like setup(e.g. user either fills out inputs or uses drags and drops
