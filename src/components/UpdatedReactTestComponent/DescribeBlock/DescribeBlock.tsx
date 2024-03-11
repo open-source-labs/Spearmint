@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import cn from 'classnames';
 import describeBlockStyles from './DescribeRenderer.module.scss';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { DescribeBlocks } from '../../../utils/reactTypes';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+import { useRTFsContexts } from '../../../context/RTFsContextsProvider';
 
 import styles from '../../Modals/Modal.module.scss';
 
@@ -24,7 +24,7 @@ interface DescribeBlockProps {
   theme: string;
 }
 
-const DescribeBlock = ({ blockObjectsState }) => {
+const DescribeBlock = React.memo(({ blockObjectsState }) => {
   const [{ theme }] = useContext(GlobalContext);
 
   const thisBlockObjectsState = blockObjectsState;
@@ -34,8 +34,9 @@ const DescribeBlock = ({ blockObjectsState }) => {
     handleChange,
     handleDeleteBlock,
     setChildrenComponents,
-  } = useContext(RTFsContexts);
+  } = useRTFsContexts();
 
+  console.log(`describe ${thisBlockObjectsState.key} rerendered`);
   // useEffect(() => {
   //   setHasSetupTeardown(false);
   // }, []);
@@ -46,9 +47,13 @@ const DescribeBlock = ({ blockObjectsState }) => {
 
   //}
 
-  const { setupTeardownBlock, arrayOfChildComponents } = setChildrenComponents(
-    blockObjectsState,
-    theme
+  const { setupTeardownBlock, arrayOfChildComponents } = useMemo(
+    () =>
+      setChildrenComponents(
+        blockObjectsState
+        //theme
+      ),
+    [blockObjectsState]
   );
 
   return (
@@ -150,6 +155,6 @@ const DescribeBlock = ({ blockObjectsState }) => {
       </div>
     </>
   );
-};
+});
 
 export default DescribeBlock;

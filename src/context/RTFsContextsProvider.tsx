@@ -1,4 +1,10 @@
-import React, { createContext, useReducer } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useMemo,
+  useReducer,
+} from 'react';
 
 import {
   reactTestFileReducer,
@@ -42,7 +48,57 @@ const RTFsContextsProvider = ({ children }) => {
     let setupTeardownBlock = '';
     const arrayOfChildComponents = [];
     Object.values(parent.children).forEach((childComponent: object) => {
-      if (childComponent['objectType'] === 'describe') {
+      switch (childComponent['objectType']) {
+        case 'describe':
+          arrayOfChildComponents.push(
+            <DescribeBlock
+              blockObjectsState={childComponent}
+              key={childComponent.filepath}
+            />
+          );
+        case 'setupTeardown':
+          setupTeardownBlock = (
+            <SetupTeardownBlock
+              blockObjectsState={childComponent}
+              key={childComponent.filepath}
+            />
+          );
+        case 'test':
+          arrayOfChildComponents.push(
+            <TestBlock
+              blockObjectsState={childComponent}
+              key={childComponent.filepath}
+            />
+          );
+        case 'statement':
+          if (
+            childComponent['statementType'] === 'render' //&&
+            //(!extraClauses || !extraClauses['setupTeardownExist'])
+          ) {
+            arrayOfChildComponents.push(
+              <Render
+                blockObjectsState={childComponent}
+                key={childComponent.filepath}
+              />
+            );
+            //setHasSetupTeardown(true);
+          } else if (childComponent['statementType'] === 'action') {
+            arrayOfChildComponents.push(
+              <Action
+                blockObjectsState={childComponent}
+                key={childComponent.filepath}
+              />
+            );
+          } else if (childComponent['statementType'] === 'assertion') {
+            arrayOfChildComponents.push(
+              <Assertion
+                blockObjectsState={childComponent}
+                key={childComponent.filepath}
+              />
+            );
+          }
+      }
+      /*if (childComponent['objectType'] === 'describe') {
         arrayOfChildComponents.push(
           <DescribeBlock
             blockObjectsState={childComponent}
@@ -94,7 +150,7 @@ const RTFsContextsProvider = ({ children }) => {
             />
           );
         }
-      }
+      }*/
     });
     return { setupTeardownBlock, arrayOfChildComponents };
   };
@@ -114,37 +170,46 @@ const RTFsContextsProvider = ({ children }) => {
     });
   };
 
-  const handleAddBlock = (
-    e: React.SyntheticEvent,
-    objectType: String,
-    addObjectToWhere: String //filepath
-  ) => {
-    const newObjectsKey = uid(8);
-    rTFDispatch(
-      addObjectToStateObject(objectType, addObjectToWhere, newObjectsKey)
-    );
-  };
+  const handleAddBlock = useCallback(
+    (
+      e: React.SyntheticEvent,
+      objectType: String,
+      addObjectToWhere: String //filepath
+    ) => {
+      const newObjectsKey = uid(8);
+      rTFDispatch(
+        addObjectToStateObject(objectType, addObjectToWhere, newObjectsKey)
+      );
+    },
+    []
+  );
 
-  const handleChange = (
-    pathToTargetStateObject: String,
-    propertyToUpdate: String,
-    updatedValue: String
-  ): void => {
-    rTFDispatch(
-      updateObjectInStateObject(
-        pathToTargetStateObject,
-        propertyToUpdate,
-        updatedValue
-      )
-    );
-  };
+  const handleChange = useCallback(
+    (
+      pathToTargetStateObject: String,
+      propertyToUpdate: String,
+      updatedValue: String
+    ): void => {
+      rTFDispatch(
+        updateObjectInStateObject(
+          pathToTargetStateObject,
+          propertyToUpdate,
+          updatedValue
+        )
+      );
+    },
+    []
+  );
 
-  const handleDeleteBlock = (
-    parentsFilepath: String, //filepath
-    targetsKey: String //parentsFilepath
-  ) => {
-    rTFDispatch(deleteObjectFromStateObject(parentsFilepath, targetsKey));
-  };
+  const handleDeleteBlock = useCallback(
+    (
+      parentsFilepath: String, //filepath
+      targetsKey: String //parentsFilepath
+    ) => {
+      rTFDispatch(deleteObjectFromStateObject(parentsFilepath, targetsKey));
+    },
+    []
+  );
 
   return (
     <RTFsContexts.Provider
@@ -170,6 +235,10 @@ const RTFsContextsProvider = ({ children }) => {
       {children}
     </RTFsContexts.Provider>
   );
+};
+
+export const useRTFsContexts = () => {
+  return useContext(RTFsContexts);
 };
 
 export default RTFsContextsProvider;
