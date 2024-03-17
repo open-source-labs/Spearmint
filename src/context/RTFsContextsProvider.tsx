@@ -1,9 +1,6 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useContext, useCallback, useMemo } from 'react';
 
-import {
-  reactTestFileReducer,
-  initialReactTestFileState,
-} from './reducers/updatedReactTestCaseReducer';
+import { useReactTestFileReducer } from './reducers/updatedReactTestCaseReducer';
 import { styles as modalStyles } from '../Modals/Modal.module.scss';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -30,10 +27,7 @@ import { uid } from 'uid';
 export const RTFsContexts = createContext();
 
 const RTFsContextsProvider = ({ children }) => {
-  const [reactTestFileState, rTFDispatch] = useReducer(
-    reactTestFileReducer,
-    initialReactTestFileState
-  );
+  const [reactTestFileState, rTFDispatch] = useReactTestFileReducer();
 
   const setChildrenComponents = (
     parent
@@ -42,6 +36,60 @@ const RTFsContextsProvider = ({ children }) => {
     let setupTeardownBlock = '';
     const arrayOfChildComponents = [];
     Object.values(parent.children).forEach((childComponent: object) => {
+      switch (childComponent['objectType']) {
+        case 'describe':
+          arrayOfChildComponents.push(
+            <DescribeBlock
+              blockObjectsState={childComponent}
+              key={childComponent.filepath}
+            />
+          );
+          break;
+        case 'setupTeardown':
+          setupTeardownBlock = (
+            <SetupTeardownBlock
+              blockObjectsState={childComponent}
+              key={childComponent.filepath}
+            />
+          );
+          break;
+        case 'test':
+          arrayOfChildComponents.push(
+            <TestBlock
+              blockObjectsState={childComponent}
+              key={childComponent.filepath}
+            />
+          );
+          break;
+        case 'statement':
+          if (
+            childComponent['statementType'] === 'render' //&&
+            //(!extraClauses || !extraClauses['setupTeardownExist'])
+          ) {
+            arrayOfChildComponents.push(
+              <Render
+                blockObjectsState={childComponent}
+                key={childComponent.filepath}
+              />
+            );
+            //setHasSetupTeardown(true);
+          } else if (childComponent['statementType'] === 'action') {
+            arrayOfChildComponents.push(
+              <Action
+                blockObjectsState={childComponent}
+                key={childComponent.filepath}
+              />
+            );
+          } else if (childComponent['statementType'] === 'assertion') {
+            arrayOfChildComponents.push(
+              <Assertion
+                blockObjectsState={childComponent}
+                key={childComponent.filepath}
+              />
+            );
+          }
+          break;
+      } /*
       if (childComponent['objectType'] === 'describe') {
         arrayOfChildComponents.push(
           <DescribeBlock
@@ -94,7 +142,7 @@ const RTFsContextsProvider = ({ children }) => {
             />
           );
         }
-      }
+      }*/
     });
     return { setupTeardownBlock, arrayOfChildComponents };
   };
@@ -139,12 +187,15 @@ const RTFsContextsProvider = ({ children }) => {
     );
   };
 
-  const handleDeleteBlock = (
-    parentsFilepath: String, //filepath
-    targetsKey: String //parentsFilepath
-  ) => {
-    rTFDispatch(deleteObjectFromStateObject(parentsFilepath, targetsKey));
-  };
+  const handleDeleteBlock = useCallback(
+    (
+      parentsFilepath: String, //filepath
+      targetsKey: String //parentsFilepath
+    ) => {
+      rTFDispatch(deleteObjectFromStateObject(parentsFilepath, targetsKey));
+    },
+    []
+  );
 
   return (
     <RTFsContexts.Provider
@@ -170,6 +221,10 @@ const RTFsContextsProvider = ({ children }) => {
       {children}
     </RTFsContexts.Provider>
   );
+};
+
+export const useRTFsContexts = () => {
+  return useContext(RTFsContexts);
 };
 
 export default RTFsContextsProvider;

@@ -6,7 +6,7 @@ import { MockDataContext } from '../../../context/reducers/updatedMockDataReduce
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/updatedReactTypes';
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+import { useRTFsContexts } from '../../../context/RTFsContextsProvider';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 
@@ -25,13 +25,14 @@ type FieldTypes =
   | 'queryValue';
 
 // Action box in middle panel (testCase.jsx)
-const Action = ({ blockObjectsState }) => {
+const Action = React.memo(({ blockObjectsState }) => {
   const thisBlockObjectsState = blockObjectsState;
 
   const [{ mockData }] = useContext(MockDataContext);
   const [{ theme }] = useContext(GlobalContext);
   const { handleAddBlock, handleChange, handleDeleteBlock, rTFDispatch } =
-    useContext(RTFsContexts);
+    //useContext(RTFsContexts);
+    useRTFsContexts();
 
   /*const handleChangeActionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAction = { ...statement };
@@ -199,6 +200,6 @@ const Action = ({ blockObjectsState }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Action;

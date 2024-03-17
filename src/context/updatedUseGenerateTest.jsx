@@ -1751,7 +1751,7 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-      //---------------------------------------------------React switch statement---------------------------------------------
+      //---------------------------------------------------Updated React switch statement---------------------------------------------
       case 'updatedReact':
         var reactTestCase = testState;
         var mockData = mockDataState;

@@ -1,10 +1,5 @@
-import React, { createContext, useReducer } from 'react';
-import {
-  actionTypes,
-  makeDeepCopyOfObject,
-  traverseObject,
-  updateObjectsKeyValuePairs,
-} from '../actions/updatedFrontendFrameworkTestCaseActions';
+import { useReducer } from 'react';
+import { actionTypes } from '../actions/updatedFrontendFrameworkTestCaseActions';
 import {
   ReactTestCaseTypes,
   Action,
@@ -18,7 +13,7 @@ import {
 
 // similar to globalReducer, but instead of dealing with global items, this is specific to React,
 // this holds state for things like describe and it statements, basically what your React test looks like
-export const initialReactTestFileState = {
+const initialReactTestFileState = {
   //below is the initial state of the reactTestFile State
   modalOpen: false,
   filepath: 'root',
@@ -226,6 +221,44 @@ const pickAndCreateObjectToAdd = (
     }
   }
 };
+
+function makeDeepCopyOfObject(objectToCopy) {
+  if (typeof objectToCopy !== 'object') return objectToCopy; // return element if not an object
+  let deepCopy;
+  //logic for deep copy for copying contents of Arrays vs Objects
+  if (Array.isArray(objectToCopy)) {
+    deepCopy = objectToCopy.map((element) => {
+      if (typeof element === 'object') return makeDeepCopyOfObject(element);
+      else return element;
+    });
+  } else {
+    //handle an object that's not an array
+    deepCopy = {};
+    for (const key in objectToCopy) {
+      if (typeof objectToCopy[key] === 'object')
+        deepCopy[key] = makeDeepCopyOfObject(objectToCopy[key]);
+      else deepCopy[key] = objectToCopy[key];
+    }
+  }
+  return deepCopy;
+}
+
+function traverseObject(objectToTraverse, filePath) {
+  if (!filePath) return objectToTraverse; //currently, a filepath will only not exist if you're starting at top level state object
+  const filePathFolders = filePath.split('/'); //The delimiter is removed and the keys that lead to your target object in the state are stored in array indexes, order kept
+  let curObject = objectToTraverse; //let's us track how deep we've looked following path
+  filePathFolders.forEach((folderToEnter) => {
+    curObject = curObject.children[folderToEnter];
+  }); //needs to be curObject.children bc every objects child blocks are found in that children property
+  return curObject; //return the object we're targeting
+}
+
+function updateObjectsKeyValuePairs(objectToUpdate, keyValuePairs) {
+  for (let key in keyValuePairs) {
+    objectToUpdate[key] = keyValuePairs[key];
+  }
+}
+
 /* ------------------------- React Test Case Reducer ------------------------ */
 /* 
 If you have reached this comment in search of trying to resolve type errors of passed in actions of dispatch
@@ -236,11 +269,12 @@ I would encourage you to look at ./hooksTestCaseReducer, which seems to have a w
 be extended to the other reducers. I hope this comment can save you the hours of confusion I experienced when trying
 to parse this code. Good luck!
 */
-export const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
+const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
   switch (action.type) {
     case actionTypes.ADD_OBJECT_TO_STATE_OBJECT: {
       const { objectType, addObjectToWhere, newObjectsKey } = action.payload;
       const deepCopyOfObject = makeDeepCopyOfObject(state);
+
       let targetObject = deepCopyOfObject;
       targetObject = traverseObject(deepCopyOfObject, addObjectToWhere);
       const newFilepath = addObjectToWhere
@@ -252,7 +286,6 @@ export const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
         newFilepath,
         addObjectToWhere
       );
-
       return deepCopyOfObject;
     }
 
@@ -313,3 +346,6 @@ export const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
       return state;
   }
 };
+
+export const useReactTestFileReducer = () =>
+  useReducer(reactTestFileReducer, initialReactTestFileState);

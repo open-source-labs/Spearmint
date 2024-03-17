@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import styles from './TestCase.module.scss';
 import { updateRenderComponent } from '../../context/actions/updatedFrontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -8,7 +8,7 @@ import { createMockData } from '../../context/actions/mockDataActions';
 import UpdatedReactTestMenu from '../TestMenu/UpdatedReactTestMenu';
 import MockData from '../UpdatedReactTestComponent/MockData/MockData';
 import { Button } from '@mui/material';
-import { RTFsContexts } from '../../context/RTFsContextsProvider';
+import { useRTFsContexts } from '../../context/RTFsContextsProvider';
 import DescribeBlock from '../UpdatedReactTestComponent/DescribeBlock/DescribeBlock';
 
 const UpdatedReactTestCase = ({
@@ -17,7 +17,11 @@ const UpdatedReactTestCase = ({
   filterFileType: Function;
 }) => {
   const { reactTestFileState, rTFDispatch, handleAddBlock } =
-    useContext(RTFsContexts);
+    //  useContext(RTFsContexts);
+    useRTFsContexts();
+  console.log('updatereact rerendered');
+  console.log('reactTestFileState rerendered', reactTestFileState);
+
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, theme }] = useContext(GlobalContext);
 
