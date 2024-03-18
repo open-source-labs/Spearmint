@@ -162,30 +162,36 @@ const RTFsContextsProvider = ({ children }) => {
     });
   };
 
-  const handleAddBlock = (
-    e: React.SyntheticEvent,
-    objectType: String,
-    addObjectToWhere: String //filepath
-  ) => {
-    const newObjectsKey = uid(8);
-    rTFDispatch(
-      addObjectToStateObject(objectType, addObjectToWhere, newObjectsKey)
-    );
-  };
+  const handleAddBlock = useCallback(
+    (
+      e: React.SyntheticEvent,
+      objectType: String,
+      addObjectToWhere: String //filepath
+    ) => {
+      const newObjectsKey = uid(8);
+      rTFDispatch(
+        addObjectToStateObject(objectType, addObjectToWhere, newObjectsKey)
+      );
+    },
+    []
+  );
 
-  const handleChange = (
-    pathToTargetStateObject: String,
-    propertyToUpdate: String,
-    updatedValue: String
-  ): void => {
-    rTFDispatch(
-      updateObjectInStateObject(
-        pathToTargetStateObject,
-        propertyToUpdate,
-        updatedValue
-      )
-    );
-  };
+  const handleChange = useCallback(
+    (
+      pathToTargetStateObject: String,
+      propertyToUpdate: String,
+      updatedValue: String
+    ): void => {
+      rTFDispatch(
+        updateObjectInStateObject(
+          pathToTargetStateObject,
+          propertyToUpdate,
+          updatedValue
+        )
+      );
+    },
+    []
+  );
 
   const handleDeleteBlock = useCallback(
     (

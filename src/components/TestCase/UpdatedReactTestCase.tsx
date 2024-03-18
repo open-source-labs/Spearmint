@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styles from './TestCase.module.scss';
 import { updateRenderComponent } from '../../context/actions/updatedFrontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -11,95 +11,103 @@ import { Button } from '@mui/material';
 import { useRTFsContexts } from '../../context/RTFsContextsProvider';
 import DescribeBlock from '../UpdatedReactTestComponent/DescribeBlock/DescribeBlock';
 
-const UpdatedReactTestCase = ({
-  filterFileType,
-}: {
-  filterFileType: Function;
-}) => {
-  const { reactTestFileState, rTFDispatch, handleAddBlock } =
-    //  useContext(RTFsContexts);
-    useRTFsContexts();
-  console.log('updatereact rerendered');
-  console.log('reactTestFileState rerendered', reactTestFileState);
+const UpdatedReactTestCase = React.memo(
+  ({ filterFileType }: { filterFileType: Function }) => {
+    const { reactTestFileState, rTFDispatch, handleAddBlock } =
+      //  useContext(RTFsContexts);
+      useRTFsContexts();
 
-  const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
-  const [{ filePathMap, theme }] = useContext(GlobalContext);
+    const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
+    const [{ filePathMap, theme }] = useContext(GlobalContext);
 
-  const handleAddMockData = () => {
-    dispatchToMockData(createMockData());
-  };
+    const handleAddMockData = () => {
+      dispatchToMockData(createMockData());
+    };
 
-  const reorder = (list: string[], startIndex: number, endIndex: number) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
-  };
+    const reorder = useMemo(
+      () => (list: string[], startIndex: number, endIndex: number) => {
+        const result = Array.from(list);
+        const [removed] = result.splice(startIndex, 1);
+        result.splice(endIndex, 0, removed);
+        return result;
+      },
+      [reactTestFileState]
+    );
 
-  const reactTestFileStateChildren = Object.values(
-    reactTestFileState.children
-  ).map((childObject) => (
-    <DescribeBlock blockObjectsState={childObject} key={childObject.filepath} />
-  ));
+    const reactTestFileStateChildren = useMemo(
+      () =>
+        Object.values(reactTestFileState.children).map((childObject) => (
+          <DescribeBlock
+            blockObjectsState={childObject}
+            key={childObject.filepath}
+          />
+        )),
+      [reactTestFileState]
+    );
 
-  return (
-    <>
-      <div id={styles[`ReactTestCase${theme}`]}>
-        <h2 id={styles[`testName${theme}`]}>React Testing</h2>
-        <UpdatedReactTestMenu />
-        <div className={styles.header}>
-          <div className={styles.searchInput}>
-            <SearchInput
-              dispatch={rTFDispatch}
-              action={updateRenderComponent}
-              filePathMap={filePathMap}
-              options={filterFileType(Object.keys(filePathMap), [
-                'js',
-                'jsx',
-                'ts',
-                'tsx',
-              ])}
-              label="Search Component"
-            />
+    return (
+      <>
+        <div id={styles[`ReactTestCase${theme}`]}>
+          <h2 id={styles[`testName${theme}`]}>React Testing</h2>
+          <UpdatedReactTestMenu />
+          <div className={styles.header}>
+            <div className={styles.searchInput}>
+              <SearchInput
+                dispatch={rTFDispatch}
+                action={updateRenderComponent}
+                filePathMap={filePathMap}
+                options={filterFileType(Object.keys(filePathMap), [
+                  'js',
+                  'jsx',
+                  'ts',
+                  'tsx',
+                ])}
+                label="Search Component"
+              />
+            </div>
+            <Button
+              variant="outlined"
+              onClick={handleAddMockData}
+              size="medium"
+            >
+              Add Mock Data
+            </Button>
           </div>
-          <Button variant="outlined" onClick={handleAddMockData} size="medium">
-            Add Mock Data
-          </Button>
-        </div>
 
-        {mockData
-          ? mockData.length > 0 && (
-              <section id={styles.mockDataHeader}>
-                {mockData.map((data) => {
-                  return (
-                    <MockData
-                      key={data.id}
-                      mockDatumId={data.id}
-                      dispatchToMockData={dispatchToMockData}
-                      fieldKeys={data.fieldKeys}
-                    />
-                  );
-                })}
-              </section>
-            )
-          : null}
-        <div id={styles.describeContainer}>
-          <div /*droppableId='droppableReactDescribe'*/ type="describe">
-            {reactTestFileStateChildren}
+          {mockData
+            ? mockData.length > 0 && (
+                <section id={styles.mockDataHeader}>
+                  {mockData.map((data) => {
+                    return (
+                      <MockData
+                        key={data.id}
+                        mockDatumId={data.id}
+                        dispatchToMockData={dispatchToMockData}
+                        fieldKeys={data.fieldKeys}
+                      />
+                    );
+                  })}
+                </section>
+              )
+            : null}
+          <div id={styles.describeContainer}>
+            <div /*droppableId='droppableReactDescribe'*/ type="describe">
+              {reactTestFileStateChildren}
+            </div>
+          </div>
+          <div id={styles.addDescribeButton}>
+            <Button
+              data-testid="addDescribeButton"
+              onClick={(e) => handleAddBlock(e, 'describe', '')}
+              variant="outlined"
+            >
+              Add Describe Block
+            </Button>
           </div>
         </div>
-        <div id={styles.addDescribeButton}>
-          <Button
-            data-testid="addDescribeButton"
-            onClick={(e) => handleAddBlock(e, 'describe', '')}
-            variant="outlined"
-          >
-            Add Describe Block
-          </Button>
-        </div>
-      </div>
-    </>
-  );
-};
+      </>
+    );
+  }
+);
 
 export default UpdatedReactTestCase;

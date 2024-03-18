@@ -24,7 +24,7 @@ interface DescribeBlockProps {
   theme: string;
 }
 
-const DescribeBlock = ({ blockObjectsState }) => {
+const DescribeBlock = React.memo(({ blockObjectsState }) => {
   const [{ theme }] = useContext(GlobalContext);
 
   const thisBlockObjectsState = blockObjectsState;
@@ -54,7 +54,6 @@ const DescribeBlock = ({ blockObjectsState }) => {
     [blockObjectsState]
   );
 
-  console.log('describe rerendered', thisBlockObjectsState.key);
   return (
     <>
       <div
@@ -154,6 +153,6 @@ const DescribeBlock = ({ blockObjectsState }) => {
       </div>
     </>
   );
-};
+});
 
-export default React.memo(DescribeBlock);
+export default DescribeBlock;

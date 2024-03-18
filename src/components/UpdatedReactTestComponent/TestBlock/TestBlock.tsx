@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import cn from 'classnames';
 import ReactTestStatements from '../../TestCase/UpdatedReactTestStatements';
 import {
@@ -19,7 +19,7 @@ import { ItStatements, Statements } from '../../../utils/updatedReactTypes';
 
 interface ItBlockProps {}
 
-const TestBlock = ({ blockObjectsState }) => {
+const TestBlock = React.memo(({ blockObjectsState }) => {
   const [{ theme }] = useContext(GlobalContext);
   const {
     handleAddBlock,
@@ -28,11 +28,10 @@ const TestBlock = ({ blockObjectsState }) => {
     setChildrenComponents,
   } = useRTFsContexts();
   const thisBlockObjectsState = blockObjectsState;
-  console.log(`Test Block ${thisBlockObjectsState.key} rerendered`);
 
-  const { setupTeardownBlock, arrayOfChildComponents } = setChildrenComponents(
-    blockObjectsState,
-    theme
+  const { setupTeardownBlock, arrayOfChildComponents } = useMemo(
+    () => setChildrenComponents(blockObjectsState, theme),
+    [blockObjectsState]
   );
 
   return (
@@ -118,6 +117,6 @@ const TestBlock = ({ blockObjectsState }) => {
       </div>
     </>
   );
-};
+});
 
 export default TestBlock;
