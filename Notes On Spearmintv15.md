@@ -28,11 +28,15 @@ For Accessibility Tool
 -Dependencies updated
 -A Accessibility Test
 
-For React Testing Tool:
+For React(Beta) Testing Tool:
 -new State Structure for UI to work with(found in 'updatedTestCaseReducer' file)
 -abstracted add, update, delete methods and workflow(Can be traced from the component, to 'RTFsContextsProvider' file, to the
 'updatedFrontendFrameworkTestCaseActions' file, to the 'updatedTestCaseReducer' file)
 -functions already created for deep copying, adding, changing, and deleting (from)the state object
+-designed components to work with new central state object
+-custom hooks
+-React.memo, useMemo, useCallback
+-MongoDB migration
 
 -Jest Abilities Not Fully Fleshed Out
 -Old testing workflow(look into FireEvent, vs Screen for jest testing)
@@ -59,6 +63,7 @@ React useMemo
 by a form like setup(e.g. user either fills out inputs or uses drags and drops
 to create the setups and teardowns)
 -add more jest testing capabilities that don't exist yet
+-refactor 'Render' component as aspect of tests to be more flexible. It only allows 1 component selection at a time for any given test file being created. Current setup allows creation of only singularly focused component test files, but not end to end testing.
 -Props and Statements are not handled correctly yet by "useGenerateTest.jsx"
 -in 'useGenerateTest', use visual Studios 'search' tool to find the code snippets related to 'Updated React'. there should be at least 2, 1 being 'import', the other being 'switch'. There is no need for 2 versions of 'useGenerateTest', but there exists two because of our creating a playground to be safe. the second is called 'updatedUseGenerateTest. decide how u best want to merge them, or if every Tool should have its own 'useGenerateTest' for just its switchcase.
 -for the switch case 'updatedReact' found in 'useGenerateTest'(or more specifically 'updatedUseGenerateTest' if you haven't moved),

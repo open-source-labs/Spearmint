@@ -87,7 +87,25 @@ const initialReactTestFileState = {
 
 /* ---------------------------- Helper Functions ---------------------------- */
 
-const createDescribeObject = (key, filepath: string, parentsFilepath) => {
+type DescribeObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  comment: string;
+  text: string;
+  children:
+    | {}
+    | {
+        [key: string]: DescribeObject | TestObject | SetupTeardownObject;
+      };
+};
+
+const createDescribeObject = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): DescribeObject => {
   return {
     key,
     filepath,
@@ -99,7 +117,21 @@ const createDescribeObject = (key, filepath: string, parentsFilepath) => {
   };
 };
 
-const createTestObject = (key, filepath, parentsFilepath) => ({
+type TestObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  comment: string;
+  text: string;
+  children: {} | {};
+};
+
+const createTestObject = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): TestObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -108,9 +140,19 @@ const createTestObject = (key, filepath, parentsFilepath) => ({
   text: '',
   children: {},
 });
-const createStatementBlock = (key, filepath, parentsFilepath) => ({});
+const createStatementBlock = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+) => ({});
 
-const createSetupTeardownObject = (key, filepath, parentsFilepath) => ({
+type SetupTeardownObject = {};
+
+const createSetupTeardownObject = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): SetupTeardownObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -123,7 +165,26 @@ const createSetupTeardownObject = (key, filepath, parentsFilepath) => ({
   },
 });
 
-const createAction = (key, filepath, parentsFilepath) => ({
+type ActionObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  statementType: string;
+  comment: string;
+  eventType: string;
+  eventValue: null | string;
+  queryVariant: string;
+  querySelector: string;
+  queryValue: string;
+  suggestions: string[];
+};
+
+const createAction = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): ActionObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -138,7 +199,27 @@ const createAction = (key, filepath, parentsFilepath) => ({
   suggestions: [],
 });
 
-const createAssertion = (key, filepath, parentsFilepath) => ({
+type AssertionObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  statementType: string;
+  comment: string;
+  queryVariant: string;
+  querySelector: string;
+  queryValue: string;
+  isNot: boolean;
+  matcherType: string;
+  matcherValue: string;
+  suggestions: string[];
+};
+
+const createAssertion = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): AssertionObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -154,7 +235,21 @@ const createAssertion = (key, filepath, parentsFilepath) => ({
   suggestions: [],
 });
 
-const createRender = (key, filepath, parentsFilepath) => ({
+type RenderObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  statementType: string;
+  comment: string;
+  children: {};
+};
+
+const createRender = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): RenderObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -165,7 +260,11 @@ const createRender = (key, filepath, parentsFilepath) => ({
   //props: [],
 });
 
-const createProp = (key, filepath, parentsFilepath) => ({
+const createProp = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+) => ({
   key,
   filepath,
   objectType: 'prop',
@@ -176,10 +275,10 @@ const createProp = (key, filepath, parentsFilepath) => ({
 });
 
 const pickAndCreateObjectToAdd = (
-  objectType,
-  newObjectsKey,
-  newObjectsFilepath,
-  addObjectToWhere
+  objectType: string,
+  newObjectsKey: string,
+  newObjectsFilepath: string,
+  addObjectToWhere: string
 ) => {
   switch (objectType) {
     case 'describe': {
@@ -243,7 +342,7 @@ function makeDeepCopyOfObject(objectToCopy) {
   return deepCopy;
 }
 
-function traverseObject(objectToTraverse, filePath) {
+function traverseObject(objectToTraverse, filePath: string) {
   if (!filePath) return objectToTraverse; //currently, a filepath will only not exist if you're starting at top level state object
   const filePathFolders = filePath.split('/'); //The delimiter is removed and the keys that lead to your target object in the state are stored in array indexes, order kept
   let curObject = objectToTraverse; //let's us track how deep we've looked following path
