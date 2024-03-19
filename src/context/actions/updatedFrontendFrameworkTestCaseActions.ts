@@ -17,22 +17,6 @@ export const actionTypes = {
 
   UPDATE_ITSTATEMENT_ORDER: 'UPDATE_ITSTATEMENT_ORDER',
 
-  ADD_ACTION: 'ADD_ACTION',
-  DELETE_ACTION: 'DELETE_ACTION',
-  UPDATE_ACTION: 'UPDATE_ACTION',
-
-  ADD_ASSERTION: 'ADD_ASSERTION',
-  DELETE_ASSERTION: 'DELETE_ASSERTION',
-  UPDATE_ASSERTION: 'UPDATE_ASSERTION',
-
-  ADD_RENDER: 'ADD_RENDER',
-  DELETE_RENDER: 'DELETE_RENDER',
-  UPDATE_RENDER_COMPONENT: 'UPDATE_RENDER_COMPONENT',
-
-  ADD_PROP: 'ADD_PROP',
-  DELETE_PROP: 'DELETE_PROP',
-  UPDATE_PROP: 'UPDATE_PROP',
-
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
@@ -89,43 +73,6 @@ export const closeInfoModal = () => {
 export const resetTests = () => ({
   type: actionTypes.RESET_TESTS,
 });
-
-export function makeDeepCopyOfObject(objectToCopy) {
-  if (typeof objectToCopy !== 'object') return objectToCopy; // return element if not an object
-  let deepCopy;
-  //logic for deep copy for copying contents of Arrays vs Objects
-  if (Array.isArray(objectToCopy)) {
-    deepCopy = objectToCopy.map((element) => {
-      if (typeof element === 'object') return makeDeepCopyOfObject(element);
-      else return element;
-    });
-  } else {
-    //handle an object that's not an array
-    deepCopy = {};
-    for (const key in objectToCopy) {
-      if (typeof objectToCopy[key] === 'object')
-        deepCopy[key] = makeDeepCopyOfObject(objectToCopy[key]);
-      else deepCopy[key] = objectToCopy[key];
-    }
-  }
-  return deepCopy;
-}
-
-export function traverseObject(objectToTraverse, filePath) {
-  if (!filePath) return objectToTraverse; //currently, a filepath will only not exist if you're starting at top level state object
-  const filePathFolders = filePath.split('/'); //The delimiter is removed and the keys that lead to your target object in the state are stored in array indexes, order kept
-  let curObject = objectToTraverse; //let's us track how deep we've looked following path
-  filePathFolders.forEach((folderToEnter) => {
-    curObject = curObject.children[folderToEnter];
-  }); //needs to be curObject.children bc every objects child blocks are found in that children property
-  return curObject; //return the object we're targeting
-}
-
-export function updateObjectsKeyValuePairs(objectToUpdate, keyValuePairs) {
-  for (let key in keyValuePairs) {
-    objectToUpdate[key] = keyValuePairs[key];
-  }
-}
 
 export function addObjectToStateObject(
   objectType,

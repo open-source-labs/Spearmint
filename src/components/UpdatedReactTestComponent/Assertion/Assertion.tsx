@@ -12,7 +12,7 @@ import UpdatedAutoComplete from '../../AutoComplete/UpdatedAutoComplete';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/updatedReactTypes';
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+import { useRTFsContexts } from '../../../context/RTFsContextsProvider';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 
@@ -29,11 +29,12 @@ type FieldTypes =
   | 'queryValue'
   | 'matcherValue';
 
-const Assertion = ({ blockObjectsState }) => {
+const Assertion = React.memo(({ blockObjectsState }) => {
   const thisBlockObjectsState = blockObjectsState;
 
   const { handleAddBlock, handleChange, handleDeleteBlock, rTFDispatch } =
-    useContext(RTFsContexts);
+    // useContext(RTFsContexts);
+    useRTFsContexts();
   const [{ theme }] = useContext(GlobalContext);
 
   /*const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
@@ -295,6 +296,6 @@ const Assertion = ({ blockObjectsState }) => {
       </div>
     </section>
   );
-};
+});
 
 export default Assertion;
