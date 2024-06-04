@@ -53,9 +53,9 @@ const Render = React.memo(({ blockObjectsState }) => {
               <label htmlFor="prop-value">Prop value</label>
             </div>
             <hr />
-            {Object.values(blockObjectsState.children).forEach((prop) => {
-              return <Prop blockObjectsState />;
-            })}
+            {Object.values(blockObjectsState.children).map((prop) => (
+              <Prop blockObjectsState={prop} />
+            ))}
           </div>
         )}
       </div>

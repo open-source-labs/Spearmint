@@ -1,7 +1,7 @@
 import { useReducer } from 'react';
 import { actionTypes } from '../actions/updatedFrontendFrameworkTestCaseActions';
 import {
-  ReactTestCaseTypes,
+  UpdatedReactTestFileState,
   Action,
   ItStatements,
   DescribeBlocks,
@@ -13,7 +13,7 @@ import {
 
 // similar to globalReducer, but instead of dealing with global items, this is specific to React,
 // this holds state for things like describe and it statements, basically what your React test looks like
-const initialReactTestFileState = {
+const initialReactTestFileState: UpdatedReactTestFileState = {
   //below is the initial state of the reactTestFile State
   modalOpen: false,
   filepath: 'root',
@@ -369,11 +369,12 @@ be extended to the other reducers. I hope this comment can save you the hours of
 to parse this code. Good luck!
 */
 const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
+  console.log('state', state);
+
   switch (action.type) {
     case actionTypes.ADD_OBJECT_TO_STATE_OBJECT: {
       const { objectType, addObjectToWhere, newObjectsKey } = action.payload;
       const deepCopyOfObject = makeDeepCopyOfObject(state);
-
       let targetObject = deepCopyOfObject;
       targetObject = traverseObject(deepCopyOfObject, addObjectToWhere);
       const newFilepath = addObjectToWhere
