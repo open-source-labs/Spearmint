@@ -2,14 +2,15 @@
  * ?
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './Prop.module.scss';
 import {
   deleteProp,
   updateProp,
 } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { PropProps } from '../../../utils/reactTypes';
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+import { useRTFsContexts } from '../../../context/RTFsContextsProvider';
+import { GlobalContext } from '../../../context/reducers/globalReducer';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
 
@@ -18,32 +19,8 @@ const minusIcon = require('../../../assets/images/minus-box-outline.png');
 const Prop = ({ blockObjectsState }): JSX.Element => {
   const thisBlockObjectsState = blockObjectsState;
 
-  const { handleAddBlock, handleChange, handleDeleteBlock } =
-    useContext(RTFsContexts);
+  const { handleAddBlock, handleChange, handleDeleteBlock } = useRTFsContexts();
   const [{ theme }] = useContext(GlobalContext);
-
-  const handleClickDeleteProp = (e: React.MouseEvent): void => {
-    e.stopPropagation();
-    dispatchToTestCase(deleteProp(statementId, propId));
-  };
-
-  const handleChangeUpdatePropKey = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    e.stopPropagation();
-    dispatchToTestCase(
-      updateProp(statementId, propId, e.target.value, propValue)
-    );
-  };
-
-  const handleChangeUpdatePropValue = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    e.stopPropagation();
-    dispatchToTestCase(
-      updateProp(statementId, propId, propKey, e.target.value)
-    );
-  };
 
   return (
     <div id={styles[`renderPropsFlexBox${theme}`]}>

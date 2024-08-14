@@ -4,7 +4,7 @@
 
 import React, { useContext } from 'react';
 import styles from './Render.module.scss';
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+import { useRTFsContexts } from '../../../context/RTFsContextsProvider';
 
 import Prop from './Prop';
 import { Button } from '@mui/material';
@@ -14,12 +14,13 @@ import { RenderProps } from '../../../utils/reactTypes';
 
 // this is the file that shows what component you are rendering in your test
 
-const Render = ({ blockObjectsState }) => {
+const Render = React.memo(({ blockObjectsState }) => {
   const thisBlockObjectsState = blockObjectsState;
 
   const [{ theme }] = useContext(GlobalContext);
   const { handleAddBlock, handleChange, handleDeleteBlock } =
-    useContext(RTFsContexts);
+    //useContext(RTFsContexts);
+    useRTFsContexts();
 
   return (
     <div id={styles[`RenderContainer${theme}`]}>
@@ -52,14 +53,14 @@ const Render = ({ blockObjectsState }) => {
               <label htmlFor="prop-value">Prop value</label>
             </div>
             <hr />
-            {Object.values(blockObjectsState.children).forEach((prop) => {
-              return <Prop blockObjectsState />;
-            })}
+            {Object.values(blockObjectsState.children).map((prop) => (
+              <Prop blockObjectsState={prop} />
+            ))}
           </div>
         )}
       </div>
     </div>
   );
-};
+});
 
 export default Render;

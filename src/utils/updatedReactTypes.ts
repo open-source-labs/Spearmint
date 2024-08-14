@@ -3,58 +3,88 @@ export interface ReactStatements {
   type: string;
   [key: string]: any;
 }
-export interface ReactTestCaseTypes {
+export interface UpdatedReactTestFileState {
   modalOpen: boolean;
-  describeId: number; //
-  itId: number;
-  statementId: number;
-  propId: number;
-  describeBlocks: DescribeBlocks;
-  itStatements: ItStatements;
-  statements: Statements;
+  filepath: string;
+  children: {} | { [key: string]: DescribeObject };
 }
-export interface DescribeBlocks {
-  byId: DescribeById;
-  allIds: Array<string>;
+export interface DescribeObject {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  comment: string;
+  text: string;
+  children:
+    | {}
+    | {
+        [key: string]: DescribeObject | TestObject | SetupTeardownObject;
+      };
 }
 
-export interface ItById {
-  [key: string]: {
-    id: string;
-    describeId: string;
-    text: string;
+export interface SetupTeardownObject {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  children: {
+    beforeAll: {} | { [key: string]: any };
+    beforeEach: {} | { [key: string]: any };
+    afterAll: {} | { [key: string]: any };
+    afterEach: {} | { [key: string]: any };
   };
 }
 
-export interface ItStatements {
-  byId: ItById;
-  allIds: allIdsType;
+export interface TestObject {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  comment: string;
+  text: string;
+  children: {} | {};
 }
+
 type allIdsType = {
   [key: string]: Array<string>;
 };
 
-export interface Action {
-  type: string;
-  id?: number;
-  serverFileName?: string;
-  serverFilePath?: string;
-  draggableStatements?: Array<ReactStatements>;
-  index?: number;
-  text?: string;
-  assertion?: Assertion;
-  db?: string | boolean;
-  dbFilePath?: string;
-  dbFileName?: string;
-  testState?: object;
+export interface ActionObject {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  statementType: string;
+  comment: string;
+  eventType: string;
+  eventValue: null | string;
+  queryVariant: string;
+  querySelector: string;
+  queryValue: string;
+  suggestions: string[];
 }
 
-export interface Assertion {
+/*export interface Assertion {
   id: number;
   expectedResponse: string;
   value: string;
   matcher: string;
   not: boolean;
+}*/
+export interface Assertion {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  statementType: string;
+  comment: string;
+  queryVariant: string;
+  querySelector: string;
+  queryValue: string;
+  isNot: boolean;
+  matcherType: string;
+  matcherValue: string;
+  suggestions: string[];
 }
 
 export interface Statements {

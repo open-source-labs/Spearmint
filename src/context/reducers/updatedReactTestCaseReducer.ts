@@ -1,12 +1,7 @@
-import React, { createContext, useReducer } from 'react';
+import { useReducer } from 'react';
+import { actionTypes } from '../actions/updatedFrontendFrameworkTestCaseActions';
 import {
-  actionTypes,
-  makeDeepCopyOfObject,
-  traverseObject,
-  updateObjectsKeyValuePairs,
-} from '../actions/updatedFrontendFrameworkTestCaseActions';
-import {
-  ReactTestCaseTypes,
+  UpdatedReactTestFileState,
   Action,
   ItStatements,
   DescribeBlocks,
@@ -18,7 +13,7 @@ import {
 
 // similar to globalReducer, but instead of dealing with global items, this is specific to React,
 // this holds state for things like describe and it statements, basically what your React test looks like
-export const initialReactTestFileState = {
+const initialReactTestFileState: UpdatedReactTestFileState = {
   //below is the initial state of the reactTestFile State
   modalOpen: false,
   filepath: 'root',
@@ -92,7 +87,25 @@ export const initialReactTestFileState = {
 
 /* ---------------------------- Helper Functions ---------------------------- */
 
-const createDescribeObject = (key, filepath: string, parentsFilepath) => {
+type DescribeObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  comment: string;
+  text: string;
+  children:
+    | {}
+    | {
+        [key: string]: DescribeObject | TestObject | SetupTeardownObject;
+      };
+};
+
+const createDescribeObject = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): DescribeObject => {
   return {
     key,
     filepath,
@@ -104,7 +117,21 @@ const createDescribeObject = (key, filepath: string, parentsFilepath) => {
   };
 };
 
-const createTestObject = (key, filepath, parentsFilepath) => ({
+type TestObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  comment: string;
+  text: string;
+  children: {} | {};
+};
+
+const createTestObject = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): TestObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -113,9 +140,19 @@ const createTestObject = (key, filepath, parentsFilepath) => ({
   text: '',
   children: {},
 });
-const createStatementBlock = (key, filepath, parentsFilepath) => ({});
+const createStatementBlock = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+) => ({});
 
-const createSetupTeardownObject = (key, filepath, parentsFilepath) => ({
+type SetupTeardownObject = {};
+
+const createSetupTeardownObject = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): SetupTeardownObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -128,7 +165,26 @@ const createSetupTeardownObject = (key, filepath, parentsFilepath) => ({
   },
 });
 
-const createAction = (key, filepath, parentsFilepath) => ({
+type ActionObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  statementType: string;
+  comment: string;
+  eventType: string;
+  eventValue: null | string;
+  queryVariant: string;
+  querySelector: string;
+  queryValue: string;
+  suggestions: string[];
+};
+
+const createAction = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): ActionObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -143,7 +199,27 @@ const createAction = (key, filepath, parentsFilepath) => ({
   suggestions: [],
 });
 
-const createAssertion = (key, filepath, parentsFilepath) => ({
+type AssertionObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  statementType: string;
+  comment: string;
+  queryVariant: string;
+  querySelector: string;
+  queryValue: string;
+  isNot: boolean;
+  matcherType: string;
+  matcherValue: string;
+  suggestions: string[];
+};
+
+const createAssertion = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): AssertionObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -159,7 +235,21 @@ const createAssertion = (key, filepath, parentsFilepath) => ({
   suggestions: [],
 });
 
-const createRender = (key, filepath, parentsFilepath) => ({
+type RenderObject = {
+  key: string;
+  filepath: string;
+  parentsFilepath: string;
+  objectType: string;
+  statementType: string;
+  comment: string;
+  children: {};
+};
+
+const createRender = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+): RenderObject => ({
   key,
   filepath,
   parentsFilepath,
@@ -170,7 +260,11 @@ const createRender = (key, filepath, parentsFilepath) => ({
   //props: [],
 });
 
-const createProp = (key, filepath, parentsFilepath) => ({
+const createProp = (
+  key: string,
+  filepath: string,
+  parentsFilepath: string
+) => ({
   key,
   filepath,
   objectType: 'prop',
@@ -181,10 +275,10 @@ const createProp = (key, filepath, parentsFilepath) => ({
 });
 
 const pickAndCreateObjectToAdd = (
-  objectType,
-  newObjectsKey,
-  newObjectsFilepath,
-  addObjectToWhere
+  objectType: string,
+  newObjectsKey: string,
+  newObjectsFilepath: string,
+  addObjectToWhere: string
 ) => {
   switch (objectType) {
     case 'describe': {
@@ -226,6 +320,44 @@ const pickAndCreateObjectToAdd = (
     }
   }
 };
+
+function makeDeepCopyOfObject(objectToCopy) {
+  if (typeof objectToCopy !== 'object') return objectToCopy; // return element if not an object
+  let deepCopy;
+  //logic for deep copy for copying contents of Arrays vs Objects
+  if (Array.isArray(objectToCopy)) {
+    deepCopy = objectToCopy.map((element) => {
+      if (typeof element === 'object') return makeDeepCopyOfObject(element);
+      else return element;
+    });
+  } else {
+    //handle an object that's not an array
+    deepCopy = {};
+    for (const key in objectToCopy) {
+      if (typeof objectToCopy[key] === 'object')
+        deepCopy[key] = makeDeepCopyOfObject(objectToCopy[key]);
+      else deepCopy[key] = objectToCopy[key];
+    }
+  }
+  return deepCopy;
+}
+
+function traverseObject(objectToTraverse, filePath: string) {
+  if (!filePath) return objectToTraverse; //currently, a filepath will only not exist if you're starting at top level state object
+  const filePathFolders = filePath.split('/'); //The delimiter is removed and the keys that lead to your target object in the state are stored in array indexes, order kept
+  let curObject = objectToTraverse; //let's us track how deep we've looked following path
+  filePathFolders.forEach((folderToEnter) => {
+    curObject = curObject.children[folderToEnter];
+  }); //needs to be curObject.children bc every objects child blocks are found in that children property
+  return curObject; //return the object we're targeting
+}
+
+function updateObjectsKeyValuePairs(objectToUpdate, keyValuePairs) {
+  for (let key in keyValuePairs) {
+    objectToUpdate[key] = keyValuePairs[key];
+  }
+}
+
 /* ------------------------- React Test Case Reducer ------------------------ */
 /* 
 If you have reached this comment in search of trying to resolve type errors of passed in actions of dispatch
@@ -236,7 +368,9 @@ I would encourage you to look at ./hooksTestCaseReducer, which seems to have a w
 be extended to the other reducers. I hope this comment can save you the hours of confusion I experienced when trying
 to parse this code. Good luck!
 */
-export const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
+const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
+  console.log('state', state);
+
   switch (action.type) {
     case actionTypes.ADD_OBJECT_TO_STATE_OBJECT: {
       const { objectType, addObjectToWhere, newObjectsKey } = action.payload;
@@ -252,7 +386,6 @@ export const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
         newFilepath,
         addObjectToWhere
       );
-
       return deepCopyOfObject;
     }
 
@@ -313,3 +446,6 @@ export const reactTestFileReducer = (state: ReactTestCaseTypes, action) => {
       return state;
   }
 };
+
+export const useReactTestFileReducer = () =>
+  useReducer(reactTestFileReducer, initialReactTestFileState);
