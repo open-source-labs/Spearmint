@@ -20,9 +20,10 @@ import {
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@mui/material';
 
+//** here we dispatching an action that updates the context-wide state*/
 const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
-  const [reactTestCase, dispatchToReactTestCase] = useReducer(
-    reactTestCaseReducer,
+  const [reactTestCase, dispatchToReactTestCase] = useReducer(  // we dont have to pass arguments to useReducer
+    reactTestCaseReducer, //** handles UPDATE_ACTION */
     reactTestCaseState
   );
 
@@ -59,6 +60,8 @@ const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
     dispatchToReactTestCase(addDescribeBlock());
   };
 
+
+//** */
   return (
     <ReactTestCaseContext.Provider
       value={[reactTestCase, dispatchToReactTestCase]}

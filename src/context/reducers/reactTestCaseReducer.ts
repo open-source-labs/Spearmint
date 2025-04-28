@@ -13,9 +13,9 @@ import {
 
 // similar to globalReducer, but instead of dealing with global items, this is specific to React,
 // this holds state for things like describe and it statements, basically what your React test looks like
+//*****! INITIAL EMPTY REACT STATE *******/
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
-  //
   describeId: 1,
   itId: 1,
   statementId: 1,
@@ -171,8 +171,12 @@ actions & cases will need to be somewhat (read: completely) rewritten in a more 
 satisfy typescript. Unfortunately we are not able to achieve this in the time available to us. For inspiration,
 I would encourage you to look at ./hooksTestCaseReducer, which seems to have a workable implementation that could 
 be extended to the other reducers. I hope this comment can save you the hours of confusion I experienced when trying
-to parse this code. Good luck!
+to parse this code. Good luck!'
+
+victim - Mickael - 14.4hr
 */
+
+//*****! REACT REDUCER *******/
 export const reactTestCaseReducer = (
   state: ReactTestCaseTypes,
   action: ReactReducerAction
@@ -416,6 +420,10 @@ export const reactTestCaseReducer = (
         },
       };
     }
+    /**
+     * * 
+     * 
+     */
     case actionTypes.UPDATE_ACTION: {
       const {
         id,
@@ -425,9 +433,12 @@ export const reactTestCaseReducer = (
         querySelector,
         queryValue,
         suggestions,
-      } = action;
+      } = action; //** pull the dispatched (user edited fields) */
+
       const byId = { ...statements.byId };
-      const oldStatement = { ...statements.byId[id] };
+      const oldStatement = { ...statements.byId[id] }; //* */ retrives the current action block from global test state
+
+    //**/ now we build the new state comibing the old data with the new edits */
       const newStatement = {
         ...oldStatement,
         eventType,
@@ -437,6 +448,7 @@ export const reactTestCaseReducer = (
         queryValue,
         suggestions,
       };
+      //** return new state ready to be rendered, previewed, or saved to disk */
       return {
         ...state,
         statements: {
@@ -682,7 +694,9 @@ export const reactTestCaseReducer = (
 // here we are using useContext to create the React state to be used in other files
 const dispatchToReactTestCase = () => null;
 const reactTestCaseArr: [ReactTestCaseTypes, (action: Action) => void] = [
-  reactTestCaseState,
-  dispatchToReactTestCase,
+  reactTestCaseState, // state
+  dispatchToReactTestCase, // dispatch
 ];
+//** this is the dispatcher were grabbing */
 export const ReactTestCaseContext = createContext(reactTestCaseArr);
+   

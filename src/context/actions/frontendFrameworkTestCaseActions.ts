@@ -1,8 +1,8 @@
 
+/* ------------------------------ Action Types ------------------------------ */
+
 // Actions for all front end frameworks, React, Solid, Svelete, and Vue can all use this because they 
 // function the same
-
-/* ------------------------------ Action Types ------------------------------ */
 
 import { UpdateActionProps, UpdateAssertionProps } from "../../utils/reactTypes";
 
@@ -101,6 +101,9 @@ export const deleteAction = (statementId: string) => ({
   statementId,
 });
 
+//** After we update an action field we land here.
+//** */ we build the final action object that gets dispatched*/
+
 export const updateAction = ({
   id,
   eventType,
@@ -119,6 +122,17 @@ export const updateAction = ({
   queryValue,
   suggestions,
 });
+
+/*
+{
+  type: 'UPDATE_ACTION',
+  id: '12345',
+  eventType: 'click',
+  queryVariant: 'getBy',
+  querySelector: 'Text',
+  queryValue: 'Submit'
+}
+  */
 
 export const addAssertion = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_ASSERTION,

@@ -3,6 +3,8 @@ export interface ReactStatements {
   type: string;
   [key: string]: any;
 }
+
+//**! REACT TEST TYPES */ 
 export interface ReactTestCaseTypes {
   modalOpen: boolean;
   describeId: number;
@@ -13,10 +15,30 @@ export interface ReactTestCaseTypes {
   itStatements: ItStatements;
   statements: Statements;
 }
+
 export interface DescribeBlocks {
   byId: DescribeById;
   allIds: Array<string>;
   children: Object;
+}
+
+export interface ItStatements {
+  byId: ItById;
+  allIds: allIdsType;
+}
+
+export interface Statements {
+  byId: StatementsById;
+  allIds: Array<string>;
+  componentPath: string;
+  componentName: string;
+}
+
+export interface DescribeById {
+  [key: string]: {
+    id: string;
+    text: string;
+  };
 }
 
 export interface ItById {
@@ -27,13 +49,22 @@ export interface ItById {
   };
 }
 
-export interface ItStatements {
-  byId: ItById;
-  allIds: allIdsType;
-}
 type allIdsType = {
   [key: string]: Array<string>;
 };
+
+export interface StatementsById {
+  [key: string]: {
+    id: string;
+    itId: string;
+    describeId: string;
+    type: string;
+    props: Array<Prop>; // example: <Login username="testUser" />
+  };
+}
+
+
+//**! REACT TEST BLOCKS */ 
 
 export interface Action {
   type: string;
@@ -58,22 +89,8 @@ export interface Assertion {
   not: boolean;
 }
 
-export interface Statements {
-  byId: StatementsById;
-  allIds: Array<string>;
-  componentPath: string;
-  componentName: string;
-}
 
-export interface StatementsById {
-  [key: string]: {
-    id: string;
-    itId: string;
-    describeId: string;
-    type: string;
-    props: Array<Prop>;
-  };
-}
+
 
 export interface ReactTestComponentAssertion {
   describeId: string;
@@ -148,12 +165,7 @@ export interface RenderProps {
   itId: string;
 }
 
-export interface DescribeById {
-  [key: string]: {
-    id: string;
-    text: string;
-  };
-}
+
 
 export interface AutoCompleteStatement {
   eventType?: string;
