@@ -107,6 +107,7 @@ const createAssertion = (
   suggestions: [],
 });
 
+/*
 const createRender = (
   describeId: string,
   itId: string,
@@ -118,6 +119,33 @@ const createRender = (
   type: 'render',
   props: [],
 });
+*/
+export const createRender = (
+  describeId: string,
+  itId: string,
+  statementId: string,
+  subType?: string
+) => {
+  if (subType === 'visit') {
+    return {
+      id: statementId,
+      itId,
+      describeId,
+      type: 'visit',
+      visitUrl: '', // user will input this later
+    };
+  }
+
+  return {
+    id: statementId,
+    itId,
+    describeId,
+    type: 'render',
+    props: [],
+  };
+};
+
+
 
 const createProp = (propId: string, statementId: string) => ({
   id: propId,
@@ -538,7 +566,7 @@ export const reactTestCaseReducer = (
     }
 
     case actionTypes.ADD_RENDER: {
-      const { describeId, itId } = action;
+      const { describeId, itId, subType } = action; // extract subType from action
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
@@ -551,12 +579,16 @@ export const reactTestCaseReducer = (
           ...statements,
           byId: {
             ...byIds,
-            [statementId]: createRender(describeId, itId, statementId),
+            [statementId]: createRender(describeId, itId, statementId, subType),
           },
           allIds: [...allIds, statementId],
         },
       };
     }
+
+
+     
+
     case actionTypes.DELETE_RENDER: {
       const { statementId } = action;
       const byId = { ...statements.byId };

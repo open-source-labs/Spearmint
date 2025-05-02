@@ -34,6 +34,7 @@ export const actionTypes = {
   SET_THEME: 'SET_THEME',
   SET_FILE_DIRECTORY: 'SET_FILE_DIRECTORY',
   SET_FOLDER_VIEW: 'SET_FOLDER_VIEW',
+  SET_TEST_FRAMEWORK: 'SET_TEST_FRAMEWORK'
 };
 
 export const setProjectUrl = (url: string) => ({

@@ -19,6 +19,8 @@ import {
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@mui/material';
+import TestFrameworkToggle from './TestFrameworkToggle'; // added toggle 
+
 
 //** here we dispatching an action that updates the context-wide state*/
 const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
@@ -68,6 +70,7 @@ const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
     >
       <div id={styles[`ReactTestCase${theme}`]}>
         <h2 id={styles[`testName${theme}`]}>React Testing</h2>
+        <TestFrameworkToggle />
         <ReactTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
@@ -83,6 +86,8 @@ const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
               ])}
               label="Search Component"
             />
+
+
           </div>
           <Button variant="outlined" onClick={handleAddMockData} size="medium">
             Add Mock Data

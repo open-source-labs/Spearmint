@@ -7,7 +7,7 @@ import {
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
-import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
+import { RTFsContexts } from '../../../context/RTFsContextsProvider';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
@@ -33,133 +33,99 @@ const Assertion = ({
   itId,
   statementId,
 }: ReactTestComponentAssertion): JSX.Element => {
-  const [{ statements }, dispatchToReactTestCase] =
-    useContext(ReactTestCaseContext);
-  const [{ theme, testFramework  }] = useContext(GlobalContext); //! DECUNSTRUCTED testFramework 
+  const [{ statements }, rTFDispatch] = useContext(RTFsContexts);
+  const [{ theme }] = useContext(GlobalContext);
 
   const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAssertion = { ...statement };
     updatedAssertion[field] = e.target.value;
-    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    rTFDispatch(updateAssertion(updatedAssertion));
   };
 
   const handleIsNot = () => {
     let updatedAssertion = { ...statement };
     updatedAssertion.isNot = !updatedAssertion.isNot;
-    dispatchToReactTestCase(updateAssertion(updatedAssertion));
+    rTFDispatch(updateAssertion(updatedAssertion));
   };
 
   const handleClickDelete = () => {
-    dispatchToReactTestCase(deleteAssertion(statementId));
+    rTFDispatch(deleteAssertion(statementId));
   };
-
-  // const needsMatcherValue = (matcherType: string) => {
-  //   const matchersWithValues = 
-  //   return matchersWithValues.includes(matcherType);
-  // };
 
   const needsMatcherValue = (matcherType: string) => {
-    if (testFramework === 'cypress') {
-      return cypressMatchersWithValues.includes(matcherType);
-    // } else if (testFramework === 'mocha') {
-    //   return mochaMatchersWithValues.includes(matcherType);
-    }
-    return jestMatchersWithValues.includes(matcherType);
+    const matchersWithValues = [
+      'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
+      'toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
+      'toHaveAttribute', //takes in a string Ex: 'type'
+      'toHaveClass', //takes in a string Ex: 'btn-link'
+      'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
+      'toHaveStyle', //takes in a sting value Ex: 'display: none'
+      'toHaveTextContent', //takes in a string value Ex: 'Content'
+      'toBe', //
+      'toHaveBeenCalledTimes',
+      'toHaveBeenCalledWith',
+      'toHaveBeenLastCalledWith',
+      'toHaveBeenNthCalledWith',
+      'toHaveReturnedTimes',
+      'toHaveReturnedWith',
+      'toHaveLastReturnedWith',
+      'toHaveNthReturnedWith',
+      'toHaveLength',
+      'toHaveProperty',
+      'toBeCloseTo',
+      'not.toBeCloseTo',
+      'toBeGreaterThan',
+      'toBeGreaterThanOrEqual',
+      'toBeLessThan',
+      'toBeLessThanOrEqual',
+      'toBeInstanceOf',
+      'toContain',
+      'toContainEqual',
+      'toEqual',
+      'toMatch',
+      'toMatchObject',
+      'toMatchSnapshot',
+      'toMatchInLineSnapshot',
+      'toStrictEqual',
+      'toThrow',
+      'toThrowErrorMatchingSnapshot',
+      'toThrowErrorMatchingInLineSnapshot',
+      'not.toBeInstanceOf',
+      'not.toContain',
+      'not.toEqual',
+      'not.toContainEqual',
+      'not.toMatch',
+      'not.toMatchObject',
+      'not.toMatchSnapshot',
+      'not.toMatchInLineSnapshot',
+      'not.toStrictEqual',
+      'not.toThrow',
+      'not.toThrowErrorMatchingSnapshot',
+      'not.toThrowErrorMatchingInLineSnapshot',
+      'not.toBeLessThan',
+      'not.toBeLessThanOrEqual',
+      'not.toBeGreaterThanOrEqual',
+      'not.toBeGreaterThan',
+      'not.toHaveProperty',
+      'not.toHaveLength',
+      'not.toHaveNthReturnedWith',
+      'not.toHaveReturnedWith',
+      'not.toBe', //
+      'not.toHaveBeenCalledTimes',
+      'not.toHaveBeenCalledWith',
+      'not.toHaveBeenLastCalledWith',
+      'not.toHaveBeenNthCalledWith',
+      'not.toHaveReturnedTimes',
+      'not.toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
+      'not.toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
+      'not.toHaveAttribute', //takes in a string Ex: 'type'
+      'not.toHaveClass', //takes in a string Ex: 'btn-link'
+      'not.toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
+      'not.toHaveStyle', //takes in a sting value Ex: 'display: none'
+      'not.toHaveTextContent', //takes in a string value Ex: 'Content'
+    ];
+    return matchersWithValues.includes(matcherType);
   };
-  // also for the auto complete decunstruct 
-
-
-  const jestMatchersWithValues: string[] = [
-    'toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
-    'toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
-    'toHaveAttribute', //takes in a string Ex: 'type'
-    'toHaveClass', //takes in a string Ex: 'btn-link'
-    'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
-    'toHaveStyle', //takes in a sting value Ex: 'display: none'
-    'toHaveTextContent', //takes in a string value Ex: 'Content'
-    'toBe', //
-    'toHaveBeenCalledTimes',
-    'toHaveBeenCalledWith',
-    'toHaveBeenLastCalledWith',
-    'toHaveBeenNthCalledWith',
-    'toHaveReturnedTimes',
-    'toHaveReturnedWith',
-    'toHaveLastReturnedWith',
-    'toHaveNthReturnedWith',
-    'toHaveLength',
-    'toHaveProperty',
-    'toBeCloseTo',
-    'not.toBeCloseTo',
-    'toBeGreaterThan',
-    'toBeGreaterThanOrEqual',
-    'toBeLessThan',
-    'toBeLessThanOrEqual',
-    'toBeInstanceOf',
-    'toContain',
-    'toContainEqual',
-    'toEqual',
-    'toMatch',
-    'toMatchObject',
-    'toMatchSnapshot',
-    'toMatchInLineSnapshot',
-    'toStrictEqual',
-    'toThrow',
-    'toThrowErrorMatchingSnapshot',
-    'toThrowErrorMatchingInLineSnapshot',
-    'not.toBeInstanceOf',
-    'not.toContain',
-    'not.toEqual',
-    'not.toContainEqual',
-    'not.toMatch',
-    'not.toMatchObject',
-    'not.toMatchSnapshot',
-    'not.toMatchInLineSnapshot',
-    'not.toStrictEqual',
-    'not.toThrow',
-    'not.toThrowErrorMatchingSnapshot',
-    'not.toThrowErrorMatchingInLineSnapshot',
-    'not.toBeLessThan',
-    'not.toBeLessThanOrEqual',
-    'not.toBeGreaterThanOrEqual',
-    'not.toBeGreaterThan',
-    'not.toHaveProperty',
-    'not.toHaveLength',
-    'not.toHaveNthReturnedWith',
-    'not.toHaveReturnedWith',
-    'not.toBe', //
-    'not.toHaveBeenCalledTimes',
-    'not.toHaveBeenCalledWith',
-    'not.toHaveBeenLastCalledWith',
-    'not.toHaveBeenNthCalledWith',
-    'not.toHaveReturnedTimes',
-    'not.toContainElement', //takes in a HTML element Ex: <span data-testid="descendant"></span>
-    'not.toContainHTML', //takes in a string Ex: '<span data-testid="child"></span>'
-    'not.toHaveAttribute', //takes in a string Ex: 'type'
-    'not.toHaveClass', //takes in a string Ex: 'btn-link'
-    'not.toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
-    'not.toHaveStyle', //takes in a sting value Ex: 'display: none'
-    'not.toHaveTextContent', //takes in a string value Ex: 'Content'
-  ];
-
-  const cypressMatchersWithValues: string[] = [
-    'should.have.text',
-    'should.have.value',
-    'should.contain',
-    'should.have.attr',
-    'should.have.class',
-    'should.have.css',
-    'should.have.length',
-    'should.include',
-    'should.eq',
-    'should.be.disabled',
-    'should.be.visible',
-    'should.not.be.visible',
-    'should.not.exist',
-    'should.not.have.value',
-  ];
-  // need to create mochaMatcherTypesList.ts
- // const mochaMatchersWithValues: string[] = []
-
 
   return (
     <section id={styles[`assertion${theme}`]} data-testid="assertionCard">
@@ -229,7 +195,7 @@ const Assertion = ({
           </label>
           {/* <AutoCompleteMockData
             statement={statement}
-            dispatchToTestCase={dispatchToReactTestCase}
+            dispatchToTestCase={rTFDispatch}
             statementType='assertion'
           /> */}
           <input
@@ -252,9 +218,7 @@ const Assertion = ({
                 <input
                   type="checkbox"
                   checked={statement.isNot}
-                  onChange={(e) => {
-                    handleIsNot();
-                  }}
+                  onChange={() => handleIsNot()}
                 />
               </div>
             </div>
@@ -262,9 +226,8 @@ const Assertion = ({
               <AutoComplete
                 statement={statement}
                 statementType="assertion"
-                dispatchToTestCase={dispatchToReactTestCase}
+                dispatchToTestCase={rTFDispatch}
                 id={styles.matcherAuto}
-                testFramework={testFramework}
               />
 
               <span id={styles.hastooltip} role="tooltip">

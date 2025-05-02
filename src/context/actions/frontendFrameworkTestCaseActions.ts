@@ -166,11 +166,13 @@ export const updateAssertion = ({
   suggestions,
 });
 
-export const addRender = (describeId: string, itId: string) => ({
+export const addRender = (describeId: string, itId: string, subType?: 'visit') => ({
   type: actionTypes.ADD_RENDER,
   describeId,
   itId,
+  subType,
 });
+
 
 export const deleteRender = (statementId: string) => ({
   type: actionTypes.DELETE_RENDER,
