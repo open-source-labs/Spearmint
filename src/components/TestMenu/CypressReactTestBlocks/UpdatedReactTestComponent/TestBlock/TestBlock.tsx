@@ -8,11 +8,11 @@ import {
 } from '../../../context/actions/updatedFrontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+import { RTFsContexts } from '../../../context/RTFsContextsProvider'; // file path not resolved
 import styles from './ItRenderer.module.scss';
 import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ItStatements, Statements } from '../../../utils/updatedReactTypes';
+import { ItStatements, Statements } from '../../../utils/updatedReactTypes'; // all import declorations are not resolved
 
 // This is tracking the it statements you have in a certain test, following the flow of data will
 // help you better understand exactly how this works
@@ -20,7 +20,7 @@ import { ItStatements, Statements } from '../../../utils/updatedReactTypes';
 interface ItBlockProps {}
 
 const TestBlock = ({ blockObjectsState }) => {
-  const [{ theme }] = useContext(GlobalContext);
+  const [{ theme, testFramework }] = useContext(GlobalContext);
   const {
     handleAddBlock,
     handleChange,
@@ -82,16 +82,22 @@ const TestBlock = ({ blockObjectsState }) => {
           {setupTeardownBlock}
           {arrayOfChildComponents}
           <div className={styles.buttonsContainer}>
-            <Button
-              id={`AddRenderTo${thisBlockObjectsState.key}`}
-              onClick={(e) => {
-                handleAddBlock(e, 'render', thisBlockObjectsState.filepath);
-              }}
-              className={styles.reactButton}
-              variant="outlined"
-            >
-              Add Render
-            </Button>
+          <Button
+  id={`AddRenderTo${thisBlockObjectsState.key}`}
+  onClick={() => {
+    const describeId = thisBlockObjectsState.parentsFilepath;
+    const itId = thisBlockObjectsState.filepath;
+
+    const subType = testFramework === 'cypress' ? 'visit' : undefined;
+
+    rTFDispatch(addRender(describeId, itId, subType));
+  }}
+  className={styles.reactButton}
+  variant="outlined"
+>
+  Add Render
+</Button>
+
             <Button
               id={`AddActionTo${thisBlockObjectsState.key}`}
               onClick={(e) => {

@@ -72,6 +72,7 @@ export const addItstatement = (describeId: string) => ({
   describeId,
 });
 
+
 export const deleteItStatement = (describeId: string, itId: string) => ({
   type: actionTypes.DELETE_ITSTATEMENT,
   describeId,
@@ -205,6 +206,7 @@ export const updateProp = (statementId: string, id: string, propKey: string, pro
   propKey,
   propValue,
 });
+
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,

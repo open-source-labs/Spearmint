@@ -120,7 +120,7 @@ const createRender = (
   props: [],
 });
 */
-export const createRender = (
+ const createRender = (
   describeId: string,
   itId: string,
   statementId: string,
@@ -132,7 +132,9 @@ export const createRender = (
       itId,
       describeId,
       type: 'visit',
-      visitUrl: '', // user will input this later
+      statementType: 'render',
+      objectType: 'statement',
+      visitUrl: '', // will be updated in the UI
     };
   }
 
@@ -141,6 +143,8 @@ export const createRender = (
     itId,
     describeId,
     type: 'render',
+    statementType: 'render',
+    objectType: 'statement',
     props: [],
   };
 };
@@ -191,6 +195,9 @@ const deleteStatementChildren = (
   return allIdCopy;
 };
 
+
+
+
 /* ------------------------- React Test Case Reducer ------------------------ */
 /* 
 If you have reached this comment in search of trying to resolve type errors of passed in actions of dispatch
@@ -213,6 +220,7 @@ export const reactTestCaseReducer = (
   let describeBlocks: DescribeBlocks = { ...state.describeBlocks };
   let itStatements: ItStatements = { ...state.itStatements };
   let statements: Statements = { ...state.statements };
+
 
   // Commented this out because the variables had to be initialized before their types could be set
 
@@ -566,11 +574,29 @@ export const reactTestCaseReducer = (
     }
 
     case actionTypes.ADD_RENDER: {
+      console.log('[ADD_RENDER] action:', action);  // logged action inside reducer
+
+
       const { describeId, itId, subType } = action; // extract subType from action
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
       let updatedStatementId = state.statementId;
+
+
+     console.log('[ADD_RENDER] Updated state:', {
+        ...state,
+        statementId: ++updatedStatementId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byIds,
+            [statementId]: createRender(describeId, itId, statementId, subType),
+          },
+          allIds: [...allIds, statementId],
+        },
+      });
+
 
       return {
         ...state,

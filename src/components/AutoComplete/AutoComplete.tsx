@@ -30,7 +30,7 @@ interface SuggestionType {
 const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   const { statement, statementType, dispatchToTestCase, type = 'react' } = props;
   const [{ testFramework }] = useContext(GlobalContext);
-  
+
   let updatedAction: AutoCompleteStatement = { ...statement };
   let updatedAssertion = { ...statement };
 
@@ -90,7 +90,6 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
           ).filter((matcher) =>
             matcher.name.toLowerCase().startsWith(inputValue)
           );
-        
       }
     } 
   };

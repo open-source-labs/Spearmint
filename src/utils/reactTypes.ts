@@ -235,5 +235,5 @@ export interface ReactReducerAction {
   filePath: string;
   propKey: string;
   propValue: string;
-  subType?: string; //! ADDED
+  subType?: 'visit'| undefined; //! ADDED
 }

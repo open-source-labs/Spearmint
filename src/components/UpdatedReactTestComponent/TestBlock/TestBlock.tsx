@@ -20,13 +20,14 @@ import { ItStatements, Statements } from '../../../utils/updatedReactTypes';
 interface ItBlockProps {}
 
 const TestBlock = ({ blockObjectsState }) => {
-  const [{ theme }] = useContext(GlobalContext);
+  const [{ theme, testFramework }] = useContext(GlobalContext);
   const {
+    rTFDispatch,
     handleAddBlock,
     handleChange,
     handleDeleteBlock,
     setChildrenComponents,
-  } = useContext(RTFsContexts);
+  } = useContext(RTFsContexts) as any; // quick
 
   const thisBlockObjectsState = blockObjectsState;
   const { setupTeardownBlock, arrayOfChildComponents } = setChildrenComponents(
