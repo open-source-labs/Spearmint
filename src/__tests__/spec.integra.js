@@ -15,10 +15,10 @@ const app = new Application({
 
 
 describe('Application Accessibility Audit', function () {
-  //app.timeout(10000);
-  setTimeout(() => {
-    console.log('application is launching');
-  }, 1000)
+  this.timeout(10000);
+  // setTimeout(() => {
+  //   console.log('application is launching');
+  // }, 1000)
   
   beforeEach(function () {
     return app.start();
