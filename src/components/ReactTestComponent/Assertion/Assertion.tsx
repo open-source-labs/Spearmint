@@ -61,8 +61,8 @@ const Assertion = ({
   const needsMatcherValue = (matcherType: string) => {
     if (testFramework === 'cypress') {
       return cypressMatchersWithValues.includes(matcherType);
-    // } else if (testFramework === 'mocha') {
-    //   return mochaMatchersWithValues.includes(matcherType);
+    } else if (testFramework === 'mocha') {
+      return mochaMatchersWithValues.includes(matcherType);
     }
     return jestMatchersWithValues.includes(matcherType);
   };
@@ -158,7 +158,39 @@ const Assertion = ({
     'should.not.have.value',
   ];
   // need to create mochaMatcherTypesList.ts
- // const mochaMatchersWithValues: string[] = []
+  const mochaMatchersWithValues: string[] = [
+    'to.have.text',
+    'to.exist',
+    'to.have.html',
+    'to.contain',
+    'to.have.attribute',
+    'to.have.class',
+    'to.have.style',
+    'to.match',
+    'to.be.empty',
+    'to.be.visible',
+    'to.have.focus',
+    'to.be',
+    'to.have.lengthOf',
+    'to.have.property',
+    'to.be.closeTo',
+    'to.be.undefined',
+    'to.be.ok',
+    'to.be.above',
+    'to.be.at.least',
+    'to.be.at.most',
+    'to.be.below',
+    'to.be.instanceOf',
+    'to.be.null',
+    'to.be.ok',
+    'to.be.undefined',
+    'to.be.nan',
+    'to.include',
+    'toContainEqual',
+    'to.equal',
+    'to.match',
+    'to.throw',
+  ]
 
 
   return (
