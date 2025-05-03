@@ -18,9 +18,9 @@ interface SearchInputProps {
 
 const SearchInput = ({
   dispatch,
-  action,
-  filePathMap,
-  options,
+  action, 
+  filePathMap, // object holding { componentName: absoluteFilePath }
+  options, // array of component names (React)
   reactTestCase = null,
   updateTypesFilePath = null,
   updateActionsFilePath = null,
@@ -28,7 +28,7 @@ const SearchInput = ({
   label,
 } : SearchInputProps ) => {
   const [activeOption, setActiveOption] = useState(0);
-  const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
+  const [filteredOptions, setFilteredOptions] = useState<string[]>([]); // current filter of components (React)
   const [showOptions, setShowOptions] = useState(false);
   const [userInput, setUserInput] = useState('');
 
@@ -36,7 +36,7 @@ const SearchInput = ({
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const input = currentTarget.value;
 
-    // this filters the options as we type, showing only relevant results from file tree
+    // this filters the options names as we type, showing only relevant results from file tree
     const newFilteredOptions: string[] = options.filter(
       (optionName) => (optionName.toLowerCase().indexOf(input.toLowerCase()) > -1)
     );
@@ -47,15 +47,17 @@ const SearchInput = ({
     setUserInput(currentTarget.value);
   };
 
+  // runs when dropdown menue is selected
+
   const handleClick = (e: React.SyntheticEvent) => {
     setActiveOption(0);
     setFilteredOptions([]);
     setShowOptions(false);
     const currentTarget = e.currentTarget as HTMLButtonElement
-    setUserInput(currentTarget.innerText);
+    setUserInput(currentTarget.innerText); // update visable input text with component name
 
-    const selectedOption = currentTarget.innerText;
-    const filePath = filePathMap[selectedOption] || '';
+    const selectedOption = currentTarget.innerText; // saves selected name temp to get path 
+    const filePath = filePathMap[selectedOption] || ''; // get the absolute file path name for selection 
 
     // updateTypesFilePath and updateActionsFilePath are only not-null if used within Redux
     if (updateTypesFilePath) {
@@ -63,8 +65,11 @@ const SearchInput = ({
     }
     if (updateActionsFilePath) dispatch(updateActionsFilePath(selectedOption, filePath, type));
 
-    if (action) dispatch(action(selectedOption, filePath));
+    if (action) dispatch(action(selectedOption, filePath)); // send both updates to global state
+    // ../ReactTestComponent/Action/Action.tsx
   };
+
+
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (action) dispatch(action('', ''));

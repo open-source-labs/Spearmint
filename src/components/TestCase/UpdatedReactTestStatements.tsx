@@ -47,15 +47,16 @@ const ReactTestStatements = ({
                 statement={statements.byId[id]}
               />
             );
-          case 'render':
-            return (
-              <Render
-                key={`render-${id}-${i}`}
-                statementId={id}
-                describeId={describeId}
-                itId={itId}
-                statement={statements.byId[id]}
-              />
+            case 'render':
+              case 'visit':
+                return (
+                  <Render
+                    key={`render-${id}-${i}`}
+                    statementId={id}
+                    describeId={describeId}
+                    itId={itId}
+                    statement={statements.byId[id]}
+                  />
             );
           default:
             return <></>;

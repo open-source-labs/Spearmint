@@ -25,7 +25,7 @@ interface DescribeBlockProps {
 }
 
 const DescribeBlock = ({ blockObjectsState }) => {
-  const [{ theme }] = useContext(GlobalContext);
+  const [{ theme }] = useContext(GlobalContext); // dark and light mode 
 
   const thisBlockObjectsState = blockObjectsState;
   //const [hasSetupTeardown, setHasSetupTeardown] = useState(false);

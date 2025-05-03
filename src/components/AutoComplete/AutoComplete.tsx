@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import AutoSuggest from 'react-autosuggest';
 import styles from './AutoComplete.module.scss';
 import { updateAction, updateAssertion } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { eventTypesList } from '../TypesList/eventTypesList';
-import { matcherTypesList} from '../TypesList/matcherTypesList';
+import { matcherTypesList as jestMatchers } from '../TypesList/matcherTypesList';
+import { cypressMatcherTypesList } from '../../components/TypesList/cypressMatcherTypeList'; //! added hereeeeeeeeee
 import { AutoCompleteProps, AutoCompleteStatement } from '../../utils/reactTypes';
+
+import { GlobalContext } from '../../context/reducers/globalReducer';
 
 
 /**
@@ -25,6 +29,8 @@ interface SuggestionType {
 
 const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
   const { statement, statementType, dispatchToTestCase, type = 'react' } = props;
+  const [{ testFramework }] = useContext(GlobalContext);
+
   let updatedAction: AutoCompleteStatement = { ...statement };
   let updatedAssertion = { ...statement };
 
@@ -75,9 +81,15 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
       } else {
         return inputLength === 0
           ? []
-          : matcherTypesList.filter(
-              (matcherType) => matcherType.name.toLowerCase().slice(0, inputLength) === inputValue
-            );
+          : (
+            testFramework === 'cypress'
+              ? cypressMatcherTypesList
+              : testFramework === 'mocha'
+              ? mochaMatcherTypesList
+              : jestMatchers
+          ).filter((matcher) =>
+            matcher.name.toLowerCase().startsWith(inputValue)
+          );
       }
     } 
   };

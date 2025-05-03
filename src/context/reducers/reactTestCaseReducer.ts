@@ -13,9 +13,9 @@ import {
 
 // similar to globalReducer, but instead of dealing with global items, this is specific to React,
 // this holds state for things like describe and it statements, basically what your React test looks like
+//*****! INITIAL EMPTY REACT STATE *******/
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
-  //
   describeId: 1,
   itId: 1,
   statementId: 1,
@@ -107,6 +107,7 @@ const createAssertion = (
   suggestions: [],
 });
 
+/*
 const createRender = (
   describeId: string,
   itId: string,
@@ -118,6 +119,37 @@ const createRender = (
   type: 'render',
   props: [],
 });
+*/
+ const createRender = (
+  describeId: string,
+  itId: string,
+  statementId: string,
+  subType?: string
+) => {
+  if (subType === 'visit') {
+    return {
+      id: statementId,
+      itId,
+      describeId,
+      type: 'visit',
+      statementType: 'render',
+      objectType: 'statement',
+      visitUrl: '', // will be updated in the UI
+    };
+  }
+
+  return {
+    id: statementId,
+    itId,
+    describeId,
+    type: 'render',
+    statementType: 'render',
+    objectType: 'statement',
+    props: [],
+  };
+};
+
+
 
 const createProp = (propId: string, statementId: string) => ({
   id: propId,
@@ -163,6 +195,9 @@ const deleteStatementChildren = (
   return allIdCopy;
 };
 
+
+
+
 /* ------------------------- React Test Case Reducer ------------------------ */
 /* 
 If you have reached this comment in search of trying to resolve type errors of passed in actions of dispatch
@@ -171,8 +206,12 @@ actions & cases will need to be somewhat (read: completely) rewritten in a more 
 satisfy typescript. Unfortunately we are not able to achieve this in the time available to us. For inspiration,
 I would encourage you to look at ./hooksTestCaseReducer, which seems to have a workable implementation that could 
 be extended to the other reducers. I hope this comment can save you the hours of confusion I experienced when trying
-to parse this code. Good luck!
+to parse this code. Good luck!'
+
+victim - Mickael - 14.4hr
 */
+
+//*****! REACT REDUCER *******/
 export const reactTestCaseReducer = (
   state: ReactTestCaseTypes,
   action: ReactReducerAction
@@ -181,6 +220,7 @@ export const reactTestCaseReducer = (
   let describeBlocks: DescribeBlocks = { ...state.describeBlocks };
   let itStatements: ItStatements = { ...state.itStatements };
   let statements: Statements = { ...state.statements };
+
 
   // Commented this out because the variables had to be initialized before their types could be set
 
@@ -416,6 +456,10 @@ export const reactTestCaseReducer = (
         },
       };
     }
+    /**
+     * * 
+     * 
+     */
     case actionTypes.UPDATE_ACTION: {
       const {
         id,
@@ -425,9 +469,12 @@ export const reactTestCaseReducer = (
         querySelector,
         queryValue,
         suggestions,
-      } = action;
+      } = action; //** pull the dispatched (user edited fields) */
+
       const byId = { ...statements.byId };
-      const oldStatement = { ...statements.byId[id] };
+      const oldStatement = { ...statements.byId[id] }; //* */ retrives the current action block from global test state
+
+    //**/ now we build the new state comibing the old data with the new edits */
       const newStatement = {
         ...oldStatement,
         eventType,
@@ -437,6 +484,7 @@ export const reactTestCaseReducer = (
         queryValue,
         suggestions,
       };
+      //** return new state ready to be rendered, previewed, or saved to disk */
       return {
         ...state,
         statements: {
@@ -526,11 +574,29 @@ export const reactTestCaseReducer = (
     }
 
     case actionTypes.ADD_RENDER: {
-      const { describeId, itId } = action;
+      console.log('[ADD_RENDER] action:', action);  // logged action inside reducer
+
+
+      const { describeId, itId, subType } = action; // extract subType from action
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
       let updatedStatementId = state.statementId;
+
+
+     console.log('[ADD_RENDER] Updated state:', {
+        ...state,
+        statementId: ++updatedStatementId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byIds,
+            [statementId]: createRender(describeId, itId, statementId, subType),
+          },
+          allIds: [...allIds, statementId],
+        },
+      });
+
 
       return {
         ...state,
@@ -539,12 +605,16 @@ export const reactTestCaseReducer = (
           ...statements,
           byId: {
             ...byIds,
-            [statementId]: createRender(describeId, itId, statementId),
+            [statementId]: createRender(describeId, itId, statementId, subType),
           },
           allIds: [...allIds, statementId],
         },
       };
     }
+
+
+     
+
     case actionTypes.DELETE_RENDER: {
       const { statementId } = action;
       const byId = { ...statements.byId };
@@ -682,7 +752,9 @@ export const reactTestCaseReducer = (
 // here we are using useContext to create the React state to be used in other files
 const dispatchToReactTestCase = () => null;
 const reactTestCaseArr: [ReactTestCaseTypes, (action: Action) => void] = [
-  reactTestCaseState,
-  dispatchToReactTestCase,
+  reactTestCaseState, // state
+  dispatchToReactTestCase, // dispatch
 ];
+//** this is the dispatcher were grabbing */
 export const ReactTestCaseContext = createContext(reactTestCaseArr);
+   
