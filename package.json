@@ -4,7 +4,7 @@
   "description": "An open-source developer tool that simplifies testing and hopes to help increase awareness about web accessibility.",
   "main": "public/electron.jsx",
   "scripts": {
-    "test": "mocha",
+    "test": "NODE_ENV=test jest",
     "start": "electron-forge start",
     "start-dev": "concurrently \"electron .\" \"nodemon server/server.js\"",
     "watch": "webpack --config webpack.config.ts --watch",
@@ -16,8 +16,7 @@
     "mac:installer": "electron-builder --mac",
     "win:installer": "electron-builder --win",
     "linux:installer": "electron-builder --linux",
-    "postinstall": "electron-builder install-app-deps",
-    "testMocha": "mocha --require global-jsdom/register"
+    "postinstall": "electron-builder install-app-deps"
   },
   "build": {
     "appId": "spearmint",
