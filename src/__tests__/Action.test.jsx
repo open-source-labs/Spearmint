@@ -5,10 +5,13 @@
 import  React, { useContext } from 'react';
 import { fireEvent, getByLabelText, render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom';
+import * as matchers from '@testing-library/jest-dom/matchers';
+import { expect } from "chai"
 import { ReactTestCaseContext } from '../context/reducers/reactTestCaseReducer';
 import { MockDataContext } from '../context/reducers/mockDataReducer';
 import Action from '../components/ReactTestComponent/Action/Action';
+
+expect.extend(matchers)
 
 const dispatchToReactTextCase = jest.fn();
 const dispatchToMockData = jest.fn();
