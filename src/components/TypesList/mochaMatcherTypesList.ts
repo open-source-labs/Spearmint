@@ -6,7 +6,7 @@ interface MLCType {
     name: string
   }
   
-  export const matcherLangChainTypeslist: Array<MLCType> = [
+  export const mochaMatcherTypesList: Array<MLCType> = [
     {
       name: 'to.have.text', //(using chai-dom)
     },
@@ -47,22 +47,22 @@ interface MLCType {
       name: 'to.be',//done
     },
     {
-      name: 'called', //sinon.assert.called
+      name: 'called', //sinon.assert.called (sinon)
     },
     {
-      name: 'callCount',//spy.callCount
+      name: 'callCount',//spy.callCount (sinon)
     },
     {
-      name: 'calledWith',//spy.calledWith
+      name: 'calledWith',//spy.calledWith (sinon)
     },
     // {
     //   name: 'toHaveBeenLastCalledWith',//
     // },
     {
-      name: 'neverCalledWith',//spy.neverCalledWith
+      name: 'neverCalledWith',//spy.neverCalledWith (sinon)
     },
     {
-      name: 'returned',//spy.returned
+      name: 'returned',//spy.returned (sinon)
     },
     // {
     //   name: 'toHaveReturnedTimes',
