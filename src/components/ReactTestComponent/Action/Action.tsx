@@ -18,28 +18,36 @@ type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTML
 
 type FieldTypes = (
   'eventType'
-  | 'eventValue'
-  | 'queryVariant'
-  | 'querySelector'
-  | 'queryValue'
+  | 'eventValue' // click
+  | 'queryVariant' // getBy
+  | 'querySelector' // Text
+  | 'queryValue' // Show More 
 )
 
 // Action box in middle panel (testCase.jsx)
 const Action = ({ statement, statementId, describeId, itId }: ReactTestComponentAssertion): JSX.Element => {
-  const [{ mockData }] = useContext(MockDataContext);
-  const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
+  const [{ mockData }] = useContext(MockDataContext); // only  used if added 
+  const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext); // test case data, [describe, it, action ] blocks.. reactTestCaseReducer
+
+
   const [{theme}] = useContext(GlobalContext)
 
+  //** */ Updates a field in the current action
   const handleChangeActionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAction = { ...statement };
-    updatedAction[field] = e.target.value;
-    dispatchToReactTestCase(updateAction(updatedAction));
+    updatedAction[field] = e.target.value; //** Query Selector dropdown, Query Target dropdown, Query Value input*/
+    dispatchToReactTestCase(updateAction(updatedAction)); // Sends a copy of the current modified action to Redux
   };
 
+  //** */removes the current action from the test case state using its ID
   const handleClickDeleteAction = () => {
-    dispatchToReactTestCase(deleteAction(statement.id));
+    dispatchToReactTestCase(deleteAction(statement.id)); //** */ Delete the current action from the test case
   };
-  //conditional rendering for events with values
+
+
+  
+  //conditional rendering for events that need a values
+  // eg. input, change
   const needsEventValue = (eventType: string) => {
     const eventsWithValues = [
       'keyDown',
@@ -51,7 +59,9 @@ const Action = ({ statement, statementId, describeId, itId }: ReactTestComponent
       'submit',
     ];
     return eventsWithValues.includes(eventType);
+    //** if true, Show a free text input or show a dropdown with mock data if added*/
   };
+  //**This eventually gets turned into this test code */
 
   return (
     <div id={styles[`action${theme}`]}>

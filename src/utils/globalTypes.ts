@@ -17,6 +17,7 @@ export interface GlobalActionTypes {
   guestState?: string,
   theme?: string,
   fileDirectoryOpen?: string,
+  testFramework?: string,
 }
 
 export interface GlobalStateTypes {
@@ -42,6 +43,7 @@ export interface GlobalStateTypes {
   tabIndex: number,
   isGuest: boolean,
   theme: any,
+  testFramework: 'jest' | 'cypress' | 'mocha'; //! added new global testframework
 }
 
 /**

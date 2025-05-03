@@ -127,26 +127,32 @@ export function updateObjectsKeyValuePairs(objectToUpdate, keyValuePairs) {
   }
 }
 
+
+
+
 export function addObjectToStateObject(
   objectType,
   addObjectToWhere, //filepath for its parent object in state
-  newObjectsKey
+  newObjectsKey,
+  subType,
 ) {
   return {
     type: actionTypes.ADD_OBJECT_TO_STATE_OBJECT,
-    payload: { objectType, addObjectToWhere, newObjectsKey },
+    payload: { objectType, addObjectToWhere, newObjectsKey, subType },
   };
 }
 
 export function updateObjectInStateObject(
   filepathToObject,
   key, //filepath for its parent object in state
-  value
+  value,
+  subType 
 ) {
   return {
     type: actionTypes.UPDATE_OBJECT_IN_STATE_OBJECT,
-    payload: { filepathToObject, key, value },
+    payload: { filepathToObject, key, value,  subType},
   };
+ 
 }
 
 export function deleteObjectFromStateObject(parentsFilepath, targetsKey) {
