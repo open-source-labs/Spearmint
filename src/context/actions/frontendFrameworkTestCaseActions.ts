@@ -1,8 +1,8 @@
 
+/* ------------------------------ Action Types ------------------------------ */
+
 // Actions for all front end frameworks, React, Solid, Svelete, and Vue can all use this because they 
 // function the same
-
-/* ------------------------------ Action Types ------------------------------ */
 
 import { UpdateActionProps, UpdateAssertionProps } from "../../utils/reactTypes";
 
@@ -72,6 +72,7 @@ export const addItstatement = (describeId: string) => ({
   describeId,
 });
 
+
 export const deleteItStatement = (describeId: string, itId: string) => ({
   type: actionTypes.DELETE_ITSTATEMENT,
   describeId,
@@ -101,6 +102,9 @@ export const deleteAction = (statementId: string) => ({
   statementId,
 });
 
+//** After we update an action field we land here.
+//** */ we build the final action object that gets dispatched*/
+
 export const updateAction = ({
   id,
   eventType,
@@ -119,6 +123,17 @@ export const updateAction = ({
   queryValue,
   suggestions,
 });
+
+/*
+{
+  type: 'UPDATE_ACTION',
+  id: '12345',
+  eventType: 'click',
+  queryVariant: 'getBy',
+  querySelector: 'Text',
+  queryValue: 'Submit'
+}
+  */
 
 export const addAssertion = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_ASSERTION,
@@ -152,11 +167,13 @@ export const updateAssertion = ({
   suggestions,
 });
 
-export const addRender = (describeId: string, itId: string) => ({
+export const addRender = (describeId: string, itId: string, subType?: 'visit') => ({
   type: actionTypes.ADD_RENDER,
   describeId,
   itId,
+  subType,
 });
+
 
 export const deleteRender = (statementId: string) => ({
   type: actionTypes.DELETE_RENDER,
@@ -189,6 +206,7 @@ export const updateProp = (statementId: string, id: string, propKey: string, pro
   propKey,
   propValue,
 });
+
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
