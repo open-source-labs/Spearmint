@@ -3,6 +3,8 @@ export interface ReactStatements {
   type: string;
   [key: string]: any;
 }
+
+//**! REACT TEST TYPES */ 
 export interface ReactTestCaseTypes {
   modalOpen: boolean;
   describeId: number;
@@ -13,11 +15,38 @@ export interface ReactTestCaseTypes {
   itStatements: ItStatements;
   statements: Statements;
 }
+
 export interface DescribeBlocks {
   byId: DescribeById;
   allIds: Array<string>;
-  children: Object;
+  children?: Object;    //! reactTestCaseReducer had type error missing children property in reactTestCaseState DescribeBlocks
+} 
+export interface DescribeById {
+  [key: string]: {
+    id: string;
+    text: string;
+  };
 }
+
+
+
+
+
+
+
+export interface ItStatements {
+  byId: ItById;
+  allIds: allIdsType;
+}
+
+export interface Statements {
+  byId: StatementsById;
+  allIds: Array<string>;
+  componentPath: string;
+  componentName: string;
+}
+
+
 
 export interface ItById {
   [key: string]: {
@@ -27,13 +56,22 @@ export interface ItById {
   };
 }
 
-export interface ItStatements {
-  byId: ItById;
-  allIds: allIdsType;
-}
 type allIdsType = {
   [key: string]: Array<string>;
 };
+
+export interface StatementsById {
+  [key: string]: {
+    id: string;
+    itId: string;
+    describeId: string;
+    type: string;
+    props: Array<Prop>; // example: <Login username="testUser" />
+  };
+}
+ 
+
+//**! REACT TEST BLOCKS */ 
 
 export interface Action {
   type: string;
@@ -58,22 +96,8 @@ export interface Assertion {
   not: boolean;
 }
 
-export interface Statements {
-  byId: StatementsById;
-  allIds: Array<string>;
-  componentPath: string;
-  componentName: string;
-}
 
-export interface StatementsById {
-  [key: string]: {
-    id: string;
-    itId: string;
-    describeId: string;
-    type: string;
-    props: Array<Prop>;
-  };
-}
+
 
 export interface ReactTestComponentAssertion {
   describeId: string;
@@ -96,16 +120,6 @@ export interface ReactTestComponentAssertion {
   };
 }
 
-export interface UpdateActionProps {
-  id?: string;
-  eventType?: string;
-  eventValue?: string;
-  queryVariant?: string;
-  querySelector?: string;
-  queryValue?: string;
-  suggestions?: any[] | number | void;
-}
-
 export interface UpdateAssertionProps {
   id?: string;
   queryVariant?: string;
@@ -116,7 +130,15 @@ export interface UpdateAssertionProps {
   matcherValue?: string;
   suggestions?: any[] | number | void;
 }
-
+export interface UpdateActionProps {
+  id?: string;
+  eventType?: string;
+  eventValue?: string;
+  queryVariant?: string;
+  querySelector?: string;
+  queryValue?: string;
+  suggestions?: any[] | number | void;
+}
 export interface Prop {
   id: string;
   statementId: string;
@@ -148,12 +170,7 @@ export interface RenderProps {
   itId: string;
 }
 
-export interface DescribeById {
-  [key: string]: {
-    id: string;
-    text: string;
-  };
-}
+
 
 export interface AutoCompleteStatement {
   eventType?: string;
@@ -167,6 +184,7 @@ export interface AutoCompleteProps {
   statementType: string;
   dispatchToTestCase: Function;
   type: string;
+  testFramework?: 'jest' | 'cypress' | 'mocha';
 }
 
 export interface AutoCompleteMockDataStatement {
@@ -217,4 +235,5 @@ export interface ReactReducerAction {
   filePath: string;
   propKey: string;
   propValue: string;
+  subType?: 'visit'| undefined; //! ADDED
 }

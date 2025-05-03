@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useContext } from 'react';
 
 import {
   reactTestFileReducer,
@@ -26,6 +26,8 @@ import {
   deleteObjectFromStateObject,
 } from '../context/actions/updatedFrontendFrameworkTestCaseActions';
 import { uid } from 'uid';
+import { GlobalContext } from './reducers/globalReducer';
+
 
 export const RTFsContexts = createContext();
 
@@ -34,6 +36,8 @@ const RTFsContextsProvider = ({ children }) => {
     reactTestFileReducer,
     initialReactTestFileState
   );
+ const [{ testFramework }] = useContext(GlobalContext);
+ console.log('[RTFsContextProvider] testFramework from GlobalContext:', testFramework);
 
   const setChildrenComponents = (
     parent
@@ -72,6 +76,10 @@ const RTFsContextsProvider = ({ children }) => {
           childComponent['statementType'] === 'render' //&&
           //(!extraClauses || !extraClauses['setupTeardownExist'])
         ) {
+
+          if (childComponent['type'] === 'visit') {
+            console.log('Rendering a Cypress visit statement:', childComponent);
+}
           arrayOfChildComponents.push(
             <Render
               blockObjectsState={childComponent}
@@ -113,17 +121,23 @@ const RTFsContextsProvider = ({ children }) => {
       </Accordion>;
     });
   };
+ 
 
-  const handleAddBlock = (
-    e: React.SyntheticEvent,
-    objectType: String,
-    addObjectToWhere: String //filepath
-  ) => {
-    const newObjectsKey = uid(8);
-    rTFDispatch(
-      addObjectToStateObject(objectType, addObjectToWhere, newObjectsKey)
-    );
-  };
+const handleAddBlock = (
+  e: React.SyntheticEvent,
+  objectType: string,
+  addObjectToWhere: string // filepath
+) => {
+  const newObjectsKey = uid(8);
+
+  // what is subType?
+  console.log('[RTFsContext] testFramework from GlobalContext:', testFramework);
+
+  const subType = objectType === 'render' && testFramework === 'cypress' ? 'visit' : undefined;
+  console.log('subType in RTFsC:', subType)
+
+  rTFDispatch(addObjectToStateObject(objectType, addObjectToWhere, newObjectsKey, subType));
+};
 
   const handleChange = (
     pathToTargetStateObject: String,
