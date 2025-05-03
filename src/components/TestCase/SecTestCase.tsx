@@ -25,12 +25,18 @@ const SecTestCase = () => {
     execute = '\r';
   }
 
-  // sends user to webpage to authenticate use of snyk in terminal
+  /**
+   * Authenticate Snyk
+   * Sends a command to the terminal to authenticate the user with Snyk.
+   */
   const snykAuth = () => {
+    // On Windows, set the execution policy to unrestricted before running Snyk commands
     if (os.platform() === 'win32') {
       ipc.send('terminal.toTerm', `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted ${execute}`);
     }
+    // Send the Snyk authentication command to the terminal
     ipc.send('terminal.toTerm', `snyk auth ${execute}`);
+    // Switch to the terminal tab in the UI
     dispatchToGlobal(setTabIndex(2));
   };
 
