@@ -3,11 +3,8 @@ const { ipcRenderer } = require('electron');
 // used to format testFileCode which is a string
 // --> makes sure code is readable
 const beautify = require('js-beautify');
-import { GlobalContext } from './reducers/globalReducer';
-import { useContext } from 'react';
 
 function useGenerateTest(test, projectFilePath) {
-  const [{testFramework}] = useContext(GlobalContext);
   return (testState, mockDataState) => {
     let testFileCode = '';
 
@@ -902,12 +899,9 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-    console.log('Outer OUTER If Type Log', testFramework);
     //! ADD SINON ASSERT STARTERS HERE 'SINON.'
     // Assertion Jest Test Code
     const addAssertion = (assertion, type = 'react') => {
-      //! log the testFramework inside of the components
-      console.log('Outer If Type Log', testFramework);
       // if (type === 'solid') *********************************************
       if (type === 'solid') {
         testFileCode += `expect(screen.${
@@ -918,24 +912,12 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
       if (type === 'react') {
-        console.log('dis shit working')
-        console.log('inside da if statement',testFramework)
-        if(testFramework === 'jest'){
-          testFileCode += `expect(${
+        testFileCode += `expect(${
           assertion.queryVariant + assertion.querySelector
         }
           (${assertion.queryValue})).${assertion.matcherType}(${
           assertion.matcherValue
         });`;
-        }
-        if(testFramework === 'sinon'){
-          testFileCode += `sinon.spy(${
-            assertion.queryVariant + assertion.querySelector
-          }
-            (${assertion.queryValue})).${assertion.matcherType}(${
-            assertion.matcherValue
-          });`;
-        }
       }
       if (type === 'vue') {
         if (assertion.querySelector) {
@@ -955,43 +937,43 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
     };
-    // //! SINON ADD ASSERTION HERE
-    // const addAssertionSinon = (assertion, type = 'react', testFramework) => {
-    //   // if (type === 'solid' && testFramework === 'sinon') *********************************************
-    //   if (type === 'solid') {
-    //     testFileCode += `expect(screen.${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    //   if (type === 'react' && testFramework === 'sinon') {
-    //     testFileCode += `sinon.spy(${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    //   if (type === 'vue') {
-    //     if (assertion.querySelector) {
-    //       testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue}).
-    //         ${assertion.querySelector}()).${assertion.matcherType}(${assertion.matcherValue});`;
-    //     } else {
-    //       testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
-    //         ${assertion.matcherType}(${assertion.matcherValue});`;
-    //     }
-    //   }
-    //   if (type === 'svelte') {
-    //     testFileCode += `expect(screen.${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    // };
+    //! SINON ADD ASSERTION HERE
+    const addAssertionSinon = (assertion, type = 'react', testFramework) => {
+      // if (type === 'solid' && testFramework === 'sinon') *********************************************
+      if (type === 'solid') {
+        testFileCode += `expect(screen.${
+          assertion.queryVariant + assertion.querySelector
+        }
+          (${assertion.queryValue})).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
+      }
+      if (type === 'react' && testFramework === 'sinon') {
+        testFileCode += `sinon.spy(${
+          assertion.queryVariant + assertion.querySelector
+        }
+          (${assertion.queryValue})).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
+      }
+      if (type === 'vue') {
+        if (assertion.querySelector) {
+          testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue}).
+            ${assertion.querySelector}()).${assertion.matcherType}(${assertion.matcherValue});`;
+        } else {
+          testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
+            ${assertion.matcherType}(${assertion.matcherValue});`;
+        }
+      }
+      if (type === 'svelte') {
+        testFileCode += `expect(screen.${
+          assertion.queryVariant + assertion.querySelector
+        }
+          (${assertion.queryValue})).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
+      }
+    };
 
     // Middleware Jest Test Code
     const addMiddleware = (middleware) => {
@@ -1754,8 +1736,6 @@ function useGenerateTest(test, projectFilePath) {
 
       //---------------------------------------------------React switch statement---------------------------------------------
       case 'react':
-        //! LOOKING FOR A LOG
-        console.log('Current Test Framework:',testFramework);
         var reactTestCase = testState;
         var mockData = mockDataState;
         return (
