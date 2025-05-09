@@ -6,6 +6,8 @@ import { updateAction, updateAssertion } from '../../context/actions/frontendFra
 import { eventTypesList } from '../TypesList/eventTypesList';
 import { matcherTypesList as jestMatchers } from '../TypesList/matcherTypesList';
 import { cypressMatcherTypesList } from '../../components/TypesList/cypressMatcherTypeList'; //! added hereeeeeeeeee
+import { mochaMatcherTypesList } from '../TypesList/mochaMatcherTypesList';
+import { sinonMatcherTypesList } from '../TypesList/sinonMatcherTypesList'
 import { AutoCompleteProps, AutoCompleteStatement } from '../../utils/reactTypes';
 
 import { GlobalContext } from '../../context/reducers/globalReducer';
@@ -86,6 +88,8 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
               ? cypressMatcherTypesList
               : testFramework === 'mocha'
               ? mochaMatcherTypesList
+              : testFramework === 'sinon'
+              ? sinonMatcherTypesList
               : jestMatchers
           ).filter((matcher) =>
             matcher.name.toLowerCase().startsWith(inputValue)

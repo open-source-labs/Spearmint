@@ -43,7 +43,7 @@ export interface GlobalStateTypes {
   tabIndex: number,
   isGuest: boolean,
   theme: any,
-  testFramework: 'jest' | 'cypress' | 'mocha'; //! added new global testframework
+  testFramework: 'jest' | 'cypress' | 'mocha' | 'sinon'; //! added new global testframework
 }
 
 /**
