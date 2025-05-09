@@ -9,6 +9,7 @@ import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
 
+
 const questionIcon = require('../../../assets/images/help-circle.png');
 
 // This is tracking the assertions that you have in a certain test, following the flow of data will help 
@@ -52,7 +53,7 @@ const Assertion = ({ statement, describeId, itId, statementId }: ReactTestCompon
       'toHaveFormValues', //takes in an object Ex: {username: 'jane.doe', rememberMe:}
       'toHaveStyle', //takes in a sting value Ex: 'display: none'
       'toHaveTextContent', //takes in a string value Ex: 'Content'
-      'toBe', //
+      'toBe',
       'toHaveBeenCalledTimes',
       'toHaveBeenCalledWith',
       'toHaveBeenLastCalledWith',
