@@ -11,6 +11,7 @@ export interface ReactTestCaseTypes {
   itId: number;
   statementId: number;
   propId: number;
+  visitId: number;
   describeBlocks: DescribeBlocks;
   itStatements: ItStatements;
   statements: Statements;
@@ -67,6 +68,7 @@ export interface StatementsById {
     describeId: string;
     type: string;
     props: Array<Prop>; // example: <Login username="testUser" />
+    visits: Array<Visit>  //! added
   };
 }
  
@@ -75,7 +77,7 @@ export interface StatementsById {
 
 export interface Action {
   type: string;
-  id?: number;
+  id?: string;
   serverFileName?: string;
   serverFilePath?: string;
   draggableStatements?: Array<ReactStatements>;
@@ -86,6 +88,7 @@ export interface Action {
   dbFilePath?: string;
   dbFileName?: string;
   testState?: object;
+
 }
 
 export interface Assertion {
@@ -145,6 +148,13 @@ export interface Prop {
   propKey: string;
   propValue: string;
 }
+//! ADDED
+export interface Visit {
+  id: string;
+  statementId: string;
+  visitKey: string;
+  visitValue: string;
+}
 
 export interface PropProps {
   statementId: string;
@@ -155,12 +165,22 @@ export interface PropProps {
   theme: string;
 }
 
+export interface VisitProps {
+  statementId: string;
+  visitId: string;
+  visitKey: string;
+  visitValue: string;
+  dispatchToTestCase: Function;
+  theme: string;
+}
+
 export interface RenderStatement {
   id: string;
   itId: string;
   describeId: string;
   type: string;
   props: Prop[];
+  visits?: Visit[]; //! ADDED to store condintional visit input value
 }
 
 export interface RenderProps {
@@ -170,6 +190,12 @@ export interface RenderProps {
   itId: string;
 }
 
+export interface RenderVisit {
+  statement: RenderStatement;
+  statementId: string;
+  describeId: string;
+  itId: string;
+}
 
 
 export interface AutoCompleteStatement {
@@ -233,7 +259,12 @@ export interface ReactReducerAction {
   matcherValue: string;
   componentName: string;
   filePath: string;
+
   propKey: string;
   propValue: string;
-  subType?: 'visit'| undefined; //! ADDED
+
+  subType?: 'visit'| ''; //! ADDED
+  visitId?: string;
+  visitKey?: string;
+  visitValue?: string;
 }

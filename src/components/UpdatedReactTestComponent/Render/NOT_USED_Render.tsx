@@ -19,16 +19,11 @@ const Render = ({ blockObjectsState }) => {
 
   const [{ theme, testFramework}] = useContext(GlobalContext);
   const { handleAddBlock, handleChange, handleDeleteBlock } =
-    useContext(RTFsContexts);
+    useContext(RTFsContexts) as any;
 
    
 
-const isVisitRender = thisBlockObjectsState.type === 'visit';
-
-
-
-console.log('Render block type:', thisBlockObjectsState.type);
-console.log('Render block object:', thisBlockObjectsState);
+    console.log("=== ACTIVE RENDER: UpdatedReactTestComponent");
 
 
 

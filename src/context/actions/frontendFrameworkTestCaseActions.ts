@@ -33,6 +33,12 @@ export const actionTypes = {
   DELETE_PROP: 'DELETE_PROP',
   UPDATE_PROP: 'UPDATE_PROP',
 
+//! NEW CONDITIONAL RENDER VISIT URL INPUT
+  UPDATE_RENDER_URL: 'UPDATE_RENDER_URL', 
+  DELETE_RENDER_URL: 'DELETE_RENDER_URL',
+  ADD_VISIT: 'ADD_VISIT',
+  UPDATE_VISIT: 'UPDATE_VISIT',
+
   CREATE_NEW_TEST: 'CREATE_NEW_TEST',
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
@@ -206,6 +212,36 @@ export const updateProp = (statementId: string, id: string, propKey: string, pro
   propKey,
   propValue,
 });
+// action creators
+ //! NEW ACTION CREATOR FOR BOTH KEY AND VALUE CHANGE 
+export const updateRenderUrl = (statementId: string, id: string, visitKey: string, visitValue: string) => ({
+  type: actionTypes.UPDATE_RENDER_URL,
+  id,
+  statementId,
+  visitKey,
+  visitValue,
+});
+ //! NEW ACTION CREATOR FOR DELETING COMPONENT 
+export const deleteRenderUrl = (statementId: string, id: string) => {
+  return {
+    type: actionTypes.DELETE_RENDER_URL,
+    id,
+    statementId,
+  };
+};
+
+//! NEW ACTION CREATOR for adding the component
+export const addVisit = (statementId: string,) => ({
+  type: actionTypes.ADD_VISIT,
+  statementId,
+});
+
+export const updateVisit = (statementId: string, visitId: string) => ({
+  type: actionTypes.UPDATE_VISIT,
+  statementId,
+  visitId,
+});
+
 
 
 export const createNewTest = () => ({

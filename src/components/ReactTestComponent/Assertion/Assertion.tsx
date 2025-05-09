@@ -61,8 +61,8 @@ const Assertion = ({
   const needsMatcherValue = (matcherType: string) => {
     if (testFramework === 'cypress') {
       return cypressMatchersWithValues.includes(matcherType);
-    // } else if (testFramework === 'mocha') {
-    //   return mochaMatchersWithValues.includes(matcherType);
+    } else if (testFramework === 'mocha') {
+      return mochaMatchersWithValues.includes(matcherType);
     }
     return jestMatchersWithValues.includes(matcherType);
   };
@@ -158,7 +158,7 @@ const Assertion = ({
     'should.not.have.value',
   ];
   // need to create mochaMatcherTypesList.ts
- // const mochaMatchersWithValues: string[] = []
+ const mochaMatchersWithValues: string[] = []
 
 
   return (

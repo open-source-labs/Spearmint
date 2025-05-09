@@ -1,7 +1,3 @@
-/**
- * ?
- */
-
 import React from 'react';
 import styles from './Prop.module.scss';
 import { deleteProp, updateProp } from '../../../context/actions/frontendFrameworkTestCaseActions';
@@ -29,8 +25,7 @@ const Prop = ({ statementId, propId, propKey, propValue, dispatchToTestCase, the
 
   return (
     <div id={styles[`renderPropsFlexBox${theme}`]}>
-      <input type='text' id='propKey' value={propKey} onChange={handleChangeUpdatePropKey} />
-      <input
+      <input type='text' id='propKey' value={propKey} onChange={handleChangeUpdatePropKey} /> <input
         type='text'
         id='propValue'
         value={propValue}

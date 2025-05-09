@@ -7,6 +7,7 @@ import {
   DescribeBlocks,
   Statements,
   Prop,
+  Visit,
   StatementsById,
   ReactReducerAction,
 } from '../../utils/reactTypes';
@@ -20,6 +21,7 @@ export const reactTestCaseState: ReactTestCaseTypes = {
   itId: 1,
   statementId: 1,
   propId: 1,
+  visitId: 1, // ! unsure if this should be 1
   describeBlocks: {
     byId: {
       describe0: {
@@ -49,6 +51,7 @@ export const reactTestCaseState: ReactTestCaseTypes = {
         describeId: 'describe0',
         type: 'render',
         props: [],
+        visits: [], //! added visits array
       },
     },
     allIds: ['statement0'],
@@ -120,6 +123,8 @@ const createRender = (
   props: [],
 });
 */
+
+// ! create Render Factory
  const createRender = (
   describeId: string,
   itId: string,
@@ -134,7 +139,7 @@ const createRender = (
       type: 'visit',
       statementType: 'render',
       objectType: 'statement',
-      visitUrl: '', // will be updated in the UI
+      visits: [], // Initializing visits
     };
   }
 
@@ -147,7 +152,10 @@ const createRender = (
     objectType: 'statement',
     props: [],
   };
+
 };
+
+
 
 
 
@@ -156,6 +164,13 @@ const createProp = (propId: string, statementId: string) => ({
   statementId,
   propKey: '',
   propValue: '',
+});
+
+const createVisit = (visitId: string, statementId: string) => ({
+  id: visitId,
+  statementId,
+  visitKey: '',
+  visitValue: '',
 });
 
 // The function deleteChildren, is now split into two separate functions, based on the object type, as trying to reference the type of 'object' based on a conditional statement was throwing errors throughout the reducer actionTypes /////
@@ -573,6 +588,8 @@ export const reactTestCaseReducer = (
       };
     }
 
+
+    //! RENDERRRR
     case actionTypes.ADD_RENDER: {
       console.log('[ADD_RENDER] action:', action);  // logged action inside reducer
 
@@ -643,6 +660,90 @@ export const reactTestCaseReducer = (
       };
     }
 
+        //! VISIT ACTION BUILDERS
+    case actionTypes.ADD_VISIT: {
+      const { statementId } = action;
+      const visitId = `visit${state.visitId}`;
+      const { byId } = statements;
+      let updatedVisitId = state.visitId;
+
+      return {
+        ...state,
+        visitId: ++updatedVisitId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              visits: [
+                ...statements.byId[statementId].visits,
+                createVisit(visitId, statementId),
+              ],
+            },
+          },
+        },
+      };
+    }
+// now dispatching updateRenderUrl will actually update the visits array 
+
+
+    //!!!!!! ADD DELETE_PROP and UPDATE_PROP
+
+    case actionTypes.UPDATE_RENDER_URL: {
+      const { id, statementId, visitKey, visitValue } = action;
+      // visits array of key value paitrs 
+
+      const updatedVisits = statements.byId[statementId].visits.map((visit) =>
+        visit.id === id
+          ? { ...visit, visitKey, visitValue }
+          : visit
+      )    
+
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              visits: updatedVisits,
+            },
+          },
+        },
+      };
+    }
+
+
+
+    case actionTypes.DELETE_RENDER_URL: {
+      const { id, statementId } = action;
+      const urls = statements.byId[statementId].visits.filter(
+        (visit: Visit) => visit.id !== id
+      );
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              urls,
+            },
+          },
+        },
+      };
+    }
+
+
+
+
+
+
+
+
     case actionTypes.ADD_PROP: {
       const { statementId } = action;
       const propId = `prop${state.propId}`;
@@ -690,7 +791,7 @@ export const reactTestCaseReducer = (
       const { id, statementId, propKey, propValue } = action;
       const updatedProps = [...statements.byId[statementId].props];
 
-      updatedProps.forEach((prop) => {
+      updatedProps.forEach((prop) => { //! for each mutates stateeeee
         if (prop.id === id) {
           prop.propKey = propKey;
           prop.propValue = propValue;

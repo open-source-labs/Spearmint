@@ -13,19 +13,25 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 import InputTextField from '../InputTextField';
 
 const HooksTestCase = (): JSX.Element => {
-  
   // hooksStatements array of of objects of interface Hooks from hooksTestCaseState
-  const [{ hooksStatements }, dispatchToHooksTestCase] = useContext(HooksTestCaseContext);
+  const [{ hooksStatements }, dispatchToHooksTestCase] =
+    useContext(HooksTestCaseContext);
   // extract theme from GlobalContext
-  const [{theme}] = useContext(GlobalContext);
+  const [{ theme }] = useContext(GlobalContext);
 
   // handle text input in Describe Block input field
-  const handleUpdateHooksTestStatement = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleUpdateHooksTestStatement = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     dispatchToHooksTestCase(updateHooksTestStatement(e.target.value));
   };
 
   // reorder array of Hooks
-  const reorder = (list: Hooks[], startIndex: number, endIndex: number): Hooks[] => {
+  const reorder = (
+    list: Hooks[],
+    startIndex: number,
+    endIndex: number
+  ): Hooks[] => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -39,30 +45,32 @@ const HooksTestCase = (): JSX.Element => {
 
   return (
     <>
-      <div id='head'>
-      <h2 id={styles[`testName${theme}`]}>Hooks Testing</h2>
+      <div id="head">
+        <h2 id={styles[`testName${theme}`]}>Hooks Testing</h2>
         <HooksTestMenu />
       </div>
       <div id={styles[`testMockSection${theme}`]}>
         <div className={styles.header}>
-          <div className={styles.searchInput} style={{marginLeft: '16px'}}>
-        <InputTextField
-          size='small'
-          variant='outlined'
-          placeholder='+Describe Block'
-          type='text'
-          onChange={handleUpdateHooksTestStatement}/>
+          <div className={styles.searchInput} style={{ marginLeft: '16px' }}>
+            <InputTextField
+              size="small"
+              variant="outlined"
+              placeholder="+Describe Block"
+              type="text"
+              onChange={handleUpdateHooksTestStatement}
+            />
           </div>
         </div>
       </div>
-              <HooksTestStatements />
+      <HooksTestStatements />
       <div id={styles[`PaintTime${theme}`]}>
-        <Button 
-          className='hookUpdatesButton' 
-          type='button' 
-          variant='outlined'
-          size='medium'
-          onClick={handleAddHookUpdates}>
+        <Button
+          className="hookUpdatesButton"
+          type="button"
+          variant="outlined"
+          size="medium"
+          onClick={handleAddHookUpdates}
+        >
           Hooks
         </Button>
       </div>
