@@ -58,11 +58,14 @@ const Assertion = ({
   //   return matchersWithValues.includes(matcherType);
   // };
 
+  //! INCLUDED SINON MATCHER TYPES
   const needsMatcherValue = (matcherType: string) => {
     if (testFramework === 'cypress') {
       return cypressMatchersWithValues.includes(matcherType);
     } else if (testFramework === 'mocha') {
       return mochaMatchersWithValues.includes(matcherType);
+    } else if (testFramework === 'sinon'){
+      return sinonMatchersWithValues.includes(matcherType);
     }
     return jestMatchersWithValues.includes(matcherType);
   };
@@ -190,6 +193,14 @@ const Assertion = ({
     'to.equal',
     'to.match',
     'to.throw',
+  ]
+
+  const sinonMatchersWithValues: string[] = [
+    'called', //sinon.assert.called (sinon)
+    'callCount',//spy.callCount (sinon)
+    'calledWith',//spy.calledWith (sinon)
+    'neverCalledWith',//spy.neverCalledWith (sinon)
+    'returned'//spy.returned (sinon)
   ]
 
 

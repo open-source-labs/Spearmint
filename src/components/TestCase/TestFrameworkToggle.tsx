@@ -27,6 +27,7 @@ const TestFrameworkToggle = () => {
         <MenuItem value="jest">Jest</MenuItem>
         <MenuItem value="cypress">Cypress</MenuItem>
         <MenuItem value="mocha">Mocha</MenuItem>
+        <MenuItem value="sinon">Sinon</MenuItem>
       </Select>
     </FormControl>
   );
