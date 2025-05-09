@@ -10,11 +10,10 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
  * @returns { JSX.Element } Returns the LeftPanel react component
  */
 const LeftPanel = () => {
-
+//! Testing test Framework context
   const [{ theme }] = useContext(
     GlobalContext
   );
-
   return (
     <div id={styles[`leftPanel${theme}`]}>
       <TestFile/>    
