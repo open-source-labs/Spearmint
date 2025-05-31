@@ -9,14 +9,17 @@ import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
 
+
 const questionIcon = require('../../../assets/images/help-circle.png');
+
+import CypressAction from '../Action/cypressAction';
 
 // This is tracking the actions that you have in a specific test, following the flow of data will
 // help you better understand exactly how this is working
 
-type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
+type ReactEventType = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
 
-type FieldTypes = (
+type FieldType = (
   'eventType'
   | 'eventValue' // click
   | 'queryVariant' // getBy
@@ -30,10 +33,10 @@ const Action = ({ statement, statementId, describeId, itId }: ReactTestComponent
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext); // test case data, [describe, it, action ] blocks.. reactTestCaseReducer
 
 
-  const [{theme}] = useContext(GlobalContext)
+  const [{theme, testFramework }] = useContext(GlobalContext)
 
   //** */ Updates a field in the current action
-  const handleChangeActionFields = (e: EventTypes, field: FieldTypes) => {
+  const handleChangeActionFields = (e: ReactEventType, field: FieldType) => {
     let updatedAction = { ...statement };
     updatedAction[field] = e.target.value; //** Query Selector dropdown, Query Target dropdown, Query Value input*/
     dispatchToReactTestCase(updateAction(updatedAction)); // Sends a copy of the current modified action to Redux
@@ -63,7 +66,24 @@ const Action = ({ statement, statementId, describeId, itId }: ReactTestComponent
   };
   //**This eventually gets turned into this test code */
 
+
+
+
+ 
   return (
+  <>
+    {testFramework === 'cypress' ? (
+      <CypressAction
+        statement={statement}
+        statementId={statementId}
+        describeId={describeId}
+        itId={itId}
+      />
+    ): (
+// Jest-style Action block
+
+
+    
     <div id={styles[`action${theme}`]}>
       <AiOutlineClose id={styles.close} onClick={handleClickDeleteAction} />
         <span className={styles.header}>
@@ -173,6 +193,9 @@ const Action = ({ statement, statementId, describeId, itId }: ReactTestComponent
         
       </div>
     </div>
+        )}
+    </>
+
   );
 };
 

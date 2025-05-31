@@ -165,6 +165,7 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
+    //! React handler
     const addReactStatements = (itId) => {
       const statements = reactTestCase.statements;
       const methods = identifyMethods(itId);
@@ -200,11 +201,31 @@ function useGenerateTest(test, projectFilePath) {
 
     // Render Jest Test Code
     const addRender = (statement, methods) => {
+    if (testFramework === 'cypress') {
+       let cyChain = 'cy';
+       
+    // Look for visit info if it exists
+    const visit = statement.visits?.[0]; // one visit per statement for now
+
+    if (visit && visit.visitValue) {
+      const fullUrl = `${visit.visitKey || ''}${visit.visitValue}`;
+      console.log('🧪 Generating test code:', `cy.visit('${fullUrl}')`);
+
+       cyChain += `.visit('${fullUrl}');`;
+    }
+    testFileCode += cyChain + `;\n`
+  
+
+
+    } else {
       let props = createRenderProps(statement.props);
       const formattedComponentName =
         reactTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
+    }
     };
+
+
 
     // Render Props Jest Test Code
     const createRenderProps = (props) => {
@@ -212,6 +233,8 @@ function useGenerateTest(test, projectFilePath) {
         return acc + `${prop.propKey}={${prop.propValue}}`;
       }, '');
     };
+
+
 
     /* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
 
@@ -858,9 +881,25 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
-    const addAction = (action, type = 'react') => {
+    // injest action block current data
+    const addAction = (action, type = 'react') => { //! REACT
       if (type === 'react') {
-        if (action.eventValue) {
+        if (testFramework === 'cypress' && Array.isArray(action.commandChain)) {
+          let cyChain = 'cy';
+          action.commandChain.forEach((step) => {
+            const {selectorType, selectorValue, actionType, actionValue} = step;
+            if ( selectorType && selectorValue) {
+              cyChain += `.${selectorType}(${selectorValue})`; // cy.get(something)
+            }
+            if (actionType) {
+              cyChain += `.${actionType}(${actionValue ? `'${actionValue}'` : ''})` // ...type(somehting)
+            }
+          })
+          testFileCode += cyChain + `;\n` // ! END OF CYPRESS TEST
+        
+        } 
+        //! Jest testing logic
+        else if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(${
             action.queryVariant + action.querySelector
           }
@@ -873,7 +912,9 @@ function useGenerateTest(test, projectFilePath) {
           }
           (${action.queryValue}));`;
         }
-      } else if (type === 'solid') {
+      } else if (type === 'solid') { //! SOLID
+
+
         if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(screen.${
             action.queryVariant + action.querySelector
@@ -887,7 +928,9 @@ function useGenerateTest(test, projectFilePath) {
           }
           (${action.queryValue}));`;
         }
-      } else if (type === 'vue') {
+      } else if (type === 'vue') { //! VUE
+
+
         testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
       } else if (type === 'svelte') {
         if (action.eventValue) {
@@ -902,13 +945,15 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-    console.log('Outer OUTER If Type Log', testFramework);
-    //! ADD SINON ASSERT STARTERS HERE 'SINON.'
+
+
+    
+
     // Assertion Jest Test Code
     const addAssertion = (assertion, type = 'react') => {
+
       //! log the testFramework inside of the components
-      console.log('Outer If Type Log', testFramework);
-      // if (type === 'solid') *********************************************
+
       if (type === 'solid') {
         testFileCode += `expect(screen.${
           assertion.queryVariant + assertion.querySelector
@@ -918,8 +963,7 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
       if (type === 'react') {
-        console.log('dis shit working')
-        console.log('inside da if statement',testFramework)
+
         if(testFramework === 'jest'){
           testFileCode += `expect(${
           assertion.queryVariant + assertion.querySelector
@@ -928,6 +972,7 @@ function useGenerateTest(test, projectFilePath) {
           assertion.matcherValue
         });`;
         }
+
         if(testFramework === 'sinon'){
           testFileCode += `sinon.spy(${
             assertion.queryVariant + assertion.querySelector
@@ -936,6 +981,17 @@ function useGenerateTest(test, projectFilePath) {
             assertion.matcherValue
           });`;
         }
+
+        if(testFramework === 'cypress'){
+          testFileCode += `should.(${
+          assertion.queryVariant + assertion.querySelector
+        }
+          (${assertion.queryValue})).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
+        }
+
+
       }
       if (type === 'vue') {
         if (assertion.querySelector) {
@@ -955,43 +1011,7 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
     };
-    // //! SINON ADD ASSERTION HERE
-    // const addAssertionSinon = (assertion, type = 'react', testFramework) => {
-    //   // if (type === 'solid' && testFramework === 'sinon') *********************************************
-    //   if (type === 'solid') {
-    //     testFileCode += `expect(screen.${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    //   if (type === 'react' && testFramework === 'sinon') {
-    //     testFileCode += `sinon.spy(${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    //   if (type === 'vue') {
-    //     if (assertion.querySelector) {
-    //       testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue}).
-    //         ${assertion.querySelector}()).${assertion.matcherType}(${assertion.matcherValue});`;
-    //     } else {
-    //       testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
-    //         ${assertion.matcherType}(${assertion.matcherValue});`;
-    //     }
-    //   }
-    //   if (type === 'svelte') {
-    //     testFileCode += `expect(screen.${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    // };
+
 
     // Middleware Jest Test Code
     const addMiddleware = (middleware) => {

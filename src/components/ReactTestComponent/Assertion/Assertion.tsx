@@ -11,8 +11,10 @@ import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseRed
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
+import CypressAssertion from '../Assertion/CypressAssertion'
 
 const questionIcon = require('../../../assets/images/help-circle.png');
+
 
 // This is tracking the assertions that you have in a certain test, following the flow of data will help
 // you better understand how exactly this is working
@@ -41,9 +43,10 @@ const Assertion = ({
     let updatedAssertion = { ...statement };
     updatedAssertion[field] = e.target.value;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
-  };
+  }; //! UPDATE WHICH UI INPUT FIELD
 
-  const handleIsNot = () => {
+  //handleIsNot checkbox 
+ const handleCheckboxChange = () => {
     let updatedAssertion = { ...statement };
     updatedAssertion.isNot = !updatedAssertion.isNot;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
@@ -60,9 +63,7 @@ const Assertion = ({
 
   //! INCLUDED SINON MATCHER TYPES
   const needsMatcherValue = (matcherType: string) => {
-    if (testFramework === 'cypress') {
-      return cypressMatchersWithValues.includes(matcherType);
-    } else if (testFramework === 'mocha') {
+   if (testFramework === 'mocha') {
       return mochaMatchersWithValues.includes(matcherType);
     } else if (testFramework === 'sinon'){
       return sinonMatchersWithValues.includes(matcherType);
@@ -144,22 +145,9 @@ const Assertion = ({
     'not.toHaveTextContent', //takes in a string value Ex: 'Content'
   ];
 
-  const cypressMatchersWithValues: string[] = [
-    'should.have.text',
-    'should.have.value',
-    'should.contain',
-    'should.have.attr',
-    'should.have.class',
-    'should.have.css',
-    'should.have.length',
-    'should.include',
-    'should.eq',
-    'should.be.disabled',
-    'should.be.visible',
-    'should.not.be.visible',
-    'should.not.exist',
-    'should.not.have.value',
-  ];
+
+
+
   // need to create mochaMatcherTypesList.ts
   const mochaMatchersWithValues: string[] = [
     'to.have.text',
@@ -205,6 +193,18 @@ const Assertion = ({
 
 
   return (
+
+      <>
+    {testFramework === 'cypress' ? (
+      <CypressAssertion
+        statement={statement}
+        statementId={statementId}
+        describeId={describeId}
+        itId={itId}
+      />
+    ): (       
+
+
     <section id={styles[`assertion${theme}`]} data-testid="assertionCard">
       <AiOutlineClose id={styles.close} onClick={handleClickDelete} />
       <div className={styles.actionHeader}>
@@ -214,6 +214,8 @@ const Assertion = ({
         </span>
       </div>
       <div id={styles.queryFlexBox}>
+
+        {/* Query Selector Block */}
         <div id={styles.querySelector}>
           <label htmlFor="queryVariant" className={styles.queryLabel}>
             Query Selector
@@ -285,6 +287,8 @@ const Assertion = ({
       </div>
       <div>
         <div id={styles.matcherFlexBox}>
+
+          
           <div id={styles.matcherLeft}>
             <div id={styles.matcherLabelFlexBox}>
               <div>
@@ -295,12 +299,11 @@ const Assertion = ({
                 <input
                   type="checkbox"
                   checked={statement.isNot}
-                  onChange={(e) => {
-                    handleIsNot();
-                  }}
+                  onChange={handleCheckboxChange} // moved to named handler 
                 />
               </div>
             </div>
+
             <div id={styles.autoTool}>
               <AutoComplete
                 statement={statement}
@@ -317,7 +320,10 @@ const Assertion = ({
                 </span>
               </span>
             </div>
+
           </div>
+
+
           {needsMatcherValue(statement.matcherType) && (
             <div>
               <span id={styles.matcherVal}>
@@ -332,9 +338,13 @@ const Assertion = ({
               </span>
             </div>
           )}
+
+
         </div>
       </div>
     </section>
+     )}
+    </>
   );
 };
 
