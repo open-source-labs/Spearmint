@@ -981,12 +981,13 @@ function useGenerateTest(test, projectFilePath) {
             assertion.matcherValue
           });`;
         }
+// click();
+//     
+//       ().should.have.text(welcome);
 
         if(testFramework === 'cypress'){
-          testFileCode += `should.(${
-          assertion.queryVariant + assertion.querySelector
-        }
-          (${assertion.queryValue})).${assertion.matcherType}(${
+          testFileCode += `${assertion.queryVariant + assertion.querySelector}
+          (${assertion.queryValue}).${assertion.matcherType}(${
           assertion.matcherValue
         });`;
         }
