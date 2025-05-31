@@ -92,6 +92,7 @@ const createAction = (
   suggestions: [],
 });
 
+
 const createAssertion = (
   describeId: string,
   itId: string,
@@ -125,24 +126,7 @@ const createRender = (
 */
 
 // ! create Render Factory
- const createRender = (
-  describeId: string,
-  itId: string,
-  statementId: string,
-  subType?: string
-) => {
-  if (subType === 'visit') {
-    return {
-      id: statementId,
-      itId,
-      describeId,
-      type: 'visit',
-      statementType: 'render',
-      objectType: 'statement',
-      visits: [], // Initializing visits
-    };
-  }
-
+ const createRender = (describeId: string, itId: string, statementId: string) => {
   return {
     id: statementId,
     itId,
@@ -151,8 +135,8 @@ const createRender = (
     statementType: 'render',
     objectType: 'statement',
     props: [],
+    visits: [] // updated
   };
-
 };
 
 
@@ -514,6 +498,28 @@ export const reactTestCaseReducer = (
       };
     }
 
+    //! Cypress Update command chain
+    // added Property 'commandChain' on type 'ReactReducerAction' in reactTypes.ts
+    case actionTypes.UPDATE_COMMAND_CHAIN: {
+  const { id, commandChain } = action;
+  return {
+    ...state,
+    statements: {
+      ...state.statements,
+      byId: {
+        ...state.statements.byId,
+        [id]: {
+          ...state.statements.byId[id],
+          commandChain,
+        },
+      },
+    },
+  };
+}
+
+
+
+
     case actionTypes.ADD_ASSERTION: {
       const { describeId, itId } = action;
       const byIds = { ...statements.byId };
@@ -594,7 +600,7 @@ export const reactTestCaseReducer = (
       console.log('[ADD_RENDER] action:', action);  // logged action inside reducer
 
 
-      const { describeId, itId, subType } = action; // extract subType from action
+      const { describeId, itId } = action; // extract subType from action
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
@@ -608,7 +614,7 @@ export const reactTestCaseReducer = (
           ...statements,
           byId: {
             ...byIds,
-            [statementId]: createRender(describeId, itId, statementId, subType),
+            [statementId]: createRender(describeId, itId, statementId),
           },
           allIds: [...allIds, statementId],
         },
@@ -622,7 +628,7 @@ export const reactTestCaseReducer = (
           ...statements,
           byId: {
             ...byIds,
-            [statementId]: createRender(describeId, itId, statementId, subType),
+            [statementId]: createRender(describeId, itId, statementId, ),
           },
           allIds: [...allIds, statementId],
         },
@@ -688,17 +694,39 @@ export const reactTestCaseReducer = (
 // now dispatching updateRenderUrl will actually update the visits array 
 
 
+//  const createRender = (describeId: string, itId: string, statementId: string) => {
+//   return {
+//     id: statementId,
+//     itId,
+//     describeId,
+//     type: 'render',
+//     statementType: 'render',
+//     objectType: 'statement',
+//     props: [],
+//     visits: [] // updated
+//   };
+// };
     //!!!!!! ADD DELETE_PROP and UPDATE_PROP
-
     case actionTypes.UPDATE_RENDER_URL: {
       const { id, statementId, visitKey, visitValue } = action;
-      // visits array of key value paitrs 
 
-      const updatedVisits = statements.byId[statementId].visits.map((visit) =>
-        visit.id === id
-          ? { ...visit, visitKey, visitValue }
-          : visit
-      )    
+      // visits array of key value paitrs 
+  const statement = statements.byId[statementId];
+
+  const currentVisits = Array.isArray(statement.visits) ? statement.visits : [];
+
+
+  // If no visits exist, add a new one
+  const updatedVisits =
+    currentVisits.length === 0
+      ? [{ id, visitKey, visitValue }]
+      : currentVisits.map((visit) =>// initialize if empty
+          visit.id === id ? { ...visit, visitKey, visitValue } : visit
+        )
+
+console.log('[Reducer] Updated Visits:', updatedVisits);
+console.log('[ReactTestCase] Statements state:', statements);
+
 
       return {
         ...state,

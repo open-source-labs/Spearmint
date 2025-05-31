@@ -4,7 +4,7 @@
 // Actions for all front end frameworks, React, Solid, Svelete, and Vue can all use this because they 
 // function the same
 
-import { UpdateActionProps, UpdateAssertionProps } from "../../utils/reactTypes";
+import { UpdateActionProps, UpdateAssertionProps, CypressCommandStep, CypressTestActionStatement } from "../../utils/reactTypes";
 
 export const actionTypes = {
   ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',
@@ -20,6 +20,11 @@ export const actionTypes = {
   ADD_ACTION: 'ADD_ACTION',
   DELETE_ACTION: 'DELETE_ACTION',
   UPDATE_ACTION: 'UPDATE_ACTION',
+
+  //!Cypress Action Update
+   // ADD_ACTION: 'ADD_ACTION',
+  // DELETE_ACTION: 'DELETE_ACTION',
+  UPDATE_COMMAND_CHAIN: 'UPDATE_COMMAND_CHAIN',
 
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
@@ -130,6 +135,16 @@ export const updateAction = ({
   suggestions,
 });
 
+export const updateCypressAction = (
+  id: string,
+  commandChain: CypressCommandStep[]
+) => ({
+  type: actionTypes.UPDATE_COMMAND_CHAIN,
+  id,
+  commandChain,
+});
+
+
 /*
 {
   type: 'UPDATE_ACTION',
@@ -173,11 +188,10 @@ export const updateAssertion = ({
   suggestions,
 });
 
-export const addRender = (describeId: string, itId: string, subType?: 'visit') => ({
+export const addRender = (describeId: string, itId: string,) => ({
   type: actionTypes.ADD_RENDER,
   describeId,
   itId,
-  subType,
 });
 
 
@@ -212,15 +226,38 @@ export const updateProp = (statementId: string, id: string, propKey: string, pro
   propKey,
   propValue,
 });
+
+
+
+
 // action creators
  //! NEW ACTION CREATOR FOR BOTH KEY AND VALUE CHANGE 
 export const updateRenderUrl = (statementId: string, id: string, visitKey: string, visitValue: string) => ({
   type: actionTypes.UPDATE_RENDER_URL,
-  id,
   statementId,
-  visitKey,
-  visitValue,
+   id,
+   visitKey,
+   visitValue,
 });
+// console.log('[Reducer] Incoming action:', action);
+// console.log('[Reducer] Current statement:', statement);
+// console.log('[Reducer] Updated visits array:', updatedVisits);
+
+
+
+
+// export const updateCypressAction = (
+//   id: string,
+//   commandChain: CypressCommandStep[]
+// ) => ({
+//   type: actionTypes.UPDATE_COMMAND_CHAIN,
+//   id,
+//   commandChain,
+// });
+
+
+
+
  //! NEW ACTION CREATOR FOR DELETING COMPONENT 
 export const deleteRenderUrl = (statementId: string, id: string) => {
   return {
@@ -230,17 +267,6 @@ export const deleteRenderUrl = (statementId: string, id: string) => {
   };
 };
 
-//! NEW ACTION CREATOR for adding the component
-export const addVisit = (statementId: string,) => ({
-  type: actionTypes.ADD_VISIT,
-  statementId,
-});
-
-export const updateVisit = (statementId: string, visitId: string) => ({
-  type: actionTypes.UPDATE_VISIT,
-  statementId,
-  visitId,
-});
 
 
 

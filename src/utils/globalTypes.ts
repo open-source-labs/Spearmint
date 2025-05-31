@@ -17,7 +17,7 @@ export interface GlobalActionTypes {
   guestState?: string,
   theme?: string,
   fileDirectoryOpen?: string,
-  testFramework?: 'jest' | 'cypress' | 'mocha';
+  testFramework?: 'jest' | 'cypress' | 'mocha' | 'sinon';
 }
 
 export interface GlobalStateTypes {

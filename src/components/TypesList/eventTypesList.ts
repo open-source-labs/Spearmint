@@ -6,7 +6,7 @@ interface EventType {
   name: string
 }
 
-export const eventTypesList: Array<EventType> = [
+export const jestEventTypesList: Array<EventType> = [
   // Clipboard Events
   {
     name: 'copy',

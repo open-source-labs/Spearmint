@@ -120,8 +120,12 @@ export interface ReactTestComponentAssertion {
     matcherType: string;
     matcherValue: string;
     suggestions: [];
+    commandChain?: CypressCommandStep[]; // this is in actions idk why its in an assertion type
+    visitValue?: string | '';
+    visitKey?: string | '';
   };
 }
+
 
 export interface UpdateAssertionProps {
   id?: string;
@@ -133,6 +137,9 @@ export interface UpdateAssertionProps {
   matcherValue?: string;
   suggestions?: any[] | number | void;
 }
+
+
+
 export interface UpdateActionProps {
   id?: string;
   eventType?: string;
@@ -142,6 +149,9 @@ export interface UpdateActionProps {
   queryValue?: string;
   suggestions?: any[] | number | void;
 }
+
+
+
 export interface Prop {
   id: string;
   statementId: string;
@@ -165,14 +175,7 @@ export interface PropProps {
   theme: string;
 }
 
-export interface VisitProps {
-  statementId: string;
-  visitId: string;
-  visitKey: string;
-  visitValue: string;
-  dispatchToTestCase: Function;
-  theme: string;
-}
+
 
 export interface RenderStatement {
   id: string;
@@ -180,15 +183,36 @@ export interface RenderStatement {
   describeId: string;
   type: string;
   props: Prop[];
-  visits?: Visit[]; //! ADDED to store condintional visit input value
+ // visits?: Visit[]; //! ADDED to store condintional visit input value
+ visitKey?: string
+  visitValue?: string;
+ // statementId: string;
 }
 
+export interface VisitProps {
+  statementId: string;
+  visitId: string;
+  visitKey: string;
+  visitValue: string;
+  theme: string;
+}
 export interface RenderProps {
+  // jest props
   statement: RenderStatement;
   statementId: string;
   describeId: string;
   itId: string;
+
+// visit props 
+  visitId?: string| '' ;
+  visitKey?: string | '';
+  visitValue?: string | '';
+
+  theme?: string;
+  
 }
+
+
 
 export interface RenderVisit {
   statement: RenderStatement;
@@ -203,6 +227,7 @@ export interface AutoCompleteStatement {
   matcherType?: string;
   isNot?: boolean;
   suggestions?: number | any[] | void;
+    fieldType?: string | '';
 }
 
 export interface AutoCompleteProps {
@@ -210,7 +235,8 @@ export interface AutoCompleteProps {
   statementType: string;
   dispatchToTestCase: Function;
   type: string;
-  testFramework?: 'jest' | 'cypress' | 'mocha';
+  fieldType?: string | '';
+  testFramework?: 'jest' | 'cypress' | 'mocha'| 'sinon';
 }
 
 export interface AutoCompleteMockDataStatement {
@@ -228,6 +254,8 @@ export interface AutoCompleteMockDataProps {
   propKey: string;
   propValue: string;
 }
+
+
 
 // Type interface for reactTestCaseReducer action type
 export interface ReactReducerAction {
@@ -263,8 +291,28 @@ export interface ReactReducerAction {
   propKey: string;
   propValue: string;
 
-  subType?: 'visit'| ''; //! ADDED
   visitId?: string;
   visitKey?: string;
   visitValue?: string;
+  commandChain? : CypressCommandStep[];
+
 }
+
+
+
+export interface CypressCommandStep {
+  selectorType: string;
+  selectorValue: string;
+  actionType: string;
+}
+
+export interface CypressTestActionStatement {
+  id: string;
+  describeId: string;
+  itId: string;
+  type: string;
+  commandChain: CypressCommandStep[];
+  suggestions?: { name: string }[]; // optional for AutoComplete
+}
+
+
