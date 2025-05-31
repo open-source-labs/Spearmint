@@ -1,125 +1,101 @@
 import React, { useContext } from 'react';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
-import { deleteAction, updateCypressAction } from '../../../context/actions/frontendFrameworkTestCaseActions';
+import { addCypressActionStep,
+  updateCypressActionStep,
+  deleteCypressActionStep,
+  deleteAction, } from '../../../context/actions/frontendFrameworkTestCaseActions';
 
 import CommandStep from '../Action/commandStep';
 import { AiOutlineClose } from 'react-icons/ai';
+import { Button } from '@mui/material';
+
+
+
 
 // import AutoComplete from '../../AutoComplete/AutoComplete';
-import styles from '../Action/Action.module.scss';
+import styles from '../Action/CypressAction.module.scss';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
+import  { CypressCommandStep } from '../../../utils/reactTypes';
 
-const CypressAction = ({ statement, statementId, describeId, itId }: ReactTestComponentAssertion ): JSX.Element => {
-const [{ statements, }, dispatchToReactTestCase] = useContext(ReactTestCaseContext); // [describe, it, action ] blocks.. reactTestCaseReducer
+const CypressAction = ({ statement, statementId, }: ReactTestComponentAssertion ): JSX.Element => {
+const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext); // [describe, it, action ] blocks.. reactTestCaseReducer
 
   const [{theme}] = useContext(GlobalContext)
 
-  // Update a field inside a command step (selectorType, selectorValue, actionType)
 
-  const handleUpdateStep = (stepIndex: number, field: string, value: string) => {
-    const updatedChain = [...(statement.commandChain || [])];
-    updatedChain[stepIndex] = {
-      ...updatedChain[stepIndex],
-      [field]: value,
+  // add a new step
+const handleAddStep = () => {
+    const newStep: CypressCommandStep = {
+      selectorType: 'get',
+      selectorValue: '',
+      actionType: '',
+      actionValue: '',
+      // id is left undefined on purpose, its generated in the reducer
     };
-    dispatchToReactTestCase(updateCypressAction(statementId, updatedChain));
+    dispatchToReactTestCase(addCypressActionStep(statementId, newStep));
   };
 
-// delete a field inside a command step 
-  const handleDeleteStep = (stepIndex: number) => {
-    const updatedChain = [...(statement.commandChain || [])];
-    updatedChain[stepIndex] = {
-      ...updatedChain[stepIndex],
-    };
- 
-  };
-//   dispatchToReactTestCase(deleteCypressAction(statementId, updatedChain));
 
-
-  
-  // dispatchToReactTestCase(updateAction(updatedAction));
-// dispatchToReactTestCase(updateCypressAction(updatedChain));
-/**
- *     dispatchToReactTestCase({
-      type: 'UPDATE_COMMAND_CHAIN',
-      id: statement.id,
-      commandChain: updatedChain,
-    });
- * 
- */
-  // Add a new step in the chain
-  const handleAddStep = () => {
-    const newStep = { selectorType: 'get', selectorValue: '', actionType: '' };
-    const commandChain = [...(statement.commandChain || []), newStep]
-    dispatchToReactTestCase(updateCypressAction(statementId, commandChain));
+// Update one field of a step
+  const handleUpdateStep = (stepId: string, field: keyof CypressCommandStep, value: string) => {
+    console.log('handleUpdateStep:', { stepId, field, value });
+    dispatchToReactTestCase(updateCypressActionStep(statementId, stepId, field, value));
   };
 
-    /**
-   *  dispatchToReactTestCase(updateCypressAction(statementId, newStep));
-   * 
- *   dispatchToReactTestCase({
-      type: 'UPDATE_COMMAND_CHAIN',
-      id: statement.id,
-      commandChain: [...statement.commandChain, newStep],
-    });
- * 
- */
+    // 3) Delete a step by its ID
+  const handleDeleteStep = (stepId: string) => {
+    dispatchToReactTestCase(deleteCypressActionStep(statementId, stepId));
+  };
 
-  // Delete the entire action block
+  // 4) Delete the entire action block
   const handleDeleteAction = () => {
     dispatchToReactTestCase(deleteAction(statement.id));
   };
-    //   {/* Optional AutoComplete for global eventType (e.g. click, type) */}
-    //   <div className={styles.eventTypeWrapper}>
-    //     <label htmlFor="eventType">Global Event Type</label>
-    //     <AutoComplete
-    //       statement={statement}
-    //       statementType="action"
-    //       dispatchToTestCase={dispatchToReactTestCase}
-    //       id={styles.matcherAuto}
-    //       testFramework="cypress"
-    //       fieldType="eventType"
-    //     />
-    //   </div>
 
-
+  
   return (
+<div id={styles[`action${theme}`]}>
+  <div className={styles.actionHeader}>
+    <span className={styles.header}>
+      Cypress Action{' '}
+      <span id={styles.componentName}>{statements.componentName}</span>
+    </span>
     
-    <div id={styles[`action${theme}`]}>
-      <AiOutlineClose id={styles.close} onClick={handleDeleteAction} />
+    <AiOutlineClose 
+      id={styles.close}
+      onClick={handleDeleteAction}
+      aria-label="Delete entire action block"
+    />
+  </div>
 
-
-
-      <span className={styles.header}>
-          Cypress Action <span id={styles.componentName}>{statements.componentName}</span>
-        </span>
-
-
-
-      {/* Main Command Chain */}
       <div className={styles.commandChainWrapper}>
-        { statement.commandChain && // defensive null check
-        statement.commandChain.map((step, index) => (
+        {(statement.commandChain || []).map((step) => (
           <CommandStep
-            key={`command-step-${index}`}
-            stepIndex={index}
+            key={step.id}
             step={step}
-            // stepIndex: number, field: string, value: string
-            onUpdateStep={handleUpdateStep}
-            onDeleteStep={handleDeleteStep}
+            onUpdateStep={(stepId, field, value) => handleUpdateStep(stepId, field, value)}
+            onDeleteStep={(stepId) => handleDeleteStep(stepId)}
             theme={theme}
-          />  
-        ) )}
+          />
+        ))}
 
-        <button className={styles.addStepButton} onClick={handleAddStep}>
-          + Add Command Step
-        </button>
+        <Button
+  variant="contained"
+  size="small"
+  color="primary"
+  onClick={handleAddStep}
+  className={styles.addStepButton}
+>
+  + Add Command Step
+</Button>
+
+
       </div>
-
-
     </div>
   );
 };
+
+
 
 export default CypressAction;

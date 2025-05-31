@@ -10,6 +10,7 @@ import {
   Visit,
   StatementsById,
   ReactReducerAction,
+  CypressCommandStep 
 } from '../../utils/reactTypes';
 
 // similar to globalReducer, but instead of dealing with global items, this is specific to React,
@@ -22,6 +23,7 @@ export const reactTestCaseState: ReactTestCaseTypes = {
   statementId: 1,
   propId: 1,
   visitId: 1, // ! unsure if this should be 1
+  stepId: 1,
   describeBlocks: {
     byId: {
       describe0: {
@@ -52,6 +54,7 @@ export const reactTestCaseState: ReactTestCaseTypes = {
         type: 'render',
         props: [],
         visits: [], //! added visits array
+        commandChain: [],
       },
     },
     allIds: ['statement0'],
@@ -90,6 +93,7 @@ const createAction = (
   querySelector: '',
   queryValue: '',
   suggestions: [],
+  commandChain: [],
 });
 
 
@@ -455,10 +459,7 @@ export const reactTestCaseReducer = (
         },
       };
     }
-    /**
-     * * 
-     * 
-     */
+
     case actionTypes.UPDATE_ACTION: {
       const {
         id,
@@ -500,22 +501,151 @@ export const reactTestCaseReducer = (
 
     //! Cypress Update command chain
     // added Property 'commandChain' on type 'ReactReducerAction' in reactTypes.ts
-    case actionTypes.UPDATE_COMMAND_CHAIN: {
-  const { id, commandChain } = action;
-  return {
-    ...state,
-    statements: {
-      ...state.statements,
-      byId: {
-        ...state.statements.byId,
-        [id]: {
-          ...state.statements.byId[id],
-          commandChain,
+    case actionTypes.ADD_CYPRESS_ACTION_STEP: {
+  const { actionId, step  } = action;
+  const s = step! // step is definitely not undefined but I made it optional as a quick fix in ReactReducerAction 
+
+  const newStepId = `step${state.stepId}`; 
+
+        // 2) Build the complete step (ensuring we don't overwrite a pre-existing id)
+      const completeStep: CypressCommandStep = {
+        id: newStepId,
+        selectorType: s.selectorType,
+        selectorValue: s.selectorValue,
+        actionType: s.actionType,
+        actionValue: s.actionValue,
+      };
+
+
+  // Find the existing action‐statement object
+
+      const existingAction = statements.byId[actionId!]!;
+
+      // Default to an empty array if commandChain is undefined
+      const existingChain: CypressCommandStep[] = existingAction.commandChain || [];
+
+      // 4) Append the new step
+      const updatedChain = [...existingChain, completeStep];
+
+return {
+        ...state,
+         // Only increment the counter if we generated a new ID
+        stepId: state.stepId + 1,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [actionId!]: {
+              // Spread everything else in the existing action (e.g. type, props, visits)
+              ...existingAction,
+              // Append the new step onto the chain
+              commandChain: updatedChain,
+            },
+          },
+          // `allIds` stays unchanged
+          allIds: [...statements.allIds],
         },
-      },
-    },
-  };
-}
+      };
+    }
+
+
+    
+
+
+    case actionTypes.UPDATE_CYPRESS_ACTION_STEP: {
+      const { actionId, stepId, field, value } = action;
+
+      const existingAction = statements.byId[actionId!]!;
+      const existingChain: CypressCommandStep[] = existingAction.commandChain || [];
+
+
+      // Map over the chain, updating only the matching step
+      const updatedChain = existingChain.map((s) =>
+        s.id === stepId ? { ...s, [field!]: value } : s
+      );
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [actionId!]: {
+              ...existingAction,
+              commandChain: updatedChain,
+            },
+          },
+          allIds: [...statements.allIds],
+        },
+      };
+    }
+
+
+
+    case actionTypes.DELETE_CYPRESS_ACTION_STEP: {
+
+      const { actionId, stepId } = action;
+
+
+      const existingAction = statements.byId[actionId!]!;
+      const existingChain: CypressCommandStep[] = existingAction.commandChain || [];
+
+      // Filter out the step whose `id` matches `stepId`
+      const filteredChain = existingChain.filter((s) => s.id !== stepId);
+
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [actionId!]: {
+              ...existingAction,
+              commandChain: filteredChain,
+            },
+          },
+          allIds: [...statements.allIds],
+        },
+      };
+    }
+
+
+//     case actionTypes.REORDER_CYPRESS_ACTION_STEPS: {
+//       const { actionId, newOrder } = action;
+
+//       // Create a lookup of steps by ID:
+//       const existingAction = statements.byId[actionId] || { commandChain: [] };
+//       const original: CypressCommandStep[] = existingAction.commandChain || [];
+
+//       // Build a lookup of steps by ID
+//       const lookup: Record<string, CypressCommandStep> = {};
+//       original.forEach((step) => {
+//         lookup[step.id] = step;
+//       });
+
+// // Create a reordered array, filtering out any unknown IDs
+//       const reorderedChain: CypressCommandStep[] = newOrder
+//         .map((sid) => lookup[sid])
+//         .filter(Boolean);
+
+//       return {
+//         ...state,
+//         statements: {
+//           ...statements,
+//           byId: {
+//             ...statements.byId,
+//             [actionId]: {
+//               ...existingAction,
+//               commandChain: reorderedChain,
+//             },
+//           },
+//           allIds: [...statements.allIds],
+//         },
+//       };
+//     }
+
+
+
+
 
 
 

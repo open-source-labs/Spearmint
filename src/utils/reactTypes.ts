@@ -15,6 +15,7 @@ export interface ReactTestCaseTypes {
   describeBlocks: DescribeBlocks;
   itStatements: ItStatements;
   statements: Statements;
+  stepId: number;
 }
 
 export interface DescribeBlocks {
@@ -69,6 +70,7 @@ export interface StatementsById {
     type: string;
     props: Array<Prop>; // example: <Login username="testUser" />
     visits: Array<Visit>  //! added
+    commandChain: CypressCommandStep[];
   };
 }
  
@@ -88,7 +90,7 @@ export interface Action {
   dbFilePath?: string;
   dbFileName?: string;
   testState?: object;
-
+  commandChain?: CypressCommandStep[];
 }
 
 export interface Assertion {
@@ -257,6 +259,7 @@ export interface AutoCompleteMockDataProps {
 
 
 
+
 // Type interface for reactTestCaseReducer action type
 export interface ReactReducerAction {
   type: string;
@@ -295,24 +298,28 @@ export interface ReactReducerAction {
   visitKey?: string;
   visitValue?: string;
   commandChain? : CypressCommandStep[];
+  actionId?: string;
+  stepId?: string;
+  step?: CypressCommandStep;
+  field?: string;
+  value?: string;
 
 }
 
 
 
 export interface CypressCommandStep {
-  selectorType: string;
-  selectorValue: string;
-  actionType: string;
+  id?: string;               // unique identifier, e.g. uuid
+  selectorType: string;     // e.g. "get", "find", "contains"
+  selectorValue: string;    // e.g. "#submitBtn"
+  actionType?: string;      // e.g. "click", "type", "dblclick"
+  actionValue?: string;     // e.g. "/Welcome/i", "hello@example.com"
 }
+
 
 export interface CypressTestActionStatement {
   id: string;
-  describeId: string;
-  itId: string;
-  type: string;
   commandChain: CypressCommandStep[];
-  suggestions?: { name: string }[]; // optional for AutoComplete
 }
 
 

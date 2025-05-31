@@ -21,10 +21,11 @@ export const actionTypes = {
   DELETE_ACTION: 'DELETE_ACTION',
   UPDATE_ACTION: 'UPDATE_ACTION',
 
-  //!Cypress Action Update
-   // ADD_ACTION: 'ADD_ACTION',
-  // DELETE_ACTION: 'DELETE_ACTION',
-  UPDATE_COMMAND_CHAIN: 'UPDATE_COMMAND_CHAIN',
+  //!Cypress Actions
+ADD_CYPRESS_ACTION_STEP : 'ADD_CYPRESS_ACTION_STEP',
+UPDATE_CYPRESS_ACTION_STEP : 'UPDATE_CYPRESS_ACTION_STEP',
+DELETE_CYPRESS_ACTION_STEP : 'DELETE_CYPRESS_ACTION_STEP',
+REORDER_CYPRESS_ACTION_STEPS : 'REORDER_CYPRESS_ACTION_STEPS', // not implemented yet, I have a rough outline in reducer for this
 
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
@@ -135,26 +136,53 @@ export const updateAction = ({
   suggestions,
 });
 
-export const updateCypressAction = (
-  id: string,
-  commandChain: CypressCommandStep[]
-) => ({
-  type: actionTypes.UPDATE_COMMAND_CHAIN,
-  id,
-  commandChain,
-});
 
-
-/*
-{
-  type: 'UPDATE_ACTION',
-  id: '12345',
-  eventType: 'click',
-  queryVariant: 'getBy',
-  querySelector: 'Text',
-  queryValue: 'Submit'
+// Add a new step to an existing action block
+export function addCypressActionStep(actionId: string, step: CypressCommandStep) {
+  return {
+  type: actionTypes.ADD_CYPRESS_ACTION_STEP,
+  actionId,
+  step,
+  }
+};
+// Update a single field of an existing step
+export function updateCypressActionStep(
+  actionId: string,
+  stepId: string,
+  field: keyof CypressCommandStep,
+  value: string
+) {
+  return {
+    type: actionTypes.UPDATE_CYPRESS_ACTION_STEP,
+    actionId,
+    stepId,
+    field,
+    value,
+  };
 }
-  */
+// Delete a step by ID
+export function deleteCypressActionStep(actionId: string, stepId: string) {
+  return {
+    type: actionTypes.DELETE_CYPRESS_ACTION_STEP,
+    actionId, 
+    stepId 
+  };
+}
+
+// export function reorderCypressActionSteps(
+//   actionId: string,
+//   newOrder: string[] // array of step IDs in the new order
+// ) {
+//   return {
+//     type: actionTypes.REORDER_CYPRESS_ACTION_STEPS,
+//     actionId,
+//     newOrder 
+//   };
+// }
+
+
+
+
 
 export const addAssertion = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_ASSERTION,
