@@ -207,13 +207,23 @@ function useGenerateTest(test, projectFilePath) {
     // Look for visit info if it exists
     const visit = statement.visits?.[0]; // one visit per statement for now
 
-    if (visit && visit.visitValue) {
-      const fullUrl = `${visit.visitKey || ''}${visit.visitValue}`;
-      console.log('🧪 Generating test code:', `cy.visit('${fullUrl}')`);
+    if (visit && visit.visitValue && visit.visitKey) {
+      const fullUrl = `${visit.visitKey}${visit.visitValue}`;
 
        cyChain += `.visit('${fullUrl}');`;
+
+    } else if (visit && visit.visitKey) {
+
+      const BaseUrl = `${visit.visitKey}${visit.visitValue || ''}`;
+
+      cyChain += `.visit('${BaseUrl}');`;
+    } else {
+      const endpoint = `${visit.visitKey || ''}${visit.visitValue}`;
+
     }
-    testFileCode += cyChain + `;\n`
+
+
+    testFileCode += `before(() =>{\n${cyChain}\n});\n`
   
 
 
@@ -986,13 +996,51 @@ function useGenerateTest(test, projectFilePath) {
 //       ().should.have.text(welcome);
 
         if(testFramework === 'cypress'){
-          testFileCode += `${assertion.queryVariant + assertion.querySelector}
-          (${assertion.queryValue}).${assertion.matcherType}(${
-          assertion.matcherValue
-        });`;
-        }
+          let selectorCall = '';
+          const method = assertion.selectorMethod || '';
+          const value = assertion.selectorValue || '';
+
+          if(method && value.trim()) {
+
+          if (method === 'contains') {
+            selectorCall = `cy.contains(${value})`;
+          } else {
+            selectorCall = `cy.${method}('${value}')`;
+          }
+          } 
 
 
+
+          const notPrefix = assertion.isNot ? '.not' : '';
+
+          const matcher = assertion.matcherType || '';    // e.g. 'should.be.visible' or 'should.have.text'
+          const mValue = assertion.matcherValue || '';       
+
+          // does matcher expects a value?:
+  const matchersWithValue = [
+    'should.have.text',
+    'should.have.value',
+    'should.contain',
+    'should.have.attr',
+    'should.have.class',
+    'should.have.css',
+    'should.have.length',
+    'should.include',
+    'should.eq',
+    'should.not.have.value',
+  ];
+
+  const needsValue = matchersWithValue.includes(matcher);
+
+
+         if (needsValue) {
+    // Surround matcherValue with quotes (or leave it unquoted if you know 
+    // it’s intended as a regex literal—adjust as needed)
+    testFileCode += `${selectorCall}${notPrefix}.${matcher}('${mValue}');\n`;
+  } else {
+    testFileCode += `${selectorCall}${notPrefix}.${matcher}();\n`;
+  }
+}
       }
       if (type === 'vue') {
         if (assertion.querySelector) {

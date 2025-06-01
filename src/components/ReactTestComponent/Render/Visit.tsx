@@ -78,8 +78,7 @@ const handleUpdateVisitValue = (e: React.ChangeEvent<HTMLInputElement>): void =>
   const newValue = e.target.value;
   setVisitValue(newValue);
   dispatchToReactTestCase(updateRenderUrl(statementId, visitId, visitKey || '', newValue));
-  console.log('Updated visit state:', statements.byId[statementId]?.visits);
-  console.log('[Visit] Updating visitValue:', newValue);
+  console.log('Visit Updating visitValue:', newValue);
 };
 // combines base + endpoint into a previewed string
  // const fullUrl = `${statement.visitKey || ''}${statement.visitValue || ''}`;
@@ -95,14 +94,14 @@ return (
         </span>
 
 
-        {/*Delete statement */}
+        {/*                Delete statement               */}
         <AiOutlineClose
           className={styles.deleteIcon}
           onClick={handleDeleteVisit}
         />
       </div>
 
-      {/*Description statement */}
+      {/*                Description statement            */}
       <p className={styles.description}>
         Use this block to simulate a <code>cy.visit()</code> command to navigate your app at the start of a test.
       </p>
@@ -122,7 +121,7 @@ return (
     />
   </div>
 
-          {/*Endpoint input  */}
+          {/*             Endpoint input                  */}
   <div className={styles.urlInputGroup}>
     <label htmlFor="visitEndpoint">Endpoint</label>
     <input
@@ -136,7 +135,7 @@ return (
   </div>
 </div>
 
-{/*Test full url in browser button */}
+{/*             Test full url in browser button                   */}
       <div className={styles.testButtonWrapper}>
         <Button
           variant="contained"

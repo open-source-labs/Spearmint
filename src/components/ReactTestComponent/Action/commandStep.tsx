@@ -56,7 +56,7 @@ const CommandStep: React.FC<CommandStepProps> = ({
     
 const stepId = step.id!;
 
-// Determine if this action requires an argument
+// Does action requires an argument
   const needsArgument = () => {
     switch (step.actionType) {
       case 'type':
@@ -72,7 +72,7 @@ const stepId = step.id!;
     }
   };
 
-   // Provide a dynamic placeholder depending on action chosen
+   // dynamic placeholder depending on action chosen
   const getArgumentPlaceholder = () => {
     switch (step.actionType) {
       case 'type':
@@ -118,7 +118,7 @@ const stepId = step.id!;
       </div>
 
       <div className={styles.inputsGrid}>
-        {/* ─── Selector Method ───────────────────────────────────────── */}
+        {/*          Selector Method            */}
         <div className={styles.inputGroup}>
           <label htmlFor={`selectorType-${stepId}`}>Selector</label>
           <select
@@ -137,7 +137,7 @@ const stepId = step.id!;
           </select>
         </div>
 
-        {/* ─── Selector Value ───────────────────────────────────────── */}
+        {/*            Selector Value                */}
         <div className={styles.inputGroup}>
           <label htmlFor={`selectorValue-${stepId}`}>Value</label>
           <input
@@ -151,7 +151,7 @@ const stepId = step.id!;
           />
         </div>
 
-        {/* ─── Action Type ───────────────────────────────────────────── */}
+        {/*                 Action Type                          */}
         <div className={styles.inputGroup}>
           <label htmlFor={`actionType-${stepId}`}>Action</label>
           <select
@@ -170,7 +170,7 @@ const stepId = step.id!;
           </select>
         </div>
 
-        {/* ─── Action Argument (if needed) ──────────────────────────── */}
+        {/*          Action Argument (if needed)          */}
         <div className={styles.inputGroup}>
           <label htmlFor={`actionValue-${stepId}`}>Argument</label>
           <input
