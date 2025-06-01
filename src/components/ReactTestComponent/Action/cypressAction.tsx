@@ -43,12 +43,12 @@ const handleAddStep = () => {
     dispatchToReactTestCase(updateCypressActionStep(statementId, stepId, field, value));
   };
 
-    // 3) Delete a step by its ID
+    // Delete a step by its ID
   const handleDeleteStep = (stepId: string) => {
     dispatchToReactTestCase(deleteCypressActionStep(statementId, stepId));
   };
 
-  // 4) Delete the entire action block
+  // Delete the entire action block
   const handleDeleteAction = () => {
     dispatchToReactTestCase(deleteAction(statement.id));
   };

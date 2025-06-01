@@ -55,6 +55,7 @@ export const reactTestCaseState: ReactTestCaseTypes = {
         props: [],
         visits: [], //! added visits array
         commandChain: [],
+
       },
     },
     allIds: ['statement0'],
@@ -113,6 +114,8 @@ const createAssertion = (
   matcherType: '',
   matcherValue: '',
   suggestions: [],
+  selectorMethod: '',
+  selectorValue: '',
 });
 
 /*
@@ -669,6 +672,8 @@ return {
         },
       };
     }
+
+
     case actionTypes.DELETE_ASSERTION: {
       const { statementId } = action;
       const byId = { ...statements.byId };
@@ -697,7 +702,12 @@ return {
         matcherType,
         matcherValue,
         suggestions,
+        selectorMethod,
+        selectorValue
       } = action;
+
+      console.log(`Reducer, UPDATE_ASSERTION payload: id=${id}, selectorMethod=${selectorMethod}, selectorValue=${selectorValue}`);
+
       const oldStatement = { ...statements.byId[id] };
       const byId = { ...statements.byId };
       const newStatement = {
@@ -709,7 +719,13 @@ return {
         matcherType,
         matcherValue,
         suggestions,
+        selectorMethod,
+        selectorValue
       };
+
+      console.log(`reducer, oldStatement:`, oldStatement);
+  console.log(`reducer, newStatement:`, newStatement);
+
       return {
         ...state,
         statements: {
@@ -727,7 +743,7 @@ return {
 
     //! RENDERRRR
     case actionTypes.ADD_RENDER: {
-      console.log('[ADD_RENDER] action:', action);  // logged action inside reducer
+      console.log('ADD_RENDER action:', action);
 
 
       const { describeId, itId } = action; // extract subType from action
@@ -735,21 +751,6 @@ return {
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
       let updatedStatementId = state.statementId;
-
-
-     console.log('[ADD_RENDER] Updated state:', {
-        ...state,
-        statementId: ++updatedStatementId,
-        statements: {
-          ...statements,
-          byId: {
-            ...byIds,
-            [statementId]: createRender(describeId, itId, statementId),
-          },
-          allIds: [...allIds, statementId],
-        },
-      });
-
 
       return {
         ...state,
@@ -854,8 +855,8 @@ return {
           visit.id === id ? { ...visit, visitKey, visitValue } : visit
         )
 
-console.log('[Reducer] Updated Visits:', updatedVisits);
-console.log('[ReactTestCase] Statements state:', statements);
+console.log('Reducer,  updated Visits:', updatedVisits);
+console.log('ReactTestCase,  Statements state:', statements);
 
 
       return {

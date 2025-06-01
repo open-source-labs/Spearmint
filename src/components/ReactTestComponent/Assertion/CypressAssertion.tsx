@@ -1,15 +1,20 @@
 import React, { useContext, useEffect } from 'react';
+// import styles from './CypressAssertion.module.scss';
 import styles from './CypressAssertion.module.scss';
 import {
   deleteAssertion,
   updateAssertion,
 } from '../../../context/actions/frontendFrameworkTestCaseActions';
 
-import AutoComplete from '../../AutoComplete/AutoComplete';
+// import AutoComplete from '../../AutoComplete/AutoComplete';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
+
+
+ // selector methods we support
+  const selectorMethods = ['get', 'contains', 'find', 'parent', 'children', 'url'];
 
 const CypressAssertion = ({
   statement,
@@ -18,6 +23,7 @@ const CypressAssertion = ({
   const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
   const [{ theme }] = useContext(GlobalContext);
 
+console.log( "CypressAssertion, selectorMethod:",statement.selectorMethod,"selectorValue:",statement.selectorValue,"matcherType:",statement.matcherType);
   // Matchers that require an “expected value”
   const matchersWithValue: string[] = [
     'should.have.text',
@@ -41,19 +47,42 @@ const CypressAssertion = ({
   ];
 
   // All possible matcher options (the union of both lists)
-  const allMatchers: string[] = [
-    ...matchersWithValue,
-    ...matchersWithoutValue,
-  ];
-
+  const allMatchers: string[] = [ ...matchersWithValue, ...matchersWithoutValue, ];
 
   // Helper to know if the current matcher needs a value
-  const needsMatcherValue = (matcherType: string) =>
-    matchersWithValue.includes(matcherType);
+  const needsMatcherValue = (matcherType: string) => matchersWithValue.includes(matcherType);
+
+
+// Update the selectorMethod (e.g. 'get', 'contains', etc.)
+  const handleSelectorMethodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newMethod = e.target.value;
+console.log(`[CypressAssertion] handleSelectorMethodChange → newMethod=`,newMethod);
+    
+    const updated = {
+      ...statement,
+      selectorMethod: newMethod,
+      selectorValue: '', // clear previous value
+    };
+
+
+    dispatchToReactTestCase(updateAssertion(updated));
+  };
+
+  // Update the selectorValue (e.g. '#myBtn' or '/some regex/i' when method='contains')
+  const handleSelectorValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const updated = { ...statement, selectorValue: e.target.value };
+
+    console.log(`[CypressAssertion] handleSelectorValueChange → selectorValue=`,e.target.value);
+    dispatchToReactTestCase(updateAssertion(updated));
+  };
+
+
+  
 
 
   const handleMatcherChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newMatcher = e.target.value;
+    console.log( `CypressAssertion, handleMatcherChange:  newMatcher=`,newMatcher);
     // Reset matcherValue if the new matcher does not expect a value,
     // or keep it if it does.
     const updated = {
@@ -67,6 +96,7 @@ const CypressAssertion = ({
 
   // Update “matcherValue” in state when the input changes
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(`CypressAssertion, handleValueChange:  matcherValue=`,e.target.value);
     const updated = { ...statement, matcherValue: e.target.value };
     dispatchToReactTestCase(updateAssertion(updated));
   };
@@ -75,12 +105,15 @@ const CypressAssertion = ({
   // Toggle “not?” flag
   const handleNotToggle = () => {
     const updated = { ...statement, isNot: !statement.isNot };
+    console.log(`CypressAssertion handleNotToggle:  isNot=`,!statement.isNot);
     dispatchToReactTestCase(updateAssertion(updated));
   };
 
 
   // Delete this assertion block
   const handleDelete = () => {
+    console.log(`CypressAssertion, handleDelete:  statementId=`, statementId);
+
     dispatchToReactTestCase(deleteAssertion(statementId));
   };
 
@@ -116,17 +149,36 @@ const getPlaceholder = (matcherType: string): string => {
   };
 
 //  If the stored matcherType was invalid (e.g. removed from list), reset ──
+  // useEffect(() => {
+  //   if (
+  //     statement.matcherType &&
+  //     !allMatchers.includes(statement.matcherType)
+  //   ) {
+  //     // If somehow matcherType isn’t in our dropdown anymore, clear it.
+  //     const fallback2 = { ...statement, matcherType: '', matcherValue: '' };
+  //     dispatchToReactTestCase(updateAssertion(fallback2));
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [allMatchers.join(','), statement.matcherType]);
+
   useEffect(() => {
+    if (statement.selectorMethod && !selectorMethods.includes(statement.selectorMethod)) {
+
+      console.warn( `CypressAssertion selectorMethod "${statement.selectorMethod}" = ""`);
+
+      dispatchToReactTestCase(updateAssertion({ ...statement, selectorMethod: '', selectorValue: '' }));
+    }
     if (
       statement.matcherType &&
       !allMatchers.includes(statement.matcherType)
     ) {
-      // If somehow matcherType isn’t in our dropdown anymore, clear it.
-      const fallback = { ...statement, matcherType: '', matcherValue: '' };
-      dispatchToReactTestCase(updateAssertion(fallback));
+      console.warn(`CypressAssertion, matcherType "${statement.matcherType}" = ""`);
+
+      dispatchToReactTestCase(updateAssertion({...statement,matcherType: '',matcherValue: '',})
+      );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allMatchers.join(','), statement.matcherType]);
+  }, [statement.selectorMethod, statement.matcherType]);
+
 
 
   return (
@@ -148,16 +200,78 @@ const getPlaceholder = (matcherType: string): string => {
         </button>
       </div>
 
-      {/*Content Row: Matcher/DashToggle + Expected Value (conditional)*/}
+
+
+      {/*      BELOW IS : selector, matcher,  Expected value, Not? (conditional)            */}
       <div className={styles.contentRow}>
+
+
+        {/* Selector Block */}
+        <div className={styles.selectorBlock}>
+          <div className={styles.selectorTopRow}>
+          
+            <label htmlFor={`selectorBlock-${statementId}`} className={styles.selectorLabel}>
+              Select By
+            </label>
+
+            {/*           Selector method for matcher                           */}
+             <select
+            id={`selectorMethod-${statementId}`}
+            value={statement.selectorMethod || ''}
+            onChange={handleSelectorMethodChange}
+            className={styles.selectorSelect}
+          >
+
+             <option value="">(Choose Method)</option>
+            {selectorMethods.map((m) => (
+              <option key={m} value={m}>
+                {m}
+              </option>
+            ))}
+          </select>
+
+
+          {statement.selectorMethod && (
+            <input
+              type="text"
+              id={`selectorValue-${statementId}`}
+              className={styles.selectorValueInput}
+              placeholder={
+                statement.selectorMethod === 'contains'
+                  ? "e.g. /Your tests will exist in a describe block/i"
+                  : "e.g. '#submitBtn' or '.my-class'"
+              }
+              value={statement.selectorValue}
+              onChange={handleSelectorValueChange}
+            />
+          )}
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         {/* Matcher Block */}
         <div className={styles.matcherBlock}>
           <div className={styles.matcherTopRow}>
+          
             <label htmlFor={`matcherType-${statementId}`} className={styles.matcherLabel}>
               Matcher
             </label>
 
-            {/* “Not?” toggle switch */}
+            {/*               “Not?” toggle switch              */}
             <label className={styles.switchLabel}>
               <input
                 type="checkbox"
@@ -170,12 +284,14 @@ const getPlaceholder = (matcherType: string): string => {
             </label>
           </div>
 
-          {/*Drop down for selecting matcherType*/}
+
+          {/*             Drop down for selecting matcherType                 */}
           <select
             id={`matcherType-${statementId}`}
-            value={statement.matcherType}
+            value={statement.matcherType || ''}
             onChange={handleMatcherChange}
             className={styles.matcherSelect}
+            disabled={false}
           >
             <option value="">(Select Matcher)</option>
             {allMatchers.map((m) => (
@@ -184,7 +300,14 @@ const getPlaceholder = (matcherType: string): string => {
               </option>
             ))}
           </select>
+
+
+
         </div>
+
+
+
+
 
         {/* Expected Value Field (renders only if matcher needs a value)*/}
         {needsMatcherValue(statement.matcherType) && (

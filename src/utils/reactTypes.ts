@@ -113,11 +113,15 @@ export interface ReactTestComponentAssertion {
     itId: string;
     describeId: string;
     type: string;
+
+// for actions
     eventType: string;
     eventValue: string;
     queryVariant: string;
     querySelector: string;
     queryValue: string;
+
+
     isNot: boolean;
     matcherType: string;
     matcherValue: string;
@@ -125,6 +129,9 @@ export interface ReactTestComponentAssertion {
     commandChain?: CypressCommandStep[]; // this is in actions idk why its in an assertion type
     visitValue?: string | '';
     visitKey?: string | '';
+// for assertions 
+    selectorMethod: string;    // e.g. "get" | "contains" | ""
+    selectorValue: string;     // e.g. "#submitBtn" or regex
   };
 }
 
@@ -138,6 +145,8 @@ export interface UpdateAssertionProps {
   matcherType?: string;
   matcherValue?: string;
   suggestions?: any[] | number | void;
+  selectorMethod?: string;
+  selectorValue?:string
 }
 
 
@@ -303,6 +312,9 @@ export interface ReactReducerAction {
   step?: CypressCommandStep;
   field?: string;
   value?: string;
+
+  selectorMethod?: string,
+  selectorValue?:string
 
 }
 

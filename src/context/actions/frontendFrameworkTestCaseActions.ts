@@ -204,6 +204,8 @@ export const updateAssertion = ({
   matcherType,
   matcherValue,
   suggestions,
+    selectorMethod,
+  selectorValue,
 }: UpdateAssertionProps) => ({
   type: actionTypes.UPDATE_ASSERTION,
   id,
@@ -214,6 +216,8 @@ export const updateAssertion = ({
   matcherType,
   matcherValue,
   suggestions,
+      selectorMethod,
+  selectorValue,
 });
 
 export const addRender = (describeId: string, itId: string,) => ({
@@ -267,9 +271,8 @@ export const updateRenderUrl = (statementId: string, id: string, visitKey: strin
    visitKey,
    visitValue,
 });
-// console.log('[Reducer] Incoming action:', action);
-// console.log('[Reducer] Current statement:', statement);
-// console.log('[Reducer] Updated visits array:', updatedVisits);
+// console.log('Reducer, Incoming action:', action);
+// console.log('Reducer, Current statement:', statement);
 
 
 
