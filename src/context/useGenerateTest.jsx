@@ -201,11 +201,15 @@ function useGenerateTest(test, projectFilePath) {
 
     // Render Jest Test Code
     const addRender = (statement, methods) => {
+
     if (testFramework === 'cypress') {
        let cyChain = 'cy';
        
     // Look for visit info if it exists
-    const visit = statement.visits?.[0]; // one visit per statement for now
+    const visit = statement.visits[0]; // one visit per statement for now
+      if (!visit) {
+        return;
+      }
 
     if (visit && visit.visitValue && visit.visitKey) {
       const fullUrl = `${visit.visitKey}${visit.visitValue}`;
@@ -223,7 +227,9 @@ function useGenerateTest(test, projectFilePath) {
     }
 
 
-    testFileCode += `before(() =>{\n${cyChain}\n});\n`
+    testFileCode += `before(() => {\n
+      ${cyChain}
+      \n});\n`;
   
 
 
@@ -996,10 +1002,12 @@ function useGenerateTest(test, projectFilePath) {
 //       ().should.have.text(welcome);
 
         if(testFramework === 'cypress'){
+
           let selectorCall = '';
           const method = assertion.selectorMethod || '';
           const value = assertion.selectorValue || '';
 
+          // build subject, cy.get('foo') or cy.contains(/regex)
           if(method && value.trim()) {
 
           if (method === 'contains') {
@@ -1011,12 +1019,12 @@ function useGenerateTest(test, projectFilePath) {
 
 
 
-          const notPrefix = assertion.isNot ? '.not' : '';
+          const isNot = assertion.isNot;
 
           const matcher = assertion.matcherType || '';    // e.g. 'should.be.visible' or 'should.have.text'
           const mValue = assertion.matcherValue || '';       
 
-          // does matcher expects a value?:
+  // we keep the prefix should to be more intuitive to the user
   const matchersWithValue = [
     'should.have.text',
     'should.have.value',
@@ -1033,12 +1041,21 @@ function useGenerateTest(test, projectFilePath) {
   const needsValue = matchersWithValue.includes(matcher);
 
 
+  // strip off the "should." prefix
+  const rawMatcher = matcher.replace(/^should\./, '');
+
+// Prefix with "not." or keep mathcher minus the "should."
+const finalMatcher = isNot ? `not.${rawMatcher}` : rawMatcher
+
+
+
+// if matcher needs a value, 
          if (needsValue) {
-    // Surround matcherValue with quotes (or leave it unquoted if you know 
-    // it’s intended as a regex literal—adjust as needed)
-    testFileCode += `${selectorCall}${notPrefix}.${matcher}('${mValue}');\n`;
+// for matchers need a value,       .should('have.text', 'foo');
+    testFileCode += `${selectorCall}.should('${finalMatcher}', '${mValue}');\n`;
   } else {
-    testFileCode += `${selectorCall}${notPrefix}.${matcher}();\n`;
+// for matchers without a value,     .should('be.visible');
+    testFileCode += `${selectorCall}.should('${finalMatcher}');\n`;
   }
 }
       }
