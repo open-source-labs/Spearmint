@@ -116,17 +116,29 @@ function useGenerateTest(test, projectFilePath) {
     //! REACT IMPORTS FOR SINON import sinon mocha chai and chai dom
     // React Import Statements
     const addReactImportStatements = () => {
-      testFileCode += `
+      if(testFramework === 'jest'){
+        testFileCode += `
         import React from 'react';
         import { render, screen,fireEvent} from '@testing-library/react'; 
         import userEvent from '@testing-library/user-event';
         import { build, fake } from 'test-data-bot';
+        \n`;
+      }else if(testFramework === 'sinon'){
+        testFileCode += `
+        import React from 'react';
+        import { build, fake } from 'test-data-bot';
         import sinon from 'sinon';
+        \n`;
+      }else if(testFramework === 'mocha'){
+        testFileCode += `
+        import React from 'react';
+        import { build, fake } from 'test-data-bot';
         import mocha from 'mocha';
         import chai from 'chai';
         import chai-dom from 'chai-dom';
         \n`;
-    };
+      }
+    }
 
     //! RENDER STAYS THE SAME
     // React Component Import Statement (Render Card)
@@ -918,8 +930,8 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
       if (type === 'react') {
-        console.log('dis shit working')
-        console.log('inside da if statement',testFramework)
+        // console.log('dis shit working')
+        // console.log('inside da if statement',testFramework)
         if(testFramework === 'jest'){
           testFileCode += `expect(${
           assertion.queryVariant + assertion.querySelector
