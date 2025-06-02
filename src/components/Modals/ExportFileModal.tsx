@@ -17,6 +17,7 @@ import { Button, TextField, InputAdornment } from '@mui/material';
 
 import styles from './Modal.module.scss';
 import { File, filePathMapType } from '../../utils/globalTypes';
+import test from 'node:test';
 
 const { ipcRenderer } = require('electron');
 
@@ -55,10 +56,35 @@ interface ExportFileModalProps {
 }
 
 
+
+
 const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFileModalProps) => {
   const [fileName, setFileName ] = useState('');
   const [invalidFileName, setInvalidFileName] = useState(false);
   const [{ projectFilePath, file, validCode, theme }, dispatchToGlobal] = useContext(GlobalContext);
+
+  /**
+ * 
+ * This is to dynamically change the file type for the testFramework being used as well as the directory in which it is housed
+ * 
+ */
+  const [{testFramework}] = useContext(GlobalContext);
+  let testFileType = '';
+  let testFileDirName = '';
+  if(testFramework === 'jest'){
+    console.log('using jest file type!');
+    testFileType = '.test.js'
+    testFileDirName = '__tests__'
+  }
+  else if(testFramework === 'mocha'){
+    console.log('using mocha file type!');
+    testFileType = '.js'
+    // testFileDirName = 'test'
+  }else if(testFramework === 'sinon'){
+    console.log('using mocha file type!');
+    testFileType = '.js'
+    // testFileDirName = 'test'
+  }
 
   const handleChangeFileName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFileName(e.target.value);
@@ -84,9 +110,10 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFile
    * Function that creates a path of the modal when save button is clicked
    * @returns { void }
    */
+  
   const handleClickSave = () => {
     // file name uniqueness check
-    const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;
+    const filePath = `${projectFilePath}/${testFileDirName}/${fileName}${testFileType}`;
     const fileExists = ipcRenderer.sendSync('ExportFileModal.exists', filePath);
     if (fileExists) {
       setInvalidFileName(true);
@@ -106,12 +133,12 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFile
    * @returns { void }
    */
   const exportTestFile = () => {
-    const folderPath = `${projectFilePath}/__tests__`;
+    const folderPath = `${projectFilePath}/${testFileType}`;
     const folderExists = ipcRenderer.sendSync('ExportFileModal.exists', folderPath);
     if (!folderExists) {
       ipcRenderer.sendSync('ExportFileModal.mkdir', folderPath);
     }
-    const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;
+    const filePath = `${projectFilePath}/${testFileType}/${fileName}${testFileType}`;
     ipcRenderer.sendSync('ExportFileModal.fileCreate', filePath, file);
 
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
@@ -121,11 +148,11 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFile
  * Function that updates global state and highlights the test file where the user is redirected
  */
   const displayTestFile = (testFolderFilePath: string) => {
-    const filePath = `${testFolderFilePath}/${fileName}.test.js`;
+    const filePath = `${testFolderFilePath}/${fileName}${testFileType}`;
     const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(setFolderView(testFolderFilePath));
-    dispatchToGlobal(highlightFile(`${fileName}.test.js`));
+    dispatchToGlobal(highlightFile(`${fileName}${testFileType}`));
     // dispatchToGlobal(toggleFileDirectory(true));
     dispatchToGlobal(setFileDirectory(true));
   };
@@ -203,7 +230,7 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFile
                   error={invalidFileName}
                   helperText={invalidFileName && `A file with the name ${fileName} already exists.`}
                   InputProps={{
-                    endAdornment: <InputAdornment position="end">.test.js</InputAdornment>,
+                    endAdornment: <InputAdornment position="end">{testFileType}</InputAdornment>,
                   }}
                 />
                 <div id={styles.exportBtns}>
