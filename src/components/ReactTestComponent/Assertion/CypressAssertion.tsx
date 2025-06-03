@@ -148,18 +148,6 @@ const getPlaceholder = (matcherType: string): string => {
     }
   };
 
-//  If the stored matcherType was invalid (e.g. removed from list), reset ──
-  // useEffect(() => {
-  //   if (
-  //     statement.matcherType &&
-  //     !allMatchers.includes(statement.matcherType)
-  //   ) {
-  //     // If somehow matcherType isn’t in our dropdown anymore, clear it.
-  //     const fallback2 = { ...statement, matcherType: '', matcherValue: '' };
-  //     dispatchToReactTestCase(updateAssertion(fallback2));
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [allMatchers.join(','), statement.matcherType]);
 
   useEffect(() => {
     if (statement.selectorMethod && !selectorMethods.includes(statement.selectorMethod)) {
