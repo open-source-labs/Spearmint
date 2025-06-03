@@ -145,6 +145,7 @@ function useGenerateTest(test, projectFilePath) {
     }; //
 
     const addDescribeBlocks = () => {
+      console.log('addDescribeBlocks fired!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
       const describeBlocks = reactTestCase.describeBlocks;
 
       describeBlocks.allIds.forEach((id) => {
@@ -154,16 +155,79 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-    //! IT STAYS THE SAME
-    // React It Statements
-    const addReactItStatement = (describeId) => {
-      const itStatements = reactTestCase.itStatements;
-      itStatements.allIds[describeId].forEach((itId) => {
-        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
-        addReactStatements(itId);
-        testFileCode += '})\n';
+
+
+
+
+
+let beforeInjected = false; // flag for first render with visitKey
+
+const addReactItStatement = (describeId) => {
+  console.log('inside It statement generation!!!!!!!!!!!!!!!!!!!!')
+
+
+
+  const itStatements = reactTestCase.itStatements; // all it test blocks
+
+  // lookup table where each key os a statement ID and each value is the full statement object 
+  const statementMap = reactTestCase.statements.byId; 
+
+  // array of all statement IDs
+  const statementIds = reactTestCase.statements.allIds; 
+
+
+  itStatements.allIds[describeId].forEach((itId) => {
+
+ // find the first render statement inside the first it block that has a visitKey
+    const renderStatement = statementIds.map((id) => {
+     
+        const s = statementMap[id]; // grab full statement info 
+        if (!s) { console.warn(`No statement found for id=${id}`); }
+        return s;
+      }).find((statement) => {
+        if (!statement) return false;
+
+        const isMatch = (
+          statement.itId === itId &&
+          statement.type === 'render' &&
+          Array.isArray(statement.visits) &&
+          statement.visits[0]?.visitKey
+        );
+
+
+    console.log(`Checking statement:`, {
+          id: statement?.id,
+          type: statement?.type,
+          itId: statement?.itId,
+          visits: statement?.visits,
+          match: isMatch,
+        });
+
+        return isMatch;
       });
-    };
+
+
+
+    if (renderStatement && !beforeInjected) {
+      console.log('SUCCSESSSSSSSSSSSSSSSSSSSSSSSS')
+      const { visitKey, visitValue = '' } = renderStatement.visits[0];
+      const baseUrl = `${visitKey}`;
+      testFileCode += `  before(() => {\n    cy.visit('${baseUrl}');\n  });\n\n`;
+      beforeInjected = true;
+    }
+
+
+console.log('falling to regular it statement..............')
+    testFileCode += `  it('${itStatements.byId[itId].text}', () => {\n`;
+    addReactStatements(itId);
+    testFileCode += `  });\n\n`;
+  });
+};
+
+
+
+
+
 
     //! React handler
     const addReactStatements = (itId) => {
@@ -203,7 +267,6 @@ function useGenerateTest(test, projectFilePath) {
     const addRender = (statement, methods) => {
 
     if (testFramework === 'cypress') {
-       let cyChain = 'cy';
        
     // Look for visit info if it exists
     const visit = statement.visits[0]; // one visit per statement for now
@@ -211,25 +274,13 @@ function useGenerateTest(test, projectFilePath) {
         return;
       }
 
-    if (visit && visit.visitValue && visit.visitKey) {
-      const fullUrl = `${visit.visitKey}${visit.visitValue}`;
-
-       cyChain += `.visit('${fullUrl}');`;
-
-    } else if (visit && visit.visitKey) {
-
-      const BaseUrl = `${visit.visitKey}${visit.visitValue || ''}`;
-
-      cyChain += `.visit('${BaseUrl}');`;
-    } else {
-      const endpoint = `${visit.visitKey || ''}${visit.visitValue}`;
-
-    }
+    if (visit && visit.visitValue) {
+      const endpoint = `${visit.visitValue}`;
+       testFileCode += `cy.visit('${endpoint}');`;
+    } 
 
 
-    testFileCode += `before(() => {\n
-      ${cyChain}
-      \n});\n`;
+
   
 
 
@@ -900,12 +951,13 @@ function useGenerateTest(test, projectFilePath) {
     // injest action block current data
     const addAction = (action, type = 'react') => { //! REACT
       if (type === 'react') {
+
         if (testFramework === 'cypress' && Array.isArray(action.commandChain)) {
           let cyChain = 'cy';
           action.commandChain.forEach((step) => {
             const {selectorType, selectorValue, actionType, actionValue} = step;
             if ( selectorType && selectorValue) {
-              cyChain += `.${selectorType}(${selectorValue})`; // cy.get(something)
+              cyChain += `.${selectorType}('${selectorValue}')`; // cy.get(something)
             }
             if (actionType) {
               cyChain += `.${actionType}(${actionValue ? `'${actionValue}'` : ''})` // ...type(somehting)
@@ -1008,21 +1060,24 @@ function useGenerateTest(test, projectFilePath) {
           const value = assertion.selectorValue || '';
 
           // build subject, cy.get('foo') or cy.contains(/regex)
-          if(method && value.trim()) {
-
+      
+          
           if (method === 'contains') {
             selectorCall = `cy.contains(${value})`;
-          } else {
+          } else if (method === 'url') {
+            selectorCall = `cy.url()`;
+          } else if (method){
             selectorCall = `cy.${method}('${value}')`;
           }
-          } 
+          
 
 
 
           const isNot = assertion.isNot;
 
           const matcher = assertion.matcherType || '';    // e.g. 'should.be.visible' or 'should.have.text'
-          const mValue = assertion.matcherValue || '';       
+          const mValue = assertion.matcherValue || '';
+          console.log(`Assertion: method=${method}, value=${value},matcher=${matcher}, mValue=${mValue}`)  
 
   // we keep the prefix should to be more intuitive to the user
   const matchersWithValue = [
@@ -1048,15 +1103,16 @@ function useGenerateTest(test, projectFilePath) {
 const finalMatcher = isNot ? `not.${rawMatcher}` : rawMatcher
 
 
-
-// if matcher needs a value, 
-         if (needsValue) {
+if (matcher === 'have.length') {        // .should('not.have.text', 'foo');  
+// for matchers need a value,       .should('have.text', 'foo');
+    testFileCode += `${selectorCall}.should('${finalMatcher}', ${mValue});\n`;
+  } else if (needsValue) {        // .should('not.have.text', 'foo');  
 // for matchers need a value,       .should('have.text', 'foo');
     testFileCode += `${selectorCall}.should('${finalMatcher}', '${mValue}');\n`;
   } else {
 // for matchers without a value,     .should('be.visible');
     testFileCode += `${selectorCall}.should('${finalMatcher}');\n`;
-  }
+  }                          
 }
       }
       if (type === 'vue') {
