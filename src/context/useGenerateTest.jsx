@@ -936,7 +936,15 @@ function useGenerateTest(test, projectFilePath) {
           testFileCode += `expect(${
           assertion.queryVariant + assertion.querySelector
         }
-          (${assertion.queryValue})).${assertion.matcherType}(${
+          ${assertion.queryValue}).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
+        }
+        if(testFramework === 'mocha'){
+          testFileCode += `expect(${
+          assertion.queryVariant + assertion.querySelector
+        }
+          ${assertion.queryValue}).${assertion.matcherType}(${
           assertion.matcherValue
         });`;
         }
@@ -944,7 +952,7 @@ function useGenerateTest(test, projectFilePath) {
           testFileCode += `sinon.spy(${
             assertion.queryVariant + assertion.querySelector
           }
-            (${assertion.queryValue})).${assertion.matcherType}(${
+            ${assertion.queryValue}).${assertion.matcherType}(${
             assertion.matcherValue
           });`;
         }

@@ -79,11 +79,11 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFile
   else if(testFramework === 'mocha'){
     console.log('using mocha file type!');
     testFileType = '.js'
-    // testFileDirName = 'test'
+    testFileDirName = 'test'
   }else if(testFramework === 'sinon'){
     console.log('using mocha file type!');
     testFileType = '.js'
-    // testFileDirName = 'test'
+    testFileDirName = 'test'
   }
 
   const handleChangeFileName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,12 +133,12 @@ const ExportFileModal = ({ isExportModalOpen, setIsExportModalOpen }: ExportFile
    * @returns { void }
    */
   const exportTestFile = () => {
-    const folderPath = `${projectFilePath}/${testFileType}`;
+    const folderPath = `${projectFilePath}/${testFileDirName}`;
     const folderExists = ipcRenderer.sendSync('ExportFileModal.exists', folderPath);
     if (!folderExists) {
       ipcRenderer.sendSync('ExportFileModal.mkdir', folderPath);
     }
-    const filePath = `${projectFilePath}/${testFileType}/${fileName}${testFileType}`;
+    const filePath = `${projectFilePath}/${testFileDirName}/${fileName}${testFileType}`;
     ipcRenderer.sendSync('ExportFileModal.fileCreate', filePath, file);
 
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
