@@ -957,10 +957,10 @@ console.log('falling to regular it statement..............')
           action.commandChain.forEach((step) => {
             const {selectorType, selectorValue, actionType, actionValue} = step;
             if ( selectorType && selectorValue) {
-              cyChain += `.${selectorType}('${selectorValue}')`; // cy.get(something)
+              cyChain += `.${selectorType}('${selectorValue}')`; // .get('selector')
             }
             if (actionType) {
-              cyChain += `.${actionType}(${actionValue ? `'${actionValue}'` : ''})` // ...type(somehting)
+              cyChain += `.${actionType}(${actionValue ? `'${actionValue}'` : ''})` // chain click(), .type('value')
             }
           })
           testFileCode += cyChain + `;\n` // ! END OF CYPRESS TEST
