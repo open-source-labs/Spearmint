@@ -11,12 +11,21 @@
 3. On the first settings screen on launch, select the following settings:
 	- Multiple windows
 	- Display number: -1
-4. On the second page select the “Start no client” option
-5. On the third setting screen select the following options:
-   -	Clipboard
-   -  Primary Selection
-   -	Native opengl
-   -	Under “Additional Parameters” textbox write ‘-ac’ (no quotes)
+4. On Client Startup: Select “Start no client”
+5. On Extrra Settings: select the following options:
+   - Clipboard
+   - Primary Selection
+   - Native opengl
+   - In “Additional Parameters”:  write ‘-ac’ (no quotes)
+     
+  
+     Set up your WSL enviorment
+   - Set the DISPLAY variable: `export DISPLAY=:0` to match VcXsrv configuration
+  
+   - Before running Spearmint, ensure the Electron binary is available. From your project root, run:
+   - ls ./node_modules/.bin/electron
+   - If you dont see a result, intall Electron: npm install
+  
 
 Completing these steps after installing will launch XLaunch and enable you to run Spearmint in the Windows desktop environment.  
 
@@ -78,7 +87,11 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 9. Consider removing MUI framework as it is incompatible with React v18+ and no longer being actively updated - either replacing with another frontend framework or styling via CSS.
 
-10. Consider implementing React Dev Tools in the app. 
+10. Consider implementing React Dev Tools in the app.
+    
+11. Clean up the before cy.visit('') inside useGenerateTest.jsx.
+    
+13. Modernize app UI
 
 **_Please feel free to add any other features or fixes that you would like or are interested in._**
 
