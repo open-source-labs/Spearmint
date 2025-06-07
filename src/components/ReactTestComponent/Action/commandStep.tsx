@@ -1,31 +1,32 @@
-import React, { useContext, MouseEventHandler  } from 'react';
+import React, { useContext, MouseEventHandler } from 'react';
 import styles from '../Action/CypressAction.module.scss';
 import { AiOutlineClose } from 'react-icons/ai';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
-import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
-import { CypressCommandStep } from '../../../utils/reactTypes';
-
-
+import { ReactTestComponentAssertion } from '../../../utils/reactTestCase';
+import { CypressCommandStep } from '../../../utils/reactTestCase';
 
 interface CommandStepProps {
   step: CypressCommandStep;
-  theme: any
-  onUpdateStep: (stepId: string, field: keyof CypressCommandStep, value: string) => void;
+  theme: any;
+  onUpdateStep: (
+    stepId: string,
+    field: keyof CypressCommandStep,
+    value: string
+  ) => void;
   onDeleteStep: (stepId: string) => void;
 }
-
 
 const selectorMethods = [
   'get',
   'find',
   'contains',
-  'within',         // e.g. cy.get('form').within(() => …)
-  'parent',         // cy.get('.foo').parent()
-  'children',       // cy.get('.foo').children()
-  'filter',         // cy.get('.items').filter('.active')
-  'eq',             // cy.get('.items').eq(2)
-  'getByTestId',    // if you’ve added @testing-library/cypress
-  'getByRole',      // ditto, if you’re using Testing Library queries
+  'within', // e.g. cy.get('form').within(() => …)
+  'parent', // cy.get('.foo').parent()
+  'children', // cy.get('.foo').children()
+  'filter', // cy.get('.items').filter('.active')
+  'eq', // cy.get('.items').eq(2)
+  'getByTestId', // if you’ve added @testing-library/cypress
+  'getByRole', // ditto, if you’re using Testing Library queries
 ];
 const actionMethods = [
   'click',
@@ -33,30 +34,25 @@ const actionMethods = [
   'rightclick',
   'type',
   'clear',
-  'check',           // for checkboxes / radio
-  'uncheck',         // for checkboxes
-  'select',          // for <select> dropdowns
-  'scrollIntoView',  // scroll that element into view
-  'trigger',         // e.g. trigger('mouseover')
+  'check', // for checkboxes / radio
+  'uncheck', // for checkboxes
+  'select', // for <select> dropdowns
+  'scrollIntoView', // scroll that element into view
+  'trigger', // e.g. trigger('mouseover')
   'focus',
   'blur',
-  'invoke',          // e.g. invoke('show') or invoke('text')
+  'invoke', // e.g. invoke('show') or invoke('text')
 ];
-
-
-
-
 
 const CommandStep: React.FC<CommandStepProps> = ({
   step,
   onUpdateStep,
   onDeleteStep,
-  theme
-}) =>  {
-    
-const stepId = step.id!;
+  theme,
+}) => {
+  const stepId = step.id!;
 
-// Does action requires an argument
+  // Does action requires an argument
   const needsArgument = () => {
     switch (step.actionType) {
       case 'type':
@@ -72,7 +68,7 @@ const stepId = step.id!;
     }
   };
 
-   // dynamic placeholder depending on action chosen
+  // dynamic placeholder depending on action chosen
   const getArgumentPlaceholder = () => {
     switch (step.actionType) {
       case 'type':
@@ -88,27 +84,20 @@ const stepId = step.id!;
     }
   };
 
-
-
-
-
-// note: since step.id is added in the reducer and not actually passed I needed to please typescript by saying step.id will never be undefined.
+  // note: since step.id is added in the reducer and not actually passed I needed to please typescript by saying step.id will never be undefined.
   return (
     <div className={`${styles.commandCard} ${styles[`action${theme}`]}`}>
- 
-
       <div className={styles.stepHeader}>
         <span className={styles.stepTitle}>Step</span>
 
-     {/* Delete this step */}
-      <button
-        className={styles.stepDeleteButton}
-        onClick={() => onDeleteStep(stepId)}
-        aria-label="Delete this step"
-      >
-        <AiOutlineClose />
-      </button>
-
+        {/* Delete this step */}
+        <button
+          className={styles.stepDeleteButton}
+          onClick={() => onDeleteStep(stepId)}
+          aria-label="Delete this step"
+        >
+          <AiOutlineClose />
+        </button>
 
         {step.selectorType && step.actionType && (
           <span className={styles.stepBadge}>
@@ -157,9 +146,7 @@ const stepId = step.id!;
           <select
             id={`actionType-${stepId}`}
             value={step.actionType || ''}
-            onChange={(e) =>
-              onUpdateStep(stepId, 'actionType', e.target.value)
-            }
+            onChange={(e) => onUpdateStep(stepId, 'actionType', e.target.value)}
           >
             <option value="">(optional)</option>
             {actionMethods.map((action) => (
@@ -187,9 +174,6 @@ const stepId = step.id!;
       </div>
     </div>
   );
-
 };
-
-
 
 export default CommandStep;

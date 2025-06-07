@@ -10,7 +10,7 @@ import AutoComplete from '../../AutoComplete/AutoComplete';
 import { RTFsContexts } from '../../../context/RTFsContextsProvider';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
+import { ReactTestComponentAssertion } from '../../../utils/reactTestCase';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 

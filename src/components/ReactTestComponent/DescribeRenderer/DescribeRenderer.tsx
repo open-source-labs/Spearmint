@@ -12,7 +12,7 @@ import {
   DescribeBlocks,
   ItStatements,
   Statements,
-} from '../../../utils/reactTypes';
+} from '../../../utils/reactTestCase';
 
 // This is tracking your describe statements in a certain test, following the flow of data will help you
 // better understand exactly how this is working

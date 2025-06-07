@@ -2,7 +2,7 @@
 
 import { createContext } from 'react';
 import { actionTypes } from '../actions/frontendFrameworkTestCaseActions';
-import { CypressReactTestCaseTypes, ReactReducerAction } from '../../utils/cypressReactTypes';
+import { CypressReactTestCaseTypes, ReactReducerAction } from '../../utils/reactTestCase/cypress';
 
 
 //*****! INITIAL EMPTY REACT STATE !*******//

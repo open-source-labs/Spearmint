@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { actionTypes } from '../actions/mockDataActions';
-import { Action } from '../../utils/reactTypes';
+import { Action } from '../../utils/reactTestCase';
 import { MockDataTypes, KeyType, MockDatumType } from '../../utils/mockTypes';
 
 export const mockDataState: MockDataTypes = {
@@ -46,7 +46,9 @@ export const mockDataReducer = (state, action) => {
         mockData,
       };
     case actionTypes.DELETE_MOCK_DATA:
-      mockData = mockData.filter((mockDatum: MockDatumType) => mockDatum.id !== action.id);
+      mockData = mockData.filter(
+        (mockDatum: MockDatumType) => mockDatum.id !== action.id
+      );
       return {
         ...state,
         mockData,
@@ -119,5 +121,8 @@ export const mockDataReducer = (state, action) => {
 };
 
 const dispatchToMockData = () => null;
-const mockDataArr: [MockDataTypes, (action: Action) => void] = [mockDataState, dispatchToMockData]
+const mockDataArr: [MockDataTypes, (action: Action) => void] = [
+  mockDataState,
+  dispatchToMockData,
+];
 export const MockDataContext = createContext(mockDataArr);
