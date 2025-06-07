@@ -16,32 +16,35 @@ import { GlobalContext } from '../../context/reducers/globalReducer';
 
 const { ipcRenderer } = require('electron');
 const os = require('os');
-import { FaFolderOpen } from 'react-icons/fa'
+import { FaFolderOpen } from 'react-icons/fa';
 import { Button } from '@mui/material';
 import { File, FilePathMap } from '../../utils/globalTypes';
 
 // Change execute command based on os platform
- 
+
 let execute = '\n';
 if (os.platform() === 'win32') {
   execute = '\r';
 }
 
 const OpenFolder = (): JSX.Element => {
-  const [{ testCase, isProjectLoaded, isFileDirectoryOpen, isTestModalOpen }, dispatchToGlobal] = useContext(
-    GlobalContext,
-  );
+  const [
+    { testCase, isProjectLoaded, isFileDirectoryOpen, isTestModalOpen },
+    dispatchToGlobal,
+  ] = useContext(GlobalContext);
 
   const handleOpenFolder = () => {
     // opens finder (or equivalent), prompts user to select file directory
-    const directory: string[] | undefined = ipcRenderer.sendSync('OpenFolderButton.dialog');
+    const directory: string[] | undefined = ipcRenderer.sendSync(
+      'OpenFolderButton.dialog'
+    );
     if (directory && directory[0]) {
       let directoryPath = directory[0];
       // replace backslashes for Windows OS
       directoryPath = directoryPath.replace(/\\/g, '/');
       // update state.projectFilePath to 'users/user/project....'
       dispatchToGlobal(setProjectFilePath(directoryPath));
-      // update state.fileTree to be array of files + folders as objects 
+      // update state.fileTree to be array of files + folders as objects
       dispatchToGlobal(createFileTree(generateFileTreeObject(directoryPath)));
       // update state.isProjectLoaded to become "load"
       dispatchToGlobal(loadProject('load'));
@@ -60,10 +63,9 @@ const OpenFolder = (): JSX.Element => {
     if (javaScriptFileTypes.includes(fileType) || fileType === 'html') {
       filePathMap[file.fileName] = file.filePath;
     }
-
   };
 
-//generates current file tree for current nesting level if there are more directories inside the directory recursively call each other. at the end return file to the mapping. 
+  //generates current file tree for current nesting level if there are more directories inside the directory recursively call each other. at the end return file to the mapping.
   const generateFileTreeObject = (directoryPath: string): File[] => {
     const filePaths = ipcRenderer.sendSync('Universal.readDir', directoryPath);
     const fileArray = filePaths.map((fileName: string) => {
@@ -79,8 +81,15 @@ const OpenFolder = (): JSX.Element => {
       populateFilePathMap(file);
 
       // generateFileTreeObj will be recursively called if it is a folder
-      const isDirectory = ipcRenderer.sendSync('OpenFolderButton.isDirectory', filePath);
-      if (file.fileName !== 'node_modules' && file.fileName !== '.git' && isDirectory) {
+      const isDirectory = ipcRenderer.sendSync(
+        'OpenFolderButton.isDirectory',
+        filePath
+      );
+      if (
+        file.fileName !== 'node_modules' &&
+        file.fileName !== '.git' &&
+        isDirectory
+      ) {
         file.files = generateFileTreeObject(file.filePath);
       }
       return file;
@@ -92,17 +101,17 @@ const OpenFolder = (): JSX.Element => {
   return (
     <>
       {!isProjectLoaded ? (
-        <Button 
-          variant="outlined" 
-          id={styles.openBtn} 
+        <Button
+          variant="outlined"
+          id={styles.openBtn}
           onClick={handleOpenFolder}
         >
           <span>Open Folder</span>
-          <FaFolderOpen size={'1.25rem'}/>
+          <FaFolderOpen size={'1.25rem'} />
         </Button>
       ) : (
-        <span onClick={handleOpenFolder} title='Open new folder'>
-          <FaFolderOpen size={'1.5rem'}/>
+        <span onClick={handleOpenFolder} title="Open new folder">
+          <FaFolderOpen size={'1.5rem'} />
         </span>
         // <button className={styles.navBtn}>
         //   <img

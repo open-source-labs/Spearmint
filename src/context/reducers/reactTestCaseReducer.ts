@@ -7,19 +7,23 @@ import {
   DescribeBlocks,
   Statements,
   Prop,
+  Visit,
   StatementsById,
   ReactReducerAction,
-} from '../../utils/reactTypes';
+  CypressCommandStep,
+} from '../../utils/reactTestCase';
 
 // similar to globalReducer, but instead of dealing with global items, this is specific to React,
 // this holds state for things like describe and it statements, basically what your React test looks like
+//*****! INITIAL EMPTY REACT STATE *******/
 export const reactTestCaseState: ReactTestCaseTypes = {
   modalOpen: false,
-  //
   describeId: 1,
   itId: 1,
   statementId: 1,
   propId: 1,
+  visitId: 1, // ! unsure if this should be 1
+  stepId: 1,
   describeBlocks: {
     byId: {
       describe0: {
@@ -49,6 +53,8 @@ export const reactTestCaseState: ReactTestCaseTypes = {
         describeId: 'describe0',
         type: 'render',
         props: [],
+        visits: [], //! added visits array
+        commandChain: [],
       },
     },
     allIds: ['statement0'],
@@ -87,6 +93,7 @@ const createAction = (
   querySelector: '',
   queryValue: '',
   suggestions: [],
+  commandChain: [],
 });
 
 const createAssertion = (
@@ -105,8 +112,11 @@ const createAssertion = (
   matcherType: '',
   matcherValue: '',
   suggestions: [],
+  selectorMethod: '',
+  selectorValue: '',
 });
 
+/*
 const createRender = (
   describeId: string,
   itId: string,
@@ -118,12 +128,38 @@ const createRender = (
   type: 'render',
   props: [],
 });
+*/
+
+// ! create Render Factory
+const createRender = (
+  describeId: string,
+  itId: string,
+  statementId: string
+) => {
+  return {
+    id: statementId,
+    itId,
+    describeId,
+    type: 'render',
+    statementType: 'render',
+    objectType: 'statement',
+    props: [],
+    visits: [], // updated
+  };
+};
 
 const createProp = (propId: string, statementId: string) => ({
   id: propId,
   statementId,
   propKey: '',
   propValue: '',
+});
+
+const createVisit = (visitId: string, statementId: string) => ({
+  id: visitId,
+  statementId,
+  visitKey: '',
+  visitValue: '',
 });
 
 // The function deleteChildren, is now split into two separate functions, based on the object type, as trying to reference the type of 'object' based on a conditional statement was throwing errors throughout the reducer actionTypes /////
@@ -171,8 +207,12 @@ actions & cases will need to be somewhat (read: completely) rewritten in a more 
 satisfy typescript. Unfortunately we are not able to achieve this in the time available to us. For inspiration,
 I would encourage you to look at ./hooksTestCaseReducer, which seems to have a workable implementation that could 
 be extended to the other reducers. I hope this comment can save you the hours of confusion I experienced when trying
-to parse this code. Good luck!
+to parse this code. Good luck!'
+
+victim - Mickael - 14.4hr
 */
+
+//*****! REACT REDUCER *******/
 export const reactTestCaseReducer = (
   state: ReactTestCaseTypes,
   action: ReactReducerAction
@@ -416,6 +456,7 @@ export const reactTestCaseReducer = (
         },
       };
     }
+
     case actionTypes.UPDATE_ACTION: {
       const {
         id,
@@ -425,9 +466,12 @@ export const reactTestCaseReducer = (
         querySelector,
         queryValue,
         suggestions,
-      } = action;
+      } = action; //** pull the dispatched (user edited fields) */
+
       const byId = { ...statements.byId };
-      const oldStatement = { ...statements.byId[id] };
+      const oldStatement = { ...statements.byId[id] }; //* */ retrives the current action block from global test state
+
+      //**/ now we build the new state comibing the old data with the new edits */
       const newStatement = {
         ...oldStatement,
         eventType,
@@ -437,6 +481,7 @@ export const reactTestCaseReducer = (
         queryValue,
         suggestions,
       };
+      //** return new state ready to be rendered, previewed, or saved to disk */
       return {
         ...state,
         statements: {
@@ -450,6 +495,142 @@ export const reactTestCaseReducer = (
         },
       };
     }
+
+    //! Cypress Update command chain
+    // added Property 'commandChain' on type 'ReactReducerAction' in reactTypes.ts
+    case actionTypes.ADD_CYPRESS_ACTION_STEP: {
+      const { actionId, step } = action;
+      const s = step!; // step is definitely not undefined but I made it optional as a quick fix in ReactReducerAction
+
+      const newStepId = `step${state.stepId}`;
+
+      // 2) Build the complete step (ensuring we don't overwrite a pre-existing id)
+      const completeStep: CypressCommandStep = {
+        id: newStepId,
+        selectorType: s.selectorType,
+        selectorValue: s.selectorValue,
+        actionType: s.actionType,
+        actionValue: s.actionValue,
+      };
+
+      // Find the existing action‐statement object
+
+      const existingAction = statements.byId[actionId!]!;
+
+      // Default to an empty array if commandChain is undefined
+      const existingChain: CypressCommandStep[] =
+        existingAction.commandChain || [];
+
+      // 4) Append the new step
+      const updatedChain = [...existingChain, completeStep];
+
+      return {
+        ...state,
+        // Only increment the counter if we generated a new ID
+        stepId: state.stepId + 1,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [actionId!]: {
+              // Spread everything else in the existing action (e.g. type, props, visits)
+              ...existingAction,
+              // Append the new step onto the chain
+              commandChain: updatedChain,
+            },
+          },
+          // `allIds` stays unchanged
+          allIds: [...statements.allIds],
+        },
+      };
+    }
+
+    case actionTypes.UPDATE_CYPRESS_ACTION_STEP: {
+      const { actionId, stepId, field, value } = action;
+
+      const existingAction = statements.byId[actionId!]!;
+      const existingChain: CypressCommandStep[] =
+        existingAction.commandChain || [];
+
+      // Map over the chain, updating only the matching step
+      const updatedChain = existingChain.map((s) =>
+        s.id === stepId ? { ...s, [field!]: value } : s
+      );
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [actionId!]: {
+              ...existingAction,
+              commandChain: updatedChain,
+            },
+          },
+          allIds: [...statements.allIds],
+        },
+      };
+    }
+
+    case actionTypes.DELETE_CYPRESS_ACTION_STEP: {
+      const { actionId, stepId } = action;
+
+      const existingAction = statements.byId[actionId!]!;
+      const existingChain: CypressCommandStep[] =
+        existingAction.commandChain || [];
+
+      // Filter out the step whose `id` matches `stepId`
+      const filteredChain = existingChain.filter((s) => s.id !== stepId);
+
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [actionId!]: {
+              ...existingAction,
+              commandChain: filteredChain,
+            },
+          },
+          allIds: [...statements.allIds],
+        },
+      };
+    }
+
+    //     case actionTypes.REORDER_CYPRESS_ACTION_STEPS: {
+    //       const { actionId, newOrder } = action;
+
+    //       // Create a lookup of steps by ID:
+    //       const existingAction = statements.byId[actionId] || { commandChain: [] };
+    //       const original: CypressCommandStep[] = existingAction.commandChain || [];
+
+    //       // Build a lookup of steps by ID
+    //       const lookup: Record<string, CypressCommandStep> = {};
+    //       original.forEach((step) => {
+    //         lookup[step.id] = step;
+    //       });
+
+    // // Create a reordered array, filtering out any unknown IDs
+    //       const reorderedChain: CypressCommandStep[] = newOrder
+    //         .map((sid) => lookup[sid])
+    //         .filter(Boolean);
+
+    //       return {
+    //         ...state,
+    //         statements: {
+    //           ...statements,
+    //           byId: {
+    //             ...statements.byId,
+    //             [actionId]: {
+    //               ...existingAction,
+    //               commandChain: reorderedChain,
+    //             },
+    //           },
+    //           allIds: [...statements.allIds],
+    //         },
+    //       };
+    //     }
 
     case actionTypes.ADD_ASSERTION: {
       const { describeId, itId } = action;
@@ -470,6 +651,7 @@ export const reactTestCaseReducer = (
         },
       };
     }
+
     case actionTypes.DELETE_ASSERTION: {
       const { statementId } = action;
       const byId = { ...statements.byId };
@@ -498,7 +680,14 @@ export const reactTestCaseReducer = (
         matcherType,
         matcherValue,
         suggestions,
+        selectorMethod,
+        selectorValue,
       } = action;
+
+      console.log(
+        `Reducer, UPDATE_ASSERTION payload: id=${id}, selectorMethod=${selectorMethod}, selectorValue=${selectorValue}`
+      );
+
       const oldStatement = { ...statements.byId[id] };
       const byId = { ...statements.byId };
       const newStatement = {
@@ -510,7 +699,13 @@ export const reactTestCaseReducer = (
         matcherType,
         matcherValue,
         suggestions,
+        selectorMethod,
+        selectorValue,
       };
+
+      console.log(`reducer, oldStatement:`, oldStatement);
+      console.log(`reducer, newStatement:`, newStatement);
+
       return {
         ...state,
         statements: {
@@ -525,8 +720,11 @@ export const reactTestCaseReducer = (
       };
     }
 
+    //! RENDERRRR
     case actionTypes.ADD_RENDER: {
-      const { describeId, itId } = action;
+      console.log('ADD_RENDER action:', action);
+
+      const { describeId, itId } = action; // extract subType from action
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
       const statementId = `statement${state.statementId}`;
@@ -545,6 +743,7 @@ export const reactTestCaseReducer = (
         },
       };
     }
+
     case actionTypes.DELETE_RENDER: {
       const { statementId } = action;
       const byId = { ...statements.byId };
@@ -570,6 +769,105 @@ export const reactTestCaseReducer = (
       return {
         ...state,
         statements,
+      };
+    }
+
+    //! VISIT ACTION BUILDERS
+    case actionTypes.ADD_VISIT: {
+      const { statementId } = action;
+      const visitId = `visit${state.visitId}`;
+      const { byId } = statements;
+      let updatedVisitId = state.visitId;
+
+      return {
+        ...state,
+        visitId: ++updatedVisitId,
+        statements: {
+          ...statements,
+          byId: {
+            ...byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              visits: [
+                ...statements.byId[statementId].visits,
+                createVisit(visitId, statementId),
+              ],
+            },
+          },
+        },
+      };
+    }
+    // now dispatching updateRenderUrl will actually update the visits array
+
+    //  const createRender = (describeId: string, itId: string, statementId: string) => {
+    //   return {
+    //     id: statementId,
+    //     itId,
+    //     describeId,
+    //     type: 'render',
+    //     statementType: 'render',
+    //     objectType: 'statement',
+    //     props: [],
+    //     visits: [] // updated
+    //   };
+    // };
+    //!!!!!! ADD DELETE_PROP and UPDATE_PROP
+    case actionTypes.UPDATE_RENDER_URL: {
+      const { id, statementId, visitKey, visitValue } = action;
+
+      // visits array of key value paitrs
+      const statement = statements.byId[statementId];
+
+      const currentVisits = Array.isArray(statement.visits)
+        ? statement.visits
+        : [];
+
+      // If no visits exist, add a new one
+      const updatedVisits =
+        currentVisits.length === 0
+          ? [{ id, visitKey, visitValue }]
+          : currentVisits.map(
+              (
+                visit // initialize if empty
+              ) =>
+                visit.id === id ? { ...visit, visitKey, visitValue } : visit
+            );
+
+      console.log('Reducer,  updated Visits:', updatedVisits);
+      console.log('ReactTestCase,  Statements state:', statements);
+
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              visits: updatedVisits,
+            },
+          },
+        },
+      };
+    }
+
+    case actionTypes.DELETE_RENDER_URL: {
+      const { id, statementId } = action;
+      const urls = statements.byId[statementId].visits.filter(
+        (visit: Visit) => visit.id !== id
+      );
+      return {
+        ...state,
+        statements: {
+          ...statements,
+          byId: {
+            ...statements.byId,
+            [statementId]: {
+              ...statements.byId[statementId],
+              urls,
+            },
+          },
+        },
       };
     }
 
@@ -621,6 +919,7 @@ export const reactTestCaseReducer = (
       const updatedProps = [...statements.byId[statementId].props];
 
       updatedProps.forEach((prop) => {
+        //! for each mutates stateeeee
         if (prop.id === id) {
           prop.propKey = propKey;
           prop.propValue = propValue;
@@ -682,7 +981,8 @@ export const reactTestCaseReducer = (
 // here we are using useContext to create the React state to be used in other files
 const dispatchToReactTestCase = () => null;
 const reactTestCaseArr: [ReactTestCaseTypes, (action: Action) => void] = [
-  reactTestCaseState,
-  dispatchToReactTestCase,
+  reactTestCaseState, // state
+  dispatchToReactTestCase, // dispatch
 ];
+//** this is the dispatcher were grabbing */
 export const ReactTestCaseContext = createContext(reactTestCaseArr);

@@ -6,6 +6,8 @@ interface MatcherType {
   name: string
 }
 
+// used for assertion auto complete of matchers
+
 export const matcherTypesList: Array<MatcherType> = [
   {
     name: 'toHaveTextContent',

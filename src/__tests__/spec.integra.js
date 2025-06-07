@@ -14,8 +14,11 @@ const app = new Application({
 });
 
 
-xdescribe('Application Accessibility Audit', function () {
+describe('Application Accessibility Audit', function () {
   this.timeout(10000);
+  // setTimeout(() => {
+  //   console.log('application is launching');
+  // }, 1000)
   
   beforeEach(function () {
     return app.start();
