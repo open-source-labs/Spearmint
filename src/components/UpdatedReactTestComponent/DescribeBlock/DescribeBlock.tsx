@@ -9,9 +9,9 @@ import {
   Button,
   TextField,
 } from '@mui/material';
-import { DescribeBlocks } from '../../../utils/reactTypes';
+import { DescribeBlocks } from '../../../utils/reactTestCase';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
-import { RTFsContexts } from '../../../context/RTFsContextsProvider';
+import { RTFsContexts } from '../../../context/RTFsContextsProvider'; // central for handling UI updates. centeral manual or state
 
 import styles from '../../Modals/Modal.module.scss';
 

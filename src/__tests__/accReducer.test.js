@@ -36,6 +36,7 @@ describe('Accessibility Reducer', () => {
           fileName: '',
           filePath: '',
           puppeteerUrl: 'sample.io',
+          testType: '',
         };
     })
 
@@ -137,14 +138,14 @@ describe('Accessibility Reducer', () => {
     it('should handle ADD_ITSTATEMENT', () => {
         const action = {
             type: 'ADD_ITSTATEMENT',
-            describeId: 'decribe0'
+            describeId: 'describe0'
         };
         expect(accTestCaseReducer(initialState, action)).toEqual({
           ...initialState,
           itId: 2,
           itStatements: {
             byId: {
-              ...initialState.itStatement.byId,
+              ...initialState.itStatements.byId,
               it1: {
                 id: 'it1',
                 describeId: 'describe0',

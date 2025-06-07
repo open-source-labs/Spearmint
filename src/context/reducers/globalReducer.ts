@@ -27,6 +27,7 @@ export const globalState: GlobalStateTypes = {
   tabIndex: 0,
   isGuest: false,
   theme: window.localStorage.theme ?? 'light',
+  testFramework: 'jest', //! added new global testframework
 };
 
 
@@ -47,6 +48,7 @@ export const GlobalContext = createContext<[GlobalStateTypes, Function]>(context
 export const globalReducer = (state: GlobalStateTypes, action: GlobalActionTypes) => {
   Object.freeze(state);
 
+  
   switch (action.type) {
     case actionTypes.SET_PROJECT_URL:
       const url = action.url;
@@ -55,6 +57,8 @@ export const globalReducer = (state: GlobalStateTypes, action: GlobalActionTypes
         url,
         projectUrl: url,
       };
+
+      
 
     case actionTypes.LOAD_PROJECT:
       const isProjectLoaded = action.load;
@@ -230,8 +234,16 @@ export const globalReducer = (state: GlobalStateTypes, action: GlobalActionTypes
         ...state,
         theme: action.theme,
       };
+//! added hereeeeeeeee
+      case actionTypes.SET_TEST_FRAMEWORK: 
+      return {
+        ...state,
+        testFramework: action.testFramework,
+      };
+      
 
     default:
       return state;
   }
 }; 
+
