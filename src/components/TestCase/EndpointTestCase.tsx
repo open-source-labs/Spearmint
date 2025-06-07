@@ -29,7 +29,11 @@ const EndpointTestCase = () => {
 
   const questionIcon = require('../../assets/images/help-circle.png');
 
-  const reorder = (list: Array<EndpointStatements>, startIndex: number, endIndex: number) => {
+  const reorder = (
+    list: Array<EndpointStatements>,
+    startIndex: number,
+    endIndex: number
+  ) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -44,7 +48,7 @@ const EndpointTestCase = () => {
 
   return (
     <div>
-      <div id='head'>
+      <div id="head">
         <h2 id={styles[`testName${theme}`]}>Endpoint Testing</h2>
         <EndpointTestMenu />
       </div>
@@ -53,7 +57,7 @@ const EndpointTestCase = () => {
           <div className={styles.header}>
             <div className={styles.searchInput}>
               <SearchInput
-                label='Import Server From'
+                label="Import Server From"
                 options={Object.keys(filePathMap)}
                 filePathMap={filePathMap}
                 dispatch={dispatchToEndpointTestCase}
@@ -69,12 +73,13 @@ const EndpointTestCase = () => {
           {addDB && (
             <>
               <div>
-                <label htmlFor='endpointDB'>Import Database From</label>{' '}
-                <span id={styles.hastooltip} role='tooltip'>
-                  <img src={questionIcon} alt='help' />
+                <label htmlFor="endpointDB">Import Database From</label>{' '}
+                <span id={styles.hastooltip} role="tooltip">
+                  <img src={questionIcon} alt="help" />
                   <span id={styles.tooltip}>
-                    If you're testing a route that involves querying a database, you must import it
-                    here. See "Run Test" above for more information.
+                    If you're testing a route that involves querying a database,
+                    you must import it here. See "Run Test" above for more
+                    information.
                   </span>
                 </span>
                 <div id={styles.labelInput} style={{ width: '80%' }}>
@@ -93,12 +98,16 @@ const EndpointTestCase = () => {
                 </div>
               </div>
               <div id={styles.dropdownWrapper} style={{ marginTop: '15px' }}>
-                <label htmlFor='endpointDBType'>Type of Database</label>
+                <label htmlFor="endpointDBType">Type of Database</label>
                 <div id={styles.dropdownFlex}>
-                  <select id='method' value={addDB} onChange={(e) => handleSelectUpdateDatabase(e)}>
-                    <option value='PostgreSQL'>PostgreSQL</option>
-                    <option value='MongoDB'>MongoDB</option>
-                    <option value='Mongoose'>Mongoose</option>
+                  <select
+                    id="method"
+                    value={addDB}
+                    onChange={(e) => handleSelectUpdateDatabase(e)}
+                  >
+                    <option value="PostgreSQL">PostgreSQL</option>
+                    <option value="MongoDB">MongoDB</option>
+                    <option value="Mongoose">Mongoose</option>
                   </select>
                 </div>
               </div>
@@ -107,14 +116,15 @@ const EndpointTestCase = () => {
         </section>
       </div>
       <div id={styles[`Endpoint${theme}`]}>
-          <Button 
-            variant='outlined'
-            data-testid='endPointButton' 
-            size='medium'
-            onClick={handleAddEndpoint}>
-            Endpoint
-          </Button>
-        </div>
+        <Button
+          variant="outlined"
+          data-testid="endPointButton"
+          size="medium"
+          onClick={handleAddEndpoint}
+        >
+          Endpoint
+        </Button>
+      </div>
     </div>
   );
 };

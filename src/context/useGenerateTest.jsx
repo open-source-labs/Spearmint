@@ -157,6 +157,7 @@ function useGenerateTest(test, projectFilePath) {
     }; //
 
     const addDescribeBlocks = () => {
+      console.log('addDescribeBlocks fired!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
       const describeBlocks = reactTestCase.describeBlocks;
 
       describeBlocks.allIds.forEach((id) => {
@@ -166,17 +167,81 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-    //! IT STAYS THE SAME
-    // React It Statements
-    const addReactItStatement = (describeId) => {
-      const itStatements = reactTestCase.itStatements;
-      itStatements.allIds[describeId].forEach((itId) => {
-        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
-        addReactStatements(itId);
-        testFileCode += '})\n';
-      });
-    };
 
+
+
+
+
+let beforeInjected = false; // flag for first render with visitKey
+
+const addReactItStatement = (describeId) => {
+  console.log('inside It statement generation!!!!!!!!!!!!!!!!!!!!')
+
+
+
+  const itStatements = reactTestCase.itStatements; // all it test blocks
+
+  // lookup table where each key os a statement ID and each value is the full statement object 
+  const statementMap = reactTestCase.statements.byId; 
+
+  // array of all statement IDs
+  const statementIds = reactTestCase.statements.allIds; 
+
+
+  itStatements.allIds[describeId].forEach((itId) => {
+
+ // find the first render statement inside the first it block that has a visitKey for cypress visit
+    const renderStatement = statementIds.map((id) => {
+     
+        const s = statementMap[id]; // grab full statement info 
+        if (!s) { console.warn(`No statement found for id=${id}`); }
+        return s;
+      }).find((statement) => {
+        if (!statement) return false;
+
+        const isMatch = (
+          statement.itId === itId &&
+          statement.type === 'render' &&
+          Array.isArray(statement.visits) &&
+          statement.visits[0]?.visitKey
+        );
+
+
+    console.log(`Checking statement:`, {
+          id: statement?.id,
+          type: statement?.type,
+          itId: statement?.itId,
+          visits: statement?.visits,
+          match: isMatch,
+        });
+
+        return isMatch;
+      });
+
+
+
+    if (renderStatement && !beforeInjected) {
+      console.log('SUCCSESSSSSSSSSSSSSSSSSSSSSSSS')
+      const { visitKey, visitValue = '' } = renderStatement.visits[0];
+      const baseUrl = `${visitKey}`;
+      testFileCode += `  before(() => {\n    cy.visit('${baseUrl}');\n  });\n\n`;
+      beforeInjected = true;
+    }
+
+
+console.log('falling to regular it statement..............')
+    testFileCode += `  it('${itStatements.byId[itId].text}', () => {\n`;
+    addReactStatements(itId);
+    testFileCode += `  });\n\n`;
+  });
+};
+
+
+
+
+
+
+    //! React handler
     const addReactStatements = (itId) => {
       const statements = reactTestCase.statements;
       const methods = identifyMethods(itId);
@@ -212,11 +277,34 @@ function useGenerateTest(test, projectFilePath) {
 
     // Render Jest Test Code
     const addRender = (statement, methods) => {
+
+    if (testFramework === 'cypress') {
+       
+    // Look for visit info if it exists
+    const visit = statement.visits[0]; // one visit per statement for now
+      if (!visit) {
+        return;
+      }
+
+    if (visit && visit.visitValue) {
+      const endpoint = `${visit.visitValue}`;
+       testFileCode += `cy.visit('${endpoint}');`;
+    } 
+
+
+
+  
+
+
+    } else {
       let props = createRenderProps(statement.props);
       const formattedComponentName =
         reactTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
+    }
     };
+
+
 
     // Render Props Jest Test Code
     const createRenderProps = (props) => {
@@ -224,6 +312,8 @@ function useGenerateTest(test, projectFilePath) {
         return acc + `${prop.propKey}={${prop.propValue}}`;
       }, '');
     };
+
+
 
     /* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
 
@@ -870,9 +960,26 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
-    const addAction = (action, type = 'react') => {
+    // injest action block current data
+    const addAction = (action, type = 'react') => { //! REACT
       if (type === 'react') {
-        if (action.eventValue) {
+
+        if (testFramework === 'cypress' && Array.isArray(action.commandChain)) {
+          let cyChain = 'cy';
+          action.commandChain.forEach((step) => {
+            const {selectorType, selectorValue, actionType, actionValue} = step;
+            if ( selectorType && selectorValue) {
+              cyChain += `.${selectorType}('${selectorValue}')`; // .get('selector')
+            }
+            if (actionType) {
+              cyChain += `.${actionType}(${actionValue ? `'${actionValue}'` : ''})` // chain click(), .type('value')
+            }
+          })
+          testFileCode += cyChain + `;\n` // ! END OF CYPRESS TEST
+        
+        } 
+        //! Jest testing logic
+        else if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(${
             action.queryVariant + action.querySelector
           }
@@ -885,7 +992,9 @@ function useGenerateTest(test, projectFilePath) {
           }
           (${action.queryValue}));`;
         }
-      } else if (type === 'solid') {
+      } else if (type === 'solid') { //! SOLID
+
+
         if (action.eventValue) {
           testFileCode += `fireEvent.${action.eventType}(screen.${
             action.queryVariant + action.querySelector
@@ -899,7 +1008,9 @@ function useGenerateTest(test, projectFilePath) {
           }
           (${action.queryValue}));`;
         }
-      } else if (type === 'vue') {
+      } else if (type === 'vue') { //! VUE
+
+
         testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
       } else if (type === 'svelte') {
         if (action.eventValue) {
@@ -914,13 +1025,15 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-    console.log('Outer OUTER If Type Log', testFramework);
-    //! ADD SINON ASSERT STARTERS HERE 'SINON.'
+
+
+    
+
     // Assertion Jest Test Code
     const addAssertion = (assertion, type = 'react') => {
+
       //! log the testFramework inside of the components
-      console.log('Outer If Type Log', testFramework);
-      // if (type === 'solid') *********************************************
+
       if (type === 'solid') {
         testFileCode += `expect(screen.${
           assertion.queryVariant + assertion.querySelector
@@ -930,8 +1043,7 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
       if (type === 'react') {
-        // console.log('dis shit working')
-        // console.log('inside da if statement',testFramework)
+ 
         if(testFramework === 'jest'){
           testFileCode += `expect(${
           assertion.queryVariant + assertion.querySelector
@@ -956,6 +1068,71 @@ function useGenerateTest(test, projectFilePath) {
             assertion.matcherValue
           });`;
         }
+// click();
+//     
+//       ().should.have.text(welcome);
+
+        if(testFramework === 'cypress'){
+
+          let selectorCall = '';
+          const method = assertion.selectorMethod || '';
+          const value = assertion.selectorValue || '';
+
+          // build subject, cy.get('foo') or cy.contains(/regex)
+      
+          
+          if (method === 'contains') {
+            selectorCall = `cy.contains('${value}')`;
+          } else if (method === 'url') {
+            selectorCall = `cy.url()`;
+          } else if (method){
+            selectorCall = `cy.${method}('${value}')`;
+          }
+          
+
+
+
+          const isNot = assertion.isNot;
+
+          const matcher = assertion.matcherType || '';    // e.g. 'should.be.visible' or 'should.have.text'
+          const mValue = assertion.matcherValue || '';
+          console.log(`Assertion: method=${method}, value=${value},matcher=${matcher}, mValue=${mValue}`)  
+
+  // we keep the prefix should to be more intuitive to the user
+  const matchersWithValue = [
+    'should.have.text',
+    'should.have.value',
+    'should.contain',
+    'should.have.attr',
+    'should.have.class',
+    'should.have.css',
+    'should.have.length',
+    'should.include',
+    'should.eq',
+    'should.not.have.value',
+  ];
+
+  const needsValue = matchersWithValue.includes(matcher);
+
+
+  // strip off the "should." prefix
+  const rawMatcher = matcher.replace(/^should\./, '');
+
+// Prefix with "not." or keep mathcher minus the "should."
+const finalMatcher = isNot ? `not.${rawMatcher}` : rawMatcher
+
+
+if (matcher === 'have.length') {        // .should('not.have.text', 'foo');  
+// for matchers need a value,       .should('have.text', 'foo');
+    testFileCode += `${selectorCall}.should('${finalMatcher}', ${mValue});\n`;
+  } else if (needsValue) {        // .should('not.have.text', 'foo');  
+// for matchers need a value,       .should('have.text', 'foo');
+    testFileCode += `${selectorCall}.should('${finalMatcher}', '${mValue}');\n`;
+  } else {
+// for matchers without a value,     .should('be.visible');
+    testFileCode += `${selectorCall}.should('${finalMatcher}');\n`;
+  }                          
+}
       }
       if (type === 'vue') {
         if (assertion.querySelector) {
@@ -975,43 +1152,7 @@ function useGenerateTest(test, projectFilePath) {
         });`;
       }
     };
-    // //! SINON ADD ASSERTION HERE
-    // const addAssertionSinon = (assertion, type = 'react', testFramework) => {
-    //   // if (type === 'solid' && testFramework === 'sinon') *********************************************
-    //   if (type === 'solid') {
-    //     testFileCode += `expect(screen.${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    //   if (type === 'react' && testFramework === 'sinon') {
-    //     testFileCode += `sinon.spy(${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    //   if (type === 'vue') {
-    //     if (assertion.querySelector) {
-    //       testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue}).
-    //         ${assertion.querySelector}()).${assertion.matcherType}(${assertion.matcherValue});`;
-    //     } else {
-    //       testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
-    //         ${assertion.matcherType}(${assertion.matcherValue});`;
-    //     }
-    //   }
-    //   if (type === 'svelte') {
-    //     testFileCode += `expect(screen.${
-    //       assertion.queryVariant + assertion.querySelector
-    //     }
-    //       (${assertion.queryValue})).${assertion.matcherType}(${
-    //       assertion.matcherValue
-    //     });`;
-    //   }
-    // };
+
 
     // Middleware Jest Test Code
     const addMiddleware = (middleware) => {

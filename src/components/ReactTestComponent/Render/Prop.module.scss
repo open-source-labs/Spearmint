@@ -33,3 +33,88 @@
     margin-bottom: 5px;
   }
 }
+
+
+#componentName{
+  color: var(--component-color);
+}
+
+.header {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--prop-color);
+}
+.header {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--visit-color);
+}
+
+
+
+.close {
+  float: right;
+  cursor: pointer;
+}
+
+
+
+.description {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.75rem;
+}
+
+label {
+  display: block;
+  margin-top: 0.50rem;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+// .invalid {
+//   border-color: #e63946;
+// }
+
+.preview {
+  margin-top: 1rem;
+  font-family: monospace;
+  background-color: #f6f8fa;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+
+
+.urlRow {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.urlInputGroup {
+  flex: 1;
+  min-width: 200px;
+}
+
+.urlInputGroup label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.urlInputGroup input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}

@@ -1,8 +1,8 @@
 import React from 'react';
 import Action from '../UpdatedReactTestComponent/Action/Action';
 import Assertion from '../UpdatedReactTestComponent/Assertion/Assertion';
-import Render from '../UpdatedReactTestComponent/Render/Render';
-import { Statements } from '../../utils/reactTypes';
+import Render from '../UpdatedReactTestComponent/Render/NOT_USED_Render';
+import { Statements } from '../../utils/reactTestCase';
 
 interface ReactTestStatementsProps {
   statements: Statements;
@@ -47,16 +47,16 @@ const ReactTestStatements = ({
                 statement={statements.byId[id]}
               />
             );
-            case 'render':
-              case 'visit':
-                return (
-                  <Render
-                    key={`render-${id}-${i}`}
-                    statementId={id}
-                    describeId={describeId}
-                    itId={itId}
-                    statement={statements.byId[id]}
-                  />
+          case 'render':
+          case 'visit':
+            return (
+              <Render
+                key={`render-${id}-${i}`}
+                statementId={id}
+                describeId={describeId}
+                itId={itId}
+                statement={statements.byId[id]}
+              />
             );
           default:
             return <></>;

@@ -12,7 +12,7 @@ import { matcherTypesList } from '../TypesList/matcherTypesList';
 import {
   AutoCompleteProps,
   AutoCompleteStatement,
-} from '../../utils/reactTypes';
+} from '../../utils/reactTestCase';
 
 /**
  * Renders the AutoComplete react component - this component is specifically for the FrontEnd frameworks and uses the eventTypesList

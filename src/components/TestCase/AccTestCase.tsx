@@ -50,9 +50,9 @@ const AccTestCase = () => {
 
       <section id={styles[`testCaseHeader${theme}`]}>
         <div id={styles.accTestDiv}>
-          <AccTestTypes 
-          // handleAccChange={handleAccChange}
-            action={updateTestType} 
+          <AccTestTypes
+            // handleAccChange={handleAccChange}
+            action={updateTestType}
             dispatch={dispatchToAccTestCase}
           />
 
