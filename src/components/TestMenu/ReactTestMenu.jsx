@@ -26,6 +26,25 @@ import { clearMockData } from '../../context/actions/mockDataActions';
 const { ipcRenderer } = require('electron');
 
 const ReactTestMenu = () => {
+
+  const [{testFramework}] = useContext(GlobalContext);
+  let testFileType = '';
+  let testFileDirName = '';
+  if(testFramework === 'jest'){
+    console.log('using jest file type!');
+    testFileType = '.test.js'
+    testFileDirName = '__tests__'
+  }
+  else if(testFramework === 'mocha'){
+    console.log('using mocha file type!');
+    testFileType = '.js'
+    testFileDirName = 'test'
+  }else if(testFramework === 'sinon'){
+    console.log('using mocha file type!');
+    testFileType = '.js'
+    testFileDirName = 'test'
+  }
+
   // React testing docs url
   const reactUrl =
     'https://testing-library.com/docs/react-testing-library/example-intro';
@@ -75,7 +94,7 @@ const ReactTestMenu = () => {
     const valid = validateInputs('react', reactTestCase);
     dispatchToGlobal(setValidCode(valid));
 
-    const newFilePath = `${projectFilePath}/__tests__/${fileName}`;
+    const newFilePath = `${projectFilePath}/${testFileDirName}/${fileName}`;
     const updatedData = fileHandle();
     // check to see if user has saved test before. If not, then open ExportFileModal
     if (!newFilePath.includes('test.js') || !userSavedTest) {

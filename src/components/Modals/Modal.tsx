@@ -107,9 +107,27 @@ const Modal = ({
     setInvalidFileName(false);
   };
 
+  const [{testFramework}] = useContext(GlobalContext);
+  let testFileType = '';
+  let testFileDirName = '';
+  if(testFramework === 'jest'){
+    console.log('using jest file type!');
+    testFileType = '.test.js'
+    testFileDirName = '__tests__'
+  }
+  else if(testFramework === 'mocha'){
+    console.log('using mocha file type!');
+    testFileType = '.js'
+    testFileDirName = 'test'
+  }else if(testFramework === 'sinon'){
+    console.log('using mocha file type!');
+    testFileType = '.js'
+    testFileDirName = 'test'
+  }
+
   const handleClickSave = () => {
     // file name uniqueness check
-    const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;
+    const filePath = `${projectFilePath}/${testFileDirName}/${fileName}${testFileType}`;
     const fileExists = ipcRenderer.sendSync('ExportFileModal.exists', filePath);
     if (fileExists) {
       setInvalidFileName(true);
@@ -126,12 +144,12 @@ const Modal = ({
   };
 
   const exportTestFile = () => {
-    const folderPath = `${projectFilePath}/__tests__`;
+    const folderPath = `${projectFilePath}/${testFileDirName}`;
     const folderExists = ipcRenderer.sendSync('ExportFileModal.exists', folderPath);
     if (!folderExists) {
       ipcRenderer.sendSync('ExportFileModal.mkdir', folderPath);
     }
-    const filePath = `${projectFilePath}/__tests__/${fileName}.test.js`;
+    const filePath = `${projectFilePath}/${testFileDirName}/${fileName}${testFileType}`;
     ipcRenderer.sendSync('ExportFileModal.fileCreate', filePath, file);
 
     dispatchToGlobal(createFileTree(generateFileTreeObject(projectFilePath)));
@@ -139,11 +157,11 @@ const Modal = ({
   };
 
   const displayTestFile = (testFolderFilePath: string) => {
-    const filePath = `${testFolderFilePath}/${fileName}.test.js`;
+    const filePath = `${testFolderFilePath}/${fileName}${testFileType}`;
     const fileContent = ipcRenderer.sendSync('ExportFileModal.readFile', filePath);
     dispatchToGlobal(updateFile(fileContent));
     dispatchToGlobal(setFolderView(testFolderFilePath));
-    dispatchToGlobal(highlightFile(`${fileName}.test.js`));
+    dispatchToGlobal(highlightFile(`${fileName}${testFileType}`));
     // dispatchToGlobal(toggleFileDirectory(true));
     dispatchToGlobal(setFileDirectory(true));
   };
@@ -321,7 +339,7 @@ if (title === 'New Test') {
                     error={invalidFileName}
                     helperText={invalidFileName && `A file with the name ${fileName} already exists.`}
                     InputProps={{
-                      endAdornment: <InputAdornment position="end">.test.js</InputAdornment>,
+                      endAdornment: <InputAdornment position="end">{testFileType}</InputAdornment>,
                     }}
                   />
                   <div id={styles.exportBtns}>
