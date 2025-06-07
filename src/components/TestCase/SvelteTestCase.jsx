@@ -6,7 +6,7 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
-  addDescribeBlock
+  addDescribeBlock,
 } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -17,7 +17,7 @@ import MockData from '../SvelteTestComponent/MockData/MockData';
 import DecribeRenderer from '../SvelteTestComponent/DescribeRenderer/DescribeRenderer';
 import {
   SvelteTestCaseContext,
-  SvelteTestCaseState ,
+  SvelteTestCaseState,
   SvelteTestCaseReducer,
 } from '../../context/reducers/svelteTestCaseReducer';
 import { Button } from '@mui/material';
@@ -67,7 +67,11 @@ const SvelteTestCase = (props) => {
       ? updateDescribeOrder
       : updateItStatementOrder;
 
-    const reorderedStatements = reorder(list, result.source.index, result.destination.index);
+    const reorderedStatements = reorder(
+      list,
+      result.source.index,
+      result.destination.index
+    );
     dispatchToSvelteTestCase(func(reorderedStatements, result.type));
   };
 
@@ -76,7 +80,9 @@ const SvelteTestCase = (props) => {
   };
 
   return (
-    <SvelteTestCaseContext.Provider value={[SvelteTestCase, dispatchToSvelteTestCase]}>
+    <SvelteTestCaseContext.Provider
+      value={[SvelteTestCase, dispatchToSvelteTestCase]}
+    >
       <div id={styles[`ReactTestCase${theme}`]}>
         <h2 id={styles[`testName${theme}`]}>Svelte Testing</h2>
         <SvelteTestMenu />
@@ -87,15 +93,17 @@ const SvelteTestCase = (props) => {
               dispatch={dispatchToSvelteTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
-              options={props.filterFileType(Object.keys(filePathMap), ['svelte'])}
-              label='Search Component'
+              options={props.filterFileType(Object.keys(filePathMap), [
+                'svelte',
+              ])}
+              label="Search Component"
             />
           </div>
-          <Button variant="outlined" onClick={handleAddMockData} size='medium'>
+          <Button variant="outlined" onClick={handleAddMockData} size="medium">
             Add Mock Data
           </Button>
         </div>
-        
+
         {mockData
           ? mockData.length > 0 && (
               <section id={styles.mockDataHeader}>
@@ -113,22 +121,25 @@ const SvelteTestCase = (props) => {
             )
           : null}
         <div id={styles.describeContainer}>
-            <div droppableId='droppableSvelteDescribe' type='describe'>
-                  <DecribeRenderer
-                    dispatcher={dispatchToSvelteTestCase}
-                    describeBlocks={describeBlocks}
-                    itStatements={itStatements}
-                    statements={statements}
-                    handleChangeDescribeText={handleChangeDescribeText}
-                    handleChangeItStatementText={handleChangeItStatementText}
-                    type='svelte'
-                    theme={theme}
-                  />
-            </div>
-          
+          <div droppableId="droppableSvelteDescribe" type="describe">
+            <DecribeRenderer
+              dispatcher={dispatchToSvelteTestCase}
+              describeBlocks={describeBlocks}
+              itStatements={itStatements}
+              statements={statements}
+              handleChangeDescribeText={handleChangeDescribeText}
+              handleChangeItStatementText={handleChangeItStatementText}
+              type="svelte"
+              theme={theme}
+            />
+          </div>
         </div>
         <div id={styles.addDescribeButton}>
-          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+          <Button
+            data-testid="addDescribeButton"
+            onClick={handleAddDescribeBlock}
+            variant="outlined"
+          >
             Add Describe Block
           </Button>
         </div>

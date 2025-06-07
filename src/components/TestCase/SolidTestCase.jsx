@@ -6,7 +6,7 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
-  addDescribeBlock
+  addDescribeBlock,
 } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -17,7 +17,7 @@ import MockData from '../SolidTestComponent/MockData/MockData';
 import DecribeRenderer from '../SolidTestComponent/DescribeRenderer/DescribeRenderer';
 import {
   SolidTestCaseContext,
-  SolidTestCaseState ,
+  SolidTestCaseState,
   SolidTestCaseReducer,
 } from '../../context/reducers/solidTestCaseReducer';
 import { Button } from '@mui/material';
@@ -67,7 +67,11 @@ const SolidTestCase = (props) => {
       ? updateDescribeOrder
       : updateItStatementOrder;
 
-    const reorderedStatements = reorder(list, result.source.index, result.destination.index);
+    const reorderedStatements = reorder(
+      list,
+      result.source.index,
+      result.destination.index
+    );
     dispatchToSolidTestCase(func(reorderedStatements, result.type));
   };
 
@@ -76,7 +80,9 @@ const SolidTestCase = (props) => {
   };
 
   return (
-    <SolidTestCaseContext.Provider value={[SolidTestCase, dispatchToSolidTestCase]}>
+    <SolidTestCaseContext.Provider
+      value={[SolidTestCase, dispatchToSolidTestCase]}
+    >
       <div id={styles[`ReactTestCase${theme}`]}>
         <h2 id={styles[`testName${theme}`]}>Solid Testing</h2>
         <SolidTestMenu />
@@ -87,15 +93,20 @@ const SolidTestCase = (props) => {
               dispatch={dispatchToSolidTestCase}
               action={updateRenderComponent}
               filePathMap={filePathMap}
-              options={props.filterFileType(Object.keys(filePathMap), ['js', 'jsx', 'ts', 'tsx'])}
-              label='Search Component'
+              options={props.filterFileType(Object.keys(filePathMap), [
+                'js',
+                'jsx',
+                'ts',
+                'tsx',
+              ])}
+              label="Search Component"
             />
           </div>
-          <Button variant="outlined" onClick={handleAddMockData} size='medium'>
+          <Button variant="outlined" onClick={handleAddMockData} size="medium">
             Add Mock Data
           </Button>
         </div>
-        
+
         {mockData
           ? mockData.length > 0 && (
               <section id={styles.mockDataHeader}>
@@ -113,22 +124,25 @@ const SolidTestCase = (props) => {
             )
           : null}
         <div id={styles.describeContainer}>
-            <div droppableId='droppableSolidDescribe' type='describe'>
-                  <DecribeRenderer
-                    dispatcher={dispatchToSolidTestCase}
-                    describeBlocks={describeBlocks}
-                    itStatements={itStatements}
-                    statements={statements}
-                    handleChangeDescribeText={handleChangeDescribeText}
-                    handleChangeItStatementText={handleChangeItStatementText}
-                    type='solid'
-                    theme={theme}
-                  />
-            </div>
-          
+          <div droppableId="droppableSolidDescribe" type="describe">
+            <DecribeRenderer
+              dispatcher={dispatchToSolidTestCase}
+              describeBlocks={describeBlocks}
+              itStatements={itStatements}
+              statements={statements}
+              handleChangeDescribeText={handleChangeDescribeText}
+              handleChangeItStatementText={handleChangeItStatementText}
+              type="solid"
+              theme={theme}
+            />
+          </div>
         </div>
         <div id={styles.addDescribeButton}>
-          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+          <Button
+            data-testid="addDescribeButton"
+            onClick={handleAddDescribeBlock}
+            variant="outlined"
+          >
             Add Describe Block
           </Button>
         </div>

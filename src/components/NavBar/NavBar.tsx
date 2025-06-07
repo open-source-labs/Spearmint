@@ -14,32 +14,34 @@ import ExportFileModal from '../Modals/ExportFileModal';
 import Modal from '../Modals/Modal';
 import { FaFileExport, FaUserCircle } from 'react-icons/fa';
 import { GoFileSubmodule } from 'react-icons/go';
-import { ImHome3 } from "react-icons/im"
+import { ImHome3 } from 'react-icons/im';
 import { useToggleModal } from '../TestMenu/testMenuHooks';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
-import { 
+import {
   reactTestCaseState,
-  reactTestCaseReducer 
+  reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
 import { createNewTest } from '../../context/actions/frontendFrameworkTestCaseActions';
 import ModeSwitch from '../ModeSwitch/ModeSwitch';
 
-
 // make sure to import in the dispatcher to the global state variable, isProjectLoaded
-const NavBar = ({ inAboutPage }: {inAboutPage: boolean}) => {
-  const [{ fileTree, isFileDirectoryOpen, theme, isProjectLoaded }, dispatchToGlobal] =
-    useContext(GlobalContext);
+const NavBar = ({ inAboutPage }: { inAboutPage: boolean }) => {
+  const [
+    { fileTree, isFileDirectoryOpen, theme, isProjectLoaded },
+    dispatchToGlobal,
+  ] = useContext(GlobalContext);
   const [, dispatchToMockData] = useContext(MockDataContext);
   const [reactTestCase, dispatchToReactTestCase] = useReducer(
     reactTestCaseReducer,
     reactTestCaseState
   );
-  const { title, isModalOpen, openModal, openScriptModal, setIsModalOpen } = useToggleModal('New Test');
-  
+  const { title, isModalOpen, openModal, openScriptModal, setIsModalOpen } =
+    useToggleModal('New Test');
+
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   // we might have to export the context from ProjectLoader.jsx and then userContext(LoginContext) here to read in and set isLoggedIn from the login component
   // const [isLoggedIn, setIsLoggedIn] = useState(false); // this is currently a component-scoped state
-  
+
   /* handles logout */
   // logout feature not being used
   // const handleLogout = () => {
@@ -67,20 +69,22 @@ const NavBar = ({ inAboutPage }: {inAboutPage: boolean}) => {
     <div id={styles[`navBar${theme}`]}>
       {/* File Explorer */}
       <div className={styles.btnContainer}>
-        <span onClick={openModal} title='Home'>
-          <ImHome3 size={'1.5rem'}/>
+        <span onClick={openModal} title="Home">
+          <ImHome3 size={'1.5rem'} />
         </span>
-        <span id={isFileDirectoryOpen ? styles.activeEffect : ''} onClick={handleToggleFileDirectory} title='Expand file explorer'>
-          <GoFileSubmodule size={'1.5rem'}/>
+        <span
+          id={isFileDirectoryOpen ? styles.activeEffect : ''}
+          onClick={handleToggleFileDirectory}
+          title="Expand file explorer"
+        >
+          <GoFileSubmodule size={'1.5rem'} />
         </span>
-        <span onClick={openExportModal} title='Export test file'>
-          <FaFileExport size={'1.5rem'}/>
+        <span onClick={openExportModal} title="Export test file">
+          <FaFileExport size={'1.5rem'} />
         </span>
         <OpenFolder />
       </div>
-      <div id={styles.spearmintTitle}>
-        spearmint
-      </div>
+      <div id={styles.spearmintTitle}>spearmint</div>
       <div className={styles.btnContainer}>
         {/* removing icons because they do not serve any purpose in current code base */}
         {/* <span title='Change user profile'>

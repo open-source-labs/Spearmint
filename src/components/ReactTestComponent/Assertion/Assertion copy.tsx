@@ -1,32 +1,41 @@
 import React, { useContext } from 'react';
 import styles from './Assertion.module.scss';
-import { deleteAssertion, updateAssertion } from '../../../context/actions/frontendFrameworkTestCaseActions';
+import {
+  deleteAssertion,
+  updateAssertion,
+} from '../../../context/actions/frontendFrameworkTestCaseActions';
 import ToolTip from '../../ToolTip/ToolTip';
 import ToolTipMatcher from '../../ToolTip/ToolTipMatcher';
 import AutoComplete from '../../AutoComplete/AutoComplete';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ReactTestComponentAssertion } from '../../../utils/reactTypes';
-
+import { ReactTestComponentAssertion } from '../../../utils/reactTestCase';
 
 const questionIcon = require('../../../assets/images/help-circle.png');
 
-// This is tracking the assertions that you have in a certain test, following the flow of data will help 
+// This is tracking the assertions that you have in a certain test, following the flow of data will help
 // you better understand how exactly this is working
 
-type EventTypes = (React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>)
+type EventTypes =
+  | React.ChangeEvent<HTMLSelectElement>
+  | React.ChangeEvent<HTMLInputElement>;
 
-type FieldTypes = (
-  'queryVariant'
+type FieldTypes =
+  | 'queryVariant'
   | 'querySelector'
   | 'queryValue'
-  | 'matcherValue'
-)
+  | 'matcherValue';
 
-const Assertion = ({ statement, describeId, itId, statementId }: ReactTestComponentAssertion ): JSX.Element => {
-  const [{ statements }, dispatchToReactTestCase] = useContext(ReactTestCaseContext);
-  const [{theme}] = useContext(GlobalContext)
+const Assertion = ({
+  statement,
+  describeId,
+  itId,
+  statementId,
+}: ReactTestComponentAssertion): JSX.Element => {
+  const [{ statements }, dispatchToReactTestCase] =
+    useContext(ReactTestCaseContext);
+  const [{ theme }] = useContext(GlobalContext);
 
   const handleChangeAssertionFields = (e: EventTypes, field: FieldTypes) => {
     let updatedAssertion = { ...statement };
@@ -38,7 +47,7 @@ const Assertion = ({ statement, describeId, itId, statementId }: ReactTestCompon
     let updatedAssertion = { ...statement };
     updatedAssertion.isNot = !updatedAssertion.isNot;
     dispatchToReactTestCase(updateAssertion(updatedAssertion));
-  }
+  };
 
   const handleClickDelete = () => {
     dispatchToReactTestCase(deleteAssertion(statementId));
@@ -120,60 +129,61 @@ const Assertion = ({ statement, describeId, itId, statementId }: ReactTestCompon
   };
 
   return (
-    <section id={styles[`assertion${theme}`]} data-testid='assertionCard'>
+    <section id={styles[`assertion${theme}`]} data-testid="assertionCard">
       <AiOutlineClose id={styles.close} onClick={handleClickDelete} />
-        <div className={styles.actionHeader}>
-          <span className={styles.header}>
-            Assertion <span id={styles.componentName}>{statements.componentName}</span>
-          </span>
-        </div>
+      <div className={styles.actionHeader}>
+        <span className={styles.header}>
+          Assertion{' '}
+          <span id={styles.componentName}>{statements.componentName}</span>
+        </span>
+      </div>
       <div id={styles.queryFlexBox}>
         <div id={styles.querySelector}>
-          <label htmlFor='queryVariant' className={styles.queryLabel}>
+          <label htmlFor="queryVariant" className={styles.queryLabel}>
             Query Selector
           </label>
           <div id={styles.dropdownFlex}>
             <select
-              id='queryVariant'
+              id="queryVariant"
               value={statement.queryVariant}
               onChange={(e) => handleChangeAssertionFields(e, 'queryVariant')}
             >
-              <option value='' />
-              <option value='find'>find</option>
-              <option value='findComponent'>findComponent</option>
-              <option value='findAll'>findAll</option>
-              <option value='findBy'>findBy</option>
-              <option value='findAllBy'>findAllBy</option>
-              <option value='get'>get</option>
-              <option value='getBy'>getBy</option>
-              <option value='getAllBy'>getAllBy</option>
-              <option value='getComponent'>getComponent</option>
-              <option value='queryBy'>queryBy</option>
-              <option value='queryAllBy'>queryAllBy</option>
+              <option value="" />
+              <option value="find">find</option>
+              <option value="findComponent">findComponent</option>
+              <option value="findAll">findAll</option>
+              <option value="findBy">findBy</option>
+              <option value="findAllBy">findAllBy</option>
+              <option value="get">get</option>
+              <option value="getBy">getBy</option>
+              <option value="getAllBy">getAllBy</option>
+              <option value="getComponent">getComponent</option>
+              <option value="queryBy">queryBy</option>
+              <option value="queryAllBy">queryAllBy</option>
             </select>
-            <span id={styles.hastooltip} role='tooltip'>
+            <span id={styles.hastooltip} role="tooltip">
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.queryVariant} />
               </span>
             </span>
             <select
-              id='querySelector'
+              id="querySelector"
               value={statement.querySelector}
               onChange={(e) => handleChangeAssertionFields(e, 'querySelector')}
             >
-              <option value='' />
-              <option value='LabelText'>LabelText</option>
-              <option value='PlaceholderText'>PlaceholderText</option>
-              <option value='Text'>Text</option>
-              <option value='AltText'>AltText</option>
-              <option value='Title'>Title</option>
-              <option value='DisplayValue'>DisplayValue</option>
-              <option value='Role'>Role</option>
-              <option value='TestId'>TestId</option>
+              <option value="" />
+              <option value="LabelText">LabelText</option>
+              <option value="PlaceholderText">PlaceholderText</option>
+              <option value="Text">Text</option>
+              <option value="AltText">AltText</option>
+              <option value="Title">Title</option>
+              <option value="DisplayValue">DisplayValue</option>
+              <option value="Role">Role</option>
+              <option value="TestId">TestId</option>
               {/* TextMatch Precision & Normalization will be added */}
             </select>
-            <span id={styles.hastooltip} role='tooltip'>
-              <img src={questionIcon} alt='help' />
+            <span id={styles.hastooltip} role="tooltip">
+              <img src={questionIcon} alt="help" />
               <span id={styles.tooltip}>
                 <ToolTip toolTipType={statement.querySelector} />
               </span>
@@ -181,7 +191,7 @@ const Assertion = ({ statement, describeId, itId, statementId }: ReactTestCompon
           </div>
         </div>
         <div id={styles.query}>
-          <label htmlFor='queryValue' className={styles.queryLabel}>
+          <label htmlFor="queryValue" className={styles.queryLabel}>
             Query
           </label>
           {/* <AutoCompleteMockData
@@ -190,8 +200,8 @@ const Assertion = ({ statement, describeId, itId, statementId }: ReactTestCompon
             statementType='assertion'
           /> */}
           <input
-            type='text'
-            id='queryValue'
+            type="text"
+            id="queryValue"
             value={statement.queryValue}
             onChange={(e) => handleChangeAssertionFields(e, 'queryValue')}
           />
@@ -202,12 +212,12 @@ const Assertion = ({ statement, describeId, itId, statementId }: ReactTestCompon
           <div id={styles.matcherLeft}>
             <div id={styles.matcherLabelFlexBox}>
               <div>
-                <label htmlFor='matcher'>Matcher</label>
+                <label htmlFor="matcher">Matcher</label>
               </div>
               <div>
                 Not?
                 <input
-                  type='checkbox'
+                  type="checkbox"
                   checked={statement.isNot}
                   onChange={() => handleIsNot()}
                 />
@@ -216,13 +226,13 @@ const Assertion = ({ statement, describeId, itId, statementId }: ReactTestCompon
             <div id={styles.autoTool}>
               <AutoComplete
                 statement={statement}
-                statementType='assertion'
+                statementType="assertion"
                 dispatchToTestCase={dispatchToReactTestCase}
                 id={styles.matcherAuto}
               />
 
-              <span id={styles.hastooltip} role='tooltip'>
-                <img src={questionIcon} alt='help' />
+              <span id={styles.hastooltip} role="tooltip">
+                <img src={questionIcon} alt="help" />
                 <span id={styles.tooltip}>
                   <ToolTipMatcher toolTipType={statement.matcherType} />
                 </span>
@@ -233,10 +243,12 @@ const Assertion = ({ statement, describeId, itId, statementId }: ReactTestCompon
             <div>
               <span id={styles.matcherVal}>
                 <input
-                  type='text'
+                  type="text"
                   id={styles.matcherInput}
-                  onChange={(e) => handleChangeAssertionFields(e, 'matcherValue')}
-                  placeholder='Value'
+                  onChange={(e) =>
+                    handleChangeAssertionFields(e, 'matcherValue')
+                  }
+                  placeholder="Value"
                 />
               </span>
             </div>

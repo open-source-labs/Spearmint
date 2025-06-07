@@ -1,0 +1,221 @@
+
+
+
+
+
+@import '../../../assets/stylesheets/colors.scss';
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../pages/LeftPanel/LeftPanel.module.scss';
+
+// ─── LIGHT / DARK VARIANTS ────────────────────────────────────────────────
+
+#assertionlight {
+  font-family: $raleway;
+  background-color: $light-gray2;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 14px 12px;
+  border-radius: 4px;
+  --text-color: black;
+  --cypress-action-color: #{$mint};
+  --component-color: black;
+  --light-border: $light-gray;
+}
+
+#assertiondark {
+  font-family: $raleway;
+  background-color: $chromegray-less-light;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 14px 12px;
+  border-radius: 4px;
+  --text-color: white;
+  --cypress-action-color: white;
+  --component-color: #{$mint};
+  --light-border: $dark-gray;
+}
+
+// ─── HEADER ─────────────────────────────────────────────────────────────────
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.headerText {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--cypress-action-color);
+}
+
+#componentName {
+  color: var(--component-color);
+}
+
+// ─── DELETE BUTTON ───────────────────────────────────────────────────────────
+// Centers the icon, gives a hover/focus glow.
+
+.deleteButton {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover:not([disabled]) {
+    background-color: rgba(239, 71, 101, 0.1);
+    box-shadow: 0 0 8px rgba(239, 71, 101, 0.4);
+  }
+
+  &:focus:not([disabled]) {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(239, 71, 101, 0.5);
+  }
+}
+
+// ─── CONTENT ROW (Matcher + Expected) ────────────────────────────────────────
+
+.contentRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;         // space between matcherBlock and valueBlock
+}
+
+// ─── MATCHER BLOCK ──────────────────────────────────────────────────────────
+
+.matcherBlock {
+  display: flex;
+  flex-direction: column;
+  min-width: 280px;  // adjust as needed
+}
+
+.matcherLabel {
+  font-size: 0.875rem;
+  //color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+// Wraps the switch toggle + AutoComplete next to each other
+.matcherInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// ─── “Not?” TOGGLE SWITCH ───────────────────────────────────────────────────
+
+.switchLabel {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.875rem;
+ // color: var(--text-color);
+
+  // Hide the native checkbox
+  input[type='checkbox'] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  // The colored “slider” circle
+  .switchSlider {
+    position: relative;
+    width: 36px;
+    height: 18px;
+    background-color: var(--light-border);
+    border-radius: 9px;
+    margin-right: 8px;
+    transition: background-color 0.2s ease;
+  }
+
+  // The little toggle knob
+  .switchSlider::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 14px;
+    height: 14px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  // Text “Not?” to the right
+  .switchText {
+    white-space: nowrap;
+ //   color: var(--text-color);
+  }
+
+  // When checked, move the knob and change the track color
+  input[type='checkbox']:checked + .switchSlider {
+    background-color: var(--cypress-action-color);
+  }
+
+  input[type='checkbox']:checked + .switchSlider::before {
+    transform: translateX(18px); // Moves the knob right
+  }
+}
+
+// ─── AUTO COMPLETE WRAPPER ─────────────────────────────────────────────────
+
+.autoTool {
+  flex: 1; // let AutoComplete grow to fill available space
+}
+
+// ─── EXPECTED VALUE BLOCK ──────────────────────────────────────────────────
+
+.valueBlock {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;  // adjust as needed
+}
+
+.valueLabel {
+  font-size: 0.875rem;
+ // color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.valueInput {
+  padding: 6px 10px;
+  font-size: 0.875rem;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+ // color: var(--text-color);
+  background-color: transparent;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.valueInput:focus {
+  outline: none;
+  border-color: var(--cypress-action-color);
+  box-shadow: 0 0 0 2px rgba(239, 71, 101, 0.2);
+}
+
+
+// ─── RESPONSIVENESS (NARROW SCREENS) ───────────────────────────────────────
+
+@media (max-width: 600px) {
+  .contentRow {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

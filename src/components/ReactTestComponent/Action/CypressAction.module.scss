@@ -1,0 +1,281 @@
+@import '../../../assets/stylesheets/colors.scss';
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../pages/LeftPanel/LeftPanel.module.scss';
+
+#actionlight {
+  font-family: $raleway;
+  background-color: $light-gray2;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 14px 10px;
+  border-radius: 2px;
+  --text-color: black;
+  --cypress-action-color: #{$mint};
+  --component-color: black;
+}
+
+#actiondark {
+  font-family: $raleway;
+  background-color: $chromegray-less-light;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 14px 10px;
+  border-radius: 2px;
+
+  --bg-color : #{$chromegray-less-light};
+  --action-color: white;
+  --component-color: #{$mint};
+  --text-color: white;
+  --component-color: #{$mint};
+  --cypress-action-color: white;
+}
+
+.header {
+  display: flex;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--cypress-action-color);
+  justify-content: space-between;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--light-gray);
+}
+
+
+.commandCard {
+  //background-color: var(--card-bg-color);
+  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.stepTitle {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+
+.stepDeleteButton {
+//   background: transparent;
+//   border: none;
+//   cursor: pointer;
+//   color: var(--text-color);
+//   padding: 0;
+//   margin-left: 8px;
+width: 40px;
+
+  background: linear-gradient(to bottom right, #EF4765, #FF9A5A);
+  border: 0;
+  border-radius: 12px;
+  color: #FFFFFF;
+  cursor: pointer;
+  /* Center content exactly */
+  display: flex;
+  align-items: center;   // vertical centering
+  justify-content: center; // horizontal centering
+
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.stepDeleteButton:not([disabled]):focus {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.stepDeleteButton:not([disabled]):hover {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+
+
+.stepDeleteButton:focus {
+  outline: 2px solid var(--cypress-action-color);
+  border-radius: 2px;
+}
+
+.commandChainWrapper {
+  max-height: 300px;       // or whatever fits your panel
+  overflow-y: auto;
+}
+
+
+
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.inputGroup label {
+  font-size: 0.875rem;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+// ─── TEXT INPUTS ─────────────────────────────────────────────────────
+
+.inputGroup input[type="text"] {
+  padding: 6px 8px;
+  font-size: 0.875rem;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  // background-color: var(--card-bg-color);
+  color: var(--text-color);
+  transition: border-color 0.2s;
+}
+
+.inputGroup input[type="text"]:focus {
+  outline: none;
+  border-color: var(--cypress-action-color);
+}
+
+
+
+// ─── MODERN SELECT DROPDOWNS ─────────────────────────────────────────
+
+.inputGroup select {
+    appearance: none;            // remove default arrow (Safari, Chrome)
+  -webkit-appearance: none;    // remove default arrow (Safari, Chrome)
+  -moz-appearance: none;       // remove default arrow (Firefox)
+
+background-color: #ffffff;   // white background (or var(--card-bg-color))
+  border: 1px solid var(--light-border);
+  border-radius: 6px;          // rounded corners for a modern look
+  padding: 8px 32px 8px 12px;  // leave space on the right for our custom arrow
+  font-size: 0.875rem;
+  color: var(--text-color);
+  line-height: 1.25;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  /*  Custom arrow (down‐caret) */
+  background-image: url("data:image/svg+xml;utf8,\
+    <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23CCCCCC' viewBox='0 0 24 24'>\
+      <path d='M7 10l5 5 5-5z'/>\
+    </svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+
+}
+
+.inputGroup select:hover {
+  border-color: var(--cypress-action-color);
+}
+
+.inputGroup select:focus {
+  outline: none;
+  border-color: var(--cypress-action-color);
+  box-shadow: 0 0 0 2px rgba(239, 71, 101, 0.2); // subtle focus halo
+}
+
+// ─── INLINE INPUTS FLEX CONTAINER ────────────────────────────────────
+
+.inputsGrid {
+  display: flex;
+  flex-wrap: nowrap;      // keep all fields in one line
+  gap: 12px;              // space between each field
+  overflow-x: auto;       // horizontal scrollbar if container is too narrow
+  padding-bottom: 4px;    // give a little space for the scrollbar
+  
+  // If screen is narrow, stack two columns:
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+// ─── EACH FIELD (SELECT/INPUT) ───────────────────────────────────────
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;        // ensures inputs/labels don’t shrink too much
+}
+
+// ─── LABEL STYLES ────────────────────────────────────────────────────
+
+.inputGroup label {
+  font-size: 0.875rem;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+
+// ─── MODERN SELECT DROPDOWNS ─────────────────────────────────────────
+
+.inputGroup select {
+  padding: 6px 8px;
+  font-size: 0.875rem;
+  color: var(--text-color);
+ // background-color: var(--card-bg-color);
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,\
+    <svg fill='%23CCCCCC' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'>\
+      <path d='M7 10l5 5 5-5z'/>\
+    </svg>");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px 16px;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+// ─── TEXT INPUTS ─────────────────────────────────────────────────────
+
+.inputGroup input[type='text'] {
+  padding: 6px 8px;
+  font-size: 0.875rem;
+  border: 1px solid var(--light-border);
+  border-radius: 4px;
+ // background-color: var(--card-bg-color);
+  color: var(--text-color);
+  transition: border-color 0.2s;
+}
+
+.inputGroup input[type='text']:focus {
+  outline: none;
+  border-color: var(--cypress-action-color);
+}
+
+.inputGroup input[type='text']:disabled {
+ // background-color: lighten(var(--card-bg-color), 5%);
+  cursor: not-allowed;
+}
+
+
+.addStepButton {
+  background-color: #12926b !important; /* MUI primary */
+  color: #fff !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  padding: 6px 18px !important;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #13181e !important;
+  }
+
+  &#RenderContainerdark & {
+    background-color: #90caf9 !important;
+    color: #212121 !important;
+
+    &:hover {
+      background-color: #64b5f6 !important;
+    }
+  }
+}

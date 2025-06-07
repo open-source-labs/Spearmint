@@ -15,9 +15,10 @@ const SecTestCase = () => {
     isFileDirectoryOpen?: null | Boolean;
     theme?: string | null;
     // dispatchToGlobal?: Function;
-  };
-  
-  const [{ isFileDirectoryOpen , theme}, dispatchToGlobal] = useContext(GlobalContext);
+  }
+
+  const [{ isFileDirectoryOpen, theme }, dispatchToGlobal] =
+    useContext(GlobalContext);
 
   // Change execute command based on os platform
   let execute = '\n';
@@ -28,7 +29,10 @@ const SecTestCase = () => {
   // sends user to webpage to authenticate use of snyk in terminal
   const snykAuth = () => {
     if (os.platform() === 'win32') {
-      ipc.send('terminal.toTerm', `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted ${execute}`);
+      ipc.send(
+        'terminal.toTerm',
+        `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted ${execute}`
+      );
     }
     ipc.send('terminal.toTerm', `snyk auth ${execute}`);
     dispatchToGlobal(setTabIndex(2));
@@ -51,39 +55,66 @@ const SecTestCase = () => {
 
   // sends user to snyk settings in default browser to enable Snyk Code
   const enableSnykCode = () => {
-    require('electron').shell.openExternal('https://app.snyk.io/manage/snyk-code');
-  }
+    require('electron').shell.openExternal(
+      'https://app.snyk.io/manage/snyk-code'
+    );
+  };
 
   return (
     <div>
       <div id="head">
-      <h2 id={styles[`testName${theme}`]}>Security Testing</h2>
+        <h2 id={styles[`testName${theme}`]}>Security Testing</h2>
         <SecTestMenu />
       </div>
       <br />
-        <br />
-        <br />
-        <br />
-      <section style={{'display': 'flex', 'flexDirection': 'column', 'justifyContent': 'center', 'alignItems': 'center'}} id={styles[`SecTestCase${theme}`]}>
+      <br />
+      <br />
+      <br />
+      <section
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        id={styles[`SecTestCase${theme}`]}
+      >
         <div id={styles.secInfo}>
           <p>
-            Spearmint leverages Snyk testing in order to evaluate security vulnerabilities.
+            Spearmint leverages Snyk testing in order to evaluate security
+            vulnerabilities.
             <br />
-            The below button will send you to Snyk's website to grant permission.
+            The below button will send you to Snyk's website to grant
+            permission.
           </p>
         </div>
         <br />
-        <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
+        <Button
+          variant="contained"
+          type="button"
+          id={styles.secTestBtn}
+          onClick={snykAuth}
+        >
           Authenticate Snyk
         </Button>
         <br />
         <br />
-        <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
+        <Button
+          variant="contained"
+          type="button"
+          id={styles.secTestBtn}
+          onClick={snykAuth}
+        >
           Test Dependencies
         </Button>
         <br />
         <br />
-        <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
+        <Button
+          variant="contained"
+          type="button"
+          id={styles.secTestBtn}
+          onClick={snykAuth}
+        >
           Fix Dependencies
         </Button>
         <br />
@@ -91,26 +122,38 @@ const SecTestCase = () => {
         <br />
         <br />
         <div id={styles.secInfo}>
-          <p >
-            To utilize Snyk's application-wide testing tool, Snyk Code must be enabled.
+          <p>
+            To utilize Snyk's application-wide testing tool, Snyk Code must be
+            enabled.
             <br />
-            The below button will send you to Snyk's website to update your settings.
+            The below button will send you to Snyk's website to update your
+            settings.
           </p>
         </div>
         <br />
-        <Button variant='contained' type='button' id={styles.secTestBtn} onClick={enableSnykCode}>
+        <Button
+          variant="contained"
+          type="button"
+          id={styles.secTestBtn}
+          onClick={enableSnykCode}
+        >
           Enable Snyk Code
         </Button>
         <br />
         <br />
-        <Button variant='contained' type='button' id={styles.secTestBtn} onClick={snykAuth}>
+        <Button
+          variant="contained"
+          type="button"
+          id={styles.secTestBtn}
+          onClick={snykAuth}
+        >
           Test Application
         </Button>
         <br />
         <br />
       </section>
     </div>
-  )
-}
+  );
+};
 
 export default SecTestCase;

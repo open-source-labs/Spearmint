@@ -11,7 +11,7 @@ import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseRed
 import styles from './ItRenderer.module.scss';
 import { Button, TextField } from '@mui/material';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ItStatements, Statements } from '../../../utils/reactTypes';
+import { ItStatements, Statements } from '../../../utils/reactTestCase';
 
 // This is tracking the it statements you have in a certain test, following the flow of data will
 // help you better understand exactly how this works

@@ -7,7 +7,7 @@ import {
   updateProp,
 } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
-import { AutoCompleteMockDataProps } from '../../utils/reactTypes';
+import { AutoCompleteMockDataProps } from '../../utils/reactTestCase';
 
 /**
  * Renders the AutoCompleteMockData react component - this component is specifically for the FrontEnd frameworks and uses the eventTypesList

@@ -19,17 +19,18 @@ import {
   reactTestCaseReducer,
 } from '../../context/reducers/reactTestCaseReducer';
 import { Button } from '@mui/material';
-import TestFrameworkToggle from './TestFrameworkToggle'; // added toggle 
-
+import TestFrameworkToggle from './TestFrameworkToggle'; // added toggle
 
 //** here we dispatching an action that updates the context-wide state*/
 const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
-  const [reactTestCase, dispatchToReactTestCase] = useReducer(  // we dont have to pass arguments to useReducer
+  const [reactTestCase, dispatchToReactTestCase] = useReducer(
+    // we dont have to pass arguments to useReducer
     reactTestCaseReducer, //** handles UPDATE_ACTION */
     reactTestCaseState
   );
 
-  const { describeBlocks, itStatements, statements } = reactTestCase;
+  const { describeBlocks, itStatements, statements } = reactTestCase; // ! look
+
   const [{ mockData }, dispatchToMockData] = useContext(MockDataContext);
   const [{ filePathMap, theme }] = useContext(GlobalContext);
 
@@ -62,8 +63,7 @@ const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
     dispatchToReactTestCase(addDescribeBlock());
   };
 
-
-//** */
+  //** */
   return (
     <ReactTestCaseContext.Provider
       value={[reactTestCase, dispatchToReactTestCase]}
@@ -86,8 +86,6 @@ const ReactTestCase = ({ filterFileType }: { filterFileType: Function }) => {
               ])}
               label="Search Component"
             />
-
-
           </div>
           <Button variant="outlined" onClick={handleAddMockData} size="medium">
             Add Mock Data

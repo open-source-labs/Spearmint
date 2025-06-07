@@ -6,7 +6,7 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
-  addDescribeBlock
+  addDescribeBlock,
 } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
@@ -70,14 +70,18 @@ const VueTestCase = (props) => {
       ? updateDescribeOrder
       : updateItStatementOrder;
 
-    const reorderedStatements = reorder(list, result.source.index, result.destination.index);
+    const reorderedStatements = reorder(
+      list,
+      result.source.index,
+      result.destination.index
+    );
     dispatchToVueTestCase(func(reorderedStatements, result.type));
   };
 
   return (
     <VueTestCaseContext.Provider value={[vueTestCase, dispatchToVueTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
-      <h2 id={styles[`testName${theme}`]}>Vue Testing</h2>
+        <h2 id={styles[`testName${theme}`]}>Vue Testing</h2>
         <VueTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
@@ -91,7 +95,7 @@ const VueTestCase = (props) => {
             />
           </div>
         </div>
-          {/* <Button variant="outlined" onClick={handleAddMockData} size='medium'>
+        {/* <Button variant="outlined" onClick={handleAddMockData} size='medium'>
             Add Mock Data
           </Button>
         </div>
@@ -113,20 +117,24 @@ const VueTestCase = (props) => {
             )
           : null} */}
 
-          <div droppableId='droppableReactDescribe' type='describe'>
-                <DecribeRenderer
-                  dispatcher={dispatchToVueTestCase}
-                  describeBlocks={describeBlocks}
-                  itStatements={itStatements}
-                  statements={statements}
-                  handleChangeDescribeText={handleChangeDescribeText}
-                  handleChangeItStatementText={handleChangeItStatementText}
-                  type='vue'
-                  theme={theme}
-                />
-          </div>
+        <div droppableId="droppableReactDescribe" type="describe">
+          <DecribeRenderer
+            dispatcher={dispatchToVueTestCase}
+            describeBlocks={describeBlocks}
+            itStatements={itStatements}
+            statements={statements}
+            handleChangeDescribeText={handleChangeDescribeText}
+            handleChangeItStatementText={handleChangeItStatementText}
+            type="vue"
+            theme={theme}
+          />
+        </div>
         <div id={styles.addDescribeButton}>
-          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+          <Button
+            data-testid="addDescribeButton"
+            onClick={handleAddDescribeBlock}
+            variant="outlined"
+          >
             Add Describe Block
           </Button>
         </div>

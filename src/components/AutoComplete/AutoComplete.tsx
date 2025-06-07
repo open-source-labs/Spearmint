@@ -1,49 +1,46 @@
 import React, { useContext } from 'react';
-
 import AutoSuggest from 'react-autosuggest';
 import styles from './AutoComplete.module.scss';
-import { updateAction, updateAssertion } from '../../context/actions/frontendFrameworkTestCaseActions';
-import { eventTypesList } from '../TypesList/eventTypesList';
+import {
+  updateAction,
+  updateAssertion,
+} from '../../context/actions/frontendFrameworkTestCaseActions';
+import { jestEventTypesList } from '../TypesList/eventTypesList';
+import { cypressSelectorTypesList } from '../TypesList/cypressQuerySelectorTypesList';
+import { cypressQueryActionTypesList } from '../TypesList/cypressQueryActionTypesList';
 import { matcherTypesList as jestMatchers } from '../TypesList/matcherTypesList';
-import { cypressMatcherTypesList } from '../../components/TypesList/cypressMatcherTypeList'; //! added hereeeeeeeeee
+import { cypressMatcherTypesList } from '../../components/TypesList/cypressMatcherTypeList';
 import { mochaMatcherTypesList } from '../TypesList/mochaMatcherTypesList';
-import { sinonMatcherTypesList } from '../TypesList/sinonMatcherTypesList'
-import { AutoCompleteProps, AutoCompleteStatement } from '../../utils/reactTypes';
-
+import { sinonMatcherTypesList } from '../TypesList/sinonMatcherTypesList';
+import {
+  AutoCompleteProps,
+  AutoCompleteStatement,
+} from '../../utils/reactTestCase';
 import { GlobalContext } from '../../context/reducers/globalReducer';
-
-
-/**
- * Renders the AutoComplete react component - this component is specifically for the FrontEnd frameworks and uses the eventTypesList 
- * and the matcherTypesList Javascript files to AutoComplete when typing in the corresponding field (Matcher for Assertions, Event Type for Actions)
- * @property { string } statement - 
- * @property { string } statementType - 
- * @property { Function } dispatchToTestCase - 
- * @property { string } type - Default to react, but also later reassigned to work for other FrontEnd frameworks
- * 
- * @returns { JSX.Element } Returns the AutoComplete react component
- */
 
 interface SuggestionType {
   name: string;
 }
 
-
 const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
-  const { statement, statementType, dispatchToTestCase, type = 'react' } = props;
+  const {
+    statement,
+    statementType,
+    dispatchToTestCase,
+    type = 'react',
+    fieldType,
+  } = props;
   const [{ testFramework }] = useContext(GlobalContext);
 
   let updatedAction: AutoCompleteStatement = { ...statement };
   let updatedAssertion = { ...statement };
 
-  /**
-   * This function updates the state as the user types into the input boxes
-   * @param { e } e - event
-   * @param { string } newValue - current input box text
-   */
-  const handleChangeValue = (e: React.ChangeEvent, { newValue }: { newValue: string }) => {
-    if (statementType === 'action') {
-      updatedAction.eventType = newValue;
+  const handleChangeValue = (
+    e: React.ChangeEvent,
+    { newValue }: { newValue: string }
+  ) => {
+    if (statementType === 'action' && fieldType) {
+      updatedAction[fieldType] = newValue;
       dispatchToTestCase(updateAction(updatedAction));
     } else {
       updatedAssertion.matcherType = newValue;
@@ -53,70 +50,71 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
 
   const inputProps = {
     placeholder:
-      statementType === 'action' ? 'eg. click, change, keypress' : 'eg. toHaveTextValue ',
-    value:
       statementType === 'action'
-        ? statement.eventType
-        : statementType === 'assertion'
-        ? statement.matcherType
-        : statementType === 'assertion' && updatedAssertion.isNot
+        ? 'eg. click, change, keypress'
+        : 'eg. toHaveTextValue',
+    value:
+      statementType === 'action' && fieldType
+        ? statement[fieldType] || ''
+        : updatedAssertion.isNot
         ? `not.${statement.matcherType}`
-        : null,
+        : statement.matcherType || '',
     onChange: handleChangeValue,
   };
-  /**
-   * function that filters through the eventTypes and matcherTypes that corresponds to the test type
-   * and makes user input not case-sensitive
-   * @param { string } value - User input
-   * @returns { (string[] | []) } Returns an array of eventTypes/matcherTypes or an empty array when user has to provide an input
-   */
-  const getSuggestions = (value: string): number | any[] | void => { //array must be typed as any since this sometimes returns an empty array
-    const inputValue = value.trim().toLowerCase();
-    const inputLength = inputValue.length;
-    if(type === 'react' || type === 'vue' || type === 'svelte'){
+
+  const getSuggestions = (value: string, fieldType?: string): any[] => {
+    const inputValue = value?.trim().toLowerCase();
+    if (!inputValue) return [];
+
+    if (type === 'react' || type === 'vue' || type === 'svelte') {
       if (statementType === 'action') {
-        return inputLength === 0
-          ? []
-          : eventTypesList.filter(
-              (eventType) => eventType.name.toLowerCase().slice(0, inputLength) === inputValue
+        if (testFramework === 'cypress') {
+          if (fieldType === 'queryVariant') {
+            return cypressSelectorTypesList.filter((matcher) =>
+              matcher.name.toLowerCase().startsWith(inputValue)
             );
-      } else {
-        return inputLength === 0
-          ? []
-          : (
-            testFramework === 'cypress'
-              ? cypressMatcherTypesList
-              : testFramework === 'mocha'
-              ? mochaMatcherTypesList
-              : testFramework === 'sinon'
-              ? sinonMatcherTypesList
-              : jestMatchers
-          ).filter((matcher) =>
-            matcher.name.toLowerCase().startsWith(inputValue)
-          );
+          }
+          if (fieldType === 'eventType') {
+            return cypressQueryActionTypesList.filter((matcher) =>
+              matcher.name.toLowerCase().startsWith(inputValue)
+            );
+          }
+        }
+        return jestEventTypesList.filter((matcher) =>
+          matcher.name.toLowerCase().startsWith(inputValue)
+        );
       }
-    } 
+
+      if (statementType === 'assertion') {
+        const matcherList =
+          testFramework === 'cypress'
+            ? cypressMatcherTypesList
+            : testFramework === 'mocha'
+            ? mochaMatcherTypesList
+            : testFramework === 'sinon'
+            ? sinonMatcherTypesList
+            : jestMatchers;
+
+        return matcherList.filter((matcher) =>
+          matcher.name.toLowerCase().startsWith(inputValue)
+        );
+      }
+    }
+
+    return [];
   };
 
-  /**
-   * This function calls upon the previous function getSuggestions and updates the state
-   * @param { string } value - User Input
-   * @returns { void } Returns void
-   */
   const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
+    const suggestions = getSuggestions(value, fieldType);
     if (statementType === 'action') {
-      updatedAction.suggestions = getSuggestions(value);
+      updatedAction.suggestions = suggestions;
       dispatchToTestCase(updateAction(updatedAction));
     } else {
-      updatedAssertion.suggestions = getSuggestions(value);
+      updatedAssertion.suggestions = suggestions;
       dispatchToTestCase(updateAssertion(updatedAssertion));
     }
   };
 
-  /**
-   * Function that updates the state and clears suggestions back to displaying nothing.
-   * @returns { void } Returns void
-   */
   const onSuggestionsClearRequested = () => {
     if (statementType === 'action') {
       updatedAction.suggestions = [];
@@ -127,22 +125,16 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
     }
   };
 
-  //getSuggestionValue is the list of suggestions from the dropdown menu
-  //udatedAssertion.isNot is a property that is updated when the Not checkbox is clicked (Visible when adding Assertions to tests)
-  let getSuggestionValue;
-  updatedAssertion.isNot
-    ? (getSuggestionValue = (suggestion: SuggestionType) => `not.${suggestion.name}`)
-    : (getSuggestionValue = (suggestion: SuggestionType) => suggestion.name);
+  const getSuggestionValue = (suggestion: SuggestionType) =>
+    updatedAssertion.isNot ? `not.${suggestion.name}` : suggestion.name;
 
-  let renderSuggestion;
-
-  updatedAssertion.isNot
-    ? (renderSuggestion = (suggestion: SuggestionType) => <div>not.{suggestion.name}</div>)
-    : (renderSuggestion = (suggestion: SuggestionType) => <div>{suggestion.name}</div>);
+  const renderSuggestion = (suggestion: SuggestionType) => (
+    <div>
+      {updatedAssertion.isNot ? `not.${suggestion.name}` : suggestion.name}
+    </div>
+  );
 
   return (
-    //@ts-ignore --> whoever wrote the code below borked the implementation, so if you can correctly deduce the type of this, hats off to you
-    // this component should probably be completely rewritten, the way it interacts with state is suboptimal
     <AutoSuggest
       theme={styles}
       suggestions={statement.suggestions}

@@ -1,0 +1,188 @@
+@import '../../../assets/stylesheets/colors.scss';
+@import '../../../assets/stylesheets/fonts.scss';
+@import '../../../pages/LeftPanel/LeftPanel.module.scss';
+
+#RenderContainerlight {
+  position: relative;
+  font-family: $raleway;
+  background-color: $light-gray2;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  padding: 14px 10px;
+  border-radius: 2px;
+
+  --bg-color : #{$light-gray2};
+    --visit-color: #{$mint};
+  --component-color: black;
+  --text-color: black;
+
+}
+
+#RenderContainerdark {
+  position: relative;
+  font-family: $raleway;
+  background-color: $chromegray-less-light;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 14px 10px;
+  border-radius: 2px;
+
+  --bg-color : #{$chromegray-less-light};
+  --visit-color: white;
+  --component-color: #{$mint};
+  --text-color: white;
+}
+
+// consumes --visit-color
+.header {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--visit-color);
+}
+
+#componentName {
+  font-weight: 400;
+  font-size: 0.95rem;
+  color: #757575;
+  margin-left: 4px;
+}
+
+/* Delete‐icon (×) styling */
+.deleteIcon {
+  font-size: 1.2rem;
+  color: #b0b0b0;
+  cursor: pointer;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #e53935; /* bright red on hover */
+  }
+}
+
+/* --------------------------------------
+   3. Description text below header
+   -------------------------------------- */
+.description {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #616161;
+  margin-bottom: 16px;
+
+  code {
+    background-color: rgba(0, 0, 0, 0.04);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.88rem;
+  }
+
+  /* Dark mode adjustment */
+  &#RenderContainerdark & {
+    color: #ccc;
+
+    code {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+  }
+}
+
+/* --------------------------------------
+   4. URL inputs wrapper: side‐by‐side
+   -------------------------------------- */
+.urlRow {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap; /* wrap on narrow screens */
+
+  &#RenderContainerdark & {
+    gap: 12px;
+  }
+}
+
+/* Each input + label group */
+.urlInputGroup {
+  flex: 1 1 200px; /* grow, shrink, min‐width: 200px */
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+    color: #424242;
+
+    &#RenderContainerdark & {
+      color: #e0e0e0;
+    }
+  }
+
+
+  input {
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    border: 1px solid #c0c0c0;
+    border-radius: 6px;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+
+    &:focus {
+      outline: none;
+      border-color: #1976d2; /* MUI primary blue */
+      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.15);
+      background-color: #fafafa;
+    }
+
+    /* Dark mode */
+    &#RenderContainerdark & {
+      background-color: #3a3a3a;
+      border: 1px solid #555;
+      color: #e0e0e0;
+
+      &:focus {
+        border-color: #90caf9;
+        box-shadow: 0 0 0 2px rgba(144, 202, 249, 0.2);
+        background-color: #4a4a4a;
+      }
+    }
+
+    &.invalid {
+      border-color: #e53935; /* bright red */
+      background-color: rgba(229, 57, 53, 0.05);
+
+      &:focus {
+        border-color: #d32f2f;
+        box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.15);
+      }
+    }
+  }
+}
+
+/* --------------------------------------
+   5. “Test Visit” button wrapper & button
+   -------------------------------------- */
+.testButtonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.testButton {
+  background-color: #12926b !important; /* MUI primary */
+  color: #fff !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  border-radius: 6px !important;
+  padding: 6px 18px !important;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #13181e !important;
+  }
+
+  &#RenderContainerdark & {
+    background-color: #90caf9 !important;
+    color: #212121 !important;
+
+    &:hover {
+      background-color: #64b5f6 !important;
+    }
+  }
+}
