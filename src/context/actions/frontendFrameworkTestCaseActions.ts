@@ -1,10 +1,14 @@
-
 /* ------------------------------ Action Types ------------------------------ */
 
-// Actions for all front end frameworks, React, Solid, Svelete, and Vue can all use this because they 
+// Actions for all front end frameworks, React, Solid, Svelete, and Vue can all use this because they
 // function the same
 
-import { UpdateActionProps, UpdateAssertionProps, CypressCommandStep, CypressTestActionStatement } from "../../utils/reactTypes";
+import {
+  UpdateActionProps,
+  UpdateAssertionProps,
+  CypressCommandStep,
+  CypressTestActionStatement,
+} from '../../utils/reactTestCase';
 
 export const actionTypes = {
   ADD_DESCRIBE_BLOCK: 'ADD_DESCRIBE_BLOCK',
@@ -22,10 +26,10 @@ export const actionTypes = {
   UPDATE_ACTION: 'UPDATE_ACTION',
 
   //!Cypress Actions
-ADD_CYPRESS_ACTION_STEP : 'ADD_CYPRESS_ACTION_STEP',
-UPDATE_CYPRESS_ACTION_STEP : 'UPDATE_CYPRESS_ACTION_STEP',
-DELETE_CYPRESS_ACTION_STEP : 'DELETE_CYPRESS_ACTION_STEP',
-REORDER_CYPRESS_ACTION_STEPS : 'REORDER_CYPRESS_ACTION_STEPS', // not implemented yet, I have a rough outline in reducer for this
+  ADD_CYPRESS_ACTION_STEP: 'ADD_CYPRESS_ACTION_STEP',
+  UPDATE_CYPRESS_ACTION_STEP: 'UPDATE_CYPRESS_ACTION_STEP',
+  DELETE_CYPRESS_ACTION_STEP: 'DELETE_CYPRESS_ACTION_STEP',
+  REORDER_CYPRESS_ACTION_STEPS: 'REORDER_CYPRESS_ACTION_STEPS', // not implemented yet, I have a rough outline in reducer for this
 
   ADD_ASSERTION: 'ADD_ASSERTION',
   DELETE_ASSERTION: 'DELETE_ASSERTION',
@@ -39,8 +43,8 @@ REORDER_CYPRESS_ACTION_STEPS : 'REORDER_CYPRESS_ACTION_STEPS', // not implemente
   DELETE_PROP: 'DELETE_PROP',
   UPDATE_PROP: 'UPDATE_PROP',
 
-//! NEW CONDITIONAL RENDER VISIT URL INPUT
-  UPDATE_RENDER_URL: 'UPDATE_RENDER_URL', 
+  //! NEW CONDITIONAL RENDER VISIT URL INPUT
+  UPDATE_RENDER_URL: 'UPDATE_RENDER_URL',
   DELETE_RENDER_URL: 'DELETE_RENDER_URL',
   ADD_VISIT: 'ADD_VISIT',
   UPDATE_VISIT: 'UPDATE_VISIT',
@@ -49,7 +53,7 @@ REORDER_CYPRESS_ACTION_STEPS : 'REORDER_CYPRESS_ACTION_STEPS', // not implemente
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
   REPLACE_TEST: 'REPLACE_TEST',
-  RESET_TESTS: 'RESET_TESTS'
+  RESET_TESTS: 'RESET_TESTS',
 };
 
 /* --------------------------------- Actions -------------------------------- */
@@ -84,7 +88,6 @@ export const addItstatement = (describeId: string) => ({
   describeId,
 });
 
-
 export const deleteItStatement = (describeId: string, itId: string) => ({
   type: actionTypes.DELETE_ITSTATEMENT,
   describeId,
@@ -97,7 +100,10 @@ export const updateItStatementText = (text: string, itId: string) => ({
   text,
 });
 
-export const updateItStatementOrder = (reorderedIt: string[], describeId: string) => ({
+export const updateItStatementOrder = (
+  reorderedIt: string[],
+  describeId: string
+) => ({
   type: actionTypes.UPDATE_ITSTATEMENT_ORDER,
   reorderedIt,
   describeId,
@@ -136,15 +142,17 @@ export const updateAction = ({
   suggestions,
 });
 
-
 // Add a new step to an existing action block
-export function addCypressActionStep(actionId: string, step: CypressCommandStep) {
+export function addCypressActionStep(
+  actionId: string,
+  step: CypressCommandStep
+) {
   return {
-  type: actionTypes.ADD_CYPRESS_ACTION_STEP,
-  actionId,
-  step,
-  }
-};
+    type: actionTypes.ADD_CYPRESS_ACTION_STEP,
+    actionId,
+    step,
+  };
+}
 // Update a single field of an existing step
 export function updateCypressActionStep(
   actionId: string,
@@ -164,8 +172,8 @@ export function updateCypressActionStep(
 export function deleteCypressActionStep(actionId: string, stepId: string) {
   return {
     type: actionTypes.DELETE_CYPRESS_ACTION_STEP,
-    actionId, 
-    stepId 
+    actionId,
+    stepId,
   };
 }
 
@@ -176,13 +184,9 @@ export function deleteCypressActionStep(actionId: string, stepId: string) {
 //   return {
 //     type: actionTypes.REORDER_CYPRESS_ACTION_STEPS,
 //     actionId,
-//     newOrder 
+//     newOrder
 //   };
 // }
-
-
-
-
 
 export const addAssertion = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_ASSERTION,
@@ -204,7 +208,7 @@ export const updateAssertion = ({
   matcherType,
   matcherValue,
   suggestions,
-    selectorMethod,
+  selectorMethod,
   selectorValue,
 }: UpdateAssertionProps) => ({
   type: actionTypes.UPDATE_ASSERTION,
@@ -216,23 +220,25 @@ export const updateAssertion = ({
   matcherType,
   matcherValue,
   suggestions,
-      selectorMethod,
+  selectorMethod,
   selectorValue,
 });
 
-export const addRender = (describeId: string, itId: string,) => ({
+export const addRender = (describeId: string, itId: string) => ({
   type: actionTypes.ADD_RENDER,
   describeId,
   itId,
 });
-
 
 export const deleteRender = (statementId: string) => ({
   type: actionTypes.DELETE_RENDER,
   statementId,
 });
 
-export const updateRenderComponent = (componentName: string, filePath: string) => ({
+export const updateRenderComponent = (
+  componentName: string,
+  filePath: string
+) => ({
   type: actionTypes.UPDATE_RENDER_COMPONENT,
   componentName,
   filePath,
@@ -251,7 +257,12 @@ export const deleteProp = (statementId: string, id: string) => {
   };
 };
 
-export const updateProp = (statementId: string, id: string, propKey: string, propValue: string) => ({
+export const updateProp = (
+  statementId: string,
+  id: string,
+  propKey: string,
+  propValue: string
+) => ({
   type: actionTypes.UPDATE_PROP,
   id,
   statementId,
@@ -259,23 +270,22 @@ export const updateProp = (statementId: string, id: string, propKey: string, pro
   propValue,
 });
 
-
-
-
 // action creators
- //! NEW ACTION CREATOR FOR BOTH KEY AND VALUE CHANGE 
-export const updateRenderUrl = (statementId: string, id: string, visitKey: string, visitValue: string) => ({
+//! NEW ACTION CREATOR FOR BOTH KEY AND VALUE CHANGE
+export const updateRenderUrl = (
+  statementId: string,
+  id: string,
+  visitKey: string,
+  visitValue: string
+) => ({
   type: actionTypes.UPDATE_RENDER_URL,
   statementId,
-   id,
-   visitKey,
-   visitValue,
+  id,
+  visitKey,
+  visitValue,
 });
 // console.log('Reducer, Incoming action:', action);
 // console.log('Reducer, Current statement:', statement);
-
-
-
 
 // export const updateCypressAction = (
 //   id: string,
@@ -286,10 +296,7 @@ export const updateRenderUrl = (statementId: string, id: string, visitKey: strin
 //   commandChain,
 // });
 
-
-
-
- //! NEW ACTION CREATOR FOR DELETING COMPONENT 
+//! NEW ACTION CREATOR FOR DELETING COMPONENT
 export const deleteRenderUrl = (statementId: string, id: string) => {
   return {
     type: actionTypes.DELETE_RENDER_URL,
@@ -297,9 +304,6 @@ export const deleteRenderUrl = (statementId: string, id: string) => {
     statementId,
   };
 };
-
-
-
 
 export const createNewTest = () => ({
   type: actionTypes.CREATE_NEW_TEST,
@@ -330,5 +334,5 @@ export const closeInfoModal = () => {
 // });
 
 export const resetTests = () => ({
-  type: actionTypes.RESET_TESTS
-})
+  type: actionTypes.RESET_TESTS,
+});

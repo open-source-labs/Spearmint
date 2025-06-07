@@ -178,7 +178,7 @@ const addReactItStatement = (describeId) => {
 
   itStatements.allIds[describeId].forEach((itId) => {
 
- // find the first render statement inside the first it block that has a visitKey
+ // find the first render statement inside the first it block that has a visitKey for cypress visit
     const renderStatement = statementIds.map((id) => {
      
         const s = statementMap[id]; // grab full statement info 
@@ -1063,7 +1063,7 @@ console.log('falling to regular it statement..............')
       
           
           if (method === 'contains') {
-            selectorCall = `cy.contains(${value})`;
+            selectorCall = `cy.contains('${value}')`;
           } else if (method === 'url') {
             selectorCall = `cy.url()`;
           } else if (method){

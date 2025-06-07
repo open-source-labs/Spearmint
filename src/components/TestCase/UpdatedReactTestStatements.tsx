@@ -2,7 +2,7 @@ import React from 'react';
 import Action from '../UpdatedReactTestComponent/Action/Action';
 import Assertion from '../UpdatedReactTestComponent/Assertion/Assertion';
 import Render from '../UpdatedReactTestComponent/Render/NOT_USED_Render';
-import { Statements } from '../../utils/reactTypes';
+import { Statements } from '../../utils/reactTestCase';
 
 interface ReactTestStatementsProps {
   statements: Statements;

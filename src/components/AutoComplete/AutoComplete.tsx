@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import AutoSuggest from 'react-autosuggest';
 import styles from './AutoComplete.module.scss';
-import { updateAction, updateAssertion } from '../../context/actions/frontendFrameworkTestCaseActions';
+import {
+  updateAction,
+  updateAssertion,
+} from '../../context/actions/frontendFrameworkTestCaseActions';
 import { jestEventTypesList } from '../TypesList/eventTypesList';
 import { cypressSelectorTypesList } from '../TypesList/cypressQuerySelectorTypesList';
 import { cypressQueryActionTypesList } from '../TypesList/cypressQueryActionTypesList';
@@ -9,7 +12,10 @@ import { matcherTypesList as jestMatchers } from '../TypesList/matcherTypesList'
 import { cypressMatcherTypesList } from '../../components/TypesList/cypressMatcherTypeList';
 import { mochaMatcherTypesList } from '../TypesList/mochaMatcherTypesList';
 import { sinonMatcherTypesList } from '../TypesList/sinonMatcherTypesList';
-import { AutoCompleteProps, AutoCompleteStatement } from '../../utils/reactTypes';
+import {
+  AutoCompleteProps,
+  AutoCompleteStatement,
+} from '../../utils/reactTestCase';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 
 interface SuggestionType {
@@ -17,7 +23,13 @@ interface SuggestionType {
 }
 
 const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
-  const { statement, statementType, dispatchToTestCase, type = 'react', fieldType } = props;
+  const {
+    statement,
+    statementType,
+    dispatchToTestCase,
+    type = 'react',
+    fieldType,
+  } = props;
   const [{ testFramework }] = useContext(GlobalContext);
 
   let updatedAction: AutoCompleteStatement = { ...statement };
@@ -117,7 +129,9 @@ const AutoComplete = (props: AutoCompleteProps): JSX.Element => {
     updatedAssertion.isNot ? `not.${suggestion.name}` : suggestion.name;
 
   const renderSuggestion = (suggestion: SuggestionType) => (
-    <div>{updatedAssertion.isNot ? `not.${suggestion.name}` : suggestion.name}</div>
+    <div>
+      {updatedAssertion.isNot ? `not.${suggestion.name}` : suggestion.name}
+    </div>
   );
 
   return (

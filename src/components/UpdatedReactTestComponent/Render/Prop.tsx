@@ -8,7 +8,7 @@ import {
   deleteProp,
   updateProp,
 } from '../../../context/actions/frontendFrameworkTestCaseActions';
-import { PropProps } from '../../../utils/reactTypes';
+import { PropProps } from '../../../utils/reactTestCase';
 import { RTFsContexts } from '../../../context/RTFsContextsProvider';
 
 const minusIcon = require('../../../assets/images/minus-box-outline.png');
