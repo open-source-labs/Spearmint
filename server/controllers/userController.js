@@ -40,7 +40,7 @@ const userController/*: userControllerType*/ = {
     // collection.create method to insert new user
     User.create(
       // Pass in username from request body and encrypted password
-      { username/*: req.body.username*/, password/*: res.locals.encryptedPassword*/ },
+      { username: req.body.username, password: res.locals.encryptedPassword },
       // Callback to handle results of query
       (err/*: ErrorRequestHandler*/, newUser/*: (null | undefined | { _id: number })*/) => {
         if (!newUser) return res.status(400).json("Username already exists, please choose another one.");
@@ -57,7 +57,7 @@ const userController/*: userControllerType*/ = {
   // Middleware to check credentials and log user into application
   login: (req/*: Request*/, res/*: Response*/, next/*: NextFunction*/)/*: void*/ => {
     // Collection.find method to look for all user instances with passed username
-    User.find({ username/*: req.body.username*/ }, (err/*: ErrorRequestHandler*/, 
+    User.find({ username: req.body.username }, (err/*: ErrorRequestHandler*/,
       result/*: Array<{ _id: number, username: String, password: String }>*/)/*: void*/ => {
       // If there is an error, invoke global error handler
       if (err) return next(err);
