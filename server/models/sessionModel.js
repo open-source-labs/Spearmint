@@ -11,9 +11,20 @@ const Schema = mongoose.Schema;
 
 // Initialize a new schema object for collection 'session'
 const sessionSchema/* : SchemaType */ = new Schema({
-  // Save user ID
-  cookieId: { type: String, required: true, unique: true },
+  // Opaque, cryptographically random session token (not the user's _id)
+  token: { type: String, required: true, unique: true },
+  // The user this session belongs to
+  userId: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('Session', sessionSchema);
+const Session = mongoose.model('Session', sessionSchema);
+
+// Reconciles the collection's actual indexes with the schema above. Needed
+// because Mongoose doesn't drop indexes that a schema stops declaring —
+// without this, an old unique index on a since-renamed/removed field (e.g.
+// a previous `cookieId` field) keeps rejecting every new document that
+// lacks that field.
+Session.syncIndexes().catch((err) => console.log('Session.syncIndexes failed:', err));
+
+module.exports = Session;
