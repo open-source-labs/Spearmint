@@ -14,7 +14,7 @@ class SessionManager {
 
   static createSession(userId, callback) {
     const token = SessionManager.generateToken();
-    Session.create({ token, userId }, (err, session) => {
+    Session.create({ token, userId }, (err) => {
       if (err) return callback(err);
       return callback(null, token);
     });

@@ -7,11 +7,18 @@
 
 // Import test state model that defines the structure of test stored in DB
 const TestState = require('../models/testStateModel');
+
 const testStateController /* :testStateControllerType */ = {};
 
 // Middleware to upload a passed test into DB
+// NOTE: this feature's frontend (UploadTest.ts) has been fully commented out
+// and is unreachable from the UI. TestState.create below never actually
+// used the destructured values (it passes the String/Object constructors
+// instead), which is why they're unused here. Out of scope for this pass —
+// tracked as the abandoned cloud-save feature, not part of the auth/CI work.
+/* eslint-disable no-unused-vars */
 testStateController.upload = (req /* : Request */, res /* : Response */, next /* : NextFunction */) /* : void */ => {
-  const { testName, testType, testState }/*: 
+  const { testName, testType, testState }/*:
   { testName : string, testType : string, testState : Object }*/ = req.body;
   const userId /* : number */ = req.cookies.ssid;
 
@@ -28,6 +35,7 @@ testStateController.upload = (req /* : Request */, res /* : Response */, next /*
     }
   );
 };
+/* eslint-enable no-unused-vars */
 
 // Middleware too get all saved tests of current user and of selected type
 testStateController.getTests = (req /* : Request */, res /* : Response */, next /* : NextFunction */) => {

@@ -13,7 +13,7 @@ mongoose
   .then(() => console.log('Connected to Mongo DB Successfully'))
   .catch((err) => console.log(err));
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // Initialize a new schema object for collection 'user'
 const userSchema/*: SchemaType*/ = new Schema({

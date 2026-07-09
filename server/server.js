@@ -6,11 +6,12 @@
 // import { defaultErrType } from "./utils/backendTypes";
 
 const express = require('express');
-const app/*: Application*/ = express();
 const cookieParser/*: Function*/ = require('cookie-parser');
-const router/*: Router*/ = require('./routes/router');
-const PORT/*: number */= 3001;
 const passport/*: Authenticator*/ = require('passport');
+const router/*: Router*/ = require('./routes/router');
+
+const app/*: Application*/ = express();
+const PORT/*: number */= 3001;
 
 // dotenv.config({ path: './config/config.env' });
 require('./config/passport')(passport);
@@ -29,13 +30,14 @@ app.use('/', router);
 app.use((req/*: Request*/, res/*: Response*/)/*: Response*/ => res.status(404).send('Error 404: No content found'));
 
 // Express global error handler
+// eslint-disable-next-line no-unused-vars
 app.use((err/*: ErrorRequestHandler*/, req/*: Request*/, res/*: Response*/, next/*: NextFunction*/)/*: Response*/ => {
   const defaultErr/*: defaultErrType*/ = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
     message: 'An error occurred',
   };
-  const errorObj = Object.assign({}, defaultErr, err);
+  const errorObj = { ...defaultErr, ...err };
   return res.status(errorObj.status).json(err);
 });
 
@@ -44,5 +46,4 @@ app.listen(PORT, ()/*: void*/ => {
   console.log(`TEST Server listening on port: ${PORT}`);
 });
 
-module.exports = app;
 module.exports = app;

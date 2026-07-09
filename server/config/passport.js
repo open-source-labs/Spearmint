@@ -7,7 +7,7 @@
 
 const GitHubStrategy = require('passport-github2').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { GithubUser, GoogleUser } = require('../models/userModel.js');
+const { GithubUser, GoogleUser } = require('../models/userModel');
 const CredentialStore = require('../utils/CredentialStore');
 
 module.exports = function (passport/*:  Authenticator */) {

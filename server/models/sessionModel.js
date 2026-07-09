@@ -7,7 +7,7 @@
 // Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 // Schema constructor
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // Initialize a new schema object for collection 'session'
 const sessionSchema/* : SchemaType */ = new Schema({
