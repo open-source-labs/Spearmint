@@ -16,6 +16,7 @@ const userController/*: userControllerType*/ = require('../controllers/userContr
 const cookieController/*: cookieControllerType*/ = require('../controllers/cookieController');
 const sessionController/*: sessionControllerType*/ = require('../controllers/sessionController');
 const testStateController/*: testStateControllerType*/ = require('../controllers/testStateController');
+const InputSanitizer = require('../utils/InputSanitizer');
 // const { ipcRenderer } = require('electron');
 // const githubController = require('../controllers/githubController');
 
@@ -25,6 +26,8 @@ const router/*: Router*/ = express.Router();
 // Set up route for post requests to /signup
 router.post(
   '/signup',
+  // Reject non-string username/password before they reach Mongoose
+  InputSanitizer.validateCredentials,
   // Bcrypt middleware to encrypt user password
   userController.bcrypt,
   // Signup middleware to sign user up with encrypted credentials
@@ -38,6 +41,8 @@ router.post(
 // Set up route for post requests to /login
 router.post(
   '/login',
+  // Reject non-string username/password before they reach Mongoose
+  InputSanitizer.validateCredentials,
   // Login middleware checks encrypted credentials
   userController.login,
   // Cookie middleware to set up a new cookie
