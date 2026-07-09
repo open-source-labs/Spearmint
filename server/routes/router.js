@@ -33,9 +33,7 @@ router.post(
   // Signup middleware to sign user up with encrypted credentials
   userController.signup,
   // Anonymous middleware to send back valid response
-  (req/*: Request*/, res/*: Response*/)/*: Response*/ => {
-    return res.sendStatus(200);
-  }
+  (req/*: Request*/, res/*: Response*/)/*: Response*/ => res.sendStatus(200)
 );
 
 // Set up route for post requests to /login

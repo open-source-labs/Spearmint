@@ -8,7 +8,9 @@
  * instead of failing later inside mongoose/passport with an opaque error.
  */
 
-require('dotenv').config({ path: __dirname + '/../../.env' });
+const path = require('path');
+
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
 
 function requireEnv(name) {
   const value = process.env[name];
