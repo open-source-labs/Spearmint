@@ -45,10 +45,10 @@ router.post(
   InputSanitizer.validateCredentials,
   // Login middleware checks encrypted credentials
   userController.login,
-  // Cookie middleware to set up a new cookie
-  cookieController.setSSIDCookie,
-  // Session middleware to initialize new session
+  // Session middleware to initialize new session (generates the token)
   sessionController.startSession,
+  // Cookie middleware to set the cookie to the generated session token
+  cookieController.setSSIDCookie,
   // Anonymous middleware to send back valid response
   (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     res.status(200).json({ ssid: res.locals.ssid });
@@ -60,6 +60,8 @@ router.get(
   '/logout',
   // Session middleware to end any existing sessions
   sessionController.endSession,
+  // Cookie middleware to clear the client-side cookie
+  cookieController.deleteCookie,
   // Anonymous middleware to send back valid response
   (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     res.status(200).json('Logged Out Successfully');
@@ -106,8 +108,8 @@ router.get(
 
   // if second passport auth is successful, then these middleware functions are invoked next
   userController.githubLogin,
-  cookieController.setSSIDCookie,
   sessionController.startSession,
+  cookieController.setSSIDCookie,
 
   // Anonymous middleware to send back valid response
   (req/*: Request*/, res/*: Response*/)/*: void*/ => {
@@ -134,8 +136,8 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   // if second passport auth is successful, then these middleware functions are invoked next
   userController.googleLogin,
-  cookieController.setSSIDCookie,
   sessionController.startSession,
+  cookieController.setSSIDCookie,
 
   // Anonymous middleware to send back valid response
   (req/*: Request*/, res/*: Response*/)/*: void*/ => {
