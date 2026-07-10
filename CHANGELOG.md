@@ -21,6 +21,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Fixed `.eslintrc`, which referenced a typo'd config name and an ESLint plugin that was never installed — ESLint had never successfully run in this repo. Fixed the ~30 real lint errors it surfaced once working.
 - Fixed `jest.config.js` silently collecting a mock file (`styleMock.js`) as a failing test suite.
 
+- Fixed a crash-on-import bug in `Visit.tsx` (the Cypress "visit URL" step builder): `window.require('electron')` ran at module load time, which works inside the real Electron app but hard-crashed in any other context — including Jest, which took down two whole test suites (`TestFile.test.jsx`, `reactTestCase.test.js`) that couldn't even load. Now lazily loaded inside the click handler.
+- Fixed `reactReducer.test.js`, whose `ADD_ACTION`/`ADD_ASSERTION`/`ADD_RENDER` expectations had gone stale after the Cypress work added new fields (`commandChain`, `selectorMethod`, `selectorValue`, `statementType`, `objectType`, `visits`) to those statement shapes — the tests were never updated to match.
+- Fixed `jest.config.js` collecting `wdio.conf.js` (a WebdriverIO config, not a test) as a failing suite — same issue class as `styleMock.js`.
+
+### Removed
+
+- Removed `test/mochaTest.js`: not valid JavaScript (invalid import identifiers), depended on packages that were never installed, wasn't wired to any test runner, and duplicated coverage that already exists and passes in `reactTestCase.test.js`.
+- Removed `useGenerateTest backup.jsx` (an unreferenced 1833-line backup file committed to source control) and `CypressTestCase.tsx` (unreferenced, unreachable from the UI).
+
+### Changed
+
+- Renamed `NOT_USED_Render.tsx` to `Render.tsx` — despite the name, it was actively imported by two files; just confusingly named mid-refactor.
+
 ### Added
 
 - Added the first backend test coverage in this project's history: 26 tests across `CredentialStore`, `InputSanitizer`, and `SessionManager`.
