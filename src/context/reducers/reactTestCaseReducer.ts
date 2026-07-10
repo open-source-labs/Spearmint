@@ -684,10 +684,6 @@ export const reactTestCaseReducer = (
         selectorValue,
       } = action;
 
-      console.log(
-        `Reducer, UPDATE_ASSERTION payload: id=${id}, selectorMethod=${selectorMethod}, selectorValue=${selectorValue}`
-      );
-
       const oldStatement = { ...statements.byId[id] };
       const byId = { ...statements.byId };
       const newStatement = {
@@ -702,9 +698,6 @@ export const reactTestCaseReducer = (
         selectorMethod,
         selectorValue,
       };
-
-      console.log(`reducer, oldStatement:`, oldStatement);
-      console.log(`reducer, newStatement:`, newStatement);
 
       return {
         ...state,
@@ -722,8 +715,6 @@ export const reactTestCaseReducer = (
 
     //! RENDERRRR
     case actionTypes.ADD_RENDER: {
-      console.log('ADD_RENDER action:', action);
-
       const { describeId, itId } = action; // extract subType from action
       const byIds = { ...statements.byId };
       const allIds = [...statements.allIds];
@@ -832,9 +823,6 @@ export const reactTestCaseReducer = (
               ) =>
                 visit.id === id ? { ...visit, visitKey, visitValue } : visit
             );
-
-      console.log('Reducer,  updated Visits:', updatedVisits);
-      console.log('ReactTestCase,  Statements state:', statements);
 
       return {
         ...state,

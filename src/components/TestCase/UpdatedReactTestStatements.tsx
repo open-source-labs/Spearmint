@@ -1,7 +1,7 @@
 import React from 'react';
 import Action from '../UpdatedReactTestComponent/Action/Action';
 import Assertion from '../UpdatedReactTestComponent/Assertion/Assertion';
-import Render from '../UpdatedReactTestComponent/Render/NOT_USED_Render';
+import Render from '../UpdatedReactTestComponent/Render/Render';
 import { Statements } from '../../utils/reactTestCase';
 
 interface ReactTestStatementsProps {
