@@ -1,6 +1,6 @@
 # How to use in development mode
 
-See [CHANGELOG.md](CHANGELOG.md) for a running record of notable changes.
+See [CHANGELOG.md](CHANGELOG.md) for a running record of notable changes, and [MANUAL_TESTING.md](MANUAL_TESTING.md) for the checklist to run by hand before a release (automated tests can't confirm the Electron window actually renders or that OAuth round-trips through a real browser).
 
 **Mac Developers**: Install Xcode command line tools if you don't already have them.
 
