@@ -197,6 +197,9 @@
     "webpack-bundle-analyzer": "^4.9.1",
     "webpack-dev-server": "^4.11.1"
   },
+  "overrides": {
+    "@types/node": "22.14.0"
+  },
   "config": {
     "forge": {
       "packagerConfig": {},
