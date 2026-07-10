@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Bumped in-range patch/minor dependencies via `npm update` (no major versions — Electron, React, Express, Mongoose, etc. are unchanged; that's separate, larger follow-up work). Pinned the transitive `@types/node` dependency to `22.14.0` via an npm `overrides` entry: it isn't declared directly anywhere in this project, but floated to `26.1.1` after the update, and that version's `ffi.d.ts` uses syntax our pinned TypeScript (4.9.5) can't parse, producing 50 spurious typecheck errors entirely inside `node_modules`. Verified after pinning: full test suite unchanged (339 passing, 0 failing), lint unchanged (0 errors), typecheck back to only the pre-existing frontend backlog.
+
 ### Security
 
 - Removed hardcoded GitHub and Google OAuth client secrets from `server/config/passport.js` (live in source since 2022). Added `CredentialStore`, a single module all credential reads go through, loading from environment variables and failing fast with a named-variable error if one is missing. Added `.env.example` documenting every required variable.
