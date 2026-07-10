@@ -1,5 +1,7 @@
 # How to use in development mode
 
+See [CHANGELOG.md](CHANGELOG.md) for a running record of notable changes.
+
 **Mac Developers**: Install Xcode command line tools if you don't already have them.
 
 **Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode.
@@ -29,24 +31,30 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 2. `npm install`
 
-3. Create a .env file in the root directory of the project
-
-4. Insert the following lines of code into the .env file
+3. Copy `.env.example` to `.env` in the root directory of the project, and fill in every value:
 
    ```
    APP_DEV=true
-   BROWSER=non
+   BROWSER=none
    SKIP_PREFLIGHT_CHECK=true
-   MONGO_LINK=mongodb+srv://username:spearmint1234@cluster0.nzon2t8.mongodb.net/?retryWrites=true&w=majority
+   MONGO_LINK=
+   GITHUB_CLIENT_ID=
+   GITHUB_CLIENT_SECRET=
+   GITHUB_CALLBACK_URL=
+   GOOGLE_CLIENT_ID=
+   GOOGLE_CLIENT_SECRET=
+   GOOGLE_CALLBACK_URL=
    ```
 
-5. Set MONGO_LINK to your MongoDB URI or use the URI we provided (ex: mongodb://localhost:27017)
+   `MONGO_LINK` is your own MongoDB URI (a local `mongodb://localhost:27017` works fine). `GITHUB_CLIENT_ID`/`GITHUB_CLIENT_SECRET` and `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` come from your own registered OAuth apps (GitHub: Settings → Developer settings → OAuth Apps; Google: Google Cloud Console → APIs & Services → Credentials) — the callback URL fields are optional and default to `http://localhost:3001/auth/{provider}/callback`. All of the above are required: the server now fails fast with a clear error naming whichever variable is missing, rather than starting up in a broken state.
 
-6. Make sure your MongoDB is running if it's hosted locally.
+4. Make sure your MongoDB is running if it's hosted locally.
 
-7. `npm run rebuild` (different from `npm rebuild` so please pay attention to that)
+5. `npm run rebuild` (different from `npm rebuild` so please pay attention to that)
 
-8. `npm run dev`
+6. `npm run dev`
+
+7. Before opening a PR, run `npm run lint`, `npm run typecheck`, and `npm test` — all three now run automatically via GitHub Actions on every pull request (typecheck reports but doesn't yet block merges; lint and test do).
 
 # Tips for development mode
 
@@ -66,9 +74,9 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 3. Dry refactoring of codebase: A lot of the folders and files for the frontend frameworks testing are the same, and the codebase would GREATLY benefit from refactoring and modularizing those.
 
-4. Persist user data: there is currently sign up and login functionality. V0.13.0 commented out the login functionality because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user.
+4. Persist user data: sign up, login, and GitHub/Google OAuth are all functional (each provider needs its own registered OAuth app — see Initial Setup above). What's still missing is anywhere to put persisted data once a user is logged in: `testStateController.js`'s `/upload` and `/getTests` routes exist on the backend, but the frontend UI for saving/loading tests (`UploadTest.tsx`) is fully commented out and unreachable, and the upload handler itself has a bug (writes placeholder values instead of the real request data). A great feature would be fixing that handler and rebuilding the frontend so tests can actually be saved and reloaded per user.
 
-5. GitHub OAuth is functional, but Google OAuth is currently broken. If you are planning to persist user data, this is an excellent feature to resolve.
+5. Both GitHub and Google OAuth are functional once you've registered your own OAuth apps and populated `.env` (see Initial Setup above).
 
 6. Add more customization to the tests themselves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
 

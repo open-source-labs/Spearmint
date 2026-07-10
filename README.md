@@ -21,7 +21,7 @@ Spearmint helps developers easily create functional Accessibility, Endpoint, Gra
 
 # Installation
 
-Please download Spearmint from our [website](https://www.spearmintjs.com/)
+See [README-dev.md](README-dev.md) for setup instructions.
 
 # How to use in development mode
 
@@ -83,6 +83,12 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 - Updated a variety of dependencies and libraries
 
 - Added documentation for future developers
+
+<br>
+
+# Recent Updates
+
+A security-hardening and CI pass closed a live secret leak, a broken/injectable auth flow, and added the project's first backend test coverage and its first CI pipeline. See [CHANGELOG.md](CHANGELOG.md) for the full list.
 
 <br>
 
@@ -184,6 +190,7 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 |    Tyler Martinez     |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tytyjameson)      |     [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tylerjamesonmartinez/)     |
 |      William Lee      |    [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/WilliamHaakLee)    |        [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/williamhaaklee)         |
 |      Wilson Tran      |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Wilson-Tran)      |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wilsonwttran/)         |
+|    Winston Ludlam     |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/winjolu)        |            [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wjludlam/)          |
 |      Yeunha Kim       |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yeunhakim93)      |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yeunhakim93/)          |
 
 <hr>
