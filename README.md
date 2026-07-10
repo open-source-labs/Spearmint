@@ -88,7 +88,7 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 
 # Recent Updates
 
-A security-hardening and CI pass closed a live secret leak, a broken/injectable auth flow, and added the project's first backend test coverage and its first CI pipeline. See [CHANGELOG.md](CHANGELOG.md) for the full list.
+A security-hardening and CI pass closed a live secret leak, a broken/injectable auth flow, and added the project's first backend test coverage and its first CI pipeline. A follow-up pass fixed regressions introduced by the Cypress test-framework work (a crash-on-import bug, stale test expectations, an unparseable dead test file) and cleaned up several unreferenced files left behind by that merge. See [CHANGELOG.md](CHANGELOG.md) for the full list.
 
 <br>
 
