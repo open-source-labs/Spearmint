@@ -16,6 +16,7 @@ const userController/*: userControllerType*/ = require('../controllers/userContr
 const cookieController/*: cookieControllerType*/ = require('../controllers/cookieController');
 const sessionController/*: sessionControllerType*/ = require('../controllers/sessionController');
 const testStateController/*: testStateControllerType*/ = require('../controllers/testStateController');
+const InputSanitizer = require('../utils/InputSanitizer');
 // const { ipcRenderer } = require('electron');
 // const githubController = require('../controllers/githubController');
 
@@ -25,25 +26,27 @@ const router/*: Router*/ = express.Router();
 // Set up route for post requests to /signup
 router.post(
   '/signup',
+  // Reject non-string username/password before they reach Mongoose
+  InputSanitizer.validateCredentials,
   // Bcrypt middleware to encrypt user password
   userController.bcrypt,
   // Signup middleware to sign user up with encrypted credentials
   userController.signup,
   // Anonymous middleware to send back valid response
-  (req/*: Request*/, res/*: Response*/)/*: Response*/ => {
-    return res.sendStatus(200);
-  }
+  (req/*: Request*/, res/*: Response*/)/*: Response*/ => res.sendStatus(200)
 );
 
 // Set up route for post requests to /login
 router.post(
   '/login',
+  // Reject non-string username/password before they reach Mongoose
+  InputSanitizer.validateCredentials,
   // Login middleware checks encrypted credentials
   userController.login,
-  // Cookie middleware to set up a new cookie
-  cookieController.setSSIDCookie,
-  // Session middleware to initialize new session
+  // Session middleware to initialize new session (generates the token)
   sessionController.startSession,
+  // Cookie middleware to set the cookie to the generated session token
+  cookieController.setSSIDCookie,
   // Anonymous middleware to send back valid response
   (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     res.status(200).json({ ssid: res.locals.ssid });
@@ -55,6 +58,8 @@ router.get(
   '/logout',
   // Session middleware to end any existing sessions
   sessionController.endSession,
+  // Cookie middleware to clear the client-side cookie
+  cookieController.deleteCookie,
   // Anonymous middleware to send back valid response
   (req/*: Request*/, res/*: Response*/)/*: void*/ => {
     res.status(200).json('Logged Out Successfully');
@@ -101,8 +106,8 @@ router.get(
 
   // if second passport auth is successful, then these middleware functions are invoked next
   userController.githubLogin,
-  cookieController.setSSIDCookie,
   sessionController.startSession,
+  cookieController.setSSIDCookie,
 
   // Anonymous middleware to send back valid response
   (req/*: Request*/, res/*: Response*/)/*: void*/ => {
@@ -129,8 +134,8 @@ router.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   // if second passport auth is successful, then these middleware functions are invoked next
   userController.googleLogin,
-  cookieController.setSSIDCookie,
   sessionController.startSession,
+  cookieController.setSSIDCookie,
 
   // Anonymous middleware to send back valid response
   (req/*: Request*/, res/*: Response*/)/*: void*/ => {

@@ -21,4 +21,16 @@ module.exports = {
       "./public",
       "./server",
     ],
+  // styleMock.js is a mock module, not a test, and gets picked up as an
+  // (empty, failing) test suite otherwise. spec.e2e.js and spec.integra.js
+  // are Spectron/ChromeDriver E2E tests that need a real Electron/Chrome
+  // browser session — not viable in a standard CI runner, and already
+  // effectively disabled upstream (spec.e2e.js's own describe block is
+  // wrapped in xdescribe). Excluded from collection rather than deleted.
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "<rootDir>/src/__tests__/styleMock.js",
+    "<rootDir>/src/__tests__/spec.e2e.js",
+    "<rootDir>/src/__tests__/spec.integra.js",
+  ],
 }

@@ -5,6 +5,8 @@
   "main": "public/electron.jsx",
   "scripts": {
     "test": "NODE_ENV=test jest",
+    "lint": "eslint server --ext .js",
+    "typecheck": "tsc --noEmit",
     "start": "electron-forge start",
     "start-dev": "concurrently \"electron .\" \"nodemon server/server.js\"",
     "watch": "webpack --config webpack.config.ts --watch",

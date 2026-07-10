@@ -7,16 +7,13 @@
 
 const GitHubStrategy = require('passport-github2').Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { GithubUser, GoogleUser } = require('../models/userModel.js');
+const { GithubUser, GoogleUser } = require('../models/userModel');
+const CredentialStore = require('../utils/CredentialStore');
 
 module.exports = function (passport/*:  Authenticator */) {
   passport.use(
     new GitHubStrategy(
-      {
-        clientID: 'd6dd018bbd5fcd3eae01',
-        clientSecret: 'a402c23eaad0cdb5e6094ce8bba259c7e2e1757f',
-        callbackURL: 'http://localhost:3001/auth/github/callback',
-      },
+      CredentialStore.getGithubOAuth(),
 
       (accessToken/* : String */, refreshToken/* : (String | undefined) */, profile/* : Profile */, done/* : Function */)/* : void */ => {
         //console.log('this is our accessToken:', accessToken);
@@ -49,11 +46,7 @@ module.exports = function (passport/*:  Authenticator */) {
 
   passport.use(
     new GoogleStrategy(
-      {
-        clientID: '783732985723-dfvjj0bro5mbc1u1ouo4e90ue0hjndcg.apps.googleusercontent.com',
-        clientSecret: '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',
-        callbackURL: 'http://localhost:3001/auth/google/callback',
-      },
+      CredentialStore.getGoogleOAuth(),
 
       (accessToken/* : String */, refreshToken/* : (String | undefined) */, profile/* : Profile */, done/* : Function */)/* : void  */=> {
         //console.log('this is our accessToken:', accessToken);

@@ -21,7 +21,7 @@ Spearmint helps developers easily create functional Accessibility, Endpoint, Gra
 
 # Installation
 
-Please download Spearmint from our [website](https://www.spearmintjs.com/)
+See [README-dev.md](README-dev.md) for setup instructions.
 
 # How to use in development mode
 
@@ -86,6 +86,12 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 
 <br>
 
+# Recent Updates
+
+A security-hardening and CI pass closed a live secret leak, a broken/injectable auth flow, and added the project's first backend test coverage and its first CI pipeline. See [CHANGELOG.md](CHANGELOG.md) for the full list.
+
+<br>
+
 # Iteration Roadmap
 
 1. _Continuing TypeScript Conversion:_
@@ -121,6 +127,7 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 
 |     Developed By      |                                                                                                                                                         |                                                                                                                                                             |
 | :-------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    Winston Ludlam     |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/winjolu)        |            [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wjludlam/)          |
 |    Alan Richardson    |   [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/alanrichardson7)    |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/arichardson7/)         |
 |       Alex Park       |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/apark0720)       |                             [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)]()                              |
 |  Alfred Sta. Iglesia  |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/astaiglesia)      |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/astaiglesia/)          |
