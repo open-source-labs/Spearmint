@@ -26,11 +26,14 @@ module.exports = {
   // are Spectron/ChromeDriver E2E tests that need a real Electron/Chrome
   // browser session — not viable in a standard CI runner, and already
   // effectively disabled upstream (spec.e2e.js's own describe block is
-  // wrapped in xdescribe). Excluded from collection rather than deleted.
+  // wrapped in xdescribe). wdio.conf.js is a WebdriverIO config (ESM,
+  // uses import.meta.url), not a test. Excluded from collection rather
+  // than deleted.
   "testPathIgnorePatterns": [
     "/node_modules/",
     "<rootDir>/src/__tests__/styleMock.js",
     "<rootDir>/src/__tests__/spec.e2e.js",
     "<rootDir>/src/__tests__/spec.integra.js",
+    "<rootDir>/src/__tests__/wdio.conf.js",
   ],
 }
