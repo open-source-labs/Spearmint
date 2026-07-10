@@ -8,15 +8,21 @@ const cookieController /*: cookieControllerType*/ = {};
 
 // Middleware to initialize a cookie when user logs in
 cookieController.setSSIDCookie = (req/*: Request*/, res/*: Response*/, next/*: NextFunction*/)/*: void*/ => {
-  // eslint-disable-next-line no-useless-escape
-  //removing double quotes with Regex?
-  res.cookie('ssid', JSON.stringify(res.locals.userId).replace(/\"/g, ''));
+  res.cookie('ssid', res.locals.ssid, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+  });
   return next();
 };
 
 // Middleware to delete a cookie upon user logging out
 cookieController.deleteCookie = (req/*: Request*/, res/*: Response*/, next/*: NextFunction*/)/*: void*/ => {
-  res.clearCookie('ssid');
+  res.clearCookie('ssid', {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+  });
   return next();
 };
 

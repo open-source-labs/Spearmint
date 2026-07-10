@@ -13,8 +13,8 @@
  */
 
 
-const { User } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const { User } = require('../models/userModel');
 
 const userController/*: userControllerType*/ = {
 
@@ -25,7 +25,7 @@ const userController/*: userControllerType*/ = {
     // Destructure password from request body
     const { password }/*: { password: String }*/ = req.body;
     // Generate the salt by passing in saltRounds (cost factor)
-    bcrypt.genSalt(saltRounds, (err/*: ErrorRequestHandler*/, salt/*: String*/)/*: void*/ => {
+    bcrypt.genSalt(saltRounds, (saltErr/*: ErrorRequestHandler*/, salt/*: String*/)/*: void*/ => {
       // Hash a password by passing in the plaintext into the hash function
       bcrypt.hash(password, salt, (err/*: ErrorRequestHandler*/, hash/*: String*/)/*: void*/ => {
         // Save encrypted password into res.locals to be accessed later
@@ -40,7 +40,7 @@ const userController/*: userControllerType*/ = {
     // collection.create method to insert new user
     User.create(
       // Pass in username from request body and encrypted password
-      { username/*: req.body.username*/, password/*: res.locals.encryptedPassword*/ },
+      { username: req.body.username, password: res.locals.encryptedPassword },
       // Callback to handle results of query
       (err/*: ErrorRequestHandler*/, newUser/*: (null | undefined | { _id: number })*/) => {
         if (!newUser) return res.status(400).json("Username already exists, please choose another one.");
@@ -57,16 +57,16 @@ const userController/*: userControllerType*/ = {
   // Middleware to check credentials and log user into application
   login: (req/*: Request*/, res/*: Response*/, next/*: NextFunction*/)/*: void*/ => {
     // Collection.find method to look for all user instances with passed username
-    User.find({ username/*: req.body.username*/ }, (err/*: ErrorRequestHandler*/, 
+    User.find({ username: req.body.username }, (err/*: ErrorRequestHandler*/,
       result/*: Array<{ _id: number, username: String, password: String }>*/)/*: void*/ => {
       // If there is an error, invoke global error handler
       if (err) return next(err);
       // If there are no matching usernames, invoke global error handler
       if (result.length === 0) return next('Incorrect username/password combo');
       // If there is a user with passed username, use the bcrypt.compare method to compare plaintext password with encrypted password
-      bcrypt.compare(req.body.password, result[0].password, (err/*: ErrorRequestHandler*/, match/*: boolean*/) => {
+      return bcrypt.compare(req.body.password, result[0].password, (compareErr/*: ErrorRequestHandler*/, match/*: boolean*/) => {
         // If an error occurs in the compare method, invoke global error handler
-        if (err) return next(err);
+        if (compareErr) return next(compareErr);
         // If there is a match, invoke next middleware
         if (match) {
           res.locals.userId = result[0]._id;
