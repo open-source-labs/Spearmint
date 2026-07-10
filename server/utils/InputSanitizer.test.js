@@ -79,5 +79,25 @@ describe('InputSanitizer', () => {
       expect(next).not.toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(400);
     });
+
+    // NFR: "the system shall reject NoSQL injection attempts without adding
+    // noticeable latency to login/signup requests (target: under 100ms
+    // overhead)". This was never actually measured before - it's a plain
+    // typeof/length check, so budget it generously at 10ms to leave headroom
+    // under the 100ms requirement while still catching a real regression
+    // (e.g. someone replacing this with a slow regex or a synchronous
+    // network call).
+    it('rejects a NoSQL injection payload in well under the 100ms latency budget', () => {
+      const req = { body: { username: { $ne: null }, password: { $ne: null } } };
+      const res = mockRes();
+      const next = jest.fn();
+
+      const start = process.hrtime.bigint();
+      InputSanitizer.validateCredentials(req, res, next);
+      const elapsedMs = Number(process.hrtime.bigint() - start) / 1e6;
+
+      expect(next).not.toHaveBeenCalled();
+      expect(elapsedMs).toBeLessThan(10);
+    });
   });
 });

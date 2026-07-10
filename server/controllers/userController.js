@@ -43,9 +43,11 @@ const userController/*: userControllerType*/ = {
       { username: req.body.username, password: res.locals.encryptedPassword },
       // Callback to handle results of query
       (err/*: ErrorRequestHandler*/, newUser/*: (null | undefined | { _id: number })*/) => {
+        // A duplicate-key error (11000, from the unique username index) is the
+        // expected "username taken" case below; any other error is a genuine
+        // failure and must not be reported as "username already exists"
+        if (err && err.code !== 11000) return next(err);
         if (!newUser) return res.status(400).json("Username already exists, please choose another one.");
-        // If there is an error, invoke global error handler
-        if (err) return next(err);
         // Save user ID into response locals
         res.locals.userId = newUser._id;
         // Inovke next middleware
