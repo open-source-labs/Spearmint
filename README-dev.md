@@ -93,13 +93,13 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 8. Continue to improve internal testing coverage – while it has been greatly expanded there are many parts of the internals of the application that are still not being tested, and especially with regards to integration and end to end testing, more could be done.
 
-9. Consider removing MUI framework as it is incompatible with React v18+ and no longer being actively updated - either replacing with another frontend framework or styling via CSS.
+9. Dependency versions are significantly behind across the board (Electron, React, Express, Mongoose, MUI, and more) — MUI itself is still actively maintained (current major is 9.x), so that's not a blocker to upgrading the rest of the stack around it.
 
 10. Consider implementing React Dev Tools in the app.
-    
+
 11. Clean up the before cy.visit('') inside useGenerateTest.jsx.
-    
-13. Modernize app UI
+
+12. Modernize app UI
 
 **_Please feel free to add any other features or fixes that you would like or are interested in._**
 
