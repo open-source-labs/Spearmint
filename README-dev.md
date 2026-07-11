@@ -6,6 +6,12 @@ See [CHANGELOG.md](CHANGELOG.md) for a running record of notable changes, and [M
 
 **Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode.
 
+## Procedure for working on the project as a Mac user
+
+1. Install Xcode Command Line Tools if you haven't already: `xcode-select --install`. This is required to compile `node-pty`, the native module that powers the embedded terminal — without it, `npm run rebuild` (step 5 below) will fail.
+2. Confirm you're on Node 20.x (`node --version`). If you use `nvm`, run `nvm use 20`.
+3. Follow the **Initial Setup** steps below in order — nothing else Mac-specific is needed beyond that; `npm start`/Electron work natively on macOS with no X server or display forwarding required (unlike the Windows/WSL path above).
+
 ## Procedure for working on the project as a Windows user.
 
 1. Download VcXsrv or a similar program in order to run an X environment on Windows. [VcXsrv](https://sourceforge.net/projects/vcxsrv/)
@@ -59,9 +65,20 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 4. Make sure your MongoDB is running if it's hosted locally.
 
-5. `npm run rebuild` (different from `npm rebuild` so please pay attention to that)
+5. `npm run rebuild` (different from `npm rebuild` so please pay attention to that) — this recompiles `node-pty` against Electron's Node ABI. If this step fails, it's almost always the Xcode Command Line Tools being missing (Mac) or a mismatched Node version.
 
-6. `npm run dev`
+6. `npm run dev` — this runs two things at once: `npm run watch` (webpack, builds the frontend bundle and rebuilds on every save) and `npm run start-dev` (launches the Electron window and the Express backend via nodemon, concurrently). Because both halves start in parallel, **the Electron window can open before webpack has finished its first build** — if you see a blank/white window immediately after launch, that's why, not a crash. Watch your terminal for, in order:
+
+   ```
+   webpack 5.x.x compiled successfully in ...ms
+   ```
+   then
+   ```
+   TEST Server listening on port: 3001
+   Connected to Mongo DB Successfully
+   ```
+
+   Once you see both, if the window is still blank, click into it and reload (Cmd+R on Mac). If it's still blank after that, open DevTools (uncomment the `openDevTools()` line — see **Tips for development mode** below) and check the console for the actual error; a red screen or repeated crash at this point usually means `.env` is missing a required variable (the server fails fast and logs exactly which one — check the terminal output from the `nodemon` process, prefixed `[1]`).
 
 7. Before opening a PR, run `npm run lint`, `npm run typecheck`, and `npm test` — all three now run automatically via GitHub Actions on every pull request (typecheck reports but doesn't yet block merges; lint and test do).
 
