@@ -4,6 +4,12 @@
  * object (e.g. { "$ne": null }) through as req.body.username, which
  * Mongoose would then pass straight to MongoDB as a query operator —
  * this rejects anything that isn't a plain, non-empty string first.
+ *
+ * Added as part of a security-hardening pass: /login and /signup had no
+ * input validation at all, so a NoSQL operator-injection payload reached
+ * Mongoose unvalidated. Wired into server/routes/router.js ahead of both
+ * routes.
+ * @author winjolu
  */
 class InputSanitizer {
   static isValidCredentialField(value) {

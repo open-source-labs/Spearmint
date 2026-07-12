@@ -107,7 +107,7 @@ A security-hardening and CI pass closed a live secret leak, a broken/injectable 
 5. _Continue to extend internal testing coverage_
   - A far greater amount of the application is tested now than it was previously, but there is more work to do on this
 6. _Update some dependencies and tools_
-  - Consider removing MUI and switching to another component library or redoing styling in CSS in order to update the program to React v18+ as MUI is incompatible and seems not to be actively updating.
+  - Dependency versions across the board are significantly behind (Electron, React, Express, Mongoose, MUI, and more) — a broader dependency-modernization pass is in progress in a separate branch, sequenced by risk (patch/minor bumps first, then major version jumps one at a time, since several — Electron especially — carry real breaking-change risk).
   - Consider implementing React Dev Tools or react-dnd to restore the drag-drop functionality
   - Monitor for other opportunities to update dependencies or otherwise improve the program with different libraries or tools.
 7. _Revamp UI for certain test cases:_

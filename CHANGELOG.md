@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Bumped in-range patch/minor dependencies via `npm update` (no major versions — Electron, React, Express, Mongoose, etc. are unchanged; that's separate, larger follow-up work). Pinned the transitive `@types/node` dependency to `22.14.0` via an npm `overrides` entry: it isn't declared directly anywhere in this project, but floated to `26.1.1` after the update, and that version's `ffi.d.ts` uses syntax our pinned TypeScript (4.9.5) can't parse, producing 50 spurious typecheck errors entirely inside `node_modules`.
+- Pinned `@uiw/react-codemirror` to `4.23.10` (was `^4.19.7`, floated to `4.25.11`), which broke the actual production frontend build — it fails to resolve `react/jsx-runtime` under the also-bumped webpack, even though that file genuinely exists. This was missed initially: the update had only been checked with `jest`/`lint`/`typecheck`, never a real `webpack` build, so the break went unnoticed until a build was actually run. Verified after both pins: production build compiles clean (0 errors), full test suite unchanged (339 passing, 0 failing), lint unchanged (0 errors), typecheck back to only the pre-existing frontend backlog (0 errors in `node_modules`).
+
 ### Security
 
 - Removed hardcoded GitHub and Google OAuth client secrets from `server/config/passport.js` (live in source since 2022). Added `CredentialStore`, a single module all credential reads go through, loading from environment variables and failing fast with a named-variable error if one is missing. Added `.env.example` documenting every required variable.

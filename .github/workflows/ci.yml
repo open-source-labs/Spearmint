@@ -1,3 +1,5 @@
+# Added by winjolu as part of a security-hardening pass — first CI this
+# repo has had. YAML has no JSDoc equivalent, so this is a plain comment.
 name: CI
 
 on:

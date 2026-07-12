@@ -23,7 +23,13 @@ const InputSanitizer = require('../utils/InputSanitizer');
 // Initialize an express router
 const router/*: Router*/ = express.Router();
 
-// Set up route for post requests to /signup
+/**
+ * /signup and /login both now run InputSanitizer.validateCredentials first,
+ * rejecting any non-string username/password (e.g. a NoSQL operator-
+ * injection payload like { "$ne": null }) before either route touches
+ * Mongoose. Neither route validated its input at all before this.
+ * @author winjolu
+ */
 router.post(
   '/signup',
   // Reject non-string username/password before they reach Mongoose
@@ -36,7 +42,13 @@ router.post(
   (req/*: Request*/, res/*: Response*/)/*: Response*/ => res.sendStatus(200)
 );
 
-// Set up route for post requests to /login
+/**
+ * startSession now runs before setSSIDCookie (previously the order was
+ * reversed) — the cookie was being set from res.locals.userId before
+ * SessionManager had even generated the session token, so the cookie
+ * value didn't exist yet at the point it was written.
+ * @author winjolu
+ */
 router.post(
   '/login',
   // Reject non-string username/password before they reach Mongoose
@@ -53,7 +65,12 @@ router.post(
   }
 );
 
-// Set up route for get requests to /logout
+/**
+ * cookieController.deleteCookie is now actually called here — it existed
+ * as dead code before this, so /logout deleted the server-side session but
+ * left the browser's cookie in place.
+ * @author winjolu
+ */
 router.get(
   '/logout',
   // Session middleware to end any existing sessions
@@ -99,6 +116,13 @@ router.get(
   passport.authenticate('github', { scope: ['profile'] })
 );
 
+/**
+ * Same session/cookie ordering fix as /login above — startSession has to
+ * run before setSSIDCookie so the token exists before it's written to the
+ * cookie. Applies to both OAuth callbacks (this one and /auth/google/callback
+ * below).
+ * @author winjolu
+ */
 // if user does ALLOW, then they are automatically redirected to the callback endpoint
 router.get(
   '/auth/github/callback',
