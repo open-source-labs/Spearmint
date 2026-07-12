@@ -10,7 +10,18 @@ const SessionManager = require('../utils/SessionManager');
 
 const sessionController /*:sessionControllerType*/ = {};
 
-// Middleware to initialize a session upon successful login
+/**
+ * Middleware to initialize a session upon successful login.
+ *
+ * Previously created the session document directly as
+ * `Session.create({ cookieId: res.locals.userId })` — the session
+ * identifier was the user's own raw Mongo _id, so anyone who could guess
+ * or enumerate a user's _id (Mongo ObjectIds aren't random — timestamp +
+ * counter) could forge a valid session. Now delegates entirely to
+ * SessionManager, which generates an unrelated, cryptographically random
+ * token.
+ * @author winjolu
+ */
 sessionController.startSession = (req /* : Request */, res /* : Response */, next /* : NextFunction */) /* : void */ => {
   SessionManager.createSession(res.locals.userId, (err /* : MongoError */, token /* : string */) /* : void */ => {
     if (err && err.code !== 11000) return next(err);

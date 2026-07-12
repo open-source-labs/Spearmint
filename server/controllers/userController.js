@@ -35,7 +35,22 @@ const userController/*: userControllerType*/ = {
     });
   },
 
-  // Middleware to save user information in database
+  /**
+   * Middleware to save user information in database.
+   *
+   * This route threw `ReferenceError: username is not defined` on every
+   * request since at least 2022: the actual query value (req.body.username)
+   * had been written inside this file's type-annotation-as-comment
+   * convention instead of as real code, leaving bare object-shorthand
+   * (just the word "username") that referenced a variable which was never
+   * declared. Fixed by writing the real key: value pairs below.
+   *
+   * The duplicate-key check (err.code !== 11000) was added afterward: the
+   * controller-level tests written for this file caught that a duplicate
+   * username was being reported to the caller as a generic Mongoose error
+   * instead of the intended "username already exists" 400 response.
+   * @author winjolu
+   */
   signup: (req/*: Request*/, res/*: Response*/, next/*: NextFunction*/)/*: (void | Response)*/ => {
     // collection.create method to insert new user
     User.create(
@@ -56,7 +71,17 @@ const userController/*: userControllerType*/ = {
     );
   },
 
-  // Middleware to check credentials and log user into application
+  /**
+   * Middleware to check credentials and log user into application.
+   *
+   * Same historical bug as signup above — the query object had the same
+   * "value written inside a comment, bare word left in the code" mistake,
+   * referencing an undefined `username` variable and throwing on every
+   * request. Fixed by writing the real key: value pair below. Also now runs behind
+   * InputSanitizer.validateCredentials (see server/routes/router.js), which
+   * rejects non-string username/password before either of these routes runs.
+   * @author winjolu
+   */
   login: (req/*: Request*/, res/*: Response*/, next/*: NextFunction*/)/*: void*/ => {
     // Collection.find method to look for all user instances with passed username
     User.find({ username: req.body.username }, (err/*: ErrorRequestHandler*/,

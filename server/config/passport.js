@@ -11,6 +11,14 @@ const { GithubUser, GoogleUser } = require('../models/userModel');
 const CredentialStore = require('../utils/CredentialStore');
 
 module.exports = function (passport/*:  Authenticator */) {
+  /**
+   * clientID/clientSecret used to be hardcoded literals here — a real
+   * GitHub OAuth client secret and a real Google OAuth client secret/ID,
+   * committed directly to the public repo. Both now come from
+   * CredentialStore, which reads from environment variables and fails
+   * fast if one is missing.
+   * @author winjolu
+   */
   passport.use(
     new GitHubStrategy(
       CredentialStore.getGithubOAuth(),

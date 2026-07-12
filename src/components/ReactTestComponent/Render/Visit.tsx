@@ -25,6 +25,15 @@ const Visit = ({
   const [visitKey, setVisitKey] = useState(statement.visitKey || '');
   const [visitValue, setVisitValue] = useState(statement.visitValue || '');
 
+  /**
+   * `window.require('electron')` used to be called at module scope (top of
+   * this file), which works fine inside the real Electron renderer but
+   * hard-crashes in any other context — including Jest, which took down
+   * two whole test suites (TestFile.test.jsx, reactTestCase.test.js) that
+   * couldn't even load this component. Moved inside the handler so it's
+   * only evaluated when a user actually clicks "Test Visit".
+   * @author winjolu
+   */
   const handleTestVisit = () => {
     if (!visitKey.trim()) {
       alert('Please enter a Base URL first');

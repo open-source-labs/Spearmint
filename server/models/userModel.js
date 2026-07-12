@@ -8,6 +8,13 @@
 const mongoose = require('mongoose');
 const CredentialStore = require('../utils/CredentialStore');
 
+/**
+ * Previously read `process.env.MONGO_LINK` directly (with its own
+ * `dotenv.config()` call duplicated in this file). Now goes through
+ * CredentialStore, the single place all server credentials are sourced
+ * from, which also fails fast with a clear error if MONGO_LINK is unset.
+ * @author winjolu
+ */
 mongoose
   .connect(CredentialStore.getMongoUri(), { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to Mongo DB Successfully'))
