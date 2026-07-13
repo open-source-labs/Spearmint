@@ -14,7 +14,7 @@ import ConfirmDialogue from '../context/errorHandle/ConfirmDialogue';
 import DescribeBlock from '../components/UpdatedReactTestComponent/DescribeBlock/DescribeBlock';
 import SetupTeardownBlock from '../components/UpdatedReactTestComponent/SetupTeardownBlock/SetupTeardownBlock';
 import TestBlock from '../components/UpdatedReactTestComponent/TestBlock/TestBlock';
-import Render from '../components/UpdatedReactTestComponent/Render/NOT_USED_Render';
+import Render from '../components/UpdatedReactTestComponent/Render/Render';
 import Props from '../components/UpdatedReactTestComponent/Render/Prop';
 import Action from '../components/UpdatedReactTestComponent/Action/Action';
 import Assertion from '../components/UpdatedReactTestComponent/Assertion/Assertion';
