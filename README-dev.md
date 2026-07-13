@@ -185,3 +185,9 @@ After running the mongo on port 27017 and running the x server with display numb
   <h3>Let's stay up to date, ask/answer questions, and connect with one another!</h3>
   <h3>Join the spearmint developer community Discord!</h3>
 </div>
+
+### UML Architecture Diagram
+
+<img src="public/spearmint-uml.svg" alt="Spearmint UML architecture diagram" width="600" />
+
+Generated against the `dev` branch as of July 2026. This is a static, generated diagram (not hand-editable — the vector paths, including text, are outlines from the export, not real shapes/labels). To update it, regenerate from whatever tool produced the original and re-export, rather than hand-editing `public/spearmint-uml.svg` directly.
