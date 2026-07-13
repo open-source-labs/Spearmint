@@ -1,0 +1,54 @@
+# Added by winjolu as part of a security-hardening pass — first CI this
+# repo has had. YAML has no JSDoc equivalent, so this is a plain comment.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # Informational only, not blocking: tsconfig.json covers src/ (the
+      # frontend), which has a large pre-existing backlog of type errors
+      # (~350+, mostly in the duplicated "Updated React" implementation).
+      # None of that is part of this security-hardening/CI scope, and none
+      # of it is server/ code (this project's actual changes), which isn't
+      # TypeScript at all. Flip continue-on-error to false once that
+      # backlog is addressed separately.
+      - run: npm run typecheck
+        continue-on-error: true
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test

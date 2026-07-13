@@ -1,8 +1,16 @@
 # How to use in development mode
 
+See [CHANGELOG.md](CHANGELOG.md) for a running record of notable changes, and [MANUAL_TESTING.md](MANUAL_TESTING.md) for the checklist to run by hand before a release (automated tests can't confirm the Electron window actually renders or that OAuth round-trips through a real browser).
+
 **Mac Developers**: Install Xcode command line tools if you don't already have them.
 
 **Windows Developers**: Install Node.js globally, may also have to run Spearmint in admin mode.
+
+## Procedure for working on the project as a Mac user
+
+1. Install Xcode Command Line Tools if you haven't already: `xcode-select --install`. This is required to compile `node-pty`, the native module that powers the embedded terminal — without it, `npm run rebuild` (step 5 below) will fail.
+2. Confirm you're on Node 20.x (`node --version`). If you use `nvm`, run `nvm use 20`.
+3. Follow the **Initial Setup** steps below in order — nothing else Mac-specific is needed beyond that; `npm start`/Electron work natively on macOS with no X server or display forwarding required (unlike the Windows/WSL path above).
 
 ## Procedure for working on the project as a Windows user.
 
@@ -38,24 +46,41 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 2. `npm install`
 
-3. Create a .env file in the root directory of the project
-
-4. Insert the following lines of code into the .env file
+3. Copy `.env.example` to `.env` in the root directory of the project, and fill in every value:
 
    ```
    APP_DEV=true
-   BROWSER=non
+   BROWSER=none
    SKIP_PREFLIGHT_CHECK=true
-   MONGO_LINK=mongodb+srv://username:spearmint1234@cluster0.nzon2t8.mongodb.net/?retryWrites=true&w=majority
+   MONGO_LINK=
+   GITHUB_CLIENT_ID=
+   GITHUB_CLIENT_SECRET=
+   GITHUB_CALLBACK_URL=
+   GOOGLE_CLIENT_ID=
+   GOOGLE_CLIENT_SECRET=
+   GOOGLE_CALLBACK_URL=
    ```
 
-5. Set MONGO_LINK to your MongoDB URI or use the URI we provided (ex: mongodb://localhost:27017)
+   `MONGO_LINK` is your own MongoDB URI (a local `mongodb://localhost:27017` works fine). `GITHUB_CLIENT_ID`/`GITHUB_CLIENT_SECRET` and `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET` come from your own registered OAuth apps (GitHub: Settings → Developer settings → OAuth Apps; Google: Google Cloud Console → APIs & Services → Credentials) — the callback URL fields are optional and default to `http://localhost:3001/auth/{provider}/callback`. All of the above are required: the server now fails fast with a clear error naming whichever variable is missing, rather than starting up in a broken state.
 
-6. Make sure your MongoDB is running if it's hosted locally.
+4. Make sure your MongoDB is running if it's hosted locally.
 
-7. `npm run rebuild` (different from `npm rebuild` so please pay attention to that)
+5. `npm run rebuild` (different from `npm rebuild` so please pay attention to that) — this recompiles `node-pty` against Electron's Node ABI. If this step fails, it's almost always the Xcode Command Line Tools being missing (Mac) or a mismatched Node version.
 
-8. `npm run dev`
+6. `npm run dev` — this runs two things at once: `npm run watch` (webpack, builds the frontend bundle and rebuilds on every save) and `npm run start-dev` (launches the Electron window and the Express backend via nodemon, concurrently). Because both halves start in parallel, **the Electron window can open before webpack has finished its first build** — if you see a blank/white window immediately after launch, that's why, not a crash. Watch your terminal for, in order:
+
+   ```
+   webpack 5.x.x compiled successfully in ...ms
+   ```
+   then
+   ```
+   TEST Server listening on port: 3001
+   Connected to Mongo DB Successfully
+   ```
+
+   Once you see both, if the window is still blank, click into it and reload (Cmd+R on Mac). If it's still blank after that, open DevTools (uncomment the `openDevTools()` line — see **Tips for development mode** below) and check the console for the actual error; a red screen or repeated crash at this point usually means `.env` is missing a required variable (the server fails fast and logs exactly which one — check the terminal output from the `nodemon` process, prefixed `[1]`).
+
+7. Before opening a PR, run `npm run lint`, `npm run typecheck`, and `npm test` — all three now run automatically via GitHub Actions on every pull request (typecheck reports but doesn't yet block merges; lint and test do).
 
 # Tips for development mode
 
@@ -75,9 +100,9 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 3. Dry refactoring of codebase: A lot of the folders and files for the frontend frameworks testing are the same, and the codebase would GREATLY benefit from refactoring and modularizing those.
 
-4. Persist user data: there is currently sign up and login functionality. V0.13.0 commented out the login functionality because there is currently no user data being persisted. A great feature would be to save tests to work on them later, or create templates for each user.
+4. Persist user data: sign up, login, and GitHub/Google OAuth are all functional (each provider needs its own registered OAuth app — see Initial Setup above). What's still missing is anywhere to put persisted data once a user is logged in: `testStateController.js`'s `/upload` and `/getTests` routes exist on the backend, but the frontend UI for saving/loading tests (`UploadTest.tsx`) is fully commented out and unreachable, and the upload handler itself has a bug (writes placeholder values instead of the real request data). A great feature would be fixing that handler and rebuilding the frontend so tests can actually be saved and reloaded per user.
 
-5. GitHub OAuth is functional, but Google OAuth is currently broken. If you are planning to persist user data, this is an excellent feature to resolve.
+5. Both GitHub and Google OAuth are functional once you've registered your own OAuth apps and populated `.env` (see Initial Setup above).
 
 6. Add more customization to the tests themselves such as chaining expects, add the ability to use siblings and children, etc., or having the ability to test more than one component in one test file.
 
@@ -85,13 +110,13 @@ React must be version 17 due to a dependency for mui. Fix-path must be version 3
 
 8. Continue to improve internal testing coverage – while it has been greatly expanded there are many parts of the internals of the application that are still not being tested, and especially with regards to integration and end to end testing, more could be done.
 
-9. Consider removing MUI framework as it is incompatible with React v18+ and no longer being actively updated - either replacing with another frontend framework or styling via CSS.
+9. Dependency versions are significantly behind across the board (Electron, React, Express, Mongoose, MUI, and more) — MUI itself is still actively maintained (current major is 9.x), so that's not a blocker to upgrading the rest of the stack around it.
 
 10. Consider implementing React Dev Tools in the app.
-    
+
 11. Clean up the before cy.visit('') inside useGenerateTest.jsx.
-    
-13. Modernize app UI
+
+12. Modernize app UI
 
 **_Please feel free to add any other features or fixes that you would like or are interested in._**
 
@@ -160,3 +185,9 @@ After running the mongo on port 27017 and running the x server with display numb
   <h3>Let's stay up to date, ask/answer questions, and connect with one another!</h3>
   <h3>Join the spearmint developer community Discord!</h3>
 </div>
+
+### UML Architecture Diagram
+
+<img src="public/spearmint-uml.svg" alt="Spearmint UML architecture diagram" width="600" />
+
+Generated against the `dev` branch as of July 2026. This is a static, generated diagram (not hand-editable — the vector paths, including text, are outlines from the export, not real shapes/labels). To update it, regenerate from whatever tool produced the original and re-export, rather than hand-editing `public/spearmint-uml.svg` directly.

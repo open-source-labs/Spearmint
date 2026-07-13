@@ -21,7 +21,7 @@ Spearmint helps developers easily create functional Accessibility, Endpoint, Gra
 
 # Installation
 
-Please download Spearmint from our [website](https://www.spearmintjs.com/)
+See [README-dev.md](README-dev.md) for setup instructions.
 
 # How to use in development mode
 
@@ -86,6 +86,12 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 
 <br>
 
+# Recent Updates
+
+A security-hardening and CI pass closed a live secret leak, a broken/injectable auth flow, and added the project's first backend test coverage and its first CI pipeline. A follow-up pass fixed regressions introduced by the Cypress test-framework work (a crash-on-import bug, stale test expectations, an unparseable dead test file) and cleaned up several unreferenced files left behind by that merge. See [CHANGELOG.md](CHANGELOG.md) for the full list.
+
+<br>
+
 # Iteration Roadmap
 
 1. _Continuing TypeScript Conversion:_
@@ -101,7 +107,7 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 5. _Continue to extend internal testing coverage_
   - A far greater amount of the application is tested now than it was previously, but there is more work to do on this
 6. _Update some dependencies and tools_
-  - Consider removing MUI and switching to another component library or redoing styling in CSS in order to update the program to React v18+ as MUI is incompatible and seems not to be actively updating.
+  - Dependency versions across the board are significantly behind (Electron, React, Express, Mongoose, MUI, and more) — a broader dependency-modernization pass is in progress in a separate branch, sequenced by risk (patch/minor bumps first, then major version jumps one at a time, since several — Electron especially — carry real breaking-change risk).
   - Consider implementing React Dev Tools or react-dnd to restore the drag-drop functionality
   - Monitor for other opportunities to update dependencies or otherwise improve the program with different libraries or tools.
 7. _Revamp UI for certain test cases:_
@@ -121,6 +127,7 @@ For developers: [README-dev.md](https://github.com/open-source-labs/spearmint/bl
 
 |     Developed By      |                                                                                                                                                         |                                                                                                                                                             |
 | :-------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|    Winston Ludlam     |       [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/winjolu)        |            [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wjludlam/)          |
 |    Alan Richardson    |   [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/alanrichardson7)    |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/arichardson7/)         |
 |       Alex Park       |      [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/apark0720)       |                             [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)]()                              |
 |  Alfred Sta. Iglesia  |     [![Github](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/astaiglesia)      |         [![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/astaiglesia/)          |
