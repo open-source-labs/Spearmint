@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-const { shell } = window.require('electron');
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { ReactTestCaseContext } from '../../../context/reducers/reactTestCaseReducer';
 import { RenderProps, VisitProps } from '../../../utils/reactTestCase';
@@ -26,24 +25,22 @@ const Visit = ({
   const [visitKey, setVisitKey] = useState(statement.visitKey || '');
   const [visitValue, setVisitValue] = useState(statement.visitValue || '');
 
-  const [previewUrl, setPreviewUrl] = useState('');
-
+  /**
+   * `window.require('electron')` used to be called at module scope (top of
+   * this file), which works fine inside the real Electron renderer but
+   * hard-crashes in any other context — including Jest, which took down
+   * two whole test suites (TestFile.test.jsx, reactTestCase.test.js) that
+   * couldn't even load this component. Moved inside the handler so it's
+   * only evaluated when a user actually clicks "Test Visit".
+   * @author winjolu
+   */
   const handleTestVisit = () => {
-    console.log('→ handleTestVisit() called');
-    console.log('  visitKey:', visitKey);
-    console.log('  visitValue:', visitValue);
-
     if (!visitKey.trim()) {
       alert('Please enter a Base URL first');
       return;
     }
-    //  const combinedUrl= `baseUrl: ${visitKey || ''}, \n cy.visit('${visitValue}')`;
-    // setPreviewUrl(combinedUrl);
-
-    //window.open(fullUrl, '_blank');
     const fullUrl = `${visitKey}${visitValue.trim()}`;
-
-    console.log('Opening external URL:', fullUrl);
+    const { shell } = window.require('electron');
     shell.openExternal(fullUrl);
   };
 
@@ -59,19 +56,10 @@ const Visit = ({
     e: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const newKey = e.target.value;
-    setVisitKey(newKey); // passing value
+    setVisitKey(newKey);
     dispatchToReactTestCase(
       updateRenderUrl(statementId, visitId, newKey, visitValue || '')
     );
-    console.log('Updated visit state:', statements.byId[statementId]?.visits);
-    console.log('[Visit] Updating visitKey:', newKey);
-
-    console.log('[Visit] Dispatching updateRenderUrl:', {
-      statementId,
-      id: visitId,
-      visitKey,
-      visitValue,
-    });
   };
 
   // whenever user changes "Endpoint" input
@@ -83,10 +71,7 @@ const Visit = ({
     dispatchToReactTestCase(
       updateRenderUrl(statementId, visitId, visitKey || '', newValue)
     );
-    console.log('Visit Updating visitValue:', newValue);
   };
-  // combines base + endpoint into a previewed string
-  // const fullUrl = `${statement.visitKey || ''}${statement.visitValue || ''}`;
 
   const visitId = `${statementId}-visit`; // simple, consistent
   return (
@@ -154,12 +139,5 @@ const Visit = ({
     </div>
   );
 };
-
-// {/*optional preview full URL text */}
-// {fullUrl  && (
-//   <p className={styles.previewText}>
-//     Visit preview: <code>cy.visit('{fullUrl}')</code>
-//   </p>
-// ) }
 
 export default Visit;

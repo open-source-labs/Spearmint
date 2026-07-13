@@ -4,18 +4,23 @@
 
 // import { Schema as SchemaType } from "mongoose";
 
-require('dotenv').config({ path: __dirname + '/./../../.env' });
 // Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
+const CredentialStore = require('../utils/CredentialStore');
 
-const MONGO_URI = process.env.MONGO_LINK;
-
+/**
+ * Previously read `process.env.MONGO_LINK` directly (with its own
+ * `dotenv.config()` call duplicated in this file). Now goes through
+ * CredentialStore, the single place all server credentials are sourced
+ * from, which also fails fast with a clear error if MONGO_LINK is unset.
+ * @author winjolu
+ */
 mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(CredentialStore.getMongoUri(), { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to Mongo DB Successfully'))
   .catch((err) => console.log(err));
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // Initialize a new schema object for collection 'user'
 const userSchema/*: SchemaType*/ = new Schema({
