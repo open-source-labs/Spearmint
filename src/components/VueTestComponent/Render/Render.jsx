@@ -11,7 +11,7 @@ import { deleteRender, addProp } from '../../../context/actions/frontendFramewor
 import Prop from './Prop';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ statement, statementId, describeId, itId }) => {

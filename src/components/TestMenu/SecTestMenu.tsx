@@ -6,13 +6,7 @@ import { createNewSecTest } from '../../context/actions/secTestCaseActions';
 import TestMenuButtons from './TestMenuButtons';
 import Modal from '../Modals/Modal';
 import {
-  updateFile,
-  setFilePath,
-  toggleRightPanel,
   setValidCode,
-  setTestCase,
-  toggleModal,
-  toggleExportBool,
 } from '../../context/actions/globalActions';
 import { SecTestCaseContext } from '../../context/reducers/secTestCaseReducer';
 import { useToggleModal } from './testMenuHooks';
@@ -37,9 +31,6 @@ const SecTestMenu = () => {
     dispatchToGlobal(openBrowserDocs(snykURL));
   };
 
-  const openNewTestModal = () => {
-  if (!isTestModalOpen) dispatchToGlobal(toggleModal());
-  };
   return (
     <div id='test'>
       <div id={styles.testMenu}>

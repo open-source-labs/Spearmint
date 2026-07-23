@@ -63,3 +63,37 @@
   
 }
 
+#dbConfiglight {
+  flex: 0 0 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  button {
+    color: $mint;
+
+    &:hover {
+      color: white;
+      background-color: $chromegray-opaque;
+    }
+  }
+}
+
+#dbConfigdark {
+  flex: 0 0 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  button {
+    color: $eggshell;
+    background-color: $salmon;
+
+    &:hover {
+      color: white;
+      background-color: $salmon-darker;
+    }
+  }
+}

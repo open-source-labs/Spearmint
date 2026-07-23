@@ -129,3 +129,7 @@ export const reduxReplaceTest = (testState: object) => ({
   type: actionTypes.REPLACE_TEST,
   testState,
 });
+
+export const resetTests = () => ({
+  type: actionTypes.RESET_TESTS
+});

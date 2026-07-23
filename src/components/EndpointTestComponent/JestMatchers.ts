@@ -24,7 +24,7 @@ const jestMatchers: string[] = [
   'to Contain Equal (an object in an array)',
   'to Match (regexp or string)',
   'to Match Object (object)',
-  'to Srict Equal (object)',
+  'to Strict Equal (object)',
   'to Throw (error[optional])',
 ];
 

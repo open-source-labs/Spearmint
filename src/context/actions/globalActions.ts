@@ -1,3 +1,8 @@
+import { File, filePathMapType } from "../../utils/globalTypes";
+
+// These are the global actions, like in the globalReducer, these pertain to global things, file items,
+// different panels, themes, etc.
+
 export const actionTypes = {
   SET_PROJECT_URL: 'SET_PROJECT_URL',
   LOAD_PROJECT: 'LOAD_PROJECT',
@@ -29,6 +34,7 @@ export const actionTypes = {
   SET_THEME: 'SET_THEME',
   SET_FILE_DIRECTORY: 'SET_FILE_DIRECTORY',
   SET_FOLDER_VIEW: 'SET_FOLDER_VIEW',
+  SET_TEST_FRAMEWORK: 'SET_TEST_FRAMEWORK'
 };
 
 export const setProjectUrl = (url: string) => ({
@@ -41,7 +47,7 @@ export const loadProject = (load: string) => ({
   load,
 });
 
-export const createFileTree = (fileTree: string) => ({
+export const createFileTree = (fileTree: File[]) => ({
   type: actionTypes.CREATE_FILE_TREE,
   fileTree,
 });
@@ -74,7 +80,7 @@ export const setProjectFilePath = (projectFilePath: string) => ({
   projectFilePath,
 });
 
-export const setFilePathMap = (filePathMap: string) => ({
+export const setFilePathMap = (filePathMap: filePathMapType) => ({
   type: actionTypes.SET_FILE_PATH_MAP,
   filePathMap,
 });
@@ -112,12 +118,12 @@ export const setFilePath = (filePath: string) => ({
   filePath,
 });
 
-export const setValidCode = (validCode: boolean) => ({ // (4/22 1100) david: previously string
+export const setValidCode = (validCode: boolean) => ({ 
   type: actionTypes.SET_VALID_CODE,
   validCode,
 });
 
-export const setTabIndex = (tabIndex: number) => ({ // (4/22 1100) david: previously string
+export const setTabIndex = (tabIndex: number) => ({ 
   type: actionTypes.SET_TAB_INDEX,
   tabIndex,
 });
@@ -141,7 +147,7 @@ export const setTheme = (theme: string) => ({
   theme,
 });
 
-export const setFileDirectory = (fileDirectoryOpen: string) => ({
+export const setFileDirectory = (fileDirectoryOpen: boolean) => ({
   type: actionTypes.SET_FILE_DIRECTORY,
   fileDirectoryOpen,
 });

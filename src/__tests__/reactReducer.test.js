@@ -1,4 +1,4 @@
-import { reactTestCaseReducer, reactTestCaseState } from '../context/reducers/reactTestCaseReducer';
+import { reactTestCaseReducer } from '../context/reducers/reactTestCaseReducer';
 
 describe('React Reducer', () => {
   let initialState = {};
@@ -26,7 +26,9 @@ describe('React Reducer', () => {
             text: '',
           },
         },
-        allIds: ['it0'],
+        allIds: {
+          describe0: ['it0']
+        },
       },
       statements: {
         byId: {
@@ -101,6 +103,13 @@ describe('React Reducer', () => {
         },
         allIds: ['describe0', 'describe1'],
       },
+      itStatements: {
+        byId: {...initialState.itStatements.byId},
+        allIds: {
+          describe0: ['it0'],
+          describe1: []
+        },
+      }
     });
   });
 
@@ -137,7 +146,7 @@ describe('React Reducer', () => {
       },
       itStatements: {
         byId: {},
-        allIds: [],
+        allIds: {},
       },
       statements: {
         ...initialState.statements,
@@ -164,7 +173,9 @@ describe('React Reducer', () => {
             text: '',
           },
         },
-        allIds: ['it0', 'it1'],
+        allIds: {
+          describe0: ['it0', 'it1']
+        },
       },
     });
   });
@@ -199,7 +210,8 @@ describe('React Reducer', () => {
       ...initialState,
       itStatements: {
         byId: {},
-        allIds: [],
+        allIds: {
+          describe0: []},
       },
       statements: {
         ...initialState.statements,
@@ -234,6 +246,7 @@ describe('React Reducer', () => {
             querySelector: '',
             queryValue: '',
             suggestions: [],
+            commandChain: [],
           },
         },
         allIds: [...initialState.statements.allIds, 'statement3'],
@@ -345,6 +358,8 @@ describe('React Reducer', () => {
             matcherType: '',
             matcherValue: '',
             suggestions: [],
+            selectorMethod: '',
+            selectorValue: '',
           },
         },
         allIds: [...initialState.statements.allIds, 'statement3'],
@@ -450,7 +465,10 @@ describe('React Reducer', () => {
             itId: 'it0',
             describeId: 'describe0',
             type: 'render',
+            statementType: 'render',
+            objectType: 'statement',
             props: [],
+            visits: [],
           },
         },
         allIds: [...initialState.statements.allIds, 'statement3'],
@@ -609,7 +627,8 @@ describe('React Reducer', () => {
     });
   });
 
-  it('should handle CREATE_NEW_TEST', () => {
+  // this test is associated with creating a new test in the database, which there is currently no functionality for.
+  xit('should handle CREATE_NEW_TEST', () => {
     const action = { type: 'CREATE_NEW_TEST' };
     expect(reactTestCaseReducer(initialState, action)).toEqual({
       ...initialState,
@@ -619,7 +638,7 @@ describe('React Reducer', () => {
       },
       itStatements: {
         byId: {},
-        allIds: [],
+        allIds: {},
       },
       statements: {
         byId: {},

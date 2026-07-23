@@ -1,13 +1,18 @@
-
 // The MAIN process: OUR BACKEND //
 
-const { app, BrowserWindow, ipcMain, dialog, session, webContents } = require('electron');
-require('dotenv').config({ path: __dirname + '/../.env'})
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  dialog,
+  session,
+  webContents,
+} = require('electron');
+require('dotenv').config({ path: __dirname + '/../.env' });
 const path = require('path');
 const fs = require('fs');
 const np = require('node-pty');
 const os = require('os');
-console.log(os.platform());
 
 // app.commandLine.appendSwitch('--headless');
 // app.commandLine.appendSwitch('--no-sandbox');
@@ -18,21 +23,21 @@ console.log(os.platform());
 // //chromeOptions.add_argument("--disable-gpu")
 // driver = webdriver.Chrome(chrome_options=chromeOptions)
 // driver.get(url)
-// (python) so maybe not work 
+// (python) so maybe not work
 
 // Comment below require out if you don't want app to reload on code changes
-// require('electron-reloader')(module);
+require('electron-reloader')(module);
 
 // react developer tools for electron in dev mode
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+//const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const { Module } = require('module');
-// global bool to determine if in dev mode or not 
-// const isDev = true; 
+// global bool to determine if in dev mode or not
+// const isDev = true;
 //Dynamic variable to change terminal type based on os
 const shell = os.platform() === 'win32' ? 'powershell.exe' : 'bash';
 
 // Checks .env local file to see if APP_DEV=true
-const isDev = process.env.APP_DEV ? (process.env.APP_DEV) : false;
+const isDev = process.env.APP_DEV ? process.env.APP_DEV : false;
 
 // Prevents ADDRESS ALREADY IN USE error when running script npm run start-dev
 if (!isDev || process.env.npm_lifecycle_event !== 'start-dev') {
@@ -43,8 +48,8 @@ let mainWindow;
 // setup electron window
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1782,
-    height: 920,
+    width: 1290,
+    height: 1105,
     backgroundColor: 'white',
     icon: path.join(__dirname, './icon.icns'),
     webPreferences: {
@@ -56,11 +61,11 @@ function createWindow() {
       // could instead build with BrowserView or iframe
     },
   });
-   //////////////////////////////////////////////////
+  //////////////////////////////////////////////////
   //boiler plate for macOS. Add closing functionality
   //////////////////////////////////////////////////
   if (process.platform === 'darwin') {
-      app.dock.setIcon(path.join(__dirname, 'icon.png'));
+    app.dock.setIcon(path.join(__dirname, 'icon.png'));
   }
 
   // potential window-close-app-terminate behavior -dk
@@ -69,7 +74,7 @@ function createWindow() {
   // });
 
   mainWindow.loadFile(path.join(__dirname, 'index.html')); // unsure why we need the path.join, but index.html not found without it
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
   //////////////////////////////////////////////////
   //Creates terminal, specifies dimensions based on columns and rows
   //////////////////////////////////////////////////
@@ -81,7 +86,6 @@ function createWindow() {
     cwd: process.env.HOME,
     env: process.env,
   };
-  console.log('process.env.HOME: ', process.env.HOME);
 
   const ptyProcess = np.spawn(shell, [], ptyArgs);
   // with ptyProcess, we want to send incoming data to the channel terminal.incData
@@ -94,19 +98,18 @@ function createWindow() {
     ptyProcess.write(data);
   });
 
-  ipcMain.on('terminal.resize', (event, data)=> {
-    //console.log('resizing pty shell', "data: ", data, "data.cols", data.cols);
+  ipcMain.on('terminal.resize', (event, data) => {
     ptyProcess.resize(data.cols, data.rows);
   });
 
-////////////////////////////////////////
-  //dark mode light mode 
-////////////////////////////////////////
+  ////////////////////////////////////////
+  //dark mode light mode
+  ////////////////////////////////////////
   mainWindow.webContents
-  .executeJavaScript('localStorage.getItem("theme");', true)
-  .then(result => {
-    mainWindow.webContents.send('theme', result ?? 'light');
-  });
+    .executeJavaScript('localStorage.getItem("theme");', true)
+    .then((result) => {
+      mainWindow.webContents.send('theme', result ?? 'light');
+    });
 }
 
 ///////////////////////////////////////
@@ -143,7 +146,6 @@ ipcMain.on('Universal.path', (e, folderPath, filePath) => {
     if (err) throw err;
   });
 });
-
 
 // EDITORVIEW.JSX SAVE FILE FUNCTIONALITY
 ipcMain.on('EditorView.saveFile', (e, filePath, editedText) => {
@@ -225,11 +227,11 @@ ipcMain.on('Github-Oauth', (_event, url) => {
     // if new url matches our final endpoint, then the user has successfully logged in
     // and we grab the github username via cookies
     if (url.startsWith('http://localhost:3001/auth/github/callback')) {
-
       // gets the cookie with the name property of 'dotcom_user'
-      session.defaultSession.cookies.get({ name: 'dotcom_user' })
+      session.defaultSession.cookies
+        .get({ name: 'dotcom_user' })
         .then((cookies) => {
-          // if we get cookies with the key of dotcom_user, 
+          // if we get cookies with the key of dotcom_user,
           // then send to mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
           if (cookies) mainWindow.webContents.send('github-new-url', cookies);
         });
@@ -240,59 +242,19 @@ ipcMain.on('Github-Oauth', (_event, url) => {
   });
 });
 
-// Facebook FUNCTIONALITY
-let facebookWindow;
-// ipcMain is listening on channel 'Facebook-Oauth' for an event from ProjectLoader line 94
-// ipbMain receives the url from ProjectLoader.jsx line 94
-ipcMain.on('Facebook-Oauth', (_event, url) => {
-  facebookWindow = new BrowserWindow({
-    // webPreferences: {
-    //   nodeIntegration: true,
-    //   worldSafeExecuteJavaScript: true,
-    //   contextIsolation: false,
-    //   webviewTag: true,
-    // },
-  });
-
-  facebookWindow.loadURL(url);
-
-  // When url changes, this event will be emitted, and have reference to the new url
-  facebookWindow.webContents.on('did-navigate', (_event, url) => {
-    // if new url matches our final endpoint, then the user has successfully logged in
-    // and we grab the facebook username via cookies
-    if (url.startsWith('http://localhost:3001/oauth2/redirect/facebook')) {
-
-      // gets the cookie with the name property of 'dotcom_user'
-      session.defaultSession.cookies.get({ domain: '.facebook.com', name: 'c_user' }).then((cookies) => {
-        if (cookies) console.log('Cookies from Facebook: \n', cookies), mainWindow.webContents.send('facebook-new-url', cookies);
-      });
-      // session.defaultSession.cookies.get({ name: 'dotcom_user' })
-      //   .then((cookies) => {
-      //     // if we get cookies with the key of dotcom_user, 
-      //     // then send to mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
-      //     if (cookies) mainWindow.webContents.send('facebook-new-url', cookies);
-      //   });
-
-      // close the facebookWindow automatically
-      facebookWindow.close();
-    }
-  });
-});
-
-
 // Google FUNCTIONALITY
 let googleWindow;
 // ipcMain is listening on channel 'Google-Oauth2' for an event from ProjectLoader line 94
 // ipbMain receives the url from ProjectLoader.jsx line 94
 ipcMain.on('Google-Oauth', (_event, url) => {
   googleWindow = new BrowserWindow({
-    // webPreferences: {
-    //   nodeIntegration: true,
-    //   worldSafeExecuteJavaScript: true,
-    //   contextIsolation: false,
-    //   webviewTag: true,
+    webPreferences: {
+      nodeIntegration: true,
+      worldSafeExecuteJavaScript: true,
+      contextIsolation: false,
+      webviewTag: true,
     },
-  );
+  });
 
   googleWindow.loadURL(url);
 
@@ -301,11 +263,11 @@ ipcMain.on('Google-Oauth', (_event, url) => {
     // if new url matches our final endpoint, then the user has successfully logged in
     // and we grab the google username via cookies
     if (url.startsWith('http://localhost:3001/auth/google/callback')) {
-
       // gets the cookie with the name property of 'dotcom_user'
-      session.defaultSession.cookies.get({ name: 'dotcom_user' })
+      session.defaultSession.cookies
+        .get({ name: 'dotcom_user' })
         .then((cookies) => {
-          // if we get cookies with the key of dotcom_user, 
+          // if we get cookies with the key of dotcom_user,
           // then send to mainWindow's Renderer Process (in this case, the ProjectLoader.jsx)
           if (cookies) mainWindow.webContents.send('google-new-url', cookies);
         });
@@ -316,27 +278,14 @@ ipcMain.on('Google-Oauth', (_event, url) => {
   });
 });
 
-app.whenReady()
+app
+  .whenReady()
   .then(createWindow)
-
-  // .then( app.on('activate', () => {
-  //   if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  // }) )
-
-  // react dev tools not working so commenting out...
-  // .then(()=> {
-  //   if (isDev) {
-  //     // Add react dev tools to electron app
-  //     mainWindow.whenReady()
-  //       .then(() => {
-  //         installExtension(REACT_DEVELOPER_TOOLS, {
-  //           loadExtensionOptions: {
-  //             allowFileAccess: true,
-  //           },
-  //         })
-  //           .then((name) => console.log(`Added Extension:  ${name}`))
-  //           .catch((err) => console.log('An error occurred: ', err));
-  //       });
-  //   }
-  // })
-
+  .then(
+    app.on('activate', () => {
+      if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    })
+  )
+  .catch((err) =>
+    console.log(`An error occurred when booting up electron: ${err}`)
+  );

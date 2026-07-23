@@ -1,6 +1,4 @@
 import React, { useContext, useReducer } from 'react';
-import cn from 'classnames';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from './TestCase.module.scss';
 import {
   updateDescribeText,
@@ -8,21 +6,20 @@ import {
   updateItStatementText,
   updateDescribeOrder,
   updateItStatementOrder,
-  addDescribeBlock
+  addDescribeBlock,
 } from '../../context/actions/frontendFrameworkTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 import SearchInput from '../SearchInput/SearchInput';
 import { MockDataContext } from '../../context/reducers/mockDataReducer';
 import { createMockData } from '../../context/actions/mockDataActions';
 import VueTestMenu from '../TestMenu/VueTestMenu';
-import MockData from '../VueTestComponent/MockData/MockData';
 import DecribeRenderer from '../VueTestComponent/DescribeRenderer/DescribeRenderer';
 import {
   VueTestCaseContext,
   vueTestCaseState,
   vueTestCaseReducer,
 } from '../../context/reducers/vueTestCaseReducer';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 
 const VueTestCase = (props) => {
   const [vueTestCase, dispatchToVueTestCase] = useReducer(
@@ -73,14 +70,18 @@ const VueTestCase = (props) => {
       ? updateDescribeOrder
       : updateItStatementOrder;
 
-    const reorderedStatements = reorder(list, result.source.index, result.destination.index);
+    const reorderedStatements = reorder(
+      list,
+      result.source.index,
+      result.destination.index
+    );
     dispatchToVueTestCase(func(reorderedStatements, result.type));
   };
 
   return (
     <VueTestCaseContext.Provider value={[vueTestCase, dispatchToVueTestCase]}>
       <div id={styles[`ReactTestCase${theme}`]}>
-      <h2 id={styles[`testName${theme}`]}>Vue Testing</h2>
+        <h2 id={styles[`testName${theme}`]}>Vue Testing</h2>
         <VueTestMenu />
         <div className={styles.header}>
           <div className={styles.searchInput}>
@@ -94,7 +95,7 @@ const VueTestCase = (props) => {
             />
           </div>
         </div>
-          {/* <Button variant="outlined" onClick={handleAddMockData} size='medium'>
+        {/* <Button variant="outlined" onClick={handleAddMockData} size='medium'>
             Add Mock Data
           </Button>
         </div>
@@ -116,27 +117,24 @@ const VueTestCase = (props) => {
             )
           : null} */}
 
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='droppableReactDescribe' type='describe'>
-            {(provided) => (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                <DecribeRenderer
-                  dispatcher={dispatchToVueTestCase}
-                  describeBlocks={describeBlocks}
-                  itStatements={itStatements}
-                  statements={statements}
-                  handleChangeDescribeText={handleChangeDescribeText}
-                  handleChangeItStatementText={handleChangeItStatementText}
-                  type='vue'
-                  theme={theme}
-                />
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <div droppableId="droppableReactDescribe" type="describe">
+          <DecribeRenderer
+            dispatcher={dispatchToVueTestCase}
+            describeBlocks={describeBlocks}
+            itStatements={itStatements}
+            statements={statements}
+            handleChangeDescribeText={handleChangeDescribeText}
+            handleChangeItStatementText={handleChangeItStatementText}
+            type="vue"
+            theme={theme}
+          />
+        </div>
         <div id={styles.addDescribeButton}>
-          <Button data-testid='addDescribeButton' onClick={handleAddDescribeBlock} variant="outlined">
+          <Button
+            data-testid="addDescribeButton"
+            onClick={handleAddDescribeBlock}
+            variant="outlined"
+          >
             Add Describe Block
           </Button>
         </div>

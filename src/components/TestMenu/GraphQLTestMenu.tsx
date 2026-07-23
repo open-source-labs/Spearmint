@@ -7,35 +7,30 @@ import {
   setFilePath,
   setValidCode,
   toggleExportBool,
-  setTestCase,
   toggleModal,
   setTabIndex,
 } from '../../context/actions/globalActions';
 import styles from './TestMenu.module.scss';
 import Modal from '../Modals/Modal';
 import {
-  addGraphQL,
   createNewGraphQLTest,
   toggleDB,
   updateDBFilePath,
+  resetTests,
 } from '../../context/actions/graphQLTestCaseActions';
 import useGenerateTest from '../../context/useGenerateTest';
 import { GraphQLTestCaseContext } from '../../context/reducers/graphQLTestCaseReducer';
 import { useToggleModal, validateInputs } from './testMenuHooks';
 import TestMenuButtons from './TestMenuButtons';
-import ExportFileModal from '../Modals/ExportFileModal';
-import { Button } from '@material-ui/core';
-const { ipcRenderer } = require('electron')
 
-// imports were declared in previous iterations, but were never used
-// import UploadTest from '../UploadTest/UploadTest';
-// import GetTests from '../GetTests/GetTests';
+import { Button } from '@mui/material';
+const { ipcRenderer } = require('electron')
 
 // child component of EndPointTest menu. has NewTest and Endpoint buttons
 const GraphQLTestMenu = () => {
   const [graphQLTestCase, dispatchToGraphQLTestCase] = useContext(GraphQLTestCaseContext);
   const [{ projectFilePath, file, exportBool, isTestModalOpen, fileName, theme }, dispatchToGlobal] = useContext<any>(GlobalContext);
-  const { title, isModalOpen, openModal, openScriptModal, closeModal } = useToggleModal('graphQL');
+  const { title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen } = useToggleModal('graphQL');
   const generateTest = useGenerateTest('graphQL', projectFilePath);
   const [isExportModalOpen, setIsExportModalOpen] = useState(false);
   const [userSavedTest, setUserSavedTest] = useState(false)
@@ -98,6 +93,9 @@ const GraphQLTestMenu = () => {
     if (!isTestModalOpen) dispatchToGlobal(toggleModal());
   };
 
+  const handleResetTests = () => {
+    dispatchToGraphQLTestCase(resetTests());
+  }
   if (exportBool) {
     const valid = validateInputs('graphQL', graphQLTestCase);
     dispatchToGlobal(setValidCode(valid));
@@ -108,7 +106,8 @@ const GraphQLTestMenu = () => {
 
   return (
     <>
-      <TestMenuButtons 
+      <TestMenuButtons
+        resetTests={handleResetTests} 
         openModal={openModal}
         fileHandle={fileHandle}
         openScriptModal={openScriptModal}
@@ -121,17 +120,11 @@ const GraphQLTestMenu = () => {
         dispatchToMockData={null}
         isModalOpen={isModalOpen}
         closeModal={closeModal}
+        setIsModalOpen={setIsModalOpen}
         dispatchTestCase={title === 'New Test' ? dispatchToGraphQLTestCase : null}
         createTest={title === 'New Test' ? createNewGraphQLTest : null}
       />
-      <ExportFileModal
-        isExportModalOpen={isExportModalOpen}
-        setIsExportModalOpen={setIsExportModalOpen}
-      />
-          {/* <UploadTest testType="endpoint test" />
-          <GetTests testType="endpoint test" /> */}
-
-        <div id={styles[`testMenu${theme}`]}>
+        <div id={styles[`dbConfig${theme}`]}>
           <Button 
             variant='outlined'
             data-testid='graphQLButton' 

@@ -21,6 +21,7 @@ export const actionTypes = {
   TOGGLE_DB: 'TOGGLE_DB',
   UPDATE_DB_FILEPATH: 'UPDATE_DB_FILEPATH',
   REPLACE_TEST: 'REPLACE_TEST',
+  RESET_TESTS: 'RESET_TESTS'
 };
 
 // Never used
@@ -145,3 +146,8 @@ export const endpointReplaceTest = (testState: object) => ({
   type: actionTypes.REPLACE_TEST,
   testState,
 });
+
+export const resetTests = () => ({
+  type: actionTypes.RESET_TESTS
+})
+

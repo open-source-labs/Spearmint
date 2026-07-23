@@ -8,8 +8,6 @@ import {
   Header,
 } from '../../utils/graphQLTypes';
 
-export const GraphQLTestCaseContext: any = createContext([]);
-
 const newAssertion: Assertion = {
   id: 0,
   expectedResponse: '',
@@ -46,7 +44,7 @@ export const graphQLTestCaseState: GraphQLTestCaseState = {
 
 const deepCopy = (graphQLStatements: GraphQLObj[]) => {
   const fullCopy: GraphQLObj[] = graphQLStatements.map((el) => {
-    return { ...el, assertions: copyAssertions(el.assertions), headers: copyHeaders(el.headers) };
+    return { ...el, assertions: copyAssertions(el.assertions), headers: copyHeaders(el.headers) }
   });
 
   function copyAssertions(array: Assertion[]) {
@@ -70,6 +68,11 @@ export const graphQLTestCaseReducer = (state: GraphQLTestCaseState, action: Acti
   let graphQLStatements: Array<any> = [...state.graphQLStatements];
 
   switch (action.type) {
+    case actionTypes.RESET_TESTS: {
+      return {
+        ...graphQLTestCaseState, 
+        graphQLStatements: [{ ...newGraphQL, headers: [], assertions: [{ ...newAssertion }] }]}
+      };
     case actionTypes.ADD_GRAPHQL:
       if (graphQLStatements.length === 0) {
         return {
@@ -213,3 +216,7 @@ export const graphQLTestCaseReducer = (state: GraphQLTestCaseState, action: Acti
       return state;
   }
 };
+
+const dispatchToGraphQLTestCase = () => null;
+const graphQLTestCaseArr: [GraphQLTestCaseState, (action: Action) => void] = [graphQLTestCaseState, dispatchToGraphQLTestCase]
+export const GraphQLTestCaseContext = createContext(graphQLTestCaseArr);

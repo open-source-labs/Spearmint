@@ -146,6 +146,9 @@ export const SvelteTestCaseReducer = (state, action) => {
   }
 
   switch (action.type) {
+    case actionTypes.RESET_TESTS: {
+      return SvelteTestCaseState;
+    }
     case actionTypes.ADD_DESCRIBE_BLOCK: {
       let updatedDescribeId = state.describeId;
       const describeId = `describe${state.describeId}`;

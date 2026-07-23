@@ -2,12 +2,12 @@
     "env": {
         "browser": true,
         "es2021": true,
-        "node": true
+        "node": true,
+        "jest": true
     },
     "extends": [
         "airbnb",
-        "plugin:prettier/reccomended",
-        "prettier/react"
+        "prettier"
     ],
     "root": true,
     "parser": "@typescript-eslint/parser",
@@ -23,6 +23,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-
+        "spaced-comment": "off",
+        "no-underscore-dangle": ["error", { "allow": ["_id"] }]
     }
 }

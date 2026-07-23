@@ -3,16 +3,14 @@
  */
 
 import React, { useContext } from 'react';
-import cn from 'classnames';
 import styles from '../../ReactTestComponent/Render/Render.module.scss';
 import { SvelteTestCaseContext } from '../../../context/reducers/svelteTestCaseReducer';
 
 import { deleteRender, addProp } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import Prop from './Prop';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import { GlobalContext } from '../../../context/reducers/globalReducer';
 import { AiOutlineClose } from 'react-icons/ai';
-const closeIcon = require('../../../assets/images/close.png');
 
 const Render = ({ statement, statementId, describeId, itId }) => {
   const [{ statements }, dispatchToSvelteTestCase] = useContext(SvelteTestCaseContext);

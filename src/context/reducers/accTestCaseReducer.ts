@@ -1,8 +1,12 @@
 import { createContext } from 'react';
-import { AccTestCaseState, Action } from '../../utils/accTypes';
+import {
+  AccTestCaseState,
+  Action,
+  DescribeBlocks,
+  ItStatements,
+  ByIdType,
+} from '../../utils/accTypes';
 import { actionTypes } from '../actions/accTestCaseActions';
-
-export const AccTestCaseContext:any = createContext([]);
 
 export const accTestCaseState: AccTestCaseState = {
   modalOpen: false,
@@ -35,9 +39,17 @@ export const accTestCaseState: AccTestCaseState = {
   },
   fileName: '',
   filePath: '',
-  testType: 'html',
+  testType: '',
   puppeteerUrl: 'sample.io',
 };
+
+const dispatchToAccTestCase = () => null;
+const accTestCaseArr: [AccTestCaseState, Function] = [
+  accTestCaseState,
+  dispatchToAccTestCase,
+];
+
+export const AccTestCaseContext = createContext(accTestCaseArr);
 
 /* ---------------------------- Helper Functions ---------------------------- */
 
@@ -61,8 +73,10 @@ const createItStatement = (describeId: string, itId: string) => ({
 export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
   Object.freeze(state);
 
-  let describeBlocks;
-  let itStatements;
+  let describeBlocks: DescribeBlocks =
+    state && action ? { ...state.describeBlocks } : { byId: {}, allIds: [] };
+  let itStatements: ItStatements =
+    state && action ? { ...state.itStatements } : { byId: {}, allIds: {} };
 
   if (state && action) {
     describeBlocks = { ...state.describeBlocks };
@@ -70,6 +84,9 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
   }
 
   switch (action.type) {
+    case actionTypes.RESET_TESTS:
+      return accTestCaseState;
+
     case actionTypes.ADD_DESCRIBE_BLOCK: {
       let updatedDescribeId = state.describeId;
       const describeId = `describe${state.describeId}`;
@@ -97,20 +114,23 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
     case actionTypes.DELETE_DESCRIBE_BLOCK: {
       const { describeId } = action;
       const newDescById = { ...describeBlocks.byId };
-      const newItById = { ...itStatements.byId };
+      const newItById: ByIdType = { ...itStatements.byId };
       const newItAllIds = { ...itStatements.allIds };
 
       // delete it from describeBlocks.byId
-      delete newDescById[describeId];
+      if (describeId) delete newDescById[describeId];
       // delete it from describeBlocks.allIds
-      const newDescAllIds = describeBlocks.allIds.filter((id: string) => id !== describeId);
+      const newDescAllIds = describeBlocks.allIds.filter(
+        (id: string) => id !== describeId
+      );
 
       // delete from itStatements.byId
-      itStatements.allIds[describeId].forEach((itId: number) => {
-        delete newItById[itId];
-      });
+      if (describeId)
+        itStatements.allIds[describeId].forEach((itId: string) => {
+          delete newItById[itId];
+        });
       // delete from itStatements.allIds
-      delete newItAllIds[describeId];
+      if (describeId) delete newItAllIds[describeId];
 
       return {
         ...state,
@@ -182,20 +202,22 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
           ...itStatements,
           byId: {
             ...itStatements.byId,
-            [itId]: createItStatement(describeId, itId),
+            [itId]: createItStatement(describeId.toString(), itId),
           },
           allIds: {
             ...itStatements.allIds,
-            [describeId]: [...(itStatements.allIds[describeId]), itId],
+            [describeId]: [...itStatements.allIds[describeId], itId],
           },
         },
       };
     }
     case actionTypes.DELETE_ITSTATEMENT: {
       const { itId, describeId } = action;
-      const byId = { ...itStatements.byId };
+      const byId: ByIdType = { ...itStatements.byId };
       delete byId[itId];
-      const newAllIds = itStatements.allIds[describeId].filter((id: number) => id !== itId);
+      const newAllIds = itStatements.allIds[describeId].filter(
+        (id: string) => id !== itId
+      );
 
       return {
         ...state,
@@ -213,7 +235,7 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
     }
     case actionTypes.UPDATE_ITSTATEMENT_TEXT: {
       const { itId, text } = action;
-      const byId = { ...itStatements.byId };
+      const byId: ByIdType = { ...itStatements.byId };
       const block = { ...itStatements.byId[itId] };
       return {
         ...state,
@@ -283,13 +305,15 @@ export const accTestCaseReducer = (state: AccTestCaseState, action: Action) => {
         filePath,
       };
     }
+    
     case actionTypes.UPDATE_TEST_TYPE: {
       const { testType } = action;
       return {
         ...state,
-        testType,
+        testType
       };
     }
+
     case actionTypes.CREATE_PUPPETEER_URL: {
       const { puppeteerUrl } = action;
       return {

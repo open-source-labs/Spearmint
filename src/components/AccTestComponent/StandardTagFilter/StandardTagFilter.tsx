@@ -1,6 +1,15 @@
 import React from 'react';
 import styles from './StandardTagFilter.module.scss';
 
+/**
+ * Renders the StandardTagFilter react component, this is a dropdown menu in the DescribeBlock accessibility standard
+ * @property { } dispatch 
+ * @property { } tagAction
+ * @property { } textAction
+ * @property { } describeID
+ * @property { } standardTag
+ * @returns { JSX.Element } Returns the StandardTagFilter react component
+ */
 const StandardTagFilter = ({ dispatch, tagAction, textAction, describeId, standardTag }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(tagAction(describeId, e.target.value));

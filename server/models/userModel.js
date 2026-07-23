@@ -1,55 +1,56 @@
-require('dotenv').config({ path: __dirname + '/./../../.env' });
+/**  using import statements in the electron / node files breaks npm start and nodepty 
+* - types are left in place in these files for future iteration alternate import method is required for them to function
+*/
+
+// import { Schema as SchemaType } from "mongoose";
+
 // Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
+const CredentialStore = require('../utils/CredentialStore');
 
-const MONGO_URI = process.env.MONGO_LINK;
-
+/**
+ * Previously read `process.env.MONGO_LINK` directly (with its own
+ * `dotenv.config()` call duplicated in this file). Now goes through
+ * CredentialStore, the single place all server credentials are sourced
+ * from, which also fails fast with a clear error if MONGO_LINK is unset.
+ * @author winjolu
+ */
 mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(CredentialStore.getMongoUri(), { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to Mongo DB Successfully'))
   .catch((err) => console.log(err));
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // Initialize a new schema object for collection 'user'
-const userSchema = new Schema({
+const userSchema/*: SchemaType*/ = new Schema({
   // Save username and password of user
   username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
 });
 
-const User = mongoose.model('user', userSchema);
+const User/*: { username: String, password: String }*/ = mongoose.model('user', userSchema);
 
-const githubSchema = new Schema({
+const githubSchema/*: SchemaType*/ = new Schema({
   // Save username and password of user
   githubId: { type: String, require: true, unique: true },
   username: { type: String, require: true },
 });
 
-const GithubUser = mongoose.model('githubUser', githubSchema);
+const GithubUser/*: { githubId: String, username: String }*/ = mongoose.model('githubUser', githubSchema);
 
-const facebookSchema = new Schema({
-  // Save username and password of user
-  facebookId: { type: String },
-  username: { type: String },
-  email: { type: String },
-  user: { type: String }
-});
 
-const FacebookUser = mongoose.model('facebookUser', facebookSchema);
-
-const googleSchema = new Schema({
+const googleSchema/*: SchemaType*/ = new Schema({
   // Save username and password of user
   googleId: { type: String, require: true, unique: true },
   username: { type: String, require: true },
 });
 
-const GoogleUser = mongoose.model('googleUser', googleSchema);
+const GoogleUser/*: { googleId: String, username: String }*/ = mongoose.model('googleUser', googleSchema);
 
 
 module.exports = {
   User,
   GithubUser,
-  FacebookUser,
   GoogleUser
 }

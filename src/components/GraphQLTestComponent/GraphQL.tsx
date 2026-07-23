@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './GraphQL.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
@@ -17,7 +16,6 @@ import {
 } from '../../context/actions/graphQLTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 const closeIcon = require('../../assets/images/close.png');
-const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 interface GraphQLProps {
@@ -76,18 +74,9 @@ const GraphQL = ({ graphQL, index, dispatchToGraphQLTestCase }: GraphQLProps) =>
 
   return (
     <div style={{ maxWidth: '650px' }}>
-      <Draggable draggableId={graphQL.id.toString()} index={index}>
-        {(provided) => (
-          
           <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
             id={styles[`graphQLmodal${theme}`]}
           >
-            <p>
-              {typeof provided}
-            </p> 
             <img
               src={closeIcon}
               id={styles.close}
@@ -95,7 +84,6 @@ const GraphQL = ({ graphQL, index, dispatchToGraphQLTestCase }: GraphQLProps) =>
               onClick={handleClickDeleteGraphQL}
             />
             <div id={styles.header}>
-              <img src={dragIcon} alt='drag' />
               <h3>GraphQL</h3>
             </div>
             <div id={styles.groupFlexbox}>
@@ -233,8 +221,6 @@ const GraphQL = ({ graphQL, index, dispatchToGraphQLTestCase }: GraphQLProps) =>
               </button>
             </div>
           </div>
-        )}
-      </Draggable>
     </div>
   );
 };

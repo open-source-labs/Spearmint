@@ -37,9 +37,13 @@ bower_components
 # Compiled binary addons (https://nodejs.org/api/addons.html)
 build/Release
 
+# Test coverage directory
+coverage/
+
 # Dependency directories
 node_modules/
 jspm_packages/
+package-lock.json
 
 # TypeScript v1 declaration files
 typings/
@@ -108,3 +112,5 @@ dist
 /build
 .DS_Store
 .dccache
+
+.env

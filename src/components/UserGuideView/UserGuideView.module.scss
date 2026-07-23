@@ -1,0 +1,38 @@
+// import the stylesheets for colors and fonts
+@import '../../assets/stylesheets/colors.scss';
+@import '../../assets/stylesheets/fonts.scss';
+
+.instructions{
+  font-family: $openSans;
+}
+
+#instructionsDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#userGuide{
+  * {
+    transition: color 0.0s !important;
+  }
+}
+
+#userGuidelight {
+  background-color: white !important;
+  --container-bg: #{$mint};
+  --container-border: #{$eggshell-opaque};
+  --accordion-bg: #24A19C;
+  --accordion-details-bg: white;
+  --accordion-color: black;
+}
+
+#userGuidedark {
+  background-color: #{$chromegray-opaque} !important;
+  color: white;
+  --container-bg: #{$darkslategrey};
+  --container-border: #{$mint};
+  --accordion-bg: #{$chromegray};
+  --accordion-details-bg: #{$chromegray-light};
+  --accordion-color: white;
+}

@@ -9,7 +9,7 @@ export function useToggleModal(test) {
   const [{ isFileDirectoryOpen }, dispatchToGlobal] = useContext(GlobalContext);
 
   const openModal = () => {
-    setTitle('New Test');
+    setTitle(test);
     setIsModalOpen(true);
   };
 
@@ -23,17 +23,17 @@ export function useToggleModal(test) {
     setIsModalOpen(false);
     setTitle(test);
   };
-
+  
   return {
-    title, isModalOpen, openModal, openScriptModal, closeModal
+    title, isModalOpen, openModal, openScriptModal, closeModal, setIsModalOpen
   };
 }
 
 export const validateInputs = (testSuite, testCaseState) => {
   let endpoint, assertion;
+  const { serverFilePath, addDB, dbFilePath, endpointStatements } = testCaseState;
   switch (testSuite) {
     case 'endpoint':
-      const { serverFilePath, addDB, dbFilePath, endpointStatements } = testCaseState;
       if (!serverFilePath || (addDB && !dbFilePath)) return false;
       for (endpoint of endpointStatements) {
         if (!endpoint.method || !endpoint.route) return false;

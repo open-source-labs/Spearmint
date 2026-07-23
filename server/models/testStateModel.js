@@ -1,10 +1,16 @@
+/**  using import statements in the electron / node files breaks npm start and nodepty 
+* - types are left in place in these files for future iteration alternate import method is required for them to function
+*/
+
+//import { Schema as SchemaType } from "mongoose";
+
 // Import mongoose for MongoDB object modeling
 const mongoose = require('mongoose');
 // Schema constructor
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 // Initialize a new schema object for collection 'testState'
-const testStateSchema = new Schema({
+const testStateObj = {
   // Save ID of user that saves test
   userId: { type: String, required: true },
   // Save name of test as user input
@@ -13,20 +19,27 @@ const testStateSchema = new Schema({
   testType: { type: String, required: true },
   // Save test state object
   testState: { type: Object, required: true },
-});
+};
+
+
+// Initialize a new schema object for collection 'testState'
+const testStateSchema/* : SchemaType */ = new Schema(testStateObj);
 
 // Mongoose does not validate the types of the properties specified in schema
 // It will only coerce the properties to equal the types specified above
 // Therefore we use a pre-script to throw an error if any prop is the incorrect type,
   // preventing the uploading of documents with incorrect data type
-testStateSchema.pre('save', function(next) {
+// A regular function (not an arrow function) is required here so `this`
+// is bound to the document being saved, per Mongoose middleware convention.
+/* eslint-disable-next-line prefer-arrow-callback, func-names */
+testStateSchema.pre('save', function (next) {
   if (typeof userId !== 'string' ||
       typeof testName !== 'string' ||
       typeof testType !== 'string' ||
       typeof testState !== 'object') {
         return next('type failure');
       }
-  else return next();
+  return next();
 });
 
 module.exports = mongoose.model('testState', testStateSchema);

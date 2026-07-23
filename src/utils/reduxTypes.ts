@@ -1,3 +1,5 @@
+import { CSSProperties, LegacyRef } from "react";
+
 // ----------------Action types--------------------
 export const actionTypes = {
   TOGGLE_REDUX: 'TOGGLE_REDUX',
@@ -23,6 +25,7 @@ export const actionTypes = {
   OPEN_INFO_MODAL: 'OPEN_INFO_MODAL',
   CLOSE_INFO_MODAL: 'CLOSE_INFO_MODAL',
   REPLACE_TEST: 'REPLACE_TEST',
+  RESET_TESTS: 'RESET_TESTS'
 };
 
 interface ToggleReduxAction {
@@ -130,6 +133,65 @@ interface CreateNewReduxTestAction {
   payload?: null;
 }
 
+interface ResetTestAction {
+  type: typeof actionTypes.RESET_TESTS;
+  payload?: null;
+}
+
+export interface ReduxActionCreator {
+  actionCreator: { id: number;
+  actionsFileName: string;
+  filePath: string;
+  typesFileName: string;
+  typesFilePath: string;
+  type?: string;
+  actionCreatorFunc: string;
+  actionType: string;
+  payloadKey: string;
+  payloadType: string;
+  it: string;},
+  index: Number,
+}
+
+export interface ReduxMiddleware {
+  middleware: {
+    id: number;
+    field: string;
+    eventType: string;
+    eventValue: string;
+    queryType: string;
+    queryVariant: string;
+    querySelector: string;
+    queryValue: string;
+    queryFunction: string;
+    suggestions: string;
+  };
+  index: number;
+}
+
+export interface ReduxAsync {
+  async: {
+    id: number;
+    field: string;
+    actionType: string;
+    actionsFileName: string;
+    filePath: string;
+    typesFileName: string;
+    typesFilePath: string;
+    asyncFunction: string;
+    method: string;
+    route: string;
+    actionsFile?: string;
+    responseType?: string;
+    it?: string;
+    payloadKey?: null | string;
+    payloadType?: null | string;
+    expectedArg?: string;
+  },
+  index: void,
+}
+
+
 // -------------Reducer Types--------------
 
 export interface ReduxTestCaseState {
@@ -179,19 +241,19 @@ export interface UpdateAsync {
 }
 
 export interface UpdateReducer {
-  id: number;
-  reducerAction: string;
-  itStatement: string;
-  initialState: string;
-  payloadKey: string;
-  payloadValue: any;
-  reducerName: string;
-  typesFileName: string;
-  typesFilePath: string;
-  reducersFileName: string;
-  reducersFilePath: string;
-  expectedKey: string;
-  expectedValue: string;
+  id?: number;
+  reducerAction?: string;
+  itStatement?: string;
+  initialState?: string;
+  payloadKey?: string | null;
+  payloadValue?: any;
+  reducerName?: string;
+  typesFileName?: string;
+  typesFilePath?: string;
+  reducersFileName?: string;
+  reducersFilePath?: string;
+  expectedKey?: string;
+  expectedValue?: string;
 }
 
 export interface UpdateActionsFilePath {
@@ -232,6 +294,7 @@ interface Middleware {
   queryFunction?: string;
   suggestions?: string;
 }
+
 interface ActionCreator {
   id?: number;
   actionsFileName?: string;
@@ -261,6 +324,11 @@ interface Async {
   payloadKey?: null | string;
   payloadType?: null | string;
   expectedArg?: string;
+  store?: string;
+  matcher?: string;
+  status?: string;
+  responseKey?: string;
+  responseValue?: string;
 }
 
 interface Reducer {
@@ -306,3 +374,5 @@ export type ReduxActionTypes =
   | UpdateReducerFilePathAction
   | UpdateMiddlewaresFilePathAction
   | CreateNewReduxTestAction
+  | ResetTestAction
+  | ReduxActionCreator

@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { globalReducer, globalState } from '../context/reducers/globalReducer';
 
 describe('Global Reducer works properly', () => {
@@ -23,6 +27,10 @@ describe('Global Reducer works properly', () => {
       exportBool: false,
       fileName: '',
       filePath: '',
+      // validCode: true,
+      tabIndex: 0,
+      // isGuest: false,
+      // theme: window.localStorage.theme ?? 'light',
     };
   });
 
@@ -194,11 +202,12 @@ describe('Global Reducer works properly', () => {
       url: reactUrl,
       isRightPanelOpen: true,
       rightPanelDisplay: 'browserView',
+      tabIndex: 1
     });
   });
 
   it('should handle EXPORT', () => {
-    const action = { type: 'EXPORT' };
+    const action = { type: 'TOGGLE_EXPORT_BOOL' };
     expect(globalReducer(initialState, action)).toEqual({
       ...initialState,
       exportBool: true,

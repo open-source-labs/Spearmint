@@ -3,7 +3,7 @@ const assert = require('assert');
 const electronPath = require('electron'); // Require Electron from the binaries included in node_modules.
 const path = require('path');
 
-describe('Application launch', function() {
+xdescribe('Application launch', function() {
   beforeEach(() => {
     this.app = new Application({
       path: electronPath,

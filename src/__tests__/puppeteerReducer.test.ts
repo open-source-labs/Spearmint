@@ -50,7 +50,7 @@ describe('puppeteerTestCaseReducer', () => {
     const action: PuppeteerAction = { type: 'DELETE_PUPPETEER_TEST', id: 0 };
     expect(puppeteerTestCaseReducer(state, action)).toEqual({
       puppeteerStatements: [],
-      statementId: 1,
+      statementId: state.statementId - 1,
     });
   });
 

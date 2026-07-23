@@ -1,11 +1,10 @@
 import React from 'react';
 import cn from 'classnames';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
 import ItRenderer from '../ItRenderer/ItRenderer';
 import styles from '../../ReactTestComponent/DescribeRenderer/DescribeRenderer.module.scss';
 import { deleteDescribeBlock, addItstatement } from '../../../context/actions/frontendFrameworkTestCaseActions';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 
 const DescribeRenderer = ({
   dispatcher,
@@ -35,25 +34,21 @@ const DescribeRenderer = ({
   };
 
   return describeBlocks.allIds.map((id, i) => (
-    <Draggable key={id} draggableId={id} index={i} type='describe'>
-      {(provided) => (
+    <div key={id} draggableId={id} index={i} type='describe'>
         <div
           id={styles[`describeBlock${theme}`]}
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
         >
           {/* <label htmlFor='describe-label' className={styles.describeLabel}>
             Describe Block
           </label> */}
 
-          <AiOutlineCloseCircle
+          { i > 0 && <AiOutlineCloseCircle
             tabIndex={0}
             id={id} 
             onKeyPress={deleteSvelteDescribeBlockOnKeyUp}
             onClick={deleteDescribeBlockHandleClick}
             className={cn('far fa-window-close', styles.describeClose)}
-          />  
+          /> } 
           
           {/* <input
             id={id}
@@ -65,7 +60,8 @@ const DescribeRenderer = ({
             onChange={handleChangeDescribeText}
           /> */}
           <div className={styles.describeInputContainer}>
-            <TextField 
+            <TextField
+              variant="standard"
               id={id}
               className={styles.describeInput}
               name='describe-label'
@@ -73,13 +69,9 @@ const DescribeRenderer = ({
               placeholder="Describe name of test"
               value={describeBlocks.byId['describe'+i]?.text}
               onChange={handleChangeDescribeText}
-              fullWidth
-            />
+              fullWidth />
           </div>
 
-          <Droppable droppableId={'droppableSvelteIt' + id} type={id}>
-            {(innerProvided) => (
-              <div ref={innerProvided.innerRef} {...innerProvided.droppableProps}>
                 <ItRenderer
                   type={type}
                   key={`it-${id}-${i}`}
@@ -89,16 +81,11 @@ const DescribeRenderer = ({
                   handleChangeItStatementText={handleChangeItStatementText}
                   theme={theme}
                 />
-                {innerProvided.placeholder}
-              </div>
-            )}
-          </Droppable>
           <Button className={styles.addIt} id={id} onClick={addItStatementHandleClick} variant="outlined">
             Add It Statement
           </Button>
         </div>
-      )}
-    </Draggable>
+    </div>
   ));
 };
 

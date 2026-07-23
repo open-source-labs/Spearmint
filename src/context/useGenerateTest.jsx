@@ -1,24 +1,31 @@
 /* eslint-disable */
 const { ipcRenderer } = require('electron');
-// used to format testFileCode which is a string 
-// --> makes sure code is readable 
+// used to format testFileCode which is a string
+// --> makes sure code is readable
 const beautify = require('js-beautify');
+import { GlobalContext } from './reducers/globalReducer';
+import { useContext } from 'react';
 
 function useGenerateTest(test, projectFilePath) {
+  const [{testFramework}] = useContext(GlobalContext);
   return (testState, mockDataState) => {
     let testFileCode = '';
-    
+
     /* ------------------------------------------ SOLID IMPORT + TEST STATEMENTS ------------------------------------------ */
     // Solid Component Import Statement for render card
     const addSolidComponentImportStatement = () => {
       const componentPath = solidTestCase.statements.componentPath;
-      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      let filePath = ipcRenderer.sendSync(
+        'Universal.path',
+        projectFilePath,
+        componentPath
+      );
       filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName = solidTestCase.statements.componentName.replace(/\.jsx?/, '');
+      const formattedComponentName =
+        solidTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
     };
-    
-    
+
     // Solid Import Statements
     const addSolidImportStatements = () => {
       testFileCode += `
@@ -27,13 +34,11 @@ function useGenerateTest(test, projectFilePath) {
         import { screen, render, fireEvent, cleanup } from 'solid-testing-library';
         import { build, fake } from 'test-data-bot';
         \n`;
-        // need to import solid-js?
-        // import { render } from "solid-js/web";
-        // import { createSignal } from "solid-js";
-    }
-    
-    
-    
+      // need to import solid-js?
+      // import { render } from "solid-js/web";
+      // import { createSignal } from "solid-js";
+    };
+
     // Solid add describe block
     const addSolidDescribeBlock = () => {
       const describeBlocks = solidTestCase.describeBlocks;
@@ -43,8 +48,8 @@ function useGenerateTest(test, projectFilePath) {
         addSolidItStatement(id);
         testFileCode += '}); \n';
       });
-    }
-    // Solid add it statement 
+    };
+    // Solid add it statement
     const addSolidItStatement = (describeId) => {
       const itStatements = solidTestCase.itStatements;
       itStatements.allIds[describeId].forEach((itId) => {
@@ -55,7 +60,6 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += '});\n';
       });
     };
-
 
     // Solid add statement card (action/assertion/render)
     const addSolidStatements = (itId) => {
@@ -95,42 +99,65 @@ function useGenerateTest(test, projectFilePath) {
     // Solid generate testing for rendering component
     const addSolidRender = (statement) => {
       let props = createSolidRenderProps(statement.props);
-      const formattedComponentName = solidTestCase.statements.componentName.replace(/\.jsx?/, '');
+      const formattedComponentName =
+        solidTestCase.statements.componentName.replace(/\.jsx?/, '');
       // check this line later to make sure solid syntax is accurate
       testFileCode += `render(() => <${formattedComponentName} ${props}/>);`;
     };
-   
-    // createSolidRenderProps ***************** are all createXXXRenderProps function the same?
+
+    // createSolidRenderProps
     const createSolidRenderProps = (props) => {
       return props.reduce((acc, prop) => {
         return acc + `${prop.propKey}={${prop.propValue}}`;
       }, '');
     };
-    
-    
-    /* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
 
+    /* ------------------------------------------ REACT IMPORT + TEST STATEMENTS ------------------------------------------ */
+    //! REACT IMPORTS FOR SINON import sinon mocha chai and chai dom
     // React Import Statements
     const addReactImportStatements = () => {
-      testFileCode += `
+      if(testFramework === 'jest'){
+        testFileCode += `
         import React from 'react';
-        import { render, fireEvent } from '@testing-library/react'; 
-        import { build, fake } from 'test-data-bot'; 
-        import '@testing-library/jest-dom/extend-expect'
+        import { render, screen,fireEvent} from '@testing-library/react'; 
+        import userEvent from '@testing-library/user-event';
+        import { build, fake } from 'test-data-bot';
         \n`;
-    };
+      }else if(testFramework === 'sinon'){
+        testFileCode += `
+        import React from 'react';
+        import { build, fake } from 'test-data-bot';
+        import sinon from 'sinon';
+        \n`;
+      }else if(testFramework === 'mocha'){
+        testFileCode += `
+        import React from 'react';
+        import { build, fake } from 'test-data-bot';
+        import mocha from 'mocha';
+        import chai from 'chai';
+        import chai-dom from 'chai-dom';
+        \n`;
+      }
+    }
 
+    //! RENDER STAYS THE SAME
     // React Component Import Statement (Render Card)
 
     const addComponentImportStatement = () => {
       const componentPath = reactTestCase.statements.componentPath;
-      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      let filePath = ipcRenderer.sendSync(
+        'Universal.path',
+        projectFilePath,
+        componentPath
+      );
       filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/, '');
+      const formattedComponentName =
+        reactTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
-    };
+    }; //
 
     const addDescribeBlocks = () => {
+      console.log('addDescribeBlocks fired!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
       const describeBlocks = reactTestCase.describeBlocks;
 
       describeBlocks.allIds.forEach((id) => {
@@ -140,16 +167,81 @@ function useGenerateTest(test, projectFilePath) {
       });
     };
 
-    // React It Statements
-    const addReactItStatement = (describeId) => {
-      const itStatements = reactTestCase.itStatements;
-      itStatements.allIds[describeId].forEach((itId) => {
-        testFileCode += `it('${itStatements.byId[itId].text}', () => {`;
-        addReactStatements(itId);
-        testFileCode += '})\n';
-      });
-    };
 
+
+
+
+
+let beforeInjected = false; // flag for first render with visitKey
+
+const addReactItStatement = (describeId) => {
+  console.log('inside It statement generation!!!!!!!!!!!!!!!!!!!!')
+
+
+
+  const itStatements = reactTestCase.itStatements; // all it test blocks
+
+  // lookup table where each key os a statement ID and each value is the full statement object 
+  const statementMap = reactTestCase.statements.byId; 
+
+  // array of all statement IDs
+  const statementIds = reactTestCase.statements.allIds; 
+
+
+  itStatements.allIds[describeId].forEach((itId) => {
+
+ // find the first render statement inside the first it block that has a visitKey for cypress visit
+    const renderStatement = statementIds.map((id) => {
+     
+        const s = statementMap[id]; // grab full statement info 
+        if (!s) { console.warn(`No statement found for id=${id}`); }
+        return s;
+      }).find((statement) => {
+        if (!statement) return false;
+
+        const isMatch = (
+          statement.itId === itId &&
+          statement.type === 'render' &&
+          Array.isArray(statement.visits) &&
+          statement.visits[0]?.visitKey
+        );
+
+
+    console.log(`Checking statement:`, {
+          id: statement?.id,
+          type: statement?.type,
+          itId: statement?.itId,
+          visits: statement?.visits,
+          match: isMatch,
+        });
+
+        return isMatch;
+      });
+
+
+
+    if (renderStatement && !beforeInjected) {
+      console.log('SUCCSESSSSSSSSSSSSSSSSSSSSSSSS')
+      const { visitKey, visitValue = '' } = renderStatement.visits[0];
+      const baseUrl = `${visitKey}`;
+      testFileCode += `  before(() => {\n    cy.visit('${baseUrl}');\n  });\n\n`;
+      beforeInjected = true;
+    }
+
+
+console.log('falling to regular it statement..............')
+    testFileCode += `  it('${itStatements.byId[itId].text}', () => {\n`;
+    addReactStatements(itId);
+    testFileCode += `  });\n\n`;
+  });
+};
+
+
+
+
+
+
+    //! React handler
     const addReactStatements = (itId) => {
       const statements = reactTestCase.statements;
       const methods = identifyMethods(itId);
@@ -185,10 +277,34 @@ function useGenerateTest(test, projectFilePath) {
 
     // Render Jest Test Code
     const addRender = (statement, methods) => {
+
+    if (testFramework === 'cypress') {
+       
+    // Look for visit info if it exists
+    const visit = statement.visits[0]; // one visit per statement for now
+      if (!visit) {
+        return;
+      }
+
+    if (visit && visit.visitValue) {
+      const endpoint = `${visit.visitValue}`;
+       testFileCode += `cy.visit('${endpoint}');`;
+    } 
+
+
+
+  
+
+
+    } else {
       let props = createRenderProps(statement.props);
-      const formattedComponentName = reactTestCase.statements.componentName.replace(/\.jsx?/, '');
+      const formattedComponentName =
+        reactTestCase.statements.componentName.replace(/\.jsx?/, '');
       testFileCode += `const {${methods}} = render(<${formattedComponentName} ${props}/>);`;
+    }
     };
+
+
 
     // Render Props Jest Test Code
     const createRenderProps = (props) => {
@@ -196,6 +312,8 @@ function useGenerateTest(test, projectFilePath) {
         return acc + `${prop.propKey}={${prop.propValue}}`;
       }, '');
     };
+
+
 
     /* ------------------------------------------ REDUX IMPORT + TEST STATEMENTS ------------------------------------------ */
 
@@ -217,7 +335,9 @@ function useGenerateTest(test, projectFilePath) {
               createPathToTypes(statement)
             );
           case 'middleware':
-            return addMiddlewareImportStatement(), createPathToMiddlewares(statement);
+            return (
+              addMiddlewareImportStatement(), createPathToMiddlewares(statement)
+            );
           case 'reducer':
             return (
               addReducerImportStatement(),
@@ -234,10 +354,19 @@ function useGenerateTest(test, projectFilePath) {
     // Async Import Statements
     function addAsyncImportStatement(async) {
       if (!testFileCode.includes(`import { fake } from 'test-data-bot';`)) {
-        testFileCode = `import { fake } from 'test-data-bot';`.concat(testFileCode);
+        testFileCode = `import { fake } from 'test-data-bot';`.concat(
+          testFileCode
+        );
       }
-      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
-        testFileCode = `import '@testing-library/jest-dom/extend-expect';`.concat(testFileCode);
+      if (
+        !testFileCode.includes(
+          `import '@testing-library/jest-dom/extend-expect';`
+        )
+      ) {
+        testFileCode =
+          `import '@testing-library/jest-dom/extend-expect';`.concat(
+            testFileCode
+          );
       }
       if (
         !testFileCode.includes(`import configureMockStore from 'redux-mock-store';
@@ -262,11 +391,23 @@ function useGenerateTest(test, projectFilePath) {
 
     // AC Import Statements
     function addActionCreatorImportStatement(action) {
-      if (!testFileCode.includes(`import { fake } from 'test-data-bot';`) && action.payloadKey) {
-        testFileCode = `import { fake } from 'test-data-bot';`.concat(testFileCode);
+      if (
+        !testFileCode.includes(`import { fake } from 'test-data-bot';`) &&
+        action.payloadKey
+      ) {
+        testFileCode = `import { fake } from 'test-data-bot';`.concat(
+          testFileCode
+        );
       }
-      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
-        testFileCode = `import '@testing-library/jest-dom/extend-expect';`.concat(testFileCode);
+      if (
+        !testFileCode.includes(
+          `import '@testing-library/jest-dom/extend-expect';`
+        )
+      ) {
+        testFileCode =
+          `import '@testing-library/jest-dom/extend-expect';`.concat(
+            testFileCode
+          );
       }
     }
 
@@ -275,7 +416,11 @@ function useGenerateTest(test, projectFilePath) {
       // if (!testFileCode.includes(`import { render } from '@testing-library/react';`)) {
       //   testFileCode += `import { render } from '@testing-library/react';`;
       // }
-      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+      if (
+        !testFileCode.includes(
+          `import '@testing-library/jest-dom/extend-expect';`
+        )
+      ) {
         testFileCode += `import '@testing-library/jest-dom/extend-expect';\n`;
       }
     }
@@ -293,7 +438,11 @@ function useGenerateTest(test, projectFilePath) {
 
     // Middleware Import Statements
     function addMiddlewareImportStatement() {
-      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect';`)) {
+      if (
+        !testFileCode.includes(
+          `import '@testing-library/jest-dom/extend-expect';`
+        )
+      ) {
         testFileCode += `import '@testing-library/jest-dom/extend-expect';`;
       }
     }
@@ -339,7 +488,9 @@ function useGenerateTest(test, projectFilePath) {
         hooksTestCase.forEach((statement) => {
           switch (statement.type) {
             case 'hooks':
-              return addRenderHooksImportStatement(), createPathToHooks(statement);
+              return (
+                addRenderHooksImportStatement(), createPathToHooks(statement)
+              );
             default:
               return statement;
           }
@@ -348,7 +499,9 @@ function useGenerateTest(test, projectFilePath) {
         hooksTestCase.hooksStatements.forEach((statement) => {
           switch (statement.type) {
             case 'hooks':
-              return addRenderHooksImportStatement(), createPathToHooks(statement);
+              return (
+                addRenderHooksImportStatement(), createPathToHooks(statement)
+              );
             default:
               return statement;
           }
@@ -370,7 +523,11 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Import Statements
     const addRenderHooksImportStatement = () => {
-      if (!testFileCode.includes(`import '@testing-library/jest-dom/extend-expect'`)) {
+      if (
+        !testFileCode.includes(
+          `import '@testing-library/jest-dom/extend-expect'`
+        )
+      ) {
         testFileCode += `import '@testing-library/jest-dom/extend-expect'`;
       }
       if (
@@ -413,12 +570,18 @@ function useGenerateTest(test, projectFilePath) {
 
     // adds all your import statements at the top to the preview file
     const addEndpointImportStatements = () => {
-      let { serverFilePath, serverFileName, dbFileName, dbFilePath, addDB } = endpointTestCase;
-      createPathToEndFiles(serverFilePath, serverFileName, dbFilePath, dbFileName, addDB);
+      let { serverFilePath, serverFileName, dbFileName, dbFilePath, addDB } =
+        endpointTestCase;
+      createPathToEndFiles(
+        serverFilePath,
+        serverFileName,
+        dbFilePath,
+        dbFileName,
+        addDB
+      );
       testFileCode += '\n';
     };
 
-    
     // adds all the statements from the test blocks and transforms it into code in the preview file
     const addEndpointTestStatements = () => {
       const { endpointStatements } = endpointTestCase;
@@ -426,34 +589,40 @@ function useGenerateTest(test, projectFilePath) {
         switch (statement.type) {
           case 'endpoint':
             return addEndpoint(statement);
-            default:
-              return statement;
-            }
-          });
-        };
-        
-        
-        // adds all your import statements at the top to the preview file
-        const addGraphQLImportStatements = () => {
-          let { serverFilePath, serverFileName, dbFileName, dbFilePath, addDB } = graphQLTestCase;
-          createPathToGraphQLFiles(serverFilePath, serverFileName, dbFilePath, dbFileName, addDB);
-          testFileCode += '\n';
-        };
-        // adds all the statements from the test blocks and transforms it into code in the preview file
-        const addGraphQLTestStatements = () => {
-          const { graphQLStatements } = graphQLTestCase;
-          graphQLStatements.forEach((statement) => {
-            switch (statement.type) {
-              case 'graphQL':
-                return addGraphQL(statement);
-              default:
-                return statement;
-            }
-          });
-        };
-        /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
-        
-        /* getLargestContentfulPaint()
+          default:
+            return statement;
+        }
+      });
+    };
+
+    // adds all your import statements at the top to the preview file
+    const addGraphQLImportStatements = () => {
+      let { serverFilePath, serverFileName, dbFileName, dbFilePath, addDB } =
+        graphQLTestCase;
+      createPathToGraphQLFiles(
+        serverFilePath,
+        serverFileName,
+        dbFilePath,
+        dbFileName,
+        addDB
+      );
+      testFileCode += '\n';
+    };
+    // adds all the statements from the test blocks and transforms it into code in the preview file
+    const addGraphQLTestStatements = () => {
+      const { graphQLStatements } = graphQLTestCase;
+      graphQLStatements.forEach((statement) => {
+        switch (statement.type) {
+          case 'graphQL':
+            return addGraphQL(statement);
+          default:
+            return statement;
+        }
+      });
+    };
+    /* ------------------------------------------ PUPPETEER IMPORT + TEST STATEMENTS ------------------------------------------ */
+
+    /* getLargestContentfulPaint()
         - creating a new PerformanceObserver object which will call the callback function when observed performance events happen
         - setting observer() method to observe the LCP performance entries
      */
@@ -512,7 +681,11 @@ function useGenerateTest(test, projectFilePath) {
     const createPathToActions = (statement) => {
       let filePath = null;
       if (statement.filePath) {
-        filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, statement.filePath);
+        filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          statement.filePath
+        );
         filePath = filePath.replace(/\\/g, '/');
       }
       if (!testFileCode.includes(`import * as actions from from`) && filePath) {
@@ -534,13 +707,13 @@ function useGenerateTest(test, projectFilePath) {
 
       if (
         !testFileCode.includes(
-          `import {${statement.reducerName}, ${statement.initialState}} from` && filePath
+          `import {${statement.reducerName}, ${statement.initialState}} from` &&
+            filePath
         )
       ) {
         testFileCode += `import  {${statement.reducerName}, ${statement.initialState}} from '../${filePath}';`;
       }
     }
-
 
     // Types Filepath
     // Creates the import statment for actionTypes
@@ -554,15 +727,23 @@ function useGenerateTest(test, projectFilePath) {
           statement.typesFilePath
         );
         filePath = filePath.replace(/\\/g, '/');
-        bool = areActionTypesDeclaredInSameFileAsActionCreators(statement.typesFilePath);
+        bool = areActionTypesDeclaredInSameFileAsActionCreators(
+          statement.typesFilePath
+        );
       }
 
       if (bool) {
-        if (!testFileCode.includes(`import { actionTypes } from `) && filePath) {
+        if (
+          !testFileCode.includes(`import { actionTypes } from `) &&
+          filePath
+        ) {
           testFileCode += `import { actionTypes } from '../${filePath}';`;
         }
       } else {
-        if (!testFileCode.includes(`import * as actionTypes from `) && filePath) {
+        if (
+          !testFileCode.includes(`import * as actionTypes from `) &&
+          filePath
+        ) {
           testFileCode += `import * as actionTypes from '../${filePath}';`;
         }
       }
@@ -593,15 +774,16 @@ function useGenerateTest(test, projectFilePath) {
 
     // Hooks Filepath
     function createPathToHooks(statement) {
-  
-
       if (Array.isArray(hooksTestCase)) {
         const hookImports = hooksTestCase.reduce((str, { hook }) => {
           str += `${hook}, `;
           return str;
         }, '');
 
-        if (!testFileCode.includes(`import { ${hooksTestCase[0].hook}`) && statement.hookFilePath) {
+        if (
+          !testFileCode.includes(`import { ${hooksTestCase[0].hook}`) &&
+          statement.hookFilePath
+        ) {
           let filePath = ipcRenderer.sendSync(
             'Universal.path',
             projectFilePath,
@@ -611,18 +793,20 @@ function useGenerateTest(test, projectFilePath) {
 
           testFileCode += `import { ${hookImports} } from '../${filePath}';`;
         }
-
-        
-
       } else if (typeof hooksTestCase === 'object') {
-        const hookImports = hooksTestCase.hooksStatements.reduce((str, { hook }) => {
-          str += `${hook}, `;
+        const hookImports = hooksTestCase.hooksStatements.reduce(
+          (str, { hook }) => {
+            str += `${hook}, `;
 
-          return str;
-        }, '');
+            return str;
+          },
+          ''
+        );
 
         if (
-          !testFileCode.includes(`import { ${hooksTestCase.hooksStatements[0].hook}`) &&
+          !testFileCode.includes(
+            `import { ${hooksTestCase.hooksStatements[0].hook}`
+          ) &&
           statement.hookFilePath
         ) {
           let filePath = ipcRenderer.sendSync(
@@ -648,34 +832,48 @@ function useGenerateTest(test, projectFilePath) {
     //   }
     // };
 
-    // Endpoint Filepath: finds the endpoint routes in the project file 
-    const createPathToEndFiles = (serverFilePath, serverFileName, dbFileName, dbFilePath, addDB) => {
+    // Endpoint Filepath: finds the endpoint routes in the project file
+    const createPathToEndFiles = (
+      serverFilePath,
+      serverFileName,
+      dbFileName,
+      dbFilePath,
+      addDB
+    ) => {
       // if you input a server file in the server search input box...
       if (serverFilePath) {
         // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          serverFilePath
+        );
         filePath = filePath.replace(/\\/g, '/');
         testFileCode = `const app = require('../${filePath}');
         const supertest = require('supertest')\n;
-        const request = supertest(app)\n`;
+        const request = supertest(app)\n;`;
       } else testFileCode = 'Please Select A Server!';
       // import "core-js/stable";
       // import "regenerator-runtime/runtime";
       // if you input a db file in the db search input box...
       if (dbFilePath) {
         // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
-        let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, dbFilePath);
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          dbFilePath
+        );
         filePath = filePath.replace(/\\/g, '/');
-      
+
         switch (addDB) {
           case 'PostgreSQL':
-            // testFileCode += `const pgPoolClient = require('../${filePath}');
-            // \n afterAll( async () => { await pgPoolClient.end(); \n});`;
-            // break;
+          // testFileCode += `const pgPoolClient = require('../${filePath}');
+          // \n afterAll( async () => { await pgPoolClient.end(); \n});`;
+          // break;
           case 'MongoDB':
-            // testFileCode += `const client = require('../${filePath}');
-            // \n afterAll( async () => { await client.close(); \n});`;
-            // break;
+          // testFileCode += `const client = require('../${filePath}');
+          // \n afterAll( async () => { await client.close(); \n});`;
+          // break;
           case 'Mongoose':
             // testFileCode += `const mongoose = require('../${filePath}');
             // \n afterAll( async () => { await mongoose.connection.close(); \n});`;
@@ -686,44 +884,57 @@ function useGenerateTest(test, projectFilePath) {
       }
     };
 
-        // GraphQLpoint Filepath: finds the endpoint routes in the project file 
-        const createPathToGraphQLFiles = (serverFilePath, serverFileName, dbFileName, dbFilePath, addDB) => {
-          // if you input a server file in the server search input box...
-          if (serverFilePath) {
-            // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
-            let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, serverFilePath);
-            filePath = filePath.replace(/\\/g, '/');
-            testFileCode = `const app = require('../${filePath}');
+    // GraphQLpoint Filepath: finds the endpoint routes in the project file
+    const createPathToGraphQLFiles = (
+      serverFilePath,
+      serverFileName,
+      dbFileName,
+      dbFilePath,
+      addDB
+    ) => {
+      // if you input a server file in the server search input box...
+      if (serverFilePath) {
+        // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          serverFilePath
+        );
+        filePath = filePath.replace(/\\/g, '/');
+        testFileCode = `const app = require('../${filePath}');
             const supertest = require('supertest')\n;
             const request = supertest(app)\n`;
-          } else testFileCode = 'Please Select A Server!';
-          // import "core-js/stable";
-          // import "regenerator-runtime/runtime";
-          // if you input a db file in the db search input box...
-          if (dbFilePath) {
-            // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
-            let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, dbFilePath);
-            filePath = filePath.replace(/\\/g, '/');
-          
-            switch (addDB) {
-              case 'PostgreSQL':
-                // testFileCode += `const pgPoolClient = require('../${filePath}');
-                // \n afterAll( async () => { await pgPoolClient.end(); \n});`;
-                // break;
-              case 'MongoDB':
-                // testFileCode += `const client = require('../${filePath}');
-                // \n afterAll( async () => { await client.close(); \n});`;
-                // break;
-              case 'Mongoose':
-                // testFileCode += `const mongoose = require('../${filePath}');
-                // \n afterAll( async () => { await mongoose.connection.close(); \n});`;
-                break;
-              default:
-                return;
-            }
-          }
-        };
-    
+      } else testFileCode = 'Please Select A Server!';
+      // import "core-js/stable";
+      // import "regenerator-runtime/runtime";
+      // if you input a db file in the db search input box...
+      if (dbFilePath) {
+        // we send the passed in files to ipcMain channel 'Universal.path', and it returns to us the RELATIVE path of these two files
+        let filePath = ipcRenderer.sendSync(
+          'Universal.path',
+          projectFilePath,
+          dbFilePath
+        );
+        filePath = filePath.replace(/\\/g, '/');
+
+        switch (addDB) {
+          case 'PostgreSQL':
+          // testFileCode += `const pgPoolClient = require('../${filePath}');
+          // \n afterAll( async () => { await pgPoolClient.end(); \n});`;
+          // break;
+          case 'MongoDB':
+          // testFileCode += `const client = require('../${filePath}');
+          // \n afterAll( async () => { await client.close(); \n});`;
+          // break;
+          case 'Mongoose':
+            // testFileCode += `const mongoose = require('../${filePath}');
+            // \n afterAll( async () => { await mongoose.connection.close(); \n});`;
+            break;
+          default:
+            return;
+        }
+      }
+    };
 
     /* ------------------------------------------ MOCK DATA + METHODS ------------------------------------------ */
 
@@ -740,7 +951,8 @@ function useGenerateTest(test, projectFilePath) {
     const createMockDatumFieldKeys = (mockDatum) => {
       return mockDatum.fieldKeys.reduce((fieldKeysCode, mockDatum) => {
         return (
-          fieldKeysCode + `${mockDatum.fieldKey}: fake(f => f.random.${mockDatum.fieldType}()),`
+          fieldKeysCode +
+          `${mockDatum.fieldKey}: fake(f => f.random.${mockDatum.fieldType}()),`
         );
       }, '');
     };
@@ -748,66 +960,199 @@ function useGenerateTest(test, projectFilePath) {
     /* ------------------------------------------ TEST STATEMENTS ------------------------------------------ */
 
     // Action Jest Test Code
-    const addAction = (action,  type = 'react') => { 
-      if (type === 'react'){
-        if (action.eventValue) {
-          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                            (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+    // injest action block current data
+    const addAction = (action, type = 'react') => { //! REACT
+      if (type === 'react') {
+
+        if (testFramework === 'cypress' && Array.isArray(action.commandChain)) {
+          let cyChain = 'cy';
+          action.commandChain.forEach((step) => {
+            const {selectorType, selectorValue, actionType, actionValue} = step;
+            if ( selectorType && selectorValue) {
+              cyChain += `.${selectorType}('${selectorValue}')`; // .get('selector')
+            }
+            if (actionType) {
+              cyChain += `.${actionType}(${actionValue ? `'${actionValue}'` : ''})` // chain click(), .type('value')
+            }
+          })
+          testFileCode += cyChain + `;\n` // ! END OF CYPRESS TEST
+        
+        } 
+        //! Jest testing logic
+        else if (action.eventValue) {
+          testFileCode += `fireEvent.${action.eventType}(${
+            action.queryVariant + action.querySelector
+          }
+          (${action.queryValue}), { target: { value: ${
+            action.eventValue
+          } } });`;
         } else {
-          testFileCode += `fireEvent.${action.eventType}(${action.queryVariant + action.querySelector}
-                            (${action.queryValue}));`;
+          testFileCode += `fireEvent.${action.eventType}(${
+            action.queryVariant + action.querySelector
+          }
+          (${action.queryValue}));`;
         }
-      }
-      // else if (type === 'solid')***************************************
-      else if (type === 'solid') {
+      } else if (type === 'solid') { //! SOLID
+
+
         if (action.eventValue) {
-          testFileCode += `fireEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
-                            (${action.queryValue}), { target: { value: ${action.eventValue} } });`;
+          testFileCode += `fireEvent.${action.eventType}(screen.${
+            action.queryVariant + action.querySelector
+          }
+          (${action.queryValue}), { target: { value: ${
+            action.eventValue
+          } } });`;
         } else {
-          testFileCode += `fireEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
-                            (${action.queryValue}));`;
+          testFileCode += `fireEvent.${action.eventType}(screen.${
+            action.queryVariant + action.querySelector
+          }
+          (${action.queryValue}));`;
         }
-      }
-      else if (type === 'vue'){
+      } else if (type === 'vue') { //! VUE
+
+
         testFileCode += `await wrapper.${action.queryVariant}(${action.queryValue}).trigger('${action.eventType}');`;
-      }
-      else if (type === 'svelte') {
+      } else if (type === 'svelte') {
         if (action.eventValue) {
-          testFileCode += `await userEvent.${action.eventType}(screen.${action.queryVariant + action.querySelector}
-                            (${action.queryValue}), "${action.eventValue}");`;
+          testFileCode += `await userEvent.${action.eventType}(screen.${
+            action.queryVariant + action.querySelector
+          }
+          (${action.queryValue}), "${action.eventValue}");`;
         } else {
           testFileCode += `await userEvent.${action.eventType}(screen.${action.querySelector}
-                            (${action.queryValue}));`;
+          (${action.queryValue}));`;
         }
       }
     };
 
+
+
+    
+
     // Assertion Jest Test Code
     const addAssertion = (assertion, type = 'react') => {
-      // if (type === 'solid') *********************************************
-      if (type === 'solid'){
-        testFileCode += `expect(screen.${assertion.queryVariant + assertion.querySelector}
-          (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
+
+      //! log the testFramework inside of the components
+
+      if (type === 'solid') {
+        testFileCode += `expect(screen.${
+          assertion.queryVariant + assertion.querySelector
+        }
+          (${assertion.queryValue})).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
       }
-      if (type === 'react'){
-        testFileCode += `expect(${assertion.queryVariant + assertion.querySelector}
-          (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
+      if (type === 'react') {
+ 
+        if(testFramework === 'jest'){
+          testFileCode += `expect(${
+          assertion.queryVariant + assertion.querySelector
+        }
+          ${assertion.queryValue}).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
+        }
+        if(testFramework === 'mocha'){
+          testFileCode += `expect(${
+          assertion.queryVariant + assertion.querySelector
+        }
+          ${assertion.queryValue}).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
+        }
+        if(testFramework === 'sinon'){
+          testFileCode += `sinon.spy(${
+            assertion.queryVariant + assertion.querySelector
+          }
+            ${assertion.queryValue}).${assertion.matcherType}(${
+            assertion.matcherValue
+          });`;
+        }
+// click();
+//     
+//       ().should.have.text(welcome);
+
+        if(testFramework === 'cypress'){
+
+          let selectorCall = '';
+          const method = assertion.selectorMethod || '';
+          const value = assertion.selectorValue || '';
+
+          // build subject, cy.get('foo') or cy.contains(/regex)
+      
+          
+          if (method === 'contains') {
+            selectorCall = `cy.contains('${value}')`;
+          } else if (method === 'url') {
+            selectorCall = `cy.url()`;
+          } else if (method){
+            selectorCall = `cy.${method}('${value}')`;
+          }
+          
+
+
+
+          const isNot = assertion.isNot;
+
+          const matcher = assertion.matcherType || '';    // e.g. 'should.be.visible' or 'should.have.text'
+          const mValue = assertion.matcherValue || '';
+          console.log(`Assertion: method=${method}, value=${value},matcher=${matcher}, mValue=${mValue}`)  
+
+  // we keep the prefix should to be more intuitive to the user
+  const matchersWithValue = [
+    'should.have.text',
+    'should.have.value',
+    'should.contain',
+    'should.have.attr',
+    'should.have.class',
+    'should.have.css',
+    'should.have.length',
+    'should.include',
+    'should.eq',
+    'should.not.have.value',
+  ];
+
+  const needsValue = matchersWithValue.includes(matcher);
+
+
+  // strip off the "should." prefix
+  const rawMatcher = matcher.replace(/^should\./, '');
+
+// Prefix with "not." or keep mathcher minus the "should."
+const finalMatcher = isNot ? `not.${rawMatcher}` : rawMatcher
+
+
+if (matcher === 'have.length') {        // .should('not.have.text', 'foo');  
+// for matchers need a value,       .should('have.text', 'foo');
+    testFileCode += `${selectorCall}.should('${finalMatcher}', ${mValue});\n`;
+  } else if (needsValue) {        // .should('not.have.text', 'foo');  
+// for matchers need a value,       .should('have.text', 'foo');
+    testFileCode += `${selectorCall}.should('${finalMatcher}', '${mValue}');\n`;
+  } else {
+// for matchers without a value,     .should('be.visible');
+    testFileCode += `${selectorCall}.should('${finalMatcher}');\n`;
+  }                          
+}
       }
-      if(type === 'vue'){
-        if (assertion.querySelector){
+      if (type === 'vue') {
+        if (assertion.querySelector) {
           testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue}).
             ${assertion.querySelector}()).${assertion.matcherType}(${assertion.matcherValue});`;
-        }
-        else{
+        } else {
           testFileCode += `expect(wrapper.${assertion.queryVariant}(${assertion.queryValue})).
             ${assertion.matcherType}(${assertion.matcherValue});`;
         }
       }
-      if (type === 'svelte'){
-        testFileCode += `expect(screen.${assertion.queryVariant + assertion.querySelector}
-          (${assertion.queryValue})).${assertion.matcherType}(${assertion.matcherValue});`;
+      if (type === 'svelte') {
+        testFileCode += `expect(screen.${
+          assertion.queryVariant + assertion.querySelector
+        }
+          (${assertion.queryValue})).${assertion.matcherType}(${
+          assertion.matcherValue
+        });`;
       }
     };
+
 
     // Middleware Jest Test Code
     const addMiddleware = (middleware) => {
@@ -919,9 +1264,12 @@ function useGenerateTest(test, projectFilePath) {
     const addHookUpdates = (hookUpdates) => {
       testFileCode += `test('${hookUpdates.testName}', () => {`;
       testFileCode += `const {result} = renderHook (() => ${hookUpdates.hook}());\n\n`;
-      let callbackCodeBlocks = hookUpdates.callbackFunc.reduce((result, callback) => {
-        return (result += `\nresult.current.${callback.callbackFunc}();`);
-      }, '');
+      let callbackCodeBlocks = hookUpdates.callbackFunc.reduce(
+        (result, callback) => {
+          return (result += `\nresult.current.${callback.callbackFunc}();`);
+        },
+        ''
+      );
       testFileCode +=
         hookUpdates.callbackFunc.length === 0 ||
         (hookUpdates.callbackFunc.length === 1 &&
@@ -952,22 +1300,29 @@ function useGenerateTest(test, projectFilePath) {
             : '';
       });
       testFileCode += statement.headers.length ? '}); \n' : '';
-      statement.assertions.forEach(({ matcher, expectedResponse, not, value }) => {
-        matcher = matcher
-          .replace(/\(([^)]+)\)/, '')
-          .split(' ')
-          .join('');
-        testFileCode += `\n expect(response.${expectedResponse.toLowerCase()})`;
-        testFileCode += not ? `.not.${matcher}(${value});` : `.${matcher}(${value});`;
-      });
+      statement.assertions.forEach(
+        ({ matcher, expectedResponse, not, value }) => {
+          matcher = matcher
+            .replace(/\(([^)]+)\)/, '')
+            .split(' ')
+            .join('');
+          testFileCode += `\n expect(response.${expectedResponse.toLowerCase()})`;
+          testFileCode += not
+            ? `.not.${matcher}(${value});`
+            : `.${matcher}(${value});`;
+        }
+      );
       testFileCode += '});';
       testFileCode += '\n';
     };
     //statement.method
+
     const addGraphQL = (statement) => {
       testFileCode += `\n test('${statement.testName}', async () => {\n const response = await request.post('${statement.route}')`;
       testFileCode += statement.postData
-        ? `.send( { "query": "${statement.method} ${statement.postData.trim()}" })\n`
+        ? `.send( { "query": "${
+            statement.method
+          } ${statement.postData.trim()}" })\n`
         : statement.headers.length
         ? `.set({`
         : '';
@@ -979,14 +1334,18 @@ function useGenerateTest(test, projectFilePath) {
             : '';
       });
       testFileCode += statement.headers.length ? '}); \n' : '';
-      statement.assertions.forEach(({ matcher, expectedResponse, not, value }) => {
-        matcher = matcher
-          .replace(/\(([^)]+)\)/, '')
-          .split(' ')
-          .join('');
-        testFileCode += `\n expect(response.${expectedResponse.toLowerCase()})`;
-        testFileCode += not ? `.not.${matcher}(${value});` : `.${matcher}(${value});`;
-      });
+      statement.assertions.forEach(
+        ({ matcher, expectedResponse, not, value }) => {
+          matcher = matcher
+            .replace(/\(([^)]+)\)/, '')
+            .split(' ')
+            .join('');
+          testFileCode += `\n expect(response.${expectedResponse.toLowerCase()})`;
+          testFileCode += not
+            ? `.not.${matcher}(${value});`
+            : `.${matcher}(${value});`;
+        }
+      );
       testFileCode += '});';
       testFileCode += '\n';
     };
@@ -1035,13 +1394,19 @@ function useGenerateTest(test, projectFilePath) {
             })
               
             it('${statement.firstPaintIt}', async () => {
-              expect(paints['first-paint']).toBeLessThan(${statement.firstPaintTime})
+              expect(paints['first-paint']).toBeLessThan(${
+                statement.firstPaintTime
+              })
             })
             it('${statement.FCPIt}', async () => {
-              expect(paints['first-contentful-paint']).toBeLessThan(${statement.FCPtTime})
+              expect(paints['first-contentful-paint']).toBeLessThan(${
+                statement.FCPtTime
+              })
             })
             it('${statement.LCPIt}', async () => {
-              expect(paints['first-contentful-paint']).toBeLessThan(${statement.LCPTime})
+              expect(paints['first-contentful-paint']).toBeLessThan(${
+                statement.LCPTime
+              })
             })
           });
         `;
@@ -1051,13 +1416,35 @@ function useGenerateTest(test, projectFilePath) {
 
     const addAccImportStatements = () => {
       let { filePath, fileName } = accTestCase;
-      filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, filePath);
+      filePath = ipcRenderer.sendSync(
+        'Universal.path',
+        projectFilePath,
+        filePath
+      );
       filePath = filePath.replace(/\\/g, '/');
 
-      testFileCode += `
+      // imports for react testing
+      if (accTestCase.testType === 'react') {
+        testFileCode += `
+        import React from 'react';
+        import ReactDOMServer from 'react-dom/server';
+        import { configureAxe, toHaveNoViolations } from 'jest-axe';
+        import ${
+          //capitalize the first letter of the component 
+          fileName.split('.')[0][0].toUpperCase() +
+          fileName.split('.')[0].slice(1)
+        } from '../${filePath}';
+        import { JSDOM } from 'jsdom';
+
+        `;
+        addMount();
+      } else {
+        testFileCode += `
         const axe = require('axe-core');
         const regeneratorRuntime = require('regenerator-runtime');`;
+      }
 
+      // EDIT: is not accessing neither accTestCase.testType html, HTML, React, or react
       if (accTestCase.testType === 'html') {
         testFileCode += `
         const path = require('path');
@@ -1065,14 +1452,7 @@ function useGenerateTest(test, projectFilePath) {
         
         const html = fs.readFileSync(path.resolve(__dirname,
           '../${filePath}'), 'utf8');`;
-      } else if (accTestCase.testType === 'react') {
-        testFileCode += `
-        import React from 'react';
-        import { configure, mount } from 'enzyme';
-        import Adapter from 'enzyme-adapter-react-16';
-
-        import ${fileName.split('.')[0]} from '../${filePath}';`;
-      }
+      } 
     };
 
     const addAccDescribeBlocks = () => {
@@ -1082,73 +1462,70 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `
 
         describe('${describeBlocks.byId[id].text}', () => {`;
-        addAccPrint();
-        if (accTestCase.testType === 'react') addMount();
+        if (accTestCase.testType !== 'react') addAccPrint();
+        // if (accTestCase.testType === 'react') addMount(); // REVIEW: no accessing this statement
         addAccBeforeAll(id);
         addAccItStatements(id);
         testFileCode += `}); \n \n`;
       });
     };
 
-    const addAccPrint = () => {
-      testFileCode += `
-        const print = (violations) => {
-          if (violations.length === 0) {
-            console.log('Congrats! Keep up the good work, you have 0 known violations!');
-          } else {
-            violations.forEach(axeViolation => {
-              const whereItFailed = axeViolation.nodes.map(node => node.html);
-              // uncomment the line(s) below to see suggestions on how to fix accessibility issues
-              // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
-        
-              const { description, help, helpUrl } = axeViolation;
+    const addAccPrint = () => { // REVIEW: No operable during V.0.15.0
       
-              console.log('---------',
-                '\\nTEST DESCRIPTION: ', description,
-                '\\nISSUE: ', help,
-                '\\nMORE INFO: ', helpUrl,
-                '\\nWHERE IT FAILED: ', whereItFailed,
-                // '\\nHOW TO FIX: ', failureSummary
-              );
-            });
-          }
+      testFileCode += `
+      const print = (violations) => {
+        if (violations.length === 0) {
+          console.log('Congrats! Keep up the good work, you have 0 known violations!');
+        } else {
+          violations.forEach(axeViolation => {
+            const whereItFailed = axeViolation.nodes.map(node => node.html);
+            // uncomment the line(s) below to see suggestions on how to fix accessibility issues
+            // const failureSummary = axeViolation.nodes.map(node => node.failureSummary);
+      
+            const { description, help, helpUrl } = axeViolation;
+    
+            console.log('---------',
+              '\\nTEST DESCRIPTION: ', description,
+              '\\nISSUE: ', help,
+              '\\nMORE INFO: ', helpUrl,
+              '\\nWHERE IT FAILED: ', whereItFailed,
+              // '\\nHOW TO FIX: ', failureSummary
+            );
+          });
         }
-      `;
+      }
+    `;
+    
     };
 
     const addMount = () => {
       testFileCode += `
-        const mountToDoc = (reactElm) => {
-          configure({ adapter: new Adapter() });
-          if (!document) {
-            // Set up a basic DOM
-            global.document = jsdom('<!doctype html><html><body></body></html>');
-          }
-          if (!wrapper) {
-            wrapper = document.createElement('main');
-            document.body.appendChild(wrapper);
-          }
-        
-          const container = mount(reactElm);
-          wrapper.innerHTML = '';
-          wrapper.appendChild(container.getDOMNode());
-          return container;
-        }
+      // Configure the JSDOM
+      const { window } = new JSDOM('<!DOCTYPE html>');
+      global.window = window;
+      global.document = window.document;
       `;
     };
 
     const addAccBeforeAll = (descId) => {
       const { fileName } = accTestCase;
-      testFileCode += `
-        let options;`;
+      // testFileCode += ` // REVIEW: Was disable during V.0.15.0
+      //   let options;`;
 
       if (accTestCase.testType === 'react') {
-        testFileCode += `
-          let linkNode;
-          let wrapper;`;
-      }
+        testFileCode += `\n
+          let axe;
+          beforeAll(() => {
+            axe = configureAxe({
+            rules: {
+            region: { enable: false}, ${ accTestCase.describeBlocks.byId[descId].standardTag === 'text-alternatives'? `\n "image-alt": { enabled: true },` : ''}
+            },
+          })
 
-      testFileCode += `\n
+          expect.extend(toHaveNoViolations);
+        })`;
+      } else {
+        testFileCode += `\n
         beforeAll((done) => {
           // exclude tests that are incompatible
           options = {
@@ -1156,19 +1533,19 @@ function useGenerateTest(test, projectFilePath) {
               'color-contrast': { enabled: false },
               'link-in-text-block': { enabled: false },
             },`;
-
-      if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
-        testFileCode += `
-              runOnly: {
-                type: 'tag',
-                value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
+        if (accTestCase.describeBlocks.byId[descId].standardTag !== 'none') {
+          testFileCode += `
+            runOnly: {
+              type: 'tag',
+              value: ['${accTestCase.describeBlocks.byId[descId].standardTag}']
             }`;
-      }
-
-      testFileCode += `
+        }
+        testFileCode += `
           };
         `;
 
+      }  
+      
       if (accTestCase.testType === 'html') {
         testFileCode += `
           // get language tag from imported html file and assign to jsdom document
@@ -1176,55 +1553,62 @@ function useGenerateTest(test, projectFilePath) {
           if (langTag) document.documentElement.lang = langTag[1];
           document.documentElement.innerHTML = html.toString();
         `;
-      } else if (accTestCase.testType === 'react') {
-        testFileCode += `
-        const linkComponent = mountToDoc(
-          < ${fileName.split('.')[0]} />
-        );
-        linkNode = linkComponent.getDOMNode();
-        `;
-      }
-
-      testFileCode += `
+      };
+    
+      if (accTestCase.testType !== 'react'){
+          testFileCode += `
           done();
         });
       `;
+      };
     };
 
     const addAccItStatements = (descId) => {
       const { itStatements } = accTestCase;
+      const { fileName } = accTestCase;
 
       itStatements.allIds[descId].forEach((itId) => {
         testFileCode += `
-          it('${itStatements.byId[itId].text}', (done) => {`;
+          it('${itStatements.byId[itId].text}', async () => {`;
 
-        if (itStatements.byId[itId].catTag !== 'none') {
+        if (accTestCase.testType !== 'react' && itStatements.byId[itId].catTag !== 'none') {
           testFileCode += `  
             options.runOnly.value.push('cat.${itStatements.byId[itId].catTag}')`;
         }
-
+        
         if (accTestCase.testType === 'react') {
-          testFileCode += `
-            axe.run(linkNode, options, async (err, results) => {`;
+          testFileCode += ` 
+            // UPDATE to render the react component from the state of the import file menu
+            const render = () => ReactDOMServer.renderToString(<div role="main"><${
+              //capitalize the first letter of the component 
+              fileName.split('.')[0][0].toUpperCase() +
+              fileName.split('.')[0].slice(1)
+            } /></div>);
+
+            const html = render();
+            // pass anything that outputs html to axe
+            expect(await axe(html)).toHaveNoViolations();
+            })
+          `;
         } else {
           testFileCode += `
-            axe.run(options, async (err, results) => {`;
+            axe.run(options, async (err, results) => {
+
+              if (err) {
+                console.log('err: ', err);
+                done();
+              }
+
+              print(results.violations);      
+      
+              expect(err).toBe(null);
+              expect(results.violations).toHaveLength(0);
+              done();
+            });
+          })
+         `;
         }
 
-        testFileCode += `
-            if (err) {
-              console.log('err: ', err);
-              done();
-            }
-
-            print(results.violations);      
-      
-            expect(err).toBe(null);
-            expect(results.violations).toHaveLength(0);
-            done();
-          });
-        })
-      `;
       });
     };
 
@@ -1326,12 +1710,16 @@ function useGenerateTest(test, projectFilePath) {
         \n`;
     };
 
-
     const addVueComponentImportStatement = () => {
       const componentPath = vueTestCase.statements.componentPath;
-      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      let filePath = ipcRenderer.sendSync(
+        'Universal.path',
+        projectFilePath,
+        componentPath
+      );
       filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.vue?/, '');
+      const formattedComponentName =
+        vueTestCase.statements.componentName.replace(/\.vue?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
     };
 
@@ -1344,7 +1732,7 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `}); \n`;
       });
     };
-    
+
     const addVueItStatement = (describeId) => {
       const itStatements = vueTestCase.itStatements;
       itStatements.allIds[describeId].forEach((itId) => {
@@ -1389,7 +1777,8 @@ function useGenerateTest(test, projectFilePath) {
 
     const addVueRender = (statement, methods) => {
       let props = createVueRenderProps(statement.props);
-      const formattedComponentName = vueTestCase.statements.componentName.replace(/\.vue?/, '');
+      const formattedComponentName =
+        vueTestCase.statements.componentName.replace(/\.vue?/, '');
       // change to VUE files
       testFileCode += `const wrapper = mount(${formattedComponentName}, {props: {${props}}});`;
     };
@@ -1401,8 +1790,8 @@ function useGenerateTest(test, projectFilePath) {
     };
 
     //-----------------------------------------Svelte Test---------------------------------------------------------------
-     // Svelte Import Statements
-     const addSvelteImportStatements = () => {
+    // Svelte Import Statements
+    const addSvelteImportStatements = () => {
       testFileCode += `
         import { render, screen, waitFor } from '@testing-library/svelte'; 
         import userEvent from '@testing-library/user-event'; 
@@ -1413,12 +1802,16 @@ function useGenerateTest(test, projectFilePath) {
 
     const addSvelteComponentImportStatement = () => {
       const componentPath = svelteTestCase.statements.componentPath;
-      let filePath = ipcRenderer.sendSync('Universal.path', projectFilePath, componentPath);
+      let filePath = ipcRenderer.sendSync(
+        'Universal.path',
+        projectFilePath,
+        componentPath
+      );
       filePath = filePath.replace(/\\/g, '/');
-      const formattedComponentName = svelteTestCase.statements.componentName.replace(/\.svelte?/, '');
+      const formattedComponentName =
+        svelteTestCase.statements.componentName.replace(/\.svelte?/, '');
       testFileCode += `import ${formattedComponentName} from '../${filePath}';`;
     };
-
 
     const addSvelteDescribeBlocks = () => {
       const describeBlocks = svelteTestCase.describeBlocks;
@@ -1429,8 +1822,7 @@ function useGenerateTest(test, projectFilePath) {
         testFileCode += `}); \n`;
       });
     };
-    
-        
+
     const addSvelteItStatement = (describeId) => {
       const itStatements = svelteTestCase.itStatements;
       itStatements.allIds[describeId].forEach((itId) => {
@@ -1475,7 +1867,8 @@ function useGenerateTest(test, projectFilePath) {
 
     const addSvelteRender = (statement, methods) => {
       let props = createSvelteRenderProps(statement.props);
-      const formattedComponentName = svelteTestCase.statements.componentName.replace(/\.svelte?/, '');
+      const formattedComponentName =
+        svelteTestCase.statements.componentName.replace(/\.svelte?/, '');
       // change to Svelte files ** NEED CORRECT FORMATTING **
       testFileCode += `render(${formattedComponentName});`;
     };
@@ -1486,13 +1879,17 @@ function useGenerateTest(test, projectFilePath) {
       }, '');
     };
 
-
     // ------------------------------------ switch statement on test type -------------------------
 
     switch (test) {
+
+      //---------------------------------------------------Accessibility switch statement---------------------------------------------
       case 'acc':
+        // Store the current test state in a variable for easier access
         var accTestCase = testState;
+        // Check if the test type is puppeteer
         if (accTestCase.testType === 'puppeteer') {
+          // and beautify the testFileCode using the options bellow
           return (
             addAccPuppeteer(),
             (testFileCode = beautify(testFileCode, {
@@ -1502,6 +1899,9 @@ function useGenerateTest(test, projectFilePath) {
             }))
           );
         } else {
+          // If it's not 'puppeteer', add 'acc' import statements and describe blocks
+          // and beautify the testFileCode using specific options
+          // beautify function will format this code to make it more readable
           return (
             addAccImportStatements(),
             addAccDescribeBlocks(),
@@ -1513,7 +1913,10 @@ function useGenerateTest(test, projectFilePath) {
           );
         }
 
+      //---------------------------------------------------React switch statement---------------------------------------------
       case 'react':
+        //! LOOKING FOR A LOG
+        console.log('Current Test Framework:',testFramework);
         var reactTestCase = testState;
         var mockData = mockDataState;
         return (
@@ -1529,6 +1932,7 @@ function useGenerateTest(test, projectFilePath) {
           }))
         );
 
+      //---------------------------------------------------Vue switch statement---------------------------------------------
       case 'vue':
         var vueTestCase = testState;
         var mockData = mockDataState;
@@ -1560,7 +1964,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-        
+
+      //---------------------------------------------------Redux switch statement---------------------------------------------
       case 'redux':
         var reduxTestCase = testState;
         return (
@@ -1573,6 +1978,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
+      //---------------------------------------------------Hooks switch statement---------------------------------------------
       case 'hooks':
         var hooksTestCase = testState;
         return (
@@ -1584,6 +1991,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
+      //---------------------------------------------------Endpoint switch statement---------------------------------------------
       // case was "endpoint test" but that is not the case being dispatched by the frontend
       case 'endpoint':
         var endpointTestCase = testState;
@@ -1596,6 +2005,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
+      //---------------------------------------------------Puppeteer switch statement---------------------------------------------
       case 'puppeteer':
         var puppeteerTestCase = testState;
         return (
@@ -1607,6 +2018,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
+      //---------------------------------------------------graphQL switch statement---------------------------------------------
       case 'graphQL':
         var graphQLTestCase = testState;
         return (
@@ -1618,7 +2031,8 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
-      // add solid switch statement **************************************
+
+      //---------------------------------------------------Solid switch statement---------------------------------------------
       case 'solid':
         var solidTestCase = testState;
         var mockData = mockDataState;
@@ -1634,12 +2048,11 @@ function useGenerateTest(test, projectFilePath) {
             e4x: true,
           }))
         );
+
       default:
         return 'not a test';
     }
   };
-
-  
 }
 
 export default useGenerateTest;

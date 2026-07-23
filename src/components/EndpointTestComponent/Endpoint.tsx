@@ -1,11 +1,9 @@
 import React, { useContext } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import styles from './Endpoint.module.scss';
 import style from '../ReactTestComponent/Render/Render.module.scss';
 import styled from '../ReactTestComponent/Render/Prop.module.scss';
 import EndpointAssertion from './EndpointAssertion';
 import { Assertion, EndpointObj, Header, Action, EventTarget } from '../../utils/endpointTypes';
-
 import {
   deleteEndpoint,
   updateEndpoint,
@@ -17,7 +15,6 @@ import {
 } from '../../context/actions/endpointTestCaseActions';
 import { GlobalContext } from '../../context/reducers/globalReducer';
 const closeIcon = require('../../assets/images/close.png');
-const dragIcon = require('../../assets/images/drag-vertical.png');
 const minusIcon = require('../../assets/images/minus-box-outline.png');
 
 interface EndpointProps {
@@ -26,8 +23,10 @@ interface EndpointProps {
   dispatchToEndpointTestCase: (action: Action) => void;
 }
 
+
+
 const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps) => {
-  const [ {theme} ] = useContext<any>(GlobalContext)
+  const [ {theme} ] = useContext(GlobalContext)
   const handleChangeEndpointFields = ({ target }: EventTarget, field: string) => {
     let updatedEndpoint = { ...endpoint };
 
@@ -68,12 +67,7 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
 
   return (
     <div style={{ maxWidth: '650px' }}>
-      <Draggable draggableId={endpoint.id.toString()} index={index}>
-        {(provided) => (
           <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
             id={styles[`endpointmodal${theme}`]}
           >
             <img
@@ -83,7 +77,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
               onClick={handleClickDeleteEndpoint}
             />
             <div id={styles.header}>
-              <img src={dragIcon} alt='drag' />
               <h3>Endpoint</h3>
             </div>
             <div id={styles.groupFlexbox}>
@@ -222,8 +215,6 @@ const Endpoint = ({ endpoint, index, dispatchToEndpointTestCase }: EndpointProps
               </button>
             </div>
           </div>
-        )}
-      </Draggable>
     </div>
   );
 };
